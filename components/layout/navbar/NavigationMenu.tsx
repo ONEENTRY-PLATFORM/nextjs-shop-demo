@@ -11,8 +11,8 @@ interface NavigationMenuProps {
 
 const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
   return (
-    <nav className="flex justify-center items-center px-5 text-lg font-bold uppercase bg-white border border-solid border-[black] text-neutral-600 max-md:px-5">
-      <div className="flex justify-center items-center py-7 max-w-full w-[1235px] max-md:px-5">
+    <nav className="flex justify-center items-center px-5 text-lg font-bold uppercase bg-white text-neutral-600 max-md:px-5">
+      <div className="flex justify-center items-center py-7 max-w-full w-[1240px] max-md:px-5">
         <ul className="flex gap-5 justify-between max-w-full w-[1053px] max-md:flex-wrap">
           {items.map((item, index) => (
             <li key={index} className="flex gap-5 justify-between py-1 my-auto whitespace-nowrap">
