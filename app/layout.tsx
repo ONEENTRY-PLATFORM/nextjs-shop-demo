@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Header from '../components/layout/Header';
 import NavigationMenu from '../components/layout/navbar/NavigationMenu';
 import Footer from '../components/layout/Footer';
+import Breadcrumbs from '../components/layout/Breadcrumbs';
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: Readonly<{children: React.React
       <body className={inter.className}>
         <Header />
         <NavigationMenu items={navigationItems} />
+        <Breadcrumbs />
         {children}
         <Footer />
       </body>
