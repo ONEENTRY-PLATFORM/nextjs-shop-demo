@@ -1,26 +1,29 @@
 import React from 'react';
 
-interface SymbolCardProps {
-  // Add any specific props here if needed
-}
-
-const GroupItem: React.FC<SymbolCardProps> = () => {
-  return (
-    <article className="box-border flex relative flex-col shrink-0">
-      {/* Content of the Symbol component */}
-    </article>
-  );
-};
+import NavGroupItem from './NavGroupItem';
 
 const NavGroup: React.FC = () => {
-  const symbolCards = [1, 2, 3];
+  const symbolCards = [
+    {
+      icon: '1',
+      href: '#',
+    },
+    {
+      icon: '2',
+      href: '#',
+    },
+    {
+      icon: '3',
+      href: '#',
+    }
+  ];
 
   return (
-    <section className="flex gap-5 my-auto max-md:flex-wrap max-md:max-w-full">
-      {symbolCards.map((_, index) => (
-        <GroupItem key={index} />
+    <div className="flex gap-5 my-auto max-md:flex-wrap max-md:max-w-full">
+      {symbolCards.map((item, index) => (
+        <NavGroupItem key={index} item={item} />
       ))}
-    </section>
+    </div>
   );
 };
 

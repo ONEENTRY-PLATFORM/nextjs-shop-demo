@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchBar from './header/SearchBar';
 import Logo from './header/Logo';
+import NavGroup from './header/NavGroup';
 
 const Header: React.FC = () => {
   return (
@@ -9,9 +10,7 @@ const Header: React.FC = () => {
         <div className="flex gap-6 justify-between w-full max-w-[1240px] max-md:flex-wrap">
           <Logo />
           <SearchBar />
-          <nav className="flex gap-5 my-auto max-md:flex-wrap max-md:max-w-full">
-            ICONS
-          </nav>
+          <NavGroup />
         </div>
       </section>
     </header>
