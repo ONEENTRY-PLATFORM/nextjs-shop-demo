@@ -22,7 +22,7 @@ const items = [
 const NavGroup: React.FC = () => {
 
   return (
-    <div className="flex gap-5 my-auto max-md:flex-wrap max-md:max-w-full">
+    <div className="flex gap-5 my-auto max-md:max-w-full">
       {items.map((item, index) => (
         <NavGroupItem key={index} item={item} />
       ))}
