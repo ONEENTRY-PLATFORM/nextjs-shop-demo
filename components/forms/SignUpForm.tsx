@@ -85,7 +85,11 @@ const SignUpForm: React.FC<SignUpFormProps> = ({
               <FormInput key={index} {...field} />
             ))}
           </div>
-          <SubmitButton text="SIGN UP" />
+          <SubmitButton 
+            title="SIGN UP" 
+            class="" 
+            icon='' 
+          />
         </form>
       </main>
     </div>

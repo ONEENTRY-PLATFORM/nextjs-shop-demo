@@ -61,7 +61,11 @@ const SignInPhone: React.FC<SignInPhoneProps> = ({
               required={true}
             />
           </div>
-          <FormSubmitButton text="SIGN IN" />
+          <FormSubmitButton 
+            title="SIGN IN" 
+            class="" 
+            icon='' 
+          />
           <div className="flex gap-5 mx-auto mb-2.5 max-w-full text-sm w-[280px] max-md:mt-10">
             <a href="#" className="flex-auto text-gray-400">
               Forgot Password?
