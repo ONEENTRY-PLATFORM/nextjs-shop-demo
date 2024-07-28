@@ -5,7 +5,7 @@ import ClosePopup from '../layout/popup/ClosePopup';
 
 const VerificationForm: React.FC = () => {
   return (
-    <div className="flex flex-col px-10 pt-8 pb-12 bg-white rounded-3xl border border-solid border-[black] max-w-[550px] w-[550px]">
+    <div className="flex flex-col px-10 pt-8 pb-12 bg-white rounded-3xl border border-solid border-neutral-200 max-w-[550px] w-[550px]">
 
       <header className="box-border flex relative flex-col shrink-0 mb-16">
         <ClosePopup />
@@ -39,7 +39,7 @@ const VerificationForm: React.FC = () => {
           </div>
 
           <FormSubmitButton 
-            title='Verify NOW' 
+            title='Verify now' 
             class='' 
             icon='' 
           />
