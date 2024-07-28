@@ -1,10 +1,12 @@
 import React from 'react';
 
-const OTPInput: React.FC = () => {
-  const inputCount = 6;
+interface FormInputProps {
+  inputCount: number;
+}
+
+const OTPInputs: React.FC<FormInputProps> = ({ inputCount }) => {
 
   return (
-    <div className="box-border flex relative flex-col shrink-0 gap-6 mb-8">
       <div className="flex gap-3.5 justify-between">
         {[...Array(inputCount)].map((_, index) => (
           <input
@@ -18,16 +20,7 @@ const OTPInput: React.FC = () => {
           />
         ))}
       </div>
-      <div className="self-end -mt-px text-xs text-orange-500 max-md:mr-2.5">
-        <span className="text-gray-400">
-          Did not receive the OTP?
-        </span>{" "}
-        <button className="font-bold text-orange-500" type="button">
-          RESEND
-        </button>
-      </div>
-    </div>
   );
 };
 
-export default OTPInput;
+export default OTPInputs;

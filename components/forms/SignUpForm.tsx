@@ -1,15 +1,7 @@
 import React from 'react';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
-
-interface SignUpFormProps {
-  sendSubmissionsTo: string;
-  sendSubmissionsToEmail: string;
-  name: string;
-  contentType: string;
-  method: string;
-  previewState: string;
-}
+import ClosePopup from '../layout/popup/ClosePopup';
 
 const formFields = [
   { 
@@ -49,27 +41,17 @@ const formFields = [
   }
 ];
 
-const SignUpForm: React.FC<SignUpFormProps> = ({
-  sendSubmissionsTo,
-  sendSubmissionsToEmail,
-  name,
-  contentType,
-  method,
-  previewState
-}) => {
+const SignUpForm: React.FC = () => {
 
   return (
     <div className="flex flex-col px-10 py-8 bg-white rounded-3xl border border-solid border-neutral-400 max-w-[550px] w-[550px]">
 
       <header className="box-border flex relative flex-col shrink-0 mb-16">
-        <img loading="lazy" src="" alt="" className="self-end w-10 aspect-square max-md:mr-2.5" />
+        <ClosePopup />
       </header>
 
       <main className="flex flex-col w-full min-h-[calc(100%_-_120px)] max-md:px-5 max-md:mt-10 max-md:max-w-full">
         <form
-          action={sendSubmissionsTo}
-          name={name}
-          method={method}
           className="flex flex-col gap-4 min-h-full text-xl leading-5"
         >
           <div className="box-border flex relative flex-col shrink-0 gap-2.5">
