@@ -1,9 +1,9 @@
-import React from 'react';
-import ProductImage from './ProductImage';
-import ProductDescription from './ProductDescription';
-import ProductDetails from './ProductDetails';
-import RelatedItems from './RelatedItems';
-import ProductFeatures from './ProductFeatures';
+import React from "react";
+import ProductImage from "./ProductImage";
+import ProductDescription from "./ProductDescription";
+import ProductDetails from "./ProductDetails";
+import RelatedItems from "./RelatedItems";
+import ProductFeatures from "./ProductFeatures";
 
 interface ProductPageProps {
   productName: string;
@@ -20,7 +20,7 @@ const ProductPage: React.FC<ProductPageProps> = ({
   price,
   stock,
   description = "Text description",
-  imageSrc
+  imageSrc,
 }) => {
   return (
     <section className="box-border flex relative flex-col grow shrink-0 self-stretch mx-auto w-full max-w-[1240px]">

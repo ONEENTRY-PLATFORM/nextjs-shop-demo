@@ -1,7 +1,7 @@
-import React from 'react';
-import SearchBar from './header/SearchBar';
-import Logo from './header/Logo';
-import NavGroup from './header/NavGroup';
+import React from "react";
+import SearchBar from "./header/SearchBar";
+import Logo from "./header/Logo";
+import NavGroup from "./header/NavGroup";
 
 const Header: React.FC = () => {
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface LinkItem {
   text: string;
@@ -11,11 +11,10 @@ const infoLinks: LinkItem[] = [
   { text: "Offers & events", href: "#" },
   { text: "Purchase a gift card", href: "#" },
   { text: "Pricing & package", href: "#" },
-  { text: "Payments", href: "#" }
+  { text: "Payments", href: "#" },
 ];
 
 const Information: React.FC = () => {
-
   return (
     <div className="flex flex-col ml-5 w-[21%] max-md:ml-0 max-md:w-full">
       <nav className="flex flex-col text-neutral-600">

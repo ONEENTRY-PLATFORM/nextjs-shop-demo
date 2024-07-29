@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const SearchBar: React.FC = () => {
   return (
@@ -13,8 +13,16 @@ const SearchBar: React.FC = () => {
         name="search"
         className="self-stretch w-full h-auto text-lg border-none max-md:px-5 max-md:max-w-full"
       />
-      <button type="submit" className="box-border flex relative flex-col shrink-0 p-2.5 m-auto">
-        <img loading="lazy" src="./icons/search.svg" className="w-6 aspect-square" alt="" />
+      <button
+        type="submit"
+        className="box-border flex relative flex-col shrink-0 p-2.5 m-auto"
+      >
+        <img
+          loading="lazy"
+          src="./icons/search.svg"
+          className="w-6 aspect-square"
+          alt=""
+        />
       </button>
     </form>
   );

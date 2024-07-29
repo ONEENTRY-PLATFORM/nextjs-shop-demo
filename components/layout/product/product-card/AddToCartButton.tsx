@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const AddToCartButton: React.FC = () => {
   return (

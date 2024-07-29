@@ -1,8 +1,8 @@
-import React from 'react';
-import VariationCard from './VariationCard';
+import React from "react";
+import VariationCard from "./VariationCard";
 
 interface VariationProps {
-  title: string; 
+  title: string;
   imageSrc: string;
 }
 

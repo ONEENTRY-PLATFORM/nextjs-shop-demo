@@ -1,5 +1,5 @@
-import React from 'react';
-import ProductCard from '../product/product-card/ProductCard';
+import React from "react";
+import ProductCard from "../product/product-card/ProductCard";
 
 interface GridLayoutProps {
   items: Array<{ id: number; data: Record<string, unknown> }>;
@@ -9,7 +9,7 @@ const GridItem: React.FC = () => {
   const product = {
     imageUrl: "",
     setName: "",
-    itemCount: "",
+    itemCount: 10,
     itemNames: "",
     currentPrice: 1200,
     originalPrice: 2350,
@@ -27,7 +27,7 @@ const GridLayout: React.FC<GridLayoutProps> = ({ items }) => {
     id: index + 1,
     data: {},
   }));
-  
+
   return (
     <div className="box-border flex relative flex-col shrink-0 px-5 py-16 w-screen min-h-[100px] ml-[calc(50%_-_50vw)]">
       <section className="box-border flex relative flex-col grow shrink-0 self-stretch px-5 py-16 mx-auto w-full max-w-[1200px] min-h-[100px]">

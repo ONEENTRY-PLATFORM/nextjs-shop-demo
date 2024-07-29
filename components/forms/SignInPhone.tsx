@@ -1,25 +1,23 @@
-import React from 'react';
-import FormInput from './inputs/FormInput';
-import FormSubmitButton from './inputs/FormSubmitButton';
-import SocialSignInButton from './inputs/SocialSignInButton';
-import ClosePopup from '../layout/popup/ClosePopup';
+import React from "react";
+import FormInput from "./inputs/FormInput";
+import FormSubmitButton from "./inputs/FormSubmitButton";
+import SocialSignInButton from "./inputs/SocialSignInButton";
+import ClosePopup from "../layout/popup/ClosePopup";
 
 const socialButtons = [
-  { 
-    src: "", 
-    alt: "Social sign-in option 1" 
+  {
+    src: "",
+    alt: "Social sign-in option 1",
   },
-  { 
-    src: "", 
-    alt: "Social sign-in option 2" 
-  }
+  {
+    src: "",
+    alt: "Social sign-in option 2",
+  },
 ];
 
 const SignInPhone: React.FC = () => {
-
   return (
     <main className="flex flex-col px-10 py-8 bg-white rounded-3xl border border-solid border-[black] max-w-[550px] w-[550px]">
-      
       <header className="box-border flex relative flex-col shrink-0 mb-16">
         <ClosePopup />
       </header>
@@ -47,11 +45,7 @@ const SignInPhone: React.FC = () => {
               required={true}
             />
           </div>
-          <FormSubmitButton 
-            title="SIGN IN" 
-            class="" 
-            icon='' 
-          />
+          <FormSubmitButton title="SIGN IN" class="" icon="" />
           <div className="flex gap-5 mx-auto mb-2.5 max-w-full text-sm w-[280px] max-md:mt-10">
             <a href="#" className="flex-auto text-gray-400">
               Forgot Password?
@@ -65,7 +59,11 @@ const SignInPhone: React.FC = () => {
           </p>
           <div className="flex gap-5 justify-between mx-auto mb-5">
             {socialButtons.map((button, index) => (
-              <SocialSignInButton key={index} imageSrc={button.src} alt={button.alt} />
+              <SocialSignInButton
+                key={index}
+                imageSrc={button.src}
+                alt={button.alt}
+              />
             ))}
           </div>
           <button className="self-stretch px-16 py-5 text-lg font-bold text-orange-500 border-2 border-orange-500 border-solid rounded-[30px] max-md:px-5 max-md:max-w-full">
@@ -73,7 +71,6 @@ const SignInPhone: React.FC = () => {
           </button>
         </form>
       </section>
-
     </main>
   );
 };

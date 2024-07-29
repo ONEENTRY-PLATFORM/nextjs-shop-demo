@@ -1,8 +1,8 @@
-import React from 'react';
-import MonthSelector from './calendar/MonthSelector';
-import CalendarGrid from './calendar/CalendarGrid';
-import TimeSlots from './calendar/TimeSlots';
-import ClosePopup from '../layout/popup/ClosePopup';
+import React from "react";
+import MonthSelector from "./calendar/MonthSelector";
+import CalendarGrid from "./calendar/CalendarGrid";
+import TimeSlots from "./calendar/TimeSlots";
+import ClosePopup from "../layout/popup/ClosePopup";
 
 const CalendarComponent: React.FC = () => {
   const selectedYear = 2024;
@@ -14,10 +14,7 @@ const CalendarComponent: React.FC = () => {
         <ClosePopup />
       </header>
       <div className="flex flex-col grow shrink-0 px-20 pb-5 basis-0 w-fit">
-        <MonthSelector 
-          month={selectedMonth} 
-          year={selectedYear} 
-        />
+        <MonthSelector month={selectedMonth} year={selectedYear} />
         <CalendarGrid />
         <TimeSlots />
         <button className="self-center px-5 py-4 mt-auto max-w-full text-base font-medium text-white uppercase bg-orange-500 rounded-[30px] w-[267px] max-md:px-5 max-md:mt-10">

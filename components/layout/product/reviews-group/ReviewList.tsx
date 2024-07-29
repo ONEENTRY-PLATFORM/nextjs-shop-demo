@@ -1,5 +1,5 @@
-import React from 'react';
-import ReviewSymbol from './ReviewSymbol';
+import React from "react";
+import ReviewSymbol from "./ReviewSymbol";
 
 const ReviewList: React.FC = () => {
   const reviewCount = 4;

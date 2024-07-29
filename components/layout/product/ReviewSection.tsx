@@ -1,6 +1,6 @@
-import React from 'react';
-import ReviewCard from './ReviewCard';
-import ReviewForm from './ReviewForm';
+import React from "react";
+import ReviewCard from "./ReviewCard";
+import ReviewForm from "./ReviewForm";
 
 interface ReviewData {
   id: number;
@@ -8,10 +8,10 @@ interface ReviewData {
 }
 
 const reviewsData: ReviewData[] = [
-  { id: 1, content: 'Review 1' },
-  { id: 2, content: 'Review 2' },
-  { id: 3, content: 'Review 3' },
-  { id: 4, content: 'Review 4' },
+  { id: 1, content: "Review 1" },
+  { id: 2, content: "Review 2" },
+  { id: 3, content: "Review 3" },
+  { id: 4, content: "Review 4" },
 ];
 
 const ReviewSection: React.FC = () => {

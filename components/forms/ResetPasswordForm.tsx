@@ -1,7 +1,7 @@
-import React from 'react';
-import FormInput from './inputs/FormInput';
-import FormSubmitButton from './inputs/FormSubmitButton';
-import ClosePopup from '../layout/popup/ClosePopup';
+import React from "react";
+import FormInput from "./inputs/FormInput";
+import FormSubmitButton from "./inputs/FormSubmitButton";
+import ClosePopup from "../layout/popup/ClosePopup";
 
 const ResetPasswordForm: React.FC = () => {
   return (
@@ -10,7 +10,6 @@ const ResetPasswordForm: React.FC = () => {
         <ClosePopup />
       </header>
       <section className="flex flex-col w-full min-h-[calc(100%_-_110px)] max-md:px-5 max-md:mt-10 max-md:max-w-full">
-
         <form
           name="resetPasswordForm"
           className="flex flex-col gap-4 min-h-full text-xl leading-5"
@@ -40,13 +39,8 @@ const ResetPasswordForm: React.FC = () => {
               required={true}
             />
           </div>
-          <FormSubmitButton 
-            title="CHANGE PASSWORD" 
-            class="" 
-            icon='' 
-          />
+          <FormSubmitButton title="CHANGE PASSWORD" class="" icon="" />
         </form>
-
       </section>
     </main>
   );

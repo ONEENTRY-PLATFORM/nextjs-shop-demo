@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface BreadcrumbItemProps {
   href: string;
@@ -6,9 +6,16 @@ interface BreadcrumbItemProps {
   isLast: boolean;
 }
 
-const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({ href, text, isLast }) => (
+const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({
+  href,
+  text,
+  isLast,
+}) => (
   <>
-    <a href={href} className="my-auto text-base leading-8 text-slate-300">
+    <a
+      href={href}
+      className="my-auto text-base leading-8 text-slate-300 hover:text-orange-500"
+    >
       <p>{text}</p>
     </a>
     {!isLast && (

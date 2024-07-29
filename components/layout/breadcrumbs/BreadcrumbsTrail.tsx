@@ -1,10 +1,10 @@
-import React from 'react';
-import BreadcrumbItem from './BreadcrumbItem';
+import React from "react";
+import BreadcrumbItem from "./BreadcrumbItem";
 
 interface BreadcrumbsTrailProps {
-  items: Array<{ 
-    href: string; 
-    text: string 
+  items: Array<{
+    href: string;
+    text: string;
   }>;
 }
 

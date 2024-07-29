@@ -1,6 +1,6 @@
-import React from 'react';
-import ReviewList from './ReviewList';
-import ViewAllButton from './ViewAllButton';
+import React from "react";
+import ReviewList from "./ReviewList";
+import ViewAllButton from "./ViewAllButton";
 
 const ReviewSection: React.FC = () => {
   return (

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface ProductDetailsProps {
   productName: string;
@@ -11,7 +11,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   productName,
   productType,
   price,
-  stock
+  stock,
 }) => {
   return (
     <div className="flex flex-col pt-1.5 w-1/5 max-md:mt-10">

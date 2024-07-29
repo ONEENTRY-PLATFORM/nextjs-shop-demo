@@ -1,7 +1,7 @@
-import React from 'react';
-import FormInput from './inputs/FormInput';
-import FormSubmitButton from './inputs/FormSubmitButton';
-import ClosePopup from '../layout/popup/ClosePopup';
+import React from "react";
+import FormInput from "./inputs/FormInput";
+import FormSubmitButton from "./inputs/FormSubmitButton";
+import ClosePopup from "../layout/popup/ClosePopup";
 
 const PaymentForm: React.FC = () => {
   return (
@@ -10,9 +10,7 @@ const PaymentForm: React.FC = () => {
         <ClosePopup />
       </header>
       <section className="flex flex-col w-full min-h-[calc(100%_-_110px)] max-md:px-5 max-md:mt-10 max-md:max-w-full">
-        <form
-          className="flex flex-col gap-4 min-h-full text-xl leading-5"
-        >
+        <form className="flex flex-col gap-4 min-h-full text-xl leading-5">
           <img
             loading="lazy"
             src=""
@@ -20,43 +18,39 @@ const PaymentForm: React.FC = () => {
             className="self-center mb-12 w-full aspect-[1.61] max-w-[375px] max-md:mt-10"
           />
           <div className="box-border flex relative flex-col shrink-0 gap-5 mb-16">
-            <FormInput 
-              type='text'
-              label="Card holder name" 
-              placeholder="ONEENTRY" 
-              name="cardHolderName" 
+            <FormInput
+              type="text"
+              label="Card holder name"
+              placeholder="ONEENTRY"
+              name="cardHolderName"
               required={true}
             />
-            <FormInput 
-              type='text'
-              label="Card number" 
-              placeholder="2300 0000 0000 0000" 
-              name="cardNumber" 
+            <FormInput
+              type="text"
+              label="Card number"
+              placeholder="2300 0000 0000 0000"
+              name="cardNumber"
               required={true}
             />
             <div className="box-border flex relative flex-row shrink-0 justify-between">
-              <FormInput 
-                type='text'
-                label="MM/YY" 
-                placeholder="09/32" 
-                name="expiryDate" 
+              <FormInput
+                type="text"
+                label="MM/YY"
+                placeholder="09/32"
+                name="expiryDate"
                 required={true}
               />
-              <FormInput 
-                type='text'
-                label="CVC" 
-                placeholder="xxx" 
-                name="cvc" 
+              <FormInput
+                type="text"
+                label="CVC"
+                placeholder="xxx"
+                name="cvc"
                 required={true}
               />
             </div>
           </div>
 
-          <FormSubmitButton 
-            title='' 
-            class='' 
-            icon='CH' 
-          />
+          <FormSubmitButton title="" class="" icon="CH" />
         </form>
       </section>
     </main>

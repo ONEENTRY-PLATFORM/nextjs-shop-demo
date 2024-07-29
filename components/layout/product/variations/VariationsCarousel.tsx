@@ -1,25 +1,24 @@
-import React from 'react';
-import CarouselItem from './CarouselItem';
-import NavigationButton from './NavigationButton';
-
+import React from "react";
+import CarouselItem from "./CarouselItem";
+import NavigationButton from "./NavigationButton";
 
 const items = [
   {
-    title: 'Red',
-    imageSrc: ''
-  }, 
+    title: "Red",
+    imageSrc: "./images/catalog-img-4.svg",
+  },
   {
-    title: 'Blue',
-    imageSrc: ''
-  }, 
+    title: "Blue",
+    imageSrc: "./images/catalog-img-4.svg",
+  },
   {
-    title: 'Green',
-    imageSrc: ''
-  }, 
+    title: "Green",
+    imageSrc: "./images/catalog-img-4.svg",
+  },
   {
-    title: 'Yellow',
-    imageSrc: ''
-  }
+    title: "Yellow",
+    imageSrc: "./images/catalog-img-4.svg",
+  },
 ];
 
 const VariationsCarousel: React.FC = () => {
@@ -28,11 +27,7 @@ const VariationsCarousel: React.FC = () => {
       <NavigationButton direction="left" />
       <div className="flex gap-1.5 self-stretch">
         {items.map((item, idx) => (
-          <CarouselItem 
-            key={idx} 
-            title={item.title} 
-            imageSrc={item.imageSrc} 
-          />
+          <CarouselItem key={idx} title={item.title} imageSrc={item.imageSrc} />
         ))}
       </div>
       <NavigationButton direction="right" />

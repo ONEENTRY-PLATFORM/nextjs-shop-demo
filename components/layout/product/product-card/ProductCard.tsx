@@ -1,13 +1,13 @@
-import React from 'react';
-import IconButton from './IconButton';
-import PriceDisplay from './PriceDisplay';
-import AddToCartButton from './AddToCartButton';
+import React from "react";
+import IconButton from "./IconButton";
+import PriceDisplay from "./PriceDisplay";
+import AddToCartButton from "./AddToCartButton";
 
 interface ProductCardProps {
   product: {
     imageUrl: string;
     setName: string;
-    itemCount: string;
+    itemCount: number;
     itemNames: string;
     currentPrice: number;
     originalPrice: number;
@@ -21,7 +21,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     itemCount = 2,
     itemNames = "itemNames",
     currentPrice,
-    originalPrice
+    originalPrice,
   } = product;
 
   return (
@@ -30,11 +30,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <IconButton iconSrc="./icons/heart.svg" />
         <IconButton iconSrc="./icons/heart.svg" />
       </header>
-      <img 
+
+      <img
         src={imageUrl}
-        alt={`Product image for ${setName}`} 
-        className="shrink-0 mt-7 w-40 h-40 bg-zinc-300" 
+        alt={`Product image for ${setName}`}
+        className="shrink-0 mt-7 w-40 h-40 bg-zinc-300 object-cover"
       />
+
       <section className="flex flex-col gap-2.5 mt-12 mb-5 max-w-full w-[153px]">
         <h2 className="text-sm leading-4 text-center text-neutral-600">
           {setName} ({itemCount} items)
@@ -42,9 +44,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <p className="text-sm leading-4 text-center text-neutral-600">
           {itemNames}
         </p>
-        <PriceDisplay 
-          currentPrice={currentPrice} 
-          originalPrice={originalPrice} 
+        <PriceDisplay
+          currentPrice={currentPrice}
+          originalPrice={originalPrice}
         />
         <AddToCartButton />
       </section>
