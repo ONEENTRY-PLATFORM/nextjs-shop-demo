@@ -6,13 +6,12 @@ interface ProductImageProps {
 
 const ProductImage: React.FC<ProductImageProps> = ({ imageSrc }) => {
   return (
-    <div className="flex flex-col grow w-[30%] max-md:w-full max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
+    <div className="shrink-0 bg-white rounded-xl h-[130px] w-[110px]" role="img" aria-label="Product image">
       <img
         src={imageSrc}
         alt="Product"
-        className="shrink-0 mb-10 bg-slate-300 h-[280px] max-md:mb-8 max-sm:mb-8 w-full"
+        className="shrink-0 mb-10 bg-slate-300 h-[280px] max-md:mb-8 max-sm:mb-8 max-sm:w-full"
       />
-      <div className="shrink-0 bg-slate-300 h-[30px]" />
     </div>
   );
 };

@@ -23,8 +23,8 @@ const ProductPage: React.FC<ProductPageProps> = ({
   imageSrc
 }) => {
   return (
-    <main className="box-border flex relative flex-col shrink-0 p-5 w-screen min-h-[100px] ml-[calc(50%_-_50vw)]" style={{ maxWidth: 1200 }}>
-      <section className="box-border flex relative flex-col grow shrink-0 self-stretch p-5 mx-auto w-full max-w-[1200px] min-h-[100px]">
+    <main className="box-border flex relative flex-col shrink-0 p-5 w-screen" style={{ maxWidth: 1200 }}>
+      <section className="box-border flex relative flex-col grow shrink-0 self-stretch p-5 mx-auto w-full max-w-[1240px]">
         <div className="flex flex-row gap-10 mb-16 max-md:pr-5 max-md:max-w-full">
           <ProductImage imageSrc={imageSrc} />
           <ProductDescription description={description} />
