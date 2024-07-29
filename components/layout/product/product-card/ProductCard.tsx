@@ -4,22 +4,26 @@ import PriceDisplay from './PriceDisplay';
 import AddToCartButton from './AddToCartButton';
 
 interface ProductCardProps {
-  imageUrl: string;
-  setName: string;
-  itemCount: number;
-  itemNames: string;
-  currentPrice: number;
-  originalPrice: number;
+  product: {
+    imageUrl: string;
+    setName: string;
+    itemCount: string;
+    itemNames: string;
+    currentPrice: number;
+    originalPrice: number;
+  };
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  imageUrl,
-  setName,
-  itemCount = 2,
-  itemNames = "itemNames",
-  currentPrice,
-  originalPrice
-}) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const {
+    imageUrl,
+    setName,
+    itemCount = 2,
+    itemNames = "itemNames",
+    currentPrice,
+    originalPrice
+  } = product;
+
   return (
     <article className="flex flex-col items-center p-4 w-full rounded-3xl bg-neutral-100">
       <header className="flex gap-5 justify-between self-stretch">
@@ -27,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <IconButton iconSrc="./icons/heart.svg" />
       </header>
       <img 
-        src="./images/catalog-img-4.svg"
+        src={imageUrl}
         alt={`Product image for ${setName}`} 
         className="shrink-0 mt-7 w-40 h-40 bg-zinc-300" 
       />
