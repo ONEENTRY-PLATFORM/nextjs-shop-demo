@@ -1,4 +1,5 @@
 import React from 'react';
+import ProductCard from './product-card/ProductCard';
 
 const ProductFeatures: React.FC = () => {
   return (
@@ -10,10 +11,19 @@ const ProductFeatures: React.FC = () => {
 
       <div className="flex justify-between max-md:flex-wrap">
         {[1, 2, 3, 4, 5].map((feature) => (
-          <div key={feature} className="box-border flex relative flex-col shrink-0 w-[19%]" />
+          <div key={feature} className="box-border flex relative flex-col shrink-0 w-[19%]">
+            <ProductCard 
+              imageUrl={""} 
+              setName={"Set Name"} 
+              itemCount={1} 
+              itemNames={""} 
+              currentPrice={2500} 
+              originalPrice={3200} 
+            />
+          </div>
         ))}
       </div>
-      
+
     </section>
   );
 };

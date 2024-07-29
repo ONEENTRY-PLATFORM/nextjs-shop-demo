@@ -25,13 +25,13 @@ const GroupCard: React.FC<GroupCardProps> = ({ title, currentPrice, originalPric
           <ApplyButton />
         </div>
 
-        <ProductImage imageSrc='' />
+        <ProductImage imageSrc="./images/catalog-img-4.svg" />
 
         <div className="shrink-0 my-auto w-3 aspect-square fill-neutral-600">
           +
         </div>
 
-        <ProductImage imageSrc='' />
+        <ProductImage imageSrc="./images/catalog-img-4.svg" />
 
       </div>
     </article>

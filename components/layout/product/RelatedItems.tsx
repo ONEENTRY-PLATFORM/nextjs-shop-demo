@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductCard from './product-card/ProductCard';
+import GroupCard from './group-card/GroupCard';
 
 const RelatedItems: React.FC = () => {
   return (
@@ -10,11 +10,8 @@ const RelatedItems: React.FC = () => {
       <div className="flex flex-row gap-2.5 justify-between max-md:max-w-full">
         {[1, 2, 3].map((item) => (
           <div key={item} className="box-border flex relative flex-col shrink-0 w-[32.5%]" >
-            <ProductCard 
-              imageUrl={""} 
-              setName={"Set Name"} 
-              itemCount={1} 
-              itemNames={""} 
+            <GroupCard 
+              title={"Set Name"} 
               currentPrice={2500} 
               originalPrice={3200} 
             />

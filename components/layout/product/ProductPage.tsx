@@ -19,26 +19,24 @@ const ProductPage: React.FC<ProductPageProps> = ({
   productType,
   price,
   stock,
-  description,
+  description = "Text description",
   imageSrc
 }) => {
   return (
-    <main className="box-border flex relative flex-col shrink-0 p-5 w-screen" style={{ maxWidth: 1200 }}>
-      <section className="box-border flex relative flex-col grow shrink-0 self-stretch p-5 mx-auto w-full max-w-[1240px]">
-        <div className="flex flex-row gap-10 mb-16 max-md:pr-5 max-md:max-w-full">
-          <ProductImage imageSrc={imageSrc} />
-          <ProductDescription description={description} />
-          <ProductDetails
-            productName={productName}
-            productType={productType}
-            price={price}
-            stock={stock}
-          />
-        </div>
-        <RelatedItems />
-        <ProductFeatures />
-      </section>
-    </main>
+    <section className="box-border flex relative flex-col grow shrink-0 self-stretch mx-auto w-full max-w-[1240px]">
+      <div className="flex flex-row gap-10 mb-16 max-md:pr-5 max-md:max-w-full">
+        <ProductImage imageSrc={imageSrc} />
+        <ProductDescription description={description} />
+        <ProductDetails
+          productName={productName}
+          productType={productType}
+          price={price}
+          stock={stock}
+        />
+      </div>
+      <RelatedItems />
+      <ProductFeatures />
+    </section>
   );
 };
 

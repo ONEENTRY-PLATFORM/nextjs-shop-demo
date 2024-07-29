@@ -15,19 +15,19 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({
   imageUrl,
   setName,
-  itemCount,
-  itemNames,
+  itemCount = 2,
+  itemNames = "itemNames",
   currentPrice,
   originalPrice
 }) => {
   return (
     <article className="flex flex-col items-center p-4 w-full rounded-3xl bg-neutral-100">
       <header className="flex gap-5 justify-between self-stretch">
-        <IconButton iconSrc="" />
-        <IconButton iconSrc="" />
+        <IconButton iconSrc="./icons/heart.svg" />
+        <IconButton iconSrc="./icons/heart.svg" />
       </header>
       <img 
-        src={imageUrl} 
+        src="./images/catalog-img-4.svg"
         alt={`Product image for ${setName}`} 
         className="shrink-0 mt-7 w-40 h-40 bg-zinc-300" 
       />

@@ -10,7 +10,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ imageSrc }) => {
       <img
         src={imageSrc}
         alt="Product"
-        className="shrink-0 mb-10 bg-slate-300 h-[280px] max-md:mb-8 max-sm:mb-8 max-sm:w-full"
+        className="shrink-0 mb-10 bg-slate-300 h-full max-md:mb-8 max-sm:mb-8 max-sm:w-full"
       />
     </div>
   );
