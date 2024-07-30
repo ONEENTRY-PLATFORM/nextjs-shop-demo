@@ -1,9 +1,9 @@
 import React from "react";
-import ProductImage from "./ProductImage";
-import ProductDescription from "./ProductDescription";
-import ProductDetails from "./ProductDetails";
-import RelatedItems from "./RelatedItems";
-import ProductFeatures from "./ProductFeatures";
+import ProductImage from "../product/ProductImage";
+import ProductDescription from "../product/ProductDescription";
+import ProductDetails from "../product/ProductDetails";
+import RelatedItems from "../product/RelatedItems";
+import ProductFeatures from "../product/ProductFeatures";
 
 interface ProductPageProps {
   productName: string;

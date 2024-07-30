@@ -5,16 +5,16 @@ interface NavigationButtonProps {
 }
 
 const NavigationButton: React.FC<NavigationButtonProps> = ({ direction }) => {
-  const imageSrc = direction === "left" ? "L" : "R";
+  const imageSrc = direction === "left" ? "./icons/arrow-left.svg" : "./icons/arrow-right.svg";
   const altText = `Navigate ${direction}`;
 
   return (
-    <button className="border border-none border-neutral-200 rounded-full">
+    <button className="flex border border-neutral-200 w-8 aspect-square rounded-full justify-center items-center">
       <img
         loading="lazy"
         src={imageSrc}
         alt={altText}
-        className="shrink-0 self-stretch my-auto w-7 aspect-square"
+        className="shrink-0 self-stretch my-auto w-4 aspect-square"
       />
     </button>
   );

@@ -1,10 +1,13 @@
 import Image from "next/image";
-import ProductPage from "@/components/layout/product/ProductPage";
+import ProductPage from "../components/layout/pages/ProductPage";
+import CatalogPage from "@/components/layout/pages/CatalogPage";
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-between px-5 py-8">
-      <div className="z-10 w-full max-w-[1240px] items-center justify-between lg:flex">
+    <main className="flex flex-col items-center justify-between px-5 py-8 gap-16">
+      <CatalogPage />
+
+      <div className="z-10 flex-col w-full max-w-[1240px] items-center justify-between lg:flex">
         <ProductPage 
           productName={"Test"} 
           productType={"productType"} 
