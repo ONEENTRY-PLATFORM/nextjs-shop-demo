@@ -1,3 +1,5 @@
+"use client"
+
 import {useContext, useEffect, useState} from 'react';
 import {LanguageContext} from '../../providers/LanguageContext';
 import {api} from '../api/api';
@@ -22,7 +24,6 @@ export const useGetBlockByMarker = ({marker}: UseGetBlockByMarkerProps) => {
             marker,
             activeLanguage,
           );
-          //logJSON(result);
           setBlock(result);
         } catch (e) {}
         setLoading(false);

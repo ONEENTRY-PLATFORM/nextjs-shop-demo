@@ -1,3 +1,4 @@
+"use client";
 import {useContext, useEffect, useState} from 'react';
 import {IMenusEntity} from 'oneentry/dist/menus/menusInterfaces';
 import {LanguageContext} from '../../providers/LanguageContext';

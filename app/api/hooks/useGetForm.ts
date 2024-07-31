@@ -1,3 +1,4 @@
+"use client";
 import {useContext, useEffect, useRef, useState} from 'react';
 import {IFormsEntity} from 'oneentry/dist/forms/formsInterfaces';
 import {LanguageContext} from '../../providers/LanguageContext';

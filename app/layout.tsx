@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import {Provider} from 'react-redux';
+import {setupStore} from './store/store';
+
 import Header from '../components/layout/Header';
 import NavigationMenu from '../components/layout/navbar/NavigationMenu';
 import Footer from '../components/layout/Footer';
 import Breadcrumbs from '../components/layout/Breadcrumbs';
+
+import { Inter } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -38,14 +42,17 @@ const navigationItems = [
 ];
 
 export default function RootLayout({ children }: Readonly<{children: React.ReactNode;}>) {
+
+  // const store = setupStore();
+  
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        <NavigationMenu items={navigationItems} />
-        <Breadcrumbs />
-        {children}
-        <Footer />
+          <Header />
+          <NavigationMenu items={navigationItems} />
+          <Breadcrumbs />
+          {children}
+          <Footer />
       </body>
     </html>
   );

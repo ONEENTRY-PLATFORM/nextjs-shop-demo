@@ -1,3 +1,4 @@
+"use client";
 import {useEffect, useState} from 'react';
 import {IPageConfig} from 'oneentry/dist/pages/pagesInterfaces';
 import {api} from '../api/api';

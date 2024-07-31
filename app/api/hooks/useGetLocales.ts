@@ -1,3 +1,4 @@
+"use client";
 import {useEffect, useState} from 'react';
 import {ILocalEntity} from 'oneentry/dist/locales/localesInterfaces';
 import {api} from '../api/api';

@@ -1,3 +1,4 @@
+"use client";
 import {useContext, useEffect, useState} from 'react';
 import {IProductsEntity} from 'oneentry/dist/products/productsInterfaces';
 import {LanguageContext} from '../../providers/LanguageContext';

@@ -1,3 +1,4 @@
+"use client";
 type TemplateProps = {};
 
 export const Template = ({}: TemplateProps) => {

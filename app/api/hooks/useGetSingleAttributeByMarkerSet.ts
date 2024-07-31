@@ -1,3 +1,4 @@
+"use client";
 import {useContext, useEffect, useState} from 'react';
 import {api} from '../api/api';
 import {IAttributesSetsEntity} from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';

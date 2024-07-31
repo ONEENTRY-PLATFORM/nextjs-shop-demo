@@ -1,3 +1,4 @@
+"use client";
 import {useState} from 'react';
 import {IFormsPost} from 'oneentry/dist/formsData/formsDataInterfaces';
 import {api} from '../api/api';

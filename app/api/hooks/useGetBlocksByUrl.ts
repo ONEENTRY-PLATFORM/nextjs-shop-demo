@@ -1,3 +1,4 @@
+"use client";
 import {useContext, useEffect, useState} from 'react';
 import {IPositionBlock} from 'oneentry/dist/pages/pagesInterfaces';
 import {LanguageContext} from '../../providers/LanguageContext';

@@ -1,27 +1,28 @@
+"use client";
+
 import {combineReducers, configureStore} from '@reduxjs/toolkit';
 import cartReducer from './reducers/CartSlice';
 import favoritesReducer from './reducers/FavoritesSlice';
 import filterReducer from './reducers/FilterSlice';
 import systemContentReducer from './reducers/SystemContentSlice';
-import SignUpFieldsReducer from '../modules/forms/reducers/signUpFieldsReducer';
+//import SignUpFieldsReducer from '../modules/forms/reducers/signUpFieldsReducer';
 import {RTKApi} from '../api';
-import {orderReducer} from '../modules/orders';
+//import {orderReducer} from '../modules/orders';
 
 const rootReducer = combineReducers({
   cartReducer,
   favoritesReducer,
-  orderReducer,
+  //orderReducer,
   filterReducer,
   systemContentReducer,
-  SignUpFieldsReducer,
+  //SignUpFieldsReducer,
   [RTKApi.reducerPath]: RTKApi.reducer,
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    middleware: getDefaultMiddleware =>
-      getDefaultMiddleware().concat(RTKApi.middleware),
+    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(RTKApi.middleware),
   });
 };
 

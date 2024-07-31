@@ -1,3 +1,4 @@
+"use client";
 import {useContext, useEffect, useState} from 'react';
 import {IProductStatusEntity} from 'oneentry/dist/product-statuses/productStatusesInterfaces';
 import {api} from '../api/api';
