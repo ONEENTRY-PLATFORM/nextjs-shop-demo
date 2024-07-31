@@ -1,4 +1,4 @@
-import ProductPage from "../components/layout/pages/ProductPage";
+import ProductPage from "@/components/layout/pages/ProductPage";
 import CatalogPage from "@/components/layout/pages/CatalogPage";
 
 export default function Home() {
