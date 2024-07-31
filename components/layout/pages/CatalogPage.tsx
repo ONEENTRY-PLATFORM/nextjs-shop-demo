@@ -1,5 +1,5 @@
 import React from 'react';
-import CardGrid from '../catalog/CardGrid';
+import CatalogGrid from '../catalog/CatalogGrid';
 
 const cards = [
   { 
@@ -51,7 +51,7 @@ const CatalogPage: React.FC = () => {
   return (
     <section className="box-border flex relative flex-col grow shrink-0 self-stretch mx-auto w-full max-w-[1240px]">
       <div className="flex flex-col gap-5 items-center w-full bg-white">
-        <CardGrid cards={cards} />
+        <CatalogGrid cards={cards} />
       </div>
     </section>
   );

@@ -16,7 +16,7 @@ const infoLinks: LinkItem[] = [
 
 const Information: React.FC = () => {
   return (
-    <div className="flex flex-col ml-5 w-[21%] max-md:ml-0 max-md:w-full">
+    <div className="flex flex-col w-[21%] max-md:w-full">
       <nav className="flex flex-col text-neutral-600">
         <h2 className="mb-5 text-xl font-bold">Information</h2>
         <ul className="flex flex-col gap-1.5 text-sm font-semibold">

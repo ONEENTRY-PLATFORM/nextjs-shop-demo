@@ -14,7 +14,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   stock,
 }) => {
   return (
-    <div className="flex flex-col pt-1.5 w-1/5 max-md:mt-10">
+    <div className="flex flex-col pt-1.5 w-1/5 max-md:mt-10 max-md:w-full">
       <h2 className="text-xl leading-6 text-neutral-600">{productName}</h2>
       <p className="mt-3 text-sm leading-4 text-neutral-600">{productType}</p>
       <p className="mt-4 mb-5 text-xl font-bold leading-8 text-left text-neutral-600">

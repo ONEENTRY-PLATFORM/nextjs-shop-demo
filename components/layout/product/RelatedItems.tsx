@@ -1,27 +1,30 @@
 import React from "react";
 import ProductCard from "./product-card/ProductCard";
 
-const product = {
-  imageUrl: "./images/catalog-img-4.svg",
-  setName: "Set Name",
-  itemCount: 1,
-  itemNames: "",
-  currentPrice: 2500,
-  originalPrice: 3200,
-};
+interface RelatedItemsProps {
+  title: string;
+  relatedItems: Array<{
+    imageUrl: string;
+    setName: string;
+    itemCount: number;
+    itemNames: string;
+    currentPrice: number;
+    originalPrice: number;
+  }>;
+}
 
-const RelatedItems: React.FC = () => {
+const RelatedItems: React.FC<RelatedItemsProps> = ({ title, relatedItems }) => {
   return (
     <section className="flex flex-col max-md:max-w-full">
       <h3 className="mb-5 text-base leading-5 uppercase text-neutral-600 max-md:max-w-full">
-        Features
+        {title}
       </h3>
 
       <div className="flex justify-between max-md:flex-wrap">
-        {[1, 2, 3, 4, 5].map((feature) => (
+        {relatedItems.map((product, i) => (
           <div
-            key={feature}
-            className="box-border flex relative flex-col shrink-0 w-[19%]"
+            key={i}
+            className="box-border flex relative flex-col shrink-0 w-[19%] max-md:w-full max-md:gap-3"
           >
             <ProductCard product={product} />
           </div>

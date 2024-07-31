@@ -5,6 +5,76 @@ import ProductDetails from "../product/ProductDetails";
 import RelatedItems from "../product/RelatedItems";
 import ProductsGroup from "../product/ProductsGroup";
 
+const relatedItems = [
+  {
+    imageUrl: "./images/catalog-img-4.svg",
+    setName: "Set Name",
+    itemCount: 1,
+    itemNames: "",
+    currentPrice: 2500,
+    originalPrice: 3200,
+  },
+  {
+    imageUrl: "./images/catalog-img-4.svg",
+    setName: "Set Name",
+    itemCount: 1,
+    itemNames: "",
+    currentPrice: 2500,
+    originalPrice: 3200,
+  },
+  {
+    imageUrl: "./images/catalog-img-4.svg",
+    setName: "Set Name",
+    itemCount: 1,
+    itemNames: "",
+    currentPrice: 2500,
+    originalPrice: 3200,
+  },
+  {
+    imageUrl: "./images/catalog-img-4.svg",
+    setName: "Set Name",
+    itemCount: 1,
+    itemNames: "",
+    currentPrice: 2500,
+    originalPrice: 3200,
+  },
+  {
+    imageUrl: "./images/catalog-img-4.svg",
+    setName: "Set Name",
+    itemCount: 1,
+    itemNames: "",
+    currentPrice: 2500,
+    originalPrice: 3200,
+  }
+];
+
+const productsGroup = [
+  {
+    imageUrl: "./images/catalog-img-4.svg",
+    setName: "Set Name",
+    itemCount: 1,
+    itemNames: "",
+    currentPrice: 2500,
+    originalPrice: 3200,
+  },
+  {
+    imageUrl: "./images/catalog-img-4.svg",
+    setName: "Set Name",
+    itemCount: 1,
+    itemNames: "",
+    currentPrice: 2500,
+    originalPrice: 3200,
+  },
+  {
+    imageUrl: "./images/catalog-img-4.svg",
+    setName: "Set Name",
+    itemCount: 1,
+    itemNames: "",
+    currentPrice: 2500,
+    originalPrice: 3200,
+  },
+];
+
 interface ProductPageProps {
   productName: string;
   productType: string;
@@ -34,8 +104,8 @@ const ProductPage: React.FC<ProductPageProps> = ({
           stock={stock}
         />
       </div>
-      <ProductsGroup />
-      <RelatedItems />
+      <ProductsGroup title="These items are cheaper together" productsGroup={productsGroup} />
+      <RelatedItems title="Features" relatedItems={relatedItems} />
     </section>
   );
 };

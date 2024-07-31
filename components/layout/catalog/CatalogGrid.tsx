@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "./Card";
+import CatalogCard from "./CatalogCard";
 
 interface CardData {
   title: string;
@@ -9,28 +9,28 @@ interface CardData {
   height?: string;
 }
 
-interface CardGridProps {
+interface CatalogGridProps {
   cards: CardData[];
 }
 
-const CardGrid: React.FC<CardGridProps> = ({ cards }) => (
+const CatalogGrid: React.FC<CatalogGridProps> = ({ cards }) => (
   <div className="flex gap-5 max-md:flex-col flex-wrap justify-between">
     {cards.map((card, index) => (
       <div
         key={index}
-        className={`flex flex-col ${card.width} max-md:ml-0 max-md:w-full`}
+        className={`flex flex-col ${card.width} max-md:w-full`}
       >
-        <div className="flex flex-col grow justify-center text-2xl font-bold text-white relative">
-          <Card
+        <a href="#" className="flex flex-col grow justify-center text-2xl font-bold text-white relative">
+          <CatalogCard
             title={card.title}
             backgroundColor={card.backgroundColor}
             imageSrc={card.imageSrc}
             height={card.height}
           />
-        </div>
+        </a>
       </div>
     ))}
   </div>
 );
 
-export default CardGrid;
+export default CatalogGrid;
