@@ -20,24 +20,24 @@ export const metadata: Metadata = {
 const navigationItems = [
   { 
     label: 'Category', 
-    href: '#', 
+    href: '/', 
     hasDropdown: true 
   },
   { 
     label: 'Promotion', 
-    href: '#' 
+    href: '/promotion' 
   },
   { 
     label: 'New arrival', 
-    href: '#' 
+    href: '/arrival' 
   },
   { 
     label: 'BEST SELLERS', 
-    href: '#' 
+    href: '/best-sellers' 
   },
   { 
     label: 'OFFER OF TODAY', 
-    href: '#' 
+    href: '/offers' 
   },
 ];
 

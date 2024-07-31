@@ -6,19 +6,38 @@ interface LinkItem {
 }
 
 const infoLinks: LinkItem[] = [
-  { text: "Book online", href: "#" },
-  { text: "Delivery", href: "#" },
-  { text: "Offers & events", href: "#" },
-  { text: "Purchase a gift card", href: "#" },
-  { text: "Pricing & package", href: "#" },
-  { text: "Payments", href: "#" },
+  { 
+    text: "Book online", 
+    href: "/book" },
+  { 
+    text: "Delivery", 
+    href: "/delivery" 
+  },
+  { 
+    text: "Offers & events", 
+    href: "/offers" 
+  },
+  { 
+    text: "Purchase a gift card", 
+    href: "/gifts" 
+  },
+  { 
+    text: "Pricing & package", 
+    href: "/package" 
+  },
+  { 
+    text: "Payments", 
+    href: "/payments" 
+  },
 ];
 
 const Information: React.FC = () => {
   return (
     <div className="flex flex-col w-[21%] max-md:w-full">
       <nav className="flex flex-col text-neutral-600">
-        <h2 className="mb-5 text-xl font-bold">Information</h2>
+        <h2 className="mb-5 text-xl font-bold">
+          Information
+        </h2>
         <ul className="flex flex-col gap-1.5 text-sm font-semibold">
           {infoLinks.map((link, index) => (
             <li key={index} className="box-border relative">
