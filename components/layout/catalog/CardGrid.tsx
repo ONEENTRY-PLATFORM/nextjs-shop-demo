@@ -20,7 +20,7 @@ const CardGrid: React.FC<CardGridProps> = ({ cards }) => (
         key={index}
         className={`flex flex-col ${card.width} max-md:ml-0 max-md:w-full`}
       >
-        <div className="flex flex-col grow justify-center text-2xl font-bold text-white max-md:mt-5 relative">
+        <div className="flex flex-col grow justify-center text-2xl font-bold text-white relative">
           <Card
             title={card.title}
             backgroundColor={card.backgroundColor}

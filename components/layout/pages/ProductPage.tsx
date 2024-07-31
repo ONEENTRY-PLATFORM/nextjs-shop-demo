@@ -3,7 +3,7 @@ import ProductImage from "../product/ProductImage";
 import ProductDescription from "../product/ProductDescription";
 import ProductDetails from "../product/ProductDetails";
 import RelatedItems from "../product/RelatedItems";
-import ProductFeatures from "../product/ProductFeatures";
+import ProductsGroup from "../product/ProductsGroup";
 
 interface ProductPageProps {
   productName: string;
@@ -24,7 +24,7 @@ const ProductPage: React.FC<ProductPageProps> = ({
 }) => {
   return (
     <section className="box-border flex relative flex-col grow shrink-0 self-stretch mx-auto w-full max-w-[1240px]">
-      <div className="flex flex-row gap-10 mb-16 max-md:pr-5 max-md:max-w-full">
+      <div className="flex flex-row gap-10 mb-16 max-md:max-w-full max-md:flex-wrap">
         <ProductImage imageSrc={imageSrc} />
         <ProductDescription description={description} />
         <ProductDetails
@@ -34,8 +34,8 @@ const ProductPage: React.FC<ProductPageProps> = ({
           stock={stock}
         />
       </div>
+      <ProductsGroup />
       <RelatedItems />
-      <ProductFeatures />
     </section>
   );
 };

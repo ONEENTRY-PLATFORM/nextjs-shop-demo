@@ -1,28 +1,34 @@
 import React from "react";
-import GroupCard from "./group-card/GroupCard";
+import ProductCard from "./product-card/ProductCard";
+
+const product = {
+  imageUrl: "./images/catalog-img-4.svg",
+  setName: "Set Name",
+  itemCount: 1,
+  itemNames: "",
+  currentPrice: 2500,
+  originalPrice: 3200,
+};
 
 const RelatedItems: React.FC = () => {
   return (
-    <section className="flex flex-col mb-8 max-md:max-w-full">
+    <section className="flex flex-col max-md:max-w-full">
       <h3 className="mb-5 text-base leading-5 uppercase text-neutral-600 max-md:max-w-full">
-        These items are cheaper together
+        Features
       </h3>
-      <div className="flex flex-row gap-2.5 justify-between max-md:max-w-full">
-        {[1, 2, 3].map((item) => (
+
+      <div className="flex justify-between max-md:flex-wrap">
+        {[1, 2, 3, 4, 5].map((feature) => (
           <div
-            key={item}
-            className="box-border flex relative flex-col shrink-0 w-[32.5%]"
+            key={feature}
+            className="box-border flex relative flex-col shrink-0 w-[19%]"
           >
-            <GroupCard
-              title={"Set Name"}
-              currentPrice={2500}
-              originalPrice={3200}
-            />
+            <ProductCard product={product} />
           </div>
         ))}
       </div>
     </section>
-  );
+  );  
 };
 
 export default RelatedItems;

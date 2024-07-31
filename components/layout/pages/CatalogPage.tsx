@@ -1,5 +1,5 @@
 import React from 'react';
-import CardGrid from './CardGrid';
+import CardGrid from '../catalog/CardGrid';
 
 const cards = [
   { 
