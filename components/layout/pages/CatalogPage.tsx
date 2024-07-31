@@ -7,7 +7,8 @@ const cards = [
     backgroundColor: 'bg-amber-600', 
     width: 'w-full',
     height: 'h-[175px]',
-    imageSrc: './images/catalog-img-1.svg'
+    imageSrc: './images/catalog-img-1.svg',
+    link: ''
   },
   { 
     title: 'BEST SELLER', 
@@ -15,6 +16,7 @@ const cards = [
     width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
     height: 'h-[260px]',
     imageSrc: './images/catalog-img-2.svg',
+    link: ''
   },
   { 
     title: 'PROMOTION', 
@@ -22,6 +24,7 @@ const cards = [
     width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
     height: 'h-[260px]',
     imageSrc: './images/catalog-img-3.svg',
+    link: ''
   },
   { 
     title: 'OFFER OF TODAY', 
@@ -29,6 +32,7 @@ const cards = [
     width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
     height: 'h-[260px]',
     imageSrc: './images/catalog-img-4.svg',
+    link: ''
   },
   { 
     title: 'NEW\nARRIVALS', 
@@ -36,6 +40,7 @@ const cards = [
     width: 'w-full md:w-[calc(_50%_-_0.65rem)]',
     height: 'h-[260px]',
     imageSrc: './images/catalog-img-5.svg',
+    link: ''
   },
   {
     title: 'Join OUR COMMUNITY',
@@ -43,6 +48,7 @@ const cards = [
     width: 'w-full lg:w-[calc(_50%_-_0.65rem)]',
     height: 'h-[260px]',
     imageSrc: './images/catalog-img-6.svg',
+    link: ''
   },
 ];
 

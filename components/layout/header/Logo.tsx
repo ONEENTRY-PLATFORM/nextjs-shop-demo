@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Logo: React.FC = () => {
   return (
-    <Link href="/" prefetch={true} className="relative w-[300px] h-[80px]">
+    <Link href="/" prefetch={true} className="relative w-full max-w-[300px] h-[80px]">
       <Image
         className="object-contain"
         fill

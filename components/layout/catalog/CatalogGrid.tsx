@@ -7,6 +7,7 @@ interface CardData {
   imageSrc: string;
   width: string;
   height?: string;
+  link: string;
 }
 
 interface CatalogGridProps {
@@ -14,20 +15,13 @@ interface CatalogGridProps {
 }
 
 const CatalogGrid: React.FC<CatalogGridProps> = ({ cards }) => (
-  <div className="flex gap-5 max-md:flex-col flex-wrap justify-between">
+  <div className="flex gap-5 max-md:flex-col flex-wrap justify-between w-full">
     {cards.map((card, index) => (
       <div
         key={index}
-        className={`flex flex-col ${card.width} max-md:w-full`}
+        className={`flex flex-col ${card.width}`}
       >
-        <a href="#" className="flex flex-col grow justify-center text-2xl font-bold text-white relative">
-          <CatalogCard
-            title={card.title}
-            backgroundColor={card.backgroundColor}
-            imageSrc={card.imageSrc}
-            height={card.height}
-          />
-        </a>
+          <CatalogCard cardData={card} />
       </div>
     ))}
   </div>

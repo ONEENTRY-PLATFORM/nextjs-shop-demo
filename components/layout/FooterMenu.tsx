@@ -10,7 +10,7 @@ interface FooterProps {
 const FooterMenu: React.FC<FooterProps> = ({ logoSrc }) => {
   return (
     <footer className="flex justify-center items-center px-5 py-10 w-full bg-gray-200 max-md:px-5 max-md:max-w-full">
-      <div className="flex flex-row gap-16 justify-between items-start max-w-full w-[1240px]">
+      <div className="flex flex-row gap-16 justify-between items-start max-w-full w-[1240px] md:w-full flex-wrap">
         <img
           loading="lazy"
           src={logoSrc}
