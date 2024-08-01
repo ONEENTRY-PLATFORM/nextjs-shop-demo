@@ -1,11 +1,8 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {api, reDefine} from '../api/index';
 import {useLazyGetMeQuery} from '../api';
 import {IUserEntity} from 'oneentry/dist/users/usersInterfaces';
 import {LanguageContext} from './LanguageContext';
-import {logJSON} from '../utils/logJSON';
-import EventEmitter from "react-native/Libraries/vendor/emitter/EventEmitter";
 
 type ContextProps = {
   isAuth: boolean;
@@ -37,7 +34,7 @@ export const AuthProvider = ({children}: Props) => {
   const {activeLanguage} = useContext(LanguageContext);
 
   const onInit = async () => {
-    const refresh = await AsyncStorage.getItem('refresh-token');
+    const refresh = localStorage.getItem('refreshToken');
 
     if (!refresh) {
       setIsAuth(false);
@@ -53,16 +50,14 @@ export const AuthProvider = ({children}: Props) => {
     trigger({})
       .then(async res => {
         if (res.error && !res.isLoading) {
-          await AsyncStorage.setItem('refresh-token', '');
+          localStorage.setItem('refreshToken', '');
           return setIsAuth(false);
         }
-        logJSON(res);
         setUser(res.data);
-        // await AsyncStorage.setItem('refresh-token', res);
         setIsAuth(true);
       })
       .catch(async e => {
-        await AsyncStorage.setItem('refresh-token', '');
+        localStorage.setItem('refreshToken', '');
         setIsAuth(false);
       });
   };
@@ -71,7 +66,6 @@ export const AuthProvider = ({children}: Props) => {
     setIsLoading(true);
     onInit().then(() => {});
     setIsLoading(false);
-    logJSON(isAuth);
   }, [refetch, activeLanguage]);
 
   useEffect(() => {
@@ -85,15 +79,15 @@ export const AuthProvider = ({children}: Props) => {
   useEffect(() => {
     if (isAuth) {
       trigger({})
-        .then(async res => {
+        .then(res => {
           if (res.error && !res.isLoading) {
-            await AsyncStorage.setItem('refresh-token', '');
+            localStorage.setItem('refreshToken', '')
             return setIsAuth(false);
           }
           setUser(res.data);
         })
-        .catch(async e => {
-          await AsyncStorage.setItem('refresh-token', '');
+        .catch(e => {
+          localStorage.setItem('refreshToken', '')
           setIsAuth(false);
         });
     }
