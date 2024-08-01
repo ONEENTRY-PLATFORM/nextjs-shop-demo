@@ -20,11 +20,11 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({ title, relatedItems }) => {
         {title}
       </h3>
 
-      <div className="flex justify-between max-md:flex-wrap">
+      <div className="flex max-lg:flex-wrap gap-4 ">
         {relatedItems.map((product, i) => (
           <div
             key={i}
-            className="box-border flex relative flex-col shrink-0 w-[19%] max-md:w-full max-md:gap-3"
+            className="box-border flex relative flex-col shrink-0 w-[calc(_20%_-_1rem_)] max-xl:w-[calc(_33.3333333%_-_1rem_)] max-md:w-[calc(_50%_-_1rem_)] max-sm:w-full"
           >
             <ProductCard product={product} />
           </div>
