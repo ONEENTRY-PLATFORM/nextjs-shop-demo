@@ -1,4 +1,4 @@
-import React from "react";
+import Image from 'next/image';
 
 interface IconButtonProps {
   iconSrc: string;
@@ -6,12 +6,16 @@ interface IconButtonProps {
 
 const IconButton: React.FC<IconButtonProps> = ({ iconSrc }) => {
   return (
-    <button className="box-border flex relative flex-col shrink-0 border border-none bg-black bg-opacity-0 border-[black]">
-      <img
+    // eslint-disable-next-line jsx-a11y/control-has-associated-label
+    <button
+      type="button"
+      className="relative box-border flex shrink-0 flex-col"
+    >
+      <Image
         loading="lazy"
         src={iconSrc}
         alt=""
-        className="shrink-0 aspect-square w-[26px]"
+        className="aspect-square w-[26px] shrink-0"
       />
     </button>
   );

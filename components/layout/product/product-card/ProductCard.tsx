@@ -1,7 +1,9 @@
-import React from "react";
-import IconButton from "./IconButton";
-import PriceDisplay from "./PriceDisplay";
-import AddToCartButton from "./AddToCartButton";
+import Image from 'next/image';
+import React from 'react';
+
+import AddToCartButton from './AddToCartButton';
+import IconButton from './IconButton';
+import PriceDisplay from './PriceDisplay';
 
 interface ProductCardProps {
   product: {
@@ -19,29 +21,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     imageUrl,
     setName,
     itemCount = 2,
-    itemNames = "itemNames",
+    itemNames = 'itemNames',
     currentPrice,
     originalPrice,
   } = product;
 
   return (
-    <article className="flex flex-col items-center p-4 w-full rounded-3xl bg-neutral-100">
-      <header className="flex gap-5 justify-between self-stretch">
+    <article className="flex w-full flex-col items-center rounded-3xl bg-neutral-100 p-4">
+      <header className="flex justify-between gap-5 self-stretch">
         <IconButton iconSrc="./icons/heart.svg" />
         <IconButton iconSrc="./icons/heart.svg" />
       </header>
 
-      <img
+      <Image
         src={imageUrl}
         alt={`Product image for ${setName}`}
-        className="shrink-0 mt-7 w-40 h-40 bg-zinc-300 object-cover"
+        className="mt-7 size-40 shrink-0 bg-zinc-300 object-cover"
       />
 
-      <section className="flex flex-col gap-2.5 mt-12 mb-5 max-w-full w-[153px]">
-        <h2 className="text-sm leading-4 text-center text-neutral-600">
+      <section className="mb-5 mt-12 flex w-[153px] max-w-full flex-col gap-2.5">
+        <h2 className="text-center text-sm leading-4 text-neutral-600">
           {setName} ({itemCount} items)
         </h2>
-        <p className="text-sm leading-4 text-center text-neutral-600">
+        <p className="text-center text-sm leading-4 text-neutral-600">
           {itemNames}
         </p>
         <PriceDisplay

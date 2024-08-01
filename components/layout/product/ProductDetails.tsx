@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface ProductDetailsProps {
   productName: string;
@@ -14,19 +14,22 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   stock,
 }) => {
   return (
-    <div className="flex flex-col pt-1.5 w-1/5 max-md:mt-10 max-md:w-full">
+    <div className="flex w-1/5 flex-col pt-1.5 max-md:mt-10 max-md:w-full">
       <h2 className="text-xl leading-6 text-neutral-600">{productName}</h2>
       <p className="mt-3 text-sm leading-4 text-neutral-600">{productType}</p>
-      <p className="mt-4 mb-5 text-xl font-bold leading-8 text-left text-neutral-600">
+      <p className="mb-5 mt-4 text-left text-xl font-bold leading-8 text-neutral-600">
         $ {price}
       </p>
-      <div className="box-border flex relative flex-col shrink-0">
+      <div className="relative box-border flex shrink-0 flex-col">
         <div className="self-end text-sm text-slate-300">{stock} units</div>
-        <div className="flex flex-row justify-start pr-16 mt-1.5 rounded-xl bg-zinc-300 max-md:pl-5">
-          <div className="shrink-0 mr-auto bg-orange-500 rounded-xl h-[3px] w-[70%]" />
+        <div className="mt-1.5 flex flex-row justify-start rounded-xl bg-zinc-300 pr-16 max-md:pl-5">
+          <div className="mr-auto h-[3px] w-[70%] shrink-0 rounded-xl bg-orange-500" />
         </div>
       </div>
-      <button className="px-5 py-4 mt-6 text-base font-bold text-center text-white uppercase bg-orange-500 border border-orange-500 border-solid rounded-[30px] max-md:px-5">
+      <button
+        type="button"
+        className="mt-6 rounded-[30px] border border-solid border-orange-500 bg-orange-500 px-5 py-4 text-center text-base font-bold uppercase text-white max-md:px-5"
+      >
         Add to cart
       </button>
     </div>

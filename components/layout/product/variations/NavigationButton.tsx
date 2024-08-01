@@ -1,20 +1,25 @@
-import React from "react";
+import Image from 'next/image';
+import React from 'react';
 
 interface NavigationButtonProps {
-  direction: "left" | "right";
+  direction: 'left' | 'right';
 }
 
 const NavigationButton: React.FC<NavigationButtonProps> = ({ direction }) => {
-  const imageSrc = direction === "left" ? "./icons/arrow-left.svg" : "./icons/arrow-right.svg";
+  const imageSrc =
+    direction === 'left' ? './icons/arrow-left.svg' : './icons/arrow-right.svg';
   const altText = `Navigate ${direction}`;
 
   return (
-    <button className="flex border border-neutral-200 w-8 aspect-square rounded-full justify-center items-center">
-      <img
+    <button
+      type="button"
+      className="flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200"
+    >
+      <Image
         loading="lazy"
         src={imageSrc}
         alt={altText}
-        className="shrink-0 self-stretch my-auto w-4 aspect-square"
+        className="my-auto aspect-square w-4 shrink-0 self-stretch"
       />
     </button>
   );

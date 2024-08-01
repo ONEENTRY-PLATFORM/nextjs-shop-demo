@@ -1,5 +1,6 @@
-import {IFilterParams} from 'oneentry/dist/products/productsInterfaces';
-import {CombinedState, createSlice, PayloadAction} from '@reduxjs/toolkit';
+import type { CombinedState, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 
 type InitialStateType = {
   filters: IFilterParams[];
@@ -44,7 +45,7 @@ function areObjectFieldsAndValuesSame(
     return false;
   }
 
-  for (let key in obj1) {
+  for (const key in obj1) {
     if (
       !obj2.hasOwnProperty(key) ||
       !areObjectFieldsAndValuesSame((obj1 as any)[key], (obj2 as any)[key])
@@ -71,12 +72,15 @@ export const filterSlice = createSlice({
     ) {
       state.search = undefined;
       state.catalogOffset = 0;
-      state.filters = state.filters.filter(filter => {
-        const filterWithoutValue: Partial<IFilterParams> = {...filter};
+      state.filters = state.filters.filter((filter) => {
+        const filterWithoutValue: Partial<IFilterParams> = { ...filter };
         delete filterWithoutValue.conditionValue;
-        const actionWithoutCondition = {...action.payload};
+        const actionWithoutCondition = { ...action.payload };
         delete actionWithoutCondition?.conditionValue;
-        console.log("=>(FilterSlice.ts:84) action.payload", actionWithoutCondition);
+        console.log(
+          '=>(FilterSlice.ts:84) action.payload',
+          actionWithoutCondition,
+        );
 
         return !areObjectFieldsAndValuesSame(
           filterWithoutValue,
@@ -215,7 +219,7 @@ export const selectFiltersByMarker = (
   marker: String,
 ) => {
   return state.filterReducer.filters.filter(
-    filter => filter.attributeMarker === marker,
+    (filter) => filter.attributeMarker === marker,
   );
 };
 

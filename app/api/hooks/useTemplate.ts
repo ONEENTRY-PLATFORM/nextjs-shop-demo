@@ -1,6 +1,8 @@
-"use client";
+'use client';
+
 type TemplateProps = {};
 
+// eslint-disable-next-line no-empty-pattern
 export const Template = ({}: TemplateProps) => {
   // const [loading, setLoading] = useState<boolean>(false);
   // const [error, setError] = useState<string | undefined>();

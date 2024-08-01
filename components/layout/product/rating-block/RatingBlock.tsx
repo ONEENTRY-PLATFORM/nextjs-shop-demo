@@ -1,5 +1,7 @@
-import React from "react";
-import RatingRow from "./RatingRow";
+import Image from 'next/image';
+import React from 'react';
+
+import RatingRow from './RatingRow';
 
 const RatingBlock: React.FC = () => {
   const ratings = [
@@ -11,17 +13,17 @@ const RatingBlock: React.FC = () => {
   ];
 
   return (
-    <section className="flex flex-col justify-center px-5 max-w-[420px]">
-      <header className="flex gap-2.5 items-center self-start text-3xl font-bold leading-8 text-neutral-600">
-        <img
+    <section className="flex max-w-[420px] flex-col justify-center px-5">
+      <header className="flex items-center gap-2.5 self-start text-3xl font-bold leading-8 text-neutral-600">
+        <Image
           loading="lazy"
           src=""
-          className="shrink-0 self-start my-auto w-full aspect-[5]"
+          className="my-auto aspect-[5] w-full shrink-0 self-start"
           alt=""
         />
         <h1>4,7</h1>
       </header>
-      <div className="flex flex-col gap-2 mt-6 w-full">
+      <div className="mt-6 flex w-full flex-col gap-2">
         {ratings.map((rating, index) => (
           <RatingRow key={index} {...rating} />
         ))}

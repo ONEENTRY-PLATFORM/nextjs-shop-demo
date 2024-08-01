@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface ReviewCardProps {
   content?: string;
@@ -6,8 +6,8 @@ interface ReviewCardProps {
 
 const ReviewCard: React.FC<ReviewCardProps> = ({ content }) => {
   return (
-    <article className="box-border flex relative flex-col shrink-0">
-      {content || "Review content placeholder"}
+    <article className="relative box-border flex shrink-0 flex-col">
+      {content || 'Review content placeholder'}
     </article>
   );
 };

@@ -1,5 +1,6 @@
-import {CombinedState, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IProductsEntity} from 'oneentry/dist/products/productsInterfaces';
+import type { CombinedState, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 type InitialStateType = {
   products: IProductsEntity[];
@@ -21,24 +22,26 @@ export const favoritesSlice = createSlice({
       }
     },
     removeFavorites(state, action: PayloadAction<number>) {
+      // eslint-disable-next-line no-param-reassign
       state.products = state.products.filter(
         (product: IProductsEntity) => product.id !== action.payload,
       );
     },
     removeAllFavorites(state) {
+      // eslint-disable-next-line no-param-reassign
       state.products = initialState.products;
     },
   },
 });
 
-export const {addFavorites, removeFavorites} = favoritesSlice.actions;
+export const { addFavorites, removeFavorites } = favoritesSlice.actions;
 
 export const selectIsFavorites = (
-  state: CombinedState<{cartReducer: {}; favoritesReducer: InitialStateType}>,
+  state: CombinedState<{ cartReducer: {}; favoritesReducer: InitialStateType }>,
   id: number,
 ): boolean => {
   const added = state.favoritesReducer.products.findIndex(
-    product => product.id === id,
+    (product: { id: number }) => product.id === id,
   );
   if (added === -1) {
     return false;

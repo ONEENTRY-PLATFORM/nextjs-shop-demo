@@ -1,9 +1,10 @@
-import {api} from '../api/api';
-import {IAuthPostBody} from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import type { IAuthPostBody } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 
-type LogInProps = {method: string; login: string; password: string};
+import { api } from '../api/api';
 
-export const logInUser = async ({method, login, password}: LogInProps) => {
+type LogInProps = { method: string; login: string; password: string };
+
+export const logInUser = async ({ method, login, password }: LogInProps) => {
   try {
     const preparedData: IAuthPostBody = {
       authData: [
@@ -20,18 +21,18 @@ export const logInUser = async ({method, login, password}: LogInProps) => {
     const result = await api.AuthProvider.auth(method, preparedData);
     // @ts-ignore
     if (!result?.error && result?.accessToken) {
-      return {data: result};
+      return { data: result };
     }
     // @ts-ignore
     throw new Error(result?.error);
   } catch (e: any) {
-    return {error: e.message};
+    return { error: e.message };
   }
 };
 
-type LogOutProps = {marker: string; token?: string};
+type LogOutProps = { marker: string; token?: string };
 
-export const logOutUser = async ({marker}: LogOutProps) => {
+export const logOutUser = async ({ marker }: LogOutProps) => {
   try {
     // @ts-ignore
     const token = localStorage.getItem('refreshToken', res);
@@ -39,9 +40,9 @@ export const logOutUser = async ({marker}: LogOutProps) => {
       throw Error('No token provided');
     }
     const result = await api.AuthProvider.logout(marker, token);
-    return {data: result};
+    return { data: result };
   } catch (e: any) {
     console.log(e);
-    return {error: e.message};
+    return { error: e.message };
   }
 };

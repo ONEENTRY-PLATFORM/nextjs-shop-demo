@@ -4,14 +4,13 @@ declare type LocalizeInfo = {
   title: string;
 };
 
-
 declare type Page = {
   id: number;
   parentId: number;
   config: object;
   pageUrl: string;
   depth?: number;
-  localizeInfos: {[key: string]: LocalizeInfo};
+  localizeInfos: { [key: string]: LocalizeInfo };
   isVisible?: boolean;
   isEditorDisabled?: boolean;
   products?: number;
@@ -25,7 +24,7 @@ declare type Page = {
 declare type Menu = {
   id: number;
   identifier: string;
-  localizeInfos: {[LanguageEnum]: LocalizeInfo};
+  localizeInfos: { [LanguageEnum]: LocalizeInfo };
   pages: Page[];
 };
 
@@ -34,7 +33,7 @@ declare type Field = {
   type: string;
 };
 
-declare type AttributeValuesValue = {[key: string]: any};
+declare type AttributeValuesValue = { [key: string]: any };
 
 declare type Product = {
   attributeSetId: number;
@@ -42,7 +41,7 @@ declare type Product = {
   id: number;
   isSync: number;
   isVisible: boolean;
-  localizeInfos: {[key: string]: LocalizeInfo};
+  localizeInfos: { [key: string]: LocalizeInfo };
   position: number;
   price: number;
   relatedIds: [];
@@ -102,7 +101,7 @@ declare type Language = {
 declare type Status = {
   id: number;
   identifier: string;
-  localizeInfos: {[key: string]: LocalizeInfo};
+  localizeInfos: { [key: string]: LocalizeInfo };
   updatedDate: string;
   version: number;
 };

@@ -1,8 +1,9 @@
-import {createContext, ReactNode, useContext, useEffect, useState} from 'react';
-import {api, reDefine} from '../api/index';
-import {useLazyGetMeQuery} from '../api';
-import {IUserEntity} from 'oneentry/dist/users/usersInterfaces';
-import {LanguageContext} from './LanguageContext';
+import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
+import type { ReactNode } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+
+import { api, reDefine, useLazyGetMeQuery } from '../api';
+import { LanguageContext } from './LanguageContext';
 
 type ContextProps = {
   isAuth: boolean;
@@ -24,14 +25,14 @@ type Props = {
   children: ReactNode;
 };
 
-export const AuthProvider = ({children}: Props) => {
+export const AuthProvider = ({ children }: Props) => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [user, setUser] = useState<IUserEntity | undefined>();
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
-  const [trigger, {isError}] = useLazyGetMeQuery({pollingInterval: 5000});
-  const {activeLanguage} = useContext(LanguageContext);
+  const [trigger, { isError }] = useLazyGetMeQuery({ pollingInterval: 5000 });
+  const { activeLanguage } = useContext(LanguageContext);
 
   const onInit = async () => {
     const refresh = localStorage.getItem('refreshToken');
@@ -48,7 +49,7 @@ export const AuthProvider = ({children}: Props) => {
 
   const checkToken = async () => {
     trigger({})
-      .then(async res => {
+      .then(async (res) => {
         if (res.error && !res.isLoading) {
           localStorage.setItem('refreshToken', '');
           return setIsAuth(false);
@@ -56,7 +57,7 @@ export const AuthProvider = ({children}: Props) => {
         setUser(res.data);
         setIsAuth(true);
       })
-      .catch(async e => {
+      .catch(async (e) => {
         localStorage.setItem('refreshToken', '');
         setIsAuth(false);
       });
@@ -74,28 +75,26 @@ export const AuthProvider = ({children}: Props) => {
     }
   }, [isError]);
 
-
-
   useEffect(() => {
     if (isAuth) {
       trigger({})
-        .then(res => {
+        .then((res) => {
           if (res.error && !res.isLoading) {
-            localStorage.setItem('refreshToken', '')
+            localStorage.setItem('refreshToken', '');
             return setIsAuth(false);
           }
           setUser(res.data);
         })
-        .catch(e => {
-          localStorage.setItem('refreshToken', '')
+        .catch((e) => {
+          localStorage.setItem('refreshToken', '');
           setIsAuth(false);
         });
     }
   }, [refetchUser]);
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
 
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
     isAuth,
     isLoading,

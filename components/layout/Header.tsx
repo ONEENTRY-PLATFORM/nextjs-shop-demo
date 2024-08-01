@@ -1,25 +1,26 @@
-import React from "react";
-import SearchBar from "./header/SearchBar";
-import Logo from "./header/Logo";
-import NavGroup from "./header/NavGroup";
+import React from 'react';
+
+import Logo from './header/Logo';
+import NavGroup from './header/NavGroup';
+import SearchBar from './header/SearchBar';
 
 const Header: React.FC = () => {
   return (
-    <header className="flex justify-center items-center px-5 bg-white border border-solid border-neutral-100 max-md:px-5">
-      <section 
+    <header className="flex items-center justify-center border border-solid border-neutral-100 bg-white px-5 max-md:px-5">
+      <section
         className="
-          box-border flex flex-col grow 
-          justify-center self-stretch 
-          lg:py-10 
-          md:py-6
-          mx-auto 
-          w-full 
+          mx-auto box-border flex w-full 
+          max-w-[1240px] grow 
+          flex-col 
+          justify-center
+          self-stretch 
           bg-white 
-          max-w-[1240px] 
-          max-md:px-5
+          max-md:px-5 
+          md:py-6 
+          lg:py-10
         "
       >
-        <div className="flex gap-6 justify-between w-full max-w-[1240px] max-md:flex-wrap">
+        <div className="flex w-full max-w-[1240px] justify-between gap-6 max-md:flex-wrap">
           <Logo />
           <SearchBar />
           <NavGroup />

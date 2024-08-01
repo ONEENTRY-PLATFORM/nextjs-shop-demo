@@ -1,5 +1,6 @@
-import {CombinedState, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IListTitle} from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
+import type { CombinedState, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 
 type ButtonsType = {
   addToCart: string;
@@ -96,17 +97,18 @@ export const systemContentSlice = createSlice({
   initialState,
   reducers: {
     addContent(state, action: PayloadAction<ContentType>) {
+      // eslint-disable-next-line no-param-reassign
       state.content = action.payload;
     },
   },
 });
 
 export const getFeaturedButtonContent = (
-  state: CombinedState<{featuredObjectReducer: InitialStateType}>,
+  state: CombinedState<{ featuredObjectReducer: InitialStateType }>,
 ) => {
   return state.featuredObjectReducer.content.buttons;
 };
 
-export const {addContent} = systemContentSlice.actions;
+export const { addContent } = systemContentSlice.actions;
 
 export default systemContentSlice.reducer;

@@ -1,4 +1,5 @@
-import React, {createContext, Dispatch, useState} from 'react';
+import type { Dispatch } from 'react';
+import React, { createContext, useState } from 'react';
 
 type OpenDrawerContextType = {
   open: boolean;
@@ -13,11 +14,16 @@ export const OpenDrawerContext = createContext<OpenDrawerContextType>({
   setActive(value: string): void {},
 });
 
-export const OpenDrawerProvider = ({children}: {children: React.ReactNode}) => {
+export const OpenDrawerProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [open, setOpen] = useState<boolean>(false);
   const [active, setActive] = useState<string>('home');
   return (
-    <OpenDrawerContext.Provider value={{open, setOpen, active, setActive}}>
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
+    <OpenDrawerContext.Provider value={{ open, setOpen, active, setActive }}>
       {children}
     </OpenDrawerContext.Provider>
   );

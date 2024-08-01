@@ -1,4 +1,5 @@
-import React from "react";
+import Image from 'next/image';
+import React from 'react';
 
 interface SocialSignInButtonProps {
   imageSrc: string;
@@ -10,12 +11,15 @@ const SocialSignInButton: React.FC<SocialSignInButtonProps> = ({
   alt,
 }) => {
   return (
-    <button className="box-border flex relative flex-col shrink-0">
-      <img
+    <button
+      type="button"
+      className="relative box-border flex shrink-0 flex-col"
+    >
+      <Image
         loading="lazy"
         src={imageSrc}
         alt={alt}
-        className="shrink-0 aspect-square w-[50px]"
+        className="aspect-square w-[50px] shrink-0"
       />
     </button>
   );

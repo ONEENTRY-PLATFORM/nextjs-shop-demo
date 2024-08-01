@@ -1,5 +1,6 @@
-import React from "react";
-import ProductCard from "./product-card/ProductCard";
+import React from 'react';
+
+import ProductCard from './product-card/ProductCard';
 
 interface RelatedItemsProps {
   title: string;
@@ -16,22 +17,22 @@ interface RelatedItemsProps {
 const RelatedItems: React.FC<RelatedItemsProps> = ({ title, relatedItems }) => {
   return (
     <section className="flex flex-col max-md:max-w-full">
-      <h3 className="mb-5 text-base leading-5 uppercase text-neutral-600 max-md:max-w-full">
+      <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
         {title}
       </h3>
 
-      <div className="flex max-lg:flex-wrap gap-4 ">
+      <div className="flex gap-4 max-lg:flex-wrap ">
         {relatedItems.map((product, i) => (
           <div
             key={i}
-            className="box-border flex relative flex-col shrink-0 w-[calc(_20%_-_1rem_)] max-xl:w-[calc(_33.3333333%_-_1rem_)] max-md:w-[calc(_50%_-_1rem_)] max-sm:w-full"
+            className="relative box-border flex w-[calc(_20%_-_1rem_)] shrink-0 flex-col max-xl:w-[calc(_33.3333333%_-_1rem_)] max-md:w-[calc(_50%_-_1rem_)] max-sm:w-full"
           >
             <ProductCard product={product} />
           </div>
         ))}
       </div>
     </section>
-  );  
+  );
 };
 
 export default RelatedItems;

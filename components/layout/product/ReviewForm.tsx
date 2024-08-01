@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 
 const ReviewForm: React.FC = () => {
   return (
-    <form className="box-border flex relative flex-col shrink-0">
+    <form className="relative box-border flex shrink-0 flex-col">
       <label htmlFor="reviewInput" className="sr-only">
         Write your review
       </label>
       <textarea
         id="reviewInput"
-        className="w-full h-32 p-2 border border-gray-300 rounded"
+        className="h-32 w-full rounded border border-gray-300 p-2"
         placeholder="Write your review here"
       />
       <button
         type="submit"
-        className="mt-4 px-4 py-2 bg-orange-500 text-white rounded"
+        className="mt-4 rounded bg-orange-500 px-4 py-2 text-white"
       >
         Submit Review
       </button>

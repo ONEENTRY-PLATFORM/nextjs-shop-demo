@@ -1,4 +1,4 @@
-import React from "react";
+import Image from 'next/image';
 
 interface VariationCardProps {
   title: string;
@@ -7,12 +7,12 @@ interface VariationCardProps {
 
 const VariationCard: React.FC<VariationCardProps> = ({ title, imageSrc }) => {
   return (
-    <article className="flex flex-col gap-2 text-sm text-center whitespace-nowrap max-w-[80px] text-slate-300">
-      <div className="w-full bg-neutral-100 min-h-[93px]">
-        <img
+    <article className="flex max-w-[80px] flex-col gap-2 whitespace-nowrap text-center text-sm text-slate-300">
+      <div className="min-h-[93px] w-full bg-neutral-100">
+        <Image
           src={imageSrc}
           alt="Product"
-          className="shrink-0 h-full w-full object-cover rounded-xl"
+          className="size-full shrink-0 rounded-xl object-cover"
         />
       </div>
       <h3 className="w-full leading-4">{title}</h3>

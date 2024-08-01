@@ -1,50 +1,52 @@
-import React from "react";
-import FormInput from "./inputs/FormInput";
-import FormSubmitButton from "./inputs/FormSubmitButton";
+import Image from 'next/image';
+import React from 'react';
+
+import FormInput from './inputs/FormInput';
+import FormSubmitButton from './inputs/FormSubmitButton';
 
 const PaymentForm: React.FC = () => {
   return (
-    <form className="flex flex-col gap-4 min-h-full text-xl leading-5">
-          <img
-            loading="lazy"
-            src=""
-            alt=""
-            className="self-center mb-12 w-full aspect-[1.61] max-w-[375px] max-md:mt-10"
+    <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
+      <Image
+        loading="lazy"
+        src=""
+        alt=""
+        className="mb-12 aspect-[1.61] w-full max-w-[375px] self-center max-md:mt-10"
+      />
+      <div className="relative mb-16 box-border flex shrink-0 flex-col gap-5">
+        <FormInput
+          type="text"
+          label="Card holder name"
+          placeholder="ONEENTRY"
+          name="cardHolderName"
+          required
+        />
+        <FormInput
+          type="text"
+          label="Card number"
+          placeholder="2300 0000 0000 0000"
+          name="cardNumber"
+          required
+        />
+        <div className="relative box-border flex shrink-0 flex-row justify-between">
+          <FormInput
+            type="text"
+            label="MM/YY"
+            placeholder="09/32"
+            name="expiryDate"
+            required
           />
-          <div className="box-border flex relative flex-col shrink-0 gap-5 mb-16">
-            <FormInput
-              type="text"
-              label="Card holder name"
-              placeholder="ONEENTRY"
-              name="cardHolderName"
-              required={true}
-            />
-            <FormInput
-              type="text"
-              label="Card number"
-              placeholder="2300 0000 0000 0000"
-              name="cardNumber"
-              required={true}
-            />
-            <div className="box-border flex relative flex-row shrink-0 justify-between">
-              <FormInput
-                type="text"
-                label="MM/YY"
-                placeholder="09/32"
-                name="expiryDate"
-                required={true}
-              />
-              <FormInput
-                type="text"
-                label="CVC"
-                placeholder="xxx"
-                name="cvc"
-                required={true}
-              />
-            </div>
-          </div>
+          <FormInput
+            type="text"
+            label="CVC"
+            placeholder="xxx"
+            name="cvc"
+            required
+          />
+        </div>
+      </div>
 
-          <FormSubmitButton title="Apply" class="" icon="CH" />
+      <FormSubmitButton title="Apply" class="" icon="CH" />
     </form>
   );
 };

@@ -1,8 +1,11 @@
-import {createContext, ReactNode, useEffect} from 'react';
-import {useAppDispatch} from '../store/hooks';
-import {addContent, ContentType} from '../store/reducers/SystemContentSlice';
-import {useGetSingleAttributeByMarkerSet, useGetBlockByMarker} from '../api';
-import {IListTitle} from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
+import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
+import type { ReactNode } from 'react';
+import { createContext, useEffect } from 'react';
+
+import { useGetBlockByMarker, useGetSingleAttributeByMarkerSet } from '../api';
+import { useAppDispatch } from '../store/hooks';
+import type { ContentType } from '../store/reducers/SystemContentSlice';
+import { addContent } from '../store/reducers/SystemContentSlice';
 
 const ContentContext = createContext({});
 
@@ -10,9 +13,9 @@ type Props = {
   children: ReactNode;
 };
 
-export const ContentContextProvider = ({children}: Props) => {
-  const {block} = useGetBlockByMarker({marker: 'system_content'});
-  const {attributes} = useGetSingleAttributeByMarkerSet({
+export const ContentContextProvider = ({ children }: Props) => {
+  const { block } = useGetBlockByMarker({ marker: 'system_content' });
+  const { attributes } = useGetSingleAttributeByMarkerSet({
     setMarker: 'system_content',
     attributeMarker: 'cart_item_options',
   });
@@ -68,8 +71,10 @@ export const ContentContextProvider = ({children}: Props) => {
           block?.attributeValues?.order_info_address_placeholder?.value,
         round_logo: block?.attributeValues?.round_logo?.value[0]?.downloadLink,
         log_out_button: block?.attributeValues?.log_out_button?.value,
-        unsuccessful_payment_text: block?.attributeValues?.unsuccessful_payment_text?.value,
-        successful_payment_text: block?.attributeValues?.successful_payment_text?.value,
+        unsuccessful_payment_text:
+          block?.attributeValues?.unsuccessful_payment_text?.value,
+        successful_payment_text:
+          block?.attributeValues?.successful_payment_text?.value,
         email_auth: block?.attributeValues?.email_auth?.value,
         auth_text: block?.attributeValues?.auth_text?.value,
         terms_text: block?.attributeValues?.terms_text?.value,

@@ -1,14 +1,16 @@
-import React from "react";
+import Image from 'next/image';
+import React from 'react';
 
 const BackButton: React.FC = () => (
   <button
-    className="flex justify-center items-center bg-white rounded-3xl border border-gray-400 border-solid h-[50px] min-w-[50px] w-[50px]"
+    type="button"
+    className="flex size-[50px] min-w-[50px] items-center justify-center rounded-3xl border border-solid border-gray-400 bg-white"
     aria-label="Go back"
   >
-    <img
+    <Image
       loading="lazy"
       src="/icons/arrow-back.svg"
-      className="aspect-[1.3] fill-neutral-600 w-[26px]"
+      className="aspect-[1.3] w-[26px] fill-neutral-600"
       alt=""
     />
   </button>

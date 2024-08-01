@@ -1,5 +1,7 @@
-import React from "react";
-import StarRating from "./StarRating";
+import Image from 'next/image';
+import React from 'react';
+
+import StarRating from './StarRating';
 
 interface ReviewSectionProps {
   rating: number;
@@ -11,7 +13,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
   reviewCount,
 }) => {
   return (
-    <section className="flex gap-5 mr-auto">
+    <section className="mr-auto flex gap-5">
       <div className="flex gap-2.5">
         <StarRating rating={rating} />
         <div className="text-lg font-bold text-neutral-600">
@@ -19,13 +21,13 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
         </div>
         <div className="text-sm leading-5 text-slate-300">{reviewCount}</div>
       </div>
-      <div className="flex gap-3.5 items-center my-auto text-lg uppercase whitespace-nowrap text-neutral-600">
+      <div className="my-auto flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600">
         <h2>Reviews</h2>
-        <img
+        <Image
           loading="lazy"
           src=""
           alt=""
-          className="shrink-0 self-start my-auto aspect-[1.92] w-[25px]"
+          className="my-auto aspect-[1.92] w-[25px] shrink-0 self-start"
         />
       </div>
     </section>

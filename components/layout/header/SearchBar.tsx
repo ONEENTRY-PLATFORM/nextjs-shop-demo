@@ -17,7 +17,7 @@ const SearchBar: React.FC = () => {
         type="submit"
         className="box-border flex relative flex-col shrink-0 p-2.5 m-auto"
       >
-        <img
+        <Image
           loading="lazy"
           src="/icons/search.svg"
           className="w-6 aspect-square"

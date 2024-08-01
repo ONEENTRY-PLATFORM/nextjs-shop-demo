@@ -1,5 +1,4 @@
-import React from "react";
-import VariationCard from "./VariationCard";
+import VariationCard from './VariationCard';
 
 interface VariationProps {
   title: string;
@@ -8,7 +7,7 @@ interface VariationProps {
 
 const CarouselItem: React.FC<VariationProps> = ({ title, imageSrc }) => {
   return (
-    <div className="box-border flex relative flex-col shrink-0 w-20">
+    <div className="relative box-border flex w-20 shrink-0 flex-col">
       <VariationCard title={title} imageSrc={imageSrc} />
     </div>
   );

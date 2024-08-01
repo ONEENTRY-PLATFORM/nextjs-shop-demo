@@ -1,5 +1,6 @@
-import React from "react";
-import BreadcrumbItem from "./BreadcrumbItem";
+import React from 'react';
+
+import BreadcrumbItem from './BreadcrumbItem';
 
 interface BreadcrumbsTrailProps {
   items: Array<{
@@ -9,9 +10,10 @@ interface BreadcrumbsTrailProps {
 }
 
 const BreadcrumbsTrail: React.FC<BreadcrumbsTrailProps> = ({ items }) => (
-  <nav className="box-border flex relative flex-row shrink-0 gap-1.5">
+  <nav className="relative box-border flex shrink-0 flex-row gap-1.5">
     {items.map((item, index) => (
       <BreadcrumbItem
+        // eslint-disable-next-line react/no-array-index-key
         key={index}
         href={item.href}
         text={item.text}

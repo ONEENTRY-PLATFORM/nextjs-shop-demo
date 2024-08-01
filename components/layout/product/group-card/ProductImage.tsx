@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from "react";
 
 interface ProductImageProps {
@@ -11,7 +12,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ imageSrc }) => {
       role="img"
       aria-label="Product image"
     >
-      <img
+      <Image
         src={imageSrc}
         alt="Product"
         className="shrink-0 rounded-xl mb-10 w-full h-full max-md:mb-8 max-sm:mb-8 object-cover"

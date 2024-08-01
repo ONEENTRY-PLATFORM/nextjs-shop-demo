@@ -1,4 +1,5 @@
-import React from "react";
+import Image from 'next/image';
+import React from 'react';
 
 interface ProductImageProps {
   imageSrc: string;
@@ -6,11 +7,11 @@ interface ProductImageProps {
 
 const ProductImage: React.FC<ProductImageProps> = ({ imageSrc }) => {
   return (
-    <div className="flex flex-col grow w-[30%] max-md:w-full max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
-      <img
+    <div className="flex w-[30%] grow flex-col max-md:w-full max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
+      <Image
         src={imageSrc}
         alt="Product"
-        className="shrink-0 bg-slate-300 h-full mb-10 max-md:mb-8 max-sm:mb-8 w-full object-cover"
+        className="mb-10 size-full shrink-0 bg-slate-300 object-cover max-md:mb-8 max-sm:mb-8"
       />
     </div>
   );

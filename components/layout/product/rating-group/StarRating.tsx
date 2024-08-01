@@ -1,4 +1,5 @@
-import React from "react";
+import Image from 'next/image';
+import React from 'react';
 
 interface StarRatingProps {
   rating: number;
@@ -6,14 +7,14 @@ interface StarRatingProps {
 
 const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
   return (
-    <div className="flex flex-row shrink-0 gap-1.5 items-center">
+    <div className="flex shrink-0 flex-row items-center gap-1.5">
       {[...Array(5)].map((_, index) => (
-        <img
+        <Image
           key={index}
           loading="lazy"
           src="./icons/star.svg"
           alt=""
-          className="shrink-0 self-start my-auto aspect-square w-[15px]"
+          className="my-auto aspect-square w-[15px] shrink-0 self-start"
         />
       ))}
     </div>

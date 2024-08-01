@@ -1,7 +1,10 @@
-import {createContext, Dispatch, ReactNode, useEffect, useState} from 'react';
-import {LanguageEnum} from '../types/enum';
-import {useGetLocales} from '../api';
-import {ILocalEntity} from 'oneentry/dist/locales/localesInterfaces';
+import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
+import type { Dispatch, ReactNode } from 'react';
+import { createContext, useEffect, useState } from 'react';
+
+// eslint-disable-next-line import/no-cycle
+import { useGetLocales } from '../api';
+import { LanguageEnum } from '../types/enum';
 
 type ContextProps = {
   activeLanguage: LanguageEnum;
@@ -17,12 +20,12 @@ export const LanguageContext = createContext<ContextProps>({
 type ProviderProps = {
   children: ReactNode;
 };
-export const LanguageProvider = ({children}: ProviderProps) => {
+export const LanguageProvider = ({ children }: ProviderProps) => {
   const [languagesData, setLanguagesData] = useState<DropdownItem[]>([]);
   const [activeLanguage, setActiveLanguage] = useState<LanguageEnum>(
     LanguageEnum.EN,
   );
-  const {locales} = useGetLocales();
+  const { locales } = useGetLocales();
 
   useEffect(() => {
     (async () => {
@@ -38,6 +41,7 @@ export const LanguageProvider = ({children}: ProviderProps) => {
     })();
   }, [locales]);
 
+  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
     activeLanguage,
     languagesData,

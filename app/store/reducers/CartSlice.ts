@@ -1,8 +1,9 @@
-import {CombinedState, createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {IProductsEntity} from 'oneentry/dist/products/productsInterfaces';
+import type { CombinedState, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 type InitialStateType = {
-  products: (IProductsEntity & {selected: boolean})[];
+  products: (IProductsEntity & { selected: boolean })[];
   currency?: string;
 };
 
@@ -15,21 +16,20 @@ export const cartSlice = createSlice({
   reducers: {
     addProductToCart(
       state,
-      action: PayloadAction<IProductsEntity & {selected: boolean}>,
+      action: PayloadAction<IProductsEntity & { selected: boolean }>,
     ) {
       if (
         !action?.payload?.attributeValues?.currency &&
         !action.payload?.price
       ) {
-        
       }
       const index = state.products.findIndex(
-        product => product.id === action.payload.id,
+        (product) => product.id === action.payload.id,
       );
 
       if (index !== -1) {
         if (!state.products[index].selected) {
-          state.products.push({...action.payload, selected: false});
+          state.products.push({ ...action.payload, selected: false });
         } else {
           state.products.push(action.payload);
         }
@@ -47,7 +47,7 @@ export const cartSlice = createSlice({
       );
     },
     deselectProduct(state, action: PayloadAction<number>) {
-      state.products.map(product => {
+      state.products.map((product) => {
         if (product.id === action.payload) {
           product.selected = !product.selected;
         }
@@ -74,20 +74,20 @@ export const {
 } = cartSlice.actions;
 
 export const selectCartItems = (
-  state: CombinedState<{cartReducer: InitialStateType; favoritesReducer: {}}>,
+  state: CombinedState<{ cartReducer: InitialStateType; favoritesReducer: {} }>,
 ) => state.cartReducer.products;
 
 export const selectCartItemWithIdLength = (
-  state: CombinedState<{cartReducer: InitialStateType; favoritesReducer: {}}>,
+  state: CombinedState<{ cartReducer: InitialStateType; favoritesReducer: {} }>,
   id: number,
-) => state.cartReducer.products.filter(item => item.id === id)?.length;
+) => state.cartReducer.products.filter((item) => item.id === id)?.length;
 
 export const selectBasketCount = (
-  state: CombinedState<{cartReducer: InitialStateType; favoritesReducer: {}}>,
+  state: CombinedState<{ cartReducer: InitialStateType; favoritesReducer: {} }>,
 ) => state.cartReducer.products.length;
 
 export const selectBasketTotal = (
-  state: CombinedState<{cartReducer: InitialStateType; favoritesReducer: {}}>,
+  state: CombinedState<{ cartReducer: InitialStateType; favoritesReducer: {} }>,
 ) =>
   state.cartReducer.products.reduce((total, item) => {
     if (item.selected) {
