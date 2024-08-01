@@ -1,16 +1,10 @@
 import React from "react";
 import FormInput from "./inputs/FormInput";
 import FormSubmitButton from "./inputs/FormSubmitButton";
-import ClosePopup from "../layout/forms/ClosePopup";
 
 const PaymentForm: React.FC = () => {
   return (
-    <main className="flex flex-col px-10 pt-8 pb-16 bg-white rounded-3xl border border-solid border-[black] max-w-[550px] w-[550px]">
-      <header className="box-border flex relative flex-col shrink-0 mb-12">
-        <ClosePopup />
-      </header>
-      <section className="flex flex-col w-full min-h-[calc(100%_-_110px)] max-md:px-5 max-md:mt-10 max-md:max-w-full">
-        <form className="flex flex-col gap-4 min-h-full text-xl leading-5">
+    <form className="flex flex-col gap-4 min-h-full text-xl leading-5">
           <img
             loading="lazy"
             src=""
@@ -50,10 +44,8 @@ const PaymentForm: React.FC = () => {
             </div>
           </div>
 
-          <FormSubmitButton title="" class="" icon="CH" />
-        </form>
-      </section>
-    </main>
+          <FormSubmitButton title="Apply" class="" icon="CH" />
+    </form>
   );
 };
 

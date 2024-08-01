@@ -29,7 +29,7 @@ const CalendarGrid: React.FC = () => {
               key={dayIndex}
               className={`leading-8 h-[30px] w-[30px] ${
                 day === "14"
-                  ? "py-1 font-medium text-white bg-orange-500 rounded-md"
+                  ? "font-medium text-white bg-orange-500 rounded-md"
                   : weekIndex === 0 || weekIndex === 4
                     ? "text-neutral-400"
                     : ""

@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import {Provider} from 'react-redux';
-import {setupStore} from './store/store';
 
 import Header from '../components/layout/Header';
 import NavigationMenu from '../components/layout/navbar/NavigationMenu';
@@ -48,11 +46,11 @@ export default function RootLayout({ children }: Readonly<{children: React.React
   return (
     <html lang="en">
       <body className={inter.className}>
-          <Header />
-          <NavigationMenu items={navigationItems} />
-          <Breadcrumbs />
-          {children}
-          <Footer />
+        <Header />
+        <NavigationMenu items={navigationItems} />
+        <Breadcrumbs />
+        {children}
+        <Footer />
       </body>
     </html>
   );

@@ -7,13 +7,8 @@ interface MonthSelectorProps {
 
 const MonthSelector: React.FC<MonthSelectorProps> = ({ month, year }) => {
   return (
-    <div className="flex gap-5 justify-between items-center py-1.5 mb-5 w-full text-2xl">
-      <img
-        loading="lazy"
-        src=""
-        alt=""
-        className="shrink-0 self-stretch my-auto w-1.5 border-none aspect-[0.5] border-[3px] border-slate-300 stroke-[2.579px] stroke-slate-300"
-      />
+    <div className="flex gap-5 justify-between items-center py-1.5 mx-auto mb-5 w-full text-2xl">
+
       <button className="shrink-0 self-stretch my-auto w-1.5">
         <svg
           width="7"
@@ -30,10 +25,16 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({ month, year }) => {
           />
         </svg>
       </button>
+
       <div className="flex gap-5 justify-center self-stretch text-xl bg-white text-orange-500">
-        <div className="font-medium">{month}</div>
-        <div className="font-light">{year}</div>
+        <div className="font-medium">
+          {month}
+        </div>
+        <div className="font-light">
+          {year}
+        </div>
       </div>
+
       <button className="shrink-0 self-stretch my-auto w-1.5">
         <svg
           width="7"
@@ -50,6 +51,7 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({ month, year }) => {
           />
         </svg>
       </button>
+      
     </div>
   );
 };
