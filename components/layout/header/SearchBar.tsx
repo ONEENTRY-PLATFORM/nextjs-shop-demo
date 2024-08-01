@@ -19,7 +19,7 @@ const SearchBar: React.FC = () => {
       >
         <img
           loading="lazy"
-          src="./icons/search.svg"
+          src="/icons/search.svg"
           className="w-6 aspect-square"
           alt=""
         />

@@ -7,7 +7,7 @@ const BackButton: React.FC = () => (
   >
     <img
       loading="lazy"
-      src="./icons/arrow-back.svg"
+      src="/icons/arrow-back.svg"
       className="aspect-[1.3] fill-neutral-600 w-[26px]"
       alt=""
     />

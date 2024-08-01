@@ -114,7 +114,7 @@ export default async function ProductPage({ params }: {
           </div>
 
           <div className="basis-full lg:basis-2/6">
-            ProductDescription
+            Product category Description
           </div>
         </div>
         <RelatedProducts id={product.id} />

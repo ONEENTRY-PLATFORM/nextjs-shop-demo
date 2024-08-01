@@ -8,7 +8,7 @@ const Logo: React.FC = () => {
         className="object-contain"
         fill
         alt={""}
-        src={"./images/logo-300x80.svg"}
+        src={"/images/logo-300x80.svg"}
         priority={true}
       />
     </Link>

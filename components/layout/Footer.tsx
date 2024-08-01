@@ -9,7 +9,7 @@ export default async function Footer() {
 
   return (
     <footer className="w-full">
-      <FooterMenu logoSrc={"./images/logo-250x70.svg"} />
+      <FooterMenu logoSrc={"/images/logo-250x70.svg"} />
       <div className="text-center px-5 py-11 w-full bg-black text-white max-md:px-5 max-md:max-w-full">
         <div className="">
           &copy; {copyrightDate} {SITE_NAME}, by{" "}

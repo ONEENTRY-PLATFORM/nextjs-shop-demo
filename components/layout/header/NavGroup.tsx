@@ -3,17 +3,17 @@ import NavGroupItem from "./NavGroupItem";
 
 const items = [
   {
-    icon: "./icons/user.svg",
+    icon: "/icons/user.svg",
     href: "#",
     title: "user",
   },
   {
-    icon: "./icons/heart.svg",
+    icon: "/icons/heart.svg",
     href: "#",
     title: "heart",
   },
   {
-    icon: "./icons/cart.svg",
+    icon: "/icons/cart.svg",
     href: "#",
     title: "cart",
   },
