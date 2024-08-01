@@ -2,7 +2,7 @@ import React from "react";
 import MonthSelector from "./calendar/MonthSelector";
 import CalendarGrid from "./calendar/CalendarGrid";
 import TimeSlots from "./calendar/TimeSlots";
-import ClosePopup from "../layout/popup/ClosePopup";
+import ClosePopup from "../layout/forms/ClosePopup";
 
 const CalendarComponent: React.FC = () => {
   const selectedYear = 2024;

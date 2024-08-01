@@ -1,29 +1,24 @@
-import React from "react";
+import React from 'react';
 
-interface FormInputProps {
+interface PasswordInputProps {
   label: string;
-  placeholder: string;
   name: string;
-  type: string;
-  required: boolean;
 }
 
-const FormInput: React.FC<FormInputProps> = ({ label, placeholder, name, type, required }) => {
+const PasswordInput: React.FC<PasswordInputProps> = ({ label, name }) => {
   return (
     <div className="box-border flex relative flex-col shrink-0">
       <label htmlFor={name} className="text-base text-gray-400">
         {label}
       </label>
       <input
-        type={type ? type : "text" }
+        type="password"
         id={name}
         name={name}
-        required={required}
-        placeholder={placeholder}
         className="relative py-3 text-base leading-5 border-b border-solid border-[none] border-b-stone-300"
       />
     </div>
   );
 };
 
-export default FormInput;
+export default PasswordInput;

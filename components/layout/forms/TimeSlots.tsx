@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface TimeSlotProps {
   time: string;
@@ -6,7 +6,11 @@ interface TimeSlotProps {
   isSelected?: boolean;
 }
 
-const TimeSlot: React.FC<TimeSlotProps> = ({ time, isDisabled = false, isSelected = false }) => {
+const TimeSlot: React.FC<TimeSlotProps> = ({
+  time,
+  isDisabled = false,
+  isSelected = false,
+}) => {
   let className = "px-3.5 py-2 rounded-3xl border-2 border-solid ";
   if (isDisabled) {
     className += "border-slate-300 text-slate-300";
@@ -16,11 +20,7 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ time, isDisabled = false, isSelecte
     className += "border-orange-500";
   }
 
-  return (
-    <time className={className}>
-      {time}
-    </time>
-  );
+  return <time className={className}>{time}</time>;
 };
 
 const TimeSlots: React.FC = () => {
@@ -36,7 +36,7 @@ const TimeSlots: React.FC = () => {
     { time: "18:00", isDisabled: true },
     { time: "19:00", isSelected: true },
     { time: "20:00" },
-    { time: "20:00" }
+    { time: "20:00" },
   ];
 
   return (

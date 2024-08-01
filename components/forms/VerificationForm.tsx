@@ -1,7 +1,7 @@
 import React from "react";
 import OTPInputs from "./inputs/OTPInputs";
 import FormSubmitButton from "./inputs/FormSubmitButton";
-import ClosePopup from "../layout/popup/ClosePopup";
+import ClosePopup from "../layout/forms/ClosePopup";
 
 const VerificationForm: React.FC = () => {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
 import FormInput from "./inputs/FormInput";
 import FormSubmitButton from "./inputs/FormSubmitButton";
-import ClosePopup from "../layout/popup/ClosePopup";
+import ClosePopup from "../layout/forms/ClosePopup";
 
 const ResetPasswordForm: React.FC = () => {
   return (
