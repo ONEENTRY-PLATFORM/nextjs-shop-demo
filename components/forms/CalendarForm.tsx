@@ -6,7 +6,7 @@ import TimeSlots from './calendar/TimeSlots';
 
 const CalendarComponent: React.FC = () => {
   const selectedYear = 2024;
-  const selectedMonth = 10;
+  const selectedMonth = 'September';
 
   return (
     <>

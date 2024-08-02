@@ -11,7 +11,7 @@ const TimeSlot: React.FC<TimeSlotProps> = ({
   isSelected,
   isDisabled,
 }) => {
-  let className = 'px-3.5 py-2 rounded-3xl border-2 ';
+  let className = 'px-3.5 py-2 rounded-3xl border-2 text-center ';
   if (isSelected) {
     className += 'text-white bg-orange-500 border-orange-500';
   } else if (isDisabled) {
@@ -20,7 +20,11 @@ const TimeSlot: React.FC<TimeSlotProps> = ({
     className += 'border-orange-500 border-solid';
   }
 
-  return <time className={className}>{time}</time>;
+  return (
+    <button className={className}>
+      <time>{time}</time>
+    </button>
+  );
 };
 
 export default TimeSlot;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface MonthSelectorProps {
-  month: number;
+  month: string;
   year: number;
 }
 
@@ -17,8 +17,8 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({ month, year }) => {
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M6.70711 0.292893C7.09763 0.683418 7.09763 1.31658 6.70711 1.70711L2.41421 6L6.70711 10.2929C7.09763 10.6834 7.09763 11.3166 6.70711 11.7071C6.31658 12.0976 5.68342 12.0976 5.29289 11.7071L0.292893 6.70711C-0.0976313 6.31658 -0.0976312 5.68342 0.292893 5.29289L5.29289 0.292893C5.68342 -0.0976312 6.31658 -0.0976311 6.70711 0.292893Z"
             fill="#B0BCCE"
           />

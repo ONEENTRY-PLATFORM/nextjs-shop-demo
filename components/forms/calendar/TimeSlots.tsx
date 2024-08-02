@@ -47,7 +47,7 @@ const TimeSlots: React.FC = () => {
   ];
 
   return (
-    <div className="mb-5 flex flex-row flex-wrap justify-start gap-2.5 rounded-3xl bg-white text-base font-bold tracking-wide text-orange-500 max-md:pl-5">
+    <div className="mb-5 grid grid-cols-4 grid-rows-4 gap-2.5 rounded-3xl bg-white px-8 text-base font-bold tracking-wide text-orange-500">
       {times.map((slot, index) => (
         <TimeSlot key={index} {...slot} />
       ))}
