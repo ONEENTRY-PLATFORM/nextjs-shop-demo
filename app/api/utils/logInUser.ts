@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { IAuthPostBody } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 
 import { api } from '../api/api';
@@ -25,8 +26,8 @@ export const logInUser = async ({ method, login, password }: LogInProps) => {
     }
     // @ts-ignore
     throw new Error(result?.error);
-  } catch (e: any) {
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 };
 
@@ -41,8 +42,7 @@ export const logOutUser = async ({ marker }: LogOutProps) => {
     }
     const result = await api.AuthProvider.logout(marker, token);
     return { data: result };
-  } catch (e: any) {
-    console.log(e);
-    return { error: e.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 };

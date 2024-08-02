@@ -77,7 +77,10 @@ export const useGetProducts = ({
             (item) => item.attributeSetIdentifier === 'product',
           );
         }
-      } catch (e) {}
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (e) {
+        /** */
+      }
     }
   };
 

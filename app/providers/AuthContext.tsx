@@ -59,6 +59,7 @@ export const AuthProvider = ({ children }: Props) => {
         setUser(res.data);
         setIsAuth(true);
       })
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .catch(async (e) => {
         localStorage.setItem('refreshToken', '');
         setIsAuth(false);
@@ -87,6 +88,7 @@ export const AuthProvider = ({ children }: Props) => {
           }
           setUser(res.data);
         })
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         .catch((e) => {
           localStorage.setItem('refreshToken', '');
           setIsAuth(false);

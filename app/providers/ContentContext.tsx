@@ -82,6 +82,7 @@ export const ContentContextProvider = ({ children }: Props) => {
       };
       dispatch(addContent(systemContent));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [block, attributes]);
 
   return <ContentContext.Provider value>{children}</ContentContext.Provider>;

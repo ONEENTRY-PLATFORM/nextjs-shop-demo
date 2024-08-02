@@ -69,7 +69,10 @@ export const {
 } = cartSlice.actions;
 
 export const selectCartItems = (
-  state: CombinedState<{ cartReducer: InitialStateType; favoritesReducer: {} }>,
+  state: CombinedState<{
+    cartReducer: InitialStateType;
+    favoritesReducer: object;
+  }>,
 ) => state.cartReducer.products;
 
 export const selectCartItemWithIdLength = (

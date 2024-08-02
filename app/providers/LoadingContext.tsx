@@ -9,6 +9,7 @@ type LoadingContextType = {
 };
 export const LoadingContext = createContext<LoadingContextType>({
   loading: false,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setLoading(value: boolean): void {},
 });
 
