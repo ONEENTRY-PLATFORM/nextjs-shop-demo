@@ -7,8 +7,9 @@ interface ProductImageProps {
 
 const ProductImage: React.FC<ProductImageProps> = ({ imageSrc }) => {
   return (
-    <div className="flex w-[30%] grow flex-col max-md:w-full max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
+    <div className="relative flex w-[30%] grow flex-col max-md:w-full max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
       <Image
+        fill
         src={imageSrc}
         alt="Product"
         className="mb-10 size-full shrink-0 bg-slate-300 object-cover max-md:mb-8 max-sm:mb-8"

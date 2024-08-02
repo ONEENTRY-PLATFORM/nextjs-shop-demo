@@ -8,7 +8,7 @@ const cards = [
     backgroundColor: 'bg-amber-600',
     width: 'w-full',
     height: 'h-[175px]',
-    imageSrc: './images/catalog-img-1.svg',
+    imageSrc: '/images/catalog-img-1.svg',
     link: '',
   },
   {
@@ -16,7 +16,7 @@ const cards = [
     backgroundColor: 'bg-purple-600',
     width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
     height: 'h-[260px]',
-    imageSrc: './images/catalog-img-2.svg',
+    imageSrc: '/images/catalog-img-2.svg',
     link: '',
   },
   {
@@ -24,7 +24,7 @@ const cards = [
     backgroundColor: 'bg-blue-500',
     width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
     height: 'h-[260px]',
-    imageSrc: './images/catalog-img-3.svg',
+    imageSrc: '/images/catalog-img-3.svg',
     link: '',
   },
   {
@@ -32,7 +32,7 @@ const cards = [
     backgroundColor: 'bg-lime-700',
     width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
     height: 'h-[260px]',
-    imageSrc: './images/catalog-img-4.svg',
+    imageSrc: '/images/catalog-img-4.svg',
     link: '',
   },
   {
@@ -40,7 +40,7 @@ const cards = [
     backgroundColor: 'bg-teal-300',
     width: 'w-full md:w-[calc(_50%_-_0.65rem)]',
     height: 'h-[260px]',
-    imageSrc: './images/catalog-img-5.svg',
+    imageSrc: '/images/catalog-img-5.svg',
     link: '',
   },
   {
@@ -48,7 +48,7 @@ const cards = [
     backgroundColor: 'bg-amber-300',
     width: 'w-full lg:w-[calc(_50%_-_0.65rem)]',
     height: 'h-[260px]',
-    imageSrc: './images/catalog-img-6.svg',
+    imageSrc: '/images/catalog-img-6.svg',
     link: '',
   },
 ];

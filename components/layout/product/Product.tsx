@@ -11,7 +11,7 @@ const product = {
   stock: 20,
   description:
     "The developers' and CMS users' vast, unique experience became the basis of HeadlessCMS OneEntry. We know what the users want, so we took into account the needs of business owners, users and developers to create our product. All the tools we've developed are aimed to improve the processes of project management.",
-  imageSrc: './images/catalog-img-4.svg',
+  imageSrc: '/images/catalog-img-4.svg',
 };
 
 const Product: React.FC = () => {

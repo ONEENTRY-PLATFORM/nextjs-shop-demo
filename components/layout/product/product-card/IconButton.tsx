@@ -12,6 +12,7 @@ const IconButton: React.FC<IconButtonProps> = ({ iconSrc }) => {
       className="relative box-border flex shrink-0 flex-col"
     >
       <Image
+        fill
         loading="lazy"
         src={iconSrc}
         alt=""

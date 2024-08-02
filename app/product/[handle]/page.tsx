@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
+import Page from '@/components/layout/pages/ProductPage';
+
 const product = {
   featuredImage: {
     url: '',
@@ -126,9 +128,7 @@ export default async function ProductPage({
             />
           </div>
 
-          <div className="basis-full lg:basis-2/6">
-            Product category Description
-          </div>
+          <Page />
         </div>
         <RelatedProducts id={product.id} />
       </div>

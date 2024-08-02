@@ -33,11 +33,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <IconButton iconSrc="./icons/heart.svg" />
       </header>
 
-      <Image
-        src={imageUrl}
-        alt={`Product image for ${setName}`}
-        className="mt-7 size-40 shrink-0 bg-zinc-300 object-cover"
-      />
+      <div className="relative size-40">
+        <Image
+          fill
+          src={imageUrl}
+          alt={`Product image for ${setName}`}
+          className="mt-7 size-40 shrink-0 bg-zinc-300 object-cover"
+        />
+      </div>
 
       <section className="mb-5 mt-12 flex w-[153px] max-w-full flex-col gap-2.5">
         <h2 className="text-center text-sm leading-4 text-neutral-600">

@@ -16,6 +16,8 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({ direction }) => {
       className="flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200"
     >
       <Image
+        width={16}
+        height={16}
         loading="lazy"
         src={imageSrc}
         alt={altText}

@@ -6,7 +6,7 @@ import RelatedItems from '../product/RelatedItems';
 
 const productsGroup = [
   {
-    imageUrl: './images/catalog-img-4.svg',
+    imageUrl: '/images/catalog-img-4.svg',
     setName: 'Set Name',
     itemCount: 1,
     itemNames: '',
@@ -14,7 +14,7 @@ const productsGroup = [
     originalPrice: 3200,
   },
   {
-    imageUrl: './images/catalog-img-4.svg',
+    imageUrl: '/images/catalog-img-4.svg',
     setName: 'Set Name',
     itemCount: 1,
     itemNames: '',
@@ -22,7 +22,7 @@ const productsGroup = [
     originalPrice: 3200,
   },
   {
-    imageUrl: './images/catalog-img-4.svg',
+    imageUrl: '/images/catalog-img-4.svg',
     setName: 'Set Name',
     itemCount: 1,
     itemNames: '',
@@ -33,7 +33,7 @@ const productsGroup = [
 
 const relatedItems = [
   {
-    imageUrl: './images/catalog-img-4.svg',
+    imageUrl: '/images/catalog-img-4.svg',
     setName: 'Set Name',
     itemCount: 1,
     itemNames: '',
@@ -41,7 +41,7 @@ const relatedItems = [
     originalPrice: 3200,
   },
   {
-    imageUrl: './images/catalog-img-4.svg',
+    imageUrl: '/images/catalog-img-4.svg',
     setName: 'Set Name',
     itemCount: 1,
     itemNames: '',
@@ -49,7 +49,7 @@ const relatedItems = [
     originalPrice: 3200,
   },
   {
-    imageUrl: './images/catalog-img-4.svg',
+    imageUrl: '/images/catalog-img-4.svg',
     setName: 'Set Name',
     itemCount: 1,
     itemNames: '',
@@ -57,7 +57,7 @@ const relatedItems = [
     originalPrice: 3200,
   },
   {
-    imageUrl: './images/catalog-img-4.svg',
+    imageUrl: '/images/catalog-img-4.svg',
     setName: 'Set Name',
     itemCount: 1,
     itemNames: '',
@@ -65,7 +65,7 @@ const relatedItems = [
     originalPrice: 3200,
   },
   {
-    imageUrl: './images/catalog-img-4.svg',
+    imageUrl: '/images/catalog-img-4.svg',
     setName: 'Set Name',
     itemCount: 1,
     itemNames: '',

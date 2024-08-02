@@ -1,7 +1,7 @@
 import React from 'react';
 
-import BackButton from './breadcrumbs/BackButton';
-import BreadcrumbsTrail from './breadcrumbs/BreadcrumbsTrail';
+import BackButton from './BackButton';
+import BreadcrumbsTrail from './BreadcrumbsTrail';
 
 const breadcrumbItems = [
   {

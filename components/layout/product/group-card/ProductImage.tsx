@@ -8,11 +8,12 @@ interface ProductImageProps {
 const ProductImage: React.FC<ProductImageProps> = ({ imageSrc }) => {
   return (
     <div
-      className="h-[130px] w-[110px] shrink-0"
+      className="relative h-[130px] w-[110px] shrink-0"
       role="img"
       aria-label="Product image"
     >
       <Image
+        fill
         src={imageSrc}
         alt="Product"
         className="mb-10 size-full shrink-0 rounded-xl object-cover max-md:mb-8 max-sm:mb-8"

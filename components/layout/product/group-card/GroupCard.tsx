@@ -28,11 +28,11 @@ const GroupCard: React.FC<GroupCardProps> = ({
         </div>
 
         <div className="flex w-[63%] flex-row justify-between">
-          <ProductImage imageSrc="./images/catalog-img-4.svg" />
+          <ProductImage imageSrc="/images/catalog-img-4.svg" />
           <div className="my-auto aspect-square w-3 shrink-0 fill-neutral-600">
             +
           </div>
-          <ProductImage imageSrc="./images/catalog-img-4.svg" />
+          <ProductImage imageSrc="/images/catalog-img-4.svg" />
         </div>
       </div>
     </article>

@@ -16,6 +16,7 @@ const RatingBlock: React.FC = () => {
     <section className="flex max-w-[420px] flex-col justify-center px-5">
       <header className="flex items-center gap-2.5 self-start text-3xl font-bold leading-8 text-neutral-600">
         <Image
+          fill
           loading="lazy"
           src=""
           className="my-auto aspect-[5] w-full shrink-0 self-start"

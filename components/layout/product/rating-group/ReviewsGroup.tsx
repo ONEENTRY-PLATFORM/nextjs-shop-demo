@@ -24,6 +24,7 @@ const ReviewSection: React.FC<ReviewSectionProps> = ({
       <div className="my-auto flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600">
         <h2>Reviews</h2>
         <Image
+          fill
           loading="lazy"
           src=""
           alt=""
