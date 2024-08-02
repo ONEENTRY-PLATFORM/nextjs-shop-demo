@@ -4,7 +4,7 @@ import type { IBlockProduct } from 'oneentry/dist/blocks/blocksInterfaces';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 // eslint-disable-next-line import/no-cycle
-import { LanguageContext } from '../../providers/LanguageContext';
+import { LanguageContext } from '../../store/providers/LanguageContext';
 import { api } from '../api/api';
 
 type Props = {

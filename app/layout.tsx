@@ -7,6 +7,11 @@ import Breadcrumbs from '../components/layout/Breadcrumbs';
 import Footer from '../components/layout/Footer';
 import Header from '../components/layout/Header';
 import NavigationMenu from '../components/layout/navbar/NavigationMenu';
+import { AuthProvider } from './store/providers/AuthContext';
+import { ContentContextProvider } from './store/providers/ContentContext';
+import { LanguageProvider } from './store/providers/LanguageContext';
+import { OpenDrawerProvider } from './store/providers/OpenDrawerContext';
+import StoreProvider from './store/providers/StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -42,16 +47,24 @@ const navigationItems = [
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  // const store = setupStore();
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        <NavigationMenu items={navigationItems} />
-        <Breadcrumbs />
-        {children}
-        <Footer />
+        <StoreProvider>
+          <LanguageProvider>
+            <AuthProvider>
+              <ContentContextProvider>
+                <OpenDrawerProvider>
+                  <Header />
+                  <NavigationMenu items={navigationItems} />
+                  <Breadcrumbs />
+                  {children}
+                  <Footer />
+                </OpenDrawerProvider>
+              </ContentContextProvider>
+            </AuthProvider>
+          </LanguageProvider>
+        </StoreProvider>
       </body>
     </html>
   );

@@ -1,3 +1,4 @@
+'use client';
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Dispatch } from 'react';
 import React, { createContext, useState } from 'react';

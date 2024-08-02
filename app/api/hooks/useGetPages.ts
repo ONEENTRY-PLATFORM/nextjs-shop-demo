@@ -3,7 +3,7 @@
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-import { LanguageContext } from '../../providers/LanguageContext';
+import { LanguageContext } from '../../store/providers/LanguageContext';
 import { api } from '../api/api';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention

@@ -1,3 +1,4 @@
+'use client';
 import type { Dispatch } from 'react';
 import React, { createContext, useState } from 'react';
 // import {LanguageEnum} from '../types/enum';

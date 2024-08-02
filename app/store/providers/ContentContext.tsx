@@ -1,11 +1,12 @@
+'use client';
 import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { ReactNode } from 'react';
 import { createContext, useEffect } from 'react';
 
-import { useGetBlockByMarker, useGetSingleAttributeByMarkerSet } from '../api';
-import { useAppDispatch } from '../store/hooks';
-import type { ContentType } from '../store/reducers/SystemContentSlice';
-import { addContent } from '../store/reducers/SystemContentSlice';
+import { useGetBlockByMarker, useGetSingleAttributeByMarkerSet } from '../../api';
+import { useAppDispatch } from '../hooks';
+import type { ContentType } from '../reducers/SystemContentSlice';
+import { addContent } from '../reducers/SystemContentSlice';
 
 const ContentContext = createContext({});
 
