@@ -1,5 +1,5 @@
-import React from "react";
-import Image from "next/image";
+import Image from 'next/image';
+import React from 'react';
 
 interface ItemProps {
   item: {
@@ -14,14 +14,14 @@ const NavGroupItem: React.FC<ItemProps> = ({ item }) => {
     <a
       href={item.href}
       title={item.title}
-      className="box-border flex relative flex-col shrink-0 w-6 h-6"
+      className="relative box-border flex size-6 shrink-0 flex-col"
     >
       <Image
         className="object-contain"
         fill
         alt={item.title}
         src={item.icon}
-        priority={true}
+        priority
       />
     </a>
   );

@@ -1,6 +1,6 @@
-import React from 'react';
-import Image from "next/image";
+import Image from 'next/image';
 import Link from 'next/link';
+import React from 'react';
 
 interface CatalogGridProps {
   cardData: {
@@ -14,27 +14,23 @@ interface CatalogGridProps {
 }
 
 const CatalogCard: React.FC<CatalogGridProps> = ({ cardData }) => {
-  const {
-    title,
-    backgroundColor,
-    imageSrc,
-    width,
-    height,
-    link,
-  } = cardData;
+  const { title, backgroundColor, imageSrc, width, height, link } = cardData;
 
   return (
-    <Link href={link} className="flex flex-col grow justify-center text-2xl font-bold text-white relative">
-      <div className={`flex p-6 w-full text-2xl font-bold text-white ${backgroundColor} ${height} rounded-3xl overflow-hidden max-md:px-5 max-md:pt-10`}>
-        <h2 className="mt-auto z-10">
-          {title}
-        </h2>
-        <Image 
+    <Link
+      href={link}
+      className="relative flex grow flex-col justify-center text-2xl font-bold text-white"
+    >
+      <div
+        className={`flex w-full p-6 text-2xl font-bold text-white ${backgroundColor} ${height} overflow-hidden rounded-3xl max-md:px-5 max-md:pt-10`}
+      >
+        <h2 className="z-10 mt-auto">{title}</h2>
+        <Image
           fill
           sizes="(min-width: 1024px) 66vw, 100vw"
-          src={imageSrc} 
-          alt={title} 
-          className="absolute top-0 left-0 w-full h-full object-cover z-0 rounded-3xl" 
+          src={imageSrc}
+          alt={title}
+          className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover"
         />
       </div>
     </Link>

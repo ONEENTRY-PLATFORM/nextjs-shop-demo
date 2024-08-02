@@ -13,7 +13,10 @@ const CalendarComponent: React.FC = () => {
       <MonthSelector month={selectedMonth} year={selectedYear} />
       <CalendarGrid />
       <TimeSlots />
-      <button className="mt-auto w-[267px] max-w-full self-center rounded-[30px] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5">
+      <button
+        type="button"
+        className="mt-auto w-[267px] max-w-full self-center rounded-[30px] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
+      >
         Apply
       </button>
     </>

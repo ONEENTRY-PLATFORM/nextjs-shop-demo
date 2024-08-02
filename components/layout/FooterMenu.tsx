@@ -16,6 +16,8 @@ const FooterMenu: React.FC<FooterProps> = ({ logoSrc }) => {
         <Image
           loading="lazy"
           src={logoSrc}
+          width={250}
+          height={70}
           alt="Company logo"
           className="aspect-[3.57] w-[253px] max-w-full shrink-0 max-sm:mb-5"
         />

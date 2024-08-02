@@ -1,8 +1,9 @@
-import React from "react";
+import Image from 'next/image';
+import React from 'react';
 
 const SearchBar: React.FC = () => {
   return (
-    <form className="flex flex-row grow shrink-0 gap-5 justify-end items-center px-7 my-auto ml-24 bg-white border border-gray-400 border-solid basis-0 h-[60px] rounded-[30px] w-fit max-md:px-5 max-md:max-w-full">
+    <form className="my-auto ml-24 flex h-[60px] w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-gray-400 bg-white px-7 max-md:max-w-full max-md:px-5">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
@@ -11,16 +12,19 @@ const SearchBar: React.FC = () => {
         id="search"
         placeholder="Search"
         name="search"
-        className="self-stretch w-full h-auto text-lg border-none max-md:px-5 max-md:max-w-full"
+        className="h-auto w-full self-stretch border-none text-lg max-md:max-w-full max-md:px-5"
       />
       <button
         type="submit"
-        className="box-border flex relative flex-col shrink-0 p-2.5 m-auto"
+        className="relative m-auto box-border flex shrink-0 flex-col p-2.5"
       >
+        search
         <Image
+          fill
+          sizes="(min-width: 1024px) 66vw, 100vw"
           loading="lazy"
           src="/icons/search.svg"
-          className="w-6 aspect-square"
+          className="aspect-square w-6"
           alt=""
         />
       </button>

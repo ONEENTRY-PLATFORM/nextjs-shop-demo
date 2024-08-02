@@ -10,7 +10,9 @@ const BackButton: React.FC = () => (
     <Image
       loading="lazy"
       src="/icons/arrow-back.svg"
-      className="aspect-[1.3] w-[26px] fill-neutral-600"
+      width={26}
+      height={26}
+      className="aspect-square w-[26px] fill-neutral-600"
       alt=""
     />
   </button>
