@@ -18,6 +18,7 @@ export const useGetLocales = () => {
       try {
         const result = await api.Locales.getLocales();
         setLocales(result);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setError(e.message);
       }

@@ -12,7 +12,7 @@ type UseGetFormProps = {
   marker: string;
 };
 
-const notEditableTypes: { [key: string]: any } = {
+const notEditableTypes: { [key: string]: unknown } = {
   button: false,
   spam: false,
   null: true,
@@ -66,6 +66,7 @@ export const useGetForm = ({ marker }: UseGetFormProps) => {
       }
     })();
     setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLanguage, refetch]);
   return {
     loading,

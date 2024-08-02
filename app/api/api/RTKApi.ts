@@ -52,7 +52,7 @@ export const RTKApi = createApi({
         }
       },
     }),
-    getMe: build.query<IUserEntity, {}>({
+    getMe: build.query<IUserEntity, object>({
       queryFn: async () => {
         try {
           const result = await api.Users.getUser('en_US');
@@ -62,7 +62,7 @@ export const RTKApi = createApi({
         }
       },
     }),
-    getAccounts: build.query<IAccountsEntity[], {}>({
+    getAccounts: build.query<IAccountsEntity[], object>({
       queryFn: async () => {
         try {
           const result = await api.Payments.getAccounts();
@@ -103,6 +103,7 @@ export const RTKApi = createApi({
       },
     }),
     getSingleOrder: build.query<undefined, { id: string }>({
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       queryFn: async ({ id }) => {
         try {
           return { data: undefined };

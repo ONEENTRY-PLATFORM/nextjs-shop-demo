@@ -25,11 +25,13 @@ export const useGetProduct = ({ id }: UseGetProductProps) => {
         try {
           const result = await api.Products.getProductById(id, activeLanguage);
           result && setProduct(result);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
           setError(e?.message);
         }
         setLoading(false);
       })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLanguage, refetch]);
 
   return {

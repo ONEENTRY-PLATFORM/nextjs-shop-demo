@@ -14,7 +14,7 @@ type UseGetMenuProps = {
 export const useGetMenu = ({ marker }: UseGetMenuProps) => {
   const [menu, setMenu] = useState<IMenusEntity>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any>('');
+  const [error, setError] = useState<unknown>('');
   const { activeLanguage } = useContext(LanguageContext);
 
   useEffect(() => {
@@ -24,11 +24,12 @@ export const useGetMenu = ({ marker }: UseGetMenuProps) => {
         const result = await api.Menus.getMenusByMarker(marker, activeLanguage);
         setMenu(result);
         setLoading(false);
-      } catch (e: any) {
+      } catch (e: unknown) {
         setError(e);
         setLoading(false);
       }
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLanguage]);
 
   return {

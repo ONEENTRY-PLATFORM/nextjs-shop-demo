@@ -18,6 +18,7 @@ export const useGetRelatedProducts = ({ id }: useGetRelatedProductsProps) => {
   const { activeLanguage } = useContext(LanguageContext);
   const [refetch, setRefetch] = useState(false);
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     id &&
       (async () => {
         setLoading(true);
@@ -27,7 +28,10 @@ export const useGetRelatedProducts = ({ id }: useGetRelatedProductsProps) => {
             activeLanguage,
           );
           setProducts(result);
-        } catch (e) {}
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (e) {
+          /** */
+        }
         setLoading(false);
       })();
   }, [refetch, activeLanguage, id]);

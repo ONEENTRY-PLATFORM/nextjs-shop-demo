@@ -29,8 +29,8 @@ export const useGetStatus = ({ marker }: UseGetStatusProps) => {
           activeLanguage,
         );
         setStatus(result);
-      } catch (e: any) {
-        setError(e);
+      } catch (e: unknown) {
+        setError((e as Error).message);
       }
       setLoading(false);
     })();

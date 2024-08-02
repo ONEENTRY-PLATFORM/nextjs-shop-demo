@@ -37,7 +37,10 @@ export const favoritesSlice = createSlice({
 export const { addFavorites, removeFavorites } = favoritesSlice.actions;
 
 export const selectIsFavorites = (
-  state: CombinedState<{ cartReducer: {}; favoritesReducer: InitialStateType }>,
+  state: CombinedState<{
+    cartReducer: object;
+    favoritesReducer: InitialStateType;
+  }>,
   id: number,
 ): boolean => {
   const added = state.favoritesReducer.products.findIndex(

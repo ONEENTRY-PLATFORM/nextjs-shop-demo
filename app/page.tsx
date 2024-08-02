@@ -14,7 +14,9 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-between gap-16 px-5 py-8">
       {/* <ProductPage /> */}
-      <PopupLayout children={<VerificationForm />} />
+      <PopupLayout>
+        <VerificationForm />
+      </PopupLayout>
     </main>
   );
 }

@@ -20,12 +20,14 @@ export const useSetPaymentSession = () => {
         const result = await api.Payments.createSession(orderId, 'session');
         console.log(result);
         session.current = result;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         console.log(e);
         setError((e as Error).message);
       }
       setLoading(false);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [refetch],
   );
 

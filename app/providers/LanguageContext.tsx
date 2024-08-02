@@ -8,7 +8,7 @@ import { LanguageEnum } from '../types/enum';
 
 type ContextProps = {
   activeLanguage: LanguageEnum;
-  languagesData: any;
+  languagesData: unknown;
   setActiveLanguage: Dispatch<LanguageEnum>;
 };
 export const LanguageContext = createContext<ContextProps>({

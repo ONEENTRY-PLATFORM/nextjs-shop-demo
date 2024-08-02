@@ -13,7 +13,7 @@ export const useSetForm = () => {
       try {
         const res = await api.FormData.postFormsData(data);
         return res;
-      } catch (e: any) {
+      } catch (e: unknown) {
         return e;
       }
     };

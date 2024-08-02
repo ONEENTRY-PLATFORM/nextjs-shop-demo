@@ -27,11 +27,12 @@ export const useGetProductsByBlockMarker = ({ marker }: Props) => {
           activeLanguage,
         );
         products.current = result;
-      } catch (e: any) {
+      } catch (e: unknown) {
         setError((e as Error).message);
       }
       setLoading(false);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLanguage]);
   return {
     loading,

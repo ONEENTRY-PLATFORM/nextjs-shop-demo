@@ -18,11 +18,6 @@ export const cartSlice = createSlice({
       state,
       action: PayloadAction<IProductsEntity & { selected: boolean }>,
     ) {
-      if (
-        !action?.payload?.attributeValues?.currency &&
-        !action.payload?.price
-      ) {
-      }
       const index = state.products.findIndex(
         (product) => product.id === action.payload.id,
       );
@@ -78,22 +73,45 @@ export const selectCartItems = (
 ) => state.cartReducer.products;
 
 export const selectCartItemWithIdLength = (
-  state: CombinedState<{ cartReducer: InitialStateType; favoritesReducer: {} }>,
+  state: CombinedState<{
+    cartReducer: InitialStateType;
+    favoritesReducer: object;
+  }>,
   id: number,
-) => state.cartReducer.products.filter((item) => item.id === id)?.length;
+) =>
+  state.cartReducer.products.filter((item: { id: number }) => item.id === id)
+    ?.length;
 
 export const selectBasketCount = (
-  state: CombinedState<{ cartReducer: InitialStateType; favoritesReducer: {} }>,
+  state: CombinedState<{
+    cartReducer: InitialStateType;
+    favoritesReducer: object;
+  }>,
 ) => state.cartReducer.products.length;
 
 export const selectBasketTotal = (
-  state: CombinedState<{ cartReducer: InitialStateType; favoritesReducer: {} }>,
+  state: CombinedState<{
+    cartReducer: InitialStateType;
+    favoritesReducer: object;
+  }>,
 ) =>
-  state.cartReducer.products.reduce((total, item) => {
-    if (item.selected) {
-      total += item.price - (item?.attributeValues?.sale?.value || 0);
-    }
-    return total;
-  }, 0);
+  state.cartReducer.products.reduce(
+    (
+      total: number,
+      item: {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        selected: any;
+        price: number;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        attributeValues: { sale: { value: any } };
+      },
+    ) => {
+      if (item.selected) {
+        total += item.price - (item?.attributeValues?.sale?.value || 0);
+      }
+      return total;
+    },
+    0,
+  );
 
 export default cartSlice.reducer;

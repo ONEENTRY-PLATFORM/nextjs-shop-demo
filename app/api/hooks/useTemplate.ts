@@ -1,6 +1,6 @@
 'use client';
 
-type TemplateProps = {};
+type TemplateProps = object;
 
 // eslint-disable-next-line no-empty-pattern
 export const Template = ({}: TemplateProps) => {

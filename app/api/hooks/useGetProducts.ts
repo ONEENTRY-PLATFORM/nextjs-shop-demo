@@ -83,6 +83,7 @@ export const useGetProducts = ({
 
   useEffect(() => {
     (async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       (offset < 1 || disableLoading) && setLoading(true);
       let result = await findProducts();
       result = result?.filter((res) => {
@@ -98,6 +99,7 @@ export const useGetProducts = ({
       }
       setLoading(false);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [limit, activeLanguage, filters, searchValue, offset, refresh]);
 
   return {

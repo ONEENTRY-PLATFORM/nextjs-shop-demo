@@ -7,7 +7,6 @@ import { useContext, useEffect, useState } from 'react';
 // eslint-disable-next-line import/no-cycle
 import { LanguageContext } from '../../providers/LanguageContext';
 import { api } from '../api/api';
-// import { logJSON } from "../../utils/logJSON";
 
 type UseGetBlockByMarkerProps = {
   marker: string | undefined;
@@ -28,11 +27,13 @@ export const useGetBlockByMarker = ({ marker }: UseGetBlockByMarkerProps) => {
             activeLanguage,
           );
           setBlock(result);
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
           /* empty */
         }
         setLoading(false);
       })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, activeLanguage]);
   return {
     loading,

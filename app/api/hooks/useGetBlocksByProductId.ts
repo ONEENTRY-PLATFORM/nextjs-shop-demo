@@ -14,6 +14,7 @@ export const useGetBlocksByProductId = ({
   productId,
 }: UseGetBlocksByProductIdProps) => {
   const [loading, setLoading] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [error, setError] = useState<string | undefined>();
   const [blocks, setBlocks] = useState<IPositionBlock[]>();
   const [refresh, setRefresh] = useState<number>(0);
@@ -36,7 +37,7 @@ export const useGetBlocksByProductId = ({
         );
         const result = await preresult.json();
         setBlocks(result);
-      } catch (e: any) {
+      } catch (e: unknown) {
         setError((e as Error).message);
       }
       setLoading(false);

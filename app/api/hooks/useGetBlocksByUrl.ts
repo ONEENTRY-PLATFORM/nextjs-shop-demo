@@ -28,9 +28,13 @@ export const useGetBlocksByUrl = ({ pageUrl }: UseGetBlockProps) => {
             activeLanguage,
           );
           setBlocks(result);
-        } catch (e) {}
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (e) {
+          /** */
+        }
         setLoading(false);
       })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, activeLanguage]);
   return {
     loading,
