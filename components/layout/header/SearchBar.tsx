@@ -12,13 +12,13 @@ const SearchBar: React.FC = () => {
         id="search"
         placeholder="Search"
         name="search"
-        className="h-auto w-full self-stretch border-none text-lg max-md:max-w-full max-md:px-5"
+        className="h-auto w-full self-stretch border-none text-lg max-md:max-w-full max-md:px-5 outline-none"
       />
       <button
         type="submit"
         className="relative m-auto box-border flex shrink-0 flex-col p-2.5"
       >
-        search
+        <span className='sr-only'>search</span>
         <Image
           fill
           sizes="(min-width: 1024px) 66vw, 100vw"

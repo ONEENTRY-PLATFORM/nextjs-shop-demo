@@ -1,6 +1,5 @@
 {
   "extends": [
-    "airbnb-base",
     "next/core-web-vitals", 
     "plugin:prettier/recommended"
   ],
@@ -23,10 +22,10 @@
       ],
       "extends": [
         "plugin:tailwindcss/recommended",
-        "airbnb",
-        "airbnb-typescript",
         "next/core-web-vitals",
-        "plugin:prettier/recommended"
+        "plugin:prettier/recommended", 
+        "eslint:recommended", 
+        "plugin:@typescript-eslint/recommended"
       ],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
@@ -57,11 +56,7 @@
         "simple-import-sort/imports": "error",
         "simple-import-sort/exports": "error",
         "import/order": "off",
-        "@typescript-eslint/no-unused-vars": 1,
-        "unused-imports/no-unused-vars": [
-          "error",
-          { "argsIgnorePattern": "^_" }
-        ]
+        "@typescript-eslint/no-unused-vars": 1
       }
     }
   ]
