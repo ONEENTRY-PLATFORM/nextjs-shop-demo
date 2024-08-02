@@ -1,5 +1,6 @@
-import React from "react";
-import NavigationItem from "./NavigationItem";
+import React from 'react';
+
+import NavigationItem from './NavigationItem';
 
 interface NavigationMenuProps {
   items: Array<{
@@ -11,13 +12,13 @@ interface NavigationMenuProps {
 
 const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
   return (
-    <nav className="flex justify-center items-center px-5 text-lg font-bold uppercase bg-white text-neutral-600 max-md:px-5">
-      <div className="flex justify-center items-center py-7 max-w-full w-[1240px] max-md:px-5">
-        <ul className="flex gap-5 justify-between max-w-full w-[1053px] max-md:flex-wrap">
+    <nav className="flex items-center justify-center bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-md:px-5">
+      <div className="flex w-[1240px] max-w-full items-center justify-center py-7 max-md:px-5">
+        <ul className="flex w-[1053px] max-w-full justify-between gap-5 max-md:flex-wrap">
           {items.map((item, index) => (
             <li
               key={index}
-              className="flex gap-5 justify-between py-1 my-auto whitespace-nowrap"
+              className="my-auto flex justify-between gap-5 whitespace-nowrap py-1"
             >
               <NavigationItem
                 label={item.label}

@@ -1,7 +1,8 @@
-import React from "react";
-import ProductImage from "./ProductImage";
-import PriceDisplay from "./PriceDisplay";
-import ApplyButton from "./ApplyButton";
+import React from 'react';
+
+import ApplyButton from './ApplyButton';
+import PriceDisplay from './PriceDisplay';
+import ProductImage from './ProductImage';
 
 interface GroupCardProps {
   title: string;
@@ -15,13 +16,10 @@ const GroupCard: React.FC<GroupCardProps> = ({
   originalPrice,
 }) => {
   return (
-    <article className="flex flex-row justify-between p-4 rounded-xl bg-neutral-100">
+    <article className="flex flex-row justify-between rounded-xl bg-neutral-100 p-4">
       <div className="flex gap-2.5">
-
-        <div className="flex flex-col w-[37%]">
-          <h2 className="mb-5 text-sm leading-4 text-neutral-600">
-            {title}
-          </h2>
+        <div className="flex w-[37%] flex-col">
+          <h2 className="mb-5 text-sm leading-4 text-neutral-600">{title}</h2>
           <PriceDisplay
             currentPrice={currentPrice}
             originalPrice={originalPrice}
@@ -29,9 +27,9 @@ const GroupCard: React.FC<GroupCardProps> = ({
           <ApplyButton />
         </div>
 
-        <div className="flex flex-row w-[63%] justify-between">
+        <div className="flex w-[63%] flex-row justify-between">
           <ProductImage imageSrc="./images/catalog-img-4.svg" />
-          <div className="shrink-0 my-auto w-3 aspect-square fill-neutral-600">
+          <div className="my-auto aspect-square w-3 shrink-0 fill-neutral-600">
             +
           </div>
           <ProductImage imageSrc="./images/catalog-img-4.svg" />

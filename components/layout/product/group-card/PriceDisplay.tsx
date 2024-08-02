@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface PriceDisplayProps {
   currentPrice: number;
@@ -10,13 +10,11 @@ const PriceDisplay: React.FC<PriceDisplayProps> = ({
   originalPrice,
 }) => {
   return (
-    <div className="flex gap-2 py-1 mr-auto mb-5">
-      <div className="grow text-lg font-bold text-orange-500 leading-4">
+    <div className="mb-5 mr-auto flex gap-2 py-1">
+      <div className="grow text-lg font-bold leading-4 text-orange-500">
         ${currentPrice}
       </div>
-      <div className="text-sm leading-4 text-gray-400">
-        ${originalPrice}
-      </div>
+      <div className="text-sm leading-4 text-gray-400">${originalPrice}</div>
     </div>
   );
 };

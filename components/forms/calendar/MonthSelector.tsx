@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface MonthSelectorProps {
   month: number;
@@ -7,9 +7,8 @@ interface MonthSelectorProps {
 
 const MonthSelector: React.FC<MonthSelectorProps> = ({ month, year }) => {
   return (
-    <div className="flex gap-5 justify-between items-center py-1.5 mx-auto mb-5 w-full text-2xl">
-
-      <button className="shrink-0 self-stretch my-auto w-1.5">
+    <div className="mx-auto mb-5 flex w-full items-center justify-between gap-5 py-1.5 text-2xl">
+      <button className="my-auto w-1.5 shrink-0 self-stretch">
         <svg
           width="7"
           height="12"
@@ -26,16 +25,12 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({ month, year }) => {
         </svg>
       </button>
 
-      <div className="flex gap-5 justify-center self-stretch text-xl bg-white text-orange-500">
-        <div className="font-medium">
-          {month}
-        </div>
-        <div className="font-light">
-          {year}
-        </div>
+      <div className="flex justify-center gap-5 self-stretch bg-white text-xl text-orange-500">
+        <div className="font-medium">{month}</div>
+        <div className="font-light">{year}</div>
       </div>
 
-      <button className="shrink-0 self-stretch my-auto w-1.5">
+      <button className="my-auto w-1.5 shrink-0 self-stretch">
         <svg
           width="7"
           height="12"
@@ -51,7 +46,6 @@ const MonthSelector: React.FC<MonthSelectorProps> = ({ month, year }) => {
           />
         </svg>
       </button>
-      
     </div>
   );
 };

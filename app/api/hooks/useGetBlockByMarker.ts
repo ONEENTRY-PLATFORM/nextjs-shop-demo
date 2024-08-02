@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client';
 
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';

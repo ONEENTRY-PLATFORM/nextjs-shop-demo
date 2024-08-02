@@ -1,5 +1,5 @@
-import React from "react";
 import Link from 'next/link';
+import React from 'react';
 
 interface NavigationItemProps {
   label: string;
@@ -15,7 +15,7 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
   return (
     <Link
       href={href}
-      className="box-border flex relative flex-row items-center shrink-0 gap-2.5 text-neutral-900 hover:text-red-500"
+      className="relative box-border flex shrink-0 flex-row items-center gap-2.5 text-neutral-900 hover:text-red-500"
     >
       <div>{label}</div>
       {hasDropdown && (

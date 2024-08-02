@@ -1,30 +1,31 @@
-import React from "react";
-import RelatedItems from "../product/RelatedItems";
-import ProductsGroup from "../product/ProductsGroup";
-import Product from "../product/Product";
+import React from 'react';
+
+import Product from '../product/Product';
+import ProductsGroup from '../product/ProductsGroup';
+import RelatedItems from '../product/RelatedItems';
 
 const productsGroup = [
   {
-    imageUrl: "./images/catalog-img-4.svg",
-    setName: "Set Name",
+    imageUrl: './images/catalog-img-4.svg',
+    setName: 'Set Name',
     itemCount: 1,
-    itemNames: "",
+    itemNames: '',
     currentPrice: 2500,
     originalPrice: 3200,
   },
   {
-    imageUrl: "./images/catalog-img-4.svg",
-    setName: "Set Name",
+    imageUrl: './images/catalog-img-4.svg',
+    setName: 'Set Name',
     itemCount: 1,
-    itemNames: "",
+    itemNames: '',
     currentPrice: 2500,
     originalPrice: 3200,
   },
   {
-    imageUrl: "./images/catalog-img-4.svg",
-    setName: "Set Name",
+    imageUrl: './images/catalog-img-4.svg',
+    setName: 'Set Name',
     itemCount: 1,
-    itemNames: "",
+    itemNames: '',
     currentPrice: 2500,
     originalPrice: 3200,
   },
@@ -32,60 +33,56 @@ const productsGroup = [
 
 const relatedItems = [
   {
-    imageUrl: "./images/catalog-img-4.svg",
-    setName: "Set Name",
+    imageUrl: './images/catalog-img-4.svg',
+    setName: 'Set Name',
     itemCount: 1,
-    itemNames: "",
+    itemNames: '',
     currentPrice: 2500,
     originalPrice: 3200,
   },
   {
-    imageUrl: "./images/catalog-img-4.svg",
-    setName: "Set Name",
+    imageUrl: './images/catalog-img-4.svg',
+    setName: 'Set Name',
     itemCount: 1,
-    itemNames: "",
+    itemNames: '',
     currentPrice: 2500,
     originalPrice: 3200,
   },
   {
-    imageUrl: "./images/catalog-img-4.svg",
-    setName: "Set Name",
+    imageUrl: './images/catalog-img-4.svg',
+    setName: 'Set Name',
     itemCount: 1,
-    itemNames: "",
+    itemNames: '',
     currentPrice: 2500,
     originalPrice: 3200,
   },
   {
-    imageUrl: "./images/catalog-img-4.svg",
-    setName: "Set Name",
+    imageUrl: './images/catalog-img-4.svg',
+    setName: 'Set Name',
     itemCount: 1,
-    itemNames: "",
+    itemNames: '',
     currentPrice: 2500,
     originalPrice: 3200,
   },
   {
-    imageUrl: "./images/catalog-img-4.svg",
-    setName: "Set Name",
+    imageUrl: './images/catalog-img-4.svg',
+    setName: 'Set Name',
     itemCount: 1,
-    itemNames: "",
+    itemNames: '',
     currentPrice: 2500,
     originalPrice: 3200,
-  }
+  },
 ];
 
 const ProductPage: React.FC = () => {
-
   return (
-    <section className="box-border flex relative flex-col grow shrink-0 self-stretch mx-auto w-full max-w-[1240px]">
+    <section className="relative mx-auto box-border flex w-full max-w-[1240px] shrink-0 grow flex-col self-stretch">
       <Product />
-      <ProductsGroup 
-        title="These items are cheaper together" 
-        productsGroup={productsGroup} 
+      <ProductsGroup
+        title="These items are cheaper together"
+        productsGroup={productsGroup}
       />
-      <RelatedItems 
-        title="Features" 
-        relatedItems={relatedItems} 
-      />
+      <RelatedItems title="Features" relatedItems={relatedItems} />
     </section>
   );
 };

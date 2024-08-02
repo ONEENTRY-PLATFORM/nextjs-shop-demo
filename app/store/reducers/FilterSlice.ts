@@ -202,8 +202,8 @@ export const {
 
 export const selectAllFilters = (
   state: CombinedState<{
-    cartReducer: {};
-    favoritesReducer: {};
+    cartReducer: object;
+    favoritesReducer: object;
     filterReducer: InitialStateType;
   }>,
 ) => {
@@ -212,14 +212,14 @@ export const selectAllFilters = (
 
 export const selectFiltersByMarker = (
   state: CombinedState<{
-    cartReducer: {};
-    favoritesReducer: {};
+    cartReducer: object;
+    favoritesReducer: object;
     filterReducer: InitialStateType;
   }>,
-  marker: String,
+  marker: string,
 ) => {
   return state.filterReducer.filters.filter(
-    (filter) => filter.attributeMarker === marker,
+    (filter: { attributeMarker: string }) => filter.attributeMarker === marker,
   );
 };
 

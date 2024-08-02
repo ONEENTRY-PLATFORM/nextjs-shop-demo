@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface FormInputProps {
   type: string;
@@ -16,13 +16,13 @@ const FormInput: React.FC<FormInputProps> = ({
   required,
 }) => {
   return (
-    <div className="box-border flex relative flex-col shrink-0">
+    <div className="relative box-border flex shrink-0 flex-col">
       <label className="text-base text-gray-400">{label}</label>
       <input
         type={type}
         id={name}
         placeholder={placeholder}
-        className="relative py-3 text-base leading-5 border-b border-solid border-[none] border-b-stone-300"
+        className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
         required={required}
       />
     </div>

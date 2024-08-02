@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface RatingBarProps {
   value: number;
@@ -7,12 +7,12 @@ interface RatingBarProps {
 
 const RatingBar: React.FC<RatingBarProps> = ({ value, maxWidth }) => (
   <div
-    className="flex flex-col justify-center my-auto"
+    className="my-auto flex flex-col justify-center"
     style={{ width: maxWidth }}
   >
     <div className="flex flex-col justify-center rounded-md bg-neutral-100">
       <div
-        className="shrink-0 h-2 bg-yellow-500 rounded-md"
+        className="h-2 shrink-0 rounded-md bg-yellow-500"
         style={{ width: `${value}%` }}
       />
     </div>

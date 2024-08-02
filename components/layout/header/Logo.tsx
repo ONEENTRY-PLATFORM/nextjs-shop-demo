@@ -1,14 +1,18 @@
-import Link from "next/link";
-import Image from "next/image";
+import Image from 'next/image';
+import Link from 'next/link';
 
 const Logo: React.FC = () => {
   return (
-    <Link href="/" prefetch={true} className="relative w-full max-w-[300px] h-[80px]">
+    <Link
+      href="/"
+      prefetch={true}
+      className="relative h-[80px] w-full max-w-[300px]"
+    >
       <Image
         className="object-contain"
         fill
-        alt={""}
-        src={"/images/logo-300x80.svg"}
+        alt={''}
+        src={'/images/logo-300x80.svg'}
         priority={true}
       />
     </Link>

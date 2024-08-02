@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 const ClosePopup = () => {
   return (
-    <button className="shrink-0 w-10 aspect-square flex items-center justify-center rounded-full bg-[#EEEFF0]">
+    <button className="flex aspect-square w-10 shrink-0 items-center justify-center rounded-full bg-[#EEEFF0]">
       <svg
         width="14"
         height="14"

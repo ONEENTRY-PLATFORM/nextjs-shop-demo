@@ -1,5 +1,6 @@
-import React from "react";
-import ProductCard from "../product/product-card/ProductCard";
+import React from 'react';
+
+import ProductCard from '../product/product-card/ProductCard';
 
 interface GridLayoutProps {
   items: Array<{ id: number; data: Record<string, unknown> }>;
@@ -7,21 +8,22 @@ interface GridLayoutProps {
 
 const GridItem: React.FC = () => {
   const product = {
-    imageUrl: "",
-    setName: "",
+    imageUrl: '',
+    setName: '',
     itemCount: 10,
-    itemNames: "",
+    itemNames: '',
     currentPrice: 1200,
     originalPrice: 2350,
   };
 
   return (
-    <div className="box-border flex relative flex-col shrink-0">
+    <div className="relative box-border flex shrink-0 flex-col">
       <ProductCard product={product} />
     </div>
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const GridLayout: React.FC<GridLayoutProps> = ({ items }) => {
   const gridItems = Array.from({ length: 10 }, (_, index) => ({
     id: index + 1,
@@ -29,9 +31,9 @@ const GridLayout: React.FC<GridLayoutProps> = ({ items }) => {
   }));
 
   return (
-    <div className="box-border flex relative flex-col shrink-0 px-5 py-16 w-screen min-h-[100px] ml-[calc(50%_-_50vw)]">
-      <section className="box-border flex relative flex-col grow shrink-0 self-stretch px-5 py-16 mx-auto w-full max-w-[1200px] min-h-[100px]">
-        <div className="grid gap-5 w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] max-md:w-full">
+    <div className="relative ml-[calc(50%_-_50vw)] box-border flex min-h-[100px] w-screen shrink-0 flex-col px-5 py-16">
+      <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-[1200px] shrink-0 grow flex-col self-stretch px-5 py-16">
+        <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
           {gridItems.map((item) => (
             <GridItem key={item.id} />
           ))}

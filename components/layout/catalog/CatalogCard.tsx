@@ -14,6 +14,7 @@ interface CatalogGridProps {
 }
 
 const CatalogCard: React.FC<CatalogGridProps> = ({ cardData }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { title, backgroundColor, imageSrc, width, height, link } = cardData;
 
   return (

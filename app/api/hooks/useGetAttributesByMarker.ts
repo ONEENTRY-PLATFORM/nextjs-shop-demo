@@ -30,11 +30,13 @@ export const useGetAttributesByMarker = ({
           activeLanguage,
         );
         setAttributes(result);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setError((e as Error).message);
       }
       setLoading(false);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLanguage, refresh]);
   return {
     loading,

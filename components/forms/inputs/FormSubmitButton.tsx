@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface FormSubmitButtonProps {
   title: string;
@@ -10,7 +10,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({ title }) => {
   return (
     <button
       type="submit"
-      className="flex justify-center items-center self-center px-5 py-4 mt-auto max-w-full text-base font-medium text-white uppercase bg-orange-500 border border-none border-[black] rounded-[30px] w-[282px] max-md:px-5 max-md:mt-10"
+      className="mt-auto flex w-[282px] max-w-full items-center justify-center self-center rounded-[30px] border border-none border-[black] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
     >
       {title}
     </button>
