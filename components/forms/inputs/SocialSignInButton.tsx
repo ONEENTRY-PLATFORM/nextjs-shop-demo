@@ -16,6 +16,8 @@ const SocialSignInButton: React.FC<SocialSignInButtonProps> = ({
       className="relative box-border flex shrink-0 flex-col"
     >
       <Image
+        width={30}
+        height={30}
         loading="lazy"
         src={imageSrc}
         alt={alt}

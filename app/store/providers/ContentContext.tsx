@@ -3,7 +3,10 @@ import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInter
 import type { ReactNode } from 'react';
 import { createContext, useEffect } from 'react';
 
-import { useGetBlockByMarker, useGetSingleAttributeByMarkerSet } from '../../api';
+import {
+  useGetBlockByMarker,
+  useGetSingleAttributeByMarkerSet,
+} from '../../api';
 import { useAppDispatch } from '../hooks';
 import type { ContentType } from '../reducers/SystemContentSlice';
 import { addContent } from '../reducers/SystemContentSlice';

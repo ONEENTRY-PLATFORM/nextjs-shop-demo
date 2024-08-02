@@ -8,6 +8,7 @@ const PaymentForm: React.FC = () => {
   return (
     <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
       <Image
+        fill
         loading="lazy"
         src="/images/card.svg"
         alt=""

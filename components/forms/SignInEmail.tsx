@@ -1,8 +1,20 @@
 import React from 'react';
 
+import CreateAccountButton from './inputs/CreateAccountButton';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
+
+const socialButtons = [
+  {
+    src: '/icons/google.svg',
+    alt: 'Social sign-in option 1',
+  },
+  {
+    src: '/icons/google.svg',
+    alt: 'Social sign-in option 2',
+  },
+];
 
 const SignInEmail: React.FC = () => {
   return (
@@ -45,16 +57,16 @@ const SignInEmail: React.FC = () => {
       </p>
 
       <div className="mx-auto flex justify-between gap-5">
-        <SocialSignInButton imageSrc="" alt="Sign In Option 1" />
-        <SocialSignInButton imageSrc="" alt="Sign In Option 2" />
+        {socialButtons.map((button, index) => (
+          <SocialSignInButton
+            key={index}
+            imageSrc={button.src}
+            alt={button.alt}
+          />
+        ))}
       </div>
 
-      <button
-        type="button"
-        className="self-stretch rounded-[30px] border-2 border-solid border-orange-500 px-5 py-3 text-lg font-bold text-orange-500 max-md:max-w-full max-md:px-5"
-      >
-        CREATE AN ACCOUNT
-      </button>
+      <CreateAccountButton title="Create AN Account" icon={''} class={''} />
     </form>
   );
 };

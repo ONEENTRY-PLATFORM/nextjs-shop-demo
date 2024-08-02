@@ -1,5 +1,6 @@
 import React from 'react';
 
+import CreateAccountButton from './inputs/CreateAccountButton';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
@@ -65,12 +66,7 @@ const SignInPhone: React.FC = () => {
         ))}
       </div>
 
-      <button
-        type="button"
-        className="self-stretch rounded-[30px] border-2 border-solid border-orange-500 px-16 py-5 text-lg font-bold text-orange-500 max-md:max-w-full max-md:px-5"
-      >
-        CREATE AN ACCOUNT
-      </button>
+      <CreateAccountButton title="Create Account" icon={''} class={''} />
     </form>
   );
 };
