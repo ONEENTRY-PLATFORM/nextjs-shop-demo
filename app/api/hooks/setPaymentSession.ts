@@ -1,11 +1,12 @@
-"use client"
+'use client';
 
-import {useCallback, useRef, useState} from 'react';
-import {
-  //ISessionBody,
+import type {
+  // ISessionBody,
   ISessionEntity,
 } from 'oneentry/dist/payments/paymentsInterfaces';
-import {api} from '../api/api';
+import { useCallback, useRef, useState } from 'react';
+
+import { api } from '../api/api';
 
 export const useSetPaymentSession = () => {
   const [loading, setLoading] = useState<boolean>(false);

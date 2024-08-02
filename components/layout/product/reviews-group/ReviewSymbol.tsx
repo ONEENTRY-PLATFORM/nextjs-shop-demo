@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface ReviewSymbolProps {
   // Add any necessary props here
@@ -6,7 +6,7 @@ interface ReviewSymbolProps {
 
 const ReviewSymbol: React.FC<ReviewSymbolProps> = () => {
   return (
-    <article className="box-border flex relative flex-col shrink-0">
+    <article className="relative box-border flex shrink-0 flex-col">
       {/* Content for the review symbol */}
     </article>
   );

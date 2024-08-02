@@ -1,50 +1,53 @@
-import {createApi, fakeBaseQuery} from '@reduxjs/toolkit/query/react';
-import {api} from './api';
-import {IPositionBlock} from 'oneentry/dist/pages/pagesInterfaces';
-import {IAuthProvidersEntity} from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import {IFormsEntity} from 'oneentry/dist/forms/formsInterfaces';
-import {IUserEntity} from 'oneentry/dist/users/usersInterfaces';
-import {
+import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
+import type {
+  IOrdersByMarkersEntity,
+  IOrdersEntity,
+} from 'oneentry/dist/orders/ordersInterfaces';
+import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
+import type {
   IAccountsEntity,
   ISessionEntity,
 } from 'oneentry/dist/payments/paymentsInterfaces';
-import {IOrdersEntity} from 'oneentry/dist/orders/ordersInterfaces';
-import {IOrdersByMarkersEntity} from 'oneentry/dist/orders/ordersInterfaces';
+import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
+
+import { api } from './api';
 
 export const RTKApi = createApi({
   reducerPath: 'api',
   baseQuery: fakeBaseQuery(),
-  endpoints: build => ({
-    getBlocksByPageUrl: build.query<IPositionBlock[], {pageUrl: string; activeLang: string}>({
-      queryFn: async ({pageUrl, activeLang}) => {
+  endpoints: (build) => ({
+    getBlocksByPageUrl: build.query<IPositionBlock[],{ pageUrl: string; activeLang: string }>({
+      queryFn: async ({ pageUrl, activeLang }) => {
         try {
           const result = await api.Pages.getBlocksByPageUrl(
             pageUrl,
             activeLang,
           );
-          return {data: result};
+          return { data: result };
         } catch (e: any) {
-          return {error: e.message};
+          return { error: e.message };
         }
       },
     }),
     getAuthProviders: build.query<IAuthProvidersEntity[], string>({
-      queryFn: async activeLang => {
+      queryFn: async (activeLang) => {
         try {
           const result = await api.AuthProvider.getAuthProviders(activeLang);
-          return {data: result};
+          return { data: result };
         } catch (e: any) {
-          return {error: e.message};
+          return { error: e.message };
         }
       },
     }),
-    getFormByMarker: build.query<IFormsEntity, {marker: string}>({
-      queryFn: async ({marker}) => {
+    getFormByMarker: build.query<IFormsEntity, { marker: string }>({
+      queryFn: async ({ marker }) => {
         try {
           const result = await api.Forms.getFormByMarker(marker);
-          return {data: result};
+          return { data: result };
         } catch (e: any) {
-          return {error: e.message};
+          return { error: e.message };
         }
       },
     }),
@@ -52,9 +55,9 @@ export const RTKApi = createApi({
       queryFn: async () => {
         try {
           const result = await api.Users.getUser('en_US');
-          return {data: result};
+          return { data: result };
         } catch (e: any) {
-          return {error: e.message};
+          return { error: e.message };
         }
       },
     }),
@@ -62,48 +65,48 @@ export const RTKApi = createApi({
       queryFn: async () => {
         try {
           const result = await api.Payments.getAccounts();
-          return {data: result};
+          return { data: result };
         } catch (e: any) {
-          return {error: e.message};
+          return { error: e.message };
         }
       },
     }),
-    getOrderStorageByMarker: build.query<IOrdersEntity, {marker: string}>({
-      queryFn: async ({marker}) => {
+    getOrderStorageByMarker: build.query<IOrdersEntity, { marker: string }>({
+      queryFn: async ({ marker }) => {
         try {
           const result = await api.Orders.getOrderByMarker(marker);
-          return {data: result};
+          return { data: result };
         } catch (e: any) {
-          return {error: e.message};
+          return { error: e.message };
         }
       },
     }),
-    getPaymentSessionById: build.query<ISessionEntity, {id: number}>({
-      queryFn: async ({id}) => {
+    getPaymentSessionById: build.query<ISessionEntity, { id: number }>({
+      queryFn: async ({ id }) => {
         try {
           const result = await api.Payments.getSessionById(id);
-          return {data: result};
+          return { data: result };
         } catch (e: any) {
-          return {error: e.message};
+          return { error: e.message };
         }
       },
     }),
-    getUserOrders: build.query<IOrdersByMarkersEntity[], {marker: string}>({
-      queryFn: async ({marker}) => {
+    getUserOrders: build.query<IOrdersByMarkersEntity[], { marker: string }>({
+      queryFn: async ({ marker }) => {
         try {
           const result = await api.Orders.getAllOrdersByMarker(marker);
-          return {data: result};
+          return { data: result };
         } catch (e: any) {
-          return {error: e.message};
+          return { error: e.message };
         }
       },
     }),
-    getSingleOrder: build.query<undefined, {id: string}>({
-      queryFn: async ({id}) => {
+    getSingleOrder: build.query<undefined, { id: string }>({
+      queryFn: async ({ id }) => {
         try {
-          return {data: undefined};
+          return { data: undefined };
         } catch (e: any) {
-          return {error: e.message};
+          return { error: e.message };
         }
       },
     }),

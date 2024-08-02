@@ -1,20 +1,24 @@
-"use client";
-import {useContext, useEffect, useState} from 'react';
-import {IPagesEntity} from 'oneentry/dist/pages/pagesInterfaces';
-import {LanguageContext} from '../../providers/LanguageContext';
-import {api} from '../api/api';
+'use client';
+
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
+import { useContext, useEffect, useState } from 'react';
+
+// eslint-disable-next-line import/no-cycle
+import { LanguageContext } from '../../providers/LanguageContext';
+import { api } from '../api/api';
 
 type UseGetPageProps = {
   pageUrl: string | undefined;
 };
 
-export const useGetPage = ({pageUrl}: UseGetPageProps) => {
+export const useGetPage = ({ pageUrl }: UseGetPageProps) => {
   const [page, setPage] = useState<IPagesEntity>();
   const [loading, setLoading] = useState<boolean>(false);
   const [refresh, setRefresh] = useState(false);
-  const {activeLanguage} = useContext(LanguageContext);
+  const { activeLanguage } = useContext(LanguageContext);
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     pageUrl &&
       (async () => {
         setLoading(true);

@@ -1,8 +1,10 @@
-"use client";
+'use client';
 
-import {useContext, useEffect, useState} from 'react';
-import {LanguageContext} from '../../providers/LanguageContext';
-import {IPositionBlock} from 'oneentry/dist/pages/pagesInterfaces';
+import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
+import { useContext, useEffect, useState } from 'react';
+
+// eslint-disable-next-line import/no-cycle
+import { LanguageContext } from '../../providers/LanguageContext';
 
 type UseGetBlocksByProductIdProps = {
   productId?: string | number;
@@ -15,7 +17,7 @@ export const useGetBlocksByProductId = ({
   const [error, setError] = useState<string | undefined>();
   const [blocks, setBlocks] = useState<IPositionBlock[]>();
   const [refresh, setRefresh] = useState<number>(0);
-  const {activeLanguage} = useContext(LanguageContext);
+  const { activeLanguage } = useContext(LanguageContext);
   useEffect(() => {
     (async () => {
       if (!productId) {

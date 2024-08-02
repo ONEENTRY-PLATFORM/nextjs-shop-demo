@@ -1,12 +1,14 @@
-"use client";
-import {useEffect, useState} from 'react';
-import {IPageConfig} from 'oneentry/dist/pages/pagesInterfaces';
-import {api} from '../api/api';
+'use client';
+
+import type { IPageConfig } from 'oneentry/dist/pages/pagesInterfaces';
+import { useEffect, useState } from 'react';
+
+import { api } from '../api/api';
 
 type UseGetConfigProps = {
   pageUrl?: string;
 };
-export const useGetConfig = ({pageUrl}: UseGetConfigProps) => {
+export const useGetConfig = ({ pageUrl }: UseGetConfigProps) => {
   const [config, setConfig] = useState<IPageConfig | null>(null);
   const [limit, setLimit] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -14,6 +16,7 @@ export const useGetConfig = ({pageUrl}: UseGetConfigProps) => {
   const [numColumns, setNumColumns] = useState<number>(1);
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     pageUrl &&
       (async () => {
         setLoading(true);

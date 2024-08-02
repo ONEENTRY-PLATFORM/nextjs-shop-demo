@@ -1,7 +1,9 @@
-"use client";
-import {useEffect, useState} from 'react';
-import {ILocalEntity} from 'oneentry/dist/locales/localesInterfaces';
-import {api} from '../api/api';
+'use client';
+
+import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
+import { useEffect, useState } from 'react';
+
+import { api } from '../api/api';
 
 // type UseGetLocalesProps = {};
 

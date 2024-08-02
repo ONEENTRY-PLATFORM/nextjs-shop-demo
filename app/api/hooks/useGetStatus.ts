@@ -1,18 +1,21 @@
-"use client";
-import {useContext, useEffect, useState} from 'react';
-import {IProductStatusEntity} from 'oneentry/dist/product-statuses/productStatusesInterfaces';
-import {api} from '../api/api';
-import {LanguageContext} from '../../providers/LanguageContext';
+'use client';
+
+import type { IProductStatusEntity } from 'oneentry/dist/product-statuses/productStatusesInterfaces';
+import { useContext, useEffect, useState } from 'react';
+
+// eslint-disable-next-line import/no-cycle
+import { LanguageContext } from '../../providers/LanguageContext';
+import { api } from '../api/api';
 
 type UseGetStatusProps = {
   marker?: string;
 };
 
-export const useGetStatus = ({marker}: UseGetStatusProps) => {
+export const useGetStatus = ({ marker }: UseGetStatusProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [status, setStatus] = useState<IProductStatusEntity>();
-  const {activeLanguage} = useContext(LanguageContext);
+  const { activeLanguage } = useContext(LanguageContext);
 
   useEffect(() => {
     setLoading(true);
@@ -32,7 +35,7 @@ export const useGetStatus = ({marker}: UseGetStatusProps) => {
       setLoading(false);
     })();
   }, [activeLanguage, marker]);
-  
+
   return {
     loading,
     error,

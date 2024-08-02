@@ -1,17 +1,20 @@
-"use client";
-import {useContext, useEffect, useRef, useState} from 'react';
-import {api} from '../api/api';
-import {LanguageContext} from '../../providers/LanguageContext';
-import {IBlockProduct} from 'oneentry/dist/blocks/blocksInterfaces';
+'use client';
+
+import type { IBlockProduct } from 'oneentry/dist/blocks/blocksInterfaces';
+import { useContext, useEffect, useRef, useState } from 'react';
+
+// eslint-disable-next-line import/no-cycle
+import { LanguageContext } from '../../providers/LanguageContext';
+import { api } from '../api/api';
 
 type Props = {
   marker?: string;
 };
-export const useGetSimilarProducts = ({marker}: Props) => {
+export const useGetSimilarProducts = ({ marker }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
   const products = useRef<IBlockProduct[]>();
-  const {activeLanguage} = useContext(LanguageContext);
+  const { activeLanguage } = useContext(LanguageContext);
   useEffect(() => {
     (async () => {
       if (!marker) {

@@ -1,11 +1,14 @@
-"use client";
-import {
+'use client';
+
+import type {
   IFilterParams,
   IProductsEntity,
 } from 'oneentry/dist/products/productsInterfaces';
-import {useContext, useEffect, useState} from 'react';
-import {LanguageContext} from '../../providers/LanguageContext';
-import {api} from '../api/api';
+import { useContext, useEffect, useState } from 'react';
+
+// eslint-disable-next-line import/no-cycle
+import { LanguageContext } from '../../providers/LanguageContext';
+import { api } from '../api/api';
 
 type UseGetProductsProps = {
   pageUrl?: string;
@@ -32,35 +35,37 @@ export const useGetProducts = ({
 }: UseGetProductsProps) => {
   const [products, setProducts] = useState<IProductsEntity[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const {activeLanguage} = useContext(LanguageContext);
+  const { activeLanguage } = useContext(LanguageContext);
   const [refresh, setRefresh] = useState<boolean>(false);
 
   const findProducts = async () => {
     if (limit && pageUrl) {
       try {
-        console.log(sortOrder + searchValue + sortKey + offset + filters + limit);
+        console.log(
+          sortOrder + searchValue + sortKey + offset + filters + limit,
+        );
 
         if (!searchValue) {
-          let expandedFilters = filters ? [...filters] : [];
+          const expandedFilters = filters ? [...filters] : [];
 
           // If availability is true, add the new filter object
           console.log(availability);
           // if (availability) {
           //   expandedFilters.push({statusMarker: 'in_stock'});
           // }
-          
+
           const res = await api.Products.getProductsByPageUrl(
             pageUrl,
             expandedFilters,
             activeLanguage,
             {
-              sortOrder: sortOrder,
-              sortKey: sortKey,
+              sortOrder,
+              sortKey,
               offset,
               limit,
             },
           );
-          
+
           return res;
         }
         if (searchValue && !filters) {
@@ -69,12 +74,10 @@ export const useGetProducts = ({
             activeLanguage,
           );
           return result.filter(
-            item => item.attributeSetIdentifier === 'product',
+            (item) => item.attributeSetIdentifier === 'product',
           );
         }
-      } catch (e) {
-        
-      }
+      } catch (e) {}
     }
   };
 
@@ -82,16 +85,15 @@ export const useGetProducts = ({
     (async () => {
       (offset < 1 || disableLoading) && setLoading(true);
       let result = await findProducts();
-      result = result?.filter(res => {
+      result = result?.filter((res) => {
         return res.isVisible;
       });
       if (result) {
         setProducts((prevState: IProductsEntity[]): IProductsEntity[] => {
           if (offset > 0) {
             return [...prevState, ...(result as IProductsEntity[])];
-          } else {
-            return result as IProductsEntity[];
           }
+          return result as IProductsEntity[];
         });
       }
       setLoading(false);

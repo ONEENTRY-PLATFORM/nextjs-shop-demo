@@ -1,20 +1,22 @@
-"use client"
+'use client';
 
-import {useContext, useEffect, useState} from 'react';
-import {LanguageContext} from '../../providers/LanguageContext';
-import {api} from '../api/api';
-import {IBlockEntity} from 'oneentry/dist/blocks/blocksInterfaces';
-//import { logJSON } from "../../utils/logJSON";
+import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
+import { useContext, useEffect, useState } from 'react';
+
+// eslint-disable-next-line import/no-cycle
+import { LanguageContext } from '../../providers/LanguageContext';
+import { api } from '../api/api';
+// import { logJSON } from "../../utils/logJSON";
 
 type UseGetBlockByMarkerProps = {
   marker: string | undefined;
 };
 
-export const useGetBlockByMarker = ({marker}: UseGetBlockByMarkerProps) => {
+export const useGetBlockByMarker = ({ marker }: UseGetBlockByMarkerProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [block, setBlock] = useState<IBlockEntity>();
   const [refetch, setRefetch] = useState(false);
-  const {activeLanguage} = useContext(LanguageContext);
+  const { activeLanguage } = useContext(LanguageContext);
   useEffect(() => {
     marker &&
       (async () => {
@@ -25,7 +27,9 @@ export const useGetBlockByMarker = ({marker}: UseGetBlockByMarkerProps) => {
             activeLanguage,
           );
           setBlock(result);
-        } catch (e) {}
+        } catch (e) {
+          /* empty */
+        }
         setLoading(false);
       })();
   }, [refetch, activeLanguage]);

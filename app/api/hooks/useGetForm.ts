@@ -1,15 +1,18 @@
-"use client";
-import {useContext, useEffect, useRef, useState} from 'react';
-import {IFormsEntity} from 'oneentry/dist/forms/formsInterfaces';
-import {LanguageContext} from '../../providers/LanguageContext';
-import {IAttributes} from 'oneentry/dist/base/utils';
-import {api} from '../api/api';
+'use client';
+
+import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
+import { useContext, useEffect, useRef, useState } from 'react';
+
+// eslint-disable-next-line import/no-cycle
+import { LanguageContext } from '../../providers/LanguageContext';
+import { api } from '../api/api';
 
 type UseGetFormProps = {
   marker: string;
 };
 
-const notEditableTypes: {[key: string]: any} = {
+const notEditableTypes: { [key: string]: any } = {
   button: false,
   spam: false,
   null: true,
@@ -23,12 +26,12 @@ export interface FormDataType {
   };
 }
 
-export const useGetForm = ({marker}: UseGetFormProps) => {
+export const useGetForm = ({ marker }: UseGetFormProps) => {
   const [form, setForm] = useState<IFormsEntity>();
   const [loading, setLoading] = useState<boolean>(false);
   const appFormData = useRef<FormDataType | null>(null);
   const [refetch, setRefetch] = useState(false);
-  const {activeLanguage} = useContext(LanguageContext);
+  const { activeLanguage } = useContext(LanguageContext);
   useEffect(() => {
     setLoading(true);
     (async () => {
@@ -46,6 +49,7 @@ export const useGetForm = ({marker}: UseGetFormProps) => {
               return obj;
             }
 
+            // eslint-disable-next-line no-param-reassign
             obj[currentValue.marker] = {
               value: '',
               valid: false,

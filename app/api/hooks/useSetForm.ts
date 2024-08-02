@@ -1,10 +1,9 @@
-"use client";
-import {useState} from 'react';
-import {IFormsPost} from 'oneentry/dist/formsData/formsDataInterfaces';
-import {api} from '../api/api';
-//import {logJSON} from '../../utils/logJSON';
+'use client';
 
-// type UseSetFormProps = {};
+import type { IFormsPost } from 'oneentry/dist/formsData/formsDataInterfaces';
+import { useState } from 'react';
+
+import { api } from '../api/api';
 
 export const useSetForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -12,10 +11,9 @@ export const useSetForm = () => {
     setLoading(true);
     const result = async () => {
       try {
-        const result = await api.FormData.postFormsData(data);
-        return result;
+        const res = await api.FormData.postFormsData(data);
+        return res;
       } catch (e: any) {
-        //logJSON(e);
         return e;
       }
     };
