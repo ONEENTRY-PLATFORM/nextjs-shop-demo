@@ -7,7 +7,7 @@ interface NavigationButtonProps {
 
 const NavigationButton: React.FC<NavigationButtonProps> = ({ direction }) => {
   const imageSrc =
-    direction === 'left' ? './icons/arrow-left.svg' : './icons/arrow-right.svg';
+    direction === 'left' ? '/icons/arrow-left.svg' : '/icons/arrow-right.svg';
   const altText = `Navigate ${direction}`;
 
   return (

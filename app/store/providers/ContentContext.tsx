@@ -25,7 +25,7 @@ export const ContentContextProvider = ({ children }: Props) => {
   });
   const dispatch = useAppDispatch();
 
-  console.log(attributes);
+  // console.log(attributes);
 
   useEffect(() => {
     if (block) {

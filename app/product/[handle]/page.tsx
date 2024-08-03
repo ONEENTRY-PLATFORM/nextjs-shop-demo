@@ -38,7 +38,7 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  console.log(params);
+  // console.log(params);
 
   if (!product) return notFound();
 
@@ -89,7 +89,7 @@ export default async function ProductPage({
 }: {
   params: { handle: string };
 }) {
-  console.log(params);
+  // console.log(params);
 
   if (!product) return notFound();
 

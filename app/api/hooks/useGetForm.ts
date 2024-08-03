@@ -61,8 +61,9 @@ export const useGetForm = ({ marker }: UseGetFormProps) => {
         );
         appFormData.current = reduced;
         setForm(result);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
-        console.log(e);
+        // console.log(e);
       }
     })();
     setLoading(false);

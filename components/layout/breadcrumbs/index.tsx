@@ -1,3 +1,6 @@
+'use client';
+
+import { usePathname, useSearchParams } from 'next/navigation';
 import React from 'react';
 
 import BackButton from './BackButton';
@@ -22,29 +25,32 @@ const breadcrumbItems = [
   },
 ];
 
-const Breadcrumbs: React.FC = () => (
-  <section
-    className="
-      mx-auto box-border flex w-full 
-      grow flex-col 
-      justify-center self-stretch border 
-      border-solid 
-      border-neutral-100 
-      bg-white px-5 py-2
-    "
-  >
-    <div
+const Breadcrumbs: React.FC = () => {
+  console.log(usePathname());
+  return (
+    <section
       className="
-      mx-auto flex w-full 
-      max-w-[1240px] flex-col justify-center 
-    "
+        mx-auto box-border flex w-full 
+        grow flex-col 
+        justify-center self-stretch border 
+        border-solid 
+        border-neutral-100 
+        bg-white px-5 py-2
+      "
     >
-      <div className="mr-auto flex gap-5">
-        <BackButton />
-        <BreadcrumbsTrail items={breadcrumbItems} />
+      <div
+        className="
+        mx-auto flex w-full 
+        max-w-[1240px] flex-col justify-center 
+      "
+      >
+        <div className="mr-auto flex gap-5">
+          <BackButton />
+          <BreadcrumbsTrail items={breadcrumbItems} />
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Breadcrumbs;

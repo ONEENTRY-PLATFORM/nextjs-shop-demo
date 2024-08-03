@@ -43,7 +43,7 @@ export type ContentType = {
   order_info_comment_placeholder: string;
   order_info_address_placeholder: string;
   terms_text: string;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
 type InitialStateType = {

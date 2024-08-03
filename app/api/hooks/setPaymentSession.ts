@@ -18,11 +18,11 @@ export const useSetPaymentSession = () => {
       setLoading(true);
       try {
         const result = await api.Payments.createSession(orderId, 'session');
-        console.log(result);
+        // console.log(result);
         session.current = result;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
-        console.log(e);
+        // console.log(e);
         setError((e as Error).message);
       }
       setLoading(false);

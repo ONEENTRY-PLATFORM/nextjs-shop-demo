@@ -41,15 +41,15 @@ export const useGetProducts = ({
   const findProducts = async () => {
     if (limit && pageUrl) {
       try {
-        console.log(
-          sortOrder + searchValue + sortKey + offset + filters + limit,
-        );
+        // console.log(
+        //   sortOrder + searchValue + sortKey + offset + filters + limit,
+        // );
 
         if (!searchValue) {
           const expandedFilters = filters ? [...filters] : [];
 
           // If availability is true, add the new filter object
-          console.log(availability);
+          // console.log(availability);
           // if (availability) {
           //   expandedFilters.push({statusMarker: 'in_stock'});
           // }
