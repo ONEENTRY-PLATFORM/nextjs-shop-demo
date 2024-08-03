@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FooterMenu from './FooterMenu';
+import FooterMenuSection from './FooterMenu';
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
@@ -10,7 +10,7 @@ export default async function Footer() {
 
   return (
     <footer className="w-full">
-      <FooterMenu logoSrc="/images/logo-250x70.svg" />
+      <FooterMenuSection logoSrc="/images/logo-250x70.svg" />
       <div className="w-full bg-black px-5 py-11 text-center text-white max-md:max-w-full max-md:px-5">
         <div className="">
           &copy; {copyrightDate} {SITE_NAME}, by{' '}

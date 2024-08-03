@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ProductCard from './product-card/ProductCard';
+import ProductCard from './product-card';
 
 interface RelatedItemsProps {
   title: string;

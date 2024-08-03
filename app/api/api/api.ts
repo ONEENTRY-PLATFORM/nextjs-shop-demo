@@ -1,9 +1,4 @@
-'use client';
-
 import { defineOneEntry } from 'oneentry';
-
-const { COMPANY_NAME, SITE_NAME } = process.env;
-console.log(COMPANY_NAME);
 
 const PROJECT_URL = 'https://react-native-course.oneentry.cloud';
 const APP_TOKEN =

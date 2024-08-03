@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ProductCard from '../product/product-card/ProductCard';
+import ProductCard from '../product/product-card';
 
 interface GridLayoutProps {
   items: Array<{ id: number; data: Record<string, unknown> }>;
