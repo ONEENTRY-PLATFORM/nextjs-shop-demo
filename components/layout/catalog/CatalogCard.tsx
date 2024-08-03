@@ -23,7 +23,7 @@ const CatalogCard: React.FC<CatalogGridProps> = ({ cardData }) => {
       className="relative flex grow flex-col justify-center text-2xl font-bold text-white"
     >
       <div
-        className={`flex w-full p-6 text-2xl font-bold text-white ${backgroundColor} ${height} overflow-hidden rounded-3xl max-md:px-5 max-md:pt-10`}
+        className={`relative flex w-full p-6 text-2xl font-bold text-white ${backgroundColor} ${height} overflow-hidden rounded-3xl max-md:px-5 max-md:pt-10`}
       >
         <h2 className="z-10 mt-auto">{title}</h2>
         <Image
