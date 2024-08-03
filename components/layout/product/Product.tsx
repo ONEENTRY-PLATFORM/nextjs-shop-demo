@@ -4,17 +4,18 @@ import ProductDescription from './ProductDescription';
 import ProductDetails from './ProductDetails';
 import ProductImage from './ProductImage';
 
-const product = {
-  productName: 'Test',
-  productType: 'productType',
-  price: 2500,
-  stock: 20,
-  description:
-    "The developers' and CMS users' vast, unique experience became the basis of HeadlessCMS OneEntry. We know what the users want, so we took into account the needs of business owners, users and developers to create our product. All the tools we've developed are aimed to improve the processes of project management.",
-  imageSrc: '/images/catalog-img-4.svg',
-};
+interface ProductProps {
+  product: {
+    productName: string;
+    productType: string;
+    price: number;
+    stock: number;
+    description: string;
+    imageSrc: string;
+  };
+}
 
-const Product: React.FC = () => {
+const Product: React.FC<ProductProps> = ({ product }) => {
   const {
     productName,
     productType,

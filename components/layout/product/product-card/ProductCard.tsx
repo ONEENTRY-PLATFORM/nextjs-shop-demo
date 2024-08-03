@@ -29,8 +29,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <article className="flex w-full flex-col items-center rounded-3xl bg-neutral-100 p-4">
       <header className="flex justify-between gap-5 self-stretch">
-        <IconButton iconSrc="./icons/heart.svg" />
-        <IconButton iconSrc="./icons/heart.svg" />
+        <IconButton iconSrc="/icons/heart.svg" />
+        <IconButton iconSrc="/icons/heart.svg" />
       </header>
 
       <div className="relative size-40">

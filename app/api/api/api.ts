@@ -2,6 +2,9 @@
 
 import { defineOneEntry } from 'oneentry';
 
+const { COMPANY_NAME, SITE_NAME } = process.env;
+console.log(COMPANY_NAME);
+
 const PROJECT_URL = 'https://react-native-course.oneentry.cloud';
 const APP_TOKEN =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmVhY3RfYXBwIiwic2VyaWFsTnVtYmVyIjoxLCJpYXQiOjE3MDA0ODAwMDYsImV4cCI6MTc0Nzk5OTk2MX0.gz3KTCITg6FhM_SwtuOZl3GsMr4MlVEPg9sw3d8Q0Po';

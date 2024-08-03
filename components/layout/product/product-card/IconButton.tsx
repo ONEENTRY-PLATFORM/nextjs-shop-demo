@@ -9,7 +9,7 @@ const IconButton: React.FC<IconButtonProps> = ({ iconSrc }) => {
     // eslint-disable-next-line jsx-a11y/control-has-associated-label
     <button
       type="button"
-      className="relative box-border flex shrink-0 flex-col"
+      className="relative box-border flex w-[26px] shrink-0 flex-col"
     >
       <Image
         fill

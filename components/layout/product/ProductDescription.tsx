@@ -10,7 +10,7 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({
   description,
 }) => {
   return (
-    <div className="flex w-2/5 grow flex-col max-md:mt-10 max-md:w-full">
+    <div className="flex w-4/12 grow flex-col max-md:mt-10 max-md:w-full">
       <div className="relative mb-6 box-border flex shrink-0 flex-col">
         <VariationsCarousel />
       </div>
