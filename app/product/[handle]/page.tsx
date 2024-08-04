@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
-import Page from '@/components/layout/pages/ProductPage';
+import Page from '@/app/product/[handle]/ProductPage';
 
 const product = {
   featuredImage: {
@@ -34,12 +34,11 @@ const product = {
 
 const HIDDEN_PRODUCT_TAG = '';
 export async function generateMetadata({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   params,
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  // console.log(params);
-
   if (!product) return notFound();
 
   const { url, width, height, altText: alt } = product.featuredImage || {};
@@ -71,26 +70,12 @@ export async function generateMetadata({
   };
 }
 
-async function RelatedProducts({ id }: { id: number }) {
-  const relatedProducts = [];
-
-  if (!relatedProducts.length) return null;
-
-  return (
-    <div className="py-8">
-      <h2 className="mb-4 text-2xl font-bold">Related Products</h2>
-      <ul className="flex w-full gap-4 overflow-x-auto pt-1">{id}</ul>
-    </div>
-  );
-}
-
 export default async function ProductPage({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   params,
 }: {
   params: { handle: string };
 }) {
-  // console.log(params);
-
   if (!product) return notFound();
 
   const productJsonLd = {
@@ -130,7 +115,6 @@ export default async function ProductPage({
 
           <Page />
         </div>
-        <RelatedProducts id={product.id} />
       </div>
     </>
   );

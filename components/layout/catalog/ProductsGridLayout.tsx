@@ -26,7 +26,7 @@ const GridItem: React.FC<ProductProps> = ({ product }) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const GridLayout: React.FC<GridLayoutProps> = ({ items }) => {
+const ProductsGridLayout: React.FC<GridLayoutProps> = ({ items }) => {
   const gridItems = Array.from({ length: 10 }, (_, index) => ({
     id: index + 1,
     data: {},
@@ -53,4 +53,4 @@ const GridLayout: React.FC<GridLayoutProps> = ({ items }) => {
   );
 };
 
-export default GridLayout;
+export default ProductsGridLayout;

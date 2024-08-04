@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Product from '../product/Product';
-import ProductsGroup from '../product/ProductsGroup';
-import RelatedItems from '../product/RelatedItems';
+import Product from '../../../components/layout/product/Product';
+import ProductsGroup from '../../../components/layout/product/ProductsGroup';
+import RelatedItems from '../../../components/layout/product/RelatedItems';
 
 const product = {
   productName: 'Test',
@@ -92,7 +92,7 @@ const ProductPage: React.FC = () => {
         title="These items are cheaper together"
         productsGroup={productsGroup}
       />
-      <RelatedItems title="Features" relatedItems={relatedItems} />
+      <RelatedItems title="Features" relatedItems={relatedItems} parentId={1} />
     </section>
   );
 };

@@ -4,6 +4,7 @@ import ProductCard from './product-card';
 
 interface RelatedItemsProps {
   title: string;
+  parentId: number;
   relatedItems: Array<{
     imageUrl: string;
     setName: string;
@@ -14,7 +15,11 @@ interface RelatedItemsProps {
   }>;
 }
 
-const RelatedItems: React.FC<RelatedItemsProps> = ({ title, relatedItems }) => {
+const RelatedItems: React.FC<RelatedItemsProps> = ({
+  title,
+  relatedItems,
+  parentId,
+}) => {
   return (
     <section className="flex flex-col max-md:max-w-full">
       <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
