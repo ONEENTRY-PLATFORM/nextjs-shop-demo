@@ -7,13 +7,11 @@ interface NavigationMenuProps {
     label: string;
     href: string;
     hasDropdown?: boolean;
-    submenu?: {
-      items: Array<{
-        label: string;
-        href: string;
-        hasDropdown?: boolean;
-      }>;
-    };
+    submenu?: Array<{
+      label: string;
+      href: string;
+      hasDropdown?: boolean;
+    }>;
   }>;
 }
 

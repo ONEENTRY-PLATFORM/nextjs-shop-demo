@@ -61,7 +61,7 @@ export default async function CatalogPage({
             }
           />
         </div>
-        <ProductsGridLayout items={[]} />
+        <ProductsGridLayout gridItems={[]} />
       </div>
     </section>
   );

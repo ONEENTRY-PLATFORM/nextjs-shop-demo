@@ -5,17 +5,17 @@ import NavGroupItem from './NavGroupItem';
 const items = [
   {
     icon: '/icons/user.svg',
-    href: '#',
+    href: '/profile',
     title: 'user',
   },
   {
     icon: '/icons/heart.svg',
-    href: '#',
+    href: '/favorites',
     title: 'heart',
   },
   {
     icon: '/icons/cart.svg',
-    href: '#',
+    href: '/cart',
     title: 'cart',
   },
 ];

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 interface ItemProps {
@@ -11,7 +12,7 @@ interface ItemProps {
 
 const NavGroupItem: React.FC<ItemProps> = ({ item }) => {
   return (
-    <a
+    <Link
       href={item.href}
       title={item.title}
       className="relative box-border flex size-6 shrink-0 flex-col"
@@ -23,7 +24,7 @@ const NavGroupItem: React.FC<ItemProps> = ({ item }) => {
         src={item.icon}
         priority
       />
-    </a>
+    </Link>
   );
 };
 

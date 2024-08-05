@@ -6,7 +6,6 @@ import { useContext, useEffect, useState } from 'react';
 import { LanguageContext } from '../../store/providers/LanguageContext';
 import { api } from '../api/api';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 type useGetPagesProps = object;
 
 // eslint-disable-next-line no-empty-pattern
