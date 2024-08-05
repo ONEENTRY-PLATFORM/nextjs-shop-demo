@@ -1,16 +1,15 @@
+import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
+
 import { api } from './';
 
-export async function getPages(activeLanguage: string) {
-  const result = await api.Pages.getPages(activeLanguage);
-
-  return result;
-}
-
-const { PROJECT_URL, APP_TOKEN } = process.env;
+// const { PROJECT_URL, APP_TOKEN } = process.env;
+const PROJECT_URL = 'https://react-native-course.oneentry.cloud';
+const APP_TOKEN =
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmVhY3RfYXBwIiwic2VyaWFsTnVtYmVyIjoxLCJpYXQiOjE3MDA0ODAwMDYsImV4cCI6MTc0Nzk5OTk2MX0.gz3KTCITg6FhM_SwtuOZl3GsMr4MlVEPg9sw3d8Q0Po';
 
 export async function getMenus() {
   const response = await fetch(
-    PROJECT_URL + 'api/content/menus/marker/header',
+    PROJECT_URL + '/api/content/menus/marker/header',
     {
       method: 'get',
       headers: {
@@ -22,35 +21,27 @@ export async function getMenus() {
   return await response.json();
 }
 
-export async function getProducts(page: number) {
-  const responseConfig = await fetch(
-    PROJECT_URL + `/api/content/pages/shop/config`,
-    {
-      method: 'get',
-      headers: {
-        Authorization: 'Bearer ' + APP_TOKEN,
-        'Content-Type': 'application/json',
-      },
-    },
-  );
+export async function getPages(activeLanguage: string) {
+  const result = await api.Pages.getPages(activeLanguage);
 
-  const config = await responseConfig.json();
-
-  const responseProducts = await fetch(
-    PROJECT_URL +
-      `/api/content/products/page/url/shop?limit=${config.productsPerRow * config.rowsPerPage}&offset=${page * config.productsPerRow * config.rowsPerPage || 0}&sortOrder=DESC&sortKey=id`,
-    {
-      method: 'get',
-      headers: {
-        Authorization: 'Bearer ' + APP_TOKEN,
-        'Content-Type': 'application/json',
-      },
-    },
-  );
-  const products = await responseProducts.json();
-
-  return { products, config };
+  return result;
 }
+
+export async function getProducts({ limit = 10, offset = 0 }) {
+  const expandedFilters: IFilterParams[] | undefined = [];
+
+  const products = await api.Products.getProducts(expandedFilters, 'en_US', {
+    sortOrder: 'DESC',
+    sortKey: 'id',
+    offset: offset,
+    limit: limit,
+  });
+
+  return { products };
+}
+
+// api.Products.getProductsByPageId
+// api.Products.
 
 export async function getProduct(id: number) {
   const response = await fetch(PROJECT_URL + `api/content/products/${id}`, {
