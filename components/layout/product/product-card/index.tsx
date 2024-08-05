@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 import AddToCartButton from './AddToCartButton';
@@ -27,9 +28,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   } = product;
 
   return (
-    <article className="flex w-full flex-col items-center rounded-3xl bg-neutral-100 p-4">
+    <article className="relative flex w-full flex-col items-center rounded-3xl bg-neutral-100 p-4">
       <header className="flex justify-between gap-5 self-stretch">
-        <IconButton iconSrc="/icons/heart.svg" />
+        <IconButton iconSrc="/icons/bestseller.svg" />
         <IconButton iconSrc="/icons/heart.svg" />
       </header>
 
@@ -42,7 +43,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         />
       </div>
 
-      <section className="mb-5 mt-12 flex w-[153px] max-w-full flex-col gap-2.5">
+      <section className="z-10 mb-5 mt-12 flex w-[153px] max-w-full flex-col gap-2.5">
         <h2 className="text-center text-sm leading-4 text-neutral-600">
           {setName} ({itemCount} items)
         </h2>
@@ -55,6 +56,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         />
         <AddToCartButton />
       </section>
+      <Link
+        href="#"
+        className="absolute left-0 top-0 z-0 flex size-full"
+      ></Link>
     </article>
   );
 };

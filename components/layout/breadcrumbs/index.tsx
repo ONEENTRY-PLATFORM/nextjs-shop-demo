@@ -26,7 +26,7 @@ const breadcrumbItems = [
 ];
 
 const Breadcrumbs: React.FC = () => {
-  console.log(usePathname());
+  // console.log(usePathname());
   return (
     <section
       className="

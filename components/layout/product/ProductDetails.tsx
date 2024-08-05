@@ -1,27 +1,27 @@
 import React from 'react';
 
 interface ProductDetailsProps {
-  productName: string;
-  productType: string;
+  title: string;
   price: number;
-  stock: number;
+  availableForSale: number;
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({
-  productName,
-  productType,
+  title,
   price,
-  stock,
+  availableForSale,
 }) => {
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mt-10 max-md:w-full">
-      <h2 className="text-xl leading-6 text-neutral-600">{productName}</h2>
-      <p className="mt-3 text-sm leading-4 text-neutral-600">{productType}</p>
+      <h2 className="text-xl leading-6 text-neutral-600">{title}</h2>
+      <p className="mt-3 text-sm leading-4 text-neutral-600">productType</p>
       <p className="mb-5 mt-4 text-left text-xl font-bold leading-8 text-neutral-600">
         $ {price}
       </p>
       <div className="relative box-border flex shrink-0 flex-col">
-        <div className="self-end text-sm text-slate-300">{stock} units</div>
+        <div className="self-end text-sm text-slate-300">
+          {availableForSale} units
+        </div>
         <div className="mt-1.5 flex flex-row justify-start rounded-xl bg-zinc-300 pr-16 max-md:pl-5">
           <div className="mr-auto h-[3px] w-[70%] shrink-0 rounded-xl bg-orange-500" />
         </div>

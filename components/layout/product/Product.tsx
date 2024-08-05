@@ -6,34 +6,47 @@ import ProductImage from './ProductImage';
 
 interface ProductProps {
   product: {
-    productName: string;
-    productType: string;
-    price: number;
-    stock: number;
+    featuredImage: {
+      url: string;
+      width: number;
+      height: number;
+      altText: string;
+    };
+    seo: {
+      title: string;
+      description: string;
+    };
+    id: number;
+    tags: string;
+    title: string;
     description: string;
-    imageSrc: string;
+    availableForSale: number;
+    price: number;
+    priceRange: {
+      minVariantPrice: {
+        currencyCode: string;
+        amount: number;
+      };
+      maxVariantPrice: {
+        currencyCode: string;
+        amount: number;
+      };
+    };
   };
 }
 
 const Product: React.FC<ProductProps> = ({ product }) => {
-  const {
-    productName,
-    productType,
-    price,
-    stock,
-    description = 'Text description',
-    imageSrc,
-  } = product;
+  const { title, price, availableForSale, description, featuredImage } =
+    product;
 
   return (
     <div className="mb-16 flex flex-row gap-10 max-md:max-w-full max-md:flex-wrap">
-      <ProductImage imageSrc={imageSrc} />
+      <ProductImage imageSrc={featuredImage.url} />
       <ProductDescription description={description} />
       <ProductDetails
-        productName={productName}
-        productType={productType}
+        title={title}
         price={price}
-        stock={stock}
+        availableForSale={availableForSale}
       />
     </div>
   );

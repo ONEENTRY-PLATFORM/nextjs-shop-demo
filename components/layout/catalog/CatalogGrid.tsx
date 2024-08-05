@@ -18,7 +18,7 @@ interface CatalogGridProps {
 const CatalogGrid: React.FC<CatalogGridProps> = ({ cards }) => (
   <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
     {cards.map((card, index) => (
-      <div key={index} className={`flex flex-col ${card.width}`}>
+      <div key={index} className={`flex flex-col ${card.width} ${card.height}`}>
         <CatalogCard cardData={card} />
       </div>
     ))}
