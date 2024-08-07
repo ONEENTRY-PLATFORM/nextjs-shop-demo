@@ -1,12 +1,11 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import ProductCard from '../product/product-card';
+import ProductCard from '../product/product-card/ProductCard';
 
 interface GridLayoutProps {
   gridItems: Array<IProductsEntity>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ProductsGridLayout: React.FC<GridLayoutProps> = ({ gridItems }) => {
   return (
     <div className="relative box-border flex w-screen shrink-0 flex-col px-5 py-4">

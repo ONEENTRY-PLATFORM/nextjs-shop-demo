@@ -1,5 +1,3 @@
-import React from 'react';
-
 import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 

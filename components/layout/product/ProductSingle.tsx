@@ -1,17 +1,15 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import React from 'react';
 
-import ProductDescription from './ProductDescription';
-import ProductDetails from './ProductDetails';
-import ProductImage from './ProductImage';
+import ProductDescription from './product-single/ProductDescription';
+import ProductDetails from './product-single/ProductDetails';
+import ProductImage from './product-single/ProductImage';
 
 interface ProductProps {
   product: IProductsEntity;
 }
 
 const ProductSingle: React.FC<ProductProps> = ({ product }) => {
-  // const { title, price, availableForSale, description, featuredImage } =
-  //   product;
+  // const { title, price, availableForSale, description, featuredImage } = product;
 
   // console.log(product);
 

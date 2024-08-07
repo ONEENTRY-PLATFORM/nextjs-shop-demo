@@ -1,5 +1,3 @@
-import React from 'react';
-
 import FooterMenuSection from './FooterMenu';
 
 const { COMPANY_NAME, SITE_NAME } = process.env;

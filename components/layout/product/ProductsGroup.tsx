@@ -1,5 +1,3 @@
-import React from 'react';
-
 import GroupCard from './group-card/GroupCard';
 
 interface ProductsGroupProps {

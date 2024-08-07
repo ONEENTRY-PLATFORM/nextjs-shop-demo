@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Logo from './header/Logo';
 import NavGroup from './header/NavGroup';
 import SearchBar from './header/SearchBar';

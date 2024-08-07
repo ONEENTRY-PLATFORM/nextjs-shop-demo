@@ -1,6 +1,6 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import ProductCard from './product-card';
+import ProductCard from './product-card/ProductCard';
 
 interface RelatedItemsProps {
   title: string;
@@ -20,7 +20,7 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({ title, relatedItems }) => {
             key={i}
             className="relative box-border flex w-[calc(_20%_-_1rem_)] shrink-0 flex-col max-xl:w-[calc(_33.3333333%_-_1rem_)] max-md:w-[calc(_50%_-_1rem_)] max-sm:w-full"
           >
-            <ProductCard product={product} />
+            <ProductCard {...product} />
           </div>
         ))}
       </div>

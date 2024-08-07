@@ -1,6 +1,4 @@
-import React from 'react';
-
-import VariationsCarousel from './variations/VariationsCarousel';
+import VariationsCarousel from '../variations/VariationsCarousel';
 
 interface ProductDescriptionProps {
   description: string;

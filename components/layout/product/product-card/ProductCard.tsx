@@ -6,7 +6,7 @@ import AddToCartButton from './AddToCartButton';
 import IconButton from './IconButton';
 import PriceDisplay from './PriceDisplay';
 
-const ProductCard: React.FC<IProductsEntity> = ({ product }) => {
+const ProductCard: React.FC<IProductsEntity> = (product) => {
   // console.log(product);
   return (
     <article className="relative flex size-full flex-col items-center rounded-3xl bg-neutral-100 p-4">
