@@ -1,15 +1,10 @@
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+
 import GroupCard from './group-card/GroupCard';
 
 interface ProductsGroupProps {
   title: string;
-  productsGroup: Array<{
-    imageUrl: string;
-    setName: string;
-    itemCount: number;
-    itemNames: string;
-    currentPrice: number;
-    originalPrice: number;
-  }>;
+  productsGroup: Array<IProductsEntity>;
 }
 
 const ProductsGroup: React.FC<ProductsGroupProps> = ({
@@ -23,15 +18,15 @@ const ProductsGroup: React.FC<ProductsGroupProps> = ({
       </h3>
 
       <div className="flex flex-row justify-between gap-2.5 max-md:max-w-full">
-        {productsGroup.map((item, i) => (
+        {productsGroup.map((product) => (
           <div
-            key={i}
+            key={product.id}
             className="relative box-border flex w-[32.5%] shrink-0 flex-col max-md:w-full"
           >
             <GroupCard
-              title={item.setName}
-              currentPrice={item.currentPrice}
-              originalPrice={item.originalPrice}
+              title={product.localizeInfos.title}
+              currentPrice={product.price}
+              originalPrice={product.price}
             />
           </div>
         ))}

@@ -1,45 +1,47 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { searchPage } from '../api/serverSideProps';
+
 export async function generateMetadata({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   params,
 }: {
   params: { page: string };
 }): Promise<Metadata> {
-  // const page = await getPage(params.page);
-  const page = {
-    title: '',
-    updatedAt: '',
-    bodySummary: '',
-    createdAt: '',
-    seo: {
-      title: '',
-      description: '',
-    },
-  };
+  const page = await searchPage({ url: params.page });
+  // const page = {
+  //   title: '',
+  //   updatedAt: '',
+  //   bodySummary: '',
+  //   createdAt: '',
+  //   seo: {
+  //     title: '',
+  //     description: '',
+  //   },
+  // };
+  console.log(page);
 
   if (!page) return notFound();
 
   return {
-    title: page.seo?.title || page.title,
-    description: page.seo?.description || page.bodySummary,
-    openGraph: {
-      publishedTime: page.createdAt,
-      modifiedTime: page.updatedAt,
-      type: 'article',
-    },
+    // title: page.seo?.title || page.title,
+    // description: page.seo?.description || page.bodySummary,
+    // openGraph: {
+    //   publishedTime: page.createdAt,
+    //   modifiedTime: page.updatedAt,
+    //   type: 'article',
+    // },
   };
 }
 
 export default async function Page({ params }: { params: { page: string } }) {
-  // const page = await getPage(params.page);
-  // console.log(params);
+  const page = await searchPage({ url: params.page });
+  console.log(page);
 
-  const page = {
-    title: 'title',
-    updatedAt: '',
-  };
+  // const page = {
+  //   title: 'title',
+  //   updatedAt: '',
+  // };
   if (!page) return notFound();
 
   return <h1 className="mb-8 text-5xl font-bold">{page.title}</h1>;

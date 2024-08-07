@@ -58,7 +58,7 @@ const catalogCards = [
 ];
 
 export default async function Home() {
-  // const pages = await getPages('en_US').then((res) => res);
+  // const pages = await getPages('en_US');
 
   return (
     <main className="flex flex-col items-center justify-between gap-16 px-5 py-8">

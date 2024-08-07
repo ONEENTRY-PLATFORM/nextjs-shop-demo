@@ -2,12 +2,7 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from './';
 
-export async function getPages(activeLanguage: string) {
-  const result = await api.Pages.getPages(activeLanguage);
-
-  return result;
-}
-
+// api.Products
 export async function getProducts({ limit = 10, offset = 0 }) {
   const expandedFilters: IFilterParams[] | undefined = [];
 
@@ -21,13 +16,21 @@ export async function getProducts({ limit = 10, offset = 0 }) {
   return { products };
 }
 
-export async function getProductById({ id = 0, langCode = 'en_US' }) {
-  // getProductById(id: number, langCode?: string);
-  const product = await api.Products.getProductById(id, langCode).then(
-    (res) => res,
-  );
+export async function getProductById(id: number, langCode: string) {
+  return await api.Products.getProductById(id, langCode);
+}
 
-  return product;
+// api.Pages
+export async function getPages(langCode: string) {
+  return await api.Pages.getPages(langCode);
+}
+
+export async function getPageById(id: number, langCode: string) {
+  return await api.Pages.getPageById(id, langCode);
+}
+
+export async function getPageByUrl(url: string, langCode: string) {
+  return await api.Pages.getPageByUrl(url, langCode);
 }
 
 // api.Products.getProductsByPageId
