@@ -21,5 +21,16 @@ export async function getProducts({ limit = 10, offset = 0 }) {
   return { products };
 }
 
+export async function getProductById({ id = 0, langCode = 'en_US' }) {
+  // getProductById(id: number, langCode?: string);
+  const product = await api.Products.getProductById(id, langCode);
+
+  return product;
+}
+
 // api.Products.getProductsByPageId
 // api.Products.getProductsEmptyPage(langCode?: string, userQuery?: IProductsQuery): Promise<Array<IProductsEntity>>;
+// getRelatedProductsById(id: number, langCode?: string, userQuery?: IProductsQuery);
+// getProductById(id: number, langCode?: string);
+// getProductBlockById(id: number)
+// searchProduct(name: string, langCode?: string)
