@@ -14,14 +14,10 @@ const ProductsGridLayout: React.FC<GridLayoutProps> = ({ gridItems }) => {
       <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-[1240px] shrink-0 grow flex-col self-stretch">
         <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
           {gridItems?.map((product) => {
-            return (
-              <div
-                key={product.id}
-                className="relative box-border flex shrink-0 flex-col"
-              >
-                <ProductCard product={product} />
-              </div>
-            );
+            if (!product.isVisible) {
+              return;
+            }
+            return <ProductCard key={product.id} {...product} />;
           })}
         </div>
       </section>
