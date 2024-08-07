@@ -41,7 +41,7 @@ const Breadcrumbs: React.FC = () => {
       <div
         className="
         mx-auto flex w-full 
-        max-w-[1240px] flex-col justify-center 
+        max-w-screen-xl flex-col justify-center 
       "
       >
         <div className="mr-auto flex gap-5">

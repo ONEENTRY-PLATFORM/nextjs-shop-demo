@@ -1,25 +1,13 @@
-import React from 'react';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import ProductCard from './product-card';
 
 interface RelatedItemsProps {
   title: string;
-  parentId: number;
-  relatedItems: Array<{
-    imageUrl: string;
-    setName: string;
-    itemCount: number;
-    itemNames: string;
-    currentPrice: number;
-    originalPrice: number;
-  }>;
+  relatedItems: Array<IProductsEntity>;
 }
 
-const RelatedItems: React.FC<RelatedItemsProps> = ({
-  title,
-  relatedItems,
-  parentId,
-}) => {
+const RelatedItems: React.FC<RelatedItemsProps> = ({ title, relatedItems }) => {
   return (
     <section className="flex flex-col max-md:max-w-full">
       <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">

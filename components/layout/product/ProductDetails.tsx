@@ -3,13 +3,13 @@ import React from 'react';
 interface ProductDetailsProps {
   title: string;
   price: number;
-  availableForSale: number;
+  // availableForSale: number;
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({
   title,
   price,
-  availableForSale,
+  // availableForSale,
 }) => {
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mt-10 max-md:w-full">
@@ -20,7 +20,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
       </p>
       <div className="relative box-border flex shrink-0 flex-col">
         <div className="self-end text-sm text-slate-300">
-          {availableForSale} units
+          {/* {availableForSale} units */}
         </div>
         <div className="mt-1.5 flex flex-row justify-start rounded-xl bg-zinc-300 pr-16 max-md:pl-5">
           <div className="mr-auto h-[3px] w-[70%] shrink-0 rounded-xl bg-orange-500" />

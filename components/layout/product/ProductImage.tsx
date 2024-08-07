@@ -3,17 +3,16 @@ import React from 'react';
 
 interface ProductImageProps {
   imageSrc: string;
+  alt: string;
 }
 
-const ProductImage: React.FC<ProductImageProps> = ({ imageSrc }) => {
-  // console.log(imageSrc);
-
+const ProductImage: React.FC<ProductImageProps> = ({ imageSrc, alt }) => {
   return (
-    <div className="relative flex w-[30%] grow flex-col max-md:w-full max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
+    <div className="relative flex h-[360px] w-[30%] grow flex-col max-md:w-full max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
       <Image
         fill
         src={imageSrc}
-        alt="Product"
+        alt={alt}
         className="mb-10 size-full shrink-0 bg-slate-300 object-cover max-md:mb-8 max-sm:mb-8"
       />
     </div>

@@ -18,7 +18,7 @@ interface NavigationMenuProps {
 const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
   return (
     <nav className="flex items-center justify-center border border-solid border-neutral-100 bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-md:px-5">
-      <div className="flex w-[1240px] max-w-full items-center justify-center py-7 max-md:px-5">
+      <div className="flex max-w-screen-xl w-full items-center justify-center py-7 max-md:px-5">
         <ul className="flex w-full justify-between gap-5 max-md:flex-wrap">
           {items.map((item, index) => (
             <li

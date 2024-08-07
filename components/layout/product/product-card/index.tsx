@@ -6,11 +6,7 @@ import AddToCartButton from './AddToCartButton';
 import IconButton from './IconButton';
 import PriceDisplay from './PriceDisplay';
 
-const ProductCard: React.FC<IProductsEntity> = ({
-  id,
-  attributeValues,
-  localizeInfos,
-}) => {
+const ProductCard: React.FC<IProductsEntity> = ({ product }) => {
   // console.log(product);
   return (
     <article className="relative flex size-full flex-col items-center rounded-3xl bg-neutral-100 p-4">
@@ -22,7 +18,7 @@ const ProductCard: React.FC<IProductsEntity> = ({
       <div className="relative size-40">
         <Image
           fill
-          src={attributeValues?.pic.value.downloadLink}
+          src={product.attributeValues?.pic.value.downloadLink}
           alt={`Product image`}
           className="mt-7 size-40 shrink-0 object-cover"
         />
@@ -30,20 +26,20 @@ const ProductCard: React.FC<IProductsEntity> = ({
 
       <section className="z-10 mb-5 mt-12 flex w-[153px] max-w-full flex-col gap-2.5">
         <h2 className="text-center text-sm leading-4 text-neutral-600">
-          {localizeInfos?.title}
+          {product.localizeInfos?.title}
           {/*  ({itemCount} items) */}
         </h2>
         <p className="text-center text-sm leading-4 text-neutral-600">
           {/* {itemNames} */}
         </p>
         <PriceDisplay
-          currentPrice={attributeValues?.sale?.value}
-          originalPrice={attributeValues?.price?.value}
+          currentPrice={product.attributeValues?.sale?.value}
+          originalPrice={product.attributeValues?.price?.value}
         />
         <AddToCartButton />
       </section>
       <Link
-        href={`product/` + id}
+        href={`product/` + product.id}
         className="absolute left-0 top-0 z-0 flex size-full"
       ></Link>
     </article>

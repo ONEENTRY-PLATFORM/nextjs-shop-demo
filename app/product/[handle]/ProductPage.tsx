@@ -86,7 +86,7 @@ const relatedItems = [
 
 const ProductPage: React.FC = ({ product }) => {
   return (
-    <section className="relative mx-auto box-border flex w-full max-w-[1240px] shrink-0 grow flex-col self-stretch">
+    <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <ProductSingle product={product} />
       <ProductsGroup
         title="These items are cheaper together"

@@ -10,7 +10,7 @@ const Header: React.FC = () => {
       <section
         className="
           mx-auto box-border flex w-full 
-          max-w-[1240px] grow 
+          max-w-screen-xl grow 
           flex-col 
           justify-center
           self-stretch 
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
           lg:py-10
         "
       >
-        <div className="flex w-full max-w-[1240px] justify-between gap-6 max-md:flex-wrap">
+        <div className="flex w-full max-w-screen-xl justify-between gap-6 max-md:flex-wrap">
           <Logo />
           <SearchBar />
           <NavGroup />

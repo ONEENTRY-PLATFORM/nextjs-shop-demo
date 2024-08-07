@@ -12,7 +12,7 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  console.log(params);
+  // console.log(params);
   const {
     url,
     width,
@@ -55,7 +55,7 @@ export default async function CatalogPage({
 }) {
   const data = await getProducts({ limit: 10, offset: 0 });
   return (
-    <section className="relative mx-auto box-border flex w-full max-w-[1240px] shrink-0 grow flex-col self-stretch">
+    <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
         <Suspense
           fallback={

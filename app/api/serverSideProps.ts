@@ -23,7 +23,9 @@ export async function getProducts({ limit = 10, offset = 0 }) {
 
 export async function getProductById({ id = 0, langCode = 'en_US' }) {
   // getProductById(id: number, langCode?: string);
-  const product = await api.Products.getProductById(id, langCode);
+  const product = await api.Products.getProductById(id, langCode).then(
+    (res) => res,
+  );
 
   return product;
 }

@@ -34,7 +34,7 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: { page: string } }) {
   // const page = await getPage(params.page);
-  console.log(params);
+  // console.log(params);
 
   const page = {
     title: 'title',
