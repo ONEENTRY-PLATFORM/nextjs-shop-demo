@@ -17,20 +17,20 @@ export async function getProducts({ limit = 10, offset = 0 }) {
 }
 
 export async function getProductById(id: number, langCode: string) {
-  return await api.Products.getProductById(id, langCode);
+  return await api.Products.getProductById(id, langCode).then((res) => res);
 }
 
 // api.Pages
 export async function getPages(langCode: string) {
-  return await api.Pages.getPages(langCode);
+  return await api.Pages.getPages(langCode).then((res) => res);
 }
 
 export async function getPageById(id: number, langCode: string) {
-  return await api.Pages.getPageById(id, langCode);
+  return await api.Pages.getPageById(id, langCode).then((res) => res);
 }
 
 export async function getPageByUrl(url: string, langCode: string) {
-  return await api.Pages.getPageByUrl(url, langCode);
+  return await api.Pages.getPageByUrl(url, langCode).then((res) => res);
 }
 
 // api.Products.getProductsByPageId

@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-async-client-component */
-// 'use client';
 import { Suspense } from 'react';
 
 import CatalogGrid from '@/components/layout/catalog/CatalogGrid';

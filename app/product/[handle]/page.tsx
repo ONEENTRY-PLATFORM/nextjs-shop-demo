@@ -14,10 +14,7 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  const product = await getProductById({
-    id: Number(params.handle),
-    langCode: 'en_US',
-  });
+  const product = await getProductById(Number(params.handle), 'en_US');
   if (!product) return notFound();
 
   const { downloadLink, alt = 'alt' } = product.attributeValues.pic.value || {};
@@ -54,10 +51,7 @@ export default async function ProductPage({
 }: {
   params: { handle: string };
 }) {
-  const product = await getProductById({
-    id: Number(params.handle),
-    langCode: 'en_US',
-  });
+  const product = await getProductById(Number(params.handle), 'en_US');
 
   if (!product) {
     return notFound();

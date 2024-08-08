@@ -1,3 +1,41 @@
+export const navigationItems = [
+  {
+    label: 'Category',
+    href: '#',
+    hasDropdown: true,
+    submenu: [
+      {
+        label: 'New arrival',
+        href: '/arrival',
+      },
+      {
+        label: 'BEST SELLERS',
+        href: '/best-sellers',
+      },
+      {
+        label: 'OFFER OF TODAY',
+        href: '/offers',
+      },
+    ],
+  },
+  {
+    label: 'Promotion',
+    href: '/promotion',
+  },
+  {
+    label: 'New arrival',
+    href: '/arrival',
+  },
+  {
+    label: 'BEST SELLERS',
+    href: '/best-sellers',
+  },
+  {
+    label: 'OFFER OF TODAY',
+    href: '/offers',
+  },
+];
+
 export const productsGroup = [
   {
     id: 82,

@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { searchPage } from '../api/serverSideProps';
+import { getPageByUrl } from '../api/serverSideProps';
 
 export async function generateMetadata({
   params,
 }: {
   params: { page: string };
 }): Promise<Metadata> {
-  const page = await searchPage({ url: params.page });
+  const page = await getPageByUrl(params.page, 'en_US');
   // const page = {
   //   title: '',
   //   updatedAt: '',
@@ -35,14 +35,16 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { page: string } }) {
-  const page = await searchPage({ url: params.page });
-  console.log(page);
+  const page = await getPageByUrl(params.page, 'en_US');
+  // console.log(page);
 
   // const page = {
   //   title: 'title',
   //   updatedAt: '',
   // };
-  if (!page) return notFound();
+  // if (page.pageUrl === '404') return notFound();
 
-  return <h1 className="mb-8 text-5xl font-bold">{page.title}</h1>;
+  // return (
+  //   <h1 className="mb-8 text-5xl font-bold">{page.localizeInfos.title}</h1>
+  // );
 }
