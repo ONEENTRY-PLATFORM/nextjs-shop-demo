@@ -3,9 +3,11 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import Footer from '../components/layout/Footer';
-import Header from '../components/layout/Header';
-import NavigationMenu from '../components/layout/navbar/NavigationMenu';
+import { navigationItems } from '@/components/data';
+import Footer from '@/components/layout/Footer';
+import Header from '@/components/layout/Header';
+import NavigationMenu from '@/components/layout/navbar/NavigationMenu';
+
 import { AuthProvider } from './store/providers/AuthContext';
 import { ContentContextProvider } from './store/providers/ContentContext';
 import { LanguageProvider } from './store/providers/LanguageContext';
@@ -18,44 +20,6 @@ export const metadata: Metadata = {
   title: 'OneEntry Shop',
   description: 'OneEntry next-js shop',
 };
-
-const navigationItems = [
-  {
-    label: 'Category',
-    href: '/',
-    hasDropdown: true,
-    submenu: [
-      {
-        label: 'New arrival',
-        href: '/arrival',
-      },
-      {
-        label: 'BEST SELLERS',
-        href: '/best-sellers',
-      },
-      {
-        label: 'OFFER OF TODAY',
-        href: '/offers',
-      },
-    ],
-  },
-  {
-    label: 'Promotion',
-    href: '/promotion',
-  },
-  {
-    label: 'New arrival',
-    href: '/arrival',
-  },
-  {
-    label: 'BEST SELLERS',
-    href: '/best-sellers',
-  },
-  {
-    label: 'OFFER OF TODAY',
-    href: '/offers',
-  },
-];
 
 export default function RootLayout({
   children,

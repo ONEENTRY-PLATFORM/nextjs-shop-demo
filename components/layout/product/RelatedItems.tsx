@@ -14,7 +14,7 @@ const RelatedItems: React.FC<RelatedItemsProps> = ({ title, relatedItems }) => {
         {title}
       </h3>
 
-      <div className="flex gap-4 max-lg:flex-wrap ">
+      <div className="flex gap-5 max-lg:flex-wrap ">
         {relatedItems.map((product, i) => (
           <div
             key={i}

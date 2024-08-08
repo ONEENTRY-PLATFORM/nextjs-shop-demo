@@ -85,38 +85,36 @@ export default async function ProductPage({
           __html: JSON.stringify(productJsonLd),
         }}
       />
-      <div className="mx-auto w-full max-w-screen-xl">
-        <div className="flex flex-col bg-white py-8">
-          <Suspense
-            fallback={
-              <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
-            }
-          />
-          <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
-            <Product product={product} />
-            {hasBlocks &&
-              blocks.map((block: string) => {
-                if (block === 'multiply_items_offer') {
-                  return (
-                    <ProductsGroup
-                      key={block}
-                      title="These items are cheaper together"
-                      productsGroup={productsGroup}
-                    />
-                  );
-                } else if (block === 'similar') {
-                  return (
-                    <RelatedItems
-                      key={block}
-                      title="Features"
-                      relatedItems={relatedItems}
-                    />
-                  );
-                }
-              })}
-            {/*  */}
-          </section>
-        </div>
+      <div className="mx-auto flex w-full max-w-screen-xl flex-col bg-white py-8">
+        <Suspense
+          fallback={
+            <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
+          }
+        />
+        <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
+          <Product product={product} />
+          {hasBlocks &&
+            blocks.map((block: string) => {
+              if (block === 'multiply_items_offer') {
+                return (
+                  <ProductsGroup
+                    key={block}
+                    title="These items are cheaper together"
+                    productsGroup={productsGroup}
+                  />
+                );
+              } else if (block === 'similar') {
+                return (
+                  <RelatedItems
+                    key={block}
+                    title="Features"
+                    relatedItems={relatedItems}
+                  />
+                );
+              }
+            })}
+          {/*  */}
+        </section>
       </div>
     </>
   );

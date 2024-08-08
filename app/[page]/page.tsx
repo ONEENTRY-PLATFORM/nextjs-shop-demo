@@ -19,9 +19,9 @@ export async function generateMetadata({
   //     description: '',
   //   },
   // };
-  console.log(page);
+  // console.log(page.pageData);
 
-  if (!page) return notFound();
+  if (page?.statusCode) return notFound();
 
   return {
     // title: page.seo?.title || page.title,
@@ -44,7 +44,9 @@ export default async function Page({ params }: { params: { page: string } }) {
   // };
   // if (page.pageUrl === '404') return notFound();
 
-  // return (
-  //   <h1 className="mb-8 text-5xl font-bold">{page.localizeInfos.title}</h1>
-  // );
+  return (
+    <div className='flex flex-col w-full min-h-80 max-w-screen-xl mx-auto py-8'>
+      <h1 className="mb-8 text-3xl">{page?.localizeInfos.title}</h1>
+    </div>
+  );
 }

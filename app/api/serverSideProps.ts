@@ -2,35 +2,64 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from './';
 
-// api.Products
+// getMenusByMarker
+export async function getMenusByMarker(marker: string, activeLanguage: string) {
+  const menu = await api.Menus.getMenusByMarker(marker, activeLanguage);
+  return menu;
+}
+
+// getProducts
 export async function getProducts({ limit = 10, offset = 0 }) {
   const expandedFilters: IFilterParams[] | undefined = [];
 
-  const products = await api.Products.getProducts(expandedFilters, 'en_US', {
-    sortOrder: 'DESC',
-    sortKey: 'id',
-    offset: offset,
-    limit: limit,
-  });
-
-  return { products };
+  try {
+    const products = await api.Products.getProducts(expandedFilters, 'en_US', {
+      sortOrder: 'DESC',
+      sortKey: 'id',
+      offset: offset,
+      limit: limit,
+    });
+    return { products };
+  } catch (err) {
+    return err;
+  }
 }
 
+// getProductById
 export async function getProductById(id: number, langCode: string) {
-  return await api.Products.getProductById(id, langCode).then((res) => res);
+  try {
+    return await api.Products.getProductById(id, langCode).then((res) => res);
+  } catch (err) {
+    return err;
+  }
 }
 
-// api.Pages
+// getPages
 export async function getPages(langCode: string) {
-  return await api.Pages.getPages(langCode).then((res) => res);
+  try {
+    return await api.Pages.getPages(langCode).then((res) => res);
+  } catch (err) {
+    return err;
+  }
 }
 
+// getPageById
 export async function getPageById(id: number, langCode: string) {
-  return await api.Pages.getPageById(id, langCode).then((res) => res);
+  try {
+    return await api.Pages.getPageById(id, langCode).then((res) => res);
+  } catch (err) {
+    return err;
+  }
 }
 
+// getPageByUrl
 export async function getPageByUrl(url: string, langCode: string) {
-  return await api.Pages.getPageByUrl(url, langCode).then((res) => res);
+  try {
+    const pages = await api.Pages.getPageByUrl(url, langCode);
+    return pages;
+  } catch (err) {
+    return err;
+  }
 }
 
 // api.Products.getProductsByPageId
