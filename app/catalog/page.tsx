@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-// import { notFound } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
@@ -12,7 +12,6 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  // console.log(params);
   const {
     url,
     width,
@@ -20,6 +19,13 @@ export async function generateMetadata({
     altText: alt,
   } = { url: '', width: 300, height: 300, altText: '' };
   const indexable = true;
+
+  const data = await getProducts({ limit: 10, offset: 0, params });
+
+  const { isError, products } = data;
+  if (isError || !products) {
+    return notFound();
+  }
 
   return {
     title: '',
@@ -54,6 +60,12 @@ export default async function CatalogPage({
   params: { handle: string };
 }) {
   const data = await getProducts({ limit: 10, offset: 0 });
+
+  const { isError, products } = data;
+  if (isError || !products) {
+    return notFound();
+  }
+
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
@@ -62,7 +74,7 @@ export default async function CatalogPage({
             <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
           }
         />
-        <ProductsGridLayout gridItems={data.products} />
+        <ProductsGridLayout gridItems={products} />
       </div>
     </section>
   );

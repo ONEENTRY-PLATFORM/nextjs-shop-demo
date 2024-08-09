@@ -14,15 +14,20 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  const product = await getProductById(Number(params.handle), 'en_US');
-  if (!product) return notFound();
+  const data = await getProductById(Number(params.handle), 'en_US');
 
-  const { downloadLink, alt = 'alt' } = product.attributeValues.pic.value || {};
-  const indexable = !product.isVisible;
+  const { isError, product } = data;
+  if (isError || !product) {
+    return notFound();
+  }
+
+  const { downloadLink, alt = 'alt' } =
+    product?.attributeValues.pic.value || {};
+  const indexable = product?.isVisible;
 
   return {
-    title: product.localizeInfos.title,
-    description: product.attributeValues.description.value.plainValue,
+    title: product?.localizeInfos.title,
+    description: product?.attributeValues.description.value.plainValue,
     robots: {
       index: indexable,
       follow: indexable,
@@ -51,9 +56,10 @@ export default async function ProductPage({
 }: {
   params: { handle: string };
 }) {
-  const product = await getProductById(Number(params.handle), 'en_US');
+  const data = await getProductById(Number(params.handle), 'en_US');
 
-  if (!product) {
+  const { isError, product } = data;
+  if (isError || !product) {
     return notFound();
   }
 
@@ -74,9 +80,6 @@ export default async function ProductPage({
     },
   };
 
-  const { blocks } = product;
-  const hasBlocks = Array.isArray(blocks);
-
   return (
     <>
       <script
@@ -92,9 +95,9 @@ export default async function ProductPage({
           }
         />
         <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
-          <Product product={product} />
-          {hasBlocks &&
-            blocks.map((block: string) => {
+          <Product {...product} />
+          {Array.isArray(product.blocks) &&
+            product.blocks.map((block: string) => {
               if (block === 'multiply_items_offer') {
                 return (
                   <ProductsGroup

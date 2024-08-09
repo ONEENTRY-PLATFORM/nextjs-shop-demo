@@ -1,16 +1,33 @@
-import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IFilterParams,
+  IProductsEntity,
+} from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from './';
 
 // getMenusByMarker
 export async function getMenusByMarker(marker: string, activeLanguage: string) {
-  const menu = await api.Menus.getMenusByMarker(marker, activeLanguage);
-  return menu;
+  try {
+    const menu = await api.Menus.getMenusByMarker(marker, activeLanguage);
+    return { isError: false, menu: menu };
+  } catch (err) {
+    return { isError: true, products: err };
+  }
 }
 
 // getProducts
-export async function getProducts({ limit = 10, offset = 0 }) {
+export async function getProducts(props: {
+  limit: number;
+  offset: number;
+  params: object;
+}): Promise<{
+  isError: boolean;
+  products?: IProductsEntity[];
+  err?: unknown;
+}> {
+  const { limit, offset, params } = props;
   const expandedFilters: IFilterParams[] | undefined = [];
+  console.log(params);
 
   try {
     const products = await api.Products.getProducts(expandedFilters, 'en_US', {
@@ -19,46 +36,56 @@ export async function getProducts({ limit = 10, offset = 0 }) {
       offset: offset,
       limit: limit,
     });
-    return { products };
+    return { isError: false, products: products };
   } catch (err) {
-    return err;
+    return { isError: true, err: err };
   }
 }
 
 // getProductById
-export async function getProductById(id: number, langCode: string) {
+export async function getProductById(
+  id: number,
+  langCode: string,
+): Promise<{
+  isError: boolean;
+  product?: IProductsEntity;
+  err?: unknown;
+}> {
   try {
-    return await api.Products.getProductById(id, langCode).then((res) => res);
+    const product = await api.Products.getProductById(id, langCode);
+    return { isError: false, product: product };
   } catch (err) {
-    return err;
+    return { isError: true, err };
   }
 }
 
 // getPages
 export async function getPages(langCode: string) {
   try {
-    return await api.Pages.getPages(langCode).then((res) => res);
+    const page = await api.Pages.getPages(langCode);
+    return { isError: false, page: page };
   } catch (err) {
-    return err;
+    return { isError: true, page: err };
   }
 }
 
 // getPageById
 export async function getPageById(id: number, langCode: string) {
   try {
-    return await api.Pages.getPageById(id, langCode).then((res) => res);
+    const page = api.Pages.getPageById(id, langCode);
+    return { isError: false, page };
   } catch (err) {
-    return err;
+    return { isError: true, page: err };
   }
 }
 
 // getPageByUrl
 export async function getPageByUrl(url: string, langCode: string) {
   try {
-    const pages = await api.Pages.getPageByUrl(url, langCode);
-    return pages;
+    const page = await api.Pages.getPageByUrl(url, langCode);
+    return { isError: false, page };
   } catch (err) {
-    return err;
+    return { isError: true, page: err };
   }
 }
 

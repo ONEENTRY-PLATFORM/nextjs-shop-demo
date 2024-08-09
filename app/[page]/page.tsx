@@ -8,7 +8,7 @@ export async function generateMetadata({
 }: {
   params: { page: string };
 }): Promise<Metadata> {
-  const page = await getPageByUrl(params.page, 'en_US');
+  const { page, isPages } = await getPageByUrl(params.page, 'en_US');
   // const page = {
   //   title: '',
   //   updatedAt: '',
