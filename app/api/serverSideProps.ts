@@ -1,3 +1,4 @@
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {
   IFilterParams,
   IProductsEntity,
@@ -25,9 +26,10 @@ export async function getProducts(props: {
   products?: IProductsEntity[];
   err?: unknown;
 }> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { limit, offset, params } = props;
   const expandedFilters: IFilterParams[] | undefined = [];
-  console.log(params);
+  // console.log(params);
 
   try {
     const products = await api.Products.getProducts(expandedFilters, 'en_US', {
@@ -80,12 +82,19 @@ export async function getPageById(id: number, langCode: string) {
 }
 
 // getPageByUrl
-export async function getPageByUrl(url: string, langCode: string) {
+export async function getPageByUrl(
+  url: string,
+  langCode: string,
+): Promise<{
+  isError: boolean;
+  page?: IPagesEntity;
+  err?: unknown;
+}> {
   try {
     const page = await api.Pages.getPageByUrl(url, langCode);
-    return { isError: false, page };
+    return { isError: false, page: page };
   } catch (err) {
-    return { isError: true, page: err };
+    return { isError: true, err: err };
   }
 }
 

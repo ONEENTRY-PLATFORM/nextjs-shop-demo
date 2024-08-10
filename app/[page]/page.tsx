@@ -8,7 +8,7 @@ export async function generateMetadata({
 }: {
   params: { page: string };
 }): Promise<Metadata> {
-  const { page, isPages } = await getPageByUrl(params.page, 'en_US');
+  const { page, isError } = await getPageByUrl(params.page, 'en_US');
   // const page = {
   //   title: '',
   //   updatedAt: '',
@@ -19,9 +19,11 @@ export async function generateMetadata({
   //     description: '',
   //   },
   // };
-  // console.log(page.pageData);
+  // console.log(page);
 
-  if (page?.statusCode) return notFound();
+  if (isError) {
+    return notFound();
+  }
 
   return {
     // title: page.seo?.title || page.title,
@@ -35,8 +37,11 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { page: string } }) {
-  const page = await getPageByUrl(params.page, 'en_US');
-  // console.log(page);
+  const { page, isError } = await getPageByUrl(params.page, 'en_US');
+
+  if (isError || !page) {
+    return notFound();
+  }
 
   // const page = {
   //   title: 'title',
@@ -45,8 +50,9 @@ export default async function Page({ params }: { params: { page: string } }) {
   // if (page.pageUrl === '404') return notFound();
 
   return (
-    <div className='flex flex-col w-full min-h-80 max-w-screen-xl mx-auto py-8'>
-      <h1 className="mb-8 text-3xl">{page?.localizeInfos.title}</h1>
+    <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col py-8">
+      <h1 className="mb-8 text-3xl">{page.localizeInfos.title}</h1>
+      {page.pageUrl === 'cart' ? <div /> : ''}
     </div>
   );
 }
