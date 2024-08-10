@@ -1173,3 +1173,31 @@ export const pages = [
     attributeValues: { show_title: [Object] },
   },
 ];
+
+export const userMenuItems = [
+  {
+    icon: '/icons/orders.svg',
+    text: 'My Profile',
+    url: '/',
+  },
+  {
+    icon: '/icons/orders.svg',
+    text: 'My Orders',
+    url: '/',
+  },
+  {
+    icon: '/icons/orders.svg',
+    text: 'Cart',
+    url: '/',
+  },
+  {
+    icon: '/icons/orders.svg',
+    text: 'Payments',
+    url: '/',
+  },
+  {
+    icon: '/icons/orders.svg',
+    text: 'Favorites',
+    url: '/',
+  },
+];

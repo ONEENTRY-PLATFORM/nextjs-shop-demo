@@ -3,21 +3,21 @@ import React from 'react';
 import DeliveryRow from './DeliveryRow';
 import TableRow from './TableRow';
 
-const Table: React.FC = () => {
-  const tableData = [
-    {
-      label: 'Date',
-      value: '09.10.2023',
-      icon: '/icons/calendar.svg',
-    },
-    {
-      label: 'Time',
-      value: '19:00',
-      icon: '/icons/time.svg',
-    },
-    { label: 'Address', value: 'Dubai, One Entry street, 50' },
-  ];
+const tableData = [
+  {
+    label: 'Date',
+    value: '09.10.2023',
+    icon: '/icons/calendar.svg',
+  },
+  {
+    label: 'Time',
+    value: '19:00',
+    icon: '/icons/time.svg',
+  },
+  { label: 'Address', value: 'Dubai, One Entry street, 50' },
+];
 
+const DeliveryTable: React.FC = () => {
   return (
     <table className="table max-w-[725px] text-neutral-600">
       {tableData.map((row, index) => (
@@ -37,4 +37,4 @@ const Table: React.FC = () => {
   );
 };
 
-export default Table;
+export default DeliveryTable;

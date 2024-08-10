@@ -8,7 +8,7 @@ interface TableRowProps {
 }
 
 const TableRow: React.FC<TableRowProps> = ({ label, value, icon }) => (
-  <tr className="table-row h-[50px] gap-5 border border-solid border-[black] max-md:max-w-full max-md:flex-wrap">
+  <tr className="table-row h-[50px] gap-5 max-md:max-w-full max-md:flex-wrap">
     <td className="self-stretch align-middle text-sm">{label}</td>
     <td className="px-5 align-middle text-base">{value}</td>
     <td className="table-cell pl-5 align-middle">

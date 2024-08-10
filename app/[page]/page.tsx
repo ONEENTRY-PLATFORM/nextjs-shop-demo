@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import CartPage from '@/components/layout/cart/CartPage';
+
 import { getPageByUrl } from '../api/serverSideProps';
 
 export async function generateMetadata({
@@ -52,7 +54,7 @@ export default async function Page({ params }: { params: { page: string } }) {
   return (
     <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col py-8">
       <h1 className="mb-8 text-3xl">{page.localizeInfos.title}</h1>
-      {page.pageUrl === 'cart' ? <div /> : ''}
+      {page.pageUrl === 'cart' && <CartPage />}
     </div>
   );
 }
