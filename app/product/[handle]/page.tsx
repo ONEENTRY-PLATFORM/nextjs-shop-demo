@@ -100,13 +100,7 @@ export default async function ProductPage({
           {Array.isArray(product.blocks) &&
             product.blocks.map((block: string) => {
               if (block === 'multiply_items_offer') {
-                return (
-                  <ProductsGroup
-                    key={block}
-                    title="These items are cheaper together"
-                    productsGroup={productsGroup}
-                  />
-                );
+                return <ProductsGroup key={block} {...productsGroup} />;
               } else if (block === 'similar') {
                 return (
                   <RelatedItems

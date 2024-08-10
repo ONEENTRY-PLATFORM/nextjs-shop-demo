@@ -2,16 +2,11 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 
 import ProductCard from './product-card/ProductCard';
 
-interface RelatedItemsProps {
-  title: string;
-  relatedItems: Array<IProductsEntity>;
-}
-
-const RelatedItems: React.FC<RelatedItemsProps> = ({ title, relatedItems }) => {
+const RelatedItems = (relatedItems: Array<IProductsEntity>) => {
   return (
     <section className="flex flex-col max-md:max-w-full">
       <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
-        {title}
+        Features
       </h3>
 
       <div className="flex gap-5 max-lg:flex-wrap ">

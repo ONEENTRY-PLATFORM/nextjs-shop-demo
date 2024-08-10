@@ -1,27 +1,20 @@
 import React from 'react';
 
 interface BreadcrumbItemProps {
-  href: string;
-  text: string;
+  link: string;
   isLast: boolean;
 }
 
-const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({
-  href,
-  text,
-  isLast,
-}) => (
+const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({ link, isLast }) => (
   <>
     <a
-      href={href}
+      href={link}
       className="my-auto text-base leading-8 text-slate-300 hover:text-orange-500"
     >
-      <p>{text}</p>
+      <p>{link}</p>
     </a>
     {!isLast && (
-      <span className="my-auto text-base leading-8 text-slate-300">
-        <p>/</p>
-      </span>
+      <span className="my-auto text-base leading-8 text-slate-300">/</span>
     )}
   </>
 );
