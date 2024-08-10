@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ReviewSymbol from './ReviewSymbol';
+import ReviewCard from './ReviewCard';
 
 const ReviewList: React.FC = () => {
   const reviewCount = 4;
@@ -8,8 +8,7 @@ const ReviewList: React.FC = () => {
   return (
     <section className="flex flex-col gap-5 max-md:mt-10 max-md:max-w-full">
       {Array.from({ length: reviewCount }).map((_, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <ReviewSymbol key={index} />
+        <ReviewCard key={index} />
       ))}
     </section>
   );

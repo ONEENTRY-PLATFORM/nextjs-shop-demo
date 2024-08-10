@@ -19,7 +19,7 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
           <VariationsCarousel />
         </div>
         <ProductDescription
-          description={attributeValues.description.value.plainValue}
+          description={attributeValues.description?.value.plainValue}
         />
       </div>
       <ProductDetails

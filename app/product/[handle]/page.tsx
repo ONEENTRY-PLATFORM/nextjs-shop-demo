@@ -22,12 +22,12 @@ export async function generateMetadata({
   }
 
   const { downloadLink, alt = 'alt' } =
-    product?.attributeValues.pic.value || {};
-  const indexable = product?.isVisible;
+    product.attributeValues.pic?.value || {};
+  const indexable = product.isVisible;
 
   return {
     title: product?.localizeInfos.title,
-    description: product?.attributeValues.description.value.plainValue,
+    description: product.attributeValues.description?.value?.plainValue,
     robots: {
       index: indexable,
       follow: indexable,
@@ -62,21 +62,22 @@ export default async function ProductPage({
   if (isError || !product) {
     return notFound();
   }
+  const { attributeValues, localizeInfos, additional } = product;
 
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: product.localizeInfos.title,
-    description: product.attributeValues.description.value,
-    image: product.attributeValues.pic.value.downloadLink,
+    name: localizeInfos.title,
+    description: attributeValues.description?.value,
+    image: attributeValues.pic.value?.downloadLink,
     offers: {
       '@type': 'AggregateOffer',
       //   availability: product.availableForSale
       //     ? 'https://schema.org/InStock'
       //     : 'https://schema.org/OutOfStock',
-      priceCurrency: product.attributeValues.currency.value,
-      highPrice: product.additional.prices.max,
-      lowPrice: product.additional.prices.min,
+      priceCurrency: attributeValues.currency?.value,
+      highPrice: additional.prices?.max,
+      lowPrice: additional.prices?.min,
     },
   };
 

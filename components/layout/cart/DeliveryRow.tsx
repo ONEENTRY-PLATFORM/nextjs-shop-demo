@@ -4,13 +4,13 @@ import React from 'react';
 interface DeliveryRowProps {
   imageSrc: string;
   deliveryText: string;
-  deliveryPrice: string;
+  price: string;
 }
 
 const DeliveryRow: React.FC<DeliveryRowProps> = ({
   imageSrc,
   deliveryText,
-  deliveryPrice,
+  price,
 }) => (
   <tr className="table-row h-[50px] gap-5 border border-solid border-[black] max-md:max-w-full max-md:flex-wrap">
     <td className="table-cell align-middle">
@@ -24,7 +24,7 @@ const DeliveryRow: React.FC<DeliveryRowProps> = ({
     <td className="table-cell px-5 align-middle">
       <div className="mt-2 flex flex-col self-start">
         <div className="text-base">{deliveryText}</div>
-        <div className="mt-4 text-xl font-bold leading-8">{deliveryPrice}</div>
+        <div className="mt-4 text-xl font-bold leading-8">{price}</div>
       </div>
     </td>
     <td className="table-cell pl-5 align-middle" />

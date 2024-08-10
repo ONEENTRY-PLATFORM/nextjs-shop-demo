@@ -1,5 +1,5 @@
-import ReviewCard from './ReviewCard';
-import ReviewForm from './ReviewForm';
+import ReviewCard from './reviews-group/ReviewCard';
+import ReviewForm from './reviews-group/ReviewForm';
 
 interface ReviewData {
   id: number;
