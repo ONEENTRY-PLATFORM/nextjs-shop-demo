@@ -15,8 +15,8 @@ const BreadcrumbsTrail: React.FC<BreadcrumbsTrailProps> = ({ items }) => {
   const pathNames = paths.split('/').filter((path: unknown) => path);
 
   return (
-    <nav className="relative box-border flex shrink-0 flex-row gap-1.5">
-      <ul className="relative box-border flex shrink-0 flex-row gap-1.5">
+    <nav className="relative box-border flex">
+      <ul className="flex w-full items-center gap-1.5 text-slate-300">
         <li>
           <Link href={'/'}>Home</Link>
         </li>

@@ -1,30 +1,12 @@
-import React from 'react';
-
 import NavGroupItem from './NavGroupItem';
 
-const items = [
-  {
-    icon: '/icons/user.svg',
-    href: '/profile',
-    title: 'user',
-  },
-  {
-    icon: '/icons/heart.svg',
-    href: '/favorites',
-    title: 'heart',
-  },
-  {
-    icon: '/icons/cart.svg',
-    href: '/cart',
-    title: 'cart',
-  },
-];
-
-const NavGroup: React.FC = () => {
+interface MenuItemsProps {
+  menuItems: [];
+}
+const NavGroup: React.FC<MenuItemsProps> = ({ menuItems }) => {
   return (
     <div className="my-auto flex gap-5 max-md:max-w-full">
-      {items.map((item, index) => (
-        // eslint-disable-next-line react/no-array-index-key
+      {menuItems?.map((item, index) => (
         <NavGroupItem key={index} item={item} />
       ))}
     </div>

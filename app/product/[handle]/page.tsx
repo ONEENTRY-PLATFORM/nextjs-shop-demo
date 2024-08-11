@@ -92,27 +92,22 @@ export default async function ProductPage({
       <div className="mx-auto flex w-full max-w-screen-xl flex-col bg-white py-8">
         <Suspense
           fallback={
-            <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
+            <div className="relative aspect-square size-full overflow-hidden" />
           }
-        />
-        <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
-          <Product {...product} />
-          {Array.isArray(product.blocks) &&
-            product.blocks.map((block: string) => {
-              if (block === 'multiply_items_offer') {
-                return <ProductsGroup key={block} {...productsGroup} />;
-              } else if (block === 'similar') {
-                return (
-                  <RelatedItems
-                    key={block}
-                    title="Features"
-                    relatedItems={relatedItems}
-                  />
-                );
-              }
-            })}
-          {/*  */}
-        </section>
+        >
+          <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
+            <Product {...product} />
+            {Array.isArray(product.blocks) &&
+              product.blocks.map((block: string) => {
+                if (block === 'multiply_items_offer') {
+                  return <ProductsGroup key={block} {...productsGroup} />;
+                } else if (block === 'similar') {
+                  return <RelatedItems key={block} {...relatedItems} />;
+                }
+              })}
+            {/*  */}
+          </section>
+        </Suspense>
       </div>
     </>
   );

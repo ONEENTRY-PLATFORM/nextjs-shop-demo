@@ -1201,3 +1201,72 @@ export const userMenuItems = [
     url: '/',
   },
 ];
+
+export const catalogCards = [
+  {
+    title: 'Catalog',
+    backgroundColor: 'bg-amber-600',
+    width: 'w-full',
+    height: 'h-[175px]',
+    imageSrc: '/images/catalog-img-1.svg',
+    link: '/catalog',
+  },
+  {
+    title: 'BEST SELLER',
+    backgroundColor: 'bg-purple-600',
+    width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
+    height: 'h-[260px]',
+    imageSrc: '/images/catalog-img-2.svg',
+    link: '',
+  },
+  {
+    title: 'PROMOTION',
+    backgroundColor: 'bg-blue-500',
+    width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
+    height: 'h-[260px]',
+    imageSrc: '/images/catalog-img-3.svg',
+    link: '',
+  },
+  {
+    title: 'OFFER OF TODAY',
+    backgroundColor: 'bg-lime-700',
+    width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
+    height: 'h-[260px]',
+    imageSrc: '/images/catalog-img-4.svg',
+    link: '',
+  },
+  {
+    title: 'NEW\nARRIVALS',
+    backgroundColor: 'bg-teal-300',
+    width: 'w-full md:w-[calc(_50%_-_0.65rem)]',
+    height: 'h-[260px]',
+    imageSrc: '/images/catalog-img-5.svg',
+    link: '',
+  },
+  {
+    title: 'Join OUR COMMUNITY',
+    backgroundColor: 'bg-amber-300',
+    width: 'w-full lg:w-[calc(_50%_-_0.65rem)]',
+    height: 'h-[260px]',
+    imageSrc: '/images/catalog-img-6.svg',
+    link: '',
+  },
+];
+
+export const menuItems = [
+  {
+    icon: '/icons/user.svg',
+    href: '/profile',
+    title: 'user',
+  },
+  {
+    icon: '/icons/heart.svg',
+    href: '/favorites',
+    title: 'heart',
+  },
+  {
+    icon: '/icons/cart.svg',
+    href: '/cart',
+    title: 'cart',
+  },
+];
