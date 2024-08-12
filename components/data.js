@@ -1176,29 +1176,29 @@ export const pages = [
 
 export const userMenuItems = [
   {
-    icon: '/icons/orders.svg',
+    icon: '/icons/user.svg',
     text: 'My Profile',
-    url: '/',
+    href: '/profile',
   },
   {
     icon: '/icons/orders.svg',
     text: 'My Orders',
-    url: '/',
+    href: '/orders',
   },
   {
-    icon: '/icons/orders.svg',
+    icon: '/icons/cart.svg',
     text: 'Cart',
-    url: '/',
+    href: '/cart',
   },
   {
     icon: '/icons/orders.svg',
     text: 'Payments',
-    url: '/',
+    href: '/payments',
   },
   {
-    icon: '/icons/orders.svg',
+    icon: '/icons/heart.svg',
     text: 'Favorites',
-    url: '/',
+    href: '/favorites',
   },
 ];
 

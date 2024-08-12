@@ -4,7 +4,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Breadcrumbs />
-      <main className="flex flex-col gap-16 px-5 py-8">{children}</main>
+      <main className="flex w-full flex-col gap-16 px-5 py-8">{children}</main>
     </>
   );
 }

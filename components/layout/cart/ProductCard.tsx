@@ -18,14 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
     <article className="flex w-full justify-between gap-5 border border-solid border-neutral-100 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
       <div className="flex justify-between gap-5">
         <div className="relative mb-auto box-border flex shrink-0 flex-row self-center">
-          <Image
-            width={24}
-            height={24}
-            loading="lazy"
-            src="/icons/trash.svg"
-            alt=""
-            className="aspect-square w-[23px] shrink-0 self-start"
-          />
+          <input type="checkbox" checked name="" id="" />
         </div>
         <div className="h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-300">
           <Image

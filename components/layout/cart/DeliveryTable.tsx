@@ -20,19 +20,21 @@ const tableData = [
 const DeliveryTable: React.FC = () => {
   return (
     <table className="table max-w-[725px] border border-solid border-neutral-100 text-neutral-600">
-      {tableData.map((row, index) => (
-        <TableRow
-          key={index}
-          label={row.label}
-          value={row.value}
-          icon={row.icon}
+      <tbody>
+        {tableData.map((row, index) => (
+          <TableRow
+            key={index}
+            label={row.label}
+            value={row.value}
+            icon={row.icon}
+          />
+        ))}
+        <DeliveryRow
+          imageSrc="/icons/delivery.svg"
+          deliveryText="Delivery"
+          price="$ 2"
         />
-      ))}
-      <DeliveryRow
-        imageSrc="/icons/delivery.svg"
-        deliveryText="Delivery"
-        price="$ 2"
-      />
+      </tbody>
     </table>
   );
 };

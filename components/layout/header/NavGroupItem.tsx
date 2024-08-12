@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-interface ItemProps {
+interface NavItemProps {
   item: {
     icon: string;
     title: string;
@@ -10,7 +10,7 @@ interface ItemProps {
   };
 }
 
-const NavGroupItem: React.FC<ItemProps> = ({ item }) => {
+const NavGroupItem: React.FC<NavItemProps> = ({ item }) => {
   return (
     <Link
       href={item.href}

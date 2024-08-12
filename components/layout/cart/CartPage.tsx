@@ -4,6 +4,14 @@ import PaymentButton from './PaymentButton';
 import ProductCard from './ProductCard';
 import TotalAmount from './TotalAmount';
 
+const productsInCart = [
+  {
+    imageSrc: '',
+    productName: 'productName',
+    price: 1250,
+  },
+];
+
 const CartPage = () => {
   return (
     <main className="ml-[calc(50%_-_50vw)] flex w-screen flex-col items-center bg-white px-5 pb-16 pt-6 max-md:px-5">
@@ -13,7 +21,11 @@ const CartPage = () => {
         </aside>
         <section className="flex grow flex-col max-md:mt-10 max-md:max-w-full">
           <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
-            <ProductCard imageSrc={''} productName={''} price={0} />
+            {productsInCart.map((product, i) => {
+              return (
+                <ProductCard key={i} imageSrc={''} productName={''} price={0} />
+              );
+            })}
             <DeliveryTable />
             <div className="mt-4 flex w-[464px] max-w-full flex-col self-end font-bold">
               <TotalAmount amount={13} />
