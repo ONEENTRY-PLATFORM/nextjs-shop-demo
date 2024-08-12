@@ -10,7 +10,7 @@ const ProductsGroup = (products: Array<IProductsEntity>) => {
       </h3>
 
       <div className="flex flex-row justify-between gap-2.5 max-md:max-w-full">
-        {products.map((product) => (
+        {products?.map((product) => (
           <div
             key={product.id}
             className="relative box-border flex w-[32.5%] shrink-0 flex-col max-md:w-full"

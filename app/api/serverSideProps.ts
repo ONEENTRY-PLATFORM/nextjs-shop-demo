@@ -44,6 +44,23 @@ export async function getProducts(props: {
   }
 }
 
+// getRelatedProductsById
+export async function getRelatedProductsById(
+  id: number,
+  langCode: string,
+): Promise<{
+  isError: boolean;
+  products?: IProductsEntity[];
+  err?: unknown;
+}> {
+  try {
+    const products = await api.Products.getRelatedProductsById(id, langCode);
+    return { isError: false, products: products };
+  } catch (err) {
+    return { isError: true, err };
+  }
+}
+
 // getProductById
 export async function getProductById(
   id: number,

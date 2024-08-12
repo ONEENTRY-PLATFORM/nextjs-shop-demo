@@ -62,7 +62,8 @@ export default async function ProductPage({
   if (isError || !product) {
     return notFound();
   }
-  const { attributeValues, localizeInfos, additional } = product;
+  const { attributeValues, localizeInfos, additional, statusIdentifier } =
+    product;
 
   const productJsonLd = {
     '@context': 'https://schema.org',
@@ -72,9 +73,10 @@ export default async function ProductPage({
     image: attributeValues.pic.value?.downloadLink,
     offers: {
       '@type': 'AggregateOffer',
-      //   availability: product.availableForSale
-      //     ? 'https://schema.org/InStock'
-      //     : 'https://schema.org/OutOfStock',
+      availability:
+        statusIdentifier === 'in_stock'
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
       priceCurrency: attributeValues.currency?.value,
       highPrice: additional.prices?.max,
       lowPrice: additional.prices?.min,
@@ -100,9 +102,9 @@ export default async function ProductPage({
             {Array.isArray(product.blocks) &&
               product.blocks.map((block: string) => {
                 if (block === 'multiply_items_offer') {
-                  return <ProductsGroup key={block} {...productsGroup} />;
+                  // return <ProductsGroup key={block} {...productsGroup} />;
                 } else if (block === 'similar') {
-                  return <RelatedItems key={block} {...relatedItems} />;
+                  return <RelatedItems key={block} id={80} title="Features" />;
                 }
               })}
             {/*  */}

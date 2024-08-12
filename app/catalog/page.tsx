@@ -7,7 +7,6 @@ import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { getProducts } from '../api/serverSideProps';
 
 export async function generateMetadata({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   params,
 }: {
   params: { handle: string };
@@ -54,12 +53,11 @@ export async function generateMetadata({
 }
 
 export default async function CatalogPage({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   params,
 }: {
   params: { handle: string };
 }) {
-  const data = await getProducts({ limit: 10, offset: 0 });
+  const data = await getProducts({ limit: 10, offset: 0, params });
 
   const { isError, products } = data;
   if (isError || !products) {
