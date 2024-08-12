@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 
 import { getProductById } from '@/app/api/serverSideProps';
 
-import { productsGroup, relatedItems } from '../../../components/data';
+import { productsGroup } from '../../../components/data';
 import ProductsGroup from '../../../components/layout/product/ProductsGroup';
 import Product from '../../../components/layout/product/ProductSingle';
 import RelatedItems from '../../../components/layout/product/RelatedItems';
@@ -73,10 +73,9 @@ export default async function ProductPage({
     image: attributeValues.pic.value?.downloadLink,
     offers: {
       '@type': 'AggregateOffer',
-      availability:
-        statusIdentifier === 'in_stock'
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
+      availability: statusIdentifier
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
       priceCurrency: attributeValues.currency?.value,
       highPrice: additional.prices?.max,
       lowPrice: additional.prices?.min,

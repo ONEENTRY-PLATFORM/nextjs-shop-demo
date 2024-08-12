@@ -1,18 +1,29 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { Key } from 'react';
 
 import AddToCartButton from './AddToCartButton';
 import IconButton from './IconButton';
 import PriceDisplay from './PriceDisplay';
 
 const ProductCard: React.FC<IProductsEntity> = (product) => {
-  // console.log(product);
   return (
     <article className="relative flex size-full flex-col items-center rounded-3xl bg-neutral-100 p-4">
       <header className="flex justify-between gap-5 self-stretch">
-        <IconButton iconSrc="/icons/bestseller.svg" />
-        <IconButton iconSrc="/icons/heart.svg" />
+        {[product?.attributeValues?.stickers].map(
+          (
+            sticker: {
+              value: {
+                value: string;
+                title: string;
+              };
+            },
+            i: Key,
+          ) => {
+            return <IconButton key={i} sticker={sticker} />;
+          },
+        )}
       </header>
 
       <div className="relative size-40">

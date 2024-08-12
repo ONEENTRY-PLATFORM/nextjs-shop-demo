@@ -10,6 +10,11 @@ interface RelatedProductsProps {
 const RelatedItems: React.FC<RelatedProductsProps> = async ({ id, title }) => {
   const data = await getRelatedProductsById(id, 'en_US');
 
+  const { isError, products } = data;
+  if (isError || !products) {
+    return null;
+  }
+
   return (
     <section className="flex flex-col max-md:max-w-full">
       <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
