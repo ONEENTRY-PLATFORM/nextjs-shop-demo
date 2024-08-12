@@ -22,7 +22,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             width={24}
             height={24}
             loading="lazy"
-            src={imageSrc}
+            src="/icons/trash.svg"
             alt=""
             className="aspect-square w-[23px] shrink-0 self-start"
           />

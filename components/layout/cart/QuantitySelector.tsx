@@ -9,7 +9,13 @@ const QuantitySelector: React.FC = () => {
       >
         –
       </button>
-      <span className="relative box-border w-10">100</span>
+      <input
+        className="relative box-border w-10"
+        type="text"
+        name=""
+        id=""
+        value={100}
+      />
       <button
         className="relative box-border w-5"
         aria-label="Increase quantity"

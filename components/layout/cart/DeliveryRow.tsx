@@ -12,7 +12,7 @@ const DeliveryRow: React.FC<DeliveryRowProps> = ({
   deliveryText,
   price,
 }) => (
-  <tr className="table-row h-[50px] gap-5 border border-solid border-[black] max-md:max-w-full max-md:flex-wrap">
+  <tr className="table-row h-[50px] gap-5 border border-solid border-neutral-100 max-md:max-w-full max-md:flex-wrap">
     <td className="table-cell align-middle">
       <img
         loading="lazy"

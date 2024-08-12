@@ -104,3 +104,26 @@ export async function getPageByUrl(
 // getProductById(id: number, langCode?: string);
 // getProductBlockById(id: number)
 // searchProduct(name: string, langCode?: string)
+
+// interface IDefineApi {
+//   Admins: AdminsApi;
+//   AttributesSets: AttributesSetsApi;
+//   AuthProvider: AuthProviderApi;
+//   Blocks: BlocksApi;
+//   Events: EventsApi;
+//   FileUploading: FileUploadingApi;
+//   Forms: FormsApi;
+//   FormData: FormsDataApi;
+//   GeneralTypes: GeneralTypesApi;
+//   Locales: LocalesApi;
+//   Menus: MenusApi;
+//   Orders: OrdersApi;
+//   Pages: PageApi;
+//   Payments: PaymentsApi;
+//   Products: ProductApi;
+//   ProductStatuses: ProductStatusesApi;
+//   System: SystemApi;
+//   Templates: TemplatesApi;
+//   TemplatePreviews: TemplatePreviewsApi;
+//   Users: UsersApi;
+// }

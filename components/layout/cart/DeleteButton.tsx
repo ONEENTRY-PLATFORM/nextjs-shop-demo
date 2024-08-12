@@ -9,7 +9,7 @@ const DeleteButton: React.FC = () => {
     >
       <img
         loading="lazy"
-        src="https://cdn.builder.io/api/v1/image/assets/TEMP/a84bf9c79c0357aa33fcce085ed597bb207f050b4c4640059695bc7d2a37ed8d?placeholderIfAbsent=true&apiKey=cdcacfb89da8456dbacd6d81e50c9b6f"
+        src="/icons/trash.svg"
         alt=""
         className="my-auto aspect-[0.8] w-4 shrink-0 fill-neutral-600"
       />
