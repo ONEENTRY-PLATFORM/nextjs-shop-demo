@@ -1,7 +1,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { CombinedState, PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 
@@ -203,22 +203,14 @@ export const {
   setPriceFilterActive,
 } = filterSlice.actions;
 
-export const selectAllFilters = (
-  state: CombinedState<{
-    cartReducer: object;
-    favoritesReducer: object;
-    filterReducer: InitialStateType;
-  }>,
-) => {
+export const selectAllFilters = (state: {
+  filterReducer: { filters: any };
+}) => {
   return state.filterReducer.filters;
 };
 
 export const selectFiltersByMarker = (
-  state: CombinedState<{
-    cartReducer: object;
-    favoritesReducer: object;
-    filterReducer: InitialStateType;
-  }>,
+  state: { filterReducer: { filters: any[] } },
   marker: string,
 ) => {
   return state.filterReducer.filters.filter(

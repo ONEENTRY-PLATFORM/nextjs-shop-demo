@@ -1,4 +1,4 @@
-import type { CombinedState, PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 
@@ -49,6 +49,7 @@ export type ContentType = {
 type InitialStateType = {
   content: ContentType;
 };
+
 const initialState: InitialStateType = {
   content: {
     buttons: {
@@ -97,15 +98,14 @@ export const systemContentSlice = createSlice({
   initialState,
   reducers: {
     addContent(state, action: PayloadAction<ContentType>) {
-      // eslint-disable-next-line no-param-reassign
       state.content = action.payload;
     },
   },
 });
 
-export const getFeaturedButtonContent = (
-  state: CombinedState<{ featuredObjectReducer: InitialStateType }>,
-) => {
+export const getFeaturedButtonContent = (state: {
+  featuredObjectReducer: { content: { buttons: unknown } };
+}) => {
   return state.featuredObjectReducer.content.buttons;
 };
 

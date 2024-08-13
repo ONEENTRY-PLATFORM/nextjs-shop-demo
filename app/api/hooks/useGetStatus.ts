@@ -3,7 +3,6 @@
 import type { IProductStatusEntity } from 'oneentry/dist/product-statuses/productStatusesInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-// eslint-disable-next-line import/no-cycle
 import { LanguageContext } from '../../store/providers/LanguageContext';
 import { api } from '../api/api';
 

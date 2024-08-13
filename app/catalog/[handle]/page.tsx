@@ -4,8 +4,8 @@ import { Suspense } from 'react';
 
 import { getProductById } from '@/app/api/serverSideProps';
 
-import { productsGroup } from '../../../components/data';
-import ProductsGroup from '../../../components/layout/product/ProductsGroup';
+// import { productsGroup } from '../../../components/data';
+// import ProductsGroup from '../../../components/layout/product/ProductsGroup';
 import Product from '../../../components/layout/product/ProductSingle';
 import RelatedItems from '../../../components/layout/product/RelatedItems';
 

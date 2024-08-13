@@ -1,32 +1,9 @@
-'use client';
-
-import { usePathname, useSearchParams } from 'next/navigation';
-import React from 'react';
+// import { usePathname, useSearchParams } from 'next/navigation';
 
 import BackButton from './BackButton';
 import BreadcrumbsTrail from './BreadcrumbsTrail';
 
-const breadcrumbItems = [
-  {
-    text: 'Home',
-    href: '/',
-  },
-  {
-    text: 'Catalogue',
-    href: '/catalogue',
-  },
-  {
-    text: 'Soft toys',
-    href: '/catalogue/soft-toys/',
-  },
-  {
-    text: 'Grey Ninja',
-    href: '/catalogue/soft-toys/grey-ninja',
-  },
-];
-
 const Breadcrumbs: React.FC = () => {
-  // console.log(usePathname());
   return (
     <section
       className="
@@ -46,7 +23,7 @@ const Breadcrumbs: React.FC = () => {
       >
         <div className="mr-auto flex gap-5">
           <BackButton />
-          <BreadcrumbsTrail items={breadcrumbItems} />
+          <BreadcrumbsTrail />
         </div>
       </div>
     </section>

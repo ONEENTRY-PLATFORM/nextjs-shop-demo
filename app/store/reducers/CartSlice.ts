@@ -1,4 +1,4 @@
-import type { CombinedState, PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
@@ -68,36 +68,26 @@ export const {
   removeAllProducts,
 } = cartSlice.actions;
 
-export const selectCartItems = (
-  state: CombinedState<{
-    cartReducer: InitialStateType;
-    favoritesReducer: object;
-  }>,
-) => state.cartReducer.products;
+export const selectCartItems = (state: {
+  cartReducer: { products: unknown };
+}) => state.cartReducer.products;
 
 export const selectCartItemWithIdLength = (
-  state: CombinedState<{
-    cartReducer: InitialStateType;
-    favoritesReducer: object;
-  }>,
+  state: {
+    cartReducer: {
+      products: [];
+    };
+  },
   id: number,
 ) =>
   state.cartReducer.products.filter((item: { id: number }) => item.id === id)
     ?.length;
 
-export const selectBasketCount = (
-  state: CombinedState<{
-    cartReducer: InitialStateType;
-    favoritesReducer: object;
-  }>,
-) => state.cartReducer.products.length;
+export const selectBasketCount = (state: {
+  cartReducer: { products: unknown[] };
+}) => state.cartReducer.products.length;
 
-export const selectBasketTotal = (
-  state: CombinedState<{
-    cartReducer: InitialStateType;
-    favoritesReducer: object;
-  }>,
-) =>
+export const selectBasketTotal = (state: { cartReducer: { products: [] } }) =>
   state.cartReducer.products.reduce(
     (
       total: number,

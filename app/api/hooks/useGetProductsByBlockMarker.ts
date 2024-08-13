@@ -1,6 +1,6 @@
 'use client';
 
-import type { IBlockProduct } from 'oneentry/dist/blocks/blocksInterfaces';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { useContext, useEffect, useRef, useState } from 'react';
 
 // eslint-disable-next-line import/no-cycle
@@ -13,7 +13,7 @@ type Props = {
 export const useGetProductsByBlockMarker = ({ marker }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
-  const products = useRef<IBlockProduct[]>();
+  const products = useRef<IProductsEntity[]>();
   const { activeLanguage } = useContext(LanguageContext);
   useEffect(() => {
     (async () => {

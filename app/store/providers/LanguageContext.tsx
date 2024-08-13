@@ -1,9 +1,7 @@
-'use client';
 import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
 import type { Dispatch, ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
-// eslint-disable-next-line import/no-cycle
 import { useGetLocales } from '../../api';
 import { LanguageEnum } from '../../types/enum';
 

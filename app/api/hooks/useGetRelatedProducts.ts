@@ -7,9 +7,8 @@ import { useContext, useEffect, useState } from 'react';
 import { LanguageContext } from '../../store/providers/LanguageContext';
 import { api } from '../api/api';
 
-// eslint-disable-next-line @typescript-eslint/naming-convention
 type useGetRelatedProductsProps = {
-  id: number | undefined;
+  id: number;
 };
 
 export const useGetRelatedProducts = ({ id }: useGetRelatedProductsProps) => {

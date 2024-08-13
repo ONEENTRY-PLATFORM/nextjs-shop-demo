@@ -6,7 +6,6 @@ import type {
 } from 'oneentry/dist/products/productsInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-// eslint-disable-next-line import/no-cycle
 import { LanguageContext } from '../../store/providers/LanguageContext';
 import { api } from '../api/api';
 
@@ -41,18 +40,13 @@ export const useGetProducts = ({
   const findProducts = async () => {
     if (limit && pageUrl) {
       try {
-        // console.log(
-        //   sortOrder + searchValue + sortKey + offset + filters + limit,
-        // );
-
         if (!searchValue) {
           const expandedFilters = filters ? [...filters] : [];
 
           // If availability is true, add the new filter object
-          // console.log(availability);
-          // if (availability) {
-          //   expandedFilters.push({statusMarker: 'in_stock'});
-          // }
+          if (availability) {
+            expandedFilters.push({ statusMarker: 'in_stock' });
+          }
 
           const res = await api.Products.getProductsByPageUrl(
             pageUrl,
