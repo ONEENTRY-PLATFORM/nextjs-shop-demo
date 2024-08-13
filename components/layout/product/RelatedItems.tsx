@@ -2,12 +2,10 @@ import { getRelatedProductsById } from '@/app/api/serverSideProps';
 
 import ProductCard from './product-card/ProductCard';
 
-interface RelatedProductsProps {
+const RelatedItems: React.FC<{
   id: number;
   title: string;
-}
-
-const RelatedItems: React.FC<RelatedProductsProps> = async ({ id, title }) => {
+}> = async ({ id, title }) => {
   const data = await getRelatedProductsById(id, 'en_US');
 
   const { isError, products } = data;

@@ -1,6 +1,10 @@
 'use client';
 
-const AddToCartButton: React.FC = (id) => {
+interface AddToCartProps {
+  id: number;
+}
+
+const AddToCartButton: React.FC<AddToCartProps> = ({ id }) => {
   return (
     <button
       onClick={() => {

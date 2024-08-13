@@ -6,7 +6,7 @@ import ProductImage from './product-single/ProductImage';
 import VariationsCarousel from './variations/VariationsCarousel';
 
 const ProductSingle: React.FC<IProductsEntity> = (product) => {
-  const { attributeValues, localizeInfos, price } = product;
+  const { id, attributeValues, localizeInfos, price } = product;
 
   return (
     <div className="mb-16 flex flex-row gap-10 max-md:max-w-full max-md:flex-wrap">
@@ -23,9 +23,10 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
         />
       </div>
       <ProductDetails
+        id={id}
         title={localizeInfos.title}
         price={price}
-        // availableForSale={availableForSale}
+        units={attributeValues.units_product}
       />
     </div>
   );

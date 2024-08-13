@@ -1,11 +1,7 @@
-import React from 'react';
-
-interface BreadcrumbItemProps {
+const BreadcrumbItem: React.FC<{
   link: string;
   isLast: boolean;
-}
-
-const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({ link, isLast }) => (
+}> = ({ link, isLast }) => (
   <>
     {!isLast ? (
       <>
@@ -18,7 +14,9 @@ const BreadcrumbItem: React.FC<BreadcrumbItemProps> = ({ link, isLast }) => (
         </a>
       </>
     ) : (
-      <p className="text-slate-700">{link}</p>
+      <div>
+        / <span className="text-orange-500">{link}</span>
+      </div>
     )}
   </>
 );
