@@ -5,12 +5,20 @@ interface IconButtonProps {
     value: {
       title: string;
       value: string;
+      extended: {
+        value: {
+          downloadLink: string;
+        };
+      };
     };
   };
 }
 
-const IconButton: React.FC<IconButtonProps> = ({ sticker }) => {
-  console.log(sticker.value.value);
+const Sticker: React.FC<IconButtonProps> = ({ sticker }) => {
+  if (!sticker?.value) {
+    return;
+  }
+  console.log();
 
   return (
     <button
@@ -20,12 +28,12 @@ const IconButton: React.FC<IconButtonProps> = ({ sticker }) => {
       <Image
         fill
         loading="lazy"
-        src={'/icons/' + sticker.value.value + '.svg'}
+        src={sticker.value.extended.value.downloadLink}
         alt={sticker.value.title}
-        className="shrink-0"
+        className="relative shrink-0"
       />
     </button>
   );
 };
 
-export default IconButton;
+export default Sticker;

@@ -1,17 +1,10 @@
 import Image from 'next/image';
 
 interface IconButtonProps {
-  sticker: {
-    value: {
-      title: string;
-      value: string;
-    };
-  };
+  imgSrc: string;
 }
 
-const IconButton: React.FC<IconButtonProps> = ({ sticker }) => {
-  console.log(sticker.value.value);
-
+const IconButton: React.FC<IconButtonProps> = ({ imgSrc }) => {
   return (
     <button
       type="button"
@@ -20,9 +13,9 @@ const IconButton: React.FC<IconButtonProps> = ({ sticker }) => {
       <Image
         fill
         loading="lazy"
-        src={'/icons/' + sticker.value.value + '.svg'}
-        alt={sticker.value.title}
-        className="shrink-0"
+        src={imgSrc}
+        alt=""
+        className="relative shrink-0"
       />
     </button>
   );
