@@ -1,13 +1,17 @@
+'use client';
+
+import AddToCartButton from './AddToCartButton';
+
 interface ProductDetailsProps {
+  id: number;
   title: string;
   price: number;
-  // availableForSale: number;
 }
 
 const ProductDetails: React.FC<ProductDetailsProps> = ({
+  id,
   title,
   price,
-  // availableForSale,
 }) => {
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mt-10 max-md:w-full">
@@ -24,12 +28,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
           <div className="mr-auto h-[3px] w-[70%] shrink-0 rounded-xl bg-orange-500" />
         </div>
       </div>
-      <button
-        type="button"
-        className="mt-6 rounded-[30px] border border-solid border-orange-500 bg-orange-500 px-5 py-4 text-center text-base font-bold uppercase text-white max-md:px-5"
-      >
-        Add to cart
-      </button>
+      <AddToCartButton id={id} />
     </div>
   );
 };
