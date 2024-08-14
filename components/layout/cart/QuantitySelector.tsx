@@ -1,6 +1,6 @@
 import React from 'react';
 
-const QuantitySelector: React.FC = () => {
+const QuantitySelector: React.FC<{ count: number }> = ({ count }) => {
   return (
     <div className="flex items-start justify-between gap-2 rounded-3xl bg-stone-50 p-2.5 max-sm:pr-2.5">
       <button
@@ -14,7 +14,7 @@ const QuantitySelector: React.FC = () => {
         type="text"
         name=""
         id=""
-        value={100}
+        value={count}
       />
       <button
         className="relative box-border w-5"

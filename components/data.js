@@ -832,3 +832,20 @@ export const menuItems = [
     title: 'cart',
   },
 ];
+
+export const productsInCart = [
+  {
+    id: 80,
+    imageSrc: '',
+    productName: 'productName',
+    price: 1250,
+    count: 1,
+  },
+  {
+    id: 1245,
+    imageSrc: '',
+    productName: 'product Name 2',
+    price: 2250,
+    count: 3,
+  },
+];

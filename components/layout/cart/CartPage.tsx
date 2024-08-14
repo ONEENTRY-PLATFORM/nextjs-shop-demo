@@ -1,16 +1,10 @@
+import { productsInCart } from '@/components/data';
+
 import SidebarMenu from '../navbar/SidebarMenu';
 import DeliveryTable from './DeliveryTable';
 import PaymentButton from './PaymentButton';
 import ProductCard from './ProductCard';
 import TotalAmount from './TotalAmount';
-
-const productsInCart = [
-  {
-    imageSrc: '',
-    productName: 'productName',
-    price: 1250,
-  },
-];
 
 const CartPage = () => {
   return (
@@ -22,9 +16,7 @@ const CartPage = () => {
         <section className="flex grow flex-col max-md:mt-10 max-md:max-w-full">
           <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
             {productsInCart.map((product, i) => {
-              return (
-                <ProductCard key={i} imageSrc={''} productName={''} price={0} />
-              );
+              return <ProductCard key={i} product={product} />;
             })}
             <DeliveryTable />
             <div className="mt-4 flex w-[464px] max-w-full flex-col self-end font-bold">

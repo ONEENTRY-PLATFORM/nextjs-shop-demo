@@ -18,7 +18,6 @@ const Sticker: React.FC<IconButtonProps> = ({ sticker }) => {
   if (!sticker?.value) {
     return;
   }
-  console.log();
 
   return (
     <button

@@ -4,21 +4,22 @@ import DeleteButton from './DeleteButton';
 import QuantitySelector from './QuantitySelector';
 
 interface ProductCardProps {
-  imageSrc: string;
-  productName: string;
-  price: number;
+  product: {
+    id: number;
+    imageSrc: string;
+    productName: string;
+    price: number;
+    count: number;
+  };
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  imageSrc,
-  productName,
-  price,
-}) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const { id, imageSrc, productName, price, count } = product;
   return (
     <article className="flex w-full justify-between gap-5 border border-solid border-neutral-100 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
       <div className="flex justify-between gap-5">
         <div className="relative mb-auto box-border flex shrink-0 flex-row self-center">
-          <input type="checkbox" checked name="" id="" />
+          <input type="checkbox" checked name={'p-' + id} id="" />
         </div>
         <div className="h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-300">
           <Image
@@ -26,7 +27,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             height={130}
             loading="lazy"
             src={imageSrc}
-            alt=""
+            alt={productName}
             className="aspect-square w-[23px] shrink-0 self-start"
           />
         </div>
@@ -36,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
       </div>
       <div className="flex gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:flex max-sm:flex-row">
-        <QuantitySelector />
+        <QuantitySelector count={count} />
         <DeleteButton />
       </div>
     </article>

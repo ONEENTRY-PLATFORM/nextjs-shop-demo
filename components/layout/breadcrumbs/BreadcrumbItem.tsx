@@ -10,12 +10,15 @@ const BreadcrumbItem: React.FC<{
           href={'/' + link}
           className="my-auto text-base hover:text-orange-500"
         >
-          {link}
+          {link[0].toUpperCase() + link.slice(1, link.length)}
         </a>
       </>
     ) : (
       <div>
-        / <span className="text-orange-500">{link}</span>
+        /{' '}
+        <span className="text-orange-500">
+          {link[0].toUpperCase() + link.slice(1, link.length)}
+        </span>
       </div>
     )}
   </>

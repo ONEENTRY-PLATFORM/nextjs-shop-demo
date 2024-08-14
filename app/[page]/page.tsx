@@ -12,15 +12,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { page, isError } = await getPageByUrl(params.page, 'en_US');
 
-  console.log(page);
-
-  if (isError) {
+  if (isError || !page) {
     return notFound();
   }
 
+  const { localizeInfos } = page;
+
   return {
-    // title: page.seo?.title || page.title,
-    // description: page.seo?.description || page.bodySummary,
+    title: localizeInfos.title,
+    description: localizeInfos.title,
     // openGraph: {
     //   publishedTime: page.createdAt,
     //   modifiedTime: page.updatedAt,
@@ -36,16 +36,13 @@ export default async function Page({ params }: { params: { page: string } }) {
     return notFound();
   }
 
-  // const page = {
-  //   title: 'title',
-  //   updatedAt: '',
-  // };
-  // if (page.pageUrl === '404') return notFound();
+  const { localizeInfos } = page;
 
   return (
     <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col py-8">
-      <h1 className="mb-8 text-3xl">{page.localizeInfos.title}</h1>
+      <h1 className="mb-8 text-3xl">{localizeInfos.title}</h1>
       {page.pageUrl === 'cart' && <CartPage />}
+      {/* {page.pageUrl === 'favorites' && <FavoritesPage />} */}
     </div>
   );
 }
