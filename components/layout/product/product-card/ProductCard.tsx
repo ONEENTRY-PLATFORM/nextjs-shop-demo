@@ -50,7 +50,7 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
           originalPrice={attributeValues.price?.value}
         />
 
-        <AddToCartButton id={id} />
+        <AddToCartButton product={product} />
       </div>
 
       <Link

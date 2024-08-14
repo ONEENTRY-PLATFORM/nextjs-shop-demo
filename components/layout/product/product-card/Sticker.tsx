@@ -25,7 +25,8 @@ const Sticker: React.FC<IconButtonProps> = ({ sticker }) => {
       className="relative box-border flex aspect-square size-[26px] shrink-0 flex-col"
     >
       <Image
-        fill
+        width={24}
+        height={24}
         loading="lazy"
         src={sticker.value.extended.value.downloadLink}
         alt={sticker.value.title}

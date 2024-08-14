@@ -14,17 +14,16 @@ export const favoritesSlice = createSlice({
   initialState,
   reducers: {
     addFavorites(state, action: PayloadAction<IProductsEntity>) {
-      console.log('addFavorites');
-
       const isUnique = state.products.findIndex((product: IProductsEntity) => {
         return product.id === action.payload.id;
       });
       if (isUnique === -1) {
         state.products.push(action.payload);
+        console.log(initialState.products);
       }
     },
     removeFavorites(state, action: PayloadAction<number>) {
-      console.log('removeFavorites');
+      console.log(action);
       state.products = state.products.filter(
         (product: IProductsEntity) => product.id !== action.payload,
       );

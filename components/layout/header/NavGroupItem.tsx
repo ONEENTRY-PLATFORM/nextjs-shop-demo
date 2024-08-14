@@ -15,7 +15,6 @@ interface NavItemProps {
 
 const NavGroupItem: React.FC<NavItemProps> = ({ item }) => {
   const cartCount = useAppSelector(selectBasketCount);
-  console.log(item);
 
   return (
     <Link
@@ -25,7 +24,8 @@ const NavGroupItem: React.FC<NavItemProps> = ({ item }) => {
     >
       <Image
         className="object-contain"
-        fill
+        width={24}
+        height={24}
         alt={item.title}
         src={item.icon}
         priority

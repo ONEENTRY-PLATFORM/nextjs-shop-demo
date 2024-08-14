@@ -69,7 +69,7 @@ const pages = [
 
 export default async function Page({ params }: { params: { page: string } }) {
   const { page, isError } = await getPageByUrl(params.page, 'en_US');
-  console.log(page);
+  // console.log(page);
 
   if (isError || !page) {
     return notFound();

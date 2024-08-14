@@ -1,10 +1,19 @@
-import { productsInCart } from '@/components/data';
+'use client';
+
+import { useAppSelector } from '@/app/store/hooks';
+import {
+  selectCartItems,
+  selectCartTotal,
+} from '@/app/store/reducers/CartSlice';
 import DeliveryTable from '@/components/layout/cart/DeliveryTable';
 import PaymentButton from '@/components/layout/cart/PaymentButton';
 import ProductCard from '@/components/layout/cart/ProductCard';
 import TotalAmount from '@/components/layout/cart/TotalAmount';
 
 const CartPage = () => {
+  const productsInCart = useAppSelector(selectCartItems);
+  const total = useAppSelector(selectCartTotal);
+
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
       {productsInCart.map((product, i) => {
@@ -12,7 +21,7 @@ const CartPage = () => {
       })}
       <DeliveryTable />
       <div className="mt-4 flex w-[464px] max-w-full flex-col self-end font-bold">
-        <TotalAmount amount={13} />
+        <TotalAmount amount={total} />
         <PaymentButton />
       </div>
     </div>

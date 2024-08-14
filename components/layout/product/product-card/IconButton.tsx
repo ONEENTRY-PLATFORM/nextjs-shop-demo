@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
+import { useAppDispatch } from '@/app/store/hooks';
 import {
   addFavorites,
   removeFavorites,
@@ -14,14 +15,17 @@ interface IconButtonProps {
 }
 
 const IconButton: React.FC<IconButtonProps> = ({ product, imgSrc }) => {
+  const dispatch = useAppDispatch();
+
   return (
     <button
       type="button"
       className="relative box-border flex aspect-square size-[26px] shrink-0 flex-col"
-      onClick={() => addFavorites(product)}
+      onClick={() => dispatch(addFavorites(product))}
     >
       <Image
-        fill
+        width={24}
+        height={24}
         loading="lazy"
         src={imgSrc}
         alt=""
