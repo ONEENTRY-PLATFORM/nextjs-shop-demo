@@ -4,7 +4,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Breadcrumbs />
-      <main className="flex flex-col ">{children}</main>
+      <main className="flex flex-col px-5 py-8">{children}</main>
     </>
   );
 }

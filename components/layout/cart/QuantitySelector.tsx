@@ -10,7 +10,7 @@ const QuantitySelector: React.FC<{ count: number }> = ({ count }) => {
         –
       </button>
       <input
-        className="relative box-border w-10"
+        className="relative box-border w-10 bg-transparent text-center"
         type="text"
         name=""
         id=""

@@ -1,9 +1,14 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import CartPage from '@/components/layout/cart/CartPage';
+import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
+import OrdersPage from '@/components/layout/orders/OrdersPage';
+// import PaymentPage from '@/components/layout/favorites/PaymentPage';
+import ProfilePage from '@/components/layout/profile/ProfilePage';
 
+import CartPage from '../../components/layout/cart/CartPage';
 import { getPageByUrl } from '../api/serverSideProps';
+import WithSidebar from './WithSidebar';
 
 export async function generateMetadata({
   params,
@@ -29,20 +34,63 @@ export async function generateMetadata({
   };
 }
 
+const pages = [
+  {
+    templateType: 'withSidebar',
+    name: 'profile',
+    title: 'profile',
+    component: <ProfilePage />,
+  },
+  {
+    templateType: 'withSidebar',
+    name: 'orders',
+    title: 'orders',
+    component: <OrdersPage />,
+  },
+  {
+    templateType: 'withSidebar',
+    name: 'cart',
+    title: 'cart',
+    component: <CartPage />,
+  },
+  {
+    templateType: 'withSidebar',
+    name: 'payment',
+    title: 'payment',
+    // component: <PaymentPage />,
+  },
+  {
+    templateType: 'withSidebar',
+    name: 'favorites',
+    title: 'favorites',
+    component: <FavoritesPage />,
+  },
+];
+
 export default async function Page({ params }: { params: { page: string } }) {
   const { page, isError } = await getPageByUrl(params.page, 'en_US');
+  console.log(page);
 
   if (isError || !page) {
     return notFound();
   }
 
-  const { localizeInfos } = page;
+  const { localizeInfos, pageUrl } = page;
 
   return (
-    <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col py-8">
-      <h1 className="mb-8 text-3xl">{localizeInfos.title}</h1>
-      {page.pageUrl === 'cart' && <CartPage />}
-      {/* {page.pageUrl === 'favorites' && <FavoritesPage />} */}
+    <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col">
+      {/* <h1 className="mb-8 text-3xl">{localizeInfos.title}</h1> */}
+      {pages.map((page, _i) => {
+        if (pageUrl !== page.name) {
+          return;
+        }
+
+        return page.templateType === 'withSidebar' ? (
+          <WithSidebar key={_i}>{page.component}</WithSidebar>
+        ) : (
+          page.component
+        );
+      })}
     </div>
   );
 }

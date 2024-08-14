@@ -6,14 +6,8 @@ import BreadcrumbsTrail from './BreadcrumbsTrail';
 const Breadcrumbs: React.FC = () => {
   return (
     <section
-      className="
-        mx-auto box-border flex w-full 
-        grow flex-col 
-        justify-center self-stretch border 
-        border-solid 
-        border-neutral-100 
-        bg-white px-5 py-2
-      "
+      className="mx-auto box-border flex w-full grow flex-col justify-center self-stretch border 
+        border-solid border-neutral-100 bg-white px-4 py-2"
     >
       <div
         className="

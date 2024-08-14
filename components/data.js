@@ -755,7 +755,7 @@ export const userMenuItems = [
   {
     icon: '/icons/orders.svg',
     text: 'Payments',
-    href: '/payments',
+    href: '/payment',
   },
   {
     icon: '/icons/heart.svg',
@@ -849,3 +849,5 @@ export const productsInCart = [
     count: 3,
   },
 ];
+
+export const favorites = [80, 73, 66, 49];
