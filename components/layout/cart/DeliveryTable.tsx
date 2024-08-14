@@ -19,7 +19,7 @@ const tableData = [
 
 const DeliveryTable: React.FC = () => {
   return (
-    <table className="table max-w-[725px] border border-solid border-neutral-100 text-neutral-600">
+    <table className="table w-full border border-solid border-neutral-100 text-neutral-600">
       <tbody>
         {tableData.map((row, index) => (
           <TableRow

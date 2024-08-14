@@ -1,3 +1,5 @@
+'use client';
+
 import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
 import type { Dispatch, ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';

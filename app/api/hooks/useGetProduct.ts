@@ -8,7 +8,7 @@ import { LanguageContext } from '../../store/providers/LanguageContext';
 import { api } from '../api/api';
 
 type UseGetProductProps = {
-  id: number | null;
+  id: number;
 };
 
 export const useGetProduct = ({ id }: UseGetProductProps) => {
@@ -18,18 +18,16 @@ export const useGetProduct = ({ id }: UseGetProductProps) => {
   const { activeLanguage } = useContext(LanguageContext);
   const [refetch, setRefetch] = useState(false);
   useEffect(() => {
-    id &&
-      (async () => {
-        setLoading(true);
-        try {
-          const result = await api.Products.getProductById(id, activeLanguage);
-          result && setProduct(result);
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (e: any) {
-          setError(e?.message);
-        }
-        setLoading(false);
-      })();
+    (async () => {
+      setLoading(true);
+      try {
+        const result = await api.Products.getProductById(id, activeLanguage);
+        result && setProduct(result);
+      } catch (e: any) {
+        setError(e.message);
+      }
+      setLoading(false);
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLanguage, refetch]);
 
