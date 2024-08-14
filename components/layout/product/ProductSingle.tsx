@@ -22,12 +22,7 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
           description={attributeValues.description?.value.plainValue}
         />
       </div>
-      <ProductDetails
-        id={id}
-        title={localizeInfos.title}
-        price={price}
-        units={attributeValues.units_product}
-      />
+      <ProductDetails {...product} />
     </div>
   );
 };

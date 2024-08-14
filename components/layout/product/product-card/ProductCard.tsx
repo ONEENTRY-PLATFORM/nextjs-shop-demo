@@ -32,7 +32,7 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
             return <Sticker key={i} sticker={sticker} />;
           },
         )}
-        <IconButton imgSrc="/icons/heart.svg" />
+        <IconButton imgSrc="/icons/heart.svg" product={product} />
       </div>
 
       <ProductImage

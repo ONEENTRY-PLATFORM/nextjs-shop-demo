@@ -14,6 +14,8 @@ export const favoritesSlice = createSlice({
   initialState,
   reducers: {
     addFavorites(state, action: PayloadAction<IProductsEntity>) {
+      console.log('addFavorites');
+
       const isUnique = state.products.findIndex((product: IProductsEntity) => {
         return product.id === action.payload.id;
       });
@@ -22,6 +24,7 @@ export const favoritesSlice = createSlice({
       }
     },
     removeFavorites(state, action: PayloadAction<number>) {
+      console.log('removeFavorites');
       state.products = state.products.filter(
         (product: IProductsEntity) => product.id !== action.payload,
       );

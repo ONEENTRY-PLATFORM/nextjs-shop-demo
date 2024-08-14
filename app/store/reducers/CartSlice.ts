@@ -18,6 +18,8 @@ export const cartSlice = createSlice({
       state,
       action: PayloadAction<IProductsEntity & { selected: boolean }>,
     ) {
+      console.log(state);
+
       const index = state.products.findIndex(
         (product) => product.id === action.payload.id,
       );
@@ -37,11 +39,13 @@ export const cartSlice = createSlice({
       }
     },
     removeProduct(state, action: PayloadAction<number>) {
+      console.log(state);
       state.products = state.products.filter(
         (product: IProductsEntity) => product.id !== action.payload,
       );
     },
     deselectProduct(state, action: PayloadAction<number>) {
+      console.log(state);
       state.products.map((product) => {
         if (product.id === action.payload) {
           product.selected = !product.selected;
@@ -49,12 +53,14 @@ export const cartSlice = createSlice({
       });
     },
     decreaseProduct(state, action: PayloadAction<number>) {
+      console.log(state);
       const badIndex = state.products.findIndex((product: IProductsEntity) => {
         return product.id === action.payload;
       });
       state.products.splice(badIndex, 1);
     },
     removeAllProducts(state) {
+      console.log(state);
       state.products = initialState.products;
     },
   },
