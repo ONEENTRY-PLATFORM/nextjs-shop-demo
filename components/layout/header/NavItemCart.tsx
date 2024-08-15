@@ -5,15 +5,13 @@ import Link from 'next/link';
 import { useAppSelector } from '@/app/store/hooks';
 import { selectBasketCount } from '@/app/store/reducers/CartSlice';
 
-interface NavItemProps {
-  item: {
-    icon: string;
-    title: string;
-    href: string;
-  };
-}
+const item = {
+  icon: '/icons/cart.svg',
+  href: '/cart',
+  title: 'cart',
+};
 
-const NavGroupItem: React.FC<NavItemProps> = ({ item }) => {
+const NavItemCart: React.FC = () => {
   const cartCount = useAppSelector(selectBasketCount);
 
   return (
@@ -30,13 +28,11 @@ const NavGroupItem: React.FC<NavItemProps> = ({ item }) => {
         src={item.icon}
         priority
       />
-      {item.href === '/cart' && (
-        <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full bg-orange-400 text-center text-sm leading-4">
-          {cartCount}
-        </div>
-      )}
+      <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full bg-orange-400 text-center text-sm leading-4">
+        {cartCount}
+      </div>
     </Link>
   );
 };
 
-export default NavGroupItem;
+export default NavItemCart;

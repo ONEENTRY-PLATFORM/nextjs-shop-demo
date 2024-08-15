@@ -6,6 +6,7 @@ import { Inter } from 'next/font/google';
 import { navigationItems } from '@/components/data';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
+import Modal from '@/components/layout/modal/Modal';
 import NavigationMenu from '@/components/layout/navbar/NavigationMenu';
 
 import { AuthProvider } from './store/providers/AuthContext';
@@ -24,6 +25,11 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const modal = {
+    title: 'test',
+    description: 'description',
+    type: '',
+  };
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -36,6 +42,7 @@ export default function RootLayout({
                   <NavigationMenu items={navigationItems} />
                   {children}
                   <Footer />
+                  <Modal modal={modal} />
                 </OpenDrawerProvider>
               </ContentContextProvider>
             </AuthProvider>

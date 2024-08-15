@@ -1,14 +1,13 @@
-import NavGroupItem from './NavGroupItem';
+import NavItemCart from './NavItemCart';
+import NavItemFavorites from './NavItemFavorites';
+import NavItemProfile from './NavItemProfile';
 
-interface MenuItemsProps {
-  menuItems: [];
-}
-const NavGroup: React.FC<MenuItemsProps> = ({ menuItems }) => {
+const NavGroup: React.FC = () => {
   return (
     <div className="my-auto flex gap-5 max-md:max-w-full">
-      {menuItems?.map((item, index) => (
-        <NavGroupItem key={index} item={item} />
-      ))}
+      <NavItemProfile />
+      <NavItemFavorites />
+      <NavItemCart />
     </div>
   );
 };
