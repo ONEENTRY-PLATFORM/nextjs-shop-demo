@@ -9,12 +9,7 @@ import {
   selectIsFavorites,
 } from '@/app/store/reducers/FavoritesSlice';
 
-interface IconButtonProps {
-  product: IProductsEntity;
-  imgSrc: string;
-}
-
-const IconButton: React.FC<IconButtonProps> = ({ product, imgSrc }) => {
+const FavoritesButton: React.FC<IProductsEntity> = (product) => {
   const dispatch = useAppDispatch();
 
   return (
@@ -27,7 +22,7 @@ const IconButton: React.FC<IconButtonProps> = ({ product, imgSrc }) => {
         width={24}
         height={24}
         loading="lazy"
-        src={imgSrc}
+        src="/icons/heart.svg"
         alt=""
         className="relative shrink-0"
       />
@@ -35,4 +30,4 @@ const IconButton: React.FC<IconButtonProps> = ({ product, imgSrc }) => {
   );
 };
 
-export default IconButton;
+export default FavoritesButton;

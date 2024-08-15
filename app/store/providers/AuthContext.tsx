@@ -1,11 +1,10 @@
 'use client';
-/* eslint-disable react-hooks/exhaustive-deps */
+
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { ReactNode } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { api, reDefine, useLazyGetMeQuery } from '../../api';
+import { reDefine, useLazyGetMeQuery } from '../../api';
 import { LanguageContext } from './LanguageContext';
 
 type ContextProps = {
@@ -60,8 +59,7 @@ export const AuthProvider = ({ children }: Props) => {
         setUser(res.data);
         setIsAuth(true);
       })
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      .catch(async (e) => {
+      .catch(async () => {
         localStorage.setItem('refreshToken', '');
         setIsAuth(false);
       });
@@ -89,8 +87,7 @@ export const AuthProvider = ({ children }: Props) => {
           }
           setUser(res.data);
         })
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        .catch((e) => {
+        .catch(() => {
           localStorage.setItem('refreshToken', '');
           setIsAuth(false);
         });

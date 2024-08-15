@@ -3,7 +3,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { Key } from 'react';
 
 import AddToCartButton from './AddToCartButton';
-import IconButton from './IconButton';
+import FavoritesButton from './FavoritesButton';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 import Sticker from './Sticker';
@@ -32,11 +32,11 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
             return <Sticker key={i} sticker={sticker} />;
           },
         )}
-        <IconButton imgSrc="/icons/heart.svg" product={product} />
+        <FavoritesButton {...product} />
       </div>
 
       <ProductImage
-        imageSrc={attributeValues.pic?.value.downloadLink}
+        imageSrc={attributeValues.pic.value.downloadLink}
         alt={localizeInfos.title}
       />
 
@@ -46,8 +46,8 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
         </h2>
 
         <PriceDisplay
-          currentPrice={attributeValues.sale?.value}
-          originalPrice={attributeValues.price?.value}
+          currentPrice={attributeValues.sale.value}
+          originalPrice={attributeValues.price.value}
         />
 
         <AddToCartButton product={product} />
