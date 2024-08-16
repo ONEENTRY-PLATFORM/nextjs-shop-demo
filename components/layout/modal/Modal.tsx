@@ -8,6 +8,7 @@ import CalendarForm from '@/components/forms/CalendarForm';
 import ForgotPasswordForm from '@/components/forms/ForgotPasswordForm';
 import PaymentForm from '@/components/forms/PaymentForm';
 import ResetPasswordForm from '@/components/forms/ResetPasswordForm';
+import SearchForm from '@/components/forms/SearchForm';
 import SignInEmail from '@/components/forms/SignInEmail';
 import SignInPhone from '@/components/forms/SignInPhone';
 import SignUpForm from '@/components/forms/SignUpForm';
@@ -37,6 +38,7 @@ function Modal() {
         {component === 'ForgotPasswordForm' && <ForgotPasswordForm />}
         {component === 'PaymentForm' && <PaymentForm />}
         {component === 'ResetPasswordForm' && <ResetPasswordForm />}
+        {component === 'SearchForm' && <SearchForm />}
         {component === 'SignInEmail' && <SignInEmail />}
         {component === 'SignInPhone' && <SignInPhone />}
         {component === 'SignUpForm' && <SignUpForm />}

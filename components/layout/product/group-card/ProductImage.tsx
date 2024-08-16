@@ -14,6 +14,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ imageSrc }) => {
     >
       <Image
         fill
+        sizes="(min-width: 600px) 66vw, 100vw"
         src={imageSrc}
         alt="Product"
         className="mb-10 size-full shrink-0 rounded-xl object-cover max-md:mb-8 max-sm:mb-8"

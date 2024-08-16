@@ -815,23 +815,23 @@ export const catalogCards = [
   },
 ];
 
-export const menuItems = [
-  {
-    icon: '/icons/user.svg',
-    href: '/profile',
-    title: 'user',
-  },
-  {
-    icon: '/icons/heart.svg',
-    href: '/favorites',
-    title: 'heart',
-  },
-  {
-    icon: '/icons/cart.svg',
-    href: '/cart',
-    title: 'cart',
-  },
-];
+// export const menuItems = [
+//   {
+//     icon: '/icons/user.svg',
+//     href: '/profile',
+//     title: 'user',
+//   },
+//   {
+//     icon: '/icons/heart.svg',
+//     href: '/favorites',
+//     title: 'heart',
+//   },
+//   {
+//     icon: '/icons/cart.svg',
+//     href: '/cart',
+//     title: 'cart',
+//   },
+// ];
 
 export const productsInCart = [
   {
@@ -851,3 +851,61 @@ export const productsInCart = [
 ];
 
 export const favorites = [80, 73, 66, 49];
+
+export const quickLinks = [
+  {
+    text: 'About us',
+    href: '/about',
+  },
+  {
+    text: 'Service',
+    href: '/service',
+  },
+  {
+    text: 'Treatment',
+    href: '/treatment',
+  },
+  {
+    text: 'Product',
+    href: '/',
+  },
+  {
+    text: 'Our experts',
+    href: '/experts',
+  },
+  {
+    text: 'Support',
+    href: '/support',
+  },
+  {
+    text: 'Contact',
+    href: '/contacts',
+  },
+];
+
+export const infoLinks = [
+  {
+    text: 'Book online',
+    href: '/book',
+  },
+  {
+    text: 'Delivery',
+    href: '/delivery',
+  },
+  {
+    text: 'Offers & events',
+    href: '/offers',
+  },
+  {
+    text: 'Purchase a gift card',
+    href: '/gifts',
+  },
+  {
+    text: 'Pricing & package',
+    href: '/package',
+  },
+  {
+    text: 'Payments',
+    href: '/payments',
+  },
+];

@@ -9,6 +9,8 @@ const PaymentForm: React.FC = () => {
     <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
       <Image
         fill
+        width={375}
+        height={233}
         loading="lazy"
         src="/images/card.svg"
         alt=""

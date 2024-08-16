@@ -11,6 +11,7 @@ const VariationCard: React.FC<VariationCardProps> = ({ title, imageSrc }) => {
       <div className="min-h-[93px] w-full bg-neutral-100">
         <Image
           fill
+          sizes="(min-width: 300px) 66vw, 100vw"
           src={imageSrc}
           alt="Product"
           className="size-full shrink-0 rounded-xl object-cover"

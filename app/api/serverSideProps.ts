@@ -119,6 +119,7 @@ export async function getPageByUrl(
 }
 
 // getMenuByMarker
+// user_web, main_web
 export async function getMenuByMarker({
   marker,
   langCode,
@@ -127,8 +128,8 @@ export async function getMenuByMarker({
   langCode: string;
 }) {
   try {
-    const page = await api.Menus.getMenusByMarker(marker, langCode);
-    return { isError: false, page: page };
+    const menu = await api.Menus.getMenusByMarker(marker, langCode);
+    return { isError: false, menu: menu };
   } catch (err) {
     return { isError: true, err: err };
   }

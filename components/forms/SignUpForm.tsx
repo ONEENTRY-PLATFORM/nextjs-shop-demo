@@ -5,7 +5,7 @@ import { useAppSelector } from '@/app/store/hooks';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
-const formFields = [
+const SignUpFormFields = [
   {
     type: 'email',
     label: 'Your e-mail',
@@ -56,7 +56,7 @@ const SignUpForm: React.FC = () => {
         </p>
       </div>
       <div className="relative mb-auto box-border flex shrink-0 flex-col gap-4">
-        {formFields.map((field, index) => (
+        {SignUpFormFields.map((field, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <FormInput key={index} {...field} />
         ))}

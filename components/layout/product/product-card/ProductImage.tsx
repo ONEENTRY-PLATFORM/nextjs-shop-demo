@@ -10,6 +10,7 @@ const ProductImage: React.FC<ProductImageProps> = ({ imageSrc, alt }) => {
     <div className="relative size-40">
       <Image
         fill
+        sizes="(min-width: 300px) 66vw, 100vw"
         src={imageSrc}
         alt={alt}
         className="size-40 shrink-0 object-cover"
