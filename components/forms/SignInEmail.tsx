@@ -1,8 +1,9 @@
-'use client';
+import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import React, { useContext } from 'react';
 
-import { useContext } from 'react';
-
-import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { logInUser } from '@/app/api';
+import { useAppSelector } from '@/app/store/hooks';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 
 import CreateAccountButton from './inputs/CreateAccountButton';
 import FormInput from './inputs/FormInput';
@@ -21,11 +22,50 @@ const socialButtons = [
 ];
 
 const SignInEmail: React.FC = () => {
-  const { open, setOpen } = useContext(OpenDrawerContext);
+  const { authenticate } = useContext(AuthContext);
+  // const fields = useAppSelector((state) => state.SignUpFieldsReducer.fields);
+  // const data: ISignUpData = {
+  //   formIdentifier: 'reg',
+  //   authData: [
+  //     { marker: 'email_reg', value: fields.email_reg.value },
+  //     { marker: 'password_reg', value: fields.password_reg.value },
+  //   ],
+  //   formData,
+  //   notificationData: {
+  //     email: fields.email_reg.value,
+  //     phonePush: fields.phone_reg.value,
+  //     phoneSMS: fields.phone_reg.value,
+  //   },
+  // };
+
+  // try {
+  //   const res = await api.AuthProvider.signUp('email', data, 'en_US');
+  //   if (res.isActive) {
+  //     try {
+  //       await logInUser({
+  //         method: 'email',
+  //         login: res.identifier,
+  //         password: fields.password_reg.value,
+  //       });
+
+  //       authenticate();
+  //     } catch (e: any) {
+  //       Alert.alert(e.message);
+  //     }
+  //   } else {
+  //     navigateAuth('activate_user', {
+  //       email: res.identifier,
+  //       method: 'email',
+  //       password: fields.password_reg.value,
+  //       event: 'activate',
+  //     });
+  //   }
+  // } catch (e: any) {
+  //   Alert.alert(e?.message);
+  // }
 
   return (
     <>
-      <button onClick={() => setOpen(!open)}>open</button>
       <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="max-w-full text-xl font-bold text-neutral-600">

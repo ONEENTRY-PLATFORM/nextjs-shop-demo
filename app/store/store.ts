@@ -2,11 +2,11 @@
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-// import SignUpFieldsReducer from '../modules/forms/reducers/signUpFieldsReducer';
 import { RTKApi } from '../api';
 import cartReducer from './reducers/CartSlice';
 import favoritesReducer from './reducers/FavoritesSlice';
 import filterReducer from './reducers/FilterSlice';
+import signUpReducer from './reducers/SignUpSlice';
 import systemContentReducer from './reducers/SystemContentSlice';
 // import {orderReducer} from '../modules/orders';
 
@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   // orderReducer,
   filterReducer,
   systemContentReducer,
-  // SignUpFieldsReducer,
+  signUpReducer,
   [RTKApi.reducerPath]: RTKApi.reducer,
 });
 

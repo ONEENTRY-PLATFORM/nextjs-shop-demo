@@ -25,11 +25,6 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const modal = {
-    title: 'test',
-    description: 'description',
-    type: '',
-  };
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -42,7 +37,7 @@ export default function RootLayout({
                   <NavigationMenu items={navigationItems} />
                   {children}
                   <Footer />
-                  <Modal modal={modal} />
+                  <Modal />
                 </OpenDrawerProvider>
               </ContentContextProvider>
             </AuthProvider>

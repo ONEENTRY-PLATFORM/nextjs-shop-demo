@@ -1,27 +1,26 @@
 'use client';
 
-import type { Dispatch } from 'react';
+import type { Dispatch, ReactNode } from 'react';
 import React, { createContext, useState } from 'react';
 
 type OpenDrawerContextType = {
+  component: string;
   open: boolean;
   setOpen: Dispatch<boolean>;
 };
 
 export const OpenDrawerContext = createContext<OpenDrawerContextType>({
+  component: '',
   open: false,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setOpen(value: boolean): void {},
 });
 
-export const OpenDrawerProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const OpenDrawerProvider = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState<boolean>(false);
   return (
-    <OpenDrawerContext.Provider value={{ open, setOpen }}>
+    <OpenDrawerContext.Provider
+      value={{ open, setOpen, component: 'SignInEmail' }}
+    >
       {children}
     </OpenDrawerContext.Provider>
   );
