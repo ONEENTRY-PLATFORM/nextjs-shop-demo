@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
+import { useAppSelector } from '@/app/store/hooks';
 
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
@@ -42,6 +44,7 @@ const formFields = [
 ];
 
 const SignUpForm: React.FC = () => {
+  const fields = useAppSelector((state) => state.signUpReducer.fields);
   return (
     <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">

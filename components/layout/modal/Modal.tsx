@@ -33,7 +33,14 @@ function Modal() {
         >
           &#10005;
         </button>
+        {component === 'CalendarForm' && <CalendarForm />}
+        {component === 'ForgotPasswordForm' && <ForgotPasswordForm />}
+        {component === 'PaymentForm' && <PaymentForm />}
+        {component === 'ResetPasswordForm' && <ResetPasswordForm />}
         {component === 'SignInEmail' && <SignInEmail />}
+        {component === 'SignInPhone' && <SignInPhone />}
+        {component === 'SignUpForm' && <SignUpForm />}
+        {component === 'VerificationForm' && <VerificationForm />}
       </div>
     </div>
   );

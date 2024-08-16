@@ -46,8 +46,8 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
         </h2>
 
         <PriceDisplay
-          currentPrice={attributeValues.sale.value}
-          originalPrice={attributeValues.price.value}
+          currentPrice={attributeValues.sale?.value}
+          originalPrice={attributeValues.price?.value}
         />
 
         <AddToCartButton product={product} />

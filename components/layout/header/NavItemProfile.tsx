@@ -7,7 +7,7 @@ import { useContext } from 'react';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 const NavItemProfile: React.FC = () => {
-  const { open, setOpen } = useContext(OpenDrawerContext);
+  const { open, setOpen, setComponent } = useContext(OpenDrawerContext);
   const item = {
     icon: '/icons/user.svg',
     href: '/profile',
@@ -15,7 +15,12 @@ const NavItemProfile: React.FC = () => {
   };
 
   return !open ? (
-    <button onClick={() => setOpen(!open)}>
+    <button
+      onClick={() => {
+        setOpen(!open);
+        setComponent('SignUpForm');
+      }}
+    >
       <Image
         className="object-contain"
         width={24}

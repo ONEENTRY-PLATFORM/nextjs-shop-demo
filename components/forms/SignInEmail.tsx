@@ -23,7 +23,32 @@ const socialButtons = [
 
 const SignInEmail: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
-  // const fields = useAppSelector((state) => state.SignUpFieldsReducer.fields);
+  const fields = useAppSelector((state) => state.signUpReducer.fields);
+  const formData = Object.keys(fields).reduce(
+    (
+      arr: Array<{
+        marker: string;
+        type: string;
+        value: string;
+      }>,
+      field,
+    ) => {
+      const candidate = {
+        marker: field,
+        type: 'string',
+        value: fields[field].value,
+      };
+      arr.push(candidate);
+      return arr;
+    },
+    [],
+  );
+  // formData.push({
+  //   marker: 'email_notifications',
+  //   type: 'string',
+  //   value: fields.email_reg.value,
+  // });
+
   // const data: ISignUpData = {
   //   formIdentifier: 'reg',
   //   authData: [
@@ -37,6 +62,8 @@ const SignInEmail: React.FC = () => {
   //     phoneSMS: fields.phone_reg.value,
   //   },
   // };
+
+  console.log(formData);
 
   // try {
   //   const res = await api.AuthProvider.signUp('email', data, 'en_US');
@@ -78,14 +105,14 @@ const SignInEmail: React.FC = () => {
           <FormInput
             type="email"
             placeholder="info@example.com"
-            name="email"
+            name="email_reg"
             label="Username"
             required={false}
           />
           <FormInput
             type="password"
             placeholder="•••••"
-            name="password"
+            name="password_reg"
             label="Confirm password"
             required={false}
           />

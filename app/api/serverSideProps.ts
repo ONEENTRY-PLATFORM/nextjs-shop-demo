@@ -1,3 +1,6 @@
+import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
+import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {
   IFilterParams,
@@ -112,6 +115,70 @@ export async function getPageByUrl(
     return { isError: false, page: page };
   } catch (err) {
     return { isError: true, err: err };
+  }
+}
+
+// getMenuByMarker
+export async function getMenuByMarker({
+  marker,
+  langCode,
+}: {
+  marker: string;
+  langCode: string;
+}) {
+  try {
+    const page = await api.Menus.getMenusByMarker(marker, langCode);
+    return { isError: false, page: page };
+  } catch (err) {
+    return { isError: true, err: err };
+  }
+}
+
+// getFormByMarker
+export async function getFormByMarker({
+  marker,
+  langCode,
+}: {
+  marker: string;
+  langCode: string;
+}) {
+  const notEditableTypes: { [key: string]: unknown } = {
+    button: false,
+    spam: false,
+    null: true,
+  };
+
+  try {
+    const form = await api.Forms.getFormByMarker(marker, langCode);
+    form.attributes = (form.attributes as IAttributes[]).sort((a, b) => {
+      return a.position - b.position;
+    });
+    const initValue: {
+      [p: string]: {
+        value: string;
+        valid: boolean;
+        required: boolean;
+      };
+    } = {};
+    const reduced = (form?.attributes as IAttributes[]).reduce(
+      (obj, currentValue) => {
+        if (notEditableTypes[currentValue.type] === false) {
+          return obj;
+        }
+        // eslint-disable-next-line no-param-reassign
+        obj[currentValue.marker] = {
+          value: '',
+          valid: false,
+          required: currentValue?.validators?.requiredValidator?.strict,
+        };
+        return obj;
+      },
+      initValue,
+    );
+    return { isError: false, form: reduced };
+  } catch (e) {
+    console.log(e);
+    return { isError: true, err: e };
   }
 }
 
