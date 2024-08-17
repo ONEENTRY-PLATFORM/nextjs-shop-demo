@@ -7,7 +7,7 @@ interface NavigationItemProps {
   hasDropdown?: boolean;
 }
 
-const NavigationItem: React.FC<NavigationItemProps> = ({
+const NavigationMenuItem: React.FC<NavigationItemProps> = ({
   label,
   href,
   hasDropdown,
@@ -34,4 +34,4 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
   );
 };
 
-export default NavigationItem;
+export default NavigationMenuItem;

@@ -5,6 +5,7 @@ import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import CalendarForm from '@/components/forms/CalendarForm';
+import FilterForm from '@/components/forms/FilterForm';
 import ForgotPasswordForm from '@/components/forms/ForgotPasswordForm';
 import PaymentForm from '@/components/forms/PaymentForm';
 import ResetPasswordForm from '@/components/forms/ResetPasswordForm';
@@ -43,6 +44,7 @@ function Modal() {
         {component === 'SignInPhone' && <SignInPhone />}
         {component === 'SignUpForm' && <SignUpForm />}
         {component === 'VerificationForm' && <VerificationForm />}
+        {component === 'FilterForm' && <FilterForm />}
       </div>
     </div>
   );

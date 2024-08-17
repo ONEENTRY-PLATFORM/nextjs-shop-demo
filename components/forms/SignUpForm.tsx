@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 
+import { useGetForm } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 
 import FormInput from './inputs/FormInput';
@@ -45,6 +46,59 @@ const SignUpFormFields = [
 
 const SignUpForm: React.FC = () => {
   const fields = useAppSelector((state) => state.signUpReducer.fields);
+  const form = useGetForm({
+    marker: 'reg',
+  });
+
+  const formData = Object.keys(fields).reduce(
+    (
+      arr: Array<{
+        marker: string;
+        type: string;
+        value: string;
+      }>,
+      field,
+    ) => {
+      const candidate = {
+        marker: field,
+        type: 'string',
+        value: fields[field].value,
+      };
+      arr.push(candidate);
+      return arr;
+    },
+    [],
+  );
+
+  console.log(form);
+  console.log(formData);
+
+  // try {
+  //   const res = await api.AuthProvider.signUp('email', data, 'en_US');
+  //   if (res.isActive) {
+  //     try {
+  //       await logInUser({
+  //         method: 'email',
+  //         login: res.identifier,
+  //         password: fields.password_reg.value,
+  //       });
+
+  //       authenticate();
+  //     } catch (e: any) {
+  //       Alert.alert(e.message);
+  //     }
+  //   } else {
+  //     navigateAuth('activate_user', {
+  //       email: res.identifier,
+  //       method: 'email',
+  //       password: fields.password_reg.value,
+  //       event: 'activate',
+  //     });
+  //   }
+  // } catch (e: any) {
+  //   Alert.alert(e?.message);
+  // }
+
   return (
     <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">

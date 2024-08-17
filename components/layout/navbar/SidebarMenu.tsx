@@ -13,7 +13,7 @@ export default async function SidebarMenu() {
   if (isError || !menu) {
     return;
   }
-  
+
   const { pages } = menu;
 
   return (

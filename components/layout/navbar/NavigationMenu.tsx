@@ -1,4 +1,4 @@
-import NavigationItem from './NavigationItem';
+import NavigationMenuItem from './NavigationMenuItem';
 
 interface NavigationMenuProps {
   items: Array<{
@@ -23,7 +23,7 @@ const NavigationMenu: React.FC<NavigationMenuProps> = ({ items }) => {
               key={index}
               className="group my-auto flex justify-between gap-5 whitespace-nowrap py-1"
             >
-              <NavigationItem
+              <NavigationMenuItem
                 label={item.label}
                 href={item.href}
                 hasDropdown={item.hasDropdown}

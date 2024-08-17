@@ -19,7 +19,7 @@ const VerificationForm: React.FC = () => {
         <OTPInputs inputCount={6} />
 
         <div className="-mt-px self-end text-xs text-orange-500 max-md:mr-2.5">
-          <span className="text-gray-400">Did not receive the OTP?</span>{' '}
+          <span className="text-gray-400">Did not receive the OTP? </span>
           <button className="font-bold text-orange-500" type="button">
             RESEND
           </button>

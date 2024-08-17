@@ -2,8 +2,10 @@ import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInter
 import React, { useContext } from 'react';
 
 import { logInUser } from '@/app/api';
+import { useGetForm } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+import { addField } from '@/app/store/reducers/SignUpSlice';
 
 import CreateAccountButton from './inputs/CreateAccountButton';
 import FormInput from './inputs/FormInput';
@@ -25,6 +27,10 @@ const socialButtons = [
 const SignInEmail: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
   const fields = useAppSelector((state) => state.signUpReducer.fields);
+  const form = useGetForm({
+    marker: 'reg',
+  });
+
   const formData = Object.keys(fields).reduce(
     (
       arr: Array<{
@@ -64,6 +70,7 @@ const SignInEmail: React.FC = () => {
   //   },
   // };
 
+  console.log(form);
   console.log(formData);
 
   // try {
@@ -93,56 +100,54 @@ const SignInEmail: React.FC = () => {
   // }
 
   return (
-    <>
-      <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
-        <div className="relative box-border flex shrink-0 flex-col gap-2.5">
-          <h2 className="max-w-full text-xl font-bold text-neutral-600">
-            Sign in
-          </h2>
-          <p className="max-w-full text-xs text-gray-400">E-mail/Phone</p>
-        </div>
+    <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
+      <div className="relative box-border flex shrink-0 flex-col gap-2.5">
+        <h2 className="max-w-full text-xl font-bold text-neutral-600">
+          Sign in
+        </h2>
+        <p className="max-w-full text-xs text-gray-400">E-mail/Phone</p>
+      </div>
 
-        <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
-          <FormInput
-            type="email"
-            placeholder="info@example.com"
-            name="email_reg"
-            label="Username"
-            required={false}
+      <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
+        <FormInput
+          type="email"
+          placeholder="info@example.com"
+          name="email_reg"
+          label="Username"
+          required={false}
+        />
+        <FormInput
+          type="password"
+          placeholder="•••••"
+          name="password_reg"
+          label="Confirm password"
+          required={false}
+        />
+      </div>
+
+      <FormSubmitButton title="SIGN IN" class="" icon="" />
+
+      <div className="mx-auto mb-5 flex w-[280px] max-w-full gap-5 text-sm max-md:mt-10">
+        <p className="mr-auto text-gray-400">Forgot Password?</p>
+        <ResetPasswordButton title="Reset password" icon={''} class={''} />
+      </div>
+
+      <p className="mx-auto mb-5 text-base font-bold leading-8 text-neutral-600">
+        Sign in with
+      </p>
+
+      <div className="mx-auto flex justify-between gap-5">
+        {socialButtons.map((button, index) => (
+          <SocialSignInButton
+            key={index}
+            imageSrc={button.src}
+            alt={button.alt}
           />
-          <FormInput
-            type="password"
-            placeholder="•••••"
-            name="password_reg"
-            label="Confirm password"
-            required={false}
-          />
-        </div>
+        ))}
+      </div>
 
-        <FormSubmitButton title="SIGN IN" class="" icon="" />
-
-        <div className="mx-auto mb-5 flex w-[280px] max-w-full gap-5 text-sm max-md:mt-10">
-          <p className="mr-auto text-gray-400">Forgot Password?</p>
-          <ResetPasswordButton title="Reset password" icon={''} class={''} />
-        </div>
-
-        <p className="mx-auto mb-5 text-base font-bold leading-8 text-neutral-600">
-          Sign in with
-        </p>
-
-        <div className="mx-auto flex justify-between gap-5">
-          {socialButtons.map((button, index) => (
-            <SocialSignInButton
-              key={index}
-              imageSrc={button.src}
-              alt={button.alt}
-            />
-          ))}
-        </div>
-
-        <CreateAccountButton title="Create AN Account" icon={''} class={''} />
-      </form>
-    </>
+      <CreateAccountButton title="Create AN Account" icon={''} class={''} />
+    </form>
   );
 };
 
