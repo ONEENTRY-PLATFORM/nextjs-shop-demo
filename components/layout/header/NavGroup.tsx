@@ -20,15 +20,16 @@ export default async function NavGroup() {
 
   return (
     <div className="my-auto flex gap-5 max-md:max-w-full">
-      {pages.map((element: { pageUrl: string }, i: Key) => {
-        return (
-          <span key={i}>
-            {element.pageUrl === 'profile' && <NavItemProfile key={i} />}
-            {element.pageUrl === 'favorites' && <NavItemFavorites />}
-            {element.pageUrl === 'cart' && <NavItemCart key={i} />}
-          </span>
-        );
-      })}
+      {Array.isArray(pages) &&
+        pages.map((element: { pageUrl: string }, i: Key) => {
+          return (
+            <span key={i}>
+              {element.pageUrl === 'profile' && <NavItemProfile key={i} />}
+              {element.pageUrl === 'favorites' && <NavItemFavorites />}
+              {element.pageUrl === 'cart' && <NavItemCart key={i} />}
+            </span>
+          );
+        })}
     </div>
   );
 }

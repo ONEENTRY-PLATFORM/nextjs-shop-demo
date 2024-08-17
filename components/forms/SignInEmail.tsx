@@ -8,6 +8,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
+import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
 const socialButtons = [
@@ -122,9 +123,7 @@ const SignInEmail: React.FC = () => {
 
         <div className="mx-auto mb-5 flex w-[280px] max-w-full gap-5 text-sm max-md:mt-10">
           <p className="mr-auto text-gray-400">Forgot Password?</p>
-          <a href="#" className="ml-auto font-bold text-orange-500 underline">
-            Reset Password
-          </a>
+          <ResetPasswordButton title="Reset password" icon={''} class={''} />
         </div>
 
         <p className="mx-auto mb-5 text-base font-bold leading-8 text-neutral-600">

@@ -18,7 +18,7 @@ const NavItemProfile: React.FC = () => {
     <button
       onClick={() => {
         setOpen(!open);
-        setComponent('SignUpForm');
+        setComponent('SignInEmail');
       }}
     >
       <Image

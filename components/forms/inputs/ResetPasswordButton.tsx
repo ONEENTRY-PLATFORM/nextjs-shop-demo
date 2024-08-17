@@ -4,27 +4,27 @@ import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-interface CreateAccountButtonProps {
+interface ButtonProps {
   title: string;
   icon: string;
   class: string;
 }
 
-const CreateAccountButton: React.FC<CreateAccountButtonProps> = ({ title }) => {
+const ResetPasswordButton: React.FC<ButtonProps> = ({ title }) => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   return (
     <button
       onClick={() => {
         setOpen(true);
-        setComponent('SignUpForm');
+        setComponent('ResetPasswordForm');
       }}
       type="button"
-      className="mx-auto w-auto rounded-[30px] border-2 border-solid border-orange-500 px-10 py-3 text-lg font-bold uppercase text-orange-500 max-md:px-5"
+      className="ml-auto font-bold text-orange-500 underline"
     >
       {title}
     </button>
   );
 };
 
-export default CreateAccountButton;
+export default ResetPasswordButton;
