@@ -1,5 +1,4 @@
 // import { getMenusByMarker } from '../api/serverSideProps';
-import { menuItems } from '../data';
 import Logo from './header/Logo';
 import NavGroup from './header/NavGroup';
 import SearchBar from './header/SearchBar';
@@ -25,7 +24,7 @@ const Header: React.FC = async () => {
         <div className="flex w-full max-w-screen-xl justify-between gap-6 max-md:flex-wrap">
           <Logo />
           <SearchBar />
-          <NavGroup menuItems={menuItems} />
+          <NavGroup />
         </div>
       </section>
     </header>

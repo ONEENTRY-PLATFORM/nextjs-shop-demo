@@ -3,8 +3,8 @@
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-import { LanguageContext } from '../../store/providers/LanguageContext';
-import { api } from '../api/api';
+import { LanguageContext } from '../../../store/providers/LanguageContext';
+import { api } from '../../api/api';
 
 type useGetPagesProps = object;
 

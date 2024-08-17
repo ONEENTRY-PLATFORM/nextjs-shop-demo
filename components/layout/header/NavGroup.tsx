@@ -1,4 +1,5 @@
-import { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
+// import { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
+import type { Key } from 'react';
 
 import { getMenuByMarker } from '@/app/api/serverSideProps';
 
@@ -19,13 +20,13 @@ export default async function NavGroup() {
 
   return (
     <div className="my-auto flex gap-5 max-md:max-w-full">
-      {pages.map((element, i) => {
+      {pages.map((element: { pageUrl: string }, i: Key) => {
         return (
-          <>
-            {element.pageUrl === 'profile' && <NavItemProfile />}
+          <span key={i}>
+            {element.pageUrl === 'profile' && <NavItemProfile key={i} />}
             {element.pageUrl === 'favorites' && <NavItemFavorites />}
-            {element.pageUrl === 'cart' && <NavItemCart />}
-          </>
+            {element.pageUrl === 'cart' && <NavItemCart key={i} />}
+          </span>
         );
       })}
     </div>

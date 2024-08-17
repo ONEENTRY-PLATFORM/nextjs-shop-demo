@@ -1,8 +1,21 @@
+import { getMenuByMarker } from '@/app/api/serverSideProps';
 import { userMenuItems } from '@/components/data';
 
 import SidebarMenuItem from './SidebarMenuItem';
 
-const SidebarMenu: React.FC = () => {
+export default async function SidebarMenu() {
+  // side_web
+  const { menu, isError } = await getMenuByMarker({
+    marker: 'side_web',
+    langCode: 'en_US',
+  });
+
+  if (isError || !menu) {
+    return;
+  }
+  
+  const { pages } = menu;
+
   return (
     <nav>
       <ul className="flex max-w-[165px] flex-col gap-5 text-base text-neutral-600">
@@ -12,6 +25,4 @@ const SidebarMenu: React.FC = () => {
       </ul>
     </nav>
   );
-};
-
-export default SidebarMenu;
+}

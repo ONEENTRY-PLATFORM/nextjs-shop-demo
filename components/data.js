@@ -815,24 +815,6 @@ export const catalogCards = [
   },
 ];
 
-// export const menuItems = [
-//   {
-//     icon: '/icons/user.svg',
-//     href: '/profile',
-//     title: 'user',
-//   },
-//   {
-//     icon: '/icons/heart.svg',
-//     href: '/favorites',
-//     title: 'heart',
-//   },
-//   {
-//     icon: '/icons/cart.svg',
-//     href: '/cart',
-//     title: 'cart',
-//   },
-// ];
-
 export const productsInCart = [
   {
     id: 80,

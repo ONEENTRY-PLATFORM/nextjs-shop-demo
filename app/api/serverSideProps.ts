@@ -9,15 +9,7 @@ import type {
 
 import { api } from './';
 
-// getMenusByMarker
-export async function getMenusByMarker(marker: string, activeLanguage: string) {
-  try {
-    const menu = await api.Menus.getMenusByMarker(marker, activeLanguage);
-    return { isError: false, menu: menu };
-  } catch (err) {
-    return { isError: true, products: err };
-  }
-}
+/* ProductApi */
 
 // getProducts
 export async function getProducts(props: {
@@ -25,8 +17,8 @@ export async function getProducts(props: {
   offset: number;
   params: object;
 }): Promise<{
-  isError: boolean;
   products?: IProductsEntity[];
+  isError: boolean;
   err?: unknown;
 }> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -52,8 +44,8 @@ export async function getRelatedProductsById(
   id: number,
   langCode: string,
 ): Promise<{
-  isError: boolean;
   products?: IProductsEntity[];
+  isError: boolean;
   err?: unknown;
 }> {
   try {
@@ -69,8 +61,8 @@ export async function getProductById(
   id: number,
   langCode: string,
 ): Promise<{
-  isError: boolean;
   product?: IProductsEntity;
+  isError: boolean;
   err?: unknown;
 }> {
   try {
@@ -81,23 +73,36 @@ export async function getProductById(
   }
 }
 
+/* PageApi */
+
 // getPages
-export async function getPages(langCode: string) {
+export async function getPages(langCode: string): Promise<{
+  pages?: IPagesEntity[];
+  isError: boolean;
+  err?: unknown;
+}> {
   try {
-    const page = await api.Pages.getPages(langCode);
-    return { isError: false, page: page };
-  } catch (err) {
-    return { isError: true, page: err };
+    const pages = await api.Pages.getPages(langCode);
+    return { isError: false, pages: pages };
+  } catch (e) {
+    return { isError: true, err: e };
   }
 }
 
 // getPageById
-export async function getPageById(id: number, langCode: string) {
+export async function getPageById(
+  id: number,
+  langCode: string,
+): Promise<{
+  page?: IPagesEntity;
+  isError: boolean;
+  err?: unknown;
+}> {
   try {
-    const page = api.Pages.getPageById(id, langCode);
-    return { isError: false, page };
+    const page = await api.Pages.getPageById(id, langCode);
+    return { isError: false, page: page };
   } catch (err) {
-    return { isError: true, page: err };
+    return { isError: true, err: err };
   }
 }
 
@@ -106,8 +111,8 @@ export async function getPageByUrl(
   url: string,
   langCode: string,
 ): Promise<{
-  isError: boolean;
   page?: IPagesEntity;
+  isError: boolean;
   err?: unknown;
 }> {
   try {
@@ -118,22 +123,29 @@ export async function getPageByUrl(
   }
 }
 
-// getMenuByMarker
-// user_web, main_web
+/* MenusApi */
+
+// getMenuByMarker - user_web, main_web
 export async function getMenuByMarker({
   marker,
   langCode,
 }: {
   marker: string;
   langCode: string;
-}) {
+}): Promise<{
+  menu?: IMenusEntity;
+  isError: boolean;
+  err?: unknown;
+}> {
   try {
     const menu = await api.Menus.getMenusByMarker(marker, langCode);
     return { isError: false, menu: menu };
-  } catch (err) {
-    return { isError: true, err: err };
+  } catch (e) {
+    return { isError: true, err: e };
   }
 }
+
+/* FormsApi */
 
 // getFormByMarker
 export async function getFormByMarker({
@@ -201,11 +213,8 @@ export async function getFormByMarker({
 //   FormData: FormsDataApi;
 //   GeneralTypes: GeneralTypesApi;
 //   Locales: LocalesApi;
-//   Menus: MenusApi;
 //   Orders: OrdersApi;
-//   Pages: PageApi;
 //   Payments: PaymentsApi;
-//   Products: ProductApi;
 //   ProductStatuses: ProductStatusesApi;
 //   System: SystemApi;
 //   Templates: TemplatesApi;
