@@ -5,12 +5,11 @@ import { useAppSelector } from '@/app/store/hooks';
 import { useAppDispatch } from '@/app/store/hooks';
 
 import { signUpFormFields } from '../data';
-// import { addField } from '@/app/store/reducers/SignUpSlice';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
 const SignUpForm: React.FC = () => {
-  const fields = useAppSelector((state) => state.signUpReducer.fields);
+  const fields = useAppSelector((state) => state.formFieldsReducer.fields);
   const dispatch = useAppDispatch();
 
   const data = useGetForm({
@@ -92,8 +91,10 @@ const SignUpForm: React.FC = () => {
         </p>
       </div>
       <div className="relative mb-auto box-border flex shrink-0 flex-col gap-4">
-        {signUpFormFields.map((field: unknown, index: React.Key) => (
-          <FormInput key={index} {...field} />
+        {signUpFormFields.map((field, index) => (
+          <div key={index}>
+            <FormInput {...field} />
+          </div>
         ))}
       </div>
       <SubmitButton title="SIGN UP" class="" icon="" />

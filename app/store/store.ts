@@ -6,17 +6,17 @@ import { RTKApi } from '../api';
 import cartReducer from './reducers/CartSlice';
 import favoritesReducer from './reducers/FavoritesSlice';
 import filterReducer from './reducers/FilterSlice';
-import signUpReducer from './reducers/SignUpSlice';
+import formFieldsReducer from './reducers/FormFieldsSlice';
+import orderReducer from './reducers/OrderSlice';
 import systemContentReducer from './reducers/SystemContentSlice';
-// import {orderReducer} from '../modules/orders';
 
 const rootReducer = combineReducers({
   cartReducer,
   favoritesReducer,
-  // orderReducer,
+  orderReducer,
   filterReducer,
   systemContentReducer,
-  signUpReducer,
+  formFieldsReducer,
   [RTKApi.reducerPath]: RTKApi.reducer,
 });
 

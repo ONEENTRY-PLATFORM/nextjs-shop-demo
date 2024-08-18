@@ -981,3 +981,14 @@ export const deliveryTableData = [
   },
   { label: 'Address', value: 'Dubai, One Entry street, 50' },
 ];
+
+export const socialProvidersButtons = [
+  {
+    src: '/icons/google.svg',
+    alt: 'Social sign-in option 1',
+  },
+  {
+    src: '/icons/google.svg',
+    alt: 'Social sign-in option 2',
+  },
+];

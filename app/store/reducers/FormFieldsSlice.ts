@@ -21,8 +21,8 @@ function getFirstKey(obj: Record<string, FieldType>): string | undefined {
   return keys.length > 0 ? keys[0] : undefined;
 }
 
-const signUpFieldsSlice = createSlice({
-  name: 'sign-up-fields',
+const formFieldsSlice = createSlice({
+  name: 'form-fields',
   initialState,
   reducers: {
     addField(state, action: PayloadAction<{ [key: string]: FieldType }>) {
@@ -34,6 +34,6 @@ const signUpFieldsSlice = createSlice({
   },
 });
 
-export const { addField } = signUpFieldsSlice.actions;
+export const { addField } = formFieldsSlice.actions;
 
-export default signUpFieldsSlice.reducer;
+export default formFieldsSlice.reducer;

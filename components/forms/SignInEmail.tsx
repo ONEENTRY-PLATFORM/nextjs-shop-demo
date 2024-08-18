@@ -1,101 +1,24 @@
-import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+// import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import React, { useContext } from 'react';
 
-import { logInUser } from '@/app/api';
+// import { logInUser } from '@/app/api';
 import { useGetForm } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import { addField } from '@/app/store/reducers/SignUpSlice';
 
+// import { addField } from '@/app/store/reducers/FormFieldsSlice';
 import { signInFormFields } from '../data';
+import { socialProvidersButtons } from '../data';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
-const socialButtons = [
-  {
-    src: '/icons/google.svg',
-    alt: 'Social sign-in option 1',
-  },
-  {
-    src: '/icons/google.svg',
-    alt: 'Social sign-in option 2',
-  },
-];
-
 const SignInEmail: React.FC = () => {
-  const { authenticate } = useContext(AuthContext);
-  const fields = useAppSelector((state) => state.signUpReducer.fields);
   const form = useGetForm({
     marker: 'reg',
   });
-
-  const formData = Object.keys(fields).reduce(
-    (
-      arr: Array<{
-        marker: string;
-        type: string;
-        value: string;
-      }>,
-      field,
-    ) => {
-      const candidate = {
-        marker: field,
-        type: 'string',
-        value: fields[field].value,
-      };
-      arr.push(candidate);
-      return arr;
-    },
-    [],
-  );
-  // formData.push({
-  //   marker: 'email_notifications',
-  //   type: 'string',
-  //   value: fields.email_reg.value,
-  // });
-
-  // const data: ISignUpData = {
-  //   formIdentifier: 'reg',
-  //   authData: [
-  //     { marker: 'email_reg', value: fields.email_reg.value },
-  //     { marker: 'password_reg', value: fields.password_reg.value },
-  //   ],
-  //   formData,
-  //   notificationData: {
-  //     email: fields.email_reg.value,
-  //     phonePush: fields.phone_reg.value,
-  //     phoneSMS: fields.phone_reg.value,
-  //   },
-  // };
-
-  // try {
-  //   const res = await api.AuthProvider.signUp('email', data, 'en_US');
-  //   if (res.isActive) {
-  //     try {
-  //       await logInUser({
-  //         method: 'email',
-  //         login: res.identifier,
-  //         password: fields.password_reg.value,
-  //       });
-
-  //       authenticate();
-  //     } catch (e: any) {
-  //       Alert.alert(e.message);
-  //     }
-  //   } else {
-  //     navigateAuth('activate_user', {
-  //       email: res.identifier,
-  //       method: 'email',
-  //       password: fields.password_reg.value,
-  //       event: 'activate',
-  //     });
-  //   }
-  // } catch (e: any) {
-  //   Alert.alert(e?.message);
-  // }
 
   return (
     <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
@@ -107,23 +30,13 @@ const SignInEmail: React.FC = () => {
       </div>
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
-        {signInFormFields.map((field: unknown, index: React.Key) => {
-          return <FormInput key={index} {...field} />;
+        {signInFormFields.map((field, index) => {
+          return (
+            <div key={index}>
+              <FormInput {...field} />
+            </div>
+          );
         })}
-        {/* <FormInput
-          type="email"
-          placeholder="info@example.com"
-          name="email_reg"
-          label="Username"
-          required={false}
-        />
-        <FormInput
-          type="password"
-          placeholder="•••••"
-          name="password_reg"
-          label="Confirm password"
-          required={false}
-        /> */}
       </div>
 
       <FormSubmitButton title="SIGN IN" class="" icon="" />
@@ -138,7 +51,7 @@ const SignInEmail: React.FC = () => {
       </p>
 
       <div className="mx-auto flex justify-between gap-5">
-        {socialButtons.map((button, index) => (
+        {socialProvidersButtons.map((button, index) => (
           <SocialSignInButton
             key={index}
             imageSrc={button.src}
