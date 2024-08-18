@@ -1,5 +1,4 @@
 import type { IAttributes } from 'oneentry/dist/base/utils';
-import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
 import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {

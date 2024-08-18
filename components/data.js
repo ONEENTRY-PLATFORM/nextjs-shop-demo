@@ -891,3 +891,41 @@ export const infoLinks = [
     href: '/payments',
   },
 ];
+
+const SignUpFormFields = [
+  {
+    type: 'email',
+    label: 'Your e-mail',
+    placeholder: 'info@example.com',
+    name: 'email',
+    required: false,
+  },
+  {
+    type: 'password',
+    label: 'Create password',
+    placeholder: '•••••',
+    name: 'password',
+    required: false,
+  },
+  {
+    type: 'password',
+    label: 'Confirm password',
+    placeholder: '•••••',
+    name: 'confirm-password',
+    required: false,
+  },
+  {
+    type: 'text',
+    label: 'First name',
+    placeholder: 'ONE',
+    name: 'name',
+    required: false,
+  },
+  {
+    type: 'text',
+    label: 'Surname',
+    placeholder: 'ENTRY',
+    name: 'surname',
+    required: false,
+  },
+];

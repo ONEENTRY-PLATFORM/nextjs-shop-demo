@@ -109,7 +109,7 @@ const SignInEmail: React.FC = () => {
       </div>
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
-        <FormInput
+        {/* <FormInput
           type="email"
           placeholder="info@example.com"
           name="email_reg"
@@ -122,7 +122,7 @@ const SignInEmail: React.FC = () => {
           name="password_reg"
           label="Confirm password"
           required={false}
-        />
+        /> */}
       </div>
 
       <FormSubmitButton title="SIGN IN" class="" icon="" />
