@@ -1,3 +1,4 @@
+// menu
 export const navigationItems = [
   {
     label: 'Category',
@@ -36,270 +37,93 @@ export const navigationItems = [
   },
 ];
 
-export const productsGroup = [
+export const userMenuItems = [
   {
-    id: 82,
-    localizeInfos: { title: 'Set (2 items) 2 Dolls' },
-    statusIdentifier: 'in_stock',
-    statusLocalizeInfos: { title: 'In stock' },
-    attributeSetIdentifier: 'product',
-    position: 1,
-    templateIdentifier: null,
-    shortDescTemplateIdentifier: null,
-    price: 67,
-    additional: { prices: { min: 10, max: 299 } },
-    sku: 'SO0103',
-    isSync: true,
-    attributeValues: {
-      pic: {
-        type: 'image',
-        value: {
-          downloadLink: '/images/catalog-img-2.svg',
-        },
-        position: 2,
-        isProductPreview: true,
-      },
-      sku: {
-        type: 'string',
-        value: 'SO0103',
-        position: 8,
-        isProductPreview: false,
-      },
-      sale: {
-        type: 'integer',
-        value: '',
-        position: 4,
-        isProductPreview: false,
-      },
-      color: {
-        type: 'list',
-        value: {},
-        position: 5,
-        isProductPreview: false,
-      },
-      price: {
-        type: 'integer',
-        value: '67',
-        position: 1,
-        isProductPreview: false,
-      },
-      category: {
-        type: 'list',
-        value: {},
-        position: 7,
-        isProductPreview: false,
-      },
-      currency: {
-        type: 'string',
-        value: 'USD',
-        position: 10,
-        isProductPreview: false,
-      },
-      more_pic: {
-        type: 'groupOfImages',
-        value: {},
-        position: 3,
-        isProductPreview: false,
-      },
-      stickers: {
-        type: 'list',
-        value: {},
-        position: 6,
-        isProductPreview: false,
-      },
-      description: {
-        type: 'text',
-        value: {},
-        position: 0,
-        isProductPreview: false,
-      },
-      units_product: {
-        type: 'integer',
-        value: '4',
-        position: 9,
-        isProductPreview: false,
-      },
-    },
-    isVisible: true,
-    productPages: { id: 260, pageId: 5, productId: 82, positionId: 3453 },
-    blocks: [],
+    icon: '/icons/user.svg',
+    text: 'My Profile',
+    href: '/profile',
   },
   {
-    id: 83,
-    localizeInfos: { title: 'Set (3 items) 2 Dolls' },
-    statusIdentifier: 'in_stock',
-    statusLocalizeInfos: { title: 'In stock' },
-    attributeSetIdentifier: 'product',
-    position: 1,
-    templateIdentifier: null,
-    shortDescTemplateIdentifier: null,
-    price: 167,
-    additional: { prices: { min: 10, max: 299 } },
-    sku: 'SO0103',
-    isSync: true,
-    attributeValues: {
-      pic: {
-        type: 'image',
-        value: {
-          downloadLink: '/images/catalog-img-3.svg',
-        },
-        position: 2,
-        isProductPreview: true,
-      },
-      sku: {
-        type: 'string',
-        value: 'SO0103',
-        position: 8,
-        isProductPreview: false,
-      },
-      sale: {
-        type: 'integer',
-        value: '',
-        position: 4,
-        isProductPreview: false,
-      },
-      color: {
-        type: 'list',
-        value: {},
-        position: 5,
-        isProductPreview: false,
-      },
-      price: {
-        type: 'integer',
-        value: '67',
-        position: 1,
-        isProductPreview: false,
-      },
-      category: {
-        type: 'list',
-        value: {},
-        position: 7,
-        isProductPreview: false,
-      },
-      currency: {
-        type: 'string',
-        value: 'USD',
-        position: 10,
-        isProductPreview: false,
-      },
-      more_pic: {
-        type: 'groupOfImages',
-        value: {},
-        position: 3,
-        isProductPreview: false,
-      },
-      stickers: {
-        type: 'list',
-        value: {},
-        position: 6,
-        isProductPreview: false,
-      },
-      description: {
-        type: 'text',
-        value: {},
-        position: 0,
-        isProductPreview: false,
-      },
-      units_product: {
-        type: 'integer',
-        value: '4',
-        position: 9,
-        isProductPreview: false,
-      },
-    },
-    isVisible: true,
-    productPages: { id: 260, pageId: 5, productId: 82, positionId: 3453 },
-    blocks: [],
+    icon: '/icons/orders.svg',
+    text: 'My Orders',
+    href: '/orders',
   },
   {
-    id: 84,
-    localizeInfos: { title: 'Set (6 items) 3 Dolls' },
-    statusIdentifier: 'in_stock',
-    statusLocalizeInfos: { title: 'In stock' },
-    attributeSetIdentifier: 'product',
-    position: 1,
-    templateIdentifier: null,
-    shortDescTemplateIdentifier: null,
-    price: 167,
-    additional: { prices: { min: 10, max: 299 } },
-    sku: 'SO0103',
-    isSync: true,
-    attributeValues: {
-      pic: {
-        type: 'image',
-        value: {
-          downloadLink: '/images/catalog-img-4.svg',
-        },
-        position: 2,
-        isProductPreview: true,
-      },
-      sku: {
-        type: 'string',
-        value: 'SO0103',
-        position: 8,
-        isProductPreview: false,
-      },
-      sale: {
-        type: 'integer',
-        value: '',
-        position: 4,
-        isProductPreview: false,
-      },
-      color: {
-        type: 'list',
-        value: {},
-        position: 5,
-        isProductPreview: false,
-      },
-      price: {
-        type: 'integer',
-        value: '67',
-        position: 1,
-        isProductPreview: false,
-      },
-      category: {
-        type: 'list',
-        value: {},
-        position: 7,
-        isProductPreview: false,
-      },
-      currency: {
-        type: 'string',
-        value: 'USD',
-        position: 10,
-        isProductPreview: false,
-      },
-      more_pic: {
-        type: 'groupOfImages',
-        value: {},
-        position: 3,
-        isProductPreview: false,
-      },
-      stickers: {
-        type: 'list',
-        value: {},
-        position: 6,
-        isProductPreview: false,
-      },
-      description: {
-        type: 'text',
-        value: {},
-        position: 0,
-        isProductPreview: false,
-      },
-      units_product: {
-        type: 'integer',
-        value: '4',
-        position: 9,
-        isProductPreview: false,
-      },
-    },
-    isVisible: true,
-    productPages: { id: 260, pageId: 5, productId: 82, positionId: 3453 },
-    blocks: [],
+    icon: '/icons/cart.svg',
+    text: 'Cart',
+    href: '/cart',
+  },
+  {
+    icon: '/icons/orders.svg',
+    text: 'Payments',
+    href: '/payment',
+  },
+  {
+    icon: '/icons/heart.svg',
+    text: 'Favorites',
+    href: '/favorites',
   },
 ];
 
+export const quickLinks = [
+  {
+    text: 'About us',
+    href: '/about',
+  },
+  {
+    text: 'Service',
+    href: '/service',
+  },
+  {
+    text: 'Treatment',
+    href: '/treatment',
+  },
+  {
+    text: 'Product',
+    href: '/',
+  },
+  {
+    text: 'Our experts',
+    href: '/experts',
+  },
+  {
+    text: 'Support',
+    href: '/support',
+  },
+  {
+    text: 'Contact',
+    href: '/contacts',
+  },
+];
+
+export const infoLinks = [
+  {
+    text: 'Book online',
+    href: '/book',
+  },
+  {
+    text: 'Delivery',
+    href: '/delivery',
+  },
+  {
+    text: 'Offers & events',
+    href: '/offers',
+  },
+  {
+    text: 'Purchase a gift card',
+    href: '/gifts',
+  },
+  {
+    text: 'Pricing & package',
+    href: '/package',
+  },
+  {
+    text: 'Payments',
+    href: '/payments',
+  },
+];
+
+// pages
 export const pages = [
   {
     id: 8,
@@ -736,34 +560,6 @@ export const pages = [
   },
 ];
 
-export const userMenuItems = [
-  {
-    icon: '/icons/user.svg',
-    text: 'My Profile',
-    href: '/profile',
-  },
-  {
-    icon: '/icons/orders.svg',
-    text: 'My Orders',
-    href: '/orders',
-  },
-  {
-    icon: '/icons/cart.svg',
-    text: 'Cart',
-    href: '/cart',
-  },
-  {
-    icon: '/icons/orders.svg',
-    text: 'Payments',
-    href: '/payment',
-  },
-  {
-    icon: '/icons/heart.svg',
-    text: 'Favorites',
-    href: '/favorites',
-  },
-];
-
 export const catalogCards = [
   {
     title: 'Catalog',
@@ -815,117 +611,373 @@ export const catalogCards = [
   },
 ];
 
-export const productsInCart = [
+// products
+export const productsGroup = [
   {
-    id: 80,
-    imageSrc: '',
-    productName: 'productName',
-    price: 1250,
-    count: 1,
+    id: 82,
+    localizeInfos: { title: 'Set (2 items) 2 Dolls' },
+    statusIdentifier: 'in_stock',
+    statusLocalizeInfos: { title: 'In stock' },
+    attributeSetIdentifier: 'product',
+    position: 1,
+    templateIdentifier: null,
+    shortDescTemplateIdentifier: null,
+    price: 67,
+    additional: { prices: { min: 10, max: 299 } },
+    sku: 'SO0103',
+    isSync: true,
+    attributeValues: {
+      pic: {
+        type: 'image',
+        value: {
+          downloadLink: '/images/catalog-img-2.svg',
+        },
+        position: 2,
+        isProductPreview: true,
+      },
+      sku: {
+        type: 'string',
+        value: 'SO0103',
+        position: 8,
+        isProductPreview: false,
+      },
+      sale: {
+        type: 'integer',
+        value: '',
+        position: 4,
+        isProductPreview: false,
+      },
+      color: {
+        type: 'list',
+        value: {},
+        position: 5,
+        isProductPreview: false,
+      },
+      price: {
+        type: 'integer',
+        value: '67',
+        position: 1,
+        isProductPreview: false,
+      },
+      category: {
+        type: 'list',
+        value: {},
+        position: 7,
+        isProductPreview: false,
+      },
+      currency: {
+        type: 'string',
+        value: 'USD',
+        position: 10,
+        isProductPreview: false,
+      },
+      more_pic: {
+        type: 'groupOfImages',
+        value: {},
+        position: 3,
+        isProductPreview: false,
+      },
+      stickers: {
+        type: 'list',
+        value: {},
+        position: 6,
+        isProductPreview: false,
+      },
+      description: {
+        type: 'text',
+        value: {},
+        position: 0,
+        isProductPreview: false,
+      },
+      units_product: {
+        type: 'integer',
+        value: '4',
+        position: 9,
+        isProductPreview: false,
+      },
+    },
+    isVisible: true,
+    productPages: { id: 260, pageId: 5, productId: 82, positionId: 3453 },
+    blocks: [],
   },
   {
-    id: 1245,
-    imageSrc: '',
-    productName: 'product Name 2',
-    price: 2250,
-    count: 3,
+    id: 83,
+    localizeInfos: { title: 'Set (3 items) 2 Dolls' },
+    statusIdentifier: 'in_stock',
+    statusLocalizeInfos: { title: 'In stock' },
+    attributeSetIdentifier: 'product',
+    position: 1,
+    templateIdentifier: null,
+    shortDescTemplateIdentifier: null,
+    price: 167,
+    additional: { prices: { min: 10, max: 299 } },
+    sku: 'SO0103',
+    isSync: true,
+    attributeValues: {
+      pic: {
+        type: 'image',
+        value: {
+          downloadLink: '/images/catalog-img-3.svg',
+        },
+        position: 2,
+        isProductPreview: true,
+      },
+      sku: {
+        type: 'string',
+        value: 'SO0103',
+        position: 8,
+        isProductPreview: false,
+      },
+      sale: {
+        type: 'integer',
+        value: '',
+        position: 4,
+        isProductPreview: false,
+      },
+      color: {
+        type: 'list',
+        value: {},
+        position: 5,
+        isProductPreview: false,
+      },
+      price: {
+        type: 'integer',
+        value: '67',
+        position: 1,
+        isProductPreview: false,
+      },
+      category: {
+        type: 'list',
+        value: {},
+        position: 7,
+        isProductPreview: false,
+      },
+      currency: {
+        type: 'string',
+        value: 'USD',
+        position: 10,
+        isProductPreview: false,
+      },
+      more_pic: {
+        type: 'groupOfImages',
+        value: {},
+        position: 3,
+        isProductPreview: false,
+      },
+      stickers: {
+        type: 'list',
+        value: {},
+        position: 6,
+        isProductPreview: false,
+      },
+      description: {
+        type: 'text',
+        value: {},
+        position: 0,
+        isProductPreview: false,
+      },
+      units_product: {
+        type: 'integer',
+        value: '4',
+        position: 9,
+        isProductPreview: false,
+      },
+    },
+    isVisible: true,
+    productPages: { id: 260, pageId: 5, productId: 82, positionId: 3453 },
+    blocks: [],
+  },
+  {
+    id: 84,
+    localizeInfos: { title: 'Set (6 items) 3 Dolls' },
+    statusIdentifier: 'in_stock',
+    statusLocalizeInfos: { title: 'In stock' },
+    attributeSetIdentifier: 'product',
+    position: 1,
+    templateIdentifier: null,
+    shortDescTemplateIdentifier: null,
+    price: 167,
+    additional: { prices: { min: 10, max: 299 } },
+    sku: 'SO0103',
+    isSync: true,
+    attributeValues: {
+      pic: {
+        type: 'image',
+        value: {
+          downloadLink: '/images/catalog-img-4.svg',
+        },
+        position: 2,
+        isProductPreview: true,
+      },
+      sku: {
+        type: 'string',
+        value: 'SO0103',
+        position: 8,
+        isProductPreview: false,
+      },
+      sale: {
+        type: 'integer',
+        value: '',
+        position: 4,
+        isProductPreview: false,
+      },
+      color: {
+        type: 'list',
+        value: {},
+        position: 5,
+        isProductPreview: false,
+      },
+      price: {
+        type: 'integer',
+        value: '67',
+        position: 1,
+        isProductPreview: false,
+      },
+      category: {
+        type: 'list',
+        value: {},
+        position: 7,
+        isProductPreview: false,
+      },
+      currency: {
+        type: 'string',
+        value: 'USD',
+        position: 10,
+        isProductPreview: false,
+      },
+      more_pic: {
+        type: 'groupOfImages',
+        value: {},
+        position: 3,
+        isProductPreview: false,
+      },
+      stickers: {
+        type: 'list',
+        value: {},
+        position: 6,
+        isProductPreview: false,
+      },
+      description: {
+        type: 'text',
+        value: {},
+        position: 0,
+        isProductPreview: false,
+      },
+      units_product: {
+        type: 'integer',
+        value: '4',
+        position: 9,
+        isProductPreview: false,
+      },
+    },
+    isVisible: true,
+    productPages: { id: 260, pageId: 5, productId: 82, positionId: 3453 },
+    blocks: [],
   },
 ];
+
+// export const productsInCart = [
+//   {
+//     id: 80,
+//     imageSrc: '',
+//     productName: 'productName',
+//     price: 1250,
+//     count: 1,
+//   },
+//   {
+//     id: 1245,
+//     imageSrc: '',
+//     productName: 'product Name 2',
+//     price: 2250,
+//     count: 3,
+//   },
+// ];
 
 export const favorites = [80, 73, 66, 49];
 
-export const quickLinks = [
+// forms
+export const signUpFormFields = [
   {
-    text: 'About us',
-    href: '/about',
-  },
-  {
-    text: 'Service',
-    href: '/service',
-  },
-  {
-    text: 'Treatment',
-    href: '/treatment',
-  },
-  {
-    text: 'Product',
-    href: '/',
-  },
-  {
-    text: 'Our experts',
-    href: '/experts',
-  },
-  {
-    text: 'Support',
-    href: '/support',
-  },
-  {
-    text: 'Contact',
-    href: '/contacts',
-  },
-];
-
-export const infoLinks = [
-  {
-    text: 'Book online',
-    href: '/book',
-  },
-  {
-    text: 'Delivery',
-    href: '/delivery',
-  },
-  {
-    text: 'Offers & events',
-    href: '/offers',
-  },
-  {
-    text: 'Purchase a gift card',
-    href: '/gifts',
-  },
-  {
-    text: 'Pricing & package',
-    href: '/package',
-  },
-  {
-    text: 'Payments',
-    href: '/payments',
-  },
-];
-
-const SignUpFormFields = [
-  {
-    type: 'email',
-    label: 'Your e-mail',
+    fieldType: 'email',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Your e-mail',
+    },
     placeholder: 'info@example.com',
-    name: 'email',
+    marker: 'email_reg',
     required: false,
   },
   {
-    type: 'password',
-    label: 'Create password',
+    fieldType: 'password',
+    localizeInfos: {
+      title: 'Create password',
+    },
     placeholder: '•••••',
-    name: 'password',
+    marker: 'password_reg',
     required: false,
   },
   {
-    type: 'password',
-    label: 'Confirm password',
+    fieldType: 'password',
+    localizeInfos: {
+      title: 'Confirm password',
+    },
     placeholder: '•••••',
-    name: 'confirm-password',
+    marker: 'confirm_password',
     required: false,
   },
   {
-    type: 'text',
-    label: 'First name',
+    fieldType: 'text',
+    localizeInfos: {
+      title: 'First name',
+    },
     placeholder: 'ONE',
-    name: 'name',
+    marker: 'name_reg',
     required: false,
   },
   {
-    type: 'text',
-    label: 'Surname',
+    fieldType: 'text',
+    localizeInfos: {
+      title: 'Surname',
+    },
     placeholder: 'ENTRY',
-    name: 'surname',
+    marker: 'surname_reg',
     required: false,
   },
+];
+
+export const signInFormFields = [
+  {
+    fieldType: 'text',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Username',
+    },
+    placeholder: 'info@example.com',
+    marker: 'email_reg',
+    required: true,
+  },
+  {
+    fieldType: 'password',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Password',
+    },
+    placeholder: '•••••',
+    marker: 'password_reg',
+    required: true,
+  },
+];
+
+export const deliveryTableData = [
+  {
+    label: 'Date',
+    value: '09.10.2023',
+    icon: '/icons/calendar.svg',
+  },
+  {
+    label: 'Time',
+    value: '19:00',
+    icon: '/icons/time.svg',
+  },
+  { label: 'Address', value: 'Dubai, One Entry street, 50' },
 ];

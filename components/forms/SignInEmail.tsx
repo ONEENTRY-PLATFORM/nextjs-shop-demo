@@ -7,6 +7,7 @@ import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { addField } from '@/app/store/reducers/SignUpSlice';
 
+import { signInFormFields } from '../data';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
@@ -70,9 +71,6 @@ const SignInEmail: React.FC = () => {
   //   },
   // };
 
-  console.log(form);
-  console.log(formData);
-
   // try {
   //   const res = await api.AuthProvider.signUp('email', data, 'en_US');
   //   if (res.isActive) {
@@ -109,6 +107,9 @@ const SignInEmail: React.FC = () => {
       </div>
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
+        {signInFormFields.map((field: unknown, index: React.Key) => {
+          return <FormInput key={index} {...field} />;
+        })}
         {/* <FormInput
           type="email"
           placeholder="info@example.com"

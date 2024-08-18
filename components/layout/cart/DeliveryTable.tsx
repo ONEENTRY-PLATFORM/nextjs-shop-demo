@@ -3,7 +3,7 @@ import React from 'react';
 import DeliveryRow from './DeliveryRow';
 import TableRow from './TableRow';
 
-const tableData = [
+const deliveryTableData = [
   {
     label: 'Date',
     value: '09.10.2023',
@@ -21,7 +21,7 @@ const DeliveryTable: React.FC = () => {
   return (
     <table className="table w-full border border-solid border-neutral-100 text-neutral-600">
       <tbody>
-        {tableData.map((row, index) => (
+        {deliveryTableData.map((row, index) => (
           <TableRow
             key={index}
             label={row.label}
