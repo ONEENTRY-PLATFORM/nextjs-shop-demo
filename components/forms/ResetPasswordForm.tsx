@@ -19,6 +19,7 @@ const ResetPasswordForm: React.FC = () => {
           Enter new password and confirm.
         </p>
       </div>
+
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
         {resetPasswordFormFields.map((field, index) => {
           return (
@@ -28,6 +29,7 @@ const ResetPasswordForm: React.FC = () => {
           );
         })}
       </div>
+
       <FormSubmitButton title="CHANGE PASSWORD" class="" icon="" />
     </form>
   );

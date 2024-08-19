@@ -2,10 +2,9 @@
 import React, { useContext } from 'react';
 
 // import { logInUser } from '@/app/api';
-import { useGetForm } from '@/app/api';
-import { useAppSelector } from '@/app/store/hooks';
-import { AuthContext } from '@/app/store/providers/AuthContext';
-
+// import { useGetForm } from '@/app/api';
+// import { useAppSelector } from '@/app/store/hooks';
+// import { AuthContext } from '@/app/store/providers/AuthContext';
 // import { addField } from '@/app/store/reducers/FormFieldsSlice';
 import { signInFormFields } from '../data';
 import { socialProvidersButtons } from '../data';
@@ -17,9 +16,9 @@ import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInEmail: React.FC = () => {
-  const form = useGetForm({
-    marker: 'reg',
-  });
+  // const form = useGetForm({
+  //   marker: 'reg',
+  // });
 
   return (
     <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
@@ -43,8 +42,8 @@ const SignInEmail: React.FC = () => {
       <FormSubmitButton title="SIGN IN" class="" icon="" />
 
       <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm max-md:mt-10">
-        <ForgotPasswordButton title="Forgot Password?" icon={''} class={''} />
-        <ResetPasswordButton title="Reset password" icon={''} class={''} />
+        <ForgotPasswordButton title="Forgot Password?" />
+        <ResetPasswordButton title="Reset password" />
       </div>
 
       <p className="mx-auto mb-5 text-base font-bold leading-8 text-neutral-600">
@@ -61,7 +60,7 @@ const SignInEmail: React.FC = () => {
         ))}
       </div>
 
-      <CreateAccountButton title="Create AN Account" icon={''} class={''} />
+      <CreateAccountButton title="Create account" icon={''} class={''} />
     </form>
   );
 };

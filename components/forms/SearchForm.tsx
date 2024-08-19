@@ -5,7 +5,6 @@ const SearchForm: React.FC = () => {
         <h2 className="max-w-full text-xl font-bold text-neutral-600">
           Sign in
         </h2>
-        <p className="max-w-full text-xs text-gray-400">E-mail/Phone</p>
       </div>
     </form>
   );

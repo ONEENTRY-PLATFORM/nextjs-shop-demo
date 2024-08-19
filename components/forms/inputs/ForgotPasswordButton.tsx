@@ -4,13 +4,9 @@ import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-interface ButtonProps {
+const ForgotPasswordButton: React.FC<{
   title: string;
-  icon: string;
-  class: string;
-}
-
-const ForgotPasswordButton: React.FC<ButtonProps> = ({ title }) => {
+}> = ({ title }) => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   return (

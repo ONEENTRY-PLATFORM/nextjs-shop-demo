@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { logInUser } from '@/app/api';
-
+// import { logInUser } from '@/app/api';
 import { socialProvidersButtons } from '../data';
 import { signInPhoneFormFields } from '../data';
 import CreateAccountButton from './inputs/CreateAccountButton';
@@ -26,6 +25,7 @@ const SignInPhone: React.FC = () => {
           E-mail/<b>Phone</b>
         </p>
       </div>
+
       <div className="relative mb-32 box-border flex shrink-0 flex-col gap-4">
         {signInPhoneFormFields.map((field, index) => {
           return (
@@ -39,8 +39,8 @@ const SignInPhone: React.FC = () => {
       <FormSubmitButton title="SIGN IN" class="" icon="" />
 
       <div className="mx-auto mb-2.5 flex w-[280px] max-w-full justify-between gap-5 text-sm max-md:mt-10">
-        <ForgotPasswordButton title="Forgot Password?" icon={''} class={''} />
-        <ResetPasswordButton title="Reset password" icon={''} class={''} />
+        <ForgotPasswordButton title="Forgot Password?" />
+        <ResetPasswordButton title="Reset password" />
       </div>
 
       <p className="mx-auto mb-2.5 text-base font-bold leading-8 text-neutral-600">
