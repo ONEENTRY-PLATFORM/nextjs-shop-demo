@@ -1,22 +1,22 @@
-import type { Dispatch } from 'react';
+// import type { Dispatch } from 'react';
 import type React from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
-import { removeAllFilters } from '../../../app/store/reducers/FilterSlice';
+// import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
+// import { removeAllFilters } from '../../../app/store/reducers/FilterSlice';
 
-interface Props {
-  visible: boolean;
-  setVisible: Dispatch<boolean>;
-  children?: React.ReactNode;
-  text?: string;
-}
+// interface Props {
+//   visible: boolean;
+//   setVisible: Dispatch<boolean>;
+//   children?: React.ReactNode;
+//   text?: string;
+// }
 
-const CatalogFiltersModal: React.FC<Props> = ({ visible, setVisible }) => {
-  const dispatch = useAppDispatch();
+const FiltersForm = () => {
+  // const dispatch = useAppDispatch();
 
-  const onReset = () => {
-    dispatch(removeAllFilters());
-  };
+  // const onReset = () => {
+  //   dispatch(removeAllFilters());
+  // };
 
   return (
     <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
@@ -29,4 +29,4 @@ const CatalogFiltersModal: React.FC<Props> = ({ visible, setVisible }) => {
   );
 };
 
-export default CatalogFiltersModal;
+export default FiltersForm;
