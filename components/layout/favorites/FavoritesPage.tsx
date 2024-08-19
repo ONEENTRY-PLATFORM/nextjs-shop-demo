@@ -1,9 +1,22 @@
-// import { favorites } from "@/components/data";
+'use client';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import { Suspense } from 'react';
+
+import { useAppSelector } from '@/app/store/hooks';
+import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
+import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 
 const FavoritesPage = () => {
+  const favorites = useAppSelector((state) => selectFavoritesItems(state));
+
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
-      favorites
+      <Suspense
+        fallback={
+          <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
+        }
+      />
+      <ProductsGridLayout gridItems={favorites} />
     </div>
   );
 };

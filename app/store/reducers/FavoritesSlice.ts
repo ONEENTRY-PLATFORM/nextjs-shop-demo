@@ -36,6 +36,10 @@ export const favoritesSlice = createSlice({
 
 export const { addFavorites, removeFavorites } = favoritesSlice.actions;
 
+export const selectFavoritesItems = (state: {
+  favoritesReducer: { products: unknown[] };
+}) => state.favoritesReducer.products;
+
 export const selectIsFavorites = (
   state: { favoritesReducer: { products: { id: number }[] } },
   id: number,

@@ -1,8 +1,9 @@
 'use client';
+
 import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import { useAppDispatch } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addFavorites,
   removeFavorites,
@@ -11,12 +12,21 @@ import {
 
 const FavoritesButton: React.FC<IProductsEntity> = (product) => {
   const dispatch = useAppDispatch();
+  const isFavorites = useAppSelector((state) =>
+    selectIsFavorites(state, product.id),
+  );
 
   return (
     <button
       type="button"
       className="relative box-border flex aspect-square size-[26px] shrink-0 flex-col"
-      onClick={() => dispatch(addFavorites(product))}
+      onClick={() => {
+        if (isFavorites) {
+          dispatch(removeFavorites(product.id));
+        } else {
+          dispatch(addFavorites(product));
+        }
+      }}
     >
       <Image
         width={24}
