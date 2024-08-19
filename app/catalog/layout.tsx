@@ -1,3 +1,4 @@
+import SearchFilterForm from '@/components/forms/SearchFilterForm';
 import Breadcrumbs from '@/components/layout/breadcrumbs';
 
 function Layout({ children }: { children: React.ReactNode }) {
@@ -5,6 +6,7 @@ function Layout({ children }: { children: React.ReactNode }) {
     <>
       <Breadcrumbs />
       <main className="flex w-full flex-col gap-16 px-5 py-8">{children}</main>
+      <SearchFilterForm />
     </>
   );
 }

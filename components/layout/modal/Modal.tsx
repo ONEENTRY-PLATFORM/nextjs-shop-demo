@@ -5,11 +5,9 @@ import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import CalendarForm from '@/components/forms/CalendarForm';
-import FilterForm from '@/components/forms/FilterForm';
 import ForgotPasswordForm from '@/components/forms/ForgotPasswordForm';
 import PaymentForm from '@/components/forms/PaymentForm';
 import ResetPasswordForm from '@/components/forms/ResetPasswordForm';
-import SearchForm from '@/components/forms/SearchForm';
 import SignInEmail from '@/components/forms/SignInEmail';
 import SignInPhone from '@/components/forms/SignInPhone';
 import SignUpForm from '@/components/forms/SignUpForm';
@@ -28,7 +26,7 @@ function Modal() {
 
   return (
     <div className="fixed left-0 top-0 z-50 flex h-screen w-full bg-slate-500/60 backdrop-blur-md">
-      <div className="relative m-auto w-full max-w-96 overflow-hidden rounded-xl bg-white p-10">
+      <div className="relative z-10 m-auto w-full max-w-96 overflow-hidden rounded-xl bg-white p-10">
         <button
           className="absolute right-8 top-4 size-5"
           onClick={onButtonClick}
@@ -39,13 +37,15 @@ function Modal() {
         {component === 'ForgotPasswordForm' && <ForgotPasswordForm />}
         {component === 'PaymentForm' && <PaymentForm />}
         {component === 'ResetPasswordForm' && <ResetPasswordForm />}
-        {component === 'SearchForm' && <SearchForm />}
         {component === 'SignInEmail' && <SignInEmail />}
         {component === 'SignInPhone' && <SignInPhone />}
         {component === 'SignUpForm' && <SignUpForm />}
         {component === 'VerificationForm' && <VerificationForm />}
-        {component === 'FilterForm' && <FilterForm />}
       </div>
+      <button
+        className="absolute left-0 top-0 z-0 size-full"
+        onClick={onButtonClick}
+      ></button>
     </div>
   );
 }

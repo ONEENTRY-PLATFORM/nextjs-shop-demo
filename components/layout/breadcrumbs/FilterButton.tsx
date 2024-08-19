@@ -1,13 +1,13 @@
 'use client';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { useContext } from 'react';
+// import { useContext } from 'react';
 
-import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+// import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 const FilterButton: React.FC = () => {
   const path = usePathname();
-  const { setOpen, setComponent } = useContext(OpenDrawerContext);
+  // const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   if (path.indexOf('catalog') !== 1) {
     return;
@@ -18,8 +18,8 @@ const FilterButton: React.FC = () => {
       className="flex items-center bg-white"
       aria-label="Filter"
       onClick={() => {
-        setOpen(true);
-        setComponent('FilterForm');
+        // setOpen(true);
+        // setComponent('FilterForm');
       }}
     >
       <Image

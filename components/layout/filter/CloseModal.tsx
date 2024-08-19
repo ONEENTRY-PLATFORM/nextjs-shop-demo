@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ClosePopup = () => {
+const CloseModal = () => {
   return (
     <button className="flex aspect-square w-10 shrink-0 items-center justify-center rounded-full bg-[#EEEFF0]">
       <svg
@@ -23,4 +23,4 @@ const ClosePopup = () => {
   );
 };
 
-export default ClosePopup;
+export default CloseModal;
