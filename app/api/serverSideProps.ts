@@ -23,7 +23,6 @@ export async function getProducts(props: {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { limit, offset, params } = props;
   const expandedFilters: IFilterParams[] | undefined = [];
-  // console.log(params);
 
   try {
     const products = await api.Products.getProducts(expandedFilters, 'en_US', {

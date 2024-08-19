@@ -2,21 +2,14 @@ import React from 'react';
 
 import { logInUser } from '@/app/api';
 
+import { socialProvidersButtons } from '../data';
+import { signInPhoneFormFields } from '../data';
 import CreateAccountButton from './inputs/CreateAccountButton';
+import ForgotPasswordButton from './inputs/ForgotPasswordButton';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
+import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
-
-const socialButtons = [
-  {
-    src: '/icons/google.svg',
-    alt: 'Social sign-in option 1',
-  },
-  {
-    src: '/icons/google.svg',
-    alt: 'Social sign-in option 2',
-  },
-];
 
 const SignInPhone: React.FC = () => {
   return (
@@ -34,24 +27,20 @@ const SignInPhone: React.FC = () => {
         </p>
       </div>
       <div className="relative mb-32 box-border flex shrink-0 flex-col gap-4">
-        <FormInput
-          type="tel"
-          placeholder="+91 ("
-          name="phone"
-          label="Phone number"
-          required
-        />
+        {signInPhoneFormFields.map((field, index) => {
+          return (
+            <div key={index}>
+              <FormInput {...field} />
+            </div>
+          );
+        })}
       </div>
 
       <FormSubmitButton title="SIGN IN" class="" icon="" />
 
-      <div className="mx-auto mb-2.5 flex w-[280px] max-w-full gap-5 text-sm max-md:mt-10">
-        <a href="#" className="flex-auto text-gray-400">
-          Forgot Password?
-        </a>
-        <a href="#" className="font-bold text-orange-500 underline">
-          Reset Password
-        </a>
+      <div className="mx-auto mb-2.5 flex w-[280px] max-w-full justify-between gap-5 text-sm max-md:mt-10">
+        <ForgotPasswordButton title="Forgot Password?" icon={''} class={''} />
+        <ResetPasswordButton title="Reset password" icon={''} class={''} />
       </div>
 
       <p className="mx-auto mb-2.5 text-base font-bold leading-8 text-neutral-600">
@@ -59,7 +48,7 @@ const SignInPhone: React.FC = () => {
       </p>
 
       <div className="mx-auto mb-5 flex justify-between gap-5">
-        {socialButtons.map((button, index) => (
+        {socialProvidersButtons.map((button, index) => (
           <SocialSignInButton
             key={index}
             imageSrc={button.src}

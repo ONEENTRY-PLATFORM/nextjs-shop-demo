@@ -20,7 +20,7 @@ const ResetPasswordButton: React.FC<ButtonProps> = ({ title }) => {
         setComponent('ResetPasswordForm');
       }}
       type="button"
-      className="ml-auto font-bold text-orange-500 underline"
+      className="font-bold text-gray-400 underline hover:text-orange-500"
     >
       {title}
     </button>

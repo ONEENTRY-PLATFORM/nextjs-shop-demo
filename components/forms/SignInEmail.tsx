@@ -10,6 +10,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import { signInFormFields } from '../data';
 import { socialProvidersButtons } from '../data';
 import CreateAccountButton from './inputs/CreateAccountButton';
+import ForgotPasswordButton from './inputs/ForgotPasswordButton';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
@@ -41,8 +42,8 @@ const SignInEmail: React.FC = () => {
 
       <FormSubmitButton title="SIGN IN" class="" icon="" />
 
-      <div className="mx-auto mb-5 flex w-[280px] max-w-full gap-5 text-sm max-md:mt-10">
-        <p className="mr-auto text-gray-400">Forgot Password?</p>
+      <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm max-md:mt-10">
+        <ForgotPasswordButton title="Forgot Password?" icon={''} class={''} />
         <ResetPasswordButton title="Reset password" icon={''} class={''} />
       </div>
 

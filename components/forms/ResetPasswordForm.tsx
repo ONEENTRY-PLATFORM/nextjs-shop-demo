@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { resetPasswordFormFields } from '../data';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
@@ -19,20 +20,13 @@ const ResetPasswordForm: React.FC = () => {
         </p>
       </div>
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
-        <FormInput
-          label="New password"
-          type="password"
-          placeholder="xxx"
-          name="new_password"
-          required
-        />
-        <FormInput
-          label="Confirm password"
-          type="password"
-          placeholder="xxx"
-          name="confirm_password"
-          required
-        />
+        {resetPasswordFormFields.map((field, index) => {
+          return (
+            <div key={index}>
+              <FormInput {...field} />
+            </div>
+          );
+        })}
       </div>
       <FormSubmitButton title="CHANGE PASSWORD" class="" icon="" />
     </form>

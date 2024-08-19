@@ -876,23 +876,6 @@ export const productsGroup = [
   },
 ];
 
-// export const productsInCart = [
-//   {
-//     id: 80,
-//     imageSrc: '',
-//     productName: 'productName',
-//     price: 1250,
-//     count: 1,
-//   },
-//   {
-//     id: 1245,
-//     imageSrc: '',
-//     productName: 'product Name 2',
-//     price: 2250,
-//     count: 3,
-//   },
-// ];
-
 export const favorites = [80, 73, 66, 49];
 
 // forms
@@ -964,6 +947,55 @@ export const signInFormFields = [
     },
     placeholder: '•••••',
     marker: 'password_reg',
+    required: true,
+  },
+];
+
+export const signInPhoneFormFields = [
+  {
+    fieldType: 'tel',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Phone number',
+    },
+    placeholder: '+91 (',
+    marker: 'email_reg',
+    required: true,
+  },
+];
+
+export const resetPasswordFormFields = [
+  {
+    fieldType: 'password',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Password',
+    },
+    placeholder: '•••••',
+    marker: 'password_reg',
+    required: true,
+  },
+  {
+    fieldType: 'password',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Confirm password',
+    },
+    placeholder: '•••••',
+    marker: 'password_confirm',
+    required: true,
+  },
+];
+
+export const forgotPasswordFormFields = [
+  {
+    fieldType: 'email',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Enter your email',
+    },
+    placeholder: 'info@example.com',
+    marker: 'email_reg',
     required: true,
   },
 ];

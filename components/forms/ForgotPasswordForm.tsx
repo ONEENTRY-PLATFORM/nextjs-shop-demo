@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { forgotPasswordFormFields } from '../data';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
@@ -18,13 +19,13 @@ export const ForgotPasswordForm: React.FC = () => {
       </div>
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
-        <FormInput
-          label="Enter your email"
-          type="email"
-          placeholder="info@example.com"
-          name="email"
-          required={false}
-        />
+        {forgotPasswordFormFields.map((field, index) => {
+          return (
+            <div key={index}>
+              <FormInput {...field} />
+            </div>
+          );
+        })}
       </div>
 
       <FormSubmitButton title="SEND" class="" icon="" />

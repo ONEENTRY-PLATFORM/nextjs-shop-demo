@@ -20,7 +20,7 @@ const ForgotPasswordButton: React.FC<ButtonProps> = ({ title }) => {
         setComponent('ForgotPasswordForm');
       }}
       type="button"
-      className="flex-auto font-bold text-gray-400 underline hover:text-orange-500"
+      className="font-bold text-gray-400 underline hover:text-orange-500"
     >
       {title}
     </button>
