@@ -8,9 +8,7 @@ const WithSidebar = ({ children }: { children: React.ReactNode }) => {
           <SidebarMenu />
         </aside>
         <section className="flex grow flex-col max-md:mt-10 max-md:max-w-full">
-          <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
-            {children}
-          </div>
+          <div className="flex flex-col pb-5 max-md:max-w-full">{children}</div>
         </section>
       </div>
     </div>

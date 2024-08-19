@@ -1,4 +1,4 @@
-import type { IAttributes } from 'oneentry/dist/base/utils';
+// import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {

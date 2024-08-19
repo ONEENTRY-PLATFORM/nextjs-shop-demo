@@ -1,5 +1,7 @@
 'use client';
 
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+
 import { useAppSelector } from '@/app/store/hooks';
 import {
   selectCartItems,
@@ -11,12 +13,15 @@ import ProductCard from '@/components/layout/cart/ProductCard';
 import TotalAmount from '@/components/layout/cart/TotalAmount';
 
 const CartPage = () => {
-  const productsInCart = useAppSelector(selectCartItems);
+  const productsInCart = useAppSelector(
+    selectCartItems,
+  ) as Array<IProductsEntity>;
+
   const total = useAppSelector(selectCartTotal);
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
-      {productsInCart.map((product, i) => {
+      {productsInCart.map((product: IProductsEntity, i: number) => {
         return <ProductCard key={i} product={product} />;
       })}
       <DeliveryTable />
