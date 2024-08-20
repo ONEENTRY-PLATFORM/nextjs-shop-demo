@@ -1,6 +1,8 @@
-import { getMenuByMarker } from '@/app/api/serverSideProps';
-import { userMenuItems } from '@/components/data';
+import type { Key } from 'react';
 
+import { getMenuByMarker } from '@/app/api/serverSideProps';
+
+// import { userMenuItems } from '@/components/data';
 import SidebarMenuItem from './SidebarMenuItem';
 
 export default async function SidebarMenu() {
@@ -16,10 +18,12 @@ export default async function SidebarMenu() {
 
   const { pages } = menu;
 
+  console.log(pages);
+
   return (
     <nav>
       <ul className="flex max-w-[165px] flex-col gap-5 text-base text-neutral-600">
-        {userMenuItems.map((item, index) => (
+        {pages.map((item, index: Key) => (
           <SidebarMenuItem key={index} {...item} />
         ))}
       </ul>
