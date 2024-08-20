@@ -80,10 +80,6 @@ export const filterSlice = createSlice({
         delete filterWithoutValue.conditionValue;
         const actionWithoutCondition = { ...action.payload };
         delete actionWithoutCondition?.conditionValue;
-        // console.log(
-        //   '=>(FilterSlice.ts:84) action.payload',
-        //   actionWithoutCondition,
-        // );
 
         return !areObjectFieldsAndValuesSame(
           filterWithoutValue,

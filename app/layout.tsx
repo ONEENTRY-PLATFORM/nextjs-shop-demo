@@ -6,7 +6,7 @@ import { Inter } from 'next/font/google';
 import { navigationItems } from '@/components/data';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
-import Modal from '@/components/layout/modal/Modal';
+import Modal from '@/components/layout/modal/ModalLayout';
 import NavigationMenu from '@/components/layout/navbar/NavigationMenu';
 
 import { AuthProvider } from './store/providers/AuthContext';
