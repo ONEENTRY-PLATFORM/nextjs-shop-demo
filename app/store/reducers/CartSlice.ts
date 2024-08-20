@@ -69,6 +69,19 @@ export const {
   removeAllProducts,
 } = cartSlice.actions;
 
+export const selectIsInCart = (
+  state: { cartReducer: { products: { id: number }[] } },
+  id: number,
+): boolean => {
+  const added = state.cartReducer.products.findIndex(
+    (product: { id: number }) => product.id === id,
+  );
+  if (added === -1) {
+    return false;
+  }
+  return true;
+};
+
 export const selectCartItems = (state: {
   cartReducer: { products: unknown[] };
 }) => state.cartReducer.products;

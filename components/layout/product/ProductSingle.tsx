@@ -6,12 +6,12 @@ import ProductImage from './product-single/ProductImage';
 import VariationsCarousel from './variations/VariationsCarousel';
 
 const ProductSingle: React.FC<IProductsEntity> = (product) => {
-  const { id, attributeValues, localizeInfos, price } = product;
+  const { attributeValues, localizeInfos } = product;
 
   return (
     <div className="mb-16 flex flex-row gap-10 max-md:max-w-full max-md:flex-wrap">
       <ProductImage
-        imageSrc={attributeValues.pic.value.downloadLink}
+        imageSrc={attributeValues.pic?.value.downloadLink}
         alt={localizeInfos.title}
       />
       <div className="flex w-4/12 grow flex-col max-md:mt-10 max-md:w-full">

@@ -1,8 +1,21 @@
-import React from 'react';
+'use client';
+
+import React, { useContext } from 'react';
+
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 const CloseModal = () => {
+  const { setOpen } = useContext(OpenDrawerContext);
+
+  const onButtonClick = () => {
+    setOpen(false);
+  };
+
   return (
-    <button className="flex aspect-square w-10 shrink-0 items-center justify-center rounded-full bg-[#EEEFF0]">
+    <button
+      className="flex aspect-square w-10 shrink-0 items-center justify-center rounded-full bg-[#EEEFF0]"
+      onClick={onButtonClick}
+    >
       <svg
         width="14"
         height="14"

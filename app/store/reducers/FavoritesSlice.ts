@@ -19,7 +19,6 @@ export const favoritesSlice = createSlice({
       });
       if (isUnique === -1) {
         state.products.push(action.payload);
-        console.log(initialState.products);
       }
     },
     removeFavorites(state, action: PayloadAction<number>) {

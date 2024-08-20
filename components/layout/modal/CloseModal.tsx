@@ -1,6 +1,6 @@
 'use client';
-import React from 'react';
-import { useContext } from 'react';
+
+import React, { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 

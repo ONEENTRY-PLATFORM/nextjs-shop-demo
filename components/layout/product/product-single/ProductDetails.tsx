@@ -1,9 +1,9 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import AddToCartButton from './AddToCartButton';
+import AddToCartButton from '../components/AddToCartButton';
 
 const ProductDetails: React.FC<IProductsEntity> = (product) => {
-  const { id, attributeValues, localizeInfos, price } = product;
+  const { attributeValues, localizeInfos, price } = product;
 
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mt-10 max-md:w-full">
@@ -26,7 +26,10 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
         </div>
       </div>
 
-      <AddToCartButton product={product} />
+      <AddToCartButton
+        product={product}
+        className="mt-6 rounded-[30px] border border-solid border-orange-500 bg-orange-500 px-5 py-4 text-center text-base font-bold uppercase text-white max-md:px-5"
+      />
     </div>
   );
 };
