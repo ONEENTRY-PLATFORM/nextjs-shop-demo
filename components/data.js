@@ -1000,6 +1000,55 @@ export const forgotPasswordFormFields = [
   },
 ];
 
+export const paymentFormFields = [
+  {
+    fieldType: 'text',
+    localizeInfos: {
+      title: 'Card holder name',
+    },
+    placeholder: 'ONEENTRY',
+    marker: 'holder_name',
+    isVisible: true,
+    required: true,
+  },
+  {
+    fieldType: 'text',
+    localizeInfos: {
+      title: 'Card number',
+    },
+    placeholder: '2300 0000 0000 0000',
+    marker: 'card_number',
+    isVisible: true,
+    required: true,
+  },
+  {
+    fieldType: 'group',
+    className: 'relative box-border flex shrink-0 flex-row justify-between',
+    fields: [
+      {
+        fieldType: 'text',
+        localizeInfos: {
+          title: 'MM/YY',
+        },
+        placeholder: '09/32',
+        marker: 'expiry_date',
+        isVisible: true,
+        required: true,
+      },
+      {
+        fieldType: 'text',
+        localizeInfos: {
+          title: 'CVC',
+        },
+        placeholder: 'xxx',
+        marker: 'card_cvc',
+        isVisible: true,
+        required: true,
+      },
+    ],
+  },
+];
+
 export const deliveryTableData = [
   {
     label: 'Date',

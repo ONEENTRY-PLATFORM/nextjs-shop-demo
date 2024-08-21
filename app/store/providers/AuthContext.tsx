@@ -69,6 +69,7 @@ export const AuthProvider = ({ children }: Props) => {
     setIsLoading(true);
     onInit().then(() => {});
     setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, activeLanguage]);
 
   useEffect(() => {
@@ -92,6 +93,7 @@ export const AuthProvider = ({ children }: Props) => {
           setIsAuth(false);
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetchUser]);
 
   useEffect(() => {}, []);

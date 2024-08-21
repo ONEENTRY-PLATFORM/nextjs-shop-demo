@@ -16,14 +16,10 @@ export default async function SidebarMenu() {
     return;
   }
 
-  const { pages } = menu;
-
-  console.log(pages);
-
   return (
     <nav>
       <ul className="flex max-w-[165px] flex-col gap-5 text-base text-neutral-600">
-        {pages.map((item, index: Key) => (
+        {menu.pages.map((item, index: Key) => (
           <SidebarMenuItem key={index} {...item} />
         ))}
       </ul>

@@ -18,8 +18,9 @@ const FavoritesPage = () => {
         fallback={
           <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
         }
-      />
-      <ProductsGridLayout gridItems={favorites} />
+      >
+        <ProductsGridLayout gridItems={favorites} />
+      </Suspense>
     </div>
   );
 };

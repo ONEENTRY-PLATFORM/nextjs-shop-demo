@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
-import OrdersPage from '@/components/layout/orders/OrdersPage';
-// import PaymentPage from '@/components/layout/favorites/PaymentPage';
-import ProfilePage from '@/components/layout/profile/ProfilePage';
+import FavoritesPage from '@/components/layout/pages/FavoritesPage';
+import OrdersPage from '@/components/layout/pages/OrdersPage';
+// import PaymentPage from '@/components/layout/pages/PaymentPage';
+import ProfilePage from '@/components/layout/pages/ProfilePage';
 
 import CartPage from '../../components/layout/cart/CartPage';
 import { getPageByUrl } from '../api/serverSideProps';

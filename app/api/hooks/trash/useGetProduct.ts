@@ -23,6 +23,7 @@ export const useGetProduct = ({ id }: UseGetProductProps) => {
       try {
         const result = await api.Products.getProductById(id, activeLanguage);
         result && setProduct(result);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setError(e.message);
       }
