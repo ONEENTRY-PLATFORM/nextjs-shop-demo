@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
+// import QuantitySelector from './QuantitySelector';
+import QuantitySelector from '../product/components/QuantitySelector';
 import DeleteButton from './DeleteButton';
-import QuantitySelector from './QuantitySelector';
 
 const ProductCard: React.FC<{
   product: IProductsEntity;
@@ -17,14 +18,14 @@ const ProductCard: React.FC<{
     <article className="flex w-full justify-between gap-5 border border-solid border-neutral-100 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
       <div className="flex justify-between gap-5">
         <div className="relative mb-auto box-border flex shrink-0 flex-row self-center">
-          <input type="checkbox" checked name={'p-' + id} id="" />
+          <input type="checkbox" name={'p-' + id} id="" />
         </div>
 
         <div className="relative h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-300">
           <Image
             fill
             loading="lazy"
-            src={attributeValues?.pic.value.downloadLink}
+            src={attributeValues.pic?.value.downloadLink}
             alt={localizeInfos?.title}
             className="aspect-square size-full shrink-0 self-start object-cover"
           />
@@ -37,8 +38,8 @@ const ProductCard: React.FC<{
       </div>
 
       <div className="flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:flex max-sm:flex-row">
-        <QuantitySelector count={1} />
-        <DeleteButton />
+        <QuantitySelector product={product} />
+        <DeleteButton {...product} />
       </div>
     </article>
   );

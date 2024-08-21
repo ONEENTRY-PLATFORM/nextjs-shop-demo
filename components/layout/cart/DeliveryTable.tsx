@@ -1,21 +1,9 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 
-import DeliveryRow from './DeliveryRow';
-import TableRow from './TableRow';
+import { deliveryTableData } from '@/components/data';
 
-const deliveryTableData = [
-  {
-    label: 'Date',
-    value: '09.10.2023',
-    icon: '/icons/calendar.svg',
-  },
-  {
-    label: 'Time',
-    value: '19:00',
-    icon: '/icons/time.svg',
-  },
-  { label: 'Address', value: 'Dubai, One Entry street, 50' },
-];
+import TableRow from './DeliveryTableRow';
 
 const DeliveryTable: React.FC = () => {
   return (
@@ -29,11 +17,23 @@ const DeliveryTable: React.FC = () => {
             icon={row.icon}
           />
         ))}
-        <DeliveryRow
-          imageSrc="/icons/delivery.svg"
-          deliveryText="Delivery"
-          price="$ 2"
-        />
+        <tr className="table-row h-[50px] gap-5 border border-solid border-neutral-100 max-md:max-w-full max-md:flex-wrap">
+          <td className="table-cell align-middle">
+            <img
+              loading="lazy"
+              src="/icons/delivery.svg"
+              alt=""
+              className="aspect-[1.16] w-[125px] max-w-full shrink-0"
+            />
+          </td>
+          <td className="table-cell px-5 align-middle">
+            <div className="mt-2 flex flex-col self-start">
+              <div className="text-base">Delivery</div>
+              <div className="mt-4 text-xl font-bold leading-8">$ 2</div>
+            </div>
+          </td>
+          <td className="table-cell pl-5 align-middle" />
+        </tr>
       </tbody>
     </table>
   );
