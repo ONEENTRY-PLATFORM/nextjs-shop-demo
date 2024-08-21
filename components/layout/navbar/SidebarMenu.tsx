@@ -1,3 +1,4 @@
+import { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { Key } from 'react';
 
 import { getMenuByMarker } from '@/app/api/serverSideProps';
@@ -14,12 +15,15 @@ export default async function SidebarMenu() {
   if (isError || !menu) {
     return;
   }
+  const pages = menu.pages as IMenusPages[];
 
   return (
     <nav>
       <ul className="flex max-w-[165px] flex-col gap-5 text-base text-neutral-600">
-        {menu.pages.map((item, index: Key) => (
-          <SidebarMenuItem key={index} {...item} />
+        {pages.map((item) => (
+          <span key={item.id}>
+            <SidebarMenuItem icon={''} {...item} />
+          </span>
         ))}
       </ul>
     </nav>

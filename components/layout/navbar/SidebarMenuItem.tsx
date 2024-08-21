@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
 import * as icons from '../../icons';
@@ -28,14 +27,6 @@ const SidebarMenuItem: React.FC<SidebarMenuItemProps> = (menuItem) => {
         <div className="my-auto aspect-square size-4 shrink-0">
           <Icon />
         </div>
-        {/* <Image
-          width={24}
-          height={24}
-          loading="lazy"
-          src={pageUrl + '.svg'}
-          alt={localizeInfos.menuTitle}
-          className="my-auto aspect-square w-4 shrink-0"
-        /> */}
         <div>{localizeInfos.menuTitle}</div>
       </Link>
     </li>
