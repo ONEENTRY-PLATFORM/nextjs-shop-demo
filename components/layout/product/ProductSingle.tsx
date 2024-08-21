@@ -3,27 +3,36 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
 import ProductImage from './product-single/ProductImage';
+import RatingBlock from './rating-block/RatingBlock';
+import RatingButton from './rating-button/RatingButton';
+import ReviewSection from './reviews-group/ReviewSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 
 const ProductSingle: React.FC<IProductsEntity> = (product) => {
   const { attributeValues, localizeInfos } = product;
 
   return (
-    <div className="mb-16 flex flex-row gap-10 max-md:max-w-full max-md:flex-wrap">
-      <ProductImage
-        imageSrc={attributeValues.pic?.value.downloadLink}
-        alt={localizeInfos.title}
-      />
-      <div className="flex w-4/12 grow flex-col max-md:mt-10 max-md:w-full">
-        <div className="relative mb-6 box-border flex shrink-0 flex-col">
-          <VariationsCarousel />
-        </div>
-        <ProductDescription
-          description={attributeValues.description?.value.plainValue}
+    <>
+      <div className="flex flex-row gap-10 max-md:max-w-full max-md:flex-wrap">
+        <ProductImage
+          imageSrc={attributeValues.pic?.value.downloadLink}
+          alt={localizeInfos.title}
         />
+        <div className="flex w-4/12 grow flex-col max-md:mt-10 max-md:w-full">
+          <div className="relative mb-6 box-border flex shrink-0 flex-col">
+            <VariationsCarousel />
+          </div>
+          <ProductDescription
+            description={attributeValues.description?.value.plainValue}
+          />
+        </div>
+        <ProductDetails {...product} />
       </div>
-      <ProductDetails {...product} />
-    </div>
+      <div className="flex mb-16 ">
+        {/* <RatingBlock /> */}
+        <RatingButton rating={4.7} reviewCount={7979} />
+      </div>
+    </>
   );
 };
 

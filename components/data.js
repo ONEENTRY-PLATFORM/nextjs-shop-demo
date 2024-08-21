@@ -848,8 +848,6 @@ export const productsGroup = [
   },
 ];
 
-// export const favorites = [80, 73, 66, 49];
-
 // forms
 export const signUpFormFields = [
   {
