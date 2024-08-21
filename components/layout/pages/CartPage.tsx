@@ -12,12 +12,17 @@ import PaymentButton from '@/components/layout/cart/PaymentButton';
 import ProductCard from '@/components/layout/cart/ProductCard';
 import TotalAmount from '@/components/layout/cart/TotalAmount';
 
+import EmptyCart from '../cart/EmptyCart';
 const CartPage = () => {
   const productsInCart = useAppSelector(
     selectCartItems,
   ) as Array<IProductsEntity>;
 
   const total = useAppSelector(selectCartTotal);
+
+  if (productsInCart.length < 1) {
+    return <EmptyCart />;
+  }
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">

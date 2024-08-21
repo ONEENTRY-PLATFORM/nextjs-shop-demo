@@ -1,38 +1,15 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import CartPage from '@/components/layout/pages/CartPage';
 import FavoritesPage from '@/components/layout/pages/FavoritesPage';
 import OrdersPage from '@/components/layout/pages/OrdersPage';
-// import PaymentPage from '@/components/layout/pages/PaymentPage';
+import PaymentPage from '@/components/layout/pages/PaymentPage';
 import ProfilePage from '@/components/layout/pages/ProfilePage';
 
-import CartPage from '../../components/layout/cart/CartPage';
+import * as pageComponents from '../../components/layout/pages';
 import { getPageByUrl } from '../api/serverSideProps';
 import WithSidebar from './WithSidebar';
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { page: string };
-}): Promise<Metadata> {
-  const { page, isError } = await getPageByUrl(params.page, 'en_US');
-
-  if (isError || !page) {
-    return notFound();
-  }
-
-  const { localizeInfos } = page;
-
-  return {
-    title: localizeInfos.title,
-    description: localizeInfos.title,
-    // openGraph: {
-    //   publishedTime: page.createdAt,
-    //   modifiedTime: page.updatedAt,
-    //   type: 'article',
-    // },
-  };
-}
 
 const pages = [
   {
@@ -57,7 +34,7 @@ const pages = [
     templateType: 'withSidebar',
     name: 'payment',
     title: 'payment',
-    // component: <PaymentPage />,
+    component: <PaymentPage />,
   },
   {
     templateType: 'withSidebar',
@@ -66,6 +43,30 @@ const pages = [
     component: <FavoritesPage />,
   },
 ];
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { page: string };
+}): Promise<Metadata> {
+  const { page, isError } = await getPageByUrl(params.page, 'en_US');
+
+  if (isError || !page) {
+    return notFound();
+  }
+
+  const { localizeInfos } = page;
+
+  return {
+    title: localizeInfos.title,
+    description: localizeInfos.title,
+    // openGraph: {
+    //   publishedTime: page.createdAt,
+    //   modifiedTime: page.updatedAt,
+    //   type: 'article',
+    // },
+  };
+}
 
 export default async function Page({ params }: { params: { page: string } }) {
   const { page, isError } = await getPageByUrl(params.page, 'en_US');

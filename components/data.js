@@ -37,34 +37,6 @@ export const navigationItems = [
   },
 ];
 
-export const userMenuItems = [
-  {
-    icon: '/icons/user.svg',
-    text: 'My Profile',
-    href: '/profile',
-  },
-  {
-    icon: '/icons/orders.svg',
-    text: 'My Orders',
-    href: '/orders',
-  },
-  {
-    icon: '/icons/cart.svg',
-    text: 'Cart',
-    href: '/cart',
-  },
-  {
-    icon: '/icons/orders.svg',
-    text: 'Payments',
-    href: '/payment',
-  },
-  {
-    icon: '/icons/heart.svg',
-    text: 'Favorites',
-    href: '/favorites',
-  },
-];
-
 export const quickLinks = [
   {
     text: 'About us',
@@ -876,7 +848,7 @@ export const productsGroup = [
   },
 ];
 
-export const favorites = [80, 73, 66, 49];
+// export const favorites = [80, 73, 66, 49];
 
 // forms
 export const signUpFormFields = [

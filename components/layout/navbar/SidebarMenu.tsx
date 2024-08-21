@@ -2,7 +2,6 @@ import type { Key } from 'react';
 
 import { getMenuByMarker } from '@/app/api/serverSideProps';
 
-// import { userMenuItems } from '@/components/data';
 import SidebarMenuItem from './SidebarMenuItem';
 
 export default async function SidebarMenu() {
