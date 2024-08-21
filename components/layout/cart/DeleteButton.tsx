@@ -1,19 +1,18 @@
-import Image from 'next/image';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { removeProduct } from '@/app/store/reducers/CartSlice';
+import DeleteIcon from '@/components/icons/delete';
 
 const DeleteButton: React.FC = () => {
+  const dispatch = useAppDispatch();
   return (
     <button
-      className="relative box-border flex w-10 max-w-[40px] shrink-0 flex-col items-center justify-center"
+      className="relative box-border flex size-8 shrink-0 flex-col items-center justify-center"
       aria-label="Delete item"
+      onClick={() => {
+        dispatch(removeProduct({ ...product, selected: true }));
+      }}
     >
-      <Image
-        width={20}
-        height={20}
-        loading="lazy"
-        src="/icons/trash.svg"
-        alt="Delete"
-        className="my-auto aspect-[0.8] w-4 shrink-0 fill-neutral-600"
-      />
+      <DeleteIcon />
     </button>
   );
 };

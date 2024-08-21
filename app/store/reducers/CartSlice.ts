@@ -19,7 +19,7 @@ export const cartSlice = createSlice({
       action: PayloadAction<IProductsEntity & { selected: boolean }>,
     ) {
       const index = state.products.findIndex(
-        (product) => product.id === action.payload.id,
+        (product: { id: number }) => product.id === action.payload.id,
       );
 
       if (index !== -1) {

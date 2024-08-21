@@ -1,6 +1,4 @@
 const CartIcon = (props: unknown) => {
-  console.log(props);
-
   return (
     <svg
       width="27"

@@ -36,7 +36,7 @@ const ProductCard: React.FC<{
         </div>
       </div>
 
-      <div className="flex gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:flex max-sm:flex-row">
+      <div className="flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:flex max-sm:flex-row">
         <QuantitySelector count={1} />
         <DeleteButton />
       </div>

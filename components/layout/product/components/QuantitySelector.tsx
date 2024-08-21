@@ -32,9 +32,12 @@ const QuantitySelector: React.FC<{ product: IProductsEntity }> = ({
       <input
         className="relative box-border w-10 bg-transparent text-center"
         type="text"
-        name=""
-        id=""
+        name={'qty_selector_' + product.id}
+        id={'qty_selector_' + product.id}
         value={items}
+        onChange={(e) => {
+          console.log(e);
+        }}
       />
       <button
         onClick={() => {
