@@ -17,7 +17,7 @@ const RatingRow: React.FC<RatingRowProps> = ({
   <div className="flex w-full justify-start gap-2.5">
     <div className="w-[30px] text-lg leading-5 text-neutral-600">{value}</div>
     <RatingBar value={barValue} maxWidth="200px" />
-    <StarRating count={starCount} />
+    <StarRating rating={starCount} />
   </div>
 );
 

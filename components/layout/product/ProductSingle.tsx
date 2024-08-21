@@ -4,9 +4,14 @@ import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
 import ProductImage from './product-single/ProductImage';
 import RatingBlock from './rating-block/RatingBlock';
-import RatingButton from './rating-button/RatingButton';
-import ReviewSection from './reviews-group/ReviewSection';
+import RatingButton from './rating-block/RatingButton';
+import ReviewsSection from './reviews-group/ReviewSection';
 import VariationsCarousel from './variations/VariationsCarousel';
+
+const rating = {
+  rating: 4.7,
+  reviewCount: 7979,
+};
 
 const ProductSingle: React.FC<IProductsEntity> = (product) => {
   const { attributeValues, localizeInfos } = product;
@@ -28,9 +33,14 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
         </div>
         <ProductDetails {...product} />
       </div>
-      <div className="flex mb-16 ">
-        {/* <RatingBlock /> */}
-        <RatingButton rating={4.7} reviewCount={7979} />
+
+      <div className="mb-6 flex ">
+        <RatingButton {...rating} />
+      </div>
+
+      <div className="mb-16 flex justify-between">
+        <ReviewsSection />
+        <RatingBlock />
       </div>
     </>
   );

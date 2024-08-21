@@ -14,7 +14,7 @@ const RatingButton: React.FC<ReviewSectionProps> = ({
   reviewCount,
 }) => {
   return (
-    <button onClick={() => {}} className="mr-auto flex gap-5">
+    <button onClick={() => 'onClick'} className="mr-auto flex gap-5">
       <div className="flex gap-2.5">
         <StarRating rating={rating} />
         <div className="text-lg font-bold text-neutral-600">
@@ -22,6 +22,7 @@ const RatingButton: React.FC<ReviewSectionProps> = ({
         </div>
         <div className="text-sm leading-5 text-slate-300">{reviewCount}</div>
       </div>
+
       <div className="my-auto flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600">
         <div>Reviews</div>
         <svg
