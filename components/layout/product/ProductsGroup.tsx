@@ -2,7 +2,11 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 
 import GroupCard from './group-card/GroupCard';
 
-const ProductsGroup = (products: Array<IProductsEntity>) => {
+const ProductsGroup: React.FC<{
+  id: number;
+}> = ({ id }) => {
+  const products = [];
+
   return (
     <section className="mb-8 flex flex-col max-md:max-w-full">
       <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">

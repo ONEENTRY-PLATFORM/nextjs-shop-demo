@@ -4,8 +4,8 @@ import { Suspense } from 'react';
 
 import { getProductById } from '@/app/api/serverSideProps';
 
-// import { productsGroup } from '../../../components/data';
-// import ProductsGroup from '../../../components/layout/product/ProductsGroup';
+import { productsGroup } from '../../../components/data';
+import ProductsGroup from '../../../components/layout/product/ProductsGroup';
 import Product from '../../../components/layout/product/ProductSingle';
 import RelatedItems from '../../../components/layout/product/RelatedItems';
 
@@ -101,7 +101,11 @@ export default async function ProductPage({
             {Array.isArray(product.blocks) &&
               product.blocks.map((block: string) => {
                 if (block === 'multiply_items_offer') {
-                  // return <ProductsGroup key={block} {...productsGroup} />;
+                  return (
+                    <span key={block}>
+                      <ProductsGroup id={10} />
+                    </span>
+                  );
                 } else if (block === 'similar') {
                   return (
                     <RelatedItems

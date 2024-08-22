@@ -1,13 +1,62 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 
-interface ReviewCardProps {
-  content?: string;
+import LikeIcon from '@/components/icons/like';
+
+import StarRating from '../rating-block/StarRating';
+
+interface UserCommentProps {
+  name: string;
+  avatarSrc: string;
+  content: string;
+  likeCount: number;
+  commentCount: number;
+  rating: number;
 }
 
-const ReviewCard: React.FC<ReviewCardProps> = ({ content }) => {
+const UserComment: React.FC<UserCommentProps> = ({
+  name,
+  avatarSrc,
+  content,
+  likeCount,
+  commentCount,
+  rating,
+}) => {
+  return (
+    <article className="flex flex-col rounded-3xl border border-solid border-slate-300 bg-white px-6 py-4 max-md:px-5">
+      <header className="mb-4 flex justify-between gap-5 text-lg font-bold leading-8 text-neutral-600 max-md:max-w-full max-md:flex-wrap">
+        <h2>{name}</h2>
+        <StarRating rating={rating} />
+      </header>
+      <div className="flex w-full items-start gap-5 text-sm max-md:max-w-full max-md:flex-wrap">
+        <p className="w-10/12 flex-auto self-start leading-5 text-neutral-600 max-md:max-w-full">
+          {content}
+        </p>
+        <div className="mt-auto flex w-2/12 gap-2.5 self-end justify-end whitespace-nowrap text-slate-300">
+          <div className="relative box-border flex shrink-0 flex-row gap-1">
+            <LikeIcon />
+            <div className="my-auto">{likeCount}</div>
+          </div>
+          <div className="relative box-border flex shrink-0 flex-row gap-1">
+            <span className="rotate-180">
+              <LikeIcon />
+            </span>
+            <div className="my-auto">{commentCount}</div>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+};
+
+interface ReviewCardProps {
+  review?: UserCommentProps;
+}
+
+const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
   return (
     <article className="relative box-border flex shrink-0 flex-col">
-      {content || 'Review content placeholder'}
+      <UserComment {...review} />
     </article>
   );
 };
