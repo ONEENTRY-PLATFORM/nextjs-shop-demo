@@ -25,7 +25,6 @@ const ProductCard: React.FC<{
         <div className="relative mb-auto box-border flex shrink-0 flex-row self-center">
           <input
             onChange={(e) => {
-              console.log(e);
               dispatch(deselectProduct(id));
             }}
             type="checkbox"

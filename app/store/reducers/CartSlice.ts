@@ -55,7 +55,6 @@ export const cartSlice = createSlice({
       state.products.splice(badIndex, 1);
     },
     removeAllProducts(state) {
-      console.log(state);
       state.products = initialState.products;
     },
   },

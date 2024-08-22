@@ -30,8 +30,6 @@ const SignUpForm: React.FC = () => {
     //     }),
     //   );
     // });
-    // console.log(data.form);
-    // console.log(data.initialFormData);
   }, [data]);
 
   // const formData = Object.keys(fields).reduce(

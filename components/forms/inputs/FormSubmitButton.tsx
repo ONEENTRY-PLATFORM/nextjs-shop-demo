@@ -15,7 +15,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({ title }) => {
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
   const useForm = () => {
-    console.log(fields);
+    // console.log(fields);
     // const formData = Object.keys(fields).reduce(
     //   (
     //     arr: Array<{

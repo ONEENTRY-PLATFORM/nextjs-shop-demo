@@ -1,11 +1,8 @@
-// import { getMenusByMarker } from '../api/serverSideProps';
 import Logo from './header/Logo';
 import NavGroup from './header/NavGroup';
 import SearchBar from './header/SearchBar';
 
 const Header: React.FC = async () => {
-  // const menu = await getMenusByMarker('user_web', 'en_US');
-  // console.log(menu);
   return (
     <header className="flex items-center justify-center border border-solid border-neutral-100 bg-white px-5 max-md:px-5">
       <section

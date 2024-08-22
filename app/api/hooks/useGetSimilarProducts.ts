@@ -26,7 +26,6 @@ export const useGetSimilarProducts = ({ marker }: Props) => {
           marker,
           activeLanguage,
         );
-        // console.log(result);
         products.current = result;
       } catch (e: unknown) {
         setError((e as Error).message);

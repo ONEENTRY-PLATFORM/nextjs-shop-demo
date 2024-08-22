@@ -7,7 +7,6 @@ import StarRating from '../rating-block/StarRating';
 
 interface UserCommentProps {
   name: string;
-  avatarSrc: string;
   content: string;
   likeCount: number;
   commentCount: number;
@@ -16,7 +15,6 @@ interface UserCommentProps {
 
 const UserComment: React.FC<UserCommentProps> = ({
   name,
-  avatarSrc,
   content,
   likeCount,
   commentCount,
@@ -32,7 +30,7 @@ const UserComment: React.FC<UserCommentProps> = ({
         <p className="w-10/12 flex-auto self-start leading-5 text-neutral-600 max-md:max-w-full">
           {content}
         </p>
-        <div className="mt-auto flex w-2/12 gap-2.5 self-end justify-end whitespace-nowrap text-slate-300">
+        <div className="mt-auto flex w-2/12 justify-end gap-2.5 self-end whitespace-nowrap text-slate-300">
           <div className="relative box-border flex shrink-0 flex-row gap-1">
             <LikeIcon />
             <div className="my-auto">{likeCount}</div>
@@ -50,7 +48,7 @@ const UserComment: React.FC<UserCommentProps> = ({
 };
 
 interface ReviewCardProps {
-  review?: UserCommentProps;
+  review: UserCommentProps;
 }
 
 const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
