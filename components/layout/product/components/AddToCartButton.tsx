@@ -22,7 +22,7 @@ const AddToCartButton: React.FC<AddToCartProps> = ({ product, className }) => {
   return !inCart ? (
     <button
       onClick={() => {
-        dispatch(addProductToCart({ ...product, selected: true }));
+        dispatch(addProductToCart({ ...product, selected: true, quantity: 1 }));
       }}
       type="button"
       className={className}

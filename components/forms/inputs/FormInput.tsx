@@ -28,7 +28,7 @@ const FormInput: React.FC<FormInputProps> = (field) => {
     //     },
     //   }),
     // );
-    console.log(value);
+    // console.log(value);
   }, [value, validate]);
 
   if (!field) {

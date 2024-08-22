@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 type InitialStateType = {
-  products: (IProductsEntity & { selected: boolean })[];
+  products: (IProductsEntity & { selected: boolean } & { quantity: number })[];
   currency?: string;
 };
 
@@ -17,7 +17,9 @@ export const cartSlice = createSlice({
   reducers: {
     addProductToCart(
       state,
-      action: PayloadAction<IProductsEntity & { selected: boolean }>,
+      action: PayloadAction<
+        IProductsEntity & { selected: boolean } & { quantity: number }
+      >,
     ) {
       const index = state.products.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
@@ -25,9 +27,17 @@ export const cartSlice = createSlice({
 
       if (index !== -1) {
         if (!state.products[index].selected) {
-          state.products.push({ ...action.payload, selected: false });
+          state.products.push({
+            ...action.payload,
+            selected: false,
+            quantity: 1,
+          });
         } else {
-          state.products.push(action.payload);
+          state.products.push({
+            ...action.payload,
+            selected: true,
+            quantity: 1,
+          });
         }
       } else {
         state.products.push(action.payload);
@@ -36,6 +46,45 @@ export const cartSlice = createSlice({
       if (!state?.currency) {
         state.currency = action.payload?.attributeValues?.currency?.value;
       }
+    },
+    increaseProductQty(
+      state,
+      action: PayloadAction<{ id: number; quantity: number }>,
+    ) {
+      const index = state.products.findIndex(
+        (product: { id: number }) => product.id === action.payload.id,
+      );
+      state.products[index] = {
+        ...state.products[index],
+        selected: state.products[index].selected,
+        quantity: state.products[index].quantity + action.payload.quantity,
+      };
+    },
+    decreaseProductQty(
+      state,
+      action: PayloadAction<{ id: number; quantity: number }>,
+    ) {
+      const index = state.products.findIndex(
+        (product: { id: number }) => product.id === action.payload.id,
+      );
+      state.products[index] = {
+        ...state.products[index],
+        selected: state.products[index].selected,
+        quantity: state.products[index].quantity - action.payload.quantity,
+      };
+    },
+    setProductQty(
+      state,
+      action: PayloadAction<{ id: number; quantity: number }>,
+    ) {
+      const index = state.products.findIndex(
+        (product: { id: number }) => product.id === action.payload.id,
+      );
+      state.products[index] = {
+        ...state.products[index],
+        selected: state.products[index].selected,
+        quantity: action.payload.quantity,
+      };
     },
     removeProduct(state, action: PayloadAction<number>) {
       state.products = state.products.filter(
@@ -49,12 +98,6 @@ export const cartSlice = createSlice({
         }
       });
     },
-    decreaseProduct(state, action: PayloadAction<number>) {
-      const badIndex = state.products.findIndex((product: IProductsEntity) => {
-        return product.id === action.payload;
-      });
-      state.products.splice(badIndex, 1);
-    },
     removeAllProducts(state) {
       state.products = initialState.products;
     },
@@ -65,7 +108,9 @@ export const {
   addProductToCart,
   deselectProduct,
   removeProduct,
-  decreaseProduct,
+  increaseProductQty,
+  decreaseProductQty,
+  setProductQty,
   removeAllProducts,
 } = cartSlice.actions;
 
@@ -83,7 +128,7 @@ export const selectIsInCart = (
 };
 
 export const selectCartItems = (state: {
-  cartReducer: { products: unknown[] };
+  cartReducer: { products: IProductsEntity[] };
 }) => state.cartReducer.products;
 
 export const selectCartItemWithIdLength = (
@@ -93,13 +138,23 @@ export const selectCartItemWithIdLength = (
     };
   },
   id: number,
-) =>
-  state.cartReducer.products.filter((item: { id: number }) => item.id === id)
-    ?.length;
+) => state.cartReducer.products.find((item: { id: number }) => item.id === id);
 
 export const selectBasketCount = (state: {
-  cartReducer: { products: IProductsEntity[] };
-}) => state.cartReducer.products.length;
+  cartReducer: { products: IProductsEntity & { quantity: number }[] };
+}) => {
+  const totalCount =
+    state.cartReducer.products.length > 0
+      ? state.cartReducer.products
+          .map((item) => {
+            return item.quantity;
+          })
+          .reduce((total, num) => {
+            return total + num;
+          })
+      : 0;
+  return totalCount;
+};
 
 export const selectCartTotal = (state: { cartReducer: { products: [] } }) =>
   state.cartReducer.products.reduce(

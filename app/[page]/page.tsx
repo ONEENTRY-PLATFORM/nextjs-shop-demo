@@ -70,7 +70,7 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: { page: string } }) {
   const { page, isError } = await getPageByUrl(params.page, 'en_US');
-  console.log({ page, isError });
+  // console.log({ page, isError });
 
   if (isError || !page) {
     return notFound();

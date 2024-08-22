@@ -56,7 +56,7 @@ export default async function ProductPage({
   params: { handle: string };
 }) {
   const data = await getProductById(Number(params.handle), 'en_US');
-  console.log(data);
+  // console.log(data);
 
   const { isError, product } = data;
   if (isError || !product) {
