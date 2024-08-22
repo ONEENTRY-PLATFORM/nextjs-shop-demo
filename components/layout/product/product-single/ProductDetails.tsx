@@ -17,7 +17,7 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
         $ {price}
       </p>
 
-      <div className="relative box-border flex shrink-0 flex-col">
+      <div className="relative box-border flex shrink-0 flex-col mb-6 ">
         <div className="self-end text-sm text-slate-300">
           {attributeValues?.units_product.value} units
         </div>
@@ -28,7 +28,7 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
 
       <AddToCartButton
         product={product}
-        className="mt-6 rounded-[30px] border border-solid border-orange-500 bg-orange-500 px-5 py-4 text-center text-base font-bold uppercase text-white max-md:px-5"
+        className="rounded-[30px] border border-solid border-orange-500 bg-orange-500 px-5 py-4 text-center text-base font-bold uppercase text-white max-md:px-5"
       />
     </div>
   );

@@ -19,18 +19,18 @@ const QuantitySelector: React.FC<{ product: IProductsEntity }> = ({
   );
 
   return (
-    <div className="mt-6 flex items-start justify-between gap-2 rounded-3xl bg-stone-50 p-2.5 max-sm:pr-2.5">
+    <div className="flex h-[42px] items-center justify-between gap-2 rounded-3xl bg-stone-50">
       <button
         onClick={() => {
           dispatch(decreaseProduct(product.id));
         }}
-        className="relative box-border w-5 self-stretch"
+        className="relative box-border h-full w-8 self-stretch text-center"
         aria-label="Decrease quantity"
       >
         –
       </button>
       <input
-        className="relative box-border w-10 bg-transparent text-center"
+        className="relative box-border w-16 bg-transparent text-center"
         type="text"
         name={'qty_selector_' + product.id}
         id={'qty_selector_' + product.id}
@@ -43,7 +43,7 @@ const QuantitySelector: React.FC<{ product: IProductsEntity }> = ({
         onClick={() => {
           dispatch(addProductToCart({ ...product, selected: true }));
         }}
-        className="relative box-border w-5"
+        className="relative box-border h-full w-8 text-center"
         aria-label="Increase quantity"
       >
         +

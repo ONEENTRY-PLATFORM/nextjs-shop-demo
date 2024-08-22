@@ -12,7 +12,7 @@ const FavoritesPage = () => {
     selectFavoritesItems(state),
   ) as Array<IProductsEntity>;
 
-  return (
+  return favorites.length > 0 ? (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <Suspense
         fallback={
@@ -21,6 +21,10 @@ const FavoritesPage = () => {
       >
         <ProductsGridLayout gridItems={favorites} />
       </Suspense>
+    </div>
+  ) : (
+    <div className="relative box-border flex shrink-0 flex-col">
+      Empty Favorites
     </div>
   );
 };

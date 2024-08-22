@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
+import { useAppDispatch } from '@/app/store/hooks';
+import { deselectProduct } from '@/app/store/reducers/CartSlice';
+
 // import QuantitySelector from './QuantitySelector';
 import QuantitySelector from '../product/components/QuantitySelector';
 import DeleteButton from './DeleteButton';
@@ -8,6 +11,8 @@ import DeleteButton from './DeleteButton';
 const ProductCard: React.FC<{
   product: IProductsEntity;
 }> = ({ product }) => {
+  const dispatch = useAppDispatch();
+
   if (!product) {
     return;
   }
@@ -18,7 +23,16 @@ const ProductCard: React.FC<{
     <article className="flex w-full justify-between gap-5 border border-solid border-neutral-100 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
       <div className="flex justify-between gap-5">
         <div className="relative mb-auto box-border flex shrink-0 flex-row self-center">
-          <input type="checkbox" name={'p-' + id} id="" />
+          <input
+            onChange={(e) => {
+              console.log(e);
+              dispatch(deselectProduct(id));
+            }}
+            type="checkbox"
+            name={'deselectProduct-' + id}
+            id=""
+            checked
+          />
         </div>
 
         <div className="relative h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-300">
