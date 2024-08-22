@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 
-import { getProducts } from '../api/serverSideProps';
+import { getProducts } from '../../api/serverSideProps';
 
 export async function generateMetadata({
   params,

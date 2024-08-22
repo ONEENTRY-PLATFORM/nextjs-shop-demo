@@ -3,11 +3,10 @@ import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 import { getProductById } from '@/app/api/serverSideProps';
-
-import { productsGroup } from '../../../components/data';
-import ProductsGroup from '../../../components/layout/product/ProductsGroup';
-import Product from '../../../components/layout/product/ProductSingle';
-import RelatedItems from '../../../components/layout/product/RelatedItems';
+// import { productsGroup } from '../../../components/data';
+import ProductsGroup from '@/components/layout/product/ProductsGroup';
+import Product from '@/components/layout/product/ProductSingle';
+import RelatedItems from '@/components/layout/product/RelatedItems';
 
 export async function generateMetadata({
   params,
@@ -57,6 +56,7 @@ export default async function ProductPage({
   params: { handle: string };
 }) {
   const data = await getProductById(Number(params.handle), 'en_US');
+  console.log(data);
 
   const { isError, product } = data;
   if (isError || !product) {

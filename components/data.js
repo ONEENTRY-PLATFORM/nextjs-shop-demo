@@ -21,19 +21,19 @@ export const navigationItems = [
   },
   {
     label: 'Promotion',
-    href: '/promotion',
+    href: '/catalog/promotion',
   },
   {
     label: 'New arrival',
-    href: '/arrival',
+    href: '/catalog/arrival',
   },
   {
     label: 'BEST SELLERS',
-    href: '/best-sellers',
+    href: '/catalog/best-sellers',
   },
   {
     label: 'OFFER OF TODAY',
-    href: '/offers',
+    href: '/catalog/offers',
   },
 ];
 
