@@ -1,15 +1,14 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import ProfileIcon from '@/components/icons/profile';
 
 const NavItemProfile: React.FC = () => {
   const { open, setOpen, setComponent } = useContext(OpenDrawerContext);
   const item = {
-    icon: '/icons/user.svg',
     href: '/profile',
     title: 'user',
   };
@@ -21,14 +20,7 @@ const NavItemProfile: React.FC = () => {
         setComponent('SignInEmail');
       }}
     >
-      <Image
-        className="object-contain"
-        width={24}
-        height={24}
-        alt={item.title}
-        src={item.icon}
-        priority
-      />
+      <ProfileIcon />
     </button>
   ) : (
     <Link
@@ -36,14 +28,7 @@ const NavItemProfile: React.FC = () => {
       title={item.title}
       className="relative box-border flex size-6 shrink-0 flex-col"
     >
-      <Image
-        className="object-contain"
-        width={24}
-        height={24}
-        alt={item.title}
-        src={item.icon}
-        priority
-      />
+      <ProfileIcon />
     </Link>
   );
 };

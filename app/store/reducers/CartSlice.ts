@@ -10,6 +10,7 @@ type InitialStateType = {
 const initialState: InitialStateType = {
   products: [],
 };
+
 export const cartSlice = createSlice({
   name: 'cart-slice',
   initialState,
@@ -97,7 +98,7 @@ export const selectCartItemWithIdLength = (
     ?.length;
 
 export const selectBasketCount = (state: {
-  cartReducer: { products: unknown[] };
+  cartReducer: { products: IProductsEntity[] };
 }) => state.cartReducer.products.length;
 
 export const selectCartTotal = (state: { cartReducer: { products: [] } }) =>
