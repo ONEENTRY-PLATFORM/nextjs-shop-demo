@@ -13,9 +13,10 @@ import QuantitySelector from './QuantitySelector';
 interface AddToCartProps {
   product: IProductsEntity;
   className: string;
+  height: number;
 }
 
-const AddToCartButton: React.FC<AddToCartProps> = ({ product, className }) => {
+const AddToCartButton: React.FC<AddToCartProps> = ({ product, className, height }) => {
   const dispatch = useAppDispatch();
   const inCart = useAppSelector((state) => selectIsInCart(state, product.id));
 
@@ -42,7 +43,7 @@ const AddToCartButton: React.FC<AddToCartProps> = ({ product, className }) => {
       Add to cart
     </button>
   ) : (
-    <QuantitySelector product={product} />
+    <QuantitySelector product={product} height={height} />
   );
 };
 

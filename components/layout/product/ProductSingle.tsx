@@ -3,8 +3,6 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
 import ProductImage from './product-single/ProductImage';
-// import RatingBlock from './rating-block/RatingBlock';
-// import RatingButton from './rating-block/RatingButton';
 import ReviewsSection from './reviews-group/ReviewSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 import ProductsGroup from './ProductsGroup';
@@ -13,6 +11,8 @@ import RelatedItems from './RelatedItems';
 const ProductSingle: React.FC<IProductsEntity> = (product) => {
   const { attributeValues, localizeInfos } = product;
 
+  console.log(attributeValues.more_pic);
+  
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
           

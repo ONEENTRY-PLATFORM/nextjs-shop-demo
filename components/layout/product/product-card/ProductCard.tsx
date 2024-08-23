@@ -52,6 +52,7 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
 
         <AddToCartButton
           product={product}
+          height={42}
           className="rounded-3xl border border-solid border-orange-500 px-4 py-2.5 text-center text-sm font-bold text-orange-500"
         />
       </div>

@@ -12,8 +12,9 @@ import {
   removeProduct,
 } from '@/app/store/reducers/CartSlice';
 
-const QuantitySelector: React.FC<{ product: IProductsEntity }> = ({
+const QuantitySelector: React.FC<{ product: IProductsEntity, height: number }> = ({
   product,
+  height
 }) => {
   const { id } = product;
   const dispatch = useAppDispatch();
@@ -24,7 +25,7 @@ const QuantitySelector: React.FC<{ product: IProductsEntity }> = ({
   };
 
   return (
-    <div className="flex h-[42px] items-center justify-between gap-2 rounded-3xl bg-stone-50">
+    <div className="flex items-center justify-between gap-2 rounded-3xl bg-stone-50" style={{height: height}}>
       <button
         onClick={() => {
           if (quantity <= 1) {

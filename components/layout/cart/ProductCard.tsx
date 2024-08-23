@@ -55,7 +55,7 @@ const ProductCard: React.FC<{
       </div>
 
       <div className="flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:flex max-sm:flex-row">
-        <QuantitySelector product={product} />
+        <QuantitySelector product={product} height={42} />
         <DeleteButton {...product} />
       </div>
     </article>
