@@ -1,0 +1,103 @@
+import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
+import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
+import React, { useEffect, useMemo } from 'react';
+
+import { useGetSingleAttributeByMarkerSet } from '@/app/api';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { addFilter, removeFilter } from '@/app/store/reducers/FilterSlice';
+
+import ColorPicker from './ColorPicker';
+
+interface Props {
+  color_filter_title?: string;
+}
+
+type Color = {
+  code: string;
+  name: string;
+  selected?: boolean;
+};
+
+const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
+  const dispatch = useAppDispatch();
+  const { attributes, loading, error } = useGetSingleAttributeByMarkerSet({
+    setMarker: 'system_content',
+    attributeMarker: 'color_filters',
+  });
+  const { colorFilterActive: activeColor, colorFilterPrevious } =
+    useAppSelector((state: { filterReducer: unknown }) => state.filterReducer);
+
+  const colorFilters = useMemo(() => {
+    let colors: Color[] = [];
+
+    if (!attributes) {
+      return colors;
+    }
+
+    colors = attributes?.listTitles.reduce(
+      (arr: Color[], option: IListTitle) => {
+        const color: Color = {
+          code: option.value.toString(),
+          name: option.title,
+        };
+
+        arr.push(color);
+        return arr;
+      },
+      [],
+    );
+    return colors;
+  }, [attributes]);
+
+  useEffect(() => {
+    if (colorFilters?.[colorFilterPrevious as number]?.code) {
+      const oldFilter: IFilterParams = {
+        attributeMarker: 'color',
+        conditionMarker: 'in',
+        conditionValue: colorFilters[colorFilterPrevious as number].code,
+        pageUrl: ['shop'],
+      };
+      dispatch(removeFilter(oldFilter));
+    }
+
+    if (colorFilters?.[activeColor as number]?.code) {
+      const newFilter: IFilterParams = {
+        attributeMarker: 'color',
+        conditionMarker: 'in',
+        conditionValue: colorFilters[activeColor as number].code,
+        pageUrl: ['shop'],
+      };
+      dispatch(addFilter(newFilter));
+    }
+  }, [activeColor]);
+
+  if (!loading && !attributes) {
+    return <></>;
+  }
+
+  if (error) {
+    return <div />;
+  }
+
+  if (loading) {
+    return <div />;
+  }
+
+  return (
+    <div>
+      <div style={{ marginBottom: 20 }}>{color_filter_title}</div>
+      {colorFilters.map((color, index) => {
+        return (
+          <ColorPicker
+            key={index}
+            code={color.code}
+            name={color.name}
+            active={activeColor}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
+export default ColorFilter;

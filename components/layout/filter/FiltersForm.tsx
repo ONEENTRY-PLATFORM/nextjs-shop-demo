@@ -1,31 +1,70 @@
-// import type { Dispatch } from 'react';
-import type React from 'react';
+'use client';
 
-// import { useAppDispatch, useAppSelector } from '../../../app/store/hooks';
-// import { removeAllFilters } from '../../../app/store/reducers/FilterSlice';
+import React, { memo, useMemo } from 'react';
 
-// interface Props {
-//   visible: boolean;
-//   setVisible: Dispatch<boolean>;
-//   children?: React.ReactNode;
-//   text?: string;
-// }
+import { useGetPage } from '@/app/api/hooks/trash/useGetPage';
+import { useAppSelector } from '@/app/store/hooks';
 
-const FiltersForm = () => {
-  // const dispatch = useAppDispatch();
+import AvailabilityFilter from './AvailabilityFilter';
+import ColorFilter from './ColorFilter';
+import FilterButtons from './FilterButtons';
+import PricePickerFilter from './PricePickerFilter';
 
-  // const onReset = () => {
-  //   dispatch(removeAllFilters());
-  // };
+function sortObjectFieldsByPosition(obj: Record<any, any>) {
+  const entries = Object.entries(obj);
+
+  entries.sort((a, b) => a[1].position - b[1].position);
+
+  const sortedObj = {};
+  for (const [key, value] of entries) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    sortedObj[key] = value;
+  }
+
+  return sortedObj;
+}
+
+const FiltersForm: React.FC = () => {
+  const { pageInfo } = useGetPage({ pageUrl: 'catalog_filters' });
+
+  const sortedAttributes: Record<any, any> = useMemo(() => {
+    if (!pageInfo) {
+      return [];
+    }
+    return sortObjectFieldsByPosition(pageInfo?.attributeValues);
+  }, [pageInfo]);
 
   return (
-    <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
-      <div className="relative box-border flex shrink-0 flex-col gap-2.5">
-        <h2 className="max-w-full text-xl font-bold text-neutral-600">
-          SearchFilterForm
-        </h2>
-      </div>
-    </form>
+    <div className="flex w-full flex-col px-10 pb-16 pt-5">
+      {Object.keys(sortedAttributes).map((attribute, index) => {
+        if (attribute === 'color_filter') {
+          return (
+            <ColorFilter
+              key={index}
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-ignore
+              color_filter_title={sortedAttributes[attribute]?.value}
+            />
+          );
+        }
+
+        if (attribute === 'price_filter') {
+          return <PricePickerFilter key={index} />;
+        }
+
+        if (attribute === 'availability_filter') {
+          return (
+            <AvailabilityFilter
+              key={index}
+              title={sortedAttributes[attribute]?.value}
+            />
+          );
+        }
+      })}
+
+      <FilterButtons />
+    </div>
   );
 };
 
