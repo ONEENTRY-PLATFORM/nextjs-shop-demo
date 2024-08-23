@@ -1,5 +1,3 @@
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
@@ -48,8 +46,10 @@ function areObjectFieldsAndValuesSame(
     return false;
   }
 
+  // eslint-disable-next-line no-restricted-syntax
   for (const key in obj1) {
     if (
+      // eslint-disable-next-line no-prototype-builtins
       !obj2.hasOwnProperty(key) ||
       !areObjectFieldsAndValuesSame((obj1 as any)[key], (obj2 as any)[key])
     ) {
@@ -108,14 +108,14 @@ export const filterSlice = createSlice({
       state.homeCardsPrevious = undefined;
       state.availability = undefined;
     },
-    setSortFilterActive(state, action: PayloadAction<number | undefined>) {
+    setSortFilterActive(state, action: PayloadAction<number>) {
       if (state.sortFilterActive === action.payload) {
         state.sortFilterActive = undefined;
       } else {
         state.sortFilterActive = action.payload;
       }
     },
-    setBadgeFilterActive(state, action: PayloadAction<number | undefined>) {
+    setBadgeFilterActive(state, action: PayloadAction<number>) {
       if (state.badgeFilterActive !== action.payload) {
         state.badgeFilterActive = action.payload;
       }
@@ -144,7 +144,7 @@ export const filterSlice = createSlice({
     setCatalogOffset(state, action: PayloadAction<number>) {
       state.catalogOffset = action.payload;
     },
-    setSearchValue(state, action: PayloadAction<string | undefined>) {
+    setSearchValue(state, action: PayloadAction<string>) {
       state.search = action.payload;
     },
     setPriceFilterActive(
@@ -161,7 +161,7 @@ export const filterSlice = createSlice({
         state.priceToSelected = action.payload.value;
       }
     },
-    setColorFilterActive(state, action: PayloadAction<number | undefined>) {
+    setColorFilterActive(state, action: PayloadAction<number>) {
       state.colorFilterPrevious = state.colorFilterActive;
 
       if (action.payload === state.colorFilterActive) {

@@ -6,8 +6,8 @@ import type {
 } from 'oneentry/dist/products/productsInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-import { LanguageContext } from '../../../store/providers/LanguageContext';
-import { api } from '../../api/api';
+import { LanguageContext } from '../../store/providers/LanguageContext';
+import { api } from '../api/api';
 
 type UseGetProductsProps = {
   pageUrl?: string;

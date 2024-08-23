@@ -1,11 +1,31 @@
+'use client';
+
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 
-export default async function SearchPage() {
+import { useGetProducts } from '../api/hooks/useGetProducts';
+
+export default function SearchPage({ params }: { params: { page: string } }) {
+  console.log(params);
+
   // const products = await getPages('en_US');
-  const products = [];
+  const data = useGetProducts({
+    // pageUrl,
+    // offset,
+    // filters,
+    // limit,
+    // searchValue,
+    // sortKey,
+    // sortOrder,
+    // availability,
+    // disableLoading,
+  }) as {
+    products: IProductsEntity[];
+    loading: boolean;
+    refetch: () => void;
+  };
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -15,13 +35,7 @@ export default async function SearchPage() {
             <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
           }
         >
-          <ProductsGridLayout
-            gridItems={products.filter(
-              (product: IProductsEntity) =>
-                product.attributeValues.stickers?.value.value === 'best' &&
-                product.attributeSetIdentifier !== 'service_product',
-            )}
-          />
+          <ProductsGridLayout gridItems={data.products} />
         </Suspense>
       </div>
     </section>
