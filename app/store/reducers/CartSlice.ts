@@ -54,10 +54,13 @@ export const cartSlice = createSlice({
       const index = state.products.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
+      const qty = state.products[index].quantity + action.payload.quantity;
+      const units = state.products[index].attributeValues?.units_product.value;
+
       state.products[index] = {
         ...state.products[index],
         selected: state.products[index].selected,
-        quantity: state.products[index].quantity + action.payload.quantity,
+        quantity: qty > units ? units : qty,
       };
     },
     decreaseProductQty(
@@ -67,10 +70,11 @@ export const cartSlice = createSlice({
       const index = state.products.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
+      const qty = state.products[index].quantity - action.payload.quantity;
       state.products[index] = {
         ...state.products[index],
         selected: state.products[index].selected,
-        quantity: state.products[index].quantity - action.payload.quantity,
+        quantity: qty < 0 ? 0 : qty,
       };
     },
     setProductQty(
@@ -80,10 +84,12 @@ export const cartSlice = createSlice({
       const index = state.products.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
+      const qty = action.payload.quantity;
+      const units = state.products[index].attributeValues?.units_product.value;
       state.products[index] = {
         ...state.products[index],
         selected: state.products[index].selected,
-        quantity: action.payload.quantity,
+        quantity: qty < 0 ? 0 : qty > units ? units : qty,
       };
     },
     removeProduct(state, action: PayloadAction<number>) {

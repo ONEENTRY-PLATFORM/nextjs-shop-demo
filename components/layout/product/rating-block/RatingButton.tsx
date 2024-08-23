@@ -11,10 +11,11 @@ interface ReviewSectionProps {
 
 const RatingButton: React.FC<ReviewSectionProps> = ({
   rating,
-  reviewCount,
+  reviewCount
 }) => {
+  
   return (
-    <button onClick={() => 'onClick'} className="mr-auto flex gap-5">
+    <button onClick={() => {}} className="mr-auto flex gap-5">
       <div className="flex gap-2.5">
         <StarRating rating={rating} />
         <div className="text-lg font-bold text-neutral-600">
@@ -31,6 +32,7 @@ const RatingButton: React.FC<ReviewSectionProps> = ({
           viewBox="0 0 26 14"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className=""
         >
           <path
             fillRule="evenodd"

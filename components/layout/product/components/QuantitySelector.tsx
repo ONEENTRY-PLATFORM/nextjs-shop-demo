@@ -9,6 +9,7 @@ import {
   increaseProductQty,
   selectCartItemWithIdLength,
   setProductQty,
+  removeProduct,
 } from '@/app/store/reducers/CartSlice';
 
 const QuantitySelector: React.FC<{ product: IProductsEntity }> = ({
@@ -26,7 +27,11 @@ const QuantitySelector: React.FC<{ product: IProductsEntity }> = ({
     <div className="flex h-[42px] items-center justify-between gap-2 rounded-3xl bg-stone-50">
       <button
         onClick={() => {
-          dispatch(decreaseProductQty({ id: id, quantity: 1 }));
+          if (quantity <= 1) {
+            dispatch(removeProduct(id));
+          } else {
+            dispatch(decreaseProductQty({ id: id, quantity: 1 }));
+          }
         }}
         className="relative box-border h-full w-8 self-stretch text-center"
         aria-label="Decrease quantity"
@@ -35,14 +40,14 @@ const QuantitySelector: React.FC<{ product: IProductsEntity }> = ({
       </button>
       <input
         className="relative box-border w-16 bg-transparent text-center"
-        type="text"
-        name={'qty_selector_' + product.id}
-        id={'qty_selector_' + product.id}
+        type="number"
+        name={'qty_selector_' + id}
+        id={'qty_selector_' + id}
         value={quantity}
         onChange={(e) => {
           dispatch(
             setProductQty({
-              id: product.id,
+              id: id,
               quantity: Number(e.target.value),
             }),
           );
@@ -50,7 +55,7 @@ const QuantitySelector: React.FC<{ product: IProductsEntity }> = ({
       />
       <button
         onClick={() => {
-          dispatch(increaseProductQty({ id: product.id, quantity: 1 }));
+          dispatch(increaseProductQty({ id: id, quantity: 1 }));
         }}
         className="relative box-border h-full w-8 text-center"
         aria-label="Increase quantity"

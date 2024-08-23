@@ -20,6 +20,12 @@ body {
   color: rgb(var(--foreground-rgb));
 }
 
+::-webkit-inner-spin-button,
+::-webkit-outer-spin-button {
+  height: auto;
+  display: none;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

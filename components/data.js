@@ -251,3 +251,50 @@ export const socialProvidersButtons = [
     alt: 'Social sign-in option 2',
   },
 ];
+
+export const reviewsData = [
+  {
+    name: 'Ahmet K.',
+    avatarSrc: '',
+    content:
+      'Lorem ipsum dolor sit amet consectetur. Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+    likeCount: 17,
+    commentCount: 0,
+    rating: 5,
+  },
+  {
+    name: 'Ahmet L.',
+    avatarSrc: '',
+    content:
+      'Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+    likeCount: 7,
+    commentCount: 4,
+    rating: 3,
+  },
+  {
+    name: 'Ahmet M.',
+    avatarSrc: '',
+    content:
+      'Lorem ipsum dolor sit amet consectetur. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+    likeCount: 17,
+    commentCount: 0,
+    rating: 2,
+  },
+  {
+    name: 'Ahmet N.',
+    avatarSrc: '',
+    content:
+      'Lorem ipsum dolor. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+    likeCount: 32,
+    commentCount: 2,
+    rating: 4,
+  },
+];
+
+export const ratingsData = [
+  { value: 87, barValue: 100, starCount: 5 },
+  { value: 95, barValue: 80, starCount: 4 },
+  { value: 21, barValue: 60, starCount: 3 },
+  { value: 2, barValue: 30, starCount: 2 },
+  { value: 0, barValue: 0, starCount: 1 },
+];
