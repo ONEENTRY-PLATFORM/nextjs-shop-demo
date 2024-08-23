@@ -7,6 +7,8 @@ import RatingBlock from './rating-block/RatingBlock';
 import RatingButton from './rating-block/RatingButton';
 import ReviewsSection from './reviews-group/ReviewSection';
 import VariationsCarousel from './variations/VariationsCarousel';
+import ProductsGroup from './ProductsGroup';
+import RelatedItems from './RelatedItems';
 
 const rating = {
   rating: 4.7,
@@ -17,7 +19,8 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
   const { attributeValues, localizeInfos } = product;
 
   return (
-    <>
+    <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
+          
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:flex-wrap">
         <ProductImage
           imageSrc={attributeValues.pic?.value.downloadLink}
@@ -42,7 +45,27 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
         <ReviewsSection />
         <RatingBlock />
       </div>
-    </>
+      
+      {Array.isArray(product.blocks) &&
+        product.blocks.map((block: string) => {
+          if (block === 'multiply_items_offer') {
+            return (
+              <span key={block}>
+                <ProductsGroup id={10} />
+              </span>
+            );
+          } else if (block === 'similar') {
+            return (
+              <RelatedItems
+                key={block}
+                id={product.id}
+                title="Features"
+              />
+            );
+          }
+        })}
+      
+    </section>
   );
 };
 

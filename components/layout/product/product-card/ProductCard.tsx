@@ -55,9 +55,8 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
           className="rounded-3xl border border-solid border-orange-500 px-4 py-2.5 text-center text-sm font-bold text-orange-500"
         />
       </div>
-
       <Link
-        href={`/catalog/` + id}
+        href={`/product/` + id}
         className="absolute left-0 top-0 z-0 flex size-full"
       ></Link>
     </div>

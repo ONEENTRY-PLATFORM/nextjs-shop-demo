@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
@@ -52,14 +53,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function CatalogPage({
-  params,
-}: {
-  params: { handle: string };
-}) {
+export default async function CatalogPage() {
+  const params = { handle: 'string' };
   const data = await getProducts({ limit: 10, offset: 0, params });
 
-  // console.log(params);
   const { isError, products } = data;
   if (isError || !products) {
     return notFound();
@@ -69,7 +66,10 @@ export default async function CatalogPage({
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
         <Suspense fallback={'...Loading'}>
-          <ProductsGridLayout gridItems={products} />
+          <ProductsGridLayout gridItems={products.filter(
+            (product: IProductsEntity) =>
+              product.attributeSetIdentifier !== 'service_product',
+          )} />
         </Suspense>
       </div>
     </section>

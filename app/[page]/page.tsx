@@ -51,6 +51,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { page, isError } = await getPageByUrl(params.page, 'en_US');
 
+  console.log(params);
+  
   if (isError || !page) {
     return notFound();
   }

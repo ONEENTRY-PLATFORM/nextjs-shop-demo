@@ -19,6 +19,18 @@ const AddToCartButton: React.FC<AddToCartProps> = ({ product, className }) => {
   const dispatch = useAppDispatch();
   const inCart = useAppSelector((state) => selectIsInCart(state, product.id));
 
+  if (typeof product.statusIdentifier === 'string' && product.statusIdentifier !== "in_stock") {
+    return (
+      <button
+        onClick={() => {}}
+        type="button"
+        className={className}
+      >
+        Out of stock
+      </button>
+    );
+  }
+  
   return !inCart ? (
     <button
       onClick={() => {
