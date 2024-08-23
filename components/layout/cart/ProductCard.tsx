@@ -4,7 +4,6 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import { useAppDispatch } from '@/app/store/hooks';
 import { deselectProduct } from '@/app/store/reducers/CartSlice';
 
-// import QuantitySelector from './QuantitySelector';
 import QuantitySelector from '../product/components/QuantitySelector';
 import DeleteButton from './DeleteButton';
 
@@ -18,6 +17,11 @@ const ProductCard: React.FC<{
   }
 
   const { id, attributeValues, price, localizeInfos } = product;
+
+  const formattedPrice = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(price);
 
   return (
     <article className="flex w-full justify-between gap-5 border border-solid border-neutral-100 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
@@ -46,7 +50,7 @@ const ProductCard: React.FC<{
 
         <div className="flex flex-col gap-5 self-start text-neutral-600">
           <h2 className="text-base leading-8">{localizeInfos?.title}</h2>
-          <p className="text-xl font-bold leading-8">$ {price}</p>
+          <p className="text-xl font-bold leading-8">{formattedPrice}</p>
         </div>
       </div>
 

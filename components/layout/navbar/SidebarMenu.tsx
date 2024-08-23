@@ -1,5 +1,4 @@
-import { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-import type { Key } from 'react';
+import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
 import { getMenuByMarker } from '@/app/api/serverSideProps';
 

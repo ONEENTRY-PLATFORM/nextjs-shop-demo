@@ -7,7 +7,7 @@ import OrdersPage from '@/components/layout/pages/OrdersPage';
 import PaymentPage from '@/components/layout/pages/PaymentPage';
 import ProfilePage from '@/components/layout/pages/ProfilePage';
 
-import * as pageComponents from '../../components/layout/pages';
+// import * as pageComponents from '../../components/layout/pages';
 import { getPageByUrl } from '../api/serverSideProps';
 import WithSidebar from './WithSidebar';
 

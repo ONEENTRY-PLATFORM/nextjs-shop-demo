@@ -161,15 +161,15 @@ export const selectCartTotal = (state: { cartReducer: { products: [] } }) =>
     (
       total: number,
       item: {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        selected: any;
+        selected: boolean;
         price: number;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        attributeValues: { sale: { value: any } };
+        quantity: number;
+        attributeValues: { sale: { value: number } };
       },
     ) => {
       if (item.selected) {
-        total += item.price - (item?.attributeValues?.sale?.value || 0);
+        total +=
+          (item.price - item.attributeValues.sale?.value || 0) * item.quantity;
       }
       return total;
     },

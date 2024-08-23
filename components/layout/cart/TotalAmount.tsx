@@ -5,9 +5,13 @@ interface TotalAmountProps {
 }
 
 const TotalAmount: React.FC<TotalAmountProps> = ({ amount }) => {
+  const formattedPrice = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  }).format(amount);
   return (
     <div className="self-end text-xl leading-8 text-neutral-600">
-      Total amount: $ {amount}
+      Total amount: {formattedPrice}
     </div>
   );
 };

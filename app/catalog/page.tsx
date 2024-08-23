@@ -68,12 +68,9 @@ export default async function CatalogPage({
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense
-          fallback={
-            <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
-          }
-        />
-        <ProductsGridLayout gridItems={products} />
+        <Suspense fallback={'...Loading'}>
+          <ProductsGridLayout gridItems={products} />
+        </Suspense>
       </div>
     </section>
   );
