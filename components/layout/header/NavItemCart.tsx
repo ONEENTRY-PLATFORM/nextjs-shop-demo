@@ -19,7 +19,7 @@ const NavItemCart: React.FC = () => {
     <Link
       href={item.href}
       title={item.title}
-      className="relative box-border flex size-6 shrink-0 flex-col"
+      className="group relative box-border flex size-6 shrink-0 flex-col"
     >
       <CartIcon />
       <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full bg-orange-400 text-center text-sm leading-4">

@@ -19,6 +19,7 @@ const NavItemProfile: React.FC = () => {
         setOpen(!open);
         setComponent('SignInEmail');
       }}
+      className="group relative box-border flex size-6 shrink-0"
     >
       <ProfileIcon />
     </button>
@@ -26,7 +27,7 @@ const NavItemProfile: React.FC = () => {
     <Link
       href={item.href}
       title={item.title}
-      className="relative box-border flex size-6 shrink-0 flex-col"
+      className="group relative box-border flex size-6 shrink-0"
     >
       <ProfileIcon />
     </Link>

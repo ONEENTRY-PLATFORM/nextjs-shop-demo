@@ -1,4 +1,4 @@
-const DeleteIcon = (props: unknown) => {
+const DeleteIcon = () => {
   return (
     <svg
       width="16"

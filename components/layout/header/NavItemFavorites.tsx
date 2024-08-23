@@ -14,7 +14,7 @@ const NavItemFavorites: React.FC = () => {
     <Link
       href={item.href}
       title={item.title}
-      className="relative box-border flex size-6 shrink-0 flex-col"
+      className="group relative box-border flex size-6 shrink-0 flex-col"
     >
       <FavoritesIcon />
     </Link>

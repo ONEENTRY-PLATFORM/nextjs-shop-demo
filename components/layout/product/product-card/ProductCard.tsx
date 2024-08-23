@@ -13,6 +13,7 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
 
   return (
     <div className="relative flex size-full flex-col items-center rounded-3xl bg-neutral-100 p-4">
+      {/* stickers */}
       <div className="z-10 flex justify-between gap-5 self-stretch">
         {[attributeValues.stickers].map(
           (
