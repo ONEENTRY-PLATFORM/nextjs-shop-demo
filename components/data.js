@@ -1,5 +1,4 @@
-// menu
-
+// footer menu
 export const quickLinks = [
   {
     text: 'About us',
@@ -30,7 +29,6 @@ export const quickLinks = [
     href: '/contacts',
   },
 ];
-
 export const infoLinks = [
   {
     text: 'Book online',
@@ -55,58 +53,6 @@ export const infoLinks = [
   {
     text: 'Payments',
     href: '/payments',
-  },
-];
-
-// catalogCards
-export const catalogCards = [
-  {
-    title: 'Catalog',
-    backgroundColor: 'bg-amber-600',
-    width: 'w-full',
-    height: 'h-[175px]',
-    imageSrc: '/images/catalog-img-1.svg',
-    link: '/catalog',
-  },
-  {
-    title: 'BEST SELLER',
-    backgroundColor: 'bg-purple-600',
-    width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
-    height: 'h-[260px]',
-    imageSrc: '/images/catalog-img-2.svg',
-    link: '/catalog/best-sellers',
-  },
-  {
-    title: 'PROMOTION',
-    backgroundColor: 'bg-blue-500',
-    width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
-    height: 'h-[260px]',
-    imageSrc: '/images/catalog-img-3.svg',
-    link: '/catalog/promotion',
-  },
-  {
-    title: 'OFFER OF TODAY',
-    backgroundColor: 'bg-lime-700',
-    width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
-    height: 'h-[260px]',
-    imageSrc: '/images/catalog-img-4.svg',
-    link: '/catalog/offers',
-  },
-  {
-    title: 'NEW ARRIVALS',
-    backgroundColor: 'bg-teal-300',
-    width: 'w-full md:w-[calc(_50%_-_0.65rem)]',
-    height: 'h-[260px]',
-    imageSrc: '/images/catalog-img-5.svg',
-    link: '/catalog/arrival',
-  },
-  {
-    title: 'Join OUR COMMUNITY',
-    backgroundColor: 'bg-amber-300',
-    width: 'w-full lg:w-[calc(_50%_-_0.65rem)]',
-    height: 'h-[260px]',
-    imageSrc: '/images/catalog-img-6.svg',
-    link: '#',
   },
 ];
 

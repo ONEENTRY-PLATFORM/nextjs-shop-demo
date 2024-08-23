@@ -45,18 +45,18 @@ export async function generateMetadata({
   };
 }
 
-export default async function CatalogPage({
+export default async function PromotionPage({
   params,
 }: {
   params: { handle: string };
 }) {
   const data = await getProducts({ limit: 10, offset: 0, params });
 
-  // console.log(params);
   const { isError, products } = data;
   if (isError || !products) {
     return notFound();
   }
+  console.log(products);
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">

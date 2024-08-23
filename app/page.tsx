@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 
-import { catalogCards } from '@/components/data';
 import CatalogGrid from '@/components/layout/catalog/CatalogGrid';
 
 export default async function Home() {
@@ -15,7 +14,7 @@ export default async function Home() {
               <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
             }
           >
-            <CatalogGrid cards={catalogCards} />
+            <CatalogGrid />
           </Suspense>
         </div>
       </section>
