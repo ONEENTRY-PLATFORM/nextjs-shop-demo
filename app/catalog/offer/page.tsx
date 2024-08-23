@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
@@ -52,7 +53,6 @@ export default async function CatalogPage({
 }) {
   const data = await getProducts({ limit: 10, offset: 0, params });
 
-  // console.log(params);
   const { isError, products } = data;
   if (isError || !products) {
     return notFound();
@@ -65,8 +65,15 @@ export default async function CatalogPage({
           fallback={
             <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
           }
-        />
-        <ProductsGridLayout gridItems={products} />
+        >
+          <ProductsGridLayout
+            gridItems={products.filter(
+              (product: IProductsEntity) =>
+                product.attributeValues.stickers?.value.value === 'offer' &&
+                product.attributeSetIdentifier !== 'service_product',
+            )}
+          />
+        </Suspense>
       </div>
     </section>
   );
