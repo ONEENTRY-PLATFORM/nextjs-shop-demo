@@ -3,7 +3,6 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import { navigationItems } from '@/components/data';
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import Modal from '@/components/layout/modal/ModalLayout';
@@ -34,7 +33,7 @@ export default function RootLayout({
               <ContentContextProvider>
                 <OpenDrawerProvider>
                   <Header />
-                  <NavigationMenu items={navigationItems} />
+                  <NavigationMenu />
                   {children}
                   <Footer />
                   <Modal />

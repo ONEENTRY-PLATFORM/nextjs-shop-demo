@@ -19,13 +19,6 @@ export async function generateMetadata({
   } = { url: '', width: 300, height: 300, altText: '' };
   const indexable = true;
 
-  const data = await getProducts({ limit: 10, offset: 0, params });
-
-  const { isError, products } = data;
-  if (isError || !products) {
-    return notFound();
-  }
-
   return {
     title: '',
     description: '',

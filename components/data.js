@@ -1,41 +1,4 @@
 // menu
-export const navigationItems = [
-  {
-    label: 'Category',
-    href: '#',
-    hasDropdown: true,
-    submenu: [
-      {
-        label: 'New arrival',
-        href: '/arrival',
-      },
-      {
-        label: 'BEST SELLERS',
-        href: '/best-sellers',
-      },
-      {
-        label: 'OFFER OF TODAY',
-        href: '/offers',
-      },
-    ],
-  },
-  {
-    label: 'Promotion',
-    href: '/catalog/promotion',
-  },
-  {
-    label: 'New arrival',
-    href: '/catalog/arrival',
-  },
-  {
-    label: 'BEST SELLERS',
-    href: '/catalog/best-sellers',
-  },
-  {
-    label: 'OFFER OF TODAY',
-    href: '/catalog/offers',
-  },
-];
 
 export const quickLinks = [
   {

@@ -1,4 +1,5 @@
 // import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {
@@ -143,12 +144,36 @@ export async function getMenuByMarker({
   }
 }
 
+export async function getAttributeByMarker({
+  attributeMarker,
+  setMarker,
+  langCode,
+}: {
+  attributeMarker: string;
+  setMarker: string;
+  langCode: string;
+}): Promise<{
+  attribute?: IAttributesSetsEntity;
+  isError: boolean;
+  err?: unknown;
+}> {
+  try {
+    const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
+      attributeMarker,
+      setMarker,
+      langCode,
+    );
+    return { isError: false, attribute: attribute };
+  } catch (e) {
+    return { isError: true, err: e };
+  }
+}
+
 // api.Products.getProductsByPageId
 // api.Products.getProductsEmptyPage(langCode?: string, userQuery?: IProductsQuery): Promise<Array<IProductsEntity>>;
-// getRelatedProductsById(id: number, langCode?: string, userQuery?: IProductsQuery);
-// getProductById(id: number, langCode?: string);
-// getProductBlockById(id: number)
-// searchProduct(name: string, langCode?: string)
+
+// api.Products.getProductBlockById(id: number)
+// api.Products.searchProduct(name: string, langCode?: string)
 
 // interface IDefineApi {
 //   Admins: AdminsApi;

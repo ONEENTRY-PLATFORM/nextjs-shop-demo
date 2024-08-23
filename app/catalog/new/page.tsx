@@ -19,13 +19,6 @@ export async function generateMetadata({
   } = { url: '', width: 300, height: 300, altText: '' };
   const indexable = true;
 
-  const data = await getProducts({ limit: 10, offset: 0, params });
-
-  const { isError, products } = data;
-  if (isError || !products) {
-    return notFound();
-  }
-
   return {
     title: '',
     description: '',
@@ -59,7 +52,10 @@ export default async function CatalogPage({
 }) {
   const data = await getProducts({ limit: 10, offset: 0, params });
 
-  console.log(data);
+  console.log(data.products?.[2].attributeValues.category);
+  // statusIdentifier - out_of_stock
+  // attributeSetIdentifier - service_product
+  // attributeValues.category.value
 
   const { isError, products } = data;
   if (isError || !products) {
