@@ -3,7 +3,6 @@
 import React, { memo, useMemo } from 'react';
 
 import { useGetPage } from '@/app/api/hooks/trash/useGetPage';
-import { useAppSelector } from '@/app/store/hooks';
 
 import AvailabilityFilter from './AvailabilityFilter';
 import ColorFilter from './ColorFilter';
@@ -68,4 +67,4 @@ const FiltersForm: React.FC = () => {
   );
 };
 
-export default FiltersForm;
+export default memo(FiltersForm);

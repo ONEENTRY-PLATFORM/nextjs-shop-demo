@@ -3,9 +3,7 @@ import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 import { getProductById } from '@/app/api/serverSideProps';
-import ProductsGroup from '@/components/layout/product/ProductsGroup';
 import Product from '@/components/layout/product/ProductSingle';
-import RelatedItems from '@/components/layout/product/RelatedItems';
 
 export async function generateMetadata({
   params,
@@ -88,7 +86,7 @@ export default async function ProductPage({
           __html: JSON.stringify(productJsonLd),
         }}
       />
-      <div className="mx-auto flex w-full max-w-screen-xl flex-col bg-white py-8">
+      <div className="mx-auto flex w-full max-w-screen-xl flex-col bg-white px-5 py-8 max-md:px-5">
         <Suspense
           fallback={
             <div className="relative aspect-square size-full overflow-hidden" />

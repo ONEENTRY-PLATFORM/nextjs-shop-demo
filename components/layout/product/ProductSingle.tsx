@@ -3,19 +3,16 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
 import ProductImage from './product-single/ProductImage';
-import ReviewsSection from './reviews-group/ReviewSection';
-import VariationsCarousel from './variations/VariationsCarousel';
 import ProductsGroup from './ProductsGroup';
 import RelatedItems from './RelatedItems';
+import ReviewsSection from './reviews-group/ReviewSection';
+import VariationsCarousel from './variations/VariationsCarousel';
 
 const ProductSingle: React.FC<IProductsEntity> = (product) => {
   const { attributeValues, localizeInfos } = product;
 
-  console.log(attributeValues.more_pic);
-  
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
-          
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:flex-wrap">
         <ProductImage
           imageSrc={attributeValues.pic?.value.downloadLink}
@@ -33,7 +30,7 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
       </div>
 
       <ReviewsSection />
-      
+
       {Array.isArray(product.blocks) &&
         product.blocks.map((block: string) => {
           if (block === 'multiply_items_offer') {
@@ -44,15 +41,10 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
             );
           } else if (block === 'similar') {
             return (
-              <RelatedItems
-                key={block}
-                id={product.id}
-                title="Features"
-              />
+              <RelatedItems key={block} id={product.id} title="Features" />
             );
           }
         })}
-      
     </section>
   );
 };

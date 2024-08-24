@@ -10,7 +10,7 @@ import CloseModal from './CloseModal';
 function Modal() {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
 
-  if (!open || !component) {
+  if (!open || !component || component === 'FilterForm') {
     return null;
   }
 

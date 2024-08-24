@@ -8,7 +8,7 @@ const ApplyButton: React.FC = () => {
     (state) => state.systemContentReducer.content,
   );
   return (
-    <button className="px-3.5 py-4 text-xl font-bold text-white whitespace-nowrap bg-orange-500 rounded-[30px]">
+    <button className="whitespace-nowrap rounded-[30px] bg-orange-500 px-3.5 py-4 text-xl font-bold text-white">
       {apply_button_placeholder}
     </button>
   );

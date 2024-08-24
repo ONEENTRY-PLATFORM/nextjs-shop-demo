@@ -86,16 +86,19 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
   return (
     <div>
       <div style={{ marginBottom: 20 }}>{color_filter_title}</div>
-      {colorFilters.map((color, index) => {
-        return (
-          <ColorPicker
-            key={index}
-            code={color.code}
-            name={color.name}
-            active={activeColor}
-          />
-        );
-      })}
+      <div className="mb-9 flex flex-wrap gap-5 whitespace-nowrap text-sm leading-8 text-slate-300">
+        {colorFilters.map((color, index) => {
+          return (
+            <ColorPicker
+              key={index}
+              index={index}
+              code={color.code}
+              name={color.name}
+              active={activeColor}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };

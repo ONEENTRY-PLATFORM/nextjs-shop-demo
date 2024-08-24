@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import { getAttributeByMarker } from '@/app/api/serverSideProps';
 
 import NavigationMenuItem from './NavigationMenuItem';
@@ -69,12 +71,12 @@ const NavigationMenu: React.FC = async () => {
                     ) => {
                       return (
                         <li key={i}>
-                          <a
+                          <Link
                             href={it.href}
                             className="transition-colors duration-300 ease-in-out focus:outline-none"
                           >
                             {it.label}
-                          </a>
+                          </Link>
                         </li>
                       );
                     },

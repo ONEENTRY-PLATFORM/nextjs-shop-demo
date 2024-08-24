@@ -21,7 +21,7 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
           type="checkbox"
           checked={available}
           onChange={() => dispatch(setAvailability(!available))}
-          className="size-[13px] shrink-0 rounded-full bg-orange-500"
+          className="size-[16px] shrink-0 rounded-full bg-orange-500"
         />
       </div>
     </div>

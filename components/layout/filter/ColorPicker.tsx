@@ -15,13 +15,18 @@ const ColorPicker: React.FC<Props> = ({ code, name, active, index }) => {
   const dispatch = useAppDispatch();
 
   return (
-    <button
-      onClick={() => {
-        dispatch(setColorFilterActive(index));
-      }}
-    >
-      <p>{name}</p>
-    </button>
+    <div className="flex gap-1.5">
+      <button
+        onClick={() => {
+          dispatch(setColorFilterActive(index));
+        }}
+        className="size-6 rounded-full"
+        style={{
+          backgroundColor: code,
+        }}
+      ></button>
+      <span className="my-auto">{name}</span>
+    </div>
   );
 };
 
