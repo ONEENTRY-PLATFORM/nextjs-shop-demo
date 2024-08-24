@@ -26,7 +26,7 @@ const NavigationMenu: React.FC = async () => {
       label: 'Category',
       href: '#',
       hasDropdown: true,
-      submenu: [
+      categories: [
         {
           label: 'New arrival',
           href: '/arrival',
@@ -61,7 +61,7 @@ const NavigationMenu: React.FC = async () => {
 
               {item.hasDropdown && (
                 <ul className="absolute z-10 mt-6 hidden flex-col gap-4 bg-white px-6 py-8 leading-8 shadow-lg group-hover:flex">
-                  {item.submenu?.map(
+                  {item.categories?.map(
                     (
                       it: {
                         href: string;

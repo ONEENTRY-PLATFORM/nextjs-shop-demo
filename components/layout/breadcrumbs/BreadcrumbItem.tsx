@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 const BreadcrumbItem: React.FC<{
   link: string;
   isLast: boolean;
@@ -6,12 +8,12 @@ const BreadcrumbItem: React.FC<{
     {!isLast ? (
       <>
         /{' '}
-        <a
+        <Link
           href={'/' + link}
           className="my-auto text-base hover:text-orange-500"
         >
           {link[0].toUpperCase() + link.slice(1, link.length)}
-        </a>
+        </Link>
       </>
     ) : (
       <div>
