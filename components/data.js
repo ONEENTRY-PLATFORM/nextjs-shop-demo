@@ -2,11 +2,11 @@
 export const quickLinks = [
   {
     text: 'About us',
-    href: '/about',
+    href: '/about_us',
   },
   {
     text: 'Service',
-    href: '/service',
+    href: '/services',
   },
   {
     text: 'Treatment',
@@ -14,7 +14,7 @@ export const quickLinks = [
   },
   {
     text: 'Product',
-    href: '/',
+    href: '/catalog',
   },
   {
     text: 'Our experts',
@@ -26,9 +26,10 @@ export const quickLinks = [
   },
   {
     text: 'Contact',
-    href: '/contacts',
+    href: '/contact_us',
   },
 ];
+
 export const infoLinks = [
   {
     text: 'Book online',

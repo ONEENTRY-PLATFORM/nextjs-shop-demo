@@ -6,12 +6,12 @@ const Logo: React.FC = () => {
     <Link
       href="/"
       prefetch={true}
-      className="relative h-[80px] w-full max-w-[300px] outline-none"
+      className="relative flex h-[83px] w-full max-w-[300px] items-center outline-none max-md:max-w-[200px] max-sm:max-w-[120px]"
     >
       <Image
         className="aspect-auto w-auto object-contain"
         width={300}
-        height={80}
+        height={83}
         alt={''}
         src={'/images/logo-300x80.svg'}
         priority={true}

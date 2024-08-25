@@ -5,7 +5,6 @@ import { getAttributeByMarker } from '@/app/api/serverSideProps';
 import CatalogCard from './CatalogCard';
 
 const CatalogGrid: React.FC = async () => {
-  
   const catalogCards = [
     {
       title: 'Catalog',

@@ -3,6 +3,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { deselectProduct } from '@/app/store/reducers/CartSlice';
+import { UsePrice } from '@/components/utils';
 
 import QuantitySelector from '../product/components/QuantitySelector';
 import DeleteButton from './DeleteButton';
@@ -18,10 +19,10 @@ const ProductCard: React.FC<{
 
   const { id, attributeValues, price, localizeInfos } = product;
 
-  const formattedPrice = new Intl.NumberFormat('en-US', {
-    style: 'currency',
+  const formattedPrice = UsePrice({
+    amount: price,
     currency: 'USD',
-  }).format(price);
+  });
 
   return (
     <article className="flex w-full justify-between gap-5 border border-solid border-neutral-100 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">

@@ -45,7 +45,7 @@ const NavigationMenu: React.FC = async () => {
   navigationItems.push(...stickers);
 
   return (
-    <nav className="relative z-20 flex items-center justify-center border border-solid border-neutral-100 bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-md:px-5">
+    <nav className="relative z-20 flex items-center justify-center border border-solid border-neutral-100 bg-white px-5 text-lg max-md:text-sm max-lg:text-md font-bold uppercase text-neutral-600 max-md:px-5">
       <div className="flex w-full max-w-screen-xl items-center justify-center py-7 max-md:px-5">
         <ul className="flex w-full justify-between gap-5 max-md:flex-wrap">
           {navigationItems.map((item, index) => (

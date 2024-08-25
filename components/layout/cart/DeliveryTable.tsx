@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import React from 'react';
 
 import { deliveryTableData } from '@/components/data';
@@ -19,7 +19,7 @@ const DeliveryTable: React.FC = () => {
         ))}
         <tr className="table-row h-[50px] gap-5 border border-solid border-neutral-100 max-md:max-w-full max-md:flex-wrap">
           <td className="table-cell align-middle">
-            <img
+            <Image
               loading="lazy"
               src="/icons/delivery.svg"
               alt=""

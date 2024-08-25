@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import AboutPage from '@/components/layout/pages/AboutPage';
 import CartPage from '@/components/layout/pages/CartPage';
 import FavoritesPage from '@/components/layout/pages/FavoritesPage';
 import OrdersPage from '@/components/layout/pages/OrdersPage';
@@ -41,6 +42,12 @@ const pages = [
     name: 'favorites',
     title: 'favorites',
     component: <FavoritesPage />,
+  },
+  {
+    templateType: '',
+    name: 'about',
+    title: 'about',
+    component: <AboutPage />,
   },
 ];
 

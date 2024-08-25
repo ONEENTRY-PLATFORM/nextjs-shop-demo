@@ -22,7 +22,7 @@ const CatalogCard: React.FC<CatalogCardProps> = ({ cardData }) => {
       <div
         className={`relative flex size-full p-6 ${backgroundColor} overflow-hidden rounded-3xl`}
       >
-        <h2 className="z-10 mt-auto uppercase">{title}</h2>
+        <h3 className="z-10 mt-auto uppercase">{title}</h3>
         <Image
           fill
           sizes="(min-width: 1024px) 66vw, 100vw"

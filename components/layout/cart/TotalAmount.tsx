@@ -1,14 +1,16 @@
 import React from 'react';
 
+import { UsePrice } from '@/components/utils';
+
 interface TotalAmountProps {
   amount: number;
 }
 
 const TotalAmount: React.FC<TotalAmountProps> = ({ amount }) => {
-  const formattedPrice = new Intl.NumberFormat('en-US', {
-    style: 'currency',
+  const formattedPrice = UsePrice({
+    amount: amount,
     currency: 'USD',
-  }).format(amount);
+  });
   return (
     <div className="self-end text-xl leading-8 text-neutral-600">
       Total amount: {formattedPrice}
