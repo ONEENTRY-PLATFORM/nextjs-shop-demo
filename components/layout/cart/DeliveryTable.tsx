@@ -23,6 +23,8 @@ const DeliveryTable: React.FC = () => {
               loading="lazy"
               src="/icons/delivery.svg"
               alt=""
+              width={30}
+              height={30}
               className="aspect-[1.16] w-[125px] max-w-full shrink-0"
             />
           </td>

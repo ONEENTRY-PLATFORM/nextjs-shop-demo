@@ -17,10 +17,10 @@ const PaymentForm: React.FC = () => {
         className="mb-12 aspect-[1.61] w-full max-w-[375px] self-center max-md:mt-10"
       />
       <div className="relative mb-16 box-border flex shrink-0 flex-col gap-5">
-        {paymentFormFields.map((field) => {
+        {paymentFormFields.map((field, i) => {
           if (field.fieldType !== 'group') {
             return (
-              <span key={field.marker}>
+              <span key={i}>
                 <FormInput {...field} />
               </span>
             );
@@ -30,9 +30,9 @@ const PaymentForm: React.FC = () => {
                 key={field.marker}
                 className="relative box-border flex shrink-0 flex-row justify-between"
               >
-                {field.fields?.map((field) => (
-                  <span key={field.marker}>
-                    <FormInput {...field} />
+                {field.fields?.map((f) => (
+                  <span key={f.marker}>
+                    <FormInput {...f} />
                   </span>
                 ))}
               </div>

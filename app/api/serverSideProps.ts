@@ -1,5 +1,6 @@
 // import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
+import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {
@@ -203,20 +204,20 @@ export async function getAttributeByMarker({
   }
 }
 
-export const getBlockByMarker = async ({ marker, langCode = 'en_US' }: {
+export async function getBlockByMarker({
+  marker,
+  langCode,
+}: {
   marker: string;
   langCode: string;
-}) => {
+}) {
   try {
-    const block = await api.Blocks.getBlockByMarker(
-      marker,
-      langCode,
-    );
+    const block = await api.Blocks.getBlockByMarker(marker, langCode);
     return { isError: false, block: block };
   } catch (e) {
-    /* empty */
+    return { isError: true, err: e };
   }
-};
+}
 
 // api.Products.getProductsByPageId
 // api.Products.getProductsEmptyPage(langCode?: string, userQuery?: IProductsQuery): Promise<Array<IProductsEntity>>;
