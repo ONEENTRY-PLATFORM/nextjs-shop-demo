@@ -1,17 +1,17 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import AddToCartButton from '../components/AddToCartButton';
 import { UsePrice } from '../../../utils';
+import AddToCartButton from '../components/AddToCartButton';
 
 const ProductDetails: React.FC<IProductsEntity> = (product) => {
   const { attributeValues, localizeInfos, price } = product;
-  const fPrice = UsePrice({amount: price, currency: 'USD' });
+  const fPrice = UsePrice({ amount: price, currency: 'USD' });
   const units = attributeValues?.units_product.value;
   const max = 50;
-  const w = (units / max * 100);
+  const w = (units / max) * 100;
 
   return (
-    <div className="flex w-3/12 flex-col pt-1.5 max-md:mt-10 max-md:w-full">
+    <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-full">
       <h1 className="text-xl leading-6 text-neutral-600">
         {localizeInfos?.title}
       </h1>
@@ -22,14 +22,15 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
         {fPrice}
       </p>
 
-      <div className="relative box-border flex shrink-0 flex-col mb-6 ">
-        <div className="self-end text-sm text-slate-300">
-          {units} units
-        </div>
-        <div className="z-10 mt-1.5 flex flex-row justify-start rounded-xl bg-zinc-300 w-full">
-          <div className={"mr-auto h-[3px] shrink-0 rounded-xl bg-orange-500"} style={{
-            width: w + "%"
-          }} />
+      <div className="relative mb-6 box-border flex shrink-0 flex-col ">
+        <div className="self-end text-sm text-slate-300">{units} units</div>
+        <div className="z-10 mt-1.5 flex w-full flex-row justify-start rounded-xl bg-zinc-300">
+          <div
+            className={'mr-auto h-[3px] shrink-0 rounded-xl bg-orange-500'}
+            style={{
+              width: w + '%',
+            }}
+          />
         </div>
       </div>
 

@@ -12,7 +12,9 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({ direction }) => {
   return (
     <button
       type="button"
-      className="flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200"
+      className={
+        'flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white'
+      }
     >
       <Image
         width={16}

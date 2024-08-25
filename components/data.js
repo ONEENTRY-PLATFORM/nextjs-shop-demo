@@ -291,6 +291,25 @@ export const reviewsData = [
   },
 ];
 
+export const variationsItems = [
+  {
+    title: 'Red',
+    imageSrc: '/images/catalog-img-4.svg',
+  },
+  {
+    title: 'Blue',
+    imageSrc: '/images/catalog-img-4.svg',
+  },
+  {
+    title: 'Green',
+    imageSrc: '/images/catalog-img-4.svg',
+  },
+  {
+    title: 'Yellow',
+    imageSrc: '/images/catalog-img-4.svg',
+  },
+];
+
 export const ratingsData = [
   { value: 87, barValue: 100, starCount: 5 },
   { value: 95, barValue: 80, starCount: 4 },

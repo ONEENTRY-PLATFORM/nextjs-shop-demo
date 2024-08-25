@@ -1,36 +1,46 @@
+'use client';
+
+import '@egjs/react-flicking/dist/flicking.css';
+
+import { Arrow } from '@egjs/flicking-plugins';
+import Flicking, { ViewportSlot } from '@egjs/react-flicking';
+
+import { variationsItems } from '@/components/data';
+
 import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 
-const items = [
-  {
-    title: 'Red',
-    imageSrc: '/images/catalog-img-4.svg',
-  },
-  {
-    title: 'Blue',
-    imageSrc: '/images/catalog-img-4.svg',
-  },
-  {
-    title: 'Green',
-    imageSrc: '/images/catalog-img-4.svg',
-  },
-  {
-    title: 'Yellow',
-    imageSrc: '/images/catalog-img-4.svg',
-  },
-];
-
 const VariationsCarousel: React.FC = () => {
+  const plugins = [new Arrow()];
+
   return (
     <nav className="flex w-full items-center justify-center gap-3 self-stretch">
-      <NavigationButton direction="left" />
       <div className="flex gap-1.5 self-stretch">
-        {items.map((item, idx) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <CarouselItem key={idx} title={item.title} imageSrc={item.imageSrc} />
-        ))}
+        <Flicking
+          plugins={plugins}
+          // hideBeforeInit={true}
+          // firstPanelSize="200px"
+          align="prev"
+          circular={true}
+          onMoveEnd={(e) => {
+            console.log(e);
+          }}
+        >
+          {variationsItems.map((item, idx) => (
+            <div key={idx}>
+              <CarouselItem title={item.title} imageSrc={item.imageSrc} />
+            </div>
+          ))}
+          <ViewportSlot>
+            <div className="flicking-arrow-prev is-outside">
+              <NavigationButton direction="left" />
+            </div>
+            <div className="flicking-arrow-next is-outside">
+              <NavigationButton direction="right" />
+            </div>
+          </ViewportSlot>
+        </Flicking>
       </div>
-      <NavigationButton direction="right" />
     </nav>
   );
 };

@@ -1,9 +1,10 @@
 import React from 'react';
 
-import RatingBlock from '../rating-block/RatingBlock';
-import ReviewCard from './ReviewCard';
-import RatingButton from '../rating-block/RatingButton';
 import { reviewsData } from '@/components/data';
+
+import RatingBlock from '../rating-block/RatingBlock';
+import RatingButton from '../rating-block/RatingButton';
+import ReviewCard from './ReviewCard';
 
 const ReviewsSection: React.FC = () => {
   const rating = {
@@ -12,8 +13,8 @@ const ReviewsSection: React.FC = () => {
   };
 
   return (
-    <div className="mb-16 flex justify-between">
-      <div className='flex flex-col'>
+    <div className="mb-16 flex justify-between max-md:flex-wrap">
+      <div className="flex flex-col">
         <div className="mb-6">
           <RatingButton {...rating} />
         </div>
