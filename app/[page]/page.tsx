@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import CartPage from '@/components/layout/cart';
 import AboutPage from '@/components/layout/pages/AboutPage';
-import CartPage from '@/components/layout/pages/CartPage';
 import FavoritesPage from '@/components/layout/pages/FavoritesPage';
 import OrdersPage from '@/components/layout/pages/OrdersPage';
 import PaymentPage from '@/components/layout/pages/PaymentPage';
 import ProfilePage from '@/components/layout/pages/ProfilePage';
+import ServicesPage from '@/components/layout/pages/ServicesPage';
 
 // import * as pageComponents from '../../components/layout/pages';
 import { getPageByUrl } from '../api/serverSideProps';
@@ -45,9 +46,15 @@ const pages = [
   },
   {
     templateType: '',
-    name: 'about',
-    title: 'about',
+    name: 'about_us',
+    title: 'About us',
     component: <AboutPage />,
+  },
+  {
+    templateType: '',
+    name: 'services',
+    title: 'About us',
+    component: <ServicesPage />,
   },
 ];
 
@@ -77,7 +84,6 @@ export async function generateMetadata({
 
 export default async function Page({ params }: { params: { page: string } }) {
   const { page, isError } = await getPageByUrl(params.page, 'en_US');
-  // console.log({ page, isError });
 
   if (isError || !page) {
     return notFound();
@@ -95,7 +101,7 @@ export default async function Page({ params }: { params: { page: string } }) {
         return page.templateType === 'withSidebar' ? (
           <WithSidebar key={_i}>{page.component}</WithSidebar>
         ) : (
-          page.component
+          <div key={_i}>{page.component}</div>
         );
       })}
     </div>

@@ -1,6 +1,6 @@
-import Logo from './header/Logo';
-import NavGroup from './header/NavGroup';
-import SearchBar from './header/SearchBar';
+import Logo from './Logo';
+import NavGroup from './NavGroup';
+import SearchBar from './SearchBar';
 
 const Header: React.FC = async () => {
   return (

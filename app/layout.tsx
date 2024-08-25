@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
 import Footer from '@/components/layout/footer';
-import Header from '@/components/layout/Header';
+import Header from '@/components/layout/header';
 import Modal from '@/components/layout/modal/ModalLayout';
 import NavigationMenu from '@/components/layout/navbar/NavigationMenu';
 

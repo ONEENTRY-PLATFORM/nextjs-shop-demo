@@ -12,7 +12,7 @@ import PaymentButton from '@/components/layout/cart/PaymentButton';
 import ProductCard from '@/components/layout/cart/ProductCard';
 import TotalAmount from '@/components/layout/cart/TotalAmount';
 
-import EmptyCart from '../cart/EmptyCart';
+import EmptyCart from './EmptyCart';
 
 const CartPage = () => {
   const productsInCart = useAppSelector(
