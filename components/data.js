@@ -14,7 +14,7 @@ export const quickLinks = [
   },
   {
     text: 'Product',
-    href: '/catalog',
+    href: '/shop',
   },
   {
     text: 'Our experts',

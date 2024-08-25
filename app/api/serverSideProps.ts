@@ -38,6 +38,40 @@ export async function getProducts(props: {
   }
 }
 
+// getProductsByUrl
+export async function getProductsByUrl(props: {
+  limit: number;
+  offset: number;
+  params: {
+    handle: string;
+  };
+}): Promise<{
+  products?: IProductsEntity[];
+  isError: boolean;
+  err?: unknown;
+}> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { limit, offset, params } = props;
+  const expandedFilters: IFilterParams[] | undefined = [];
+
+  try {
+    const products = await api.Products.getProductsByPageUrl(
+      params.handle,
+      // expandedFilters,
+      // 'en_US',
+      // {
+      //   sortOrder: 'DESC',
+      //   sortKey: 'id',
+      //   offset: offset,
+      //   limit: limit,
+      // },
+    );
+    return { isError: false, products: products };
+  } catch (err) {
+    return { isError: true, err: err };
+  }
+}
+
 // getRelatedProductsById
 export async function getRelatedProductsById(
   id: number,

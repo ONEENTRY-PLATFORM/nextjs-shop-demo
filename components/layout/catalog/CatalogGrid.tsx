@@ -12,7 +12,7 @@ const CatalogGrid: React.FC = async () => {
       width: 'w-full',
       height: 'h-[175px]',
       imageSrc: '/images/catalog-img-1.svg',
-      link: '/catalog',
+      link: '/shop',
     },
     {
       title: 'BEST SELLER',
@@ -20,7 +20,7 @@ const CatalogGrid: React.FC = async () => {
       width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
       height: 'h-[260px]',
       imageSrc: '/images/catalog-img-2.svg',
-      link: '/catalog/best',
+      link: '/shop/best',
     },
     {
       title: 'PROMOTION',
@@ -28,7 +28,7 @@ const CatalogGrid: React.FC = async () => {
       width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
       height: 'h-[260px]',
       imageSrc: '/images/catalog-img-3.svg',
-      link: '/catalog/promotion',
+      link: '/shop/promotion',
     },
     {
       title: 'OFFER OF TODAY',
@@ -36,7 +36,7 @@ const CatalogGrid: React.FC = async () => {
       width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
       height: 'h-[260px]',
       imageSrc: '/images/catalog-img-4.svg',
-      link: '/catalog/offer',
+      link: '/shop/offer',
     },
     {
       title: 'NEW ARRIVALS',
@@ -44,7 +44,7 @@ const CatalogGrid: React.FC = async () => {
       width: 'w-full md:w-[calc(_50%_-_0.65rem)]',
       height: 'h-[260px]',
       imageSrc: '/images/catalog-img-5.svg',
-      link: '/catalog/new',
+      link: '/shop/new',
     },
     {
       title: 'Join OUR COMMUNITY',

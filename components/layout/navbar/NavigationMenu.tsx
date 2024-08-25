@@ -10,42 +10,41 @@ const NavigationMenu: React.FC = async () => {
     setMarker: 'product',
     langCode: 'en_US',
   });
-
   const stickers = stickersData.attribute?.listTitles.map(
     (sticker: { title: string; value: string }) => {
       return {
         label: sticker.title,
-        href: '/catalog/' + sticker.value,
+        href: '/shop/' + sticker.value,
+      };
+    },
+  );
+
+  const categoryData = await getAttributeByMarker({
+    attributeMarker: 'category',
+    setMarker: 'product',
+    langCode: 'en_US',
+  });
+  const categories = categoryData.attribute?.listTitles.map(
+    (category: { title: string; value: string }) => {
+      return {
+        label: category.title,
+        href: '/shop/category/' + category.value,
       };
     },
   );
 
   const navigationItems = [
-    // Category
     {
       label: 'Category',
       href: '#',
       hasDropdown: true,
-      categories: [
-        {
-          label: 'New arrival',
-          href: '/arrival',
-        },
-        {
-          label: 'BEST SELLERS',
-          href: '/best-sellers',
-        },
-        {
-          label: 'OFFER OF TODAY',
-          href: '/offers',
-        },
-      ],
+      categories: categories,
     },
   ];
   navigationItems.push(...stickers);
 
   return (
-    <nav className="relative z-20 flex items-center justify-center border border-solid border-neutral-100 bg-white px-5 text-lg max-md:text-sm max-lg:text-md font-bold uppercase text-neutral-600 max-md:px-5">
+    <nav className="relative z-20 flex items-center justify-center border border-solid border-neutral-100 bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-lg:text-sm max-md:px-5 max-md:text-sm">
       <div className="flex w-full max-w-screen-xl items-center justify-center py-7 max-md:px-5">
         <ul className="flex w-full justify-between gap-5 max-md:flex-wrap">
           {navigationItems.map((item, index) => (
