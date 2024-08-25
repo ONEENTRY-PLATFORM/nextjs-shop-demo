@@ -1,4 +1,4 @@
-import SidebarMenu from '@/components/layout/navbar/SidebarMenu';
+import SidebarMenu from '@/components/layout/sidebar/SidebarMenu';
 
 const WithSidebar = ({ children }: { children: React.ReactNode }) => {
   return (
