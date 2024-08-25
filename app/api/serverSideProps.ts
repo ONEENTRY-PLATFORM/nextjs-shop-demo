@@ -203,6 +203,21 @@ export async function getAttributeByMarker({
   }
 }
 
+export const getBlockByMarker = async ({ marker, langCode = 'en_US' }: {
+  marker: string;
+  langCode: string;
+}) => {
+  try {
+    const block = await api.Blocks.getBlockByMarker(
+      marker,
+      langCode,
+    );
+    return { isError: false, block: block };
+  } catch (e) {
+    /* empty */
+  }
+};
+
 // api.Products.getProductsByPageId
 // api.Products.getProductsEmptyPage(langCode?: string, userQuery?: IProductsQuery): Promise<Array<IProductsEntity>>;
 

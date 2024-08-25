@@ -7,10 +7,10 @@ import { createContext, useEffect } from 'react';
 import {
   useGetBlockByMarker,
   useGetSingleAttributeByMarkerSet,
-} from '../../api';
-import { useAppDispatch } from '../hooks';
-import type { ContentType } from '../reducers/SystemContentSlice';
-import { addContent } from '../reducers/SystemContentSlice';
+} from '@/app/api';
+import { useAppDispatch } from '@/app/store/hooks';
+import type { ContentType } from '@/app/store/reducers/SystemContentSlice';
+import { addContent } from '@/app/store/reducers/SystemContentSlice';
 
 const ContentContext = createContext({});
 
