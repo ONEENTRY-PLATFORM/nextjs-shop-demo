@@ -7,15 +7,15 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   decreaseProductQty,
   increaseProductQty,
+  removeProduct,
   selectCartItemWithIdLength,
   setProductQty,
-  removeProduct,
 } from '@/app/store/reducers/CartSlice';
 
-const QuantitySelector: React.FC<{ product: IProductsEntity, height: number }> = ({
-  product,
-  height
-}) => {
+const QuantitySelector: React.FC<{
+  product: IProductsEntity;
+  height: number;
+}> = ({ product, height }) => {
   const { id } = product;
   const dispatch = useAppDispatch();
   const { quantity } = useAppSelector((state) =>
@@ -25,7 +25,10 @@ const QuantitySelector: React.FC<{ product: IProductsEntity, height: number }> =
   };
 
   return (
-    <div className="flex items-center justify-between gap-2 rounded-3xl bg-stone-50" style={{height: height}}>
+    <div
+      className="flex items-center justify-between gap-2 rounded-3xl bg-stone-50"
+      style={{ height: height }}
+    >
       <button
         onClick={() => {
           if (quantity <= 1) {

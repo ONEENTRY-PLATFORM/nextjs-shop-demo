@@ -16,22 +16,25 @@ interface AddToCartProps {
   height: number;
 }
 
-const AddToCartButton: React.FC<AddToCartProps> = ({ product, className, height }) => {
+const AddToCartButton: React.FC<AddToCartProps> = ({
+  product,
+  className,
+  height,
+}) => {
   const dispatch = useAppDispatch();
   const inCart = useAppSelector((state) => selectIsInCart(state, product.id));
 
-  if (typeof product.statusIdentifier === 'string' && product.statusIdentifier !== "in_stock") {
+  if (
+    typeof product.statusIdentifier === 'string' &&
+    product.statusIdentifier !== 'in_stock'
+  ) {
     return (
-      <button
-        onClick={() => {}}
-        type="button"
-        className={className}
-      >
+      <button onClick={() => {}} type="button" className={className}>
         Out of stock
       </button>
     );
   }
-  
+
   return !inCart ? (
     <button
       onClick={() => {

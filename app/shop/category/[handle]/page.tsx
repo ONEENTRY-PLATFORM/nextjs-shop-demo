@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import { getProductsByUrl } from '@/app/api/serverSideProps';
+import { getProducts, getProductsByUrl } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 
 export async function generateMetadata({
@@ -50,13 +50,15 @@ export default async function CatalogPage({
 }: {
   params: { handle: string };
 }) {
-  const data = await getProductsByUrl({ limit: 10, offset: 0, params });
+  const data = await getProducts({ limit: 10, offset: 0, params });
+  // const data = await getProductsByUrl({ limit: 10, offset: 0, params });
+  // Как получить продукты по категории?
 
-  console.log(data);
   const { isError, products } = data;
   if (isError || !products) {
     return notFound();
   }
+  console.log(products[2].attributeValues.category.value.value);
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -69,7 +71,7 @@ export default async function CatalogPage({
         <ProductsGridLayout
           gridItems={products.filter(
             (product: IProductsEntity) =>
-              product.attributeValues.stickers?.value.value === 'best' &&
+              product.attributeValues.category?.value.value === params.handle &&
               product.attributeSetIdentifier !== 'service_product',
           )}
         />

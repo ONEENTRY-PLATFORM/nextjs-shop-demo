@@ -61,14 +61,14 @@ export async function getProductsByUrl(props: {
   try {
     const products = await api.Products.getProductsByPageUrl(
       params.handle,
-      // expandedFilters,
-      // 'en_US',
-      // {
-      //   sortOrder: 'DESC',
-      //   sortKey: 'id',
-      //   offset: offset,
-      //   limit: limit,
-      // },
+      expandedFilters,
+      'en_US',
+      {
+        sortOrder: 'DESC',
+        sortKey: 'id',
+        offset: offset,
+        limit: limit,
+      },
     );
     return { isError: false, products: products };
   } catch (err) {
@@ -182,7 +182,7 @@ export async function getMenuByMarker({
   }
 }
 
-// AttributesSets
+// getAttributeByMarker
 export async function getAttributeByMarker({
   attributeMarker,
   setMarker,
@@ -208,7 +208,7 @@ export async function getAttributeByMarker({
   }
 }
 
-// Blocks
+// getBlocks
 export async function getBlocks({
   type,
   langCode,
@@ -224,6 +224,7 @@ export async function getBlocks({
   }
 }
 
+// getBlockByMarker
 export async function getBlockByMarker({
   marker,
   langCode,
@@ -234,6 +235,22 @@ export async function getBlockByMarker({
   try {
     const block = await api.Blocks.getBlockByMarker(marker, langCode);
     return { isError: false, block: block };
+  } catch (e) {
+    return { isError: true, err: e };
+  }
+}
+
+// getFormByMarker
+export async function getFormByMarker({
+  marker,
+  langCode,
+}: {
+  marker: string;
+  langCode: string;
+}) {
+  try {
+    const form = await api.Blocks.getBlockByMarker(marker, langCode);
+    return { isError: false, form: form };
   } catch (e) {
     return { isError: true, err: e };
   }

@@ -53,7 +53,6 @@ export default async function CatalogPage({
 }) {
   const data = await getProducts({ limit: 10, offset: 0, params });
 
-  // console.log(params);
   const { isError, products } = data;
   if (isError || !products) {
     return notFound();
@@ -70,7 +69,6 @@ export default async function CatalogPage({
         <ProductsGridLayout
           gridItems={products.filter(
             (product: IProductsEntity) =>
-              product.attributeValues.stickers?.value.value === 'best' &&
               product.attributeSetIdentifier !== 'service_product',
           )}
         />

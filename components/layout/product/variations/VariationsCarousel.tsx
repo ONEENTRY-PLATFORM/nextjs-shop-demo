@@ -23,7 +23,7 @@ const VariationsCarousel: React.FC = () => {
           align="prev"
           circular={true}
           onMoveEnd={(e) => {
-            console.log(e);
+            // console.log(e);
           }}
         >
           {variationsItems.map((item, idx) => (

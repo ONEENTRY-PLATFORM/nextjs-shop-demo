@@ -1,50 +1,50 @@
-import type { Metadata } from 'next';
+// import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
+import { getProducts } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
+import Loader from '@/components/shared/Loader';
 
-import { getProducts } from '../../api/serverSideProps';
+// export async function generateMetadata({
+//   params,
+// }: {
+//   params: { handle: string };
+// }): Promise<Metadata> {
+//   const {
+//     url,
+//     width,
+//     height,
+//     altText: alt,
+//   } = { url: '', width: 300, height: 300, altText: '' };
+//   const indexable = true;
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { handle: string };
-}): Promise<Metadata> {
-  const {
-    url,
-    width,
-    height,
-    altText: alt,
-  } = { url: '', width: 300, height: 300, altText: '' };
-  const indexable = true;
-
-  return {
-    title: '',
-    description: '',
-    robots: {
-      index: indexable,
-      follow: indexable,
-      googleBot: {
-        index: indexable,
-        follow: indexable,
-      },
-    },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-        }
-      : null,
-  };
-}
+//   return {
+//     title: '',
+//     description: '',
+//     robots: {
+//       index: indexable,
+//       follow: indexable,
+//       googleBot: {
+//         index: indexable,
+//         follow: indexable,
+//       },
+//     },
+//     openGraph: url
+//       ? {
+//           images: [
+//             {
+//               url,
+//               width,
+//               height,
+//               alt,
+//             },
+//           ],
+//         }
+//       : null,
+//   };
+// }
 
 export default async function CatalogPage({
   params,
@@ -52,11 +52,6 @@ export default async function CatalogPage({
   params: { handle: string };
 }) {
   const data = await getProducts({ limit: 10, offset: 0, params });
-
-  // console.log(data.products?.[2].attributeValues.category);
-  // statusIdentifier - out_of_stock
-  // attributeSetIdentifier - service_product
-  // attributeValues.category.value
 
   const { isError, products } = data;
   if (isError || !products) {
@@ -66,7 +61,7 @@ export default async function CatalogPage({
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense fallback={'..Loading'}>
+        <Suspense fallback={<Loader />}>
           <ProductsGridLayout
             gridItems={products.filter(
               (product: IProductsEntity) =>

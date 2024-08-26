@@ -8,7 +8,7 @@ import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { useGetProducts } from '../api/hooks/useGetProducts';
 
 export default function SearchPage({ params }: { params: { page: string } }) {
-  console.log(params);
+  // console.log(params);
 
   // const products = await getPages('en_US');
   // const data = useGetProducts({
