@@ -19,17 +19,17 @@ const FormInput: React.FC<FormInputProps> = (field) => {
   const dispatch = useAppDispatch();
   const validate = true;
 
-  useEffect(() => {
-    // dispatch(
-    //   addField({
-    //     [field.marker]: {
-    //       valid: validate,
-    //       value: value,
-    //     },
-    //   }),
-    // );
-    // console.log(value);
-  }, [value, validate]);
+  // useEffect(() => {
+  //   dispatch(
+  //     addField({
+  //       [field.marker]: {
+  //         valid: validate,
+  //         value: value,
+  //       },
+  //     }),
+  //   );
+  //   console.log(value);
+  // }, [value, validate]);
 
   if (!field) {
     return;
