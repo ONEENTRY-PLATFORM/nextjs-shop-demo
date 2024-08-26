@@ -318,3 +318,211 @@ export const ratingsData = [
   { value: 2, barValue: 30, starCount: 2 },
   { value: 0, barValue: 0, starCount: 1 },
 ];
+
+// catalogCards
+export const catalogCards = [
+  {
+    id: 1,
+    isVisible: true,
+    attributeValues: {
+      title: {
+        value: 'Catalog',
+      },
+      bg_web: {
+        value: {
+          downloadLink: '/images/catalog-img-1.svg',
+        },
+      },
+      class_name: {
+        value: 'bg-amber-600',
+      },
+      card_width: {
+        value: 'w-full',
+      },
+      card_height: {
+        value: 'h-[175px]',
+      },
+      link: {
+        value: '/shop',
+      },
+      quote: {
+        value: 'Endless posibilities in one system',
+      },
+    },
+  },
+  {
+    id: 2,
+    isVisible: true,
+    attributeValues: {
+      title: {
+        value: 'BEST SELLER',
+      },
+      bg_web: {
+        value: {
+          downloadLink: '/images/catalog-img-2.svg',
+        },
+      },
+      class_name: {
+        value: 'bg-purple-600',
+      },
+      card_width: {
+        value: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
+      },
+      card_height: {
+        value: 'h-[260px]',
+      },
+      link: {
+        value: 'best',
+      },
+      stickers: {
+        value: {
+          extended: {
+            value: {
+              downloadLink: '',
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    id: 3,
+    isVisible: true,
+    attributeValues: {
+      title: {
+        value: 'PROMOTION',
+      },
+      bg_web: {
+        value: {
+          downloadLink: '/images/catalog-img-3.svg',
+        },
+      },
+      class_name: {
+        value: 'bg-blue-500',
+      },
+      card_width: {
+        value: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
+      },
+      card_height: {
+        value: 'h-[260px]',
+      },
+      link: {
+        value: 'promotion',
+      },
+      stickers: {
+        value: {
+          extended: {
+            value: {
+              downloadLink: '',
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    id: 4,
+    isVisible: true,
+    attributeValues: {
+      title: {
+        value: 'OFFER OF TODAY',
+      },
+      bg_web: {
+        value: {
+          downloadLink: '/images/catalog-img-4.svg',
+        },
+      },
+      class_name: {
+        value: 'bg-lime-700',
+      },
+      card_width: {
+        value: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
+      },
+      card_height: {
+        value: 'h-[260px]',
+      },
+      link: {
+        value: 'offer',
+      },
+      stickers: {
+        value: {
+          extended: {
+            value: {
+              downloadLink: '',
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    id: 5,
+    isVisible: true,
+    attributeValues: {
+      title: {
+        value: 'NEW ARRIVALS',
+      },
+      bg_web: {
+        value: {
+          downloadLink: '/images/catalog-img-5.svg',
+        },
+      },
+      class_name: {
+        value: 'bg-teal-300',
+      },
+      card_width: {
+        value: 'w-full md:w-[calc(_50%_-_0.65rem)]',
+      },
+      card_height: {
+        value: 'h-[260px]',
+      },
+      link: {
+        value: 'new',
+      },
+      stickers: {
+        value: {
+          extended: {
+            value: {
+              downloadLink: '',
+            },
+          },
+        },
+      },
+    },
+  },
+  {
+    id: 6,
+    isVisible: true,
+    attributeValues: {
+      title: {
+        value: 'Join OUR COMMUNITY',
+      },
+      bg_web: {
+        value: {
+          downloadLink: '/images/catalog-img-6.svg',
+        },
+      },
+      class_name: {
+        value: 'bg-amber-300',
+      },
+      card_width: {
+        value: 'w-full lg:w-[calc(_50%_-_0.65rem)]',
+      },
+      card_height: {
+        value: 'h-[260px]',
+      },
+      link: {
+        value: 'new',
+      },
+      stickers: {
+        value: {
+          extended: {
+            value: {
+              downloadLink: '',
+            },
+          },
+        },
+      },
+    },
+  },
+];

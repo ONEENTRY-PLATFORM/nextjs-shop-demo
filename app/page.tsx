@@ -6,11 +6,12 @@ import Loader from '@/components/shared/Loader';
 import { getPageByUrl } from './api/serverSideProps';
 
 const HomePage = async () => {
-  const { page, isError } = await getPageByUrl('home_web', 'en_US');
+  const { page, isError } = await getPageByUrl('home_web_2', 'en_US');
 
   if (isError || !page?.blocks) {
     return null;
   }
+  console.log(page.blocks);
 
   return (
     <main className="flex flex-col items-center justify-between gap-16 px-5 py-8">

@@ -3,28 +3,34 @@ import Link from 'next/link';
 import type React from 'react';
 
 import { getBlockByMarker } from '@/app/api/serverSideProps';
+import { catalogCards } from '@/components/data';
 
 interface CatalogCardProps {
   cardData: string;
+  index: number;
 }
 
-const CatalogCard: React.FC<CatalogCardProps> = async ({ cardData }) => {
-  const { block, isError } = await getBlockByMarker({
-    marker: cardData,
-    langCode: 'en_US',
-  });
+const CatalogCard: React.FC<CatalogCardProps> = async ({ cardData, index }) => {
+  // const { block, isError } = await getBlockByMarker({
+  //   marker: cardData,
+  //   langCode: 'en_US',
+  // });
+  const block = catalogCards[index];
+  const isError = false;
 
-  if (!block?.attributeValues || isError) {
+  if (!block?.attributeValues || !block.isVisible || isError) {
     return null;
   }
 
   const { title, class_name, card_width, card_height, bg_web, link } =
     block.attributeValues;
-  const imageSrc = bg_web?.value[0]?.downloadLink || '/images/card.svg';
+  const imageSrc = bg_web?.value?.downloadLink || '/images/card.svg';
+  // const imageSrc = bg_web?.value[0]?.downloadLink || '/images/card.svg';
   const sticker = block.attributeValues.stickers;
+  const quote = block.attributeValues.quote?.value || '';
 
-  // console.log(sticker?.value.extended?.value.downloadLink);
-  // console.log('!-----------------------------!');
+  console.log(block);
+  console.log('!-----------------------------!');
 
   // return;
   return (
@@ -48,14 +54,17 @@ const CatalogCard: React.FC<CatalogCardProps> = async ({ cardData }) => {
           ''
         )}
 
-        <h3 className="z-10 mt-auto uppercase">{title?.value || ''}</h3>
-        <Image
-          fill
-          sizes="(min-width: 1024px) 66vw, 100vw"
-          src={imageSrc}
-          alt={title?.value || ''}
-          className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover"
-        />
+        <h2 className="z-10 mt-auto uppercase">{title?.value || ''}</h2>
+        {quote}
+        {imageSrc && (
+          <Image
+            fill
+            sizes="(min-width: 1024px) 66vw, 100vw"
+            src={imageSrc}
+            alt={title?.value || ''}
+            className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover"
+          />
+        )}
       </div>
     </Link>
   );
