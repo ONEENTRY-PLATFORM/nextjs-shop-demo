@@ -1,6 +1,9 @@
 // import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
-import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
+import type {
+  BlockType,
+  // IBlockEntity,
+} from 'oneentry/dist/blocks/blocksInterfaces';
 import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {
@@ -179,6 +182,7 @@ export async function getMenuByMarker({
   }
 }
 
+// AttributesSets
 export async function getAttributeByMarker({
   attributeMarker,
   setMarker,
@@ -199,6 +203,22 @@ export async function getAttributeByMarker({
       langCode,
     );
     return { isError: false, attribute: attribute };
+  } catch (e) {
+    return { isError: true, err: e };
+  }
+}
+
+// Blocks
+export async function getBlocks({
+  type,
+  langCode,
+}: {
+  type: BlockType;
+  langCode: string;
+}) {
+  try {
+    const blocks = await api.Blocks.getBlocks(type, langCode);
+    return { isError: false, blocks: blocks };
   } catch (e) {
     return { isError: true, err: e };
   }

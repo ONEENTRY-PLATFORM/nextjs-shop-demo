@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type React from 'react';
 
-import { getBlockByMarker } from '@/app/api/serverSideProps';
+import { getBlockByMarker, getBlocks } from '@/app/api/serverSideProps';
 import { catalogCards } from '@/components/data';
 
 interface CatalogCardProps {
@@ -11,12 +11,13 @@ interface CatalogCardProps {
 }
 
 const CatalogCard: React.FC<CatalogCardProps> = async ({ cardData, index }) => {
-  // const { block, isError } = await getBlockByMarker({
-  //   marker: cardData,
-  //   langCode: 'en_US',
-  // });
-  const block = catalogCards[index];
-  const isError = false;
+  const { block, isError } = await getBlockByMarker({
+    marker: cardData,
+    langCode: 'en_US',
+  }); // BAD
+
+  // const block = catalogCards[index];
+  // const isError = false;
 
   if (!block?.attributeValues || !block.isVisible || isError) {
     return null;
@@ -24,13 +25,24 @@ const CatalogCard: React.FC<CatalogCardProps> = async ({ cardData, index }) => {
 
   const { title, class_name, card_width, card_height, bg_web, link } =
     block.attributeValues;
-  const imageSrc = bg_web?.value?.downloadLink || '/images/card.svg';
-  // const imageSrc = bg_web?.value[0]?.downloadLink || '/images/card.svg';
+  // const imageSrc = bg_web?.value?.downloadLink || '/images/placeholder.jpg';
+  const imageSrc = bg_web?.value[0]?.downloadLink || '/images/placeholder.jpg';
   const sticker = block.attributeValues.stickers;
   const quote = block.attributeValues.quote?.value || '';
 
-  console.log(block);
-  console.log('!-----------------------------!');
+  // !!! PROBLEM 1
+  // const data = await getBlocks({
+  //   type: 'forTextBlock',
+  //   langCode: 'en_US',
+  // }); //OK
+  // console.log('!1---- ' + block.localizeInfos.title + ' ----1!');
+  // console.log(block);
+  // console.log('!1-----------------------------------------1!');
+
+  // console.log('!2---- ' + data.blocks?.[2].localizeInfos.title + ' ----2!');
+  // console.log(data.blocks?.[2]);
+  // console.log('!2-----------------------------------------2!');
+  // !!! PROBLEM 1
 
   // return;
   return (
