@@ -13,9 +13,10 @@ interface FormSubmitButtonProps {
 const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({ title }) => {
   const { authenticate } = useContext(AuthContext);
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);
+  console.log(fields);
 
-  const useForm = () => {
-    // console.log(fields);
+  const useForm = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
     // const formData = Object.keys(fields).reduce(
     //   (
     //     arr: Array<{
@@ -35,7 +36,6 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({ title }) => {
     //   },
     //   [],
     // );
-
     // const data: ISignUpData = {
     //   formIdentifier: 'reg',
     //   authData: [
@@ -49,7 +49,6 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({ title }) => {
     //     phoneSMS: fields.phone_reg.value,
     //   },
     // };
-
     // try {
     // const res = await api.AuthProvider.signUp('email', data, 'en_US');
     //   if (res.isActive) {

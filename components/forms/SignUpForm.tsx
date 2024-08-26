@@ -12,12 +12,13 @@ const SignUpForm: React.FC = () => {
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);
   const dispatch = useAppDispatch();
 
-  const data = useGetForm({
+  const form = useGetForm({
     marker: 'reg',
   });
+  console.log(form);
 
   useEffect(() => {
-    if (data.loading) {
+    if (form.loading) {
       return;
     }
     // data.form?.attributes.forEach((field) => {
@@ -30,7 +31,7 @@ const SignUpForm: React.FC = () => {
     //     }),
     //   );
     // });
-  }, [data]);
+  }, [form]);
 
   // const formData = Object.keys(fields).reduce(
   //   (

@@ -1,8 +1,8 @@
 // import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import React, { useContext } from 'react';
 
-// import { logInUser } from '@/app/api';
-// import { useGetForm } from '@/app/api';
+import { logInUser, useGetForm } from '@/app/api';
+
 // import { useAppSelector } from '@/app/store/hooks';
 // import { AuthContext } from '@/app/store/providers/AuthContext';
 // import { addField } from '@/app/store/reducers/FormFieldsSlice';
@@ -16,9 +16,10 @@ import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInEmail: React.FC = () => {
-  // const form = useGetForm({
-  //   marker: 'reg',
-  // });
+  const form = useGetForm({
+    marker: 'sign_in',
+  });
+  console.log(form);
 
   return (
     <form className="flex min-h-full flex-col gap-4 text-xl leading-5">

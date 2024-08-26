@@ -1,6 +1,7 @@
 import React from 'react';
 
-// import { logInUser } from '@/app/api';
+import { logInUser, useGetForm } from '@/app/api';
+
 import { socialProvidersButtons } from '../data';
 import { signInPhoneFormFields } from '../data';
 import CreateAccountButton from './inputs/CreateAccountButton';
@@ -11,6 +12,10 @@ import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInPhone: React.FC = () => {
+  const form = useGetForm({
+    marker: 'sign_in',
+  });
+  console.log(form);
   return (
     <form
       name="signin-form"
