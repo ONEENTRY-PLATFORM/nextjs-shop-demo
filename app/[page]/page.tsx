@@ -53,7 +53,7 @@ const pages = [
   {
     templateType: '',
     name: 'services',
-    title: 'About us',
+    title: 'Services',
     component: <ServicesPage />,
   },
 ];

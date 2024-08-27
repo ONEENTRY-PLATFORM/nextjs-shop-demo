@@ -19,8 +19,8 @@ const SignInEmail: React.FC = () => {
   // });
   // console.log(form);
   const { authenticate } = useContext(AuthContext);
-  const { isAuth, isLoading } = useContext(AuthContext);
-  console.log(isAuth);
+  // const { isAuth, isLoading } = useContext(AuthContext);
+  // console.log(isAuth);
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,

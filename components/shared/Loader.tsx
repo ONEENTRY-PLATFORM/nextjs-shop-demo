@@ -7,7 +7,7 @@ interface LoaderProps {
 const Loader: React.FC<LoaderProps> = ({ data = {} }) => {
   return (
     <div className="relative aspect-square size-full max-h-[550px] overflow-hidden">
-      {/* content goes here */}
+      ...Loading
     </div>
   );
 };

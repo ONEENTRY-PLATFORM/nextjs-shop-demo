@@ -14,23 +14,25 @@ const OrdersPage = () => {
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>
         <table className="w-full">
-          {data?.map((order, i) => {
-            const {
-              createdDate,
-              currency,
-              paymentAccountLocalizeInfos,
-              products,
-              statusIdentifier,
-              totalSum,
-            } = order;
-            return (
-              <tr key={i}>
-                <td>{createdDate}</td>
-                <td>{currency}</td>
-                <td>{totalSum}</td>
-              </tr>
-            );
-          })}
+          <tbody>
+            {data?.map((order, i) => {
+              const {
+                createdDate,
+                currency,
+                // paymentAccountLocalizeInfos,
+                // products,
+                // statusIdentifier,
+                totalSum,
+              } = order;
+              return (
+                <tr key={i}>
+                  <td>{createdDate}</td>
+                  <td>{currency}</td>
+                  <td>{totalSum}</td>
+                </tr>
+              );
+            })}
+          </tbody>
         </table>
       </Suspense>
     </div>
