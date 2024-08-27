@@ -1,5 +1,5 @@
 // import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import { logInUser, useGetForm } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
