@@ -67,7 +67,7 @@ const CatalogCard: React.FC<CatalogCardProps> = async ({ cardData, index }) => {
         )}
 
         <h2 className="z-10 mt-auto uppercase">{title?.value || ''}</h2>
-        {quote}
+        {quote && <p className="z-10 ml-auto mt-auto w-60">{quote}</p>}
         {imageSrc && (
           <Image
             fill

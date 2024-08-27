@@ -233,6 +233,9 @@ export async function getBlockByMarker({
   langCode: string;
 }) {
   try {
+    // const _cookies = cookies();
+    // console.log(_cookies);
+
     const block = await api.Blocks.getBlockByMarker(marker, langCode);
     return { isError: false, block: block };
   } catch (e) {
