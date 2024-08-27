@@ -91,9 +91,7 @@ const SignUpForm: React.FC = () => {
       </div>
       <div className="relative mb-auto box-border flex shrink-0 flex-col gap-4">
         {signUpFormFields.map((field, index) => (
-          <div key={index}>
-            <FormInput {...field} />
-          </div>
+          <FormInput key={index} {...field} />
         ))}
       </div>
       <SubmitButton title="SIGN UP" class="" icon="" />

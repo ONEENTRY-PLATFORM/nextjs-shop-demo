@@ -12,10 +12,11 @@ import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInPhone: React.FC = () => {
-  const form = useGetForm({
-    marker: 'sign_in',
-  });
-  console.log(form);
+  // const form = useGetForm({
+  //   marker: 'sign_in',
+  // });
+  // console.log(form);
+
   return (
     <form
       name="signin-form"
@@ -33,11 +34,7 @@ const SignInPhone: React.FC = () => {
 
       <div className="relative mb-32 box-border flex shrink-0 flex-col gap-4">
         {signInPhoneFormFields.map((field, index) => {
-          return (
-            <div key={index}>
-              <FormInput {...field} />
-            </div>
-          );
+          return <FormInput key={index} {...field} />;
         })}
       </div>
 

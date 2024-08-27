@@ -11,9 +11,9 @@ interface FormSubmitButtonProps {
 }
 
 const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({ title }) => {
-  const { authenticate } = useContext(AuthContext);
-  const fields = useAppSelector((state) => state.formFieldsReducer.fields);
-  console.log(fields);
+  // const { authenticate } = useContext(AuthContext);
+  // const fields = useAppSelector((state) => state.formFieldsReducer.fields);
+  // console.log(fields);
 
   const useForm = (e: { preventDefault: () => void }) => {
     e.preventDefault();

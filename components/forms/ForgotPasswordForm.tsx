@@ -20,11 +20,7 @@ export const ForgotPasswordForm: React.FC = () => {
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
         {forgotPasswordFormFields.map((field, index) => {
-          return (
-            <div key={index}>
-              <FormInput {...field} />
-            </div>
-          );
+          return <FormInput key={index} {...field} />;
         })}
       </div>
 

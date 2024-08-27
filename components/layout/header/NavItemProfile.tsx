@@ -3,17 +3,20 @@
 import Link from 'next/link';
 import { useContext } from 'react';
 
+import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import ProfileIcon from '@/components/icons/profile';
 
 const NavItemProfile: React.FC = () => {
   const { open, setOpen, setComponent } = useContext(OpenDrawerContext);
+  const { isAuth } = useContext(AuthContext);
+
   const item = {
     href: '/profile',
     title: 'user',
   };
 
-  return !open ? (
+  return !isAuth ? (
     <button
       onClick={() => {
         setOpen(!open);

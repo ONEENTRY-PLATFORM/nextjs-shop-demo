@@ -19,33 +19,34 @@ const FormInput: React.FC<FormInputProps> = (field) => {
   const dispatch = useAppDispatch();
   const validate = true;
 
-  // useEffect(() => {
-  //   dispatch(
-  //     addField({
-  //       [field.marker]: {
-  //         valid: validate,
-  //         value: value,
-  //       },
-  //     }),
-  //   );
-  //   console.log(value);
-  // }, [value, validate]);
+  useEffect(() => {
+    dispatch(
+      addField({
+        [field.marker]: {
+          valid: validate,
+          value: value,
+        },
+      }),
+    );
+  }, [value, validate]);
 
   if (!field) {
     return;
   }
 
-  // console.log(field);
+  const { fieldType, marker, placeholder, required } = field;
+
   return (
     <div className="relative box-border flex shrink-0 flex-col">
       <label className="text-base text-gray-400">{localizeInfos?.title}</label>
       <input
-        type={field.fieldType}
-        id={field.marker}
-        placeholder={field.placeholder}
+        type={fieldType}
+        id={marker}
+        placeholder={placeholder}
         className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
-        required={field.required}
+        required={required}
         onChange={(val) => setValue(val.currentTarget.value)}
+        autoComplete={fieldType === 'password' ? 'password' : ''}
       />
     </div>
   );

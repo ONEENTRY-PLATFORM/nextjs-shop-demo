@@ -7,14 +7,12 @@ type FieldType = {
 };
 
 type InitialStateType = {
-  form: string;
   fields: {
     [key: string]: FieldType;
   };
 };
 
 const initialState: InitialStateType = {
-  form: '',
   fields: {},
 };
 

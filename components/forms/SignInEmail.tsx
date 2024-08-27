@@ -1,28 +1,68 @@
 // import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { logInUser, useGetForm } from '@/app/api';
+import { useAppSelector } from '@/app/store/hooks';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 
 // import { useAppSelector } from '@/app/store/hooks';
-// import { AuthContext } from '@/app/store/providers/AuthContext';
-// import { addField } from '@/app/store/reducers/FormFieldsSlice';
-import { signInFormFields } from '../data';
-import { socialProvidersButtons } from '../data';
+import { signInFormFields, socialProvidersButtons } from '../data';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import ForgotPasswordButton from './inputs/ForgotPasswordButton';
 import FormInput from './inputs/FormInput';
-import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInEmail: React.FC = () => {
-  const form = useGetForm({
-    marker: 'sign_in',
-  });
-  console.log(form);
+  // const form = useGetForm({
+  //   marker: 'sign_in',
+  // });
+  // console.log(form);
+  const { authenticate } = useContext(AuthContext);
+  const { isAuth, isLoading } = useContext(AuthContext);
+  console.log(isAuth);
+
+  const fields = useAppSelector(
+    (state) => state.formFieldsReducer.fields,
+  ) as unknown as {
+    email_reg: {
+      value: string;
+    };
+    password: {
+      value: string;
+    };
+  };
+
+  if (!fields) {
+    return;
+  }
+
+  const onSignIn = async (e: unknown) => {
+    e.preventDefault();
+    const login = 'kvasssukr.net@gmail.com';
+    const password = '3hdjxjcjfj1';
+    // const password = fields.password?.value;
+
+    try {
+      const result = await logInUser({
+        method: 'email',
+        login: login,
+        password: password,
+      });
+      if (result.error) {
+        throw new Error(result?.error);
+      }
+      authenticate();
+    } catch (e: unknown) {
+      console.log(e);
+    }
+  };
 
   return (
-    <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
+    <form
+      className="flex min-h-full flex-col gap-4 text-xl leading-5"
+      onSubmit={(e) => onSignIn(e)}
+    >
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">
         <h2 className="max-w-full text-xl font-bold text-neutral-600">
           Sign in
@@ -30,24 +70,25 @@ const SignInEmail: React.FC = () => {
         <p className="max-w-full text-xs text-gray-400">E-mail/Phone</p>
       </div>
 
-      <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
+      <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
         {signInFormFields.map((field, index) => {
-          return (
-            <div key={index}>
-              <FormInput {...field} />
-            </div>
-          );
+          return <FormInput key={index} {...field} />;
         })}
       </div>
 
-      <FormSubmitButton title="SIGN IN" class="" icon="" />
+      <button
+        type="submit"
+        className="mt-auto flex w-[282px] max-w-full items-center justify-center self-center rounded-[30px] border border-none border-[black] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
+      >
+        Sign in
+      </button>
 
       <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm max-md:mt-10">
         <ForgotPasswordButton title="Forgot Password?" />
         <ResetPasswordButton title="Reset password" />
       </div>
 
-      <p className="mx-auto mb-5 text-base font-bold leading-8 text-neutral-600">
+      <p className="mx-auto mb-3 text-base font-bold leading-8 text-neutral-600">
         Sign in with
       </p>
 
