@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import OrdersPage from '@/components/layout/pages/OrdersPage';
+import OrdersPage from '@/components/layout/orders/OrdersPage';
 import Loader from '@/components/shared/Loader';
 
 import WithSidebar from '../[page]/WithSidebar';

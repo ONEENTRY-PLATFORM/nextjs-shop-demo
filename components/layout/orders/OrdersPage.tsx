@@ -5,6 +5,7 @@ import { Suspense } from 'react';
 
 import { useGetUserOrdersQuery } from '@/app/api';
 import Loader from '@/components/shared/Loader';
+import { UsePrice } from '@/components/utils';
 
 const OrdersPage = () => {
   const { data, isLoading, refetch } = useGetUserOrdersQuery({
@@ -25,11 +26,14 @@ const OrdersPage = () => {
               // statusIdentifier,
               totalSum,
             } = order;
+            const formattedPrice = UsePrice({
+              amount: totalSum,
+              currency: currency,
+            });
             return (
-              <Link href={'/orders/' + id} key={i}>
+              <Link href={'/orders/' + id} key={i} className="flex gap-4">
                 <div>{createdDate}</div>
-                <div>{currency}</div>
-                <div>{totalSum}</div>
+                <div>{formattedPrice}</div>
               </Link>
             );
           })}
