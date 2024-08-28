@@ -7,6 +7,7 @@ export {
   useGetFormByMarkerQuery,
   useGetOrderStorageByMarkerQuery,
   useGetPaymentSessionByIdQuery,
+  useGetSingleOrderQuery,
   useGetUserOrdersQuery,
   useLazyGetFormByMarkerQuery,
   useLazyGetMeQuery,
@@ -17,8 +18,6 @@ export { useSetPaymentSession } from './hooks/setPaymentSession';
 // export { useGetMenu } from './hooks/trash/useGetMenu';
 // export { useGetPage } from './hooks/trash/useGetPage';
 // export { useGetPages } from './hooks/trash/useGetPages';
-// export { useGetProduct } from './hooks/trash/useGetProduct';
-// export { useGetProducts } from './hooks/trash/useGetProducts';
 // export { useGetRelatedProducts } from './hooks/trash/useGetRelatedProducts';
 export { useGetAttributesByMarker } from './hooks/useGetAttributesByMarker';
 export { useGetBlockByMarker } from './hooks/useGetBlockByMarker';

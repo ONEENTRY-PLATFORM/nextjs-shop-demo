@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import WithSidebar from '@/app/[page]/WithSidebar';
-// import { useGetUserOrdersQuery } from '@/app/api';
+import { useGetSingleOrderQuery } from '@/app/api';
 // import { useAppSelector } from '@/app/store/hooks';
 import Loader from '@/components/shared/Loader';
 
@@ -10,6 +10,11 @@ export default async function CatalogPage({
 }: {
   params: { handle: string };
 }) {
+  // const { data, isLoading, refetch } = useGetSingleOrderQuery({
+  //   marker: params.handle,
+  // });
+  // console.log(data);
+
   // const {
   //   order_info_amount,
   //   order_info_status,

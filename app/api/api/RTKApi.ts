@@ -103,11 +103,12 @@ export const RTKApi = createApi({
         }
       },
     }),
-    getSingleOrder: build.query<undefined, { id: string }>({
+    getSingleOrder: build.query<IOrdersByMarkersEntity, { marker: string }>({
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      queryFn: async ({ id }) => {
+      queryFn: async ({ marker }) => {
         try {
-          return { data: undefined };
+          const result = await api.Orders.getOrderByMarker(marker);
+          return { data: result };
         } catch (e: any) {
           return { error: e.message };
         }
@@ -127,4 +128,5 @@ export const {
   useLazyGetPaymentSessionByIdQuery,
   useGetOrderStorageByMarkerQuery,
   useGetUserOrdersQuery,
+  useGetSingleOrderQuery,
 } = RTKApi;
