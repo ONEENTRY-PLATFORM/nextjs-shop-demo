@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Suspense } from 'react';
 
 import { useGetUserOrdersQuery } from '@/app/api';
@@ -13,27 +14,26 @@ const OrdersPage = () => {
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>
-        <table className="w-full">
-          <tbody>
-            {data?.map((order, i) => {
-              const {
-                createdDate,
-                currency,
-                // paymentAccountLocalizeInfos,
-                // products,
-                // statusIdentifier,
-                totalSum,
-              } = order;
-              return (
-                <tr key={i}>
-                  <td>{createdDate}</td>
-                  <td>{currency}</td>
-                  <td>{totalSum}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <div className="w-full">
+          {data?.map((order, i) => {
+            const {
+              id,
+              createdDate,
+              currency,
+              // paymentAccountLocalizeInfos,
+              // products,
+              // statusIdentifier,
+              totalSum,
+            } = order;
+            return (
+              <Link href={'/orders/' + id} key={i}>
+                <div>{createdDate}</div>
+                <div>{currency}</div>
+                <div>{totalSum}</div>
+              </Link>
+            );
+          })}
+        </div>
       </Suspense>
     </div>
   );

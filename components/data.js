@@ -130,6 +130,49 @@ export const signInFormFields = [
   },
 ];
 
+export const userFormFields = [
+  {
+    fieldType: 'text',
+    isVisible: true,
+    localizeInfos: {
+      title: 'First name',
+    },
+    placeholder: 'ONE',
+    marker: 'user_name',
+    required: true,
+  },
+  {
+    fieldType: 'text',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Surname',
+    },
+    placeholder: 'ONE',
+    marker: 'user_surname',
+    required: true,
+  },
+  {
+    fieldType: 'email',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Enter your email',
+    },
+    placeholder: 'info@example.com',
+    marker: 'email',
+    required: true,
+  },
+  {
+    fieldType: 'tel',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Phone number',
+    },
+    placeholder: '+91 (',
+    marker: 'phone',
+    required: true,
+  },
+];
+
 export const signInPhoneFormFields = [
   {
     fieldType: 'tel',

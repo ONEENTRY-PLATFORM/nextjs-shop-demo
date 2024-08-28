@@ -19,10 +19,8 @@ export const RTKApi = createApi({
   reducerPath: 'api',
   baseQuery: fakeBaseQuery(),
   endpoints: (build) => ({
-    getBlocksByPageUrl: build.query<
-      IPositionBlock[],
-      { pageUrl: string; activeLang: string }
-    >({
+    // eslint-disable-next-line prettier/prettier
+    getBlocksByPageUrl: build.query<IPositionBlock[], { pageUrl: string; activeLang: string }>({
       queryFn: async ({ pageUrl, activeLang }) => {
         try {
           const result = await api.Pages.getBlocksByPageUrl(

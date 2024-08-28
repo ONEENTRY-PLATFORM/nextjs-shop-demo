@@ -20,12 +20,12 @@ const pages = [
     title: 'profile',
     component: <ProfilePage />,
   },
-  {
-    templateType: 'withSidebar',
-    name: 'orders',
-    title: 'orders',
-    component: <OrdersPage />,
-  },
+  // {
+  //   templateType: 'withSidebar',
+  //   name: 'orders',
+  //   title: 'orders',
+  //   component: <OrdersPage />,
+  // },
   {
     templateType: 'withSidebar',
     name: 'cart',
