@@ -8,14 +8,14 @@ import SearchIcon from '@/components/icons/search';
 
 const SearchInput: React.FC = () => {
   const dispatch = useAppDispatch();
-
   const searchPlaceholder = useAppSelector(
     (state) => state.systemContentReducer.content.search_placeholder,
   );
+
   const searchValue = useAppSelector((state) => state.filterReducer.search);
 
   return (
-    <>
+    <form className="flex w-full">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
@@ -35,7 +35,7 @@ const SearchInput: React.FC = () => {
         <span className="sr-only">search</span>
         <SearchIcon />
       </button>
-    </>
+    </form>
   );
 };
 

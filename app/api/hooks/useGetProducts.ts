@@ -45,7 +45,7 @@ export const useGetProducts = ({
 
           // If availability is true, add the new filter object
           if (availability) {
-            expandedFilters.push({ statusMarker: 'in_stock' });
+            // expandedFilters.push({ statusMarker: 'in_stock' });
           }
 
           const res = await api.Products.getProductsByPageUrl(
