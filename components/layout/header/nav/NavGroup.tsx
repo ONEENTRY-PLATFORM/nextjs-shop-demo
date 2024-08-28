@@ -1,10 +1,9 @@
-// import { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { Key } from 'react';
 
 import { getMenuByMarker } from '@/app/api/serverSideProps';
 
+import NavItemFavorites from '../NavItemFavorites';
 import NavItemCart from './NavItemCart';
-import NavItemFavorites from './NavItemFavorites';
 import NavItemProfile from './NavItemProfile';
 
 export default async function NavGroup() {
