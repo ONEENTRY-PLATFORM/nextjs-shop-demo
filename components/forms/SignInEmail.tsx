@@ -1,9 +1,10 @@
 // import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { logInUser, useGetForm } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 // import { useAppSelector } from '@/app/store/hooks';
 import { signInFormFields, socialProvidersButtons } from '../data';
@@ -15,13 +16,13 @@ import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInEmail: React.FC = () => {
+  const { authenticate } = useContext(AuthContext);
+  const { isAuth, isLoading } = useContext(AuthContext);
+  const { setOpen } = useContext(OpenDrawerContext);
   // const form = useGetForm({
   //   marker: 'sign_in',
   // });
   // console.log(form);
-  const { authenticate } = useContext(AuthContext);
-  const { isAuth, isLoading } = useContext(AuthContext);
-  console.log(isAuth);
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -29,7 +30,7 @@ const SignInEmail: React.FC = () => {
     email_reg: {
       value: string;
     };
-    password: {
+    password_reg: {
       value: string;
     };
   };
@@ -44,9 +45,10 @@ const SignInEmail: React.FC = () => {
 
   const onSignIn = async (e: unknown) => {
     e.preventDefault();
-    const login = 'kvasssukr.net@gmail.com';
-    const password = '3hdjxjcjfj1';
-    // const password = fields.password?.value;
+    // const login = 'kvasssukr.net@gmail.com';
+    // const password = '3hdjxjcjfj1';
+    const login = fields.email_reg?.value;
+    const password = fields.password_reg?.value;
 
     try {
       const result = await logInUser({
@@ -57,6 +59,7 @@ const SignInEmail: React.FC = () => {
       if (result.error) {
         throw new Error(result?.error);
       }
+      setOpen(!isAuth);
       authenticate();
     } catch (e: unknown) {
       console.log(e);
@@ -106,7 +109,7 @@ const SignInEmail: React.FC = () => {
           />
         ))}
       </div>
-
+      <Loader />
       <CreateAccountButton title="Create account" icon={''} class={''} />
     </form>
   );

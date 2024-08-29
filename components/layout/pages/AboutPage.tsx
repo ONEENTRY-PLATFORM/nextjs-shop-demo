@@ -38,47 +38,44 @@ const AboutPage = () => {
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>
-        <div className="w-[1240px] max-w-full px-1">
-          <div className="flex gap-5 max-md:flex-col">
-            <aside className="relative flex w-[18%] flex-col items-start max-md:ml-0 max-md:w-full">
-              <Image
-                fill
-                sizes="(min-width: 600px) 66vw, 100vw"
-                loading="lazy"
-                src="/images/about-image.svg"
-                className="aspect-[0.57] w-[201px] max-w-full shrink-0 max-md:mt-10"
-                alt="OneEntry HeadlessCMS illustration"
-              />
-            </aside>
-            <article className="ml-5 flex w-[82%] flex-col max-md:ml-0 max-md:w-full">
-              <section className="text-sm leading-5 text-neutral-600 underline max-md:mt-10 max-md:max-w-full">
-                <p className="text-xl font-bold leading-8 text-neutral-600">
-                  The developers` and CMS users` vast, unique experience became
-                  the basis of OneEntry HeadlessCMS. We know what the users
-                  want, so we took into account the needs of business owners,
-                  users and developers to create our product. All the tools
-                  we`ve developed are aimed to improve the processes of project
-                  management.
-                </p>
-                {features.map((feature, index) => (
-                  <div key={index}>
-                    <h2 className="text-xl font-bold underline">
-                      {feature.title}
-                    </h2>
-                    <p>{feature.description}</p>
-                  </div>
+        <div className="flex w-full gap-5 max-md:flex-col">
+          <aside className="relative flex w-[18%] flex-col items-start max-md:ml-0 max-md:w-full">
+            <Image
+              fill
+              sizes="(min-width: 600px) 66vw, 100vw"
+              loading="lazy"
+              src="/images/about-image.svg"
+              className="aspect-[0.57] w-[201px] max-w-full shrink-0 max-md:mt-10"
+              alt="OneEntry HeadlessCMS illustration"
+            />
+          </aside>
+          <article className="ml-5 flex w-[82%] flex-col max-md:ml-0 max-md:w-full">
+            <section className="text-sm leading-5 text-neutral-600 underline max-md:mt-10 max-md:max-w-full">
+              <p className="text-xl font-bold leading-8 text-neutral-600">
+                The developers` and CMS users` vast, unique experience became
+                the basis of OneEntry HeadlessCMS. We know what the users want,
+                so we took into account the needs of business owners, users and
+                developers to create our product. All the tools we`ve developed
+                are aimed to improve the processes of project management.
+              </p>
+              {features.map((feature, index) => (
+                <div key={index}>
+                  <h2 className="text-xl font-bold underline">
+                    {feature.title}
+                  </h2>
+                  <p>{feature.description}</p>
+                </div>
+              ))}
+              <h2 className="text-xl font-bold underline">
+                OneEntry functionality is unlimited
+              </h2>
+              <ul>
+                {listItems.map((item, index) => (
+                  <li key={index}>{item}</li>
                 ))}
-                <h2 className="text-xl font-bold underline">
-                  OneEntry functionality is unlimited
-                </h2>
-                <ul>
-                  {listItems.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </section>
-            </article>
-          </div>
+              </ul>
+            </section>
+          </article>
         </div>
       </Suspense>
     </div>
