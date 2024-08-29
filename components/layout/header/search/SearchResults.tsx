@@ -1,0 +1,50 @@
+'use client';
+
+import Link from 'next/link';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
+import React from 'react';
+
+interface SearchResultsProps {
+  products: IProductsEntity[];
+  state: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  setState: Function;
+}
+
+const SearchResults: FC<SearchResultsProps> = ({
+  products,
+  state,
+  setState,
+}) => {
+  return state ? (
+    <div className="absolute left-0 top-full z-30 mt-px flex w-full flex-col gap-1 rounded-2xl bg-white p-5 shadow-lg">
+      <button
+        className="absolute right-3 top-3 size-4"
+        onClick={() => setState(false)}
+      >
+        &#10005;
+      </button>
+      {products.map((product: IProductsEntity, i: React.Key) => {
+        const { id, localizeInfos, attributeSetIdentifier } = product;
+
+        if (attributeSetIdentifier === 'service_product') {
+          return;
+        }
+        return (
+          <div key={i} className="flex w-full">
+            <Link
+              href={'/product/' + id}
+              onClick={() => setState(false)}
+              className="flex w-full py-2 hover:text-red-500"
+            >
+              {localizeInfos.title}
+            </Link>
+          </div>
+        );
+      })}
+    </div>
+  ) : null;
+};
+
+export default SearchResults;
