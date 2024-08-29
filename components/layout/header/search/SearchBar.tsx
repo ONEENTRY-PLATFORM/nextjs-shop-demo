@@ -1,12 +1,9 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-// import { useSearchProducts } from '@/app/api/hooks/useSearchProducts';
-// import { useDebouncedCallback } from 'use-debounce';
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-// import { setSearchValue } from '@/app/store/reducers/FilterSlice';
+import { useAppSelector } from '@/app/store/hooks';
 import SearchIcon from '@/components/icons/search';
 
 import SearchResults from './SearchResults';
@@ -15,18 +12,8 @@ const SearchBar: React.FC = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  // const dispatch = useAppDispatch();
   const router = useRouter();
-  // const searchValue = useAppSelector((state) => state.filterReducer.search);
   const [state, setState] = useState(false);
-
-  // useEffect(() => {
-  //   if (searchValue && searchValue.length > 2) {
-  //     setState(true);
-  //   } else {
-  //     setState(false);
-  //   }
-  // }, [searchValue]);
 
   const searchPlaceholder = useAppSelector(
     (state) => state.systemContentReducer.content.search_placeholder,
@@ -37,8 +24,10 @@ const SearchBar: React.FC = () => {
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set('search', term);
+      setState(true);
     } else {
       params.delete('search');
+      setState(false);
     }
     replace(`${pathname}?${params.toString()}`);
   };

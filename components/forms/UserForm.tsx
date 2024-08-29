@@ -5,12 +5,12 @@ import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInt
 import React, { useContext } from 'react';
 
 import { api, useGetForm } from '@/app/api';
-import { useAppSelector } from '@/app/store/hooks';
+// import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
 // import { useAppSelector } from '@/app/store/hooks';
 import { userFormFields } from '../data';
-import Loader from '../shared/Loader';
+// import Loader from '../shared/Loader';
 import FormInput from './inputs/FormInput';
 
 export type InputValue = {
@@ -35,7 +35,7 @@ const UserForm: React.FC = () => {
 
   const { refreshUser, user } = useContext(AuthContext);
 
-  const onUpdateUserData = async (e: unknown) => {
+  const onUpdateUserData = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       const formData: IAuthFormData[] = [];
 

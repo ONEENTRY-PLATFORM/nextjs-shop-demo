@@ -19,14 +19,35 @@ const SignInEmail: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
   const { isAuth, isLoading } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
-  // const form = useGetForm({
-  //   marker: 'sign_in',
-  // });
-  // console.log(form);
+  const form = useGetForm({
+    marker: 'sign_in',
+  });
+  console.log(form);
+
+  // form
+  //   localizeInfos
+  //     titleForSite
+  //     successMessage
+  //     unsuccessMessage
+
+  //   attributes
+  //     isVisible
+  //     marker
+  //     localizeInfos.title
+  //     type
+  //     validators
+
+  //   initialFormData
+  //     name_reg: {
+  //       "value": "",
+  //       "valid": false,
+  //       "required": true
+  //     }
+  //     password_reg: ...
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
-  ) as unknown as {
+  ) as object as {
     email_reg: {
       value: string;
     };
@@ -43,7 +64,7 @@ const SignInEmail: React.FC = () => {
     return <Loader />;
   }
 
-  const onSignIn = async (e: unknown) => {
+  const onSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // const login = 'kvasssukr.net@gmail.com';
     // const password = '3hdjxjcjfj1';

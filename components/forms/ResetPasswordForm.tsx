@@ -5,11 +5,12 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const ResetPasswordForm: React.FC = () => {
+  const onResetSubmit = () => {};
   return (
     <form
       name="resetPasswordForm"
       className="flex min-h-full flex-col gap-4 text-xl leading-5"
-      method="POST"
+      onSubmit={onResetSubmit}
     >
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">
         <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">

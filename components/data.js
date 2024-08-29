@@ -271,20 +271,6 @@ export const paymentFormFields = [
   },
 ];
 
-export const deliveryTableData = [
-  {
-    label: 'Date',
-    value: '09.10.2023',
-    icon: '/icons/calendar.svg',
-  },
-  {
-    label: 'Time',
-    value: '19:00',
-    icon: '/icons/time.svg',
-  },
-  { label: 'Address', value: 'Dubai, One Entry street, 50' },
-];
-
 export const socialProvidersButtons = [
   {
     src: '/icons/google.svg',

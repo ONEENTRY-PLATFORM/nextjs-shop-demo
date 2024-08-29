@@ -17,9 +17,9 @@ const PaymentForm: React.FC = () => {
         className="mb-12 aspect-[1.61] w-full max-w-[375px] self-center max-md:mt-10"
       />
       <div className="relative mb-16 box-border flex shrink-0 flex-col gap-5">
-        {paymentFormFields.map((field, i) => {
+        {paymentFormFields.map((field) => {
           if (field.fieldType !== 'group') {
-            return <FormInput key={i} {...field} />;
+            return <FormInput key={field.marker} {...field} />;
           } else {
             return (
               <div

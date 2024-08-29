@@ -15,7 +15,7 @@ interface FormInputProps {
 
 const FormInput: React.FC<FormInputProps> = (field) => {
   const { localizeInfos } = field;
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string>('');
   const dispatch = useAppDispatch();
   const validate = true;
 
@@ -28,6 +28,7 @@ const FormInput: React.FC<FormInputProps> = (field) => {
         },
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, validate]);
 
   if (!field) {

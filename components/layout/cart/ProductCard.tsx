@@ -9,7 +9,7 @@ import QuantitySelector from '../product/components/QuantitySelector';
 import DeleteButton from './DeleteButton';
 
 const ProductCard: React.FC<{
-  product: IProductsEntity;
+  product: IProductsEntity & { selected: boolean };
 }> = ({ product }) => {
   const dispatch = useAppDispatch();
 
@@ -17,7 +17,8 @@ const ProductCard: React.FC<{
     return;
   }
 
-  const { id, attributeValues, price, localizeInfos } = product;
+  const { id, attributeValues, price, localizeInfos, selected } = product;
+  console.log(product);
 
   const formattedPrice = UsePrice({
     amount: price,
@@ -35,13 +36,14 @@ const ProductCard: React.FC<{
             type="checkbox"
             name={'deselectProduct-' + id}
             id=""
-            checked
+            checked={selected}
           />
         </div>
 
         <div className="relative h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-300">
           <Image
-            fill
+            width={130}
+            height={150}
             loading="lazy"
             src={attributeValues.pic?.value.downloadLink}
             alt={localizeInfos?.title}

@@ -4,6 +4,9 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 import OTPInputs from './inputs/OTPInputs';
 
 const VerificationForm: React.FC = () => {
+  const resend = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    console.log(e);
+  };
   return (
     <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
       <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
@@ -20,7 +23,11 @@ const VerificationForm: React.FC = () => {
 
         <div className="-mt-px self-end text-xs text-orange-500 max-md:mr-2.5">
           <span className="text-gray-400">Did not receive the OTP? </span>
-          <button className="font-bold text-orange-500" type="button">
+          <button
+            className="font-bold text-orange-500"
+            type="button"
+            onClick={(e) => resend(e)}
+          >
             RESEND
           </button>
         </div>

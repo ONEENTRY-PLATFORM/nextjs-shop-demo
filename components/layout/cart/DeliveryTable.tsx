@@ -1,22 +1,29 @@
 import Image from 'next/image';
 import React from 'react';
 
-import { deliveryTableData } from '@/components/data';
-
 import TableRow from './DeliveryTableRow';
 
 const DeliveryTable: React.FC = () => {
   return (
     <table className="table w-full border border-solid border-neutral-100 text-neutral-600">
       <tbody>
-        {deliveryTableData.map((row, index) => (
-          <TableRow
-            key={index}
-            label={row.label}
-            value={row.value}
-            icon={row.icon}
-          />
-        ))}
+        <TableRow
+          label={'Date'}
+          value={'09.10.2023'}
+          icon={'/icons/calendar.svg'}
+          placeholder={'Select date'}
+        />
+        <TableRow
+          label={'Time'}
+          value={'19.00'}
+          icon={'/icons/time.svg'}
+          placeholder={'Select time'}
+        />
+        <TableRow
+          label={'Address'}
+          value={'Dubai, One Entry street, 50'}
+          placeholder={'Address'}
+        />
         <tr className="table-row h-[50px] gap-5 border border-solid border-neutral-100 max-md:max-w-full max-md:flex-wrap">
           <td className="table-cell align-middle">
             <Image
