@@ -18,6 +18,9 @@ const ProductsGridLayout: React.FC<GridLayoutProps> = ({ gridItems }) => {
             return <ProductCard key={product.id} {...product} />;
           })}
         </div>
+        <div className="mt-5 flex w-full justify-center">
+          {/* <Pagination totalPages={totalPages} /> */}
+        </div>
       </section>
     </div>
   );

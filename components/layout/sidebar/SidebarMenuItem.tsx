@@ -7,7 +7,7 @@ const SidebarMenuItem: React.FC<{ menuItem: IMenusPages }> = ({ menuItem }) => {
   if (!menuItem) {
     return;
   }
-  console.log(menuItem);
+  // add icons from page object
 
   const { pageUrl, localizeInfos } = menuItem;
 

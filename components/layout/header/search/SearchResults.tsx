@@ -5,18 +5,26 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 import React from 'react';
 
+import { useSearchProducts } from '@/app/api/hooks/useSearchProducts';
+
 interface SearchResultsProps {
-  products: IProductsEntity[];
+  searchValue: string | undefined;
   state: boolean;
   // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   setState: Function;
 }
 
 const SearchResults: FC<SearchResultsProps> = ({
-  products,
+  searchValue,
   state,
   setState,
 }) => {
+  const data = useSearchProducts({
+    name: searchValue || '',
+  });
+
+  const { products } = data;
+
   return state ? (
     <div className="absolute left-0 top-full z-30 mt-px flex w-full flex-col gap-1 rounded-2xl bg-white p-5 shadow-lg">
       <button
