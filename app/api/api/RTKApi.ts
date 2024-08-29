@@ -103,12 +103,10 @@ export const RTKApi = createApi({
         }
       },
     }),
-    getSingleOrder: build.query<IOrdersByMarkersEntity, { marker: string }>({
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      queryFn: async ({ marker }) => {
+    getSingleOrder: build.query<undefined, { id: string }>({
+      queryFn: async ({ id }) => {
         try {
-          const result = await api.Orders.getOrderByMarker(marker);
-          return { data: result };
+          return { data: undefined };
         } catch (e: any) {
           return { error: e.message };
         }
