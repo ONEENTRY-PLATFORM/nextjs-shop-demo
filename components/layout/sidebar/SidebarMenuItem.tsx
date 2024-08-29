@@ -1,21 +1,16 @@
 import Link from 'next/link';
+import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
 import * as icons from '../../icons';
 
-interface SidebarMenuItemProps {
-  icon: string;
-  localizeInfos: {
-    menuTitle: string;
-  };
-  isActive?: boolean;
-  pageUrl: string;
-}
-
-const SidebarMenuItem: React.FC<SidebarMenuItemProps> = (menuItem) => {
+const SidebarMenuItem: React.FC<{ menuItem: IMenusPages }> = ({ menuItem }) => {
   if (!menuItem) {
     return;
   }
-  const { localizeInfos, pageUrl } = menuItem;
+  console.log(menuItem);
+
+  const { pageUrl, localizeInfos } = menuItem;
+
   const Icon = icons[pageUrl];
 
   return (

@@ -4,6 +4,9 @@ import { getMenuByMarker } from '@/app/api/serverSideProps';
 
 import SidebarMenuItem from './SidebarMenuItem';
 
+export const revalidate = 10;
+export const dynamicParams = true;
+
 export default async function SidebarMenu() {
   // side_web
   const { menu, isError } = await getMenuByMarker({
@@ -20,9 +23,7 @@ export default async function SidebarMenu() {
     <nav>
       <ul className="flex max-w-[165px] flex-col gap-5 text-base text-neutral-600">
         {pages.map((item) => (
-          <span key={item.id}>
-            <SidebarMenuItem icon={''} {...item} />
-          </span>
+          <SidebarMenuItem key={item.id} menuItem={item} />
         ))}
       </ul>
     </nav>

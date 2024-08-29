@@ -25,7 +25,10 @@ const Order = ({ order }: { order: IOrdersByMarkersEntity }) => {
   });
 
   return (
-    <Link href={'/orders/' + id} className="flex gap-4">
+    <Link
+      href={'/orders/' + id}
+      className="-mb-px flex border-collapse gap-4 border-y p-4"
+    >
       <div>{createdDate}</div>
       <div>{formattedPrice}</div>
     </Link>
