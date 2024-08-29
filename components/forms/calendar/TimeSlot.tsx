@@ -1,17 +1,18 @@
 import React from 'react';
 
 interface TimeSlotProps {
-  time: string;
-  isSelected?: boolean;
-  isDisabled?: boolean;
+  slot: {
+    time: string;
+    isSelected?: boolean;
+    isDisabled?: boolean;
+  };
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  setTime: Function;
 }
 
-const TimeSlot: React.FC<TimeSlotProps> = ({
-  time,
-  isSelected,
-  isDisabled,
-}) => {
+const TimeSlot: React.FC<TimeSlotProps> = ({ slot, setTime }) => {
   let className = 'px-3.5 py-2 rounded-3xl border-2 text-center ';
+  const { isSelected, isDisabled, time } = slot;
   if (isSelected) {
     className += 'text-white bg-orange-500 border-orange-500';
   } else if (isDisabled) {
@@ -21,7 +22,7 @@ const TimeSlot: React.FC<TimeSlotProps> = ({
   }
 
   return (
-    <button className={className}>
+    <button className={className} onClick={setTime(time)}>
       <time>{time}</time>
     </button>
   );
