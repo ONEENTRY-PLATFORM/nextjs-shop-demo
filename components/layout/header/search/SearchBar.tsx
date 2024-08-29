@@ -35,12 +35,16 @@ const SearchBar: React.FC = () => {
     <div className="relative my-auto ml-24 flex h-[60px] w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-gray-400 bg-white px-7 max-md:ml-0 max-md:h-[50px] max-md:max-w-full max-md:px-5 max-sm:h-[40px] max-sm:gap-0 max-sm:px-4 max-sm:pr-1">
       <SearchInput />
       {state ? (
-        <div className="absolute left-0 top-full z-30 flex min-h-36 w-full flex-col rounded-lg bg-white p-5">
+        <div className="absolute left-0 top-full z-30 mt-px flex w-full flex-col gap-1 rounded-2xl bg-white p-5 shadow-lg">
           {products.map((product: IProductsEntity, i) => {
             const { id, localizeInfos } = product;
             return (
               <div key={i} className="flex w-full">
-                <Link href={'/product/' + id} onClick={() => setState(false)}>
+                <Link
+                  href={'/product/' + id}
+                  onClick={() => setState(false)}
+                  className="py-2 hover:text-red-500"
+                >
                   {localizeInfos.title}
                 </Link>
               </div>

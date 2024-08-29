@@ -2,12 +2,11 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { PersistGate } from 'reduxjs-toolkit-persist/integration/react';
 
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
+import NavigationMenu from '@/components/layout/main-menu/NavigationMenu';
 import Modal from '@/components/layout/modal/ModalLayout';
-import NavigationMenu from '@/components/layout/navbar/NavigationMenu';
 
 import { AuthProvider } from './store/providers/AuthContext';
 import { ContentContextProvider } from './store/providers/ContentContext';

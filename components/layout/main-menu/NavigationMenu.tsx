@@ -72,7 +72,7 @@ const NavigationMenu: React.FC = async () => {
                         <li key={i}>
                           <Link
                             href={it.href}
-                            className="transition-colors duration-300 ease-in-out focus:outline-none"
+                            className="transition-colors duration-300 ease-in-out hover:text-red-500 focus:outline-none"
                           >
                             {it.label}
                           </Link>
