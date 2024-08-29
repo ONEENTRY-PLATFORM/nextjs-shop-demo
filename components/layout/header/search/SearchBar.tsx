@@ -1,7 +1,5 @@
 'use client';
 
-import Link from 'next/link';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import React, { useEffect, useState } from 'react';
 
 import { useSearchProducts } from '@/app/api/hooks/useSearchProducts';

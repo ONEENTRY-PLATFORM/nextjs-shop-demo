@@ -13,6 +13,7 @@ const SearchInput: React.FC = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const searchPlaceholder = useAppSelector(
     (state) => state.systemContentReducer.content.search_placeholder,
@@ -34,6 +35,8 @@ const SearchInput: React.FC = () => {
       className="flex w-full"
       onSubmit={(e) => {
         e.preventDefault();
+        const params = new URLSearchParams(searchParams);
+        router.push(`/shop/?${params.toString()}`);
       }}
     >
       <label htmlFor="quick-search" className="sr-only">

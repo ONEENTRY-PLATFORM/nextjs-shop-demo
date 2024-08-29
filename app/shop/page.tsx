@@ -54,9 +54,17 @@ export async function generateMetadata({
   };
 }
 
-export default async function CatalogPage() {
-  const params = { handle: 'string' };
-  const data = await getProducts({ limit: 10, offset: 0, params });
+export default async function CatalogPage({
+  searchParams,
+}: {
+  searchParams?: {
+    search?: string;
+    page?: string;
+  };
+}) {
+  const params = { searchParams };
+  const currentPage = Number(searchParams?.page) || 0;
+  const data = await getProducts({ limit: 10, offset: currentPage, params });
 
   const { isError, products } = data;
   if (isError || !products) {
