@@ -32,7 +32,7 @@ const SignInPhone: React.FC = () => {
         </p>
       </div>
 
-      <div className="relative mb-32 box-border flex shrink-0 flex-col gap-4">
+      <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
         {signInPhoneFormFields.map((field, index) => {
           return <FormInput key={index} {...field} />;
         })}

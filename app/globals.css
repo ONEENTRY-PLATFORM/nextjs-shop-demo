@@ -83,9 +83,8 @@ body {
 .react-calendar__navigation button:disabled {
   background-color: #f0f0f0;
 }
-.react-calendar__navigation button:enabled:hover,
-.react-calendar__navigation button:enabled:focus {
-  background-color: #e6e6e6;
+button.react-calendar__navigation__label {
+  pointer-events: none;
 }
 .react-calendar__month-view__weekdays {
   text-align: center;

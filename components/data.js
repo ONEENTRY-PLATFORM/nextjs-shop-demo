@@ -555,3 +555,47 @@ export const catalogCards = [
     },
   },
 ];
+
+// timeSlots
+export const timeSlotsData = [
+  {
+    time: '10:00',
+  },
+  {
+    time: '11:00',
+    isDisabled: true,
+  },
+  {
+    time: '12:00',
+  },
+  {
+    time: '13:00',
+  },
+  {
+    time: '14:00',
+  },
+  {
+    time: '15:00',
+  },
+  {
+    time: '16:00',
+  },
+  {
+    time: '17:00',
+    isDisabled: true,
+  },
+  {
+    time: '18:00',
+    isDisabled: true,
+  },
+  {
+    time: '19:00',
+    isSelected: true,
+  },
+  {
+    time: '20:00',
+  },
+  {
+    time: '20:00',
+  },
+];
