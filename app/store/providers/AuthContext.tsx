@@ -1,7 +1,7 @@
 'use client';
 
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
-import type { ReactNode } from 'react';
+import type { ReactNode, SetStateAction } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 import { reDefine, useLazyGetMeQuery } from '../../api';
@@ -83,13 +83,19 @@ export const AuthProvider = ({ children }: Props) => {
     console.log(isAuth);
     if (isAuth) {
       trigger({})
-        .then((res) => {
-          if (res.error && !res.isLoading) {
-            localStorage.setItem('refreshToken', '');
-            return setIsAuth(false);
-          }
-          setUser(res.data);
-        })
+        .then(
+          (res: {
+            error: any;
+            isLoading: any;
+            data: SetStateAction<IUserEntity | undefined>;
+          }) => {
+            if (res.error && !res.isLoading) {
+              localStorage.setItem('refreshToken', '');
+              return setIsAuth(false);
+            }
+            setUser(res.data);
+          },
+        )
         .catch(() => {
           localStorage.setItem('refreshToken', '');
           setIsAuth(false);
