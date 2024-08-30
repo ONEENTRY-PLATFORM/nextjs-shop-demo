@@ -19,7 +19,7 @@ import { api } from './';
 export async function getProducts(props: {
   limit: number;
   offset: number;
-  params: {
+  params?: {
     searchParams?: {
       search?: string;
     };
