@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
 
+import { useAppDispatch } from '@/app/store/hooks';
+import { setDeliveryData } from '@/app/store/reducers/CartSlice';
+
 import { timeSlotsData } from '../data';
 import TimeSlots from './calendar/TimeSlots';
 
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
-
 const CalendarComponent: React.FC = () => {
-  const [date, setDate] = useState<Value>(new Date());
+  const dispatch = useAppDispatch();
+  const [date, setDate] = useState<Date>(new Date());
   const [time, setTime] = useState<string>('');
 
   const onApply = () => {
-    console.log(date);
-    console.log(time);
+    dispatch(setDeliveryData({ date: date.getTime(), time: time }));
   };
 
   return (

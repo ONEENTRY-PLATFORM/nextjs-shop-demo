@@ -5,12 +5,18 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 type InitialStateType = {
   products: (IProductsEntity & { selected: boolean } & { quantity: number })[];
   currency?: string;
-  deliveryData: {};
+  deliveryData: {
+    date: number;
+    time: string;
+  };
 };
 
 const initialState: InitialStateType = {
   products: [],
-  deliveryData: {},
+  deliveryData: {
+    date: new Date().getTime(),
+    time: '',
+  },
 };
 
 export const cartSlice = createSlice({
@@ -111,16 +117,13 @@ export const cartSlice = createSlice({
     },
     setDeliveryData(
       state,
-      action: PayloadAction<{ date: string; time: string; address: string }>,
+      action: PayloadAction<{ date: number; time: string }>,
     ) {
       const date = action.payload.date;
       const time = action.payload.time;
-      const address = action.payload.address;
-      // const units = state.products[index].attributeValues?.units_product.value;
       state.deliveryData = {
         date: date,
         time: time,
-        address: address,
       };
     },
   },
@@ -132,6 +135,7 @@ export const {
   removeProduct,
   increaseProductQty,
   decreaseProductQty,
+  setDeliveryData,
   setProductQty,
   removeAllProducts,
 } = cartSlice.actions;
@@ -199,13 +203,14 @@ export const selectCartTotal = (state: { cartReducer: { products: [] } }) =>
   );
 
 export const selectDeliveryData = (state: {
-  deliveryData: { 
-    date: string;
-    time: string;
-    address: string; 
+  cartReducer: {
+    deliveryData: {
+      date: string;
+      time: string;
+    };
   };
 }) => {
-  return state.deliveryData;
+  return state.cartReducer.deliveryData;
 };
 
 export default cartSlice.reducer;
