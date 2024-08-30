@@ -1,37 +1,44 @@
 import React, { useContext, useEffect } from 'react';
 
-import { useGetForm } from '@/app/api';
+import { api, useGetForm } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { useAppDispatch } from '@/app/store/hooks';
+import { addField } from '@/app/store/reducers/FormFieldsSlice';
 
 import { signUpFormFields } from '../data';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
 const SignUpForm: React.FC = () => {
-  const fields = useAppSelector((state) => state.formFieldsReducer.fields);
   const dispatch = useAppDispatch();
+  const fields = useAppSelector(
+    (state) => state.formFieldsReducer.fields,
+  ) as object as {
+    email_reg: {
+      value: string;
+    };
+    password_reg: {
+      value: string;
+    };
+  };
 
-  const form = useGetForm({
+  const data = useGetForm({
     marker: 'reg',
   });
-  console.log(form);
+  console.log(data);
 
-  useEffect(() => {
-    if (form.loading) {
-      return;
-    }
-    // data.form?.attributes.forEach((field) => {
-    //   dispatch(
-    //     addField({
-    //       [field.marker]: {
-    //         valid: validate,
-    //         value: value,
-    //       },
-    //     }),
-    //   );
-    // });
-  }, [form]);
+  const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // const login = fields.email_reg?.value;
+    // const password = fields.password_reg?.value;
+
+    // try {
+    //   const res = await api.AuthProvider.signUp('email', data, 'en_US');
+    //   console.log();
+    // } catch (e: unknown) {
+    //   console.log(e);
+    // }
+  };
 
   // const formData = Object.keys(fields).reduce(
   //   (
@@ -80,7 +87,10 @@ const SignUpForm: React.FC = () => {
   // }
 
   return (
-    <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
+    <form
+      onSubmit={(e) => onSignUp(e)}
+      className="flex min-h-full flex-col gap-4 text-xl leading-5"
+    >
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">
         <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
           Sign up

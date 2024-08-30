@@ -17,8 +17,8 @@ export async function generateMetadata({
   if (isError || !page) {
     return notFound();
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { localizeInfos, isVisible, attributeValues } = page;
-  console.log(attributeValues);
 
   const {
     url,

@@ -20,10 +20,11 @@ export type InputValue = {
 };
 
 const UserForm: React.FC = () => {
-  // const form = useGetForm({
-  //   marker: 'sign_in',
-  // });
-  // console.log(form);
+  const data = useGetForm({
+    marker: 'reg',
+  });
+  console.log(data);
+  console.log(data.initialFormData);
 
   // const { user_name_placeholder, user_phone_placeholder } = useAppSelector(
   //   (state) => state.systemContentReducer.content,

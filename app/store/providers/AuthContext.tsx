@@ -33,7 +33,8 @@ export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<IUserEntity | undefined>();
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
-  const [trigger, { isError }] = useLazyGetMeQuery({ pollingInterval: 5000 });
+  const [trigger, { isError }] =
+    useLazyGetMeQuery(/**{ pollingInterval: 5000 } */);
   const { activeLanguage } = useContext(LanguageContext);
 
   // console.log(isAuth);

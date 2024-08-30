@@ -4,8 +4,8 @@ import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
 import type { Dispatch, ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
-import { useGetLocales } from '../../api';
-import { LanguageEnum } from '../../types/enum';
+import { useGetLocales } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 
 type ContextProps = {
   activeLanguage: LanguageEnum;
