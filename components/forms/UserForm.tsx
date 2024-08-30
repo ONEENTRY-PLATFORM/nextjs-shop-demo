@@ -31,11 +31,10 @@ const UserForm: React.FC = () => {
 
   const { authenticate } = useContext(AuthContext);
   const { isAuth, isLoading } = useContext(AuthContext);
-  console.log(isAuth);
 
   const { refreshUser, user } = useContext(AuthContext);
 
-  const onUpdateUserData = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onUpdateUserData = async () => {
     try {
       const formData: IAuthFormData[] = [];
 

@@ -22,7 +22,7 @@ const SignInEmail: React.FC = () => {
   const form = useGetForm({
     marker: 'sign_in',
   });
-  console.log(form.loading);
+  console.log(isAuth);
 
   // form
   //   localizeInfos
@@ -66,8 +66,6 @@ const SignInEmail: React.FC = () => {
 
   const onSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const login = 'kvasssukr.net@gmail.com';
-    // const password = '3hdjxjcjfj1';
     const login = fields.email_reg?.value;
     const password = fields.password_reg?.value;
 

@@ -36,9 +36,9 @@ export const AuthProvider = ({ children }: Props) => {
   const [trigger, { isError }] = useLazyGetMeQuery({ pollingInterval: 5000 });
   const { activeLanguage } = useContext(LanguageContext);
 
+  // console.log(isAuth);
   const onInit = async () => {
     const refresh = localStorage.getItem('refreshToken');
-
     if (!refresh) {
       setIsAuth(false);
       return;
@@ -52,6 +52,7 @@ export const AuthProvider = ({ children }: Props) => {
   const checkToken = async () => {
     trigger({})
       .then(async (res) => {
+        console.log(res);
         if (res.error && !res.isLoading) {
           localStorage.setItem('refreshToken', '');
           return setIsAuth(false);
@@ -95,8 +96,6 @@ export const AuthProvider = ({ children }: Props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetchUser]);
-
-  useEffect(() => {}, []);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
