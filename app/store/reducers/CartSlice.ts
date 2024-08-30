@@ -5,10 +5,12 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 type InitialStateType = {
   products: (IProductsEntity & { selected: boolean } & { quantity: number })[];
   currency?: string;
+  deliveryData: {};
 };
 
 const initialState: InitialStateType = {
   products: [],
+  deliveryData: {},
 };
 
 export const cartSlice = createSlice({
@@ -107,6 +109,20 @@ export const cartSlice = createSlice({
     removeAllProducts(state) {
       state.products = initialState.products;
     },
+    setDeliveryData(
+      state,
+      action: PayloadAction<{ date: string; time: string; address: string }>,
+    ) {
+      const date = action.payload.date;
+      const time = action.payload.time;
+      const address = action.payload.address;
+      // const units = state.products[index].attributeValues?.units_product.value;
+      state.deliveryData = {
+        date: date,
+        time: time,
+        address: address,
+      };
+    },
   },
 });
 
@@ -181,5 +197,15 @@ export const selectCartTotal = (state: { cartReducer: { products: [] } }) =>
     },
     0,
   );
+
+export const selectDeliveryData = (state: {
+  deliveryData: { 
+    date: string;
+    time: string;
+    address: string; 
+  };
+}) => {
+  return state.deliveryData;
+};
 
 export default cartSlice.reducer;

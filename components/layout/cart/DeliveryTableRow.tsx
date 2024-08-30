@@ -18,7 +18,7 @@ const TableRow: React.FC<TableRowProps> = ({
   <tr className="table-row h-[50px] gap-5 max-md:max-w-full max-md:flex-wrap">
     <td className="self-stretch align-middle text-sm">{label}</td>
     <td className="px-5 align-middle text-base">
-      <input type="text" value={value} placeholder={placeholder} />
+      <input type="text" value={value} placeholder={placeholder} disabled />
     </td>
     <td className="table-cell pl-5 align-middle">
       {icon && (

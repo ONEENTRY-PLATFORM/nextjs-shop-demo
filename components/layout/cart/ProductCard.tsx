@@ -28,8 +28,8 @@ const ProductCard: React.FC<{
 
   return (
     <article className="flex w-full justify-between gap-5 border border-solid border-neutral-100 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
-      <div className="flex justify-between gap-5">
-        <div className="relative mb-auto box-border flex shrink-0 flex-row self-center">
+      <div className="relative flex justify-between gap-5">
+        <div className="relative mb-auto box-border flex shrink-0 flex-row self-center z-10">
           <input
             onChange={(e) => {
               dispatch(deselectProduct(id));

@@ -5,15 +5,16 @@ import CalendarForm from '@/components/forms/CalendarForm';
 
 import TableRow from './DeliveryTableRow';
 
+import { selectDeliveryData } from '@/app/store/reducers/CartSlice';
+import { useAppSelector } from '@/app/store/hooks';
+
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const DeliveryTable: React.FC = () => {
-  const [date, setDate] = useState<Value>(new Date());
-  const [time, setTime] = useState<string>('');
-  console.log(date);
-  console.log(time);
-
+  const deliveryData = useAppSelector((state) => selectDeliveryData(state));
+  const { date, time, address } = deliveryData;
+  // selectDeliveryData
   return (
     <>
       <CalendarForm />
@@ -21,19 +22,19 @@ const DeliveryTable: React.FC = () => {
         <tbody>
           <TableRow
             label={'Date'}
-            value={'09.10.2023'}
+            value={date}
             icon={'/icons/calendar.svg'}
             placeholder={'Select date'}
           />
           <TableRow
             label={'Time'}
-            value={'19.00'}
+            value={time}
             icon={'/icons/time.svg'}
             placeholder={'Select time'}
           />
           <TableRow
             label={'Address'}
-            value={'Dubai, One Entry street, 50'}
+            value={address}
             placeholder={'Address'}
           />
           <tr className="table-row h-[50px] gap-5 border border-solid border-neutral-100 max-md:max-w-full max-md:flex-wrap">
@@ -47,6 +48,7 @@ const DeliveryTable: React.FC = () => {
                 className="aspect-[1.16] w-[125px] max-w-full shrink-0"
               />
             </td>
+
             <td className="table-cell px-5 align-middle">
               <div className="mt-2 flex flex-col self-start">
                 <div className="text-base">Delivery</div>
