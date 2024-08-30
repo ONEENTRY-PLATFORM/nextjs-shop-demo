@@ -6,37 +6,37 @@ import { Suspense } from 'react';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import Loader from '@/components/shared/Loader';
 
-import { getProducts } from '../api/serverSideProps';
+import { getPageByUrl, getProducts } from '../api/serverSideProps';
 
 export async function generateMetadata({
   params,
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
+  const data = await getPageByUrl('shop', 'en_US');
+  const { isError, page } = data;
+  if (isError || !page) {
+    return notFound();
+  }
+  const { localizeInfos, isVisible, attributeValues } = page;
+  console.log(attributeValues);
+
   const {
     url,
     width,
     height,
     altText: alt,
   } = { url: '', width: 300, height: 300, altText: '' };
-  const indexable = true;
-
-  // const data = await getProducts({ limit: 10, offset: 0, params });
-
-  // const { isError, products } = data;
-  // if (isError || !products) {
-  //   return notFound();
-  // }
 
   return {
-    title: '',
-    description: '',
+    title: localizeInfos.title,
+    description: localizeInfos.plainContent,
     robots: {
-      index: indexable,
-      follow: indexable,
+      index: isVisible,
+      follow: isVisible,
       googleBot: {
-        index: indexable,
-        follow: indexable,
+        index: isVisible,
+        follow: isVisible,
       },
     },
     openGraph: url

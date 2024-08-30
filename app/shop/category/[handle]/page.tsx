@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import { getProducts, getProductsByUrl } from '@/app/api/serverSideProps';
+import { getPageByUrl, getProducts } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 
 export async function generateMetadata({
@@ -11,23 +11,30 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
+  const data = await getPageByUrl('shop', 'en_US');
+  const { isError, page } = data;
+  if (isError || !page) {
+    return notFound();
+  }
+  const { localizeInfos, isVisible, attributeValues } = page;
+  console.log(attributeValues);
+
   const {
     url,
     width,
     height,
     altText: alt,
   } = { url: '', width: 300, height: 300, altText: '' };
-  const indexable = true;
 
   return {
-    title: '',
-    description: '',
+    title: localizeInfos.title,
+    description: localizeInfos.plainContent,
     robots: {
-      index: indexable,
-      follow: indexable,
+      index: isVisible,
+      follow: isVisible,
       googleBot: {
-        index: indexable,
-        follow: indexable,
+        index: isVisible,
+        follow: isVisible,
       },
     },
     openGraph: url
@@ -50,7 +57,7 @@ export default async function CatalogPage({
 }: {
   params: { handle: string };
 }) {
-  const data = await getProducts({ limit: 10, offset: 0, params });
+  const data = await getProducts({ limit: 10, offset: 0 });
   // const data = await getProductsByUrl({ limit: 10, offset: 0, params });
   // !!! Как получить продукты по категории?
 
