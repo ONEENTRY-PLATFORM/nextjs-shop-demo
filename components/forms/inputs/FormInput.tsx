@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { addField } from '@/app/store/reducers/FormFieldsSlice';
+import { FormFieldsEnum } from '@/app/types/enum';
 
 interface FormInputProps {
   localizeInfos: {
@@ -35,7 +36,9 @@ const FormInput: React.FC<FormInputProps> = (field) => {
     return;
   }
 
-  const { fieldType, marker, placeholder, required } = field;
+  const { marker, placeholder, required } = field;
+
+  const fieldType = (FormFieldsEnum as unknown as FormFieldsEnum)[marker];
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">

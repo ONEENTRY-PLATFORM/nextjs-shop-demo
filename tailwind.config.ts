@@ -20,6 +20,15 @@ const config: Config = {
         xl: '1240px',
         '2xl': '1536px',
       },
+      keyframes: {
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+      },
+      animation: {
+        spinner: 'spin 60s linear infinite',
+      },
     },
   },
   plugins: [],
