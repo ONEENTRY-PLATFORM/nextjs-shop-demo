@@ -1,34 +1,24 @@
-import React from 'react';
+'use client';
 
-import { reviewsData } from '@/components/data';
+import React, { useState } from 'react';
+
 import { productRating } from '@/components/data';
 
 import RatingBlock from '../rating-block/RatingBlock';
 import RatingButton from '../rating-block/RatingButton';
-import ReviewCard from './ReviewCard';
+import ReviewsList from './ReviewsList';
+import ViewAllButton from './ViewAllButton';
 
 const ReviewsSection: React.FC = () => {
+  const [state, setState] = useState(false);
   return (
     <div className="mb-16 flex justify-between max-md:flex-wrap">
       <div className="flex flex-col">
-        <div className="mb-6">
-          <RatingButton {...productRating} />
-        </div>
-        <section className="flex flex-col gap-5 max-md:mb-10 max-md:max-w-full">
-          {reviewsData.map((review, index) => (
-            <ReviewCard key={index} review={review} />
-          ))}
-        </section>
-        <div className="flex flex-col gap-5 max-md:mb-10 max-md:max-w-full">
-          <button
-            type="button"
-            className="mt-5 self-end rounded-[30px] border border-solid border-orange-500 px-16 py-4 max-md:px-5"
-          >
-            View all reviews
-          </button>
-        </div>
+        <RatingButton state={state} setState={setState} {...productRating} />
+        {state && <ReviewsList />}
+        {state && <ViewAllButton />}
       </div>
-      <RatingBlock {...productRating} />
+      {state && <RatingBlock {...productRating} />}
     </div>
   );
 };

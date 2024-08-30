@@ -7,15 +7,20 @@ import StarRating from './StarRating';
 interface ReviewSectionProps {
   rating: number;
   reviewCount: number;
+  state: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  setState: Function;
 }
 
 const RatingButton: React.FC<ReviewSectionProps> = ({
+  state,
+  setState,
   rating,
   reviewCount
 }) => {
   
   return (
-    <button onClick={() => {}} className="mr-auto flex gap-5">
+    <button onClick={() => setState(!state)} className="mr-auto flex gap-5 mb-6">
       <div className="flex gap-2.5">
         <StarRating rating={rating} />
         <div className="text-lg font-bold text-neutral-600">

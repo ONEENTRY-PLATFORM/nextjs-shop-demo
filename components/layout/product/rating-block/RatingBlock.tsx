@@ -1,12 +1,13 @@
 import React from 'react';
 
-import RatingRow from './RatingRow';
-import StarRating from './StarRating';
 import { ratingsData } from '@/components/data';
 
+import RatingRow from './RatingRow';
+import StarRating from './StarRating';
+
 const RatingBlock: React.FC<{
-  rating: number,
-  reviewCount: number,
+  rating: number;
+  reviewCount: number;
 }> = (rating) => {
   return (
     <div className="flex max-w-[420px] flex-col px-5">
