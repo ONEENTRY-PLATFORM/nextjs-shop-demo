@@ -22,7 +22,7 @@ const SignInEmail: React.FC = () => {
   const form = useGetForm({
     marker: 'sign_in',
   });
-  console.log(form);
+  console.log(form.loading);
 
   // form
   //   localizeInfos
@@ -60,9 +60,9 @@ const SignInEmail: React.FC = () => {
     return;
   }
 
-  if (isLoading) {
-    return <Loader />;
-  }
+  // if (isLoading) {
+  //   return <Spinner />;
+  // }
 
   const onSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,7 +80,7 @@ const SignInEmail: React.FC = () => {
       if (result.error) {
         throw new Error(result?.error);
       }
-      setOpen(!isAuth);
+      setOpen(false);
       authenticate();
     } catch (e: unknown) {
       console.log(e);
@@ -107,9 +107,9 @@ const SignInEmail: React.FC = () => {
 
       <button
         type="submit"
-        className="mt-auto flex w-[282px] max-w-full items-center justify-center self-center rounded-[30px] border border-none border-[black] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
+        className="relative mt-auto flex w-[282px] max-w-full items-center justify-center self-center rounded-[30px] border border-none border-[black] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
       >
-        Sign in
+        {form.loading ? <Spinner /> : 'Sign in'}
       </button>
 
       <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm max-md:mt-10">
@@ -130,7 +130,6 @@ const SignInEmail: React.FC = () => {
           />
         ))}
       </div>
-      <Spinner />
       <CreateAccountButton title="Create account" icon={''} class={''} />
     </form>
   );

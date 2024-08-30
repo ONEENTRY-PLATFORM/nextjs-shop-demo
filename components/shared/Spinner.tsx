@@ -2,14 +2,15 @@ import React from 'react';
 
 const Spinner: React.FC = () => {
   return (
-    <div className="relative aspect-square size-full overflow-hidden">
+    <div className="absolute translate-x-[calc(50%_-_12px)] translate-y-[calc(50%_-_12px)] aspect-square size-full overflow-hidden">
       <svg
         width="24"
         height="24"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
+        className="animate-spin"
       >
-        <g className="spinner">
+        <g>
           <circle cx="12" cy="2.5" r="1.5" opacity=".14" />
           <circle cx="16.75" cy="3.77" r="1.5" opacity=".29" />
           <circle cx="20.23" cy="7.25" r="1.5" opacity=".43" />
