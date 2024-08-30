@@ -596,6 +596,12 @@ export const timeSlotsData = [
     time: '20:00',
   },
   {
-    time: '20:00',
+    time: '21:00',
   },
 ];
+
+// productRating
+export const productRating = {
+  rating: 4.7,
+  reviewCount: 7979,
+};

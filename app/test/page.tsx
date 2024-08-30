@@ -17,13 +17,13 @@ const TestPage = () => {
       <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
         <div className="flex w-full flex-col items-center gap-5 bg-white">
           <CalendarForm />
-          <ForgotPasswordForm />
+          {/* <ForgotPasswordForm />
           <PaymentForm />
           <ResetPasswordForm />
           <SignInEmail />
           <SignInPhone />
           <SignUpForm />
-          <VerificationForm />
+          <VerificationForm /> */}
         </div>
       </section>
     </main>

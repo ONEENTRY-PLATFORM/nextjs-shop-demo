@@ -162,3 +162,6 @@ button.react-calendar__navigation__label {
 .react-calendar__navigation__next2-button {
   display: none;
 }
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;
+}

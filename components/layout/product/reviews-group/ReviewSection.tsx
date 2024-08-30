@@ -1,22 +1,18 @@
 import React from 'react';
 
 import { reviewsData } from '@/components/data';
+import { productRating } from '@/components/data';
 
 import RatingBlock from '../rating-block/RatingBlock';
 import RatingButton from '../rating-block/RatingButton';
 import ReviewCard from './ReviewCard';
 
 const ReviewsSection: React.FC = () => {
-  const rating = {
-    rating: 4.7,
-    reviewCount: 7979,
-  };
-
   return (
     <div className="mb-16 flex justify-between max-md:flex-wrap">
       <div className="flex flex-col">
         <div className="mb-6">
-          <RatingButton {...rating} />
+          <RatingButton {...productRating} />
         </div>
         <section className="flex flex-col gap-5 max-md:mb-10 max-md:max-w-full">
           {reviewsData.map((review, index) => (
@@ -32,7 +28,7 @@ const ReviewsSection: React.FC = () => {
           </button>
         </div>
       </div>
-      <RatingBlock {...rating} />
+      <RatingBlock {...productRating} />
     </div>
   );
 };

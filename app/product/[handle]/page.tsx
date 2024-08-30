@@ -86,7 +86,7 @@ export default async function ProductPage({
           __html: JSON.stringify(productJsonLd),
         }}
       />
-      <div className="mx-auto flex w-full max-w-screen-xl flex-col bg-white px-5 py-8 max-md:px-5">
+      <div className="mx-auto flex w-full max-w-screen-xl flex-col bg-white">
         <Suspense
           fallback={
             <div className="relative aspect-square size-full overflow-hidden" />

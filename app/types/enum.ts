@@ -20,6 +20,7 @@ export enum ConditionMarkersEnum {
 }
 
 export enum FormFieldsEnum {
+  string = 'text',
   email = 'email',
   password = 'password',
   phone = 'tel',
