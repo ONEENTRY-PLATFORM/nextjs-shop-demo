@@ -8,7 +8,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 // import { useAppSelector } from '@/app/store/hooks';
 import { signInFormFields, socialProvidersButtons } from '../data';
-import Loader from '../shared/Loader';
+import Spinner from '../shared/Spinner';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import ForgotPasswordButton from './inputs/ForgotPasswordButton';
 import FormInput from './inputs/FormInput';
@@ -130,7 +130,7 @@ const SignInEmail: React.FC = () => {
           />
         ))}
       </div>
-      <Loader />
+      <Spinner />
       <CreateAccountButton title="Create account" icon={''} class={''} />
     </form>
   );
