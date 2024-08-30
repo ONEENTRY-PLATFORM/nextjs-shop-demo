@@ -58,7 +58,6 @@ export default async function CatalogPage({
   if (isError || !products) {
     return notFound();
   }
-  console.log(products[2].attributeValues.category.value.value);
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -67,14 +66,16 @@ export default async function CatalogPage({
           fallback={
             <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
           }
-        />
-        <ProductsGridLayout
-          gridItems={products.filter(
-            (product: IProductsEntity) =>
-              product.attributeValues.category?.value.value === params.handle &&
-              product.attributeSetIdentifier !== 'service_product',
-          )}
-        />
+        >
+          <ProductsGridLayout
+            gridItems={products.filter(
+              (product: IProductsEntity) =>
+                product.attributeValues.category?.value.value ===
+                  params.handle &&
+                product.attributeSetIdentifier !== 'service_product',
+            )}
+          />
+        </Suspense>
       </div>
     </section>
   );

@@ -12,7 +12,7 @@ export default function CatalogPage({
 }: {
   params: { handle: string };
 }) {
-  console.log(params);
+  // console.log(params);
 
   // const { data, isLoading, refetch } = useGetSingleOrderQuery({
   //   marker: params.handle,

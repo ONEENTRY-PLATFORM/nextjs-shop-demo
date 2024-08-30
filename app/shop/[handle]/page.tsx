@@ -19,7 +19,7 @@ export async function generateMetadata({
     altText: alt,
   } = { url: '', width: 300, height: 300, altText: '' };
   const indexable = true;
-  console.log('handle-' + params);
+  // console.log('handle-' + params);
 
   return {
     title: '',

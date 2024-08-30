@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }: Props) => {
   const checkToken = async () => {
     trigger({})
       .then(async (res) => {
-        console.log(res);
+        // console.log(res);
         if (res.error && !res.isLoading) {
           localStorage.setItem('refreshToken', '');
           return setIsAuth(false);
@@ -68,8 +68,9 @@ export const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     setIsLoading(true);
-    onInit().then(() => {});
-    setIsLoading(false);
+    onInit().then(() => {
+      setIsLoading(false);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, activeLanguage]);
 
@@ -80,6 +81,7 @@ export const AuthProvider = ({ children }: Props) => {
   }, [isError]);
 
   useEffect(() => {
+    console.log(isAuth);
     if (isAuth) {
       trigger({})
         .then((res) => {

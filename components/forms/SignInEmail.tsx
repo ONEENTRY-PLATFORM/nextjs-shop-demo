@@ -1,7 +1,7 @@
 // import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import React, { useContext, useEffect } from 'react';
 
-import { logInUser, useGetForm } from '@/app/api';
+import { logInUser, useGetAuthProvidersQuery, useGetForm } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -22,7 +22,6 @@ const SignInEmail: React.FC = () => {
   const form = useGetForm({
     marker: 'sign_in',
   });
-  console.log(isAuth);
 
   // form
   //   localizeInfos
