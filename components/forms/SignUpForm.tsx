@@ -25,7 +25,7 @@ const SignUpForm: React.FC = () => {
   const data = useGetForm({
     marker: 'reg',
   });
-  console.log(data);
+  // console.log(data);
 
   const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

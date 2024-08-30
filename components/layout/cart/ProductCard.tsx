@@ -19,7 +19,6 @@ const ProductCard: React.FC<{
   }
 
   const { id, attributeValues, price, localizeInfos, selected } = product;
-  console.log(product);
 
   const formattedPrice = UsePrice({
     amount: price,

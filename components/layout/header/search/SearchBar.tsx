@@ -20,7 +20,6 @@ const SearchBar: React.FC = () => {
   );
 
   const handleSearch = (term: string) => {
-    // console.log(`Searching... ${term}`);
     const params = new URLSearchParams(searchParams);
     if (term) {
       params.set('search', term);

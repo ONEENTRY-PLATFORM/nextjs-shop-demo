@@ -37,7 +37,6 @@ export const AuthProvider = ({ children }: Props) => {
     useLazyGetMeQuery(/**{ pollingInterval: 5000 } */);
   const { activeLanguage } = useContext(LanguageContext);
 
-  // console.log(isAuth);
   const onInit = async () => {
     const refresh = localStorage.getItem('refreshToken');
     if (!refresh) {
@@ -53,7 +52,6 @@ export const AuthProvider = ({ children }: Props) => {
   const checkToken = async () => {
     trigger({})
       .then(async (res) => {
-        // console.log(res);
         if (res.error && !res.isLoading) {
           localStorage.setItem('refreshToken', '');
           return setIsAuth(false);

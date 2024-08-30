@@ -8,9 +8,8 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
   const { attributeValues, localizeInfos, price } = product;
   const fPrice = UsePrice({ amount: price, currency: 'USD' });
   const units = attributeValues?.units_product.value;
-  const max = 50;
-  const w = (units / max) * 100;
-  // console.log(product.attributeValues.category.value.title);
+  const maxUnits = 50;
+  const width = (units / maxUnits) * 100;
 
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-full">
@@ -38,7 +37,7 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
           <div
             className={'mr-auto h-[3px] shrink-0 rounded-xl bg-orange-500'}
             style={{
-              width: w + '%',
+              width: width + '%',
             }}
           />
         </div>

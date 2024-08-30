@@ -20,7 +20,6 @@ export async function generateMetadata({
     return notFound();
   }
   const { localizeInfos, isVisible, attributeValues } = page;
-  console.log(attributeValues);
 
   const {
     url,

@@ -18,7 +18,6 @@ export async function generateMetadata({
     return notFound();
   }
   const { localizeInfos, isVisible, attributeValues } = page;
-  console.log(attributeValues);
 
   const {
     url,
@@ -60,7 +59,6 @@ export default async function CatalogPage({
 }) {
   const data = await getProducts({ limit: 10, offset: 0 });
 
-  // console.log(params);
   const { isError, products } = data;
   if (isError || !products) {
     return notFound();

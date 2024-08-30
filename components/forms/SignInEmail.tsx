@@ -80,7 +80,7 @@ const SignInEmail: React.FC = () => {
       setOpen(false);
       authenticate();
     } catch (e: unknown) {
-      console.log(e);
+      // console.log(e);
     }
   };
 

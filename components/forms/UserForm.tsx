@@ -23,8 +23,7 @@ const UserForm: React.FC = () => {
   const data = useGetForm({
     marker: 'reg',
   });
-  console.log(data);
-  console.log(data.initialFormData);
+  // console.log(data);
 
   // const { user_name_placeholder, user_phone_placeholder } = useAppSelector(
   //   (state) => state.systemContentReducer.content,
