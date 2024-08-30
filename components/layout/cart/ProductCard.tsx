@@ -7,6 +7,7 @@ import { UsePrice } from '@/components/utils';
 
 import QuantitySelector from '../product/components/QuantitySelector';
 import DeleteButton from './DeleteButton';
+import Link from 'next/link';
 
 const ProductCard: React.FC<{
   product: IProductsEntity & { selected: boolean };
@@ -55,9 +56,14 @@ const ProductCard: React.FC<{
           <h2 className="text-base leading-8">{localizeInfos?.title}</h2>
           <p className="text-xl font-bold leading-8">{formattedPrice}</p>
         </div>
+
+        <Link
+          href={`/shop/product/` + id}
+          className="absolute left-0 top-0 z-0 flex size-full"
+        ></Link>
       </div>
 
-      <div className="flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:flex max-sm:flex-row">
+      <div className="flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:flex max-sm:flex-row z-10">
         <QuantitySelector product={product} height={42} />
         <DeleteButton {...product} />
       </div>

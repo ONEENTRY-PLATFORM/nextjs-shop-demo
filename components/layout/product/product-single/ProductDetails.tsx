@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { UsePrice } from '../../../utils';
@@ -9,6 +10,7 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
   const units = attributeValues?.units_product.value;
   const max = 50;
   const w = (units / max) * 100;
+  // console.log(product.attributeValues.category.value.title);
 
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-full">
@@ -16,7 +18,15 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
         {localizeInfos?.title}
       </h1>
 
-      <p className="mt-3 text-sm leading-4 text-neutral-600">productType</p>
+      <p className="mt-3 text-sm leading-4 text-neutral-600">
+        <Link
+          href={
+            '/shop/category/' + product.attributeValues.category.value.value
+          }
+        >
+          {product.attributeValues.category.value.title}
+        </Link>
+      </p>
 
       <p className="mb-5 mt-4 text-left text-xl font-bold leading-8 text-neutral-600">
         {fPrice}
