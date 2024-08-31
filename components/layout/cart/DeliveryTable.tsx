@@ -1,16 +1,21 @@
 import Image from 'next/image';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
-import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
-import { selectDeliveryData } from '@/app/store/reducers/CartSlice';
 
 // import CalendarForm from '@/components/forms/CalendarForm';
 import TableRow from './DeliveryTableRow';
 
 const DeliveryTable: React.FC = () => {
-  const deliveryData = useAppSelector(selectDeliveryData);
+  const deliveryData = useAppSelector(
+    (state) => state.cartReducer.deliveryData,
+  );
   const date = new Date(deliveryData.date).toLocaleDateString('en-US');
+  const {
+    order_info_date_placeholder,
+    order_info_time_placeholder,
+    order_info_address_placeholder,
+  } = useAppSelector((state) => state.systemContentReducer.content);
 
   const [address, setAddress] = useState('');
 
@@ -23,22 +28,26 @@ const DeliveryTable: React.FC = () => {
             label={'Date'}
             value={date}
             icon={'/icons/calendar.svg'}
-            placeholder={'Select date'}
+            placeholder={order_info_date_placeholder}
           />
           <TableRow
             label={'Time'}
             value={deliveryData?.time || ''}
             icon={'/icons/time.svg'}
-            placeholder={'Select time'}
+            placeholder={order_info_time_placeholder}
           />
           <tr className="table-row h-[50px] gap-5 max-md:max-w-full max-md:flex-wrap">
-            <td className="self-stretch align-middle text-sm">Address</td>
+            <td className="self-stretch align-middle text-sm">
+              <label htmlFor={'address'}>Address</label>
+            </td>
             <td className="px-5 align-middle text-base">
               <input
                 size={40}
                 type="text"
                 value={address}
-                placeholder={'Address'}
+                id="address"
+                name="address"
+                placeholder={order_info_address_placeholder}
                 onChange={(e) => setAddress(e.target.value)}
               />
             </td>

@@ -24,7 +24,7 @@ const PaymentForm: React.FC = () => {
             return (
               <div
                 key={field.marker}
-                className="relative box-border flex shrink-0 flex-row justify-between"
+                className="relative box-border flex shrink-0 flex-row justify-between gap-4"
               >
                 {field.fields?.map((f) => <FormInput key={f.marker} {...f} />)}
               </div>

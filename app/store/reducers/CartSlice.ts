@@ -202,15 +202,4 @@ export const selectCartTotal = (state: { cartReducer: { products: [] } }) =>
     0,
   );
 
-export const selectDeliveryData = (state: {
-  cartReducer: {
-    deliveryData: {
-      date: string;
-      time: string;
-    };
-  };
-}) => {
-  return state.cartReducer.deliveryData;
-};
-
 export default cartSlice.reducer;

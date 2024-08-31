@@ -19,7 +19,9 @@ const TableRow: React.FC<TableRowProps> = ({
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
   return (
     <tr className="table-row h-[50px] gap-5 max-md:max-w-full max-md:flex-wrap">
-      <td className="self-stretch align-middle text-sm">{label}</td>
+      <td className="self-stretch align-middle text-sm">
+        <label htmlFor={'label-' + placeholder}>{label}</label>
+      </td>
       <td className="px-5 align-middle text-base">
         <input
           size={40}
@@ -27,6 +29,8 @@ const TableRow: React.FC<TableRowProps> = ({
           value={value}
           placeholder={placeholder}
           readOnly
+          id={'label-' + placeholder}
+          name={placeholder}
           onClick={() => {
             setOpen(true);
             setComponent('CalendarForm');

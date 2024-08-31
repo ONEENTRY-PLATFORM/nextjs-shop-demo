@@ -2,12 +2,14 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import type { Key } from 'react';
 
 import BreadcrumbItem from './BreadcrumbItem';
 
 const BreadcrumbsTrail: React.FC = () => {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);
+  console.log(paths);
 
   return (
     <nav className="relative box-border flex">
@@ -17,14 +19,18 @@ const BreadcrumbsTrail: React.FC = () => {
             Home
           </Link>
         </li>
-        {pathNames?.map((link, index) => (
-          <li key={index}>
-            <BreadcrumbItem
-              link={link}
-              isLast={index === pathNames.length - 1}
-            />
-          </li>
-        ))}
+        {pathNames?.map(
+          (link: string, index: Key) =>
+            link !== 'product' &&
+            link !== 'category' && (
+              <li key={index}>
+                <BreadcrumbItem
+                  link={link}
+                  isLast={index === pathNames.length - 1}
+                />
+              </li>
+            ),
+        )}
       </ul>
     </nav>
   );

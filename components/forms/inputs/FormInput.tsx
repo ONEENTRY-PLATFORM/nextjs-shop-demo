@@ -44,7 +44,9 @@ const FormInput: React.FC<FormInputProps> = (field) => {
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
-      <label className="text-base text-gray-400">{localizeInfos?.title}</label>
+      <label htmlFor={field.marker} className="text-base text-gray-400">
+        {localizeInfos?.title}
+      </label>
       <input
         type={type}
         id={field.marker}

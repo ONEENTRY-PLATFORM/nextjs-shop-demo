@@ -11,15 +11,27 @@ const PriceDisplay: React.FC<PriceDisplayProps> = ({
   currentPrice,
   originalPrice,
 }) => {
+  if (!currentPrice && !originalPrice) {
+    return;
+  }
   const price = UsePrice({ amount: currentPrice, currency: 'USD' });
   const oldPrice = UsePrice({ amount: originalPrice, currency: 'USD' });
 
   return (
     <div className="mb-5 mr-auto flex gap-2 py-1">
-      <div className="grow text-lg font-bold leading-4 text-orange-500">
-        {price}
+      {currentPrice && (
+        <div className="grow text-lg font-bold leading-4 text-orange-500">
+          {price}
+        </div>
+      )}
+      <div
+        className={
+          'leading-4 ' +
+          (currentPrice ? 'text-gray-400 text-sm' : 'text-orange-500 text-lg')
+        }
+      >
+        {oldPrice}
       </div>
-      <div className="text-sm leading-4 text-gray-400">{oldPrice}</div>
     </div>
   );
 };

@@ -12,6 +12,9 @@ const FavoritesPage = () => {
   const favorites = useAppSelector((state) =>
     selectFavoritesItems(state),
   ) as Array<IProductsEntity>;
+  const { empty_favorites_plug } = useAppSelector(
+    (state) => state.systemContentReducer.content,
+  );
 
   return favorites.length > 0 ? (
     <div className="flex flex-col pb-5 max-md:max-w-full">
@@ -21,7 +24,7 @@ const FavoritesPage = () => {
     </div>
   ) : (
     <div className="relative box-border flex shrink-0 flex-col">
-      Empty Favorites
+      {empty_favorites_plug}
     </div>
   );
 };
