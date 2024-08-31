@@ -26,6 +26,7 @@ export enum FormFieldsEnum {
   phone = 'tel',
 
   email_reg = email,
+  email_notifications = email,
   phone_reg = phone,
   password_reg = password,
   password_confirm = password,

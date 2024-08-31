@@ -18,12 +18,12 @@ const TestPage = () => {
         <div className="flex w-full flex-col items-center gap-5 bg-white">
           {/* <CalendarForm /> */}
           {/* <ForgotPasswordForm /> */}
-          <ResetPasswordForm />
+          {/* <ResetPasswordForm /> */}
+          <SignUpForm />
           {/* 
           <PaymentForm />
           <SignInEmail />
           <SignInPhone />
-          <SignUpForm />
           <VerificationForm /> */}
         </div>
       </section>

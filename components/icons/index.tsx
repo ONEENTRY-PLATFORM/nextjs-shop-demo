@@ -1,6 +1,7 @@
 import cart from './cart';
 import trash from './delete';
 import eye from './eye';
+import eyeO from './eye-o';
 import favorites from './favorites';
 import filter from './filter';
 import like from './like';
@@ -12,6 +13,7 @@ import search from './search';
 export {
   cart,
   eye,
+  eyeO,
   favorites,
   filter,
   like,

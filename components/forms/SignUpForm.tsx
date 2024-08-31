@@ -2,15 +2,15 @@ import React, { useContext, useEffect } from 'react';
 
 import { api, useGetForm } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
-import { useAppDispatch } from '@/app/store/hooks';
-import { addField } from '@/app/store/reducers/FormFieldsSlice';
 
-import { signUpFormFields } from '../data';
+// import { useAppDispatch } from '@/app/store/hooks';
+// import { addField } from '@/app/store/reducers/FormFieldsSlice';
+// import { signUpFormFields } from '../data';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
 const SignUpForm: React.FC = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
   ) as object as {
@@ -21,11 +21,11 @@ const SignUpForm: React.FC = () => {
       value: string;
     };
   };
+  console.log(fields);
 
   const data = useGetForm({
     marker: 'reg',
   });
-  // console.log(data);
 
   const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -38,53 +38,53 @@ const SignUpForm: React.FC = () => {
     // } catch (e: unknown) {
     //   console.log(e);
     // }
+
+    // const formData = Object.keys(fields).reduce(
+    //   (
+    //     arr: Array<{
+    //       marker: string;
+    //       type: string;
+    //       value: string;
+    //     }>,
+    //     field,
+    //   ) => {
+    //     const candidate = {
+    //       marker: field,
+    //       type: 'string',
+    //       value: fields[field].value,
+    //     };
+    //     arr.push(candidate);
+    //     return arr;
+    //   },
+    //   [],
+    // );
+
+    // try {
+    //   const res = await api.AuthProvider.signUp('email', data, 'en_US');
+    //   if (res.isActive) {
+    //     try {
+    //       await logInUser({
+    //         method: 'email',
+    //         login: res.identifier,
+    //         password: fields.password_reg.value,
+    //       });
+
+    //       authenticate();
+    //     } catch (e: any) {
+    //       Alert.alert(e.message);
+    //     }
+    //   } else {
+    //     navigateAuth('activate_user', {
+    //       email: res.identifier,
+    //       method: 'email',
+    //       password: fields.password_reg.value,
+    //       event: 'activate',
+    //     });
+    //   }
+    // } catch (e: any) {
+    //   Alert.alert(e?.message);
+    // }
   };
-
-  // const formData = Object.keys(fields).reduce(
-  //   (
-  //     arr: Array<{
-  //       marker: string;
-  //       type: string;
-  //       value: string;
-  //     }>,
-  //     field,
-  //   ) => {
-  //     const candidate = {
-  //       marker: field,
-  //       type: 'string',
-  //       value: fields[field].value,
-  //     };
-  //     arr.push(candidate);
-  //     return arr;
-  //   },
-  //   [],
-  // );
-
-  // try {
-  //   const res = await api.AuthProvider.signUp('email', data, 'en_US');
-  //   if (res.isActive) {
-  //     try {
-  //       await logInUser({
-  //         method: 'email',
-  //         login: res.identifier,
-  //         password: fields.password_reg.value,
-  //       });
-
-  //       authenticate();
-  //     } catch (e: any) {
-  //       Alert.alert(e.message);
-  //     }
-  //   } else {
-  //     navigateAuth('activate_user', {
-  //       email: res.identifier,
-  //       method: 'email',
-  //       password: fields.password_reg.value,
-  //       event: 'activate',
-  //     });
-  //   }
-  // } catch (e: any) {
-  //   Alert.alert(e?.message);
-  // }
 
   return (
     <form
@@ -100,9 +100,17 @@ const SignUpForm: React.FC = () => {
         </p>
       </div>
       <div className="relative mb-auto box-border flex shrink-0 flex-col gap-4">
-        {signUpFormFields.map((field, index) => (
-          <FormInput key={index} {...field} />
-        ))}
+        {data.form?.attributes.map(
+          (
+            field: {
+              localizeInfos: {
+                title: string;
+              };
+              marker: string;
+            },
+            index: React.Key,
+          ) => <FormInput key={index} {...field} />,
+        )}
       </div>
       <SubmitButton title="SIGN UP" class="" icon="" />
     </form>
