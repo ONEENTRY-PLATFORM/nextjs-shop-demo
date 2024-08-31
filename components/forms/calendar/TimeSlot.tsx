@@ -11,7 +11,7 @@ interface TimeSlotProps {
 }
 
 const TimeSlot: React.FC<TimeSlotProps> = ({ slot, currentTime, setTime }) => {
-  let className = 'px-3.5 py-2 rounded-3xl border-2 text-center ';
+  let className = 'px-2 py-1.5 rounded-3xl border-2 text-center text-sm ';
   const { isDisabled, time } = slot;
   if (currentTime === time) {
     className += 'text-white bg-orange-500 border-orange-500';

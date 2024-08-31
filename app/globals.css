@@ -54,7 +54,7 @@ body {
   max-width: 100%;
   background: white;
   line-height: 1.125em;
-  padding: 20px;
+  padding: 20px 0;
 }
 .react-calendar,
 .react-calendar *,

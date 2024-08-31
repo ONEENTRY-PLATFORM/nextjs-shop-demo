@@ -1,10 +1,11 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { selectDeliveryData } from '@/app/store/reducers/CartSlice';
-import CalendarForm from '@/components/forms/CalendarForm';
 
+// import CalendarForm from '@/components/forms/CalendarForm';
 import TableRow from './DeliveryTableRow';
 
 const DeliveryTable: React.FC = () => {
@@ -15,7 +16,7 @@ const DeliveryTable: React.FC = () => {
 
   return (
     <>
-      <CalendarForm />
+      {/* <CalendarForm /> */}
       <table className="table w-full border border-solid border-neutral-100 text-neutral-600">
         <tbody>
           <TableRow
@@ -34,6 +35,7 @@ const DeliveryTable: React.FC = () => {
             <td className="self-stretch align-middle text-sm">Address</td>
             <td className="px-5 align-middle text-base">
               <input
+                size={40}
                 type="text"
                 value={address}
                 placeholder={'Address'}
