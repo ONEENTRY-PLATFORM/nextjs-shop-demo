@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { useAppDispatch } from '@/app/store/hooks';
@@ -7,7 +8,6 @@ import { UsePrice } from '@/components/utils';
 
 import QuantitySelector from '../product/components/QuantitySelector';
 import DeleteButton from './DeleteButton';
-import Link from 'next/link';
 
 const ProductCard: React.FC<{
   product: IProductsEntity & { selected: boolean };
@@ -28,7 +28,7 @@ const ProductCard: React.FC<{
   return (
     <article className="flex w-full justify-between gap-5 border border-solid border-neutral-100 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
       <div className="relative flex justify-between gap-5">
-        <div className="relative mb-auto box-border flex shrink-0 flex-row self-center z-10">
+        <div className="relative z-10 mb-auto box-border flex shrink-0 flex-row self-center">
           <input
             onChange={(e) => {
               dispatch(deselectProduct(id));
@@ -62,7 +62,7 @@ const ProductCard: React.FC<{
         ></Link>
       </div>
 
-      <div className="flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:flex max-sm:flex-row z-10">
+      <div className="z-10 flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:flex max-sm:flex-row">
         <QuantitySelector product={product} height={42} />
         <DeleteButton {...product} />
       </div>

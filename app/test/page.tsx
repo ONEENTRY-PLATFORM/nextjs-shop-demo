@@ -19,9 +19,9 @@ const TestPage = () => {
           {/* <CalendarForm /> */}
           {/* <ForgotPasswordForm /> */}
           {/* <ResetPasswordForm /> */}
-          <SignUpForm />
-          {/* 
+          {/* <SignUpForm /> */}
           <PaymentForm />
+          {/* 
           <SignInEmail />
           <SignInPhone />
           <VerificationForm /> */}

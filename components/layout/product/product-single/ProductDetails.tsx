@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import { UsePrice } from '../../../utils';
+// import { UsePrice } from '../../../utils';
 import AddToCartButton from '../components/AddToCartButton';
+import PriceDisplay from '../product-card/PriceDisplay';
 
 const ProductDetails: React.FC<IProductsEntity> = (product) => {
   const { attributeValues, localizeInfos, price } = product;
-  const fPrice = UsePrice({ amount: price, currency: 'USD' });
+  // const fPrice = UsePrice({ amount: price, currency: 'USD' });
   const units = attributeValues?.units_product.value;
   const maxUnits = 50;
   const width = (units / maxUnits) * 100;
@@ -28,7 +29,11 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
       </p>
 
       <p className="mb-5 mt-4 text-left text-xl font-bold leading-8 text-neutral-600">
-        {fPrice}
+        {/* {fPrice} */}
+        <PriceDisplay
+          currentPrice={attributeValues.sale?.value}
+          originalPrice={attributeValues.price?.value}
+        />
       </p>
 
       <div className="relative mb-6 box-border flex shrink-0 flex-col ">

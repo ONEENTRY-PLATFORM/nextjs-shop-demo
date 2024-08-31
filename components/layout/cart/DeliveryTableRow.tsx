@@ -26,6 +26,7 @@ const TableRow: React.FC<TableRowProps> = ({
           type="text"
           value={value}
           placeholder={placeholder}
+          readOnly
           onClick={() => {
             setOpen(true);
             setComponent('CalendarForm');
