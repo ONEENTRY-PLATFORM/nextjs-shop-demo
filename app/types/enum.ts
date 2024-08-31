@@ -28,5 +28,5 @@ export enum FormFieldsEnum {
   email_reg = email,
   phone_reg = phone,
   password_reg = password,
-  password_repeat = password,
+  password_confirm = password,
 }
