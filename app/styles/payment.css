@@ -1,38 +1,4 @@
-.form-container .field-container:first-of-type {
-  grid-area: name;
-}
-.form-container .field-container:nth-of-type(2) {
-  grid-area: number;
-}
-.form-container .field-container:nth-of-type(3) {
-  grid-area: expiration;
-}
-.form-container .field-container:nth-of-type(4) {
-  grid-area: security;
-}
-
-.field-container {
-  position: relative;
-}
-
-.form-container {
-  display: grid;
-  grid-column-gap: 10px;
-  grid-template-columns: auto auto;
-  grid-template-rows: 90px 90px 90px;
-  grid-template-areas: "name name""number number""expiration security";
-  max-width: 400px;
-  padding: 20px;
-  color: #707070;
-}
-
 /* CREDIT CARD IMAGE STYLING */
-.container {
-  width: 100%;
-  max-width: 400px;
-  max-height: 251px;
-  height: 54vw;
-}
 #ccsingle {
   position: absolute;
   right: 15px;

@@ -1,24 +1,25 @@
 import '@/app/styles/payment.css';
 
 import Image from 'next/image';
-import React from 'react';
+import React, { useRef } from 'react';
+import { IMaskInput } from 'react-imask';
 
-// import { paymentFormFields } from '../data';
-// import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const PaymentForm: React.FC = () => {
+  const cardRef = useRef();
   return (
     <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
-      {/* <Image
+      <Image
         width={375}
         height={233}
         loading="lazy"
         src="/images/card.svg"
         alt=""
         className="mb-12 aspect-[1.61] w-full max-w-[375px] self-center max-md:mt-10"
-      /> */}
-      <div className="container relative h-[230px] w-[235px] self-center">
+      />
+
+      {/* <div className="relative h-[230px] w-[350px] self-center">
         <div className="creditcard">
           <div className="front">
             <div id="ccsingle"></div>
@@ -272,20 +273,21 @@ const PaymentForm: React.FC = () => {
             </svg>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="relative mb-16 box-border flex shrink-0 flex-col gap-5">
         <div className="relative box-border flex shrink-0 flex-col">
           <label htmlFor="name" className="text-base text-gray-400">
             Name
           </label>
-          <input
+          <IMaskInput
             id="name"
             maxLength={20}
             type="text"
             className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
           />
         </div>
+
         <div className="relative box-border flex shrink-0 flex-col">
           <label htmlFor="cardnumber" className="text-base text-gray-400">
             Card Number
@@ -293,11 +295,21 @@ const PaymentForm: React.FC = () => {
           <span id="generatecard" className="absolute right-0">
             generate random
           </span>
-          <input
-            id="cardnumber"
-            type="text"
+          <IMaskInput
+            mask={'0000 0000 0000 0000'}
+            radix="."
+            value=""
             pattern="[0-9]*"
+            unmask={false}
+            id="cardnumber"
             inputMode="numeric"
+            // ref={ref}
+            // inputRef={inputRef}
+            onAccept={
+              // depending on prop above first argument
+              (value, mask) => console.log(value)
+            }
+            placeholder="Enter card number"
             className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
           />
         </div>
@@ -307,11 +319,17 @@ const PaymentForm: React.FC = () => {
             <label htmlFor="expirationdate" className="text-base text-gray-400">
               Expiration (mm/yy)
             </label>
-            <input
+            <IMaskInput
+              mask="MM{/}YY"
+              value="00/00"
               id="expirationdate"
               type="text"
-              pattern="[0-9]*"
+              pattern="[0-9]*/"
               inputMode="numeric"
+              onAccept={
+                // depending on prop above first argument
+                (value, mask) => console.log(value)
+              }
               className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
             />
           </div>
@@ -319,7 +337,8 @@ const PaymentForm: React.FC = () => {
             <label htmlFor="securitycode" className="text-base text-gray-400">
               Security Code
             </label>
-            <input
+            <IMaskInput
+              mask="0000"
               id="securitycode"
               type="text"
               pattern="[0-9]*"
