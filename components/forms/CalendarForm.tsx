@@ -1,3 +1,5 @@
+import '@/app/styles/calendar.css';
+
 import React, { useContext, useState } from 'react';
 import Calendar from 'react-calendar';
 

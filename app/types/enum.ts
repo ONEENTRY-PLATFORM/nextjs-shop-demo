@@ -24,10 +24,20 @@ export enum FormFieldsEnum {
   email = 'email',
   password = 'password',
   phone = 'tel',
+  date = 'date',
 
   email_reg = email,
   email_notifications = email,
   phone_reg = phone,
   password_reg = password,
   password_confirm = password,
+  card_cvc = password,
+}
+
+export enum minLengthFieldsEnum {
+  card_cvc = 3,
+}
+
+export enum maxLengthFieldsEnum {
+  card_cvc = 3,
 }

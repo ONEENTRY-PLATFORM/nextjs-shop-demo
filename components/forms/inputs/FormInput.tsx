@@ -21,6 +21,8 @@ const FormInput: React.FC<FormInputProps> = (field) => {
   const validate = true;
 
   const fieldType = (FormFieldsEnum as unknown as FormFieldsEnum)[field.marker];
+  const minLength = (FormFieldsEnum as unknown as FormFieldsEnum)[field.marker];
+  const maxLength = (FormFieldsEnum as unknown as FormFieldsEnum)[field.marker];
 
   useEffect(() => {
     dispatch(
@@ -35,7 +37,7 @@ const FormInput: React.FC<FormInputProps> = (field) => {
   }, [value, validate]);
 
   useEffect(() => {
-    setType(fieldType);
+    setType(fieldType || 'text');
   }, [fieldType]);
 
   if (!field) {
@@ -55,6 +57,8 @@ const FormInput: React.FC<FormInputProps> = (field) => {
         required={true}
         onChange={(val) => setValue(val.currentTarget.value)}
         autoComplete={fieldType === 'password' ? 'password' : ''}
+        minLength={minLength || 0}
+        maxLength={maxLength || 50}
       />
       {fieldType === 'password' && (
         <button
