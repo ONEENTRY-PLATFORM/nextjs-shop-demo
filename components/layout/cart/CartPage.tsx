@@ -13,7 +13,6 @@ import PaymentButton from '@/components/layout/cart/PaymentButton';
 import ProductCard from '@/components/layout/cart/ProductCard';
 import TotalAmount from '@/components/layout/cart/TotalAmount';
 import { useGetProduct } from '@/app/api';
-
 import EmptyCart from './EmptyCart';
 import { useEffect } from 'react';
 
@@ -46,6 +45,9 @@ const CartPage = () => {
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
       <div className="flex w-full gap-4 flex-col mb-4">
         {productsInCart?.map((product: IProductsEntity, i: number) => {
+          if (product.id === 83) {
+            return;
+          }
           return <ProductCard key={i} product={product as IProductsEntity & { selected: boolean; }} />;
         })}
       </div>

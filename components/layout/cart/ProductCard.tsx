@@ -8,6 +8,7 @@ import { UsePrice } from '@/components/utils';
 
 import QuantitySelector from '../product/components/QuantitySelector';
 import DeleteButton from './DeleteButton';
+import PriceDisplay from './PriceDisplay';
 
 const ProductCard: React.FC<{
   product: IProductsEntity & { selected: boolean };
@@ -53,7 +54,10 @@ const ProductCard: React.FC<{
 
         <div className="flex flex-col gap-5 self-start text-neutral-600">
           <h2 className="text-base leading-8">{localizeInfos?.title}</h2>
-          <p className="text-xl font-bold leading-8">{formattedPrice}</p>
+          <PriceDisplay
+            currentPrice={attributeValues.sale?.value}
+            originalPrice={attributeValues.price?.value}
+          />
         </div>
 
         <Link

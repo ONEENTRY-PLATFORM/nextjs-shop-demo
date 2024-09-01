@@ -182,8 +182,10 @@ export const selectBasketCount = (state: {
   return totalCount;
 };
 
-export const selectCartTotal = (state: { cartReducer: { products: [] } }) =>
-  state.cartReducer.products.reduce(
+export const selectCartTotal = (state: { cartReducer: { products: [] } }) => {
+  
+  
+  return state.cartReducer.products.reduce(
     (
       total: number,
       item: {
@@ -195,11 +197,12 @@ export const selectCartTotal = (state: { cartReducer: { products: [] } }) =>
     ) => {
       if (item.selected) {
         total +=
-          (item.price - item.attributeValues.sale?.value || 0) * item.quantity;
+          (item.attributeValues.sale?.value || item.price) * item.quantity;
       }
       return total;
     },
     0,
   );
+}
 
 export default cartSlice.reducer;
