@@ -3,13 +3,17 @@ import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { addField } from '@/app/store/reducers/FormFieldsSlice';
-import {
-  FormFieldsEnum,
-  maxLengthFieldsEnum,
-  minLengthFieldsEnum,
-} from '@/app/types/enum';
+import { FormFieldsEnum } from '@/app/types/enum';
 import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
+
+enum minLengthFieldsEnum {
+  card_cvc = 3,
+}
+
+enum maxLengthFieldsEnum {
+  card_cvc = 3,
+}
 
 const FormInput: React.FC<IAttributes & { value?: string }> = (field) => {
   const { localizeInfos } = field;
@@ -18,9 +22,12 @@ const FormInput: React.FC<IAttributes & { value?: string }> = (field) => {
   const dispatch = useAppDispatch();
   const validate = true;
 
-  const fieldType = (FormFieldsEnum as unknown as FormFieldsEnum)[field.marker];
-  const minLength = minLengthFieldsEnum[field.marker];
-  const maxLength = maxLengthFieldsEnum[field.marker];
+  const fieldType = (FormFieldsEnum as unknown as FormFieldsEnum)[
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    field.marker as any
+  ];
+  const minLength = (minLengthFieldsEnum[field.marker] as number) || 0;
+  const maxLength = (maxLengthFieldsEnum[field.marker] as number) || 50;
 
   useEffect(() => {
     dispatch(
@@ -55,8 +62,8 @@ const FormInput: React.FC<IAttributes & { value?: string }> = (field) => {
         required={true}
         onChange={(val) => setValue(val.currentTarget.value)}
         autoComplete={fieldType === 'password' ? 'password' : ''}
-        minLength={minLength || 0}
-        maxLength={maxLength || 50}
+        minLength={minLength}
+        maxLength={maxLength}
         value={value}
       />
       {fieldType === 'password' && (

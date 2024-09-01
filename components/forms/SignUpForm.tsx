@@ -1,18 +1,28 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { useGetFormByMarkerQuery } from '@/app/api';
+import { logInUser } from '@/app/api';
+import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
 const SignUpForm: React.FC = () => {
+  const [_isLoading, setIsLoading] = useState<boolean>(false);
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
+  const { authenticate } = useContext(AuthContext);
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
   ) as object as {
+    phone_reg: {
+      value: string;
+    };
     email_reg: {
       value: string;
     };
@@ -23,61 +33,80 @@ const SignUpForm: React.FC = () => {
 
   const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // const login = fields.email_reg?.value;
-    // const password = fields.password_reg?.value;
+    const canSubmit = Object.keys(fields).reduce((isValid, field) => {
+      if (!isValid) {
+        return false;
+      }
+      return fields[field].valid;
+    }, true);
 
-    // try {
-    //   const res = await api.AuthProvider.signUp('email', data, 'en_US');
-    //   console.log();
-    // } catch (e: unknown) {
-    //   console.log(e);
-    // }
+    if (canSubmit) {
+      const formData = Object.keys(fields).reduce(
+        (
+          arr: Array<{
+            marker: string;
+            type: string;
+            value: string;
+          }>,
+          field,
+        ) => {
+          const candidate = {
+            marker: field,
+            type: 'string',
+            value: fields[field].value,
+          };
+          arr.push(candidate);
+          return arr;
+        },
+        [],
+      );
+      formData.push({
+        marker: 'email_notifications',
+        type: 'string',
+        value: fields.email_reg.value,
+      });
+      const data: ISignUpData = {
+        formIdentifier: 'reg',
+        authData: [
+          { marker: 'email_reg', value: fields.email_reg.value },
+          { marker: 'password_reg', value: fields.password_reg.value },
+        ],
+        formData,
+        notificationData: {
+          email: fields.email_reg.value,
+          phonePush: fields.phone_reg.value,
+          phoneSMS: fields.phone_reg.value,
+        },
+      };
+      setIsLoading(!isLoading);
 
-    // const formData = Object.keys(fields).reduce(
-    //   (
-    //     arr: Array<{
-    //       marker: string;
-    //       type: string;
-    //       value: string;
-    //     }>,
-    //     field,
-    //   ) => {
-    //     const candidate = {
-    //       marker: field,
-    //       type: 'string',
-    //       value: fields[field].value,
-    //     };
-    //     arr.push(candidate);
-    //     return arr;
-    //   },
-    //   [],
-    // );
+      try {
+        const res = await api.AuthProvider.signUp('email', data, 'en_US');
+        if (res.isActive) {
+          try {
+            await logInUser({
+              method: 'email',
+              login: res.identifier,
+              password: fields.password_reg.value,
+            });
 
-    // try {
-    //   const res = await api.AuthProvider.signUp('email', data, 'en_US');
-    //   if (res.isActive) {
-    //     try {
-    //       await logInUser({
-    //         method: 'email',
-    //         login: res.identifier,
-    //         password: fields.password_reg.value,
-    //       });
-
-    //       authenticate();
-    //     } catch (e: any) {
-    //       Alert.alert(e.message);
-    //     }
-    //   } else {
-    //     navigateAuth('activate_user', {
-    //       email: res.identifier,
-    //       method: 'email',
-    //       password: fields.password_reg.value,
-    //       event: 'activate',
-    //     });
-    //   }
-    // } catch (e: any) {
-    //   Alert.alert(e?.message);
-    // }
+            authenticate();
+          } catch (e: any) {
+            // Alert.alert(e.message);
+          }
+        } else {
+          // navigateAuth('activate_user', {
+          //   email: res.identifier,
+          //   method: 'email',
+          //   password: fields.password_reg.value,
+          //   event: 'activate',
+          // });
+        }
+      } catch (e: any) {
+        // Alert.alert(e?.message);
+      }
+      setIsLoading(false);
+    }
   };
 
   return (
