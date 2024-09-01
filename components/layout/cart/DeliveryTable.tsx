@@ -1,14 +1,13 @@
 import Image from 'next/image';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import React, { useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
+import { UsePrice } from '@/components/utils';
 
 import TableRow from './DeliveryTableRow';
-import { UsePrice } from '@/components/utils';
-import { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 const DeliveryTable: React.FC<IProductsEntity> = (product) => {
-
   const deliveryData = useAppSelector(
     (state) => state.cartReducer.deliveryData,
   );
@@ -20,42 +19,43 @@ const DeliveryTable: React.FC<IProductsEntity> = (product) => {
   } = useAppSelector((state) => state.systemContentReducer.content);
 
   const [address, setAddress] = useState('');
-  
+
   return (
-      <table className="table w-full text-neutral-600 border-collapse">
-        <tbody>
-          <TableRow
-            label={'Date'}
-            value={date}
-            icon={'/icons/calendar.svg'}
-            placeholder={order_info_date_placeholder}
-          />
+    <table className="table w-full border-collapse text-neutral-600">
+      <tbody>
+        <TableRow
+          label={'Date'}
+          value={date}
+          icon={'/icons/calendar.svg'}
+          placeholder={order_info_date_placeholder}
+        />
 
-          <TableRow
-            label={'Time'}
-            value={deliveryData?.time || ''}
-            icon={'/icons/time.svg'}
-            placeholder={order_info_time_placeholder}
-          />
+        <TableRow
+          label={'Time'}
+          value={deliveryData?.time || ''}
+          icon={'/icons/time.svg'}
+          placeholder={order_info_time_placeholder}
+        />
 
-          <tr className="table-row h-[50px] gap-5 max-md:max-w-full max-md:flex-wrap border-t border-b border-solid border-neutral-400">
-            <td className="self-stretch align-middle text-sm">
-              <label htmlFor={'address'}>Address</label>
-            </td>
-            <td className="px-5 align-middle text-base">
-              <input
-                size={40}
-                type="text"
-                value={address}
-                id="address"
-                name="address"
-                placeholder={order_info_address_placeholder}
-                onChange={(e) => setAddress(e.target.value)}
-              />
-            </td>
-          </tr>
+        <tr className="table-row h-[50px] gap-5 border-y border-solid border-neutral-400 max-md:max-w-full max-md:flex-wrap">
+          <td className="self-stretch align-middle text-sm">
+            <label htmlFor={'address'}>Address</label>
+          </td>
+          <td className="px-5 align-middle text-base">
+            <input
+              size={40}
+              type="text"
+              value={address}
+              id="address"
+              name="address"
+              placeholder={order_info_address_placeholder}
+              onChange={(e) => setAddress(e.target.value)}
+            />
+          </td>
+        </tr>
 
-          {product && <tr className="table-row h-[50px] gap-5 border-b border-solid border-neutral-400 max-md:max-w-full max-md:flex-wrap">
+        {product && (
+          <tr className="table-row h-[50px] gap-5 border-b border-solid border-neutral-400 max-md:max-w-full max-md:flex-wrap">
             <td className="table-cell align-middle">
               <Image
                 loading="lazy"
@@ -78,9 +78,10 @@ const DeliveryTable: React.FC<IProductsEntity> = (product) => {
               </div>
             </td>
             <td className="table-cell pl-5 align-middle" />
-          </tr>}
-        </tbody>
-      </table>
+          </tr>
+        )}
+      </tbody>
+    </table>
   );
 };
 

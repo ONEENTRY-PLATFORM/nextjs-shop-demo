@@ -24,7 +24,7 @@ export default function CatalogPage({
   //   order_info_total,
   //   order_info_address_placeholder,
   // } = useAppSelector((state) => state.systemContentReducer.content);
-
+  // !!!
   return (
     <section className="relative mx-auto box-border flex min-h-80 w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">

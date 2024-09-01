@@ -16,11 +16,13 @@ const RatingButton: React.FC<ReviewSectionProps> = ({
   state,
   setState,
   rating,
-  reviewCount
+  reviewCount,
 }) => {
-  
   return (
-    <button onClick={() => setState(!state)} className="mr-auto flex gap-5 mb-6">
+    <button
+      onClick={() => setState(!state)}
+      className="mb-6 mr-auto flex gap-5"
+    >
       <div className="flex gap-2.5">
         <StarRating rating={rating} />
         <div className="text-lg font-bold text-neutral-600">

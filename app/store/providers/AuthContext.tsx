@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }: Props) => {
         .then(
           (res: {
             error: any;
-            isLoading: any;
+            isLoading: boolean;
             data: SetStateAction<IUserEntity | undefined>;
           }) => {
             if (res.error && !res.isLoading) {

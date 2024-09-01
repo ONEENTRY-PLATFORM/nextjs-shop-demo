@@ -3,8 +3,8 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { Key } from 'react';
 
 import AddToCartButton from '../components/AddToCartButton';
-import PriceDisplay from './PriceDisplay';
 import FavoritesButton from './FavoritesButton';
+import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 import Sticker from './Sticker';
 

@@ -9,10 +9,7 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
   const units = attributeValues?.units_product.value;
   const maxUnits = 50;
   const width = (units / maxUnits) * 100;
-  console.log(attributeValues);
-  console.log('!!!-------------------------------------!!!');
-  
-  
+
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-full">
       <h1 className="text-xl leading-6 text-neutral-600">

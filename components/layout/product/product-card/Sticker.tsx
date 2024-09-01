@@ -22,7 +22,7 @@ const Sticker: React.FC<IconButtonProps> = ({ sticker }) => {
   return (
     <button
       type="button"
-      className="relative box-border flex items-center justify-center size-[26px] shrink-0 flex-col"
+      className="relative box-border flex size-[26px] shrink-0 flex-col items-center justify-center"
     >
       <Image
         width={24}

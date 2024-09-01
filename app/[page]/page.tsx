@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import CartPage from '@/components/layout/cart/CartPage';
 import AboutPage from '@/components/layout/pages/AboutPage';
 import FavoritesPage from '@/components/layout/pages/FavoritesPage';
-import OrdersPage from '@/components/layout/orders/OrdersPage';
 import PaymentPage from '@/components/layout/pages/PaymentPage';
 import ProfilePage from '@/components/layout/pages/ProfilePage';
 import ServicesPage from '@/components/layout/pages/ServicesPage';
@@ -20,12 +19,6 @@ const pages = [
     title: 'profile',
     component: <ProfilePage />,
   },
-  // {
-  //   templateType: 'withSidebar',
-  //   name: 'orders',
-  //   title: 'orders',
-  //   component: <OrdersPage />,
-  // },
   {
     templateType: 'withSidebar',
     name: 'cart',

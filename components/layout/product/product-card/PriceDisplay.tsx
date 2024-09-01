@@ -17,7 +17,10 @@ const PriceDisplay: React.FC<PriceDisplayProps> = ({
     return;
   }
   const price = UsePrice({ amount: currentPrice, currency: currency || 'USD' });
-  const oldPrice = UsePrice({ amount: originalPrice, currency: currency || 'USD' });
+  const oldPrice = UsePrice({
+    amount: originalPrice,
+    currency: currency || 'USD',
+  });
 
   return (
     <div className="flex gap-2.5 self-center font-bold">

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Action, PayloadAction } from '@reduxjs/toolkit';
 import type { BaseQueryApi } from '@reduxjs/toolkit/query/react';
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';

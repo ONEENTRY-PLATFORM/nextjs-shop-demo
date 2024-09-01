@@ -1,7 +1,7 @@
 import React from 'react';
 
-import PriceDisplay from './PriceDisplay';
 import ApplyButton from './ApplyButton';
+import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 
 interface GroupCardProps {
