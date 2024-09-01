@@ -4,7 +4,8 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { ReactNode, SetStateAction } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 
-import { reDefine, useLazyGetMeQuery } from '../../api';
+import { reDefine, useLazyGetMeQuery } from '@/app/api';
+
 import { LanguageContext } from './LanguageContext';
 
 type ContextProps = {

@@ -11,7 +11,7 @@ import type {
   IProductsEntity,
 } from 'oneentry/dist/products/productsInterfaces';
 
-import { api } from './';
+import { api } from '@/app/api';
 
 /* ProductApi */
 
@@ -259,7 +259,6 @@ export async function getBlockByMarker({
 // api.Products.getProductsEmptyPage(langCode?: string, userQuery?: IProductsQuery): Promise<Array<IProductsEntity>>;
 
 // api.Products.getProductBlockById(id: number)
-// api.Products.searchProduct(name: string, langCode?: string)
 
 // interface IDefineApi {
 //   Admins: AdminsApi;
