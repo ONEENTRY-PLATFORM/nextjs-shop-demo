@@ -1,3 +1,4 @@
+import type { IAttributes } from 'oneentry/dist/base/utils';
 import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
@@ -6,14 +7,14 @@ import { FormFieldsEnum } from '@/app/types/enum';
 import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
 
-interface FormInputProps {
-  localizeInfos: {
-    title: string;
-  };
-  marker: string;
-}
+// interface FormInputProps {
+//   localizeInfos: {
+//     title: string;
+//   };
+//   marker: string;
+// }
 
-const FormInput: React.FC<FormInputProps> = (field) => {
+const FormInput: React.FC<IAttributes> = (field) => {
   const { localizeInfos } = field;
   const [value, setValue] = useState<string>('');
   const [type, setType] = useState<string>('');

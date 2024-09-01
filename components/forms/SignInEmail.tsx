@@ -1,7 +1,14 @@
 // import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { Key } from 'react';
 import React, { useContext, useEffect } from 'react';
 
-import { logInUser, useGetAuthProvidersQuery, useGetForm } from '@/app/api';
+import {
+  logInUser,
+  useGetAuthProvidersQuery,
+  useGetForm,
+  useGetFormByMarkerQuery,
+} from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -17,11 +24,9 @@ import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInEmail: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
-  const { isAuth, isLoading } = useContext(AuthContext);
+  const { isAuth } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
-  const form = useGetForm({
-    marker: 'sign_in',
-  });
+  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'sign_in' });
 
   // form
   //   localizeInfos
@@ -97,7 +102,7 @@ const SignInEmail: React.FC = () => {
       </div>
 
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-        {signInFormFields.map((field, index) => {
+        {data?.attributes.map((field: IAttributes, index: Key) => {
           return <FormInput key={index} {...field} />;
         })}
       </div>
@@ -106,7 +111,7 @@ const SignInEmail: React.FC = () => {
         type="submit"
         className="relative mt-auto flex w-[282px] max-w-full items-center justify-center self-center rounded-[30px] border border-none border-[black] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
       >
-        {form.loading ? <Spinner /> : 'Sign in'}
+        {isLoading ? <Spinner /> : 'Sign in'}
       </button>
 
       <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm max-md:mt-10">

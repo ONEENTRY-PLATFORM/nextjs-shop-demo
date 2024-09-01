@@ -1,6 +1,7 @@
+import type { IAttributes } from 'oneentry/dist/base/utils';
 import React, { useContext, useEffect } from 'react';
 
-import { api, useGetForm } from '@/app/api';
+import { useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 
 // import { useAppDispatch } from '@/app/store/hooks';
@@ -11,6 +12,8 @@ import SubmitButton from './inputs/FormSubmitButton';
 
 const SignUpForm: React.FC = () => {
   // const dispatch = useAppDispatch();
+  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
+
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
   ) as object as {
@@ -21,11 +24,6 @@ const SignUpForm: React.FC = () => {
       value: string;
     };
   };
-  console.log(fields);
-
-  const data = useGetForm({
-    marker: 'reg',
-  });
 
   const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -100,17 +98,11 @@ const SignUpForm: React.FC = () => {
         </p>
       </div>
       <div className="relative mb-auto box-border flex shrink-0 flex-col gap-4">
-        {data.form?.attributes.map(
-          (
-            field: {
-              localizeInfos: {
-                title: string;
-              };
-              marker: string;
-            },
-            index: React.Key,
-          ) => <FormInput key={index} {...field} />,
-        )}
+        {data?.attributes.map((field: IAttributes, index: React.Key) => {
+          if (field.marker !== 'email_notifications') {
+            return <FormInput key={index} {...field} />;
+          }
+        })}
       </div>
       <SubmitButton title="SIGN UP" class="" icon="" />
     </form>

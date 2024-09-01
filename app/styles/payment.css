@@ -8,16 +8,6 @@
   width: 100px;
   max-height: 60px;
 }
-#generatecard{
-  cursor: pointer;
-  font-size: 12px;
-  color: #fff;
-  padding: 2px 4px;
-  background-color: #909090;
-  border-radius: 4px;
-  position: absolute;
-  right: 0;
-}
 
 /* CHANGEABLE CARD ELEMENTS */
 .creditcard .lightcolor,

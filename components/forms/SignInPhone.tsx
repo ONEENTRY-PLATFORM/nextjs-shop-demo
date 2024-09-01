@@ -1,9 +1,10 @@
+import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { Key } from 'react';
 import React from 'react';
 
-import { logInUser, useGetForm } from '@/app/api';
+import { logInUser, useGetForm, useGetFormByMarkerQuery } from '@/app/api';
 
 import { socialProvidersButtons } from '../data';
-import { signInPhoneFormFields } from '../data';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import ForgotPasswordButton from './inputs/ForgotPasswordButton';
 import FormInput from './inputs/FormInput';
@@ -11,21 +12,37 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
+const signInPhoneFormFields = [
+  {
+    isVisible: true,
+    localizeInfos: {
+      title: 'Phone number',
+    },
+    placeholder: '+91 (',
+    marker: 'phone_reg',
+    required: true,
+  },
+];
+
 const SignInPhone: React.FC = () => {
-  // const form = useGetForm({
+  // const data = useGetForm({
   //   marker: 'sign_in',
   // });
-  // console.log(form);
+  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
+
+  const onSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+  };
 
   return (
     <form
       name="signin-form"
       className="flex min-h-full flex-col gap-4 text-xl leading-5"
-      method="POST"
+      onSubmit={onSubmit}
     >
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">
         <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
-          Sign in
+          {data?.localizeInfos.titleForSite}
         </h2>
         <p className="text-xs text-gray-400 max-md:max-w-full">
           E-mail/<b>Phone</b>
@@ -33,8 +50,10 @@ const SignInPhone: React.FC = () => {
       </div>
 
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-        {signInPhoneFormFields.map((field, index) => {
-          return <FormInput key={index} {...field} />;
+        {data?.attributes.map((field: IAttributes, index: Key) => {
+          if (field.marker === 'phone_reg') {
+            return <FormInput key={index} {...field} />;
+          }
         })}
       </div>
 

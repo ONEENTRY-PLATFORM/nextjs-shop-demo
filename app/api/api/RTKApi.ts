@@ -1,5 +1,5 @@
 import type { Action, PayloadAction } from '@reduxjs/toolkit';
-import type { UnknownAction } from '@reduxjs/toolkit';
+import type { BaseQueryApi } from '@reduxjs/toolkit/query/react';
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
@@ -25,9 +25,10 @@ function isHydrateAction(action: Action): action is PayloadAction<RootState> {
 
 export const RTKApi = createApi({
   reducerPath: 'api',
+  baseQuery: fakeBaseQuery(),
   endpoints: (build) => ({
     // eslint-disable-next-line prettier/prettier
-    getBlocksByPageUrl: build.query<IPositionBlock[], { pageUrl: string; activeLang: string }>({
+    getBlocksByPageUrl: build.query<IPositionBlock[], { pageUrl: string; activeLang: string; }>({
       queryFn: async ({ pageUrl, activeLang }) => {
         try {
           const result = await api.Pages.getBlocksByPageUrl(

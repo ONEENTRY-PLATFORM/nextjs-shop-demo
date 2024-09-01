@@ -1,14 +1,14 @@
+import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { Key } from 'react';
 import React from 'react';
 
-import { useGetForm } from '@/app/api';
+import { useGetFormByMarkerQuery } from '@/app/api';
 
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 export const ForgotPasswordForm: React.FC = () => {
-  const data = useGetForm({
-    marker: 'reg',
-  });
+  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'sign_in' });
 
   return (
     <form
@@ -27,21 +27,11 @@ export const ForgotPasswordForm: React.FC = () => {
       </div>
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
-        {data.form?.attributes.map(
-          (
-            field: {
-              localizeInfos: {
-                title: string;
-              };
-              marker: string;
-            },
-            index: React.Key,
-          ) => {
-            if (field.marker === 'email_reg') {
-              return <FormInput key={index} {...field} />;
-            }
-          },
-        )}
+        {data?.attributes.map((field: IAttributes, index: Key) => {
+          if (field.marker === 'email_reg') {
+            return <FormInput key={index} {...field} />;
+          }
+        })}
       </div>
 
       <FormSubmitButton title="SEND" class="" icon="" />

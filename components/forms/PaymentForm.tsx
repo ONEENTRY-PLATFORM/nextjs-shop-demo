@@ -2,14 +2,19 @@ import '@/app/styles/payment.css';
 
 import Image from 'next/image';
 import React, { useRef } from 'react';
-import { IMaskInput } from 'react-imask';
+import { IMask, IMaskInput } from 'react-imask';
 
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const PaymentForm: React.FC = () => {
-  const cardRef = useRef();
+  const onSubmit = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+  };
   return (
-    <form className="flex min-h-full flex-col gap-4 text-xl leading-5">
+    <form
+      className="flex min-h-full flex-col gap-4 text-xl leading-5"
+      onSubmit={onSubmit}
+    >
       <Image
         width={375}
         height={233}
@@ -284,6 +289,7 @@ const PaymentForm: React.FC = () => {
             id="name"
             maxLength={20}
             type="text"
+            placeholder="ONE ENTRY"
             className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
           />
         </div>
@@ -292,15 +298,12 @@ const PaymentForm: React.FC = () => {
           <label htmlFor="cardnumber" className="text-base text-gray-400">
             Card Number
           </label>
-          <span id="generatecard" className="absolute right-0">
-            generate random
-          </span>
           <IMaskInput
             mask={'0000 0000 0000 0000'}
             radix="."
             value=""
             pattern="[0-9]*"
-            unmask={false}
+            unmask={true}
             id="cardnumber"
             inputMode="numeric"
             // ref={ref}
@@ -315,16 +318,30 @@ const PaymentForm: React.FC = () => {
         </div>
 
         <div className="relative box-border flex shrink-0 flex-row justify-between gap-4">
-          <div className="relative box-border flex shrink-0 flex-col">
+          <div className="relative box-border flex w-[45%] shrink-0 flex-col">
             <label htmlFor="expirationdate" className="text-base text-gray-400">
               Expiration (mm/yy)
             </label>
             <IMaskInput
-              mask="MM{/}YY"
-              value="00/00"
+              mask={Date}
+              pattern="MM{/}YY"
+              blocks={{
+                MM: {
+                  mask: IMask.MaskedRange,
+                  from: 1,
+                  to: 12,
+                  maxLength: 2,
+                },
+                YY: {
+                  mask: IMask.MaskedRange,
+                  from: 0,
+                  to: 999,
+                  maxLength: 2,
+                },
+              }}
+              placeholder="00/00"
               id="expirationdate"
               type="text"
-              pattern="[0-9]*/"
               inputMode="numeric"
               onAccept={
                 // depending on prop above first argument
@@ -333,7 +350,7 @@ const PaymentForm: React.FC = () => {
               className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
             />
           </div>
-          <div className="relative box-border flex shrink-0 flex-col">
+          <div className="relative box-border flex w-[45%] shrink-0 flex-col">
             <label htmlFor="securitycode" className="text-base text-gray-400">
               Security Code
             </label>
@@ -343,6 +360,7 @@ const PaymentForm: React.FC = () => {
               type="text"
               pattern="[0-9]*"
               inputMode="numeric"
+              placeholder="000"
               className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
             />
           </div>

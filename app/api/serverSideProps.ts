@@ -255,22 +255,6 @@ export async function getBlockByMarker({
   }
 }
 
-// getFormByMarker
-// export async function getFormByMarker({
-//   marker,
-//   langCode,
-// }: {
-//   marker: string;
-//   langCode: string;
-// }) {
-//   try {
-//     const form = await api.Blocks.getBlockByMarker(marker, langCode);
-//     return { isError: false, form: form };
-//   } catch (e) {
-//     return { isError: true, err: e };
-//   }
-// }
-
 // api.Products.getProductsByPageId
 // api.Products.getProductsEmptyPage(langCode?: string, userQuery?: IProductsQuery): Promise<Array<IProductsEntity>>;
 

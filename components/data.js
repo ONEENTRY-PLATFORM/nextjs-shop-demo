@@ -173,19 +173,6 @@ export const userFormFields = [
   },
 ];
 
-export const signInPhoneFormFields = [
-  {
-    fieldType: 'tel',
-    isVisible: true,
-    localizeInfos: {
-      title: 'Phone number',
-    },
-    placeholder: '+91 (',
-    marker: 'email_reg',
-    required: true,
-  },
-];
-
 export const resetPasswordFormFields = [
   {
     fieldType: 'password',
