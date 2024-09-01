@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PriceDisplay from '../components/PriceDisplay';
+import PriceDisplay from './PriceDisplay';
 import ApplyButton from './ApplyButton';
 import ProductImage from './ProductImage';
 
@@ -23,7 +23,6 @@ const GroupCard: React.FC<GroupCardProps> = ({
           <PriceDisplay
             currentPrice={currentPrice}
             originalPrice={originalPrice}
-            className={'mb-5 mr-auto flex gap-2 py-1'}
           />
           <ApplyButton />
         </div>

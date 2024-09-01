@@ -1,17 +1,18 @@
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-// import { UsePrice } from '../../../utils';
 import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';
 
 const ProductDetails: React.FC<IProductsEntity> = (product) => {
   const { attributeValues, localizeInfos, price } = product;
-  // const fPrice = UsePrice({ amount: price, currency: 'USD' });
   const units = attributeValues?.units_product.value;
   const maxUnits = 50;
   const width = (units / maxUnits) * 100;
-
+  console.log(attributeValues);
+  console.log('!!!-------------------------------------!!!');
+  
+  
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-full">
       <h1 className="text-xl leading-6 text-neutral-600">
@@ -28,14 +29,12 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
         </Link>
       </p>
 
-      <p className="mb-5 mt-4 text-left text-xl font-bold leading-8 text-neutral-600">
-        {/* {fPrice} */}
-        {/* <PriceDisplay
+      <div className="mb-5 mt-4 text-left text-xl font-bold leading-8 text-neutral-600">
+        <PriceDisplay
           currentPrice={attributeValues.sale?.value}
           originalPrice={attributeValues.price?.value}
-          className={'flex gap-2.5 self-center font-bold'}
-        /> */}
-      </p>
+        />
+      </div>
 
       <div className="relative mb-6 box-border flex shrink-0 flex-col ">
         <div className="self-end text-sm text-slate-300">{units} units</div>

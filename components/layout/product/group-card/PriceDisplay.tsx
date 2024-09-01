@@ -5,17 +5,19 @@ import { UsePrice } from '../../../utils';
 interface PriceDisplayProps {
   currentPrice: number;
   originalPrice: number;
+  currency?: string;
 }
 
 const PriceDisplay: React.FC<PriceDisplayProps> = ({
   currentPrice,
   originalPrice,
+  currency,
 }) => {
   if (!currentPrice && !originalPrice) {
     return;
   }
-  const price = UsePrice({ amount: currentPrice, currency: 'USD' });
-  const oldPrice = UsePrice({ amount: originalPrice, currency: 'USD' });
+  const price = UsePrice({ amount: currentPrice, currency: currency || 'USD' });
+  const oldPrice = UsePrice({ amount: originalPrice, currency: currency || 'USD' });
 
   return (
     <div className="mb-5 mr-auto flex gap-2 py-1">

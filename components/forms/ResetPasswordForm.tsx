@@ -5,7 +5,9 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const ResetPasswordForm: React.FC = () => {
-  const onResetSubmit = () => {};
+  const onResetSubmit = () => {
+    // !!!
+  };
   return (
     <form
       name="resetPasswordForm"

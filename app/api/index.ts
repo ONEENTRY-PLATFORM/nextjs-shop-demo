@@ -26,6 +26,7 @@ export { useGetBlocksByUrl } from './hooks/useGetBlocksByUrl';
 export { useGetConfig } from './hooks/useGetConfig';
 export { useGetForm } from './hooks/useGetForm';
 export { useGetLocales } from './hooks/useGetLocales';
+export { useGetProduct } from './hooks/useGetProduct';
 export { useGetProductsByBlockMarker } from './hooks/useGetProductsByBlockMarker';
 export { useGetSimilarProducts } from './hooks/useGetSimilarProducts';
 export { useGetSingleAttributeByMarkerSet } from './hooks/useGetSingleAttributeByMarkerSet';

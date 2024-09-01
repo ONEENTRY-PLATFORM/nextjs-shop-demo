@@ -3,7 +3,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { Key } from 'react';
 
 import AddToCartButton from '../components/AddToCartButton';
-import PriceDisplay from '../components/PriceDisplay';
+import PriceDisplay from './PriceDisplay';
 import FavoritesButton from './FavoritesButton';
 import ProductImage from './ProductImage';
 import Sticker from './Sticker';
@@ -49,7 +49,6 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
         <PriceDisplay
           currentPrice={attributeValues.sale?.value}
           originalPrice={attributeValues.price?.value}
-          className={'flex gap-2.5 self-center font-bold'}
         />
 
         <AddToCartButton
