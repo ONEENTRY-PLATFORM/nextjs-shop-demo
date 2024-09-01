@@ -1,4 +1,4 @@
-import cart from '../cart';
+import cart from '../cart/CartPage';
 import about_us from './AboutPage';
 import contact_us from './ContactsPage';
 import favorites from './FavoritesPage';

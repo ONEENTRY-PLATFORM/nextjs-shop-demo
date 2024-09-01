@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import CartPage from '@/components/layout/cart';
+import CartPage from '@/components/layout/cart/CartPage';
 import AboutPage from '@/components/layout/pages/AboutPage';
 import FavoritesPage from '@/components/layout/pages/FavoritesPage';
 import OrdersPage from '@/components/layout/orders/OrdersPage';

@@ -3,13 +3,12 @@ import React, { useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 
-// import CalendarForm from '@/components/forms/CalendarForm';
 import TableRow from './DeliveryTableRow';
-import { getProductById } from '@/app/api/serverSideProps';
-import { useGetProduct } from '@/app/api';
 import { UsePrice } from '@/components/utils';
+import { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-const DeliveryTable: React.FC = () => {
+const DeliveryTable: React.FC<IProductsEntity> = (product) => {
+
   const deliveryData = useAppSelector(
     (state) => state.cartReducer.deliveryData,
   );
@@ -21,12 +20,9 @@ const DeliveryTable: React.FC = () => {
   } = useAppSelector((state) => state.systemContentReducer.content);
 
   const [address, setAddress] = useState('');
-
-  const { product } = useGetProduct({id: 83});
-  console.log(product);
   
   return (
-      <table className="table w-full border border-solid border-neutral-100 text-neutral-600">
+      <table className="table w-full text-neutral-600 border-collapse">
         <tbody>
           <TableRow
             label={'Date'}
@@ -42,7 +38,7 @@ const DeliveryTable: React.FC = () => {
             placeholder={order_info_time_placeholder}
           />
 
-          <tr className="table-row h-[50px] gap-5 max-md:max-w-full max-md:flex-wrap">
+          <tr className="table-row h-[50px] gap-5 max-md:max-w-full max-md:flex-wrap border-t border-b border-solid border-neutral-400">
             <td className="self-stretch align-middle text-sm">
               <label htmlFor={'address'}>Address</label>
             </td>
@@ -59,21 +55,20 @@ const DeliveryTable: React.FC = () => {
             </td>
           </tr>
 
-          {product && <tr className="table-row h-[50px] gap-5 border border-solid border-neutral-100 max-md:max-w-full max-md:flex-wrap">
+          {product && <tr className="table-row h-[50px] gap-5 border-b border-solid border-neutral-400 max-md:max-w-full max-md:flex-wrap">
             <td className="table-cell align-middle">
               <Image
                 loading="lazy"
                 src="/icons/delivery.svg"
-                alt=""
+                alt="delivery"
                 width={125}
                 height={107}
                 className="aspect-[1.16] w-[125px] max-w-full shrink-0 p-4"
               />
             </td>
-
             <td className="table-cell px-5 align-middle">
               <div className="mt-2 flex flex-col self-start">
-                <div className="text-base">Delivery</div>
+                <div className="text-base">{product?.localizeInfos?.title}</div>
                 <div className="mt-4 text-xl font-bold leading-8">
                   {UsePrice({
                     amount: product?.price,

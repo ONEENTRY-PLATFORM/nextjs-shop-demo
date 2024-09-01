@@ -18,7 +18,7 @@ const TableRow: React.FC<TableRowProps> = ({
 }) => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
   return (
-    <tr className="table-row h-[50px] gap-5 max-md:max-w-full max-md:flex-wrap">
+    <tr className="table-row h-[50px] gap-5 max-md:max-w-full max-md:flex-wrap border-t border-solid border-neutral-400">
       <td className="self-stretch align-middle text-sm">
         <label htmlFor={'label-' + placeholder}>{label}</label>
       </td>
