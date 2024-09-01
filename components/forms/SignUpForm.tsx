@@ -100,7 +100,7 @@ const SignUpForm: React.FC = () => {
           }
         })}
       </div>
-      <SubmitButton title="SIGN UP" class="" icon="" />
+      <SubmitButton title="SIGN UP" isLoading={isLoading} class="" icon="" />
     </form>
   );
 };

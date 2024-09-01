@@ -15,59 +15,11 @@
   -webkit-transition: fill .5s;
   transition: fill .5s;
 }
-.creditcard .lightblue {
-  fill: #03A9F4;
-}
-.creditcard .lightbluedark {
-  fill: #0288D1;
-}
-.creditcard .red {
-  fill: #ef5350;
-}
-.creditcard .reddark {
-  fill: #d32f2f;
-}
-.creditcard .purple {
-  fill: #ab47bc;
-}
-.creditcard .purpledark {
-  fill: #7b1fa2;
-}
-.creditcard .cyan {
-  fill: #26c6da;
-}
-.creditcard .cyandark {
-  fill: #0097a7;
-}
-.creditcard .green {
-  fill: #66bb6a;
-}
-.creditcard .greendark {
-  fill: #388e3c;
-}
-.creditcard .lime {
-  fill: #d4e157;
-}
-.creditcard .limedark {
-  fill: #afb42b;
-}
-.creditcard .yellow {
-  fill: #ffeb3b;
-}
-.creditcard .yellowdark {
-  fill: #f9a825;
-}
-.creditcard .orange {
-  fill: #ff9800;
-}
-.creditcard .orangedark {
-  fill: #ef6c00;
-}
 .creditcard .grey {
-  fill: #bdbdbd;
+  fill: transparent;
 }
 .creditcard .greydark {
-  fill: #616161;
+  fill: transparent;
 }
 
 /* FRONT OF CARD */
@@ -85,14 +37,12 @@
   font-size: 54.7817px;
 }
 #cardfront .st5 {
-  font-family: 'Source Code Pro', monospace;
   font-weight: 400;
 }
 #cardfront .st6 {
-  font-size: 33.1112px;
+  font-size: 40px;
 }
 #cardfront .st7 {
-  opacity: 0.6;
   fill: #FFFFFF;
 }
 #cardfront .st8 {
@@ -100,10 +50,6 @@
 }
 #cardfront .st9 {
   font-size: 36.5498px;
-}
-#cardfront .st10 {
-  font-family: 'Source Code Pro', monospace;
-  font-weight: 300;
 }
 #cardfront .st11 {
   font-size: 16.1716px;

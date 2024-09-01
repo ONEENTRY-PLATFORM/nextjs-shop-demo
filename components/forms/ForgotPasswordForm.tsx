@@ -8,7 +8,7 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 export const ForgotPasswordForm: React.FC = () => {
-  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'sign_in' });
+  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
 
   return (
     <form
@@ -28,13 +28,14 @@ export const ForgotPasswordForm: React.FC = () => {
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
         {data?.attributes.map((field: IAttributes, index: Key) => {
+          console.log(field.marker);
           if (field.marker === 'email_reg') {
             return <FormInput key={index} {...field} />;
           }
         })}
       </div>
 
-      <FormSubmitButton title="SEND" class="" icon="" />
+      <FormSubmitButton title="SEND" isLoading={isLoading} class="" icon="" />
     </form>
   );
 };

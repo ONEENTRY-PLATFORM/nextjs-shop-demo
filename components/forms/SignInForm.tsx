@@ -1,11 +1,11 @@
 // import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { Key } from 'react';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useState } from 'react';
 
 import {
   logInUser,
-  useGetAuthProvidersQuery,
+  // useGetAuthProvidersQuery,
   useGetFormByMarkerQuery,
 } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -23,32 +23,10 @@ import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInForm: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
-  const { isAuth } = useContext(AuthContext);
+  // const { isAuth } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
-
-  console.log(data);
-
-  // form
-  //   localizeInfos
-  //     titleForSite
-  //     successMessage
-  //     unsuccessMessage
-
-  //   attributes
-  //     isVisible
-  //     marker
-  //     localizeInfos.title
-  //     type
-  //     validators
-
-  //   initialFormData
-  //     name_reg: {
-  //       "value": "",
-  //       "valid": false,
-  //       "required": true
-  //     }
-  //     password_reg: ...
+  const [tab, setTab] = useState('email');
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -61,16 +39,11 @@ const SignInForm: React.FC = () => {
     };
   };
 
-  if (!fields) {
-    return;
-  }
-
-  // if (isLoading) {
-  //   return <Spinner />;
-  // }
-
   const onSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!fields) {
+      return;
+    }
     const login = fields.email_reg?.value;
     const password = fields.password_reg?.value;
 
@@ -90,6 +63,10 @@ const SignInForm: React.FC = () => {
     }
   };
 
+  const formFields = data?.attributes
+    .slice()
+    .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
+
   return (
     <form
       className="flex min-h-full flex-col gap-4 text-xl leading-5"
@@ -100,17 +77,32 @@ const SignInForm: React.FC = () => {
           Sign in
         </h2>
         <div className="max-w-full text-xs text-gray-400">
-          <button onClick={() => {}}>E-mail</button>/
-          <button onClick={() => {}}>Phone</button>
+          <button
+            onClick={() => {
+              setTab('email');
+            }}
+            className={tab === 'email' ? 'font-bold' : ''}
+          >
+            E-mail
+          </button>
+          /
+          <button
+            onClick={() => {
+              setTab('phone');
+            }}
+            className={tab === 'phone' ? 'font-bold' : ''}
+          >
+            Phone
+          </button>
         </div>
       </div>
 
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-        {data?.attributes.map((field: IAttributes, index: Key) => {
-          if (field.marker === 'email_reg') {
+        {formFields.map((field: IAttributes, index: Key) => {
+          if (field.marker === 'email_reg' && tab === 'email') {
             return <FormInput key={index} {...field} />;
           }
-          if (field.marker === 'phone_reg') {
+          if (field.marker === 'phone_reg' && tab === 'phone') {
             return <FormInput key={index} {...field} />;
           }
           if (field.marker === 'password_reg') {
