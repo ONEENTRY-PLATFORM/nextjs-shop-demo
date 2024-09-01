@@ -15,6 +15,7 @@ const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
 }) => {
   return (
     <button
+      disabled={isLoading}
       type="submit"
       className="mx-auto mt-auto flex w-[280px] max-w-full items-center justify-center self-center rounded-[30px] border-none bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
     >

@@ -67,11 +67,9 @@ const SignInForm: React.FC = () => {
     .slice()
     .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
 
-  console.log(isAuth);
-
-  if (!isAuth) {
-    return;
-  }
+  // if (!isAuth) {
+  //   return;
+  // }
 
   return (
     <form

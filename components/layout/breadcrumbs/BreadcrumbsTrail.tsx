@@ -9,7 +9,6 @@ import BreadcrumbItem from './BreadcrumbItem';
 const BreadcrumbsTrail: React.FC = () => {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);
-  console.log(paths);
 
   return (
     <nav className="relative box-border flex">

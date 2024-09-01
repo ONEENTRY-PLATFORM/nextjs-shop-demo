@@ -84,7 +84,6 @@ const SignUpForm: React.FC = () => {
 
       try {
         const res = await api.AuthProvider.signUp('email', data, 'en_US');
-        console.log(res);
         if (res.isActive) {
           try {
             await logInUser({
@@ -100,7 +99,6 @@ const SignUpForm: React.FC = () => {
         } else {
           setOpen(true);
           setComponent('VerificationForm');
-          console.log('navigate VerificationForm');
         }
       } catch (e: any) {
         console.log(e);

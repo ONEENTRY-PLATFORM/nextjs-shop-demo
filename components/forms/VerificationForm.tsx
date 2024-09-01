@@ -37,7 +37,6 @@ const VerificationForm: React.FC = () => {
         fields['email_reg'].value,
         otp,
       );
-      console.log(result);
       if (result) {
         await logInUser({
           method: 'email',

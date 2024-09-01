@@ -15,7 +15,6 @@ const PaymentForm: React.FC = () => {
     e.preventDefault();
   };
   const inputRef = useRef(null);
-  console.log(inputRef.current);
 
   return (
     <form

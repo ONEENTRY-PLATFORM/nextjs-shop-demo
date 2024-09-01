@@ -12,6 +12,7 @@ export const ForgotPasswordForm: React.FC = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // !!!
   };
 
   return (
@@ -32,7 +33,6 @@ export const ForgotPasswordForm: React.FC = () => {
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
         {data?.attributes.map((field: IAttributes, index: Key) => {
-          console.log(field.marker);
           if (field.marker === 'email_reg') {
             return <FormInput key={index} {...field} />;
           }
