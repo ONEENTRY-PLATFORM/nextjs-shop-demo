@@ -6,10 +6,9 @@ import type { IAttributes } from 'oneentry/dist/base/utils';
 import React, { useContext } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
+import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
-// import { useAppSelector } from '@/app/store/hooks';
-import { userFormFields } from '../data';
 // import Loader from '../shared/Loader';
 import FormInput from './inputs/FormInput';
 
@@ -22,9 +21,26 @@ export type InputValue = {
 const UserForm: React.FC = () => {
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
 
-  // const { user_name_placeholder, user_phone_placeholder } = useAppSelector(
-  //   (state) => state.systemContentReducer.content,
-  // );
+  const fields = useAppSelector(
+    (state) => state.formFieldsReducer.fields,
+  ) as object as {
+    email_reg: {
+      valid: boolean;
+      value: string;
+    };
+    name_reg: {
+      valid: boolean;
+      value: string;
+    };
+    phone_reg: {
+      valid: boolean;
+      value: string;
+    };
+    password_reg: {
+      valid: boolean;
+      value: string;
+    };
+  };
 
   const { authenticate } = useContext(AuthContext);
   const { isAuth } = useContext(AuthContext);
@@ -32,18 +48,37 @@ const UserForm: React.FC = () => {
   const { refreshUser, user } = useContext(AuthContext);
 
   const onUpdateUserData = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
-      const formData: IAuthFormData[] = [];
+      const formData: IAuthFormData[] = data?.attributes
+        .map((field: IAttributes, index: React.Key) => {
+          if (field.marker !== 'email_notifications') {
+            return {
+              marker: field.marker,
+              value: fields[field.marker].value,
+              type: 'string',
+            };
+          }
+          return null;
+        })
+        .filter(function (el: null) {
+          return el !== null;
+        });
 
       if (user?.formIdentifier) {
         await api.Users.updateUser({
           formIdentifier: user.formIdentifier,
           formData,
-          authData: [],
+          authData: [
+            {
+              marker: 'password_reg',
+              value: fields['password_reg'].value,
+            },
+          ],
           notificationData: {
-            email: '',
+            email: fields['email_reg'].value,
             phonePush: [],
-            phoneSMS: '',
+            phoneSMS: fields['phone_reg'].value,
           },
         });
       }
@@ -57,6 +92,10 @@ const UserForm: React.FC = () => {
     }
   };
 
+  if (!isAuth) {
+    return;
+  }
+
   return (
     <form
       className="flex min-h-full flex-col gap-4 text-xl leading-5"
@@ -64,11 +103,11 @@ const UserForm: React.FC = () => {
     >
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
         {data?.attributes.map((field: IAttributes, index: React.Key) => {
-          if (
-            field.marker !== 'email_notifications' &&
-            field.marker !== 'password_reg'
-          ) {
-            return <FormInput key={index} {...field} />;
+          const fieldData = user?.formData.find(
+            (item) => item.marker === field.marker,
+          );
+          if (field.marker !== 'email_notifications') {
+            return <FormInput key={index} {...field} {...fieldData} />;
           }
         })}
       </div>

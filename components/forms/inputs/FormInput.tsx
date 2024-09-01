@@ -11,9 +11,9 @@ import {
 import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
 
-const FormInput: React.FC<IAttributes> = (field) => {
+const FormInput: React.FC<IAttributes & { value?: string }> = (field) => {
   const { localizeInfos } = field;
-  const [value, setValue] = useState<string>('');
+  const [value, setValue] = useState<string>(field.value || '');
   const [type, setType] = useState<string>('');
   const dispatch = useAppDispatch();
   const validate = true;
@@ -57,6 +57,7 @@ const FormInput: React.FC<IAttributes> = (field) => {
         autoComplete={fieldType === 'password' ? 'password' : ''}
         minLength={minLength || 0}
         maxLength={maxLength || 50}
+        value={value}
       />
       {fieldType === 'password' && (
         <button

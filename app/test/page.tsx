@@ -20,10 +20,10 @@ const TestPage = () => {
           {/* <ForgotPasswordForm /> */}
           {/* <ResetPasswordForm /> */}
           {/* <PaymentForm /> */}
-          <SignInForm />
-          <UserForm />
-          {/* <SignUpForm /> */}
-          {/* <VerificationForm /> */}
+          {/* <SignInForm /> */}
+          <SignUpForm />
+          <VerificationForm />
+          {/* <UserForm /> */}
         </div>
       </section>
     </main>

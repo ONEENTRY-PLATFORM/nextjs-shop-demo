@@ -23,7 +23,7 @@ import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInForm: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
-  // const { isAuth } = useContext(AuthContext);
+  const { isAuth } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
   const [tab, setTab] = useState('email');
@@ -66,6 +66,12 @@ const SignInForm: React.FC = () => {
   const formFields = data?.attributes
     .slice()
     .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
+
+  console.log(isAuth);
+
+  if (!isAuth) {
+    return;
+  }
 
   return (
     <form
