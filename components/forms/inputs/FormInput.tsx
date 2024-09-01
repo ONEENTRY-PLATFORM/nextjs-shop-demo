@@ -3,16 +3,13 @@ import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { addField } from '@/app/store/reducers/FormFieldsSlice';
-import { FormFieldsEnum } from '@/app/types/enum';
+import {
+  FormFieldsEnum,
+  maxLengthFieldsEnum,
+  minLengthFieldsEnum,
+} from '@/app/types/enum';
 import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
-
-// interface FormInputProps {
-//   localizeInfos: {
-//     title: string;
-//   };
-//   marker: string;
-// }
 
 const FormInput: React.FC<IAttributes> = (field) => {
   const { localizeInfos } = field;
@@ -22,8 +19,8 @@ const FormInput: React.FC<IAttributes> = (field) => {
   const validate = true;
 
   const fieldType = (FormFieldsEnum as unknown as FormFieldsEnum)[field.marker];
-  const minLength = (FormFieldsEnum as unknown as FormFieldsEnum)[field.marker];
-  const maxLength = (FormFieldsEnum as unknown as FormFieldsEnum)[field.marker];
+  const minLength = minLengthFieldsEnum[field.marker];
+  const maxLength = maxLengthFieldsEnum[field.marker];
 
   useEffect(() => {
     dispatch(

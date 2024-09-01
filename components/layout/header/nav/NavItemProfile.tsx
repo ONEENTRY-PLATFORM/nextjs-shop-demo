@@ -20,7 +20,7 @@ const NavItemProfile: React.FC = () => {
     <button
       onClick={() => {
         setOpen(!open);
-        setComponent('SignInEmail');
+        setComponent('SignInForm');
       }}
       className="group relative box-border flex size-6 shrink-0"
     >

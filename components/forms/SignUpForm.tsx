@@ -4,14 +4,10 @@ import React, { useContext, useEffect } from 'react';
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 
-// import { useAppDispatch } from '@/app/store/hooks';
-// import { addField } from '@/app/store/reducers/FormFieldsSlice';
-// import { signUpFormFields } from '../data';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
 const SignUpForm: React.FC = () => {
-  // const dispatch = useAppDispatch();
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
 
   const fields = useAppSelector(

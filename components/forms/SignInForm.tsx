@@ -6,7 +6,6 @@ import React, { useContext, useEffect } from 'react';
 import {
   logInUser,
   useGetAuthProvidersQuery,
-  useGetForm,
   useGetFormByMarkerQuery,
 } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -14,7 +13,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 // import { useAppSelector } from '@/app/store/hooks';
-import { signInFormFields, socialProvidersButtons } from '../data';
+import { socialProvidersButtons } from '../data';
 import Spinner from '../shared/Spinner';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import ForgotPasswordButton from './inputs/ForgotPasswordButton';
@@ -22,11 +21,13 @@ import FormInput from './inputs/FormInput';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
-const SignInEmail: React.FC = () => {
+const SignInForm: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
   const { isAuth } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
-  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'sign_in' });
+  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
+
+  console.log(data);
 
   // form
   //   localizeInfos
@@ -98,12 +99,23 @@ const SignInEmail: React.FC = () => {
         <h2 className="max-w-full text-xl font-bold text-neutral-600">
           Sign in
         </h2>
-        <p className="max-w-full text-xs text-gray-400">E-mail/Phone</p>
+        <div className="max-w-full text-xs text-gray-400">
+          <button onClick={() => {}}>E-mail</button>/
+          <button onClick={() => {}}>Phone</button>
+        </div>
       </div>
 
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
         {data?.attributes.map((field: IAttributes, index: Key) => {
-          return <FormInput key={index} {...field} />;
+          if (field.marker === 'email_reg') {
+            return <FormInput key={index} {...field} />;
+          }
+          if (field.marker === 'phone_reg') {
+            return <FormInput key={index} {...field} />;
+          }
+          if (field.marker === 'password_reg') {
+            return <FormInput key={index} {...field} />;
+          }
         })}
       </div>
 
@@ -137,4 +149,4 @@ const SignInEmail: React.FC = () => {
   );
 };
 
-export default SignInEmail;
+export default SignInForm;

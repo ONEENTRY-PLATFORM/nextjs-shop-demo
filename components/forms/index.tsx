@@ -2,8 +2,7 @@ import CalendarForm from '@/components/forms/CalendarForm';
 import ForgotPasswordForm from '@/components/forms/ForgotPasswordForm';
 import PaymentForm from '@/components/forms/PaymentForm';
 import ResetPasswordForm from '@/components/forms/ResetPasswordForm';
-import SignInEmail from '@/components/forms/SignInEmail';
-import SignInPhone from '@/components/forms/SignInPhone';
+import SignInForm from '@/components/forms/SignInForm';
 import SignUpForm from '@/components/forms/SignUpForm';
 import VerificationForm from '@/components/forms/VerificationForm';
 
@@ -12,8 +11,7 @@ export {
   ForgotPasswordForm,
   PaymentForm,
   ResetPasswordForm,
-  SignInEmail,
-  SignInPhone,
+  SignInForm,
   SignUpForm,
   VerificationForm,
 };
