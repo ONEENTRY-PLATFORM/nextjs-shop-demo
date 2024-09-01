@@ -23,11 +23,25 @@ const ResetPasswordForm: React.FC = () => {
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
         {resetPasswordFormFields.map((field, index) => {
-          return <FormInput key={index} {...field} />;
+          return (
+            <FormInput
+              listTitles={[]}
+              position={0}
+              type={''}
+              validators={{}}
+              key={index}
+              {...field}
+            />
+          );
         })}
       </div>
 
-      <FormSubmitButton title="CHANGE PASSWORD" class="" icon="" />
+      <FormSubmitButton
+        title="CHANGE PASSWORD"
+        isLoading={false}
+        class=""
+        icon=""
+      />
     </form>
   );
 };

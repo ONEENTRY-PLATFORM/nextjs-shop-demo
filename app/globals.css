@@ -26,6 +26,11 @@ body {
   display: none;
 }
 
+input:focus-visible {
+  outline: none !important;
+  border-color: #f97316;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

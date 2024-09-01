@@ -7,6 +7,7 @@ import {
   ResetPasswordForm,
   SignInForm,
   SignUpForm,
+  UserForm,
   VerificationForm,
 } from '@/components/forms';
 
@@ -18,8 +19,9 @@ const TestPage = () => {
           {/* <CalendarForm /> */}
           {/* <ForgotPasswordForm /> */}
           {/* <ResetPasswordForm /> */}
-          <PaymentForm />
-          {/* <SignInForm /> */}
+          {/* <PaymentForm /> */}
+          <SignInForm />
+          <UserForm />
           {/* <SignUpForm /> */}
           {/* <VerificationForm /> */}
         </div>

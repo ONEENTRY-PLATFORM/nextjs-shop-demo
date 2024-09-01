@@ -2,10 +2,10 @@
 
 // import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import type { IAttributes } from 'oneentry/dist/base/utils';
 import React, { useContext } from 'react';
 
-import { api, useGetForm } from '@/app/api';
-// import { useAppSelector } from '@/app/store/hooks';
+import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
 // import { useAppSelector } from '@/app/store/hooks';
@@ -20,21 +20,18 @@ export type InputValue = {
 };
 
 const UserForm: React.FC = () => {
-  const data = useGetForm({
-    marker: 'reg',
-  });
-  // console.log(data);
+  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
 
   // const { user_name_placeholder, user_phone_placeholder } = useAppSelector(
   //   (state) => state.systemContentReducer.content,
   // );
 
   const { authenticate } = useContext(AuthContext);
-  const { isAuth, isLoading } = useContext(AuthContext);
+  const { isAuth } = useContext(AuthContext);
 
   const { refreshUser, user } = useContext(AuthContext);
 
-  const onUpdateUserData = async () => {
+  const onUpdateUserData = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       const formData: IAuthFormData[] = [];
 
@@ -66,8 +63,13 @@ const UserForm: React.FC = () => {
       onSubmit={(e) => onUpdateUserData(e)}
     >
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-        {userFormFields.map((field, index) => {
-          return <FormInput key={index} {...field} />;
+        {data?.attributes.map((field: IAttributes, index: React.Key) => {
+          if (
+            field.marker !== 'email_notifications' &&
+            field.marker !== 'password_reg'
+          ) {
+            return <FormInput key={index} {...field} />;
+          }
         })}
       </div>
 

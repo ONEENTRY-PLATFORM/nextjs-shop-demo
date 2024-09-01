@@ -98,7 +98,7 @@ const SignInForm: React.FC = () => {
       </div>
 
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-        {formFields.map((field: IAttributes, index: Key) => {
+        {formFields?.map((field: IAttributes, index: Key) => {
           if (field.marker === 'email_reg' && tab === 'email') {
             return <FormInput key={index} {...field} />;
           }
