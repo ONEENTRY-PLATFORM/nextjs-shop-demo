@@ -74,7 +74,7 @@ const SignUpForm: React.FC = () => {
         formData,
         notificationData: {
           email: fields.email_reg.value,
-          phonePush: fields.phone_reg.value,
+          phonePush: [fields.phone_reg.value],
           phoneSMS: fields.phone_reg.value,
         },
       };
@@ -82,6 +82,7 @@ const SignUpForm: React.FC = () => {
 
       try {
         const res = await api.AuthProvider.signUp('email', data, 'en_US');
+        console.log(res);
         if (res.isActive) {
           try {
             await logInUser({
@@ -95,6 +96,7 @@ const SignUpForm: React.FC = () => {
             // Alert.alert(e.message);
           }
         } else {
+          console.log('navigateAuth');
           // navigateAuth('activate_user', {
           //   email: res.identifier,
           //   method: 'email',
@@ -103,6 +105,7 @@ const SignUpForm: React.FC = () => {
           // });
         }
       } catch (e: any) {
+        console.log(e);
         // Alert.alert(e?.message);
       }
       setIsLoading(false);

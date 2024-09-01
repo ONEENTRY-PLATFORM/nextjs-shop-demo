@@ -1,17 +1,16 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
+// import OTPInputs from './inputs/OTPInputs';
+import OtpInput from 'react-otp-input';
 
 import { api, logInUser } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
 import FormSubmitButton from './inputs/FormSubmitButton';
-import OTPInputs from './inputs/OTPInputs';
 
 const VerificationForm: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
-  const resend = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    console.log(e);
-  };
+  const [otp, setOtp] = useState('');
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
   ) as object as {
@@ -28,30 +27,49 @@ const VerificationForm: React.FC = () => {
 
   const onSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    // if (value.length < 6) {
-    //   return;
-    // }
+    if (otp.length < 6) {
+      return;
+    }
 
-    // try {
-    //   const result = await api.AuthProvider.activateUser(
-    //     params.method,
-    //     params.email,
-    //     value,
-    //   );
-
-    //   if (result) {
-    //     await logInUser({
-    //       method: 'email',
-    //       login: params.email,
-    //       password: params.password,
-    //     });
-
-    //     authenticate();
-    //   }
-    // } catch (e: any) {
-    //   // Alert.alert(e.message);
-    // }
+    try {
+      const result = await api.AuthProvider.activateUser(
+        'email',
+        fields['email_reg'].value,
+        otp,
+      );
+      console.log(result);
+      if (result) {
+        await logInUser({
+          method: 'email',
+          login: fields['email_reg'].value,
+          password: fields['password_reg'].value,
+        });
+        authenticate();
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      console.log(e);
+    }
   };
+
+  const onResend = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    e.preventDefault();
+    console.log(e);
+    try {
+      const result = await api.AuthProvider.generateCode(
+        'email',
+        fields['email_reg'].value,
+        'generate_code',
+      );
+      console.log(result);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
+
   return (
     <form
       className="flex min-h-full flex-col gap-4 text-xl leading-5"
@@ -67,14 +85,25 @@ const VerificationForm: React.FC = () => {
       </div>
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-6">
-        <OTPInputs inputCount={6} />
+        {/* <OTPInputs inputCount={6} /> */}
+        {/* className="" */}
 
+        <OtpInput
+          value={otp}
+          onChange={setOtp}
+          numInputs={6}
+          renderInput={(props) => <input {...props} />}
+          containerStyle={'flex justify-between gap-3.5 max-md:gap-2'}
+          inputStyle={
+            'relative mx-auto box-border flex h-[70px] min-w-[50px] shrink-0 flex-col rounded border border-solid border-neutral-100 bg-neutral-100 p-2.5 text-center text-2xl font-medium text-neutral-600 max-md:w-[40px]'
+          }
+        />
         <div className="-mt-px self-end text-xs text-orange-500 max-md:mr-2.5">
           <span className="text-gray-400">Did not receive the OTP? </span>
           <button
             className="font-bold text-orange-500"
             type="button"
-            onClick={(e) => resend(e)}
+            onClick={(e) => onResend(e)}
           >
             RESEND
           </button>
