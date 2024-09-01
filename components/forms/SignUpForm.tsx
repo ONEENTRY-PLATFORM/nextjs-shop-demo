@@ -8,6 +8,7 @@ import { logInUser } from '@/app/api';
 import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
@@ -16,6 +17,7 @@ const SignUpForm: React.FC = () => {
   const [_isLoading, setIsLoading] = useState<boolean>(false);
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
   const { authenticate } = useContext(AuthContext);
+  const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -93,20 +95,15 @@ const SignUpForm: React.FC = () => {
 
             authenticate();
           } catch (e: any) {
-            // Alert.alert(e.message);
+            console.log(e);
           }
         } else {
-          console.log('navigateAuth');
-          // navigateAuth('activate_user', {
-          //   email: res.identifier,
-          //   method: 'email',
-          //   password: fields.password_reg.value,
-          //   event: 'activate',
-          // });
+          setOpen(true);
+          setComponent('VerificationForm');
+          console.log('navigate VerificationForm');
         }
       } catch (e: any) {
         console.log(e);
-        // Alert.alert(e?.message);
       }
       setIsLoading(false);
     }

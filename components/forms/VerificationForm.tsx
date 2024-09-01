@@ -56,14 +56,12 @@ const VerificationForm: React.FC = () => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     e.preventDefault();
-    console.log(e);
     try {
-      const result = await api.AuthProvider.generateCode(
+      await api.AuthProvider.generateCode(
         'email',
         fields['email_reg'].value,
         'generate_code',
       );
-      console.log(result);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
@@ -85,9 +83,6 @@ const VerificationForm: React.FC = () => {
       </div>
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-6">
-        {/* <OTPInputs inputCount={6} /> */}
-        {/* className="" */}
-
         <OtpInput
           value={otp}
           onChange={setOtp}
