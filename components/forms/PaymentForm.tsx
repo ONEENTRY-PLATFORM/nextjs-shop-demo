@@ -10,6 +10,7 @@ const PaymentForm: React.FC = () => {
   const [cardNumber, setCardNumber] = useState('0000 0000 0000 0000');
   const [cardName, setCardName] = useState('');
   const [cardExp, setCardExp] = useState('01/25');
+  const [cardCode, setCardCode] = useState('000');
   const onSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
   };
@@ -32,41 +33,25 @@ const PaymentForm: React.FC = () => {
         />
 
         {/* Image */}
-        <div className="absolute top-0 left-0 h-[230px] w-[350px] self-center">
+        <div className="absolute left-0 top-0 h-[230px] w-[350px] self-center">
           <div className="creditcard">
-            <div className="front">
-              <div id="ccsingle"></div>
+            <div>
               <svg
                 version="1.1"
-                id="cardfront"
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
                 y="0px"
                 viewBox="0 0 750 471"
+                id="cardfront"
+                className="front"
               >
                 <g id="Front">
-                  <g id="CardBackground">
-                    <g id="Page-1_1_">
-                      <g id="amex_1_">
-                        <path
-                          id="Rectangle-1_1_"
-                          className="lightcolor grey"
-                          d="M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40
-                                C0,17.9,17.9,0,40,0z"
-                        />
-                      </g>
-                    </g>
-                    <path
-                      className="darkcolor greydark"
-                      d="M750,431V193.2c-217.6-57.5-556.4-13.5-750,24.9V431c0,22.1,17.9,40,40,40h670C732.1,471,750,453.1,750,431z"
-                    />
-                  </g>
                   <text
-                    transform="matrix(1 0 0 1 60 325)"
+                    transform="matrix(1 0 0 1 50 325)"
                     id="svgnumber"
-                    className="st2 st3 st4"
+                    className="st2 st4"
                   >
-                    {cardNumber}
+                    {cardNumber || '0000 0000 0000 0000'}
                   </text>
                   <text
                     transform="matrix(1 0 0 1 54.1064 428.1723)"
@@ -82,67 +67,50 @@ const PaymentForm: React.FC = () => {
                     CARD HOLDER
                   </text>
                   <text
-                    transform="matrix(1 0 0 1 360 380)"
+                    transform="matrix(1 0 0 1 560 380)"
                     className="st7 st5 st8"
                   >
                     MONTH/YEAR
                   </text>
-                  <text
-                    transform="matrix(1 0 0 1 65.1054 241.5)"
-                    className="st7 st5 st8"
-                  >
-                    card number
-                  </text>
                   <g>
                     <text
-                      transform="matrix(1 0 0 1 574.4219 433.8095)"
+                      transform="matrix(1 0 0 1 630 430)"
                       id="svgexpire"
                       className="st2 st5 st9"
                     >
-                      {cardExp}
+                      {cardExp || '01/25'}
                     </text>
                     <text
-                      transform="matrix(1 0 0 1 479.3848 417.0097)"
+                      transform="matrix(1 0 0 1 560 417.0097)"
                       className="st2 st10 st11"
                     >
                       VALID
                     </text>
                     <text
-                      transform="matrix(1 0 0 1 479.3848 435.6762)"
+                      transform="matrix(1 0 0 1 560 435.6762)"
                       className="st2 st10 st11"
                     >
                       THRU
                     </text>
-                    <polygon
-                      className="st2"
-                      points="554.5,421 540.4,414.2 540.4,427.9"
-                    />
                   </g>
                 </g>
-                <g id="Back"></g>
               </svg>
-            </div>
-
-            <div className="back">
               <svg
                 version="1.1"
-                id="cardback"
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
                 y="0px"
                 viewBox="0 0 750 471"
+                id="cardback"
+                className="back"
               >
-                <g id="Front">
-                  <line className="st0" x1="35.3" y1="10.4" x2="36.7" y2="11" />
-                </g>
                 <g id="Back">
                   <g id="Page-1_2_">
                     <g id="amex_2_">
                       <path
                         id="Rectangle-1_2_"
                         className="darkcolor greydark"
-                        d="M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40
-                            C0,17.9,17.9,0,40,0z"
+                        d="M40,0h670c22.1,0,40,17.9,40,40v391c0,22.1-17.9,40-40,40H40c-22.1,0-40-17.9-40-40V40 C0,17.9,17.9,0,40,0z"
                       />
                     </g>
                   </g>
@@ -151,7 +119,7 @@ const PaymentForm: React.FC = () => {
                     <path
                       className="st3"
                       d="M701.1,249.1H48.9c-3.3,0-6-2.7-6-6v-52.5c0-3.3,2.7-6,6-6h652.1c3.3,0,6,2.7,6,6v52.5
-                        C707.1,246.4,704.4,249.1,701.1,249.1z"
+                    C707.1,246.4,704.4,249.1,701.1,249.1z"
                     />
                     <rect
                       x="42.9"
@@ -177,7 +145,7 @@ const PaymentForm: React.FC = () => {
                     id="svgsecurity"
                     className="st6 st7"
                   >
-                    985
+                    {cardCode}
                   </text>
                   <g className="st8">
                     <text
@@ -206,7 +174,7 @@ const PaymentForm: React.FC = () => {
                     id="svgnameback"
                     className="st12 st13"
                   >
-                    John Doe
+                    {cardName || 'ONE ENTRY'}
                   </text>
                 </g>
               </svg>

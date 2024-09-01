@@ -9,55 +9,34 @@
   max-height: 60px;
 }
 
-/* CHANGEABLE CARD ELEMENTS */
-.creditcard .lightcolor,
-.creditcard .darkcolor {
-  -webkit-transition: fill .5s;
-  transition: fill .5s;
-}
-.creditcard .grey {
-  fill: transparent;
-}
-.creditcard .greydark {
-  fill: transparent;
-}
-
 /* FRONT OF CARD */
 #svgname {
   text-transform: uppercase;
 }
 #cardfront .st2 {
-  fill: #FFFFFF;
-}
-#cardfront .st3 {
-  font-family: 'Source Code Pro', monospace;
-  font-weight: 600;
+  fill: #4C4D56;
 }
 #cardfront .st4 {
-  font-size: 54.7817px;
-}
-#cardfront .st5 {
-  font-weight: 400;
+  font-size: 42px;
 }
 #cardfront .st6 {
   font-size: 40px;
 }
 #cardfront .st7 {
-  fill: #FFFFFF;
+  fill: #4C4D56;
 }
 #cardfront .st8 {
   font-size: 24px;
 }
 #cardfront .st9 {
-  font-size: 36.5498px;
+  font-size: 36px;
 }
 #cardfront .st11 {
-  font-size: 16.1716px;
+  font-size: 20px;
 }
 #cardfront .st12 {
   fill: #4C4C4C;
 }
-
 /* BACK OF CARD */
 #cardback .st0 {
   fill: none;
@@ -101,7 +80,6 @@
 #cardback .st13 {
   font-size: 37.769px;
 }
-
 /* FLIP ANIMATION */
 .container {
   perspective: 1000px;
