@@ -3,13 +3,14 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { useEffect } from 'react';
 
-import { useGetProduct } from '@/app/api';
+import { useGetOrderStorageByMarkerQuery, useGetProduct } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addProductToCart,
   selectCartItems,
   selectCartTotal,
 } from '@/app/store/reducers/CartSlice';
+import { addProducts } from '@/app/store/reducers/OrderSlice';
 import DeliveryTable from '@/components/layout/cart/DeliveryTable';
 import PaymentButton from '@/components/layout/cart/PaymentButton';
 import ProductCard from '@/components/layout/cart/ProductCard';
@@ -19,8 +20,11 @@ import EmptyCart from './EmptyCart';
 
 const CartPage = () => {
   const { product } = useGetProduct({ id: 83 });
+  const { data, error } = useGetOrderStorageByMarkerQuery({
+    marker: 'order',
+  });
   const productsInCart = useAppSelector(selectCartItems) as Array<
-    IProductsEntity & { selected: boolean }
+    IProductsEntity & { quantity: number; selected: boolean }
   >;
   const dispatch = useAppDispatch();
 
@@ -37,6 +41,26 @@ const CartPage = () => {
       dispatch(addProductToCart({ ...product, selected: true, quantity: 1 }));
     }
   }, [product]);
+
+  useEffect(() => {
+    const productsInOrder = productsInCart.map(
+      (product: IProductsEntity & { quantity: number }) => {
+        return {
+          productId: product.id,
+          quantity: product.quantity,
+        };
+      },
+    );
+    //   const groupItems = items.reduce((results: ItemsInBusketType, item) => {
+    //     if (item.selected) {
+    //       (results[item.id] = results[item.id] || []).push(item);
+    //       return results;
+    //     }
+    //     return results;
+    //   }, {});
+
+    dispatch(addProducts(productsInOrder));
+  }, [productsInCart]);
 
   // if (productsInCart.length < 1) {
   //   return <EmptyCart />;

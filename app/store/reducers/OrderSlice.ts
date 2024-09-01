@@ -78,7 +78,6 @@ const orderReducer = createSlice({
       if (!state.order) {
         return;
       }
-
       state.order.paymentAccountIdentifier = action.payload;
     },
     addOrderCurrency(state, action: PayloadAction<string>) {
