@@ -24,6 +24,7 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
     }
     replace(`${pathname}?${params.toString()}`);
   }, [available]);
+  console.log(available);
 
   return (
     <div className="mb-9 flex gap-5">
@@ -33,7 +34,7 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
       <div className="flex flex-col items-start justify-center self-start rounded-[30px] bg-neutral-100 py-px">
         <input
           type="checkbox"
-          checked={available}
+          checked={available || false}
           onChange={() => dispatch(setAvailability(!available))}
           className="size-[16px] shrink-0 rounded-full bg-orange-500"
         />
