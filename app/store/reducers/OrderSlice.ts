@@ -32,11 +32,8 @@ const orderReducer = createSlice({
         state.order = action.payload;
       }
     },
-    addProducts(state, action: PayloadAction<IOrderProductData[]>) {
-      if (!state.order) {
-        return;
-      }
-      state.order.products = action.payload;
+    remove(state) {
+      state.order = undefined;
     },
     addData(
       state,
@@ -49,18 +46,17 @@ const orderReducer = createSlice({
         (item) => item.marker === action.payload.marker,
       );
 
-      // if (action.payload.valid === undefined) {
-      //   action.payload.valid = true;
-      // }
-
       if (ind !== -1) {
         state.order.formData[ind] = action.payload;
       } else {
         state.order.formData.push(action.payload);
       }
     },
-    remove(state) {
-      state.order = undefined;
+    addProducts(state, action: PayloadAction<IOrderProductData[]>) {
+      if (!state.order) {
+        return;
+      }
+      state.order.products = action.payload;
     },
     addPaymentMethods(
       state,
@@ -93,10 +89,10 @@ export const {
   remove: removeOrder,
   create: createOrder,
   addData,
-  addOrderCurrency,
   addProducts,
   addPaymentMethods,
   addPaymentMethod,
+  addOrderCurrency,
 } = orderReducer.actions;
 
 export default orderReducer.reducer;

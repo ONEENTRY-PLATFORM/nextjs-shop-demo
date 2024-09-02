@@ -8,6 +8,7 @@ const PaymentButton: React.FC = () => {
   // PaymentForm
   return (
     <button
+      type="submit"
       onClick={() => {
         setOpen(true);
         setComponent('PaymentForm');
