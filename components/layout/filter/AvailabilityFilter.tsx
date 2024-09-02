@@ -24,7 +24,6 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
     }
     replace(`${pathname}?${params.toString()}`);
   }, [available]);
-  console.log(available);
 
   return (
     <div className="mb-9 flex gap-5">

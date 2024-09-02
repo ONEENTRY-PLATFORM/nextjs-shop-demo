@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type {
   IFilterParams,
   IProductsEntity,
@@ -72,6 +71,7 @@ export default async function CatalogPage({
     offset: currentPage,
     params: { searchParams: searchParams },
   });
+  console.log(searchParams);
 
   const { isError, products } = data;
   if (isError || !products) {

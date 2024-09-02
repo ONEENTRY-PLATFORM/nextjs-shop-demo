@@ -33,11 +33,13 @@ export async function getProducts(props: {
 }> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { limit, offset, params } = props;
-  const expandedFilters: IFilterParams[] | undefined = [];
+  const expandedFilters: Array<IFilterParams> | undefined = [];
   const searchValue = params?.searchParams?.search || '';
 
   if (params?.searchParams?.['in_stock']) {
-    expandedFilters.push({ statusMarker: 'in_stock' });
+    expandedFilters.push({
+      statusMarker: 'in_stock',
+    });
   }
 
   if (params?.searchParams?.color) {

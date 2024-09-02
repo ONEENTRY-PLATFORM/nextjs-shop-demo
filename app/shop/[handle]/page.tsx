@@ -66,6 +66,8 @@ export default async function CatalogPage({
     filters?: IFilterParams[];
   };
 }) {
+  console.log(searchParams);
+
   const data = await getProducts({ limit: 10, offset: 0 });
 
   const { isError, products } = data;
