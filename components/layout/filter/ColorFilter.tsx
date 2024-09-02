@@ -26,7 +26,14 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
     attributeMarker: 'color_filters',
   });
   const { colorFilterActive: activeColor, colorFilterPrevious } =
-    useAppSelector((state: { filterReducer: unknown }) => state.filterReducer);
+    useAppSelector(
+      (state: {
+        filterReducer: {
+          colorFilterActive?: number;
+          colorFilterPrevious?: number;
+        };
+      }) => state.filterReducer,
+    );
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -51,16 +58,6 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
     return colors;
   }, [attributes]);
 
-  // useEffect(() => {
-  //   const params = new URLSearchParams(searchParams);
-  //   if (activeColor) {
-  //     params.set('color', activeColor ? 'true' : '');
-  //   } else {
-  //     params.delete('in_stock');
-  //   }
-  //   replace(`${pathname}?${params.toString()}`);
-  // }, [activeColor]);
-
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
 
@@ -82,7 +79,7 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
         conditionValue: colorFilters[activeColor as number].code,
         pageUrl: ['shop'],
       };
-      params.set('color', colorFilters[activeColor as number].name);
+      params.set('color', colorFilters[activeColor as number].code);
       dispatch(addFilter(newFilter));
     }
     replace(`${pathname}?${params.toString()}`);

@@ -20,7 +20,9 @@ const ColorPicker: React.FC<Props> = ({ code, name, active, index }) => {
         onClick={() => {
           dispatch(setColorFilterActive(index));
         }}
-        className="size-6 rounded-full"
+        className={
+          'size-6 rounded-full' + (active === index) ? 'outline-red-500' : ''
+        }
         style={{
           backgroundColor: code,
         }}

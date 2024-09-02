@@ -23,6 +23,7 @@ export async function getProducts(props: {
     searchParams?: {
       search?: string;
       in_stock?: string;
+      color?: string;
     };
   };
 }): Promise<{
@@ -37,6 +38,16 @@ export async function getProducts(props: {
 
   if (params?.searchParams?.['in_stock']) {
     expandedFilters.push({ statusMarker: 'in_stock' });
+  }
+
+  if (params?.searchParams?.color) {
+    const newFilter: IFilterParams = {
+      attributeMarker: 'color',
+      conditionMarker: 'in',
+      conditionValue: params.searchParams.color,
+      pageUrl: ['shop'],
+    };
+    expandedFilters.push(newFilter);
   }
 
   try {
