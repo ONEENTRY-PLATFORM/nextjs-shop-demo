@@ -22,8 +22,8 @@ export async function getProducts(props: {
   params?: {
     searchParams?: {
       search?: string;
+      in_stock?: string;
     };
-    activeFilters?: IFilterParams[];
   };
 }): Promise<{
   products?: IProductsEntity[];
@@ -32,8 +32,13 @@ export async function getProducts(props: {
 }> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { limit, offset, params } = props;
-  const expandedFilters: IFilterParams[] | undefined = params?.activeFilters;
+  const expandedFilters: IFilterParams[] | undefined = [];
   const searchValue = params?.searchParams?.search || '';
+
+  if (params?.searchParams?.['in_stock']) {
+    expandedFilters.push({ statusMarker: 'in_stock' });
+  }
+
   try {
     if (searchValue === '') {
       const products = await api.Products.getProducts(

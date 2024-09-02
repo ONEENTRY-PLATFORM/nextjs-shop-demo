@@ -1,5 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { setAvailability } from '@/app/store/reducers/FilterSlice';
@@ -14,7 +14,6 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const router = useRouter();
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);

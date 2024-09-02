@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IFilterParams,
+  IProductsEntity,
+} from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
@@ -55,9 +58,13 @@ export async function generateMetadata({
 }
 
 export default async function CatalogPage({
-  params,
+  searchParams,
 }: {
-  params: { handle: string };
+  searchParams?: {
+    search?: string;
+    page?: string;
+    filters?: IFilterParams[];
+  };
 }) {
   const data = await getProducts({ limit: 10, offset: 0 });
 

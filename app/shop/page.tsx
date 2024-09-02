@@ -1,7 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type { IFilterParams, IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IFilterParams,
+  IProductsEntity,
+} from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
@@ -69,7 +72,6 @@ export default async function CatalogPage({
     offset: currentPage,
     params: { searchParams: searchParams },
   });
-  console.log(searchParams);
 
   const { isError, products } = data;
   if (isError || !products) {

@@ -1,3 +1,4 @@
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import React, { useEffect, useMemo } from 'react';
@@ -27,20 +28,21 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
   const { colorFilterActive: activeColor, colorFilterPrevious } =
     useAppSelector((state: { filterReducer: unknown }) => state.filterReducer);
 
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
   const colorFilters = useMemo(() => {
     let colors: Color[] = [];
-
     if (!attributes) {
       return colors;
     }
-
     colors = attributes?.listTitles.reduce(
       (arr: Color[], option: IListTitle) => {
         const color: Color = {
           code: option.value.toString(),
           name: option.title,
         };
-
         arr.push(color);
         return arr;
       },
@@ -49,7 +51,19 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
     return colors;
   }, [attributes]);
 
+  // useEffect(() => {
+  //   const params = new URLSearchParams(searchParams);
+  //   if (activeColor) {
+  //     params.set('color', activeColor ? 'true' : '');
+  //   } else {
+  //     params.delete('in_stock');
+  //   }
+  //   replace(`${pathname}?${params.toString()}`);
+  // }, [activeColor]);
+
   useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+
     if (colorFilters?.[colorFilterPrevious as number]?.code) {
       const oldFilter: IFilterParams = {
         attributeMarker: 'color',
@@ -57,6 +71,7 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
         conditionValue: colorFilters[colorFilterPrevious as number].code,
         pageUrl: ['shop'],
       };
+      params.delete('color');
       dispatch(removeFilter(oldFilter));
     }
 
@@ -67,8 +82,10 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
         conditionValue: colorFilters[activeColor as number].code,
         pageUrl: ['shop'],
       };
+      params.set('color', colorFilters[activeColor as number].name);
       dispatch(addFilter(newFilter));
     }
+    replace(`${pathname}?${params.toString()}`);
   }, [activeColor]);
 
   if (!loading && !attributes) {
