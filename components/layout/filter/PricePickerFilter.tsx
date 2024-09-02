@@ -109,9 +109,6 @@ const PriceFilter: React.FC = () => {
                 width: '20px',
                 borderRadius: '50%',
                 backgroundColor: '#f97316',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
                 boxShadow: '0px 2px 6px #AAA',
               }}
             />

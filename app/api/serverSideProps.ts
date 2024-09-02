@@ -23,6 +23,7 @@ export async function getProducts(props: {
     searchParams?: {
       search?: string;
     };
+    activeFilters: IFilterParams[];
   };
 }): Promise<{
   products?: IProductsEntity[];
@@ -31,7 +32,7 @@ export async function getProducts(props: {
 }> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { limit, offset, params } = props;
-  const expandedFilters: IFilterParams[] | undefined = [];
+  const expandedFilters: IFilterParams[] | undefined = params?.activeFilters;
   const searchValue = params?.searchParams?.search || '';
   try {
     if (searchValue === '') {

@@ -4,8 +4,8 @@ import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
 // eslint-disable-next-line import/no-cycle
-import { LanguageContext } from '../../../store/providers/LanguageContext';
-import { api } from '../../api/api';
+import { LanguageContext } from '../../store/providers/LanguageContext';
+import { api } from '../api/api';
 
 type UseGetPageProps = {
   pageUrl: string | undefined;

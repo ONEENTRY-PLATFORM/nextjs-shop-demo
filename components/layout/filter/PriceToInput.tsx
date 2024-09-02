@@ -9,10 +9,10 @@ import {
 } from '@/app/store/reducers/FilterSlice';
 
 const PriceToInput: React.FC = () => {
-  const { priceToSelected } = useAppSelector((state) => state.filterReducer);
-  const { maxPriceValue } = useAppSelector((state) => state.filterReducer);
-
   const dispatch = useAppDispatch();
+  const { priceToSelected, maxPriceValue } = useAppSelector(
+    (state) => state.filterReducer,
+  );
 
   const onChange = (value: string) => {
     if (priceToSelected) {
