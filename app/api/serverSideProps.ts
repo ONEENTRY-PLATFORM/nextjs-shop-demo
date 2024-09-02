@@ -23,7 +23,7 @@ export async function getProducts(props: {
     searchParams?: {
       search?: string;
     };
-    activeFilters: IFilterParams[];
+    activeFilters?: IFilterParams[];
   };
 }): Promise<{
   products?: IProductsEntity[];

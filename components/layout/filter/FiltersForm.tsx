@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import React, { memo, useMemo } from 'react';
+// import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import React, { memo, useMemo, useState } from 'react';
 
 import { useGetPage } from '@/app/api/hooks/useGetPage';
 
@@ -25,6 +26,31 @@ function sortObjectFieldsByPosition(obj: Record<any, any>) {
 const FiltersForm: React.FC = () => {
   const { pageInfo } = useGetPage({ pageUrl: 'catalog_filters' });
 
+  // const searchParams = useSearchParams();
+  // const pathname = usePathname();
+  // const { replace } = useRouter();
+  // const router = useRouter();
+  // const [state, setState] = useState(false);
+
+  // const handleSearch = (term: string) => {
+  //   const params = new URLSearchParams(searchParams);
+  //   if (term) {
+  //     params.set('search', term);
+  //     setState(true);
+  //   } else {
+  //     params.delete('search');
+  //     setState(false);
+  //   }
+  //   replace(`${pathname}?${params.toString()}`);
+  // };
+
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const params = new URLSearchParams(searchParams);
+  //   router.push(`/shop?${params.toString()}`);
+  //   setState(false);
+  // };
+
   const sortedAttributes: Record<any, any> = useMemo(() => {
     if (!pageInfo) {
       return [];
@@ -35,18 +61,18 @@ const FiltersForm: React.FC = () => {
   return (
     <div className="flex w-full flex-col px-10 pb-16 pt-5">
       {Object.keys(sortedAttributes).map((attribute, index) => {
-        if (attribute === 'color_filter') {
-          return (
-            <ColorFilter
-              key={index}
-              color_filter_title={sortedAttributes[attribute]?.value}
-            />
-          );
-        }
+        // if (attribute === 'color_filter') {
+        //   return (
+        //     <ColorFilter
+        //       key={index}
+        //       color_filter_title={sortedAttributes[attribute]?.value}
+        //     />
+        //   );
+        // }
 
-        if (attribute === 'price_filter') {
-          return <PricePickerFilter key={index} />;
-        }
+        // if (attribute === 'price_filter') {
+        //   return <PricePickerFilter key={index} />;
+        // }
 
         if (attribute === 'availability_filter') {
           return (
@@ -64,3 +90,6 @@ const FiltersForm: React.FC = () => {
 };
 
 export default memo(FiltersForm);
+function setState(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}

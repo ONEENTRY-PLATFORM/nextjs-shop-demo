@@ -1,4 +1,5 @@
-import React from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { setAvailability } from '@/app/store/reducers/FilterSlice';
@@ -10,6 +11,20 @@ interface Props {
 const AvailabilityFilter: React.FC<Props> = ({ title }) => {
   const available = useAppSelector((state) => state.filterReducer.availability);
   const dispatch = useAppDispatch();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const router = useRouter();
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    if (available) {
+      params.set('in_stock', available ? 'true' : '');
+    } else {
+      params.delete('in_stock');
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }, [available]);
 
   return (
     <div className="mb-9 flex gap-5">

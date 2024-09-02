@@ -32,6 +32,9 @@ const initialState: InitialStateType = {
   catalogOffset: 0,
   homeBadgeFilterActive: undefined,
   search: '',
+  availability: false,
+  // minPriceValue: 0,
+  // maxPriceValue: 100,
 };
 
 function areObjectFieldsAndValuesSame(

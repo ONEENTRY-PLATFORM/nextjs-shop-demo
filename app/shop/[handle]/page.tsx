@@ -3,8 +3,6 @@ import { notFound } from 'next/navigation';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import { useAppSelector } from '@/app/store/hooks';
-import { selectAllFilters } from '@/app/store/reducers/FilterSlice';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import Loader from '@/components/shared/Loader';
 
@@ -61,14 +59,7 @@ export default async function CatalogPage({
 }: {
   params: { handle: string };
 }) {
-  const activeFilters = useAppSelector(selectAllFilters);
-  console.log(activeFilters);
-
-  const data = await getProducts({
-    limit: 10,
-    offset: 0,
-    params: { activeFilters: activeFilters },
-  });
+  const data = await getProducts({ limit: 10, offset: 0 });
 
   const { isError, products } = data;
   if (isError || !products) {

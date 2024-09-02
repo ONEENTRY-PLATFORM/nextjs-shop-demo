@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import type { IFilterParams, IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
@@ -59,11 +60,16 @@ export default async function CatalogPage({
   searchParams?: {
     search?: string;
     page?: string;
+    filters?: IFilterParams[];
   };
 }) {
-  const params = { searchParams };
   const currentPage = Number(searchParams?.page) || 0;
-  const data = await getProducts({ limit: 10, offset: currentPage, params });
+  const data = await getProducts({
+    limit: 10,
+    offset: currentPage,
+    params: { searchParams: searchParams },
+  });
+  console.log(searchParams);
 
   const { isError, products } = data;
   if (isError || !products) {
