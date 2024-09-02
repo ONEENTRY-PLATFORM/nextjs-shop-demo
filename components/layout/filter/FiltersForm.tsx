@@ -12,16 +12,13 @@ import PricePickerFilter from './PricePickerFilter';
 
 function sortObjectFieldsByPosition(obj: Record<any, any>) {
   const entries = Object.entries(obj);
-
   entries.sort((a, b) => a[1].position - b[1].position);
-
   const sortedObj = {};
   for (const [key, value] of entries) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     sortedObj[key] = value;
   }
-
   return sortedObj;
 }
 
@@ -42,8 +39,6 @@ const FiltersForm: React.FC = () => {
           return (
             <ColorFilter
               key={index}
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              //@ts-ignore
               color_filter_title={sortedAttributes[attribute]?.value}
             />
           );
