@@ -7,6 +7,7 @@ const RelatedItems: React.FC<{
   title: string;
 }> = async ({ id, title }) => {
   const data = await getRelatedProductsById(id, 'en_US');
+  console.log(data);
 
   const { isError, products } = data;
   if (isError || !products) {

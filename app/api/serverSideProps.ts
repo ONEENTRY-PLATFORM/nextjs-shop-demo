@@ -14,10 +14,12 @@ import type {
 import { api } from '@/app/api';
 
 /* ProductApi */
-const useSearchParams = (searchParams?: {
+const setSearchParams = (searchParams?: {
   search?: string;
   in_stock?: string;
   color?: string;
+  minPrice?: string;
+  maxPrice?: string;
 }) => {
   const expandedFilters: Array<IFilterParams> | undefined = [];
 
@@ -37,8 +39,28 @@ const useSearchParams = (searchParams?: {
     expandedFilters.push(newFilter);
   }
 
+  if (searchParams?.minPrice) {
+    const filter: IFilterParams = {
+      attributeMarker: 'price',
+      conditionMarker: 'mth',
+      conditionValue: searchParams?.minPrice,
+      pageUrl: ['shop'],
+    };
+    expandedFilters.push(filter);
+  }
+
+  if (searchParams?.maxPrice) {
+    const filter: IFilterParams = {
+      attributeMarker: 'price',
+      conditionMarker: 'lth',
+      conditionValue: searchParams?.maxPrice,
+      pageUrl: ['shop'],
+    };
+    expandedFilters.push(filter);
+  }
+
   return expandedFilters;
-}
+};
 
 // getProducts
 export async function getProducts(props: {
@@ -49,6 +71,8 @@ export async function getProducts(props: {
       search?: string;
       in_stock?: string;
       color?: string;
+      minPrice?: string;
+      maxPrice?: string;
     };
   };
 }): Promise<{
@@ -57,11 +81,8 @@ export async function getProducts(props: {
   err?: unknown;
 }> {
   const { limit, offset, params } = props;
-  // const expandedFilters: Array<IFilterParams> | undefined = [];
   const searchValue = params?.searchParams?.search || '';
-  const expandedFilters = useSearchParams(params?.searchParams);
-
-  // console.log(params);
+  const expandedFilters = setSearchParams(params?.searchParams);
 
   try {
     if (searchValue === '') {
@@ -93,6 +114,13 @@ export async function getProductsByUrl(props: {
   offset: number;
   params: {
     handle: string;
+    searchParams?: {
+      search?: string;
+      in_stock?: string;
+      color?: string;
+      minPrice?: string;
+      maxPrice?: string;
+    };
   };
 }): Promise<{
   products?: IProductsEntity[];
@@ -101,7 +129,7 @@ export async function getProductsByUrl(props: {
 }> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { limit, offset, params } = props;
-  const expandedFilters: IFilterParams[] | undefined = [];
+  const expandedFilters = setSearchParams(params?.searchParams);
 
   try {
     const products = await api.Products.getProductsByPageUrl(
