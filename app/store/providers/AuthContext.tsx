@@ -84,19 +84,19 @@ export const AuthProvider = ({ children }: Props) => {
     // console.log(isAuth);
     if (isAuth) {
       trigger({})
-        .then(
-          (res: {
-            error: any;
-            isLoading: boolean;
-            data: SetStateAction<IUserEntity | undefined>;
-          }) => {
-            if (res.error && !res.isLoading) {
-              localStorage.setItem('refreshToken', '');
-              return setIsAuth(false);
-            }
-            setUser(res.data);
-          },
-        )
+        // .then(
+        //   (res: {
+        //     error: any;
+        //     isLoading: boolean;
+        //     data: SetStateAction<IUserEntity | undefined>;
+        //   }) => {
+        //     if (res.error && !res.isLoading) {
+        //       localStorage.setItem('refreshToken', '');
+        //       return setIsAuth(false);
+        //     }
+        //     setUser(res.data);
+        //   },
+        // )
         .catch(() => {
           localStorage.setItem('refreshToken', '');
           setIsAuth(false);

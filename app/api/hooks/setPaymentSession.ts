@@ -15,16 +15,16 @@ export const useSetPaymentSession = () => {
   const [refetch, setRefetch] = useState<boolean>(false);
   const setSession = useCallback(
     async (orderId: number) => {
-      setLoading(true);
-      try {
-        const result = await api.Payments.createSession(orderId, 'session');
-        session.current = result;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (e: any) {
-        // console.log(e);
-        setError((e as Error).message);
-      }
-      setLoading(false);
+      // setLoading(true);
+      // try {
+      //   const result = await api.Payments.createSession(orderId, 'session');
+      //   session.current = result;
+      //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // } catch (e: any) {
+      //   // console.log(e);
+      //   setError((e as Error).message);
+      // }
+      // setLoading(false);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [refetch],

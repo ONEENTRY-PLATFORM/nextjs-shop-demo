@@ -23,7 +23,13 @@ const CalendarComponent: React.FC = () => {
 
   return (
     <>
-      <Calendar view="month" onChange={setDate} value={date} />
+      <Calendar
+        view="month"
+        onChange={(value) => {
+          setDate(value as Date);
+        }}
+        value={date}
+      />
       <TimeSlots
         timeSlots={timeSlotsData}
         currentTime={time}

@@ -4,7 +4,7 @@ import type {
   BlockType,
   // IBlockEntity,
 } from 'oneentry/dist/blocks/blocksInterfaces';
-import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
+// import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {
   IFilterParams,
@@ -21,11 +21,15 @@ const setSearchParams = (searchParams?: {
   minPrice?: string;
   maxPrice?: string;
 }) => {
-  const expandedFilters: Array<IFilterParams> | undefined = [];
+  const expandedFilters:
+    | Array<IFilterParams & { statusMarker?: string }>
+    | undefined = [];
 
   if (searchParams?.['in_stock']) {
     expandedFilters.push({
       statusMarker: 'in_stock',
+      attributeMarker: '',
+      conditionValue: null,
     });
   }
 

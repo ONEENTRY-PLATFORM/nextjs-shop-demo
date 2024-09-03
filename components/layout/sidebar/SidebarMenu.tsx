@@ -2,11 +2,11 @@
 
 import { usePathname } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-import { Suspense } from 'react';
 
+// import { Suspense } from 'react';
 import { useGetMenu } from '@/app/api';
-import { getMenuByMarker } from '@/app/api/serverSideProps';
 
+// import { getMenuByMarker } from '@/app/api/serverSideProps';
 import SidebarMenuItem from './SidebarMenuItem';
 
 export const revalidate = 10;

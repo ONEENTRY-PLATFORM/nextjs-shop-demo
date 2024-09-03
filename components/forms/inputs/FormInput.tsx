@@ -7,14 +7,6 @@ import { FormFieldsEnum } from '@/app/types/enum';
 import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
 
-enum minLengthFieldsEnum {
-  card_cvc = 3,
-}
-
-enum maxLengthFieldsEnum {
-  card_cvc = 3,
-}
-
 const FormInput: React.FC<IAttributes & { value?: string }> = (field) => {
   const { localizeInfos } = field;
   const [value, setValue] = useState<string>(field.value || '');
@@ -26,8 +18,8 @@ const FormInput: React.FC<IAttributes & { value?: string }> = (field) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     field.marker as any
   ];
-  const minLength = (minLengthFieldsEnum[field.marker] as number) || 0;
-  const maxLength = (maxLengthFieldsEnum[field.marker] as number) || 50;
+  const minLength = field.marker === 'card_cvc' ? 3 : 0;
+  const maxLength = field.marker === 'card_cvc' ? 3 : 50;
 
   useEffect(() => {
     dispatch(
