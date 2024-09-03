@@ -1,18 +1,12 @@
-import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import React, { memo } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import {
-  addFilter,
-  removeFilter,
-  setPriceFilterActive,
-} from '@/app/store/reducers/FilterSlice';
-
-const PriceToInput: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const { priceToSelected } = useAppSelector((state) => state.filterReducer);
-
+const PriceToInput: React.FC<{
+  priceTo: number;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  setPriceTo: Function;
+}> = ({ priceTo, setPriceTo }) => {
   const onChange = (value: number) => {
+    // setPriceTo(value);
     // if (value) {
     //   const filter: IFilterParams = {
     //     attributeMarker: 'price',
@@ -30,14 +24,13 @@ const PriceToInput: React.FC = () => {
     //   };
     //   dispatch(removeFilter(filter));
     // }
-    dispatch(setPriceFilterActive({ value, operator: 'to' }));
   };
 
   return (
     <input
       type="number"
-      value={priceToSelected}
-      onChange={(e) => onChange(Number(e.target.value))}
+      value={priceTo}
+      onChange={(e) => setPriceTo(Number(e.target.value))}
       className="w-5/6 bg-transparent"
     />
   );

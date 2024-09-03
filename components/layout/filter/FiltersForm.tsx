@@ -37,27 +37,27 @@ const FiltersForm: React.FC = () => {
     <Suspense fallback={'...Loading'}>
       <div className="flex w-full flex-col px-10 pb-16 pt-5">
         {Object.keys(sortedAttributes).map((attribute, index) => {
-          if (attribute === 'color_filter') {
-            return (
-              <ColorFilter
-                key={index}
-                color_filter_title={sortedAttributes[attribute]?.value}
-              />
-            );
-          }
-
-          // if (attribute === 'price_filter') {
-          //   return <PricePickerFilter key={index} />;
+          // if (attribute === 'color_filter') {
+          //   return (
+          //     <ColorFilter
+          //       key={index}
+          //       color_filter_title={sortedAttributes[attribute]?.value}
+          //     />
+          //   );
           // }
 
-          if (attribute === 'availability_filter') {
-            return (
-              <AvailabilityFilter
-                key={index}
-                title={sortedAttributes[attribute]?.value}
-              />
-            );
+          if (attribute === 'price_filter') {
+            return <PricePickerFilter key={index} />;
           }
+
+          // if (attribute === 'availability_filter') {
+          //   return (
+          //     <AvailabilityFilter
+          //       key={index}
+          //       title={sortedAttributes[attribute]?.value}
+          //     />
+          //   );
+          // }
         })}
 
         <FilterButtons />

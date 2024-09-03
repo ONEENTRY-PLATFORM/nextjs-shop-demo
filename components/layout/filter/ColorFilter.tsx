@@ -3,9 +3,9 @@ import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInter
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { useGetSingleAttributeByMarkerSet } from '@/app/api';
+import Loader from '@/components/shared/Loader';
 
 import ColorPicker from './ColorPicker';
-import Loader from '@/components/shared/Loader';
 
 interface Props {
   color_filter_title?: string;
@@ -29,13 +29,13 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
 
   const pathname = usePathname();
   const { replace } = useRouter();
-  
+
   const colorFilters = useMemo(() => {
     let colors: Color[] = [];
     if (!attributes) {
       return colors;
     }
-    colors = attributes?.listTitles.reduce(
+    colors = attributes.listTitles.reduce(
       (arr: Color[], option: IListTitle) => {
         const color: Color = {
           code: option.value.toString(),
@@ -58,7 +58,7 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
     replace(`${pathname}?${params.toString()}`);
   }, [activeColor]);
 
-  if (!loading && !attributes || error || loading) {
+  if ((!loading && !attributes) || error || loading) {
     return <Loader />;
   }
 

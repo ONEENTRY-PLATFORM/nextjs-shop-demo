@@ -5,7 +5,8 @@ interface Props {
   code: string;
   name: string;
   key: number;
-  setActiveColor: any;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  setActiveColor: Function;
 }
 
 const ColorPicker: React.FC<Props> = ({ code, name, setActiveColor }) => {
@@ -23,7 +24,8 @@ const ColorPicker: React.FC<Props> = ({ code, name, setActiveColor }) => {
           }
         }}
         className={
-          'size-6 rounded-full ' + ((code === params.get('color')) ? 'outline outline-neutral-400' : '')
+          'size-6 rounded-full ' +
+          (code === params.get('color') ? 'outline outline-neutral-400' : '')
         }
         style={{
           backgroundColor: code,

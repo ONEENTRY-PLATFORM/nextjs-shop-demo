@@ -2,26 +2,20 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';
 
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { setPriceFilterActive } from '@/app/store/reducers/FilterSlice';
+import { useAppSelector } from '@/app/store/hooks';
 
 import PriceFromInput from './PriceFromInput';
 import PriceToInput from './PriceToInput';
 
 const PriceFilter: React.FC = () => {
-  const dispatch = useAppDispatch();
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
+  const [values, setValues] = useState([0, 100]);
 
-  const { priceFromSelected, priceToSelected, minPriceValue, maxPriceValue } =
-    useAppSelector((state) => state.filterReducer);
-
-  const STEP = 1;
+  const STEP = 10;
   const MIN = 0;
   const MAX = 100;
-
-  // console.log({ priceFromSelected, priceToSelected });
 
   const priceFromLabel = useAppSelector(
     (state) => state.systemContentReducer.content.price_from,
@@ -32,23 +26,23 @@ const PriceFilter: React.FC = () => {
 
   const params = new URLSearchParams(searchParams);
 
-  useEffect(() => {
-    if (priceFromSelected) {
-      params.set('minPrice', priceFromSelected.toFixed(2));
+  const setPriceFrom = () => {
+    if (values[0]) {
+      params.set('minPrice', values[0].toFixed(2));
     } else {
       params.delete('minPrice');
     }
     replace(`${pathname}?${params.toString()}`);
-  }, [priceFromSelected]);
+  };
 
-  useEffect(() => {
-    if (priceToSelected) {
-      params.set('maxPrice', priceToSelected.toFixed(2));
+  const setPriceTo = () => {
+    if (values[1]) {
+      params.set('maxPrice', values[1].toFixed(2));
     } else {
       params.delete('maxPrice');
     }
     replace(`${pathname}?${params.toString()}`);
-  }, [priceToSelected]);
+  };
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
@@ -62,7 +56,7 @@ const PriceFilter: React.FC = () => {
             {priceFromLabel}
           </span>
           <span className="text-lg leading-8 text-neutral-600">
-            <PriceFromInput />
+            <PriceFromInput priceFrom={values[0]} setPriceFrom={setPriceFrom} />
           </span>
         </div>
         <div className="flex flex-1 gap-2.5 rounded-3xl bg-neutral-100 p-2.5">
@@ -70,32 +64,33 @@ const PriceFilter: React.FC = () => {
             {priceToLabel}
           </span>
           <span className="text-lg leading-8 text-neutral-600">
-            <PriceToInput />
+            <PriceToInput priceTo={values[1]} setPriceTo={setPriceTo} />
           </span>
         </div>
       </div>
 
-      <div className="mb-5 mt-2 flex w-full">
+      <div className="mb-2 mt-2 flex w-full">
         <Range
           label="Select your value"
           step={STEP}
-          min={minPriceValue}
-          max={maxPriceValue}
-          values={[priceFromSelected, priceToSelected]}
+          min={MIN}
+          max={MAX}
+          values={values}
           onChange={(values) => {
-            dispatch(
-              setPriceFilterActive({
-                value: values[0],
-                operator: 'from',
-              }),
-            );
-            dispatch(
-              setPriceFilterActive({
-                value: values[1],
-                operator: 'to',
-              }),
-            );
+            setValues(values);
           }}
+          renderMark={({ props, index }) => (
+            <div
+              {...props}
+              key={props.key}
+              style={{
+                ...props.style,
+                height: '16px',
+                width: '1px',
+                backgroundColor: index * STEP < values[0] ? '#548BF4' : '#ccc',
+              }}
+            />
+          )}
           renderTrack={({ props, children }) => (
             <div
               onMouseDown={props.onMouseDown}
@@ -114,7 +109,7 @@ const PriceFilter: React.FC = () => {
                   width: '100%',
                   borderRadius: '4px',
                   background: getTrackBackground({
-                    values: [priceFromSelected, priceToSelected],
+                    values: values,
                     colors: ['#ccc', '#ffa03d', '#ccc'],
                     min: MIN,
                     max: MAX,
@@ -126,6 +121,7 @@ const PriceFilter: React.FC = () => {
               </div>
             </div>
           )}
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           renderThumb={({ index, props, isDragged }) => (
             <div
               {...props}
@@ -142,12 +138,11 @@ const PriceFilter: React.FC = () => {
           )}
         />
       </div>
-      {/* 
-      <div className="flex w-full justify-between gap-5 self-center text-base leading-8 text-slate-300">
-        <span>5</span>
-        <span>10</span>
-        <span>30</span>
-      </div> */}
+      <div className="mb-5 flex w-full justify-between gap-5 self-center text-base leading-8 text-slate-300">
+        <span>{MIN}</span>
+        <span>{(MAX - MIN) / 2}</span>
+        <span>{MAX}</span>
+      </div>
     </div>
   );
 };
