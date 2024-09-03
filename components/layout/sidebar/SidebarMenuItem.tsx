@@ -3,8 +3,9 @@ import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
 import * as icons from '../../icons';
 
-const SidebarMenuItem: React.FC<{ menuItem: IMenusPages & ({isActive: boolean}) }> = ({ menuItem }) => {
-  
+const SidebarMenuItem: React.FC<{
+  menuItem: IMenusPages & { isActive: boolean };
+}> = ({ menuItem }) => {
   if (!menuItem) {
     return;
   }
@@ -17,6 +18,7 @@ const SidebarMenuItem: React.FC<{ menuItem: IMenusPages & ({isActive: boolean}) 
       <Link
         className={`mr-auto flex justify-start gap-3 whitespace-nowrap pr-5 hover:text-orange-500 ${menuItem.isActive ? 'text-orange-500' : ''} group`}
         href={'/' + pageUrl}
+        aria-checked={menuItem.isActive}
       >
         <div className="my-auto aspect-square size-4 shrink-0">
           <Icon />

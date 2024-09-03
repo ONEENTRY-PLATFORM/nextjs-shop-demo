@@ -1,11 +1,9 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { removeAllFilters } from '@/app/store/reducers/FilterSlice';
+import { useAppSelector } from '@/app/store/hooks';
 
 const ResetButton: React.FC = () => {
-  const dispatch = useAppDispatch();
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -16,6 +14,7 @@ const ResetButton: React.FC = () => {
   );
 
   const onReset = () => {
+    params.delete('search');
     params.delete('color');
     params.delete('in_stock');
     params.delete('minPrice');

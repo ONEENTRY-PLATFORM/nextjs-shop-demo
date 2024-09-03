@@ -242,11 +242,7 @@ export async function getMenuByMarker({
 }: {
   marker: string;
   langCode: string;
-}): Promise<{
-  menu?: IMenusEntity;
-  isError: boolean;
-  err?: unknown;
-}> {
+}) {
   try {
     const menu = await api.Menus.getMenusByMarker(marker, langCode);
     return { isError: false, menu: menu };
