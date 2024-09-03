@@ -71,7 +71,7 @@ export default async function CatalogPage({
     offset: currentPage,
     params: { searchParams: searchParams },
   });
-  console.log(searchParams);
+  // console.log(searchParams);
 
   const { isError, products } = data;
   if (isError || !products) {

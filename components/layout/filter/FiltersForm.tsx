@@ -2,7 +2,7 @@
 'use client';
 
 // import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, Suspense, useMemo, useState } from 'react';
 
 import { useGetPage } from '@/app/api/hooks/useGetPage';
 
@@ -59,37 +59,36 @@ const FiltersForm: React.FC = () => {
   }, [pageInfo]);
 
   return (
-    <div className="flex w-full flex-col px-10 pb-16 pt-5">
-      {Object.keys(sortedAttributes).map((attribute, index) => {
-        if (attribute === 'color_filter') {
-          return (
-            <ColorFilter
-              key={index}
-              color_filter_title={sortedAttributes[attribute]?.value}
-            />
-          );
-        }
+    <Suspense fallback={'...Loading'}>
+      <div className="flex w-full flex-col px-10 pb-16 pt-5">
+        {Object.keys(sortedAttributes).map((attribute, index) => {
+          if (attribute === 'color_filter') {
+            return (
+              <ColorFilter
+                key={index}
+                color_filter_title={sortedAttributes[attribute]?.value}
+              />
+            );
+          }
 
-        // if (attribute === 'price_filter') {
-        //   return <PricePickerFilter key={index} />;
-        // }
+          // if (attribute === 'price_filter') {
+          //   return <PricePickerFilter key={index} />;
+          // }
 
-        if (attribute === 'availability_filter') {
-          return (
-            <AvailabilityFilter
-              key={index}
-              title={sortedAttributes[attribute]?.value}
-            />
-          );
-        }
-      })}
+          if (attribute === 'availability_filter') {
+            return (
+              <AvailabilityFilter
+                key={index}
+                title={sortedAttributes[attribute]?.value}
+              />
+            );
+          }
+        })}
 
-      <FilterButtons />
-    </div>
+        <FilterButtons />
+      </div>
+    </Suspense>
   );
 };
 
 export default memo(FiltersForm);
-function setState(arg0: boolean) {
-  throw new Error('Function not implemented.');
-}

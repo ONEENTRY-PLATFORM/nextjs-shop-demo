@@ -6,7 +6,6 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 type InitialStateType = {
   filters: IFilterParams[];
   homeBadgesPrevious?: IFilterParams;
-  homeCardsPrevious?: IFilterParams;
   sortFilterActive?: number;
   badgeFilterActive?: number;
   homeBadgeFilterActive?: number;
@@ -108,8 +107,7 @@ export const filterSlice = createSlice({
       state.priceToSelected = undefined;
       state.priceFromPrevious = undefined;
       state.priceFromPrevious = undefined;
-      state.homeCardsPrevious = undefined;
-      state.availability = undefined;
+      state.availability = false;
     },
     setSortFilterActive(state, action: PayloadAction<number>) {
       if (state.sortFilterActive === action.payload) {
@@ -132,14 +130,6 @@ export const filterSlice = createSlice({
     ) {
       state.homeBadgeFilterActive = action.payload.value;
       state.homeBadgesPrevious = action.payload.previous;
-    },
-    setHomeCardPrevious(
-      state,
-      action: PayloadAction<{
-        previous?: IFilterParams;
-      }>,
-    ) {
-      state.homeCardsPrevious = action.payload.previous;
     },
     setAvailability(state, action: PayloadAction<boolean>) {
       state.availability = action.payload;

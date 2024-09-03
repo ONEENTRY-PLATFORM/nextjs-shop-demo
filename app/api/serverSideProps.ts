@@ -31,7 +31,6 @@ export async function getProducts(props: {
   isError: boolean;
   err?: unknown;
 }> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { limit, offset, params } = props;
   const expandedFilters: Array<IFilterParams> | undefined = [];
   const searchValue = params?.searchParams?.search || '';

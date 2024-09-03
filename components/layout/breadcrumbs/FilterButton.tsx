@@ -10,9 +10,9 @@ const FilterButton: React.FC = () => {
   const path = usePathname();
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
-  // if (path.indexOf('catalog') !== 1 || path.indexOf('shop') !== 1) {
-  //   return;
-  // }
+  if (path.indexOf('shop') === -1) {
+    return;
+  }
 
   return (
     <button

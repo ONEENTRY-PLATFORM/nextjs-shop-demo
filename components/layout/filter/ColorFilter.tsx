@@ -60,6 +60,7 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
+    params.delete('color');
 
     if (colorFilters?.[colorFilterPrevious as number]?.code) {
       const oldFilter: IFilterParams = {
@@ -68,7 +69,6 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
         conditionValue: colorFilters[colorFilterPrevious as number].code,
         pageUrl: ['shop'],
       };
-      params.delete('color');
       dispatch(removeFilter(oldFilter));
     }
 

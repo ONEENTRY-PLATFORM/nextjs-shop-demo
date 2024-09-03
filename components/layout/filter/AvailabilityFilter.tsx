@@ -11,18 +11,22 @@ interface Props {
 const AvailabilityFilter: React.FC<Props> = ({ title }) => {
   const available = useAppSelector((state) => state.filterReducer.availability);
   const dispatch = useAppDispatch();
-  const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
+    params.delete('in_stock');
     if (available) {
       params.set('in_stock', available ? 'true' : '');
     } else {
       params.delete('in_stock');
     }
     replace(`${pathname}?${params.toString()}`);
+    console.log(params.toString());
+    console.log(available);
   }, [available]);
 
   return (
