@@ -1,13 +1,11 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
-import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { useGetSingleAttributeByMarkerSet } from '@/app/api';
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { addFilter, removeFilter } from '@/app/store/reducers/FilterSlice';
 
 import ColorPicker from './ColorPicker';
+import Loader from '@/components/shared/Loader';
 
 interface Props {
   color_filter_title?: string;
@@ -20,24 +18,17 @@ type Color = {
 };
 
 const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
-  const dispatch = useAppDispatch();
   const { attributes, loading, error } = useGetSingleAttributeByMarkerSet({
     setMarker: 'system_content',
     attributeMarker: 'color_filters',
   });
-  const { colorFilterActive: activeColor, colorFilterPrevious } =
-    useAppSelector(
-      (state: {
-        filterReducer: {
-          colorFilterActive?: number;
-          colorFilterPrevious?: number;
-        };
-      }) => state.filterReducer,
-    );
+  const [activeColor, setActiveColor] = useState('');
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+
+  const params = new URLSearchParams(searchParams);
 
   const colorFilters = useMemo(() => {
     let colors: Color[] = [];
@@ -59,42 +50,16 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
   }, [attributes]);
 
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    params.delete('color');
-
-    if (colorFilters?.[colorFilterPrevious as number]?.code) {
-      const oldFilter: IFilterParams = {
-        attributeMarker: 'color',
-        conditionMarker: 'in',
-        conditionValue: colorFilters[colorFilterPrevious as number].code,
-        pageUrl: ['shop'],
-      };
-      dispatch(removeFilter(oldFilter));
-    }
-
-    if (colorFilters?.[activeColor as number]?.code) {
-      const newFilter: IFilterParams = {
-        attributeMarker: 'color',
-        conditionMarker: 'in',
-        conditionValue: colorFilters[activeColor as number].code,
-        pageUrl: ['shop'],
-      };
-      params.set('color', colorFilters[activeColor as number].code);
-      dispatch(addFilter(newFilter));
+    if (activeColor) {
+      params.set('color', activeColor);
+    } else {
+      params.delete('color');
     }
     replace(`${pathname}?${params.toString()}`);
   }, [activeColor]);
 
-  if (!loading && !attributes) {
-    return <></>;
-  }
-
-  if (error) {
-    return <div />;
-  }
-
-  if (loading) {
-    return <div />;
+  if (!loading && !attributes || error || loading) {
+    return <Loader />;
   }
 
   return (
@@ -105,10 +70,10 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
           return (
             <ColorPicker
               key={index}
-              index={index}
               code={color.code}
               name={color.name}
               active={activeColor}
+              setActiveColor={setActiveColor}
             />
           );
         })}

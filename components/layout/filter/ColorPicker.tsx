@@ -1,27 +1,26 @@
 import React, { memo } from 'react';
 
-import { useAppDispatch } from '@/app/store/hooks';
-import { setColorFilterActive } from '@/app/store/reducers/FilterSlice';
-
 interface Props {
   code: string;
   name: string;
-  active?: number;
+  active: string;
   key: number;
-  index: number;
+  setActiveColor: any;
 }
 
-const ColorPicker: React.FC<Props> = ({ code, name, active, index }) => {
-  const dispatch = useAppDispatch();
-
+const ColorPicker: React.FC<Props> = ({ code, name, active, setActiveColor }) => {
   return (
     <div className="flex gap-1.5">
       <button
         onClick={() => {
-          dispatch(setColorFilterActive(index));
+          if (code === active) {
+            setActiveColor('');
+          } else {
+            setActiveColor(code);
+          }
         }}
         className={
-          'size-6 rounded-full ' + ((active === index) ? 'outline outline-neutral-400' : '')
+          'size-6 rounded-full ' + ((code === active) ? 'outline outline-neutral-400' : '')
         }
         style={{
           backgroundColor: code,
