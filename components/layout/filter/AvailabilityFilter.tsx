@@ -25,12 +25,15 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
 
   return (
     <div className="mb-9 flex gap-5">
-      <label htmlFor='availability' className="flex-auto text-base leading-8 text-neutral-600">
+      <label
+        htmlFor="availability"
+        className="flex-auto text-base leading-8 text-neutral-600"
+      >
         {title}
       </label>
       <div className="flex flex-col items-start justify-center self-start rounded-[30px] bg-neutral-100 py-px">
         <input
-          id='availability'
+          id="availability"
           type="checkbox"
           checked={params.get('in_stock') ? true : false}
           onChange={() => setAvailability(!available)}

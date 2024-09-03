@@ -1,4 +1,3 @@
-// import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import React, { memo } from 'react';
 
 const PriceFromInput: React.FC<{
