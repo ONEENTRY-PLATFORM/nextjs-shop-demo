@@ -5,7 +5,6 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { RTKApi } from '../api';
 import cartReducer from './reducers/CartSlice';
 import favoritesReducer from './reducers/FavoritesSlice';
-import filterReducer from './reducers/FilterSlice';
 import formFieldsReducer from './reducers/FormFieldsSlice';
 import orderReducer from './reducers/OrderSlice';
 import systemContentReducer from './reducers/SystemContentSlice';
@@ -14,7 +13,6 @@ const rootReducer = combineReducers({
   cartReducer,
   favoritesReducer,
   orderReducer,
-  filterReducer,
   systemContentReducer,
   formFieldsReducer,
   [RTKApi.reducerPath]: RTKApi.reducer,

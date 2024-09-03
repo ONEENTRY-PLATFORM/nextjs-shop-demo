@@ -11,7 +11,8 @@ const PriceFilter: React.FC = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
-  const [values, setValues] = useState([0, 100]);
+  const [priceFrom, setPriceFrom] = useState(0);
+  const [priceTo, setPriceTo] = useState(100);
 
   const STEP = 10;
   const MIN = 0;
@@ -26,23 +27,23 @@ const PriceFilter: React.FC = () => {
 
   const params = new URLSearchParams(searchParams);
 
-  const setPriceFrom = () => {
-    if (values[0]) {
-      params.set('minPrice', values[0].toFixed(2));
+  useEffect(() => {
+    if (priceFrom) {
+      params.set('minPrice', priceFrom.toString());
     } else {
       params.delete('minPrice');
     }
     replace(`${pathname}?${params.toString()}`);
-  };
+  }, [priceFrom]);
 
-  const setPriceTo = () => {
-    if (values[1]) {
-      params.set('maxPrice', values[1].toFixed(2));
+  useEffect(() => {
+    if (priceTo) {
+      params.set('maxPrice', priceTo.toString());
     } else {
       params.delete('maxPrice');
     }
     replace(`${pathname}?${params.toString()}`);
-  };
+  }, [priceTo]);
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
@@ -56,7 +57,7 @@ const PriceFilter: React.FC = () => {
             {priceFromLabel}
           </span>
           <span className="text-lg leading-8 text-neutral-600">
-            <PriceFromInput priceFrom={values[0]} setPriceFrom={setPriceFrom} />
+            <PriceFromInput price={priceFrom} setPrice={setPriceFrom} />
           </span>
         </div>
         <div className="flex flex-1 gap-2.5 rounded-3xl bg-neutral-100 p-2.5">
@@ -64,20 +65,21 @@ const PriceFilter: React.FC = () => {
             {priceToLabel}
           </span>
           <span className="text-lg leading-8 text-neutral-600">
-            <PriceToInput priceTo={values[1]} setPriceTo={setPriceTo} />
+            <PriceToInput price={priceTo} setPrice={setPriceTo} />
           </span>
         </div>
       </div>
 
-      <div className="mb-2 mt-2 flex w-full">
+      <div className="my-2 flex w-full">
         <Range
           label="Select your value"
           step={STEP}
           min={MIN}
           max={MAX}
-          values={values}
+          values={[priceFrom, priceTo]}
           onChange={(values) => {
-            setValues(values);
+            setPriceFrom(values[0]);
+            setPriceTo(values[1]);
           }}
           renderMark={({ props, index }) => (
             <div
@@ -87,7 +89,12 @@ const PriceFilter: React.FC = () => {
                 ...props.style,
                 height: '16px',
                 width: '1px',
-                backgroundColor: index * STEP < values[0] ? '#548BF4' : '#ccc',
+                backgroundColor:
+                  index * STEP < priceFrom
+                    ? '#ccc'
+                    : index * STEP > priceTo
+                      ? '#ccc'
+                      : '#f97316',
               }}
             />
           )}
@@ -109,7 +116,7 @@ const PriceFilter: React.FC = () => {
                   width: '100%',
                   borderRadius: '4px',
                   background: getTrackBackground({
-                    values: values,
+                    values: [priceFrom, priceTo],
                     colors: ['#ccc', '#ffa03d', '#ccc'],
                     min: MIN,
                     max: MAX,
