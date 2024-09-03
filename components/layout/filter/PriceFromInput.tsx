@@ -1,10 +1,10 @@
-import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
+// import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import React, { memo } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
-  addFilter,
-  removeFilter,
+  // addFilter,
+  // removeFilter,
   setPriceFilterActive,
 } from '@/app/store/reducers/FilterSlice';
 
@@ -12,16 +12,7 @@ const PriceFromInput: React.FC = () => {
   const dispatch = useAppDispatch();
   const { priceFromSelected } = useAppSelector((state) => state.filterReducer);
 
-  const onChange = (value: string) => {
-    // if (priceFromSelected) {
-    //   const filter: IFilterParams = {
-    //     attributeMarker: 'price',
-    //     conditionMarker: 'mth',
-    //     conditionValue: priceFromSelected,
-    //     pageUrl: ['shop'],
-    //   };
-    //   dispatch(removeFilter(filter));
-    // }
+  const onChange = (value: number) => {
     // if (value) {
     //   const filter: IFilterParams = {
     //     attributeMarker: 'price',
@@ -45,9 +36,9 @@ const PriceFromInput: React.FC = () => {
 
   return (
     <input
-      type="text"
+      type="number"
       value={priceFromSelected}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => onChange(Number(e.target.value))}
       className="w-5/6 bg-transparent"
     />
   );

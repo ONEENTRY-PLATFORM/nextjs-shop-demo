@@ -12,17 +12,7 @@ const PriceToInput: React.FC = () => {
   const dispatch = useAppDispatch();
   const { priceToSelected } = useAppSelector((state) => state.filterReducer);
 
-  const onChange = (value: string) => {
-    // if (priceToSelected) {
-    //   const filter: IFilterParams = {
-    //     attributeMarker: 'price',
-    //     conditionMarker: 'lth',
-    //     conditionValue: priceToSelected,
-    //     pageUrl: ['shop'],
-    //   };
-    //   dispatch(removeFilter(filter));
-    // }
-
+  const onChange = (value: number) => {
     // if (value) {
     //   const filter: IFilterParams = {
     //     attributeMarker: 'price',
@@ -40,15 +30,14 @@ const PriceToInput: React.FC = () => {
     //   };
     //   dispatch(removeFilter(filter));
     // }
-
     dispatch(setPriceFilterActive({ value, operator: 'to' }));
   };
 
   return (
     <input
-      type="text"
+      type="number"
       value={priceToSelected}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={(e) => onChange(Number(e.target.value))}
       className="w-5/6 bg-transparent"
     />
   );

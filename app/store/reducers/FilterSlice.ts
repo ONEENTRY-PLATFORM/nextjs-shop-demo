@@ -98,8 +98,8 @@ export const filterSlice = createSlice({
       state.badgeFilterActive = 0;
       state.sortFilterActive = undefined;
       state.colorFilterActive = undefined;
-      state.priceFromSelected = undefined;
-      state.priceToSelected = undefined;
+      state.priceFromSelected = 0;
+      state.priceToSelected = 100;
       state.priceFromPrevious = undefined;
       state.priceFromPrevious = undefined;
       state.availability = false;
@@ -128,7 +128,7 @@ export const filterSlice = createSlice({
     setPriceFilterActive(
       state,
       action: PayloadAction<{
-        value: string | undefined;
+        value: number;
         operator: 'from' | 'to';
       }>,
     ) {

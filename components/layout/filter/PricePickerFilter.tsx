@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -9,13 +10,16 @@ import PriceToInput from './PriceToInput';
 
 const PriceFilter: React.FC = () => {
   const dispatch = useAppDispatch();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
+
   const { priceFromSelected, priceToSelected, minPriceValue, maxPriceValue } =
     useAppSelector((state) => state.filterReducer);
 
   const STEP = 1;
   const MIN = 0;
   const MAX = 100;
-  const [values, setValues] = useState([minPriceValue, maxPriceValue]);
 
   console.log({ priceFromSelected, priceToSelected });
 
@@ -25,6 +29,26 @@ const PriceFilter: React.FC = () => {
   const priceToLabel = useAppSelector(
     (state) => state.systemContentReducer.content.price_to,
   );
+
+  const params = new URLSearchParams(searchParams);
+
+  useEffect(() => {
+    if (priceFromSelected) {
+      params.set('minPrice', priceFromSelected.toFixed(2));
+    } else {
+      params.delete('minPrice');
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }, [priceFromSelected]);
+
+  useEffect(() => {
+    if (priceToSelected) {
+      params.set('maxPrice', priceToSelected.toFixed(2));
+    } else {
+      params.delete('maxPrice');
+    }
+    replace(`${pathname}?${params.toString()}`);
+  }, [priceToSelected]);
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
@@ -55,23 +79,22 @@ const PriceFilter: React.FC = () => {
         <Range
           label="Select your value"
           step={STEP}
-          min={MIN}
-          max={MAX}
+          min={minPriceValue}
+          max={maxPriceValue}
           values={[priceFromSelected, priceToSelected]}
           onChange={(values) => {
             dispatch(
               setPriceFilterActive({
-                value: values[0].toFixed(1),
+                value: values[0],
                 operator: 'from',
               }),
             );
             dispatch(
               setPriceFilterActive({
-                value: values[1].toFixed(1),
+                value: values[1],
                 operator: 'to',
               }),
             );
-            setValues(values);
           }}
           renderTrack={({ props, children }) => (
             <div
@@ -91,7 +114,7 @@ const PriceFilter: React.FC = () => {
                   width: '100%',
                   borderRadius: '4px',
                   background: getTrackBackground({
-                    values,
+                    values: [priceFromSelected, priceToSelected],
                     colors: ['#ccc', '#ffa03d', '#ccc'],
                     min: MIN,
                     max: MAX,
