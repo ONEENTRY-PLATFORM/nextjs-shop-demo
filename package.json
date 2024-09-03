@@ -19,6 +19,7 @@
     "next-auth": "^4.24.7",
     "next-intl": "^3.19.0",
     "next-redux-wrapper": "^8.1.0",
+    "nuqs": "^1.19.0",
     "oneentry": "^1.0.80",
     "react": "^18.3.1",
     "react-calendar": "^5.0.0",

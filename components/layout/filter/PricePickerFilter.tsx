@@ -9,11 +9,15 @@ import PriceToInput from './PriceToInput';
 
 const PriceFilter: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [values, setValues] = useState([0, 50]);
+  const { priceFromSelected, priceToSelected, minPriceValue, maxPriceValue } =
+    useAppSelector((state) => state.filterReducer);
 
   const STEP = 1;
   const MIN = 0;
   const MAX = 100;
+  const [values, setValues] = useState([minPriceValue, maxPriceValue]);
+
+  console.log({ priceFromSelected, priceToSelected });
 
   const priceFromLabel = useAppSelector(
     (state) => state.systemContentReducer.content.price_from,
@@ -53,7 +57,7 @@ const PriceFilter: React.FC = () => {
           step={STEP}
           min={MIN}
           max={MAX}
-          values={values}
+          values={[priceFromSelected, priceToSelected]}
           onChange={(values) => {
             dispatch(
               setPriceFilterActive({

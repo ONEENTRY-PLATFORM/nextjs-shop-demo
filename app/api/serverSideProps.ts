@@ -50,6 +50,7 @@ export async function getProducts(props: {
     };
     expandedFilters.push(newFilter);
   }
+  console.log(params);
 
   try {
     if (searchValue === '') {

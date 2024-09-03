@@ -5,35 +5,32 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 
 type InitialStateType = {
   filters: IFilterParams[];
-  homeBadgesPrevious?: IFilterParams;
   sortFilterActive?: number;
   badgeFilterActive?: number;
-  homeBadgeFilterActive?: number;
   colorFilterActive?: number;
   colorFilterPrevious?: number;
-  priceFromSelected?: string;
+  priceFromSelected: number;
+  priceToSelected: number;
   priceFromPrevious?: string;
-  priceToSelected?: string;
   priceToPrevious?: string;
   catalogOffset: number;
-  search?: string;
-  availability?: boolean;
-  minPriceValue?: number;
-  maxPriceValue?: number;
+  search: string;
+  availability: boolean;
+  minPriceValue: number;
+  maxPriceValue: number;
 };
 const initialState: InitialStateType = {
   filters: [],
   sortFilterActive: undefined,
   badgeFilterActive: 0,
   colorFilterActive: undefined,
-  priceFromSelected: undefined,
-  priceToSelected: undefined,
+  priceFromSelected: 0,
+  priceToSelected: 100,
   catalogOffset: 0,
-  homeBadgeFilterActive: undefined,
   search: '',
   availability: false,
-  // minPriceValue: 0,
-  // maxPriceValue: 100,
+  minPriceValue: 0,
+  maxPriceValue: 100,
 };
 
 function areObjectFieldsAndValuesSame(
@@ -96,10 +93,8 @@ export const filterSlice = createSlice({
     },
     removeAllFilters(state) {
       state.catalogOffset = 0;
-      state.search = undefined;
+      state.search = '';
       state.filters = initialState.filters;
-      state.homeBadgesPrevious = undefined;
-      state.homeBadgeFilterActive = undefined;
       state.badgeFilterActive = 0;
       state.sortFilterActive = undefined;
       state.colorFilterActive = undefined;
@@ -120,16 +115,6 @@ export const filterSlice = createSlice({
       if (state.badgeFilterActive !== action.payload) {
         state.badgeFilterActive = action.payload;
       }
-    },
-    setHomeBadgeFilterActive(
-      state,
-      action: PayloadAction<{
-        value: number | undefined;
-        previous?: IFilterParams;
-      }>,
-    ) {
-      state.homeBadgeFilterActive = action.payload.value;
-      state.homeBadgesPrevious = action.payload.previous;
     },
     setAvailability(state, action: PayloadAction<boolean>) {
       state.availability = action.payload;
@@ -183,10 +168,8 @@ export const {
   setSortFilterActive,
   removeFilter,
   setBadgeFilterActive,
-  setHomeBadgeFilterActive,
   setCatalogOffset,
   setSearchValue,
-  setHomeCardPrevious,
   setColorFilterActive,
   setAvailability,
   setPriceFilterActive,

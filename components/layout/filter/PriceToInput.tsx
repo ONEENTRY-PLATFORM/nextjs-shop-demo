@@ -10,38 +10,36 @@ import {
 
 const PriceToInput: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { priceToSelected, maxPriceValue } = useAppSelector(
-    (state) => state.filterReducer,
-  );
+  const { priceToSelected } = useAppSelector((state) => state.filterReducer);
 
   const onChange = (value: string) => {
-    if (priceToSelected) {
-      const filter: IFilterParams = {
-        attributeMarker: 'price',
-        conditionMarker: 'lth',
-        conditionValue: priceToSelected,
-        pageUrl: ['shop'],
-      };
-      dispatch(removeFilter(filter));
-    }
+    // if (priceToSelected) {
+    //   const filter: IFilterParams = {
+    //     attributeMarker: 'price',
+    //     conditionMarker: 'lth',
+    //     conditionValue: priceToSelected,
+    //     pageUrl: ['shop'],
+    //   };
+    //   dispatch(removeFilter(filter));
+    // }
 
-    if (value) {
-      const filter: IFilterParams = {
-        attributeMarker: 'price',
-        conditionMarker: 'lth',
-        conditionValue: value,
-        pageUrl: ['shop'],
-      };
-      dispatch(addFilter(filter));
-    } else {
-      const filter: IFilterParams = {
-        attributeMarker: 'price',
-        conditionMarker: 'lth',
-        conditionValue: value,
-        pageUrl: ['shop'],
-      };
-      dispatch(removeFilter(filter));
-    }
+    // if (value) {
+    //   const filter: IFilterParams = {
+    //     attributeMarker: 'price',
+    //     conditionMarker: 'lth',
+    //     conditionValue: value,
+    //     pageUrl: ['shop'],
+    //   };
+    //   dispatch(addFilter(filter));
+    // } else {
+    //   const filter: IFilterParams = {
+    //     attributeMarker: 'price',
+    //     conditionMarker: 'lth',
+    //     conditionValue: value,
+    //     pageUrl: ['shop'],
+    //   };
+    //   dispatch(removeFilter(filter));
+    // }
 
     dispatch(setPriceFilterActive({ value, operator: 'to' }));
   };
@@ -50,7 +48,6 @@ const PriceToInput: React.FC = () => {
     <input
       type="text"
       value={priceToSelected}
-      placeholder={maxPriceValue?.toString()}
       onChange={(e) => onChange(e.target.value)}
       className="w-5/6 bg-transparent"
     />

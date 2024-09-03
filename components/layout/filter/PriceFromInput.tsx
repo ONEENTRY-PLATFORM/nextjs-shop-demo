@@ -10,37 +10,35 @@ import {
 
 const PriceFromInput: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { priceFromSelected, minPriceValue } = useAppSelector(
-    (state) => state.filterReducer,
-  );
+  const { priceFromSelected } = useAppSelector((state) => state.filterReducer);
 
   const onChange = (value: string) => {
-    if (priceFromSelected) {
-      const filter: IFilterParams = {
-        attributeMarker: 'price',
-        conditionMarker: 'mth',
-        conditionValue: priceFromSelected,
-        pageUrl: ['shop'],
-      };
-      dispatch(removeFilter(filter));
-    }
-    if (value) {
-      const filter: IFilterParams = {
-        attributeMarker: 'price',
-        conditionMarker: 'mth',
-        conditionValue: value,
-        pageUrl: ['shop'],
-      };
-      dispatch(addFilter(filter));
-    } else {
-      const filter: IFilterParams = {
-        attributeMarker: 'price',
-        conditionMarker: 'mth',
-        conditionValue: value,
-        pageUrl: ['shop'],
-      };
-      dispatch(removeFilter(filter));
-    }
+    // if (priceFromSelected) {
+    //   const filter: IFilterParams = {
+    //     attributeMarker: 'price',
+    //     conditionMarker: 'mth',
+    //     conditionValue: priceFromSelected,
+    //     pageUrl: ['shop'],
+    //   };
+    //   dispatch(removeFilter(filter));
+    // }
+    // if (value) {
+    //   const filter: IFilterParams = {
+    //     attributeMarker: 'price',
+    //     conditionMarker: 'mth',
+    //     conditionValue: value,
+    //     pageUrl: ['shop'],
+    //   };
+    //   dispatch(addFilter(filter));
+    // } else {
+    //   const filter: IFilterParams = {
+    //     attributeMarker: 'price',
+    //     conditionMarker: 'mth',
+    //     conditionValue: value,
+    //     pageUrl: ['shop'],
+    //   };
+    //   dispatch(removeFilter(filter));
+    // }
 
     dispatch(setPriceFilterActive({ value, operator: 'from' }));
   };
@@ -49,7 +47,6 @@ const PriceFromInput: React.FC = () => {
     <input
       type="text"
       value={priceFromSelected}
-      placeholder={minPriceValue?.toString()}
       onChange={(e) => onChange(e.target.value)}
       className="w-5/6 bg-transparent"
     />
