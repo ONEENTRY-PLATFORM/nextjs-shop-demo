@@ -25,8 +25,6 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
       params.delete('in_stock');
     }
     replace(`${pathname}?${params.toString()}`);
-    console.log(params.toString());
-    console.log(available);
   }, [available]);
 
   return (

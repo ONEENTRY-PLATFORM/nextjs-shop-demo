@@ -21,7 +21,7 @@ const PriceFilter: React.FC = () => {
   const MIN = 0;
   const MAX = 100;
 
-  console.log({ priceFromSelected, priceToSelected });
+  // console.log({ priceFromSelected, priceToSelected });
 
   const priceFromLabel = useAppSelector(
     (state) => state.systemContentReducer.content.price_from,
