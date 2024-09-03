@@ -14,6 +14,34 @@ import type {
 import { api } from '@/app/api';
 
 /* ProductApi */
+const useSearcParams = (params: {
+  searchParams?: {
+    search?: string;
+    in_stock?: string;
+    color?: string;
+  };
+}) => {
+  const expandedFilters: Array<IFilterParams> | undefined = [];
+  const searchValue = params?.searchParams?.search || '';
+
+  if (params?.searchParams?.['in_stock']) {
+    expandedFilters.push({
+      statusMarker: 'in_stock',
+    });
+  }
+
+  if (params?.searchParams?.color) {
+    const newFilter: IFilterParams = {
+      attributeMarker: 'color',
+      conditionMarker: 'in',
+      conditionValue: params.searchParams.color,
+      pageUrl: ['shop'],
+    };
+    expandedFilters.push(newFilter);
+  }
+
+  return expandedFilters;
+}
 
 // getProducts
 export async function getProducts(props: {
@@ -32,25 +60,11 @@ export async function getProducts(props: {
   err?: unknown;
 }> {
   const { limit, offset, params } = props;
-  const expandedFilters: Array<IFilterParams> | undefined = [];
+  // const expandedFilters: Array<IFilterParams> | undefined = [];
   const searchValue = params?.searchParams?.search || '';
+  const expandedFilters = useSearcParams(params);
 
-  if (params?.searchParams?.['in_stock']) {
-    expandedFilters.push({
-      statusMarker: 'in_stock',
-    });
-  }
-  console.log(params);
-
-  if (params?.searchParams?.color) {
-    const newFilter: IFilterParams = {
-      attributeMarker: 'color',
-      conditionMarker: 'in',
-      conditionValue: params.searchParams.color,
-      pageUrl: ['shop'],
-    };
-    expandedFilters.push(newFilter);
-  }
+  // console.log(params);
 
   try {
     if (searchValue === '') {

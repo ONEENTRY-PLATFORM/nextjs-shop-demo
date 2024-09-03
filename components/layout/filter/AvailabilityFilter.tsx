@@ -32,7 +32,7 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
         <input
           id='availability'
           type="checkbox"
-          checked={available || false}
+          checked={params.get('in_stock') ? true : false}
           onChange={() => setAvailability(!available)}
           className="size-[16px] shrink-0 rounded-full bg-orange-500"
         />

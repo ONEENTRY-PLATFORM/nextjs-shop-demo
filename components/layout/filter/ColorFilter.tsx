@@ -22,14 +22,14 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
     setMarker: 'system_content',
     attributeMarker: 'color_filters',
   });
-  const [activeColor, setActiveColor] = useState('');
+  const [activeColor, setActiveColor] = useState<string | null>('');
 
   const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const { replace } = useRouter();
-
   const params = new URLSearchParams(searchParams);
 
+  const pathname = usePathname();
+  const { replace } = useRouter();
+  
   const colorFilters = useMemo(() => {
     let colors: Color[] = [];
     if (!attributes) {
@@ -72,7 +72,6 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
               key={index}
               code={color.code}
               name={color.name}
-              active={activeColor}
               setActiveColor={setActiveColor}
             />
           );
