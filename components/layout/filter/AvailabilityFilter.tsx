@@ -1,16 +1,12 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect } from 'react';
-
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { setAvailability } from '@/app/store/reducers/FilterSlice';
+import React, { useEffect, useState } from 'react';
 
 interface Props {
   title?: string;
 }
 
 const AvailabilityFilter: React.FC<Props> = ({ title }) => {
-  const available = useAppSelector((state) => state.filterReducer.availability);
-  const dispatch = useAppDispatch();
+  const [available, setAvailability] = useState(false);
   const pathname = usePathname();
   const { replace } = useRouter();
 
@@ -29,14 +25,15 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
 
   return (
     <div className="mb-9 flex gap-5">
-      <span className="flex-auto text-base leading-8 text-neutral-600">
+      <label htmlFor='availability' className="flex-auto text-base leading-8 text-neutral-600">
         {title}
-      </span>
+      </label>
       <div className="flex flex-col items-start justify-center self-start rounded-[30px] bg-neutral-100 py-px">
         <input
+          id='availability'
           type="checkbox"
           checked={available || false}
-          onChange={() => dispatch(setAvailability(!available))}
+          onChange={() => setAvailability(!available)}
           className="size-[16px] shrink-0 rounded-full bg-orange-500"
         />
       </div>

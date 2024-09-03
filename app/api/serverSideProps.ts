@@ -40,6 +40,7 @@ export async function getProducts(props: {
       statusMarker: 'in_stock',
     });
   }
+  console.log(params);
 
   if (params?.searchParams?.color) {
     const newFilter: IFilterParams = {
@@ -50,7 +51,6 @@ export async function getProducts(props: {
     };
     expandedFilters.push(newFilter);
   }
-  console.log(params);
 
   try {
     if (searchValue === '') {

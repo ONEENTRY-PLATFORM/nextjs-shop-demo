@@ -17,11 +17,11 @@ const ResetButton: React.FC = () => {
 
   const onReset = () => {
     dispatch(removeAllFilters());
-    params.delete('color');
-    params.delete('in_stock');
-    params.delete('minPrice');
-    params.delete('maxPrice');
-    replace(pathname);
+    // params.delete('color');
+    // params.delete('in_stock');
+    // params.delete('minPrice');
+    // params.delete('maxPrice');
+    // replace(pathname);
   };
 
   return (

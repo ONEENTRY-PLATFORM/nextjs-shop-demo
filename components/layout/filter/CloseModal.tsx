@@ -13,7 +13,7 @@ const CloseModal = () => {
 
   return (
     <button
-      className="flex aspect-square w-10 shrink-0 items-center justify-center rounded-full bg-[#EEEFF0]"
+      className="flex aspect-square size-12 shrink-0 items-center justify-center rounded-full bg-[#EEEFF0]"
       onClick={onButtonClick}
     >
       <svg

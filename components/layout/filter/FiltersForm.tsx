@@ -46,9 +46,9 @@ const FiltersForm: React.FC = () => {
             );
           }
 
-          if (attribute === 'price_filter') {
-            return <PricePickerFilter key={index} />;
-          }
+          // if (attribute === 'price_filter') {
+          //   return <PricePickerFilter key={index} />;
+          // }
 
           if (attribute === 'availability_filter') {
             return (
