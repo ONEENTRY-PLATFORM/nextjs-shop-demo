@@ -14,27 +14,24 @@ import type {
 import { api } from '@/app/api';
 
 /* ProductApi */
-const useSearcParams = (params: {
-  searchParams?: {
-    search?: string;
-    in_stock?: string;
-    color?: string;
-  };
+const useSearchParams = (searchParams?: {
+  search?: string;
+  in_stock?: string;
+  color?: string;
 }) => {
   const expandedFilters: Array<IFilterParams> | undefined = [];
-  const searchValue = params?.searchParams?.search || '';
 
-  if (params?.searchParams?.['in_stock']) {
+  if (searchParams?.['in_stock']) {
     expandedFilters.push({
       statusMarker: 'in_stock',
     });
   }
 
-  if (params?.searchParams?.color) {
+  if (searchParams?.color) {
     const newFilter: IFilterParams = {
       attributeMarker: 'color',
       conditionMarker: 'in',
-      conditionValue: params.searchParams.color,
+      conditionValue: searchParams.color,
       pageUrl: ['shop'],
     };
     expandedFilters.push(newFilter);
@@ -62,7 +59,7 @@ export async function getProducts(props: {
   const { limit, offset, params } = props;
   // const expandedFilters: Array<IFilterParams> | undefined = [];
   const searchValue = params?.searchParams?.search || '';
-  const expandedFilters = useSearcParams(params);
+  const expandedFilters = useSearchParams(params?.searchParams);
 
   // console.log(params);
 

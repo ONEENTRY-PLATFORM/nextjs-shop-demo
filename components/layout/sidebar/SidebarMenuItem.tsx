@@ -3,12 +3,11 @@ import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
 import * as icons from '../../icons';
 
-const SidebarMenuItem: React.FC<{ menuItem: IMenusPages }> = ({ menuItem }) => {
+const SidebarMenuItem: React.FC<{ menuItem: IMenusPages & ({isActive: boolean}) }> = ({ menuItem }) => {
+  
   if (!menuItem) {
     return;
   }
-  // add icons from page object
-
   const { pageUrl, localizeInfos } = menuItem;
 
   const Icon = icons[pageUrl];

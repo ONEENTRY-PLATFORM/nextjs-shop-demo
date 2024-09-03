@@ -15,10 +15,10 @@ export {
 } from './api/RTKApi';
 export { useSetPaymentSession } from './hooks/setPaymentSession';
 // eslint-disable-next-line import/no-cycle
-// export { useGetMenu } from './hooks/trash/useGetMenu';
 // export { useGetPage } from './hooks/trash/useGetPage';
 // export { useGetPages } from './hooks/trash/useGetPages';
 // export { useGetRelatedProducts } from './hooks/trash/useGetRelatedProducts';
+export { useGetMenu } from './hooks/useGetMenu';
 export { useGetAttributesByMarker } from './hooks/useGetAttributesByMarker';
 export { useGetBlockByMarker } from './hooks/useGetBlockByMarker';
 export { useGetBlocksByProductId } from './hooks/useGetBlocksByProductId';

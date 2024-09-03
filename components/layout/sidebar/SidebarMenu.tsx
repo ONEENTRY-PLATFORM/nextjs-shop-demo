@@ -1,30 +1,40 @@
+'use client';
+
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-
 import { getMenuByMarker } from '@/app/api/serverSideProps';
-
 import SidebarMenuItem from './SidebarMenuItem';
+import { usePathname } from 'next/navigation';
+import { Suspense } from 'react';
+import { useGetMenu } from '@/app/api';
 
 export const revalidate = 10;
 export const dynamicParams = true;
 
-export default async function SidebarMenu() {
+export default function SidebarMenu() {
+  const paths = usePathname();
+  const pathNames = paths.split('/').filter((path: unknown) => path);
   // side_web
-  const { menu, isError } = await getMenuByMarker({
-    marker: 'side_web',
-    langCode: 'en_US',
+  const { menu, loading, error } = useGetMenu({
+    marker: 'side_web'
   });
 
-  if (isError || !menu) {
+  console.log(pathNames);
+  if (error || !menu) {
     return;
   }
-  const pages = menu.pages as IMenusPages[];
+  const pages = menu.pages as Array<IMenusPages & ({isActive: boolean})>;
 
   return (
     <nav>
       <ul className="flex max-w-[165px] flex-col gap-5 text-base text-neutral-600">
-        {pages.map((item) => (
-          <SidebarMenuItem key={item.id} menuItem={item} />
-        ))}
+        {pages.map((item) => {
+          console.log(item);
+          const el ={
+            ...item,
+            isActive: item.pageUrl === pathNames[0]
+          }
+          return <SidebarMenuItem key={item.id} menuItem={el} />;
+        })}
       </ul>
     </nav>
   );
