@@ -83,7 +83,7 @@ const CartPage = () => {
 
   const onSubmitOrder = (e: FormEvent<HTMLDivElement>) => {
     e.preventDefault();
-    console.log(e);
+    // console.log(e);
   };
 
   return (

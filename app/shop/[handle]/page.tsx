@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type {
@@ -67,6 +68,7 @@ export default async function CatalogPage({
   };
 }) {
   // console.log(searchParams);
+  console.log(searchParams);
 
   const data = await getProducts({ limit: 10, offset: 0 });
 

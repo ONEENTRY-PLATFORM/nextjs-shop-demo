@@ -1,15 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type {
   IFilterParams,
   IProductsEntity,
 } from 'oneentry/dist/products/productsInterfaces';
-import { Suspense } from 'react';
 
+// import { ProductsGridLoader } from '@/components/shared/Loader';
+import { getPageByUrl, getProducts } from '@/app/api/serverSideProps';
+// import { Suspense } from 'react';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
-import { ProductsGridLoader } from '@/components/shared/Loader';
-
-import { getPageByUrl, getProducts } from '../api/serverSideProps';
 
 export async function generateMetadata({
   params,
@@ -66,8 +66,9 @@ export default async function CatalogPage({
   };
 }) {
   const currentPage = Number(searchParams?.page) || 0;
+  const pageLimit = 10;
   const data = await getProducts({
-    limit: 10,
+    limit: pageLimit,
     offset: currentPage,
     params: { searchParams: searchParams },
   });
@@ -80,14 +81,12 @@ export default async function CatalogPage({
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense fallback={<ProductsGridLoader />}>
-          <ProductsGridLayout
-            gridItems={products.filter(
-              (product: IProductsEntity) =>
-                product.attributeSetIdentifier !== 'service_product',
-            )}
-          />
-        </Suspense>
+        <ProductsGridLayout
+          gridItems={products.filter(
+            (product: IProductsEntity) =>
+              product.attributeSetIdentifier !== 'service_product',
+          )}
+        />
       </div>
     </section>
   );
