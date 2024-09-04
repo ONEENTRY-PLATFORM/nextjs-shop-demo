@@ -167,12 +167,21 @@ export const selectCartItemWithIdLength = (
 ) => state.cartReducer.products.find((item: { id: number }) => item.id === id);
 
 export const selectBasketCount = (state: {
-  cartReducer: { products: IProductsEntity & { quantity: number }[] };
+  cartReducer: {
+    products: IProductsEntity &
+      {
+        attributeSetIdentifier: string;
+        quantity: number;
+      }[];
+  };
 }) => {
   const totalCount =
     state.cartReducer.products.length > 0
       ? state.cartReducer.products
           .map((item) => {
+            if (item.attributeSetIdentifier === 'service_product') {
+              return 0;
+            }
             return item.quantity;
           })
           .reduce((total, num) => {

@@ -70,16 +70,17 @@ const CartPage = () => {
       return;
     }
     const index = productsInCart.findIndex(
-      (product: { id: number }) => product.id === product.id,
+      (p: { id: number }) => p.id === product.id,
     );
     if (index === -1) {
       dispatch(addProductToCart({ ...product, selected: true, quantity: 1 }));
     }
-  }, [dispatch, product, productsInCart]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product]);
 
-  // if (productsInCart.length < 1) {
-  //   return <EmptyCart />;
-  // }
+  if (productsInCart.length < 2) {
+    return <EmptyCart />;
+  }
 
   const onSubmitOrder = (e: FormEvent<HTMLDivElement>) => {
     e.preventDefault();

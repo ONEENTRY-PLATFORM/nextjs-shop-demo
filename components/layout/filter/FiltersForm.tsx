@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { memo, Suspense, useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 
 import { useGetPage } from '@/app/api/hooks/useGetPage';
 

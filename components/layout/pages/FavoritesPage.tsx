@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
@@ -24,7 +25,10 @@ const FavoritesPage = () => {
     </div>
   ) : (
     <div className="relative box-border flex shrink-0 flex-col">
-      {empty_favorites_plug}
+      <h1 className="mb-5">{empty_favorites_plug}</h1>
+      <Link href="/shop" className="underline">
+        Go to shop
+      </Link>
     </div>
   );
 };
