@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Action, PayloadAction } from '@reduxjs/toolkit';
-import type { BaseQueryApi } from '@reduxjs/toolkit/query/react';
+// import type { BaseQueryApi } from '@reduxjs/toolkit/query/react';
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import { HYDRATE } from 'next-redux-wrapper';
 import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
@@ -20,9 +21,9 @@ type RootState = unknown;
 
 import { api } from './api';
 
-function isHydrateAction(action: Action): action is PayloadAction<RootState> {
-  return action.type === HYDRATE;
-}
+// function isHydrateAction(action: Action): action is PayloadAction<RootState> {
+//   return action.type === HYDRATE;
+// }
 
 export const RTKApi = createApi({
   reducerPath: 'api',
@@ -113,6 +114,7 @@ export const RTKApi = createApi({
       },
     }),
     getSingleOrder: build.query<undefined, { id: string }>({
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       queryFn: async ({ id }) => {
         try {
           return { data: undefined };

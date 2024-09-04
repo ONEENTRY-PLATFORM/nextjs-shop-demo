@@ -18,7 +18,7 @@ const FavoritesButton: React.FC<IProductsEntity> = (product) => {
   return (
     <button
       type="button"
-      className="relative box-border flex items-center justify-center size-[26px] shrink-0 flex-col"
+      className="relative box-border flex size-[26px] shrink-0 flex-col items-center justify-center"
       onClick={() => {
         if (isFavorites) {
           dispatch(removeFavorites(product.id));

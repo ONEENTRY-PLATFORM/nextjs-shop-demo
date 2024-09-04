@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable tailwindcss/no-custom-classname */
 import '@/app/styles/payment.css';
 
 import Image from 'next/image';

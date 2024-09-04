@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type {
@@ -6,7 +7,7 @@ import type {
 } from 'oneentry/dist/payments/paymentsInterfaces';
 import { useCallback, useRef, useState } from 'react';
 
-import { api } from '../api/api';
+// import { api } from '../api/api';
 
 export const useSetPaymentSession = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -14,6 +15,7 @@ export const useSetPaymentSession = () => {
   const session = useRef<ISessionEntity>();
   const [refetch, setRefetch] = useState<boolean>(false);
   const setSession = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async (orderId: number) => {
       // setLoading(true);
       // try {

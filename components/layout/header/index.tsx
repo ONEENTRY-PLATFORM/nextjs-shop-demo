@@ -1,3 +1,5 @@
+import { Suspense } from 'react';
+
 import Logo from './Logo';
 import NavGroup from './nav/NavGroup';
 import SearchBar from './search/SearchBar';
@@ -20,8 +22,12 @@ const Header: React.FC = async () => {
       >
         <div className="flex w-full max-w-screen-xl justify-between gap-6 max-md:flex-wrap">
           <Logo />
-          <SearchBar />
-          <NavGroup />
+          <Suspense>
+            <SearchBar />
+          </Suspense>
+          <Suspense>
+            <NavGroup />
+          </Suspense>
         </div>
       </section>
     </header>

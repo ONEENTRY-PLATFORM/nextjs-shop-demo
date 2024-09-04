@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { Key } from 'react';
@@ -23,6 +24,7 @@ import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInForm: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isAuth } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
@@ -58,6 +60,7 @@ const SignInForm: React.FC = () => {
       }
       setOpen(false);
       authenticate();
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e: unknown) {
       // console.log(e);
     }
