@@ -3,10 +3,9 @@
 import { usePathname } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
-// import { Suspense } from 'react';
 import { useGetMenu } from '@/app/api';
+import { SidebarMenuLoader } from '@/components/shared/Loader';
 
-// import { getMenuByMarker } from '@/app/api/serverSideProps';
 import SidebarMenuItem from './SidebarMenuItem';
 
 export const revalidate = 10;
@@ -15,15 +14,12 @@ export const dynamicParams = true;
 export default function SidebarMenu() {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);
-  // side_web
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { menu, loading, error } = useGetMenu({
     marker: 'side_web',
   });
 
-  console.log(pathNames);
-  if (error || !menu) {
-    return;
+  if (error || !menu || loading) {
+    return <SidebarMenuLoader />;
   }
   const pages = menu.pages as Array<IMenusPages & { isActive: boolean }>;
 

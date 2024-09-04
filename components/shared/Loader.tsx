@@ -59,10 +59,38 @@ export const SearchBarLoader: React.FC = () => {
   return (
     <div className="relative my-auto ml-24 flex h-[60px] w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-gray-400 bg-white px-7 max-md:ml-0 max-md:h-[50px] max-md:max-w-full max-md:px-5 max-sm:h-[40px] max-sm:gap-0 max-sm:px-4 max-sm:pr-1">
       <div className="flex w-full">
-        <div className="group relative m-auto box-border flex shrink-0 flex-col p-2.5">
+        <div className="group relative ml-auto box-border flex shrink-0 flex-col p-2.5">
           <SearchIcon />
         </div>
       </div>
+    </div>
+  );
+};
+
+export const SidebarMenuLoader: React.FC = () => {
+  return (
+    <nav>
+      <ul className="flex max-w-[165px] flex-col gap-5 text-base">
+        {Array.from(Array(5).keys()).map((item) => (
+          <li key={item} className={`group flex h-5 justify-start gap-3 pr-5`}>
+            <div className="my-auto aspect-square size-5 shrink-0 bg-slate-100" />
+            <div className={'h-5 min-w-full bg-slate-100'} />
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+};
+
+export const NavMenuLoader: React.FC = () => {
+  return (
+    <div className="my-auto flex gap-5 max-md:max-w-full">
+      {Array.from(Array(3).keys()).map((item) => (
+        <div
+          key={item}
+          className="group relative box-border flex size-6 shrink-0 bg-slate-100"
+        ></div>
+      ))}
     </div>
   );
 };

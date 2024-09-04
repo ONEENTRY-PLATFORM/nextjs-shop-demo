@@ -10,7 +10,7 @@ const SidebarMenuItem: React.FC<{
     return;
   }
   const { pageUrl, localizeInfos } = menuItem;
-
+  // !!! Element implicitly has an 'any'
   const Icon = icons[pageUrl];
 
   return (

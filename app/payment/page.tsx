@@ -8,15 +8,14 @@ import WithSidebar from '../[page]/WithSidebar';
 export const revalidate = 10;
 export const dynamicParams = true;
 
-const Page = async () => {
+const Page = async ({ params }: { params: { handle: string } }) => {
+  console.log(params);
   return (
     <section className="relative mx-auto box-border flex min-h-80 w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense fallback={<Loader />}>
-          <WithSidebar>
-            <PaymentPage />
-          </WithSidebar>
-        </Suspense>
+        <WithSidebar>
+          <PaymentPage />
+        </WithSidebar>
       </div>
     </section>
   );
