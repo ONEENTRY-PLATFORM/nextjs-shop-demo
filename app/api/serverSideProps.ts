@@ -28,7 +28,7 @@ const setSearchParams = (searchParams?: {
   if (searchParams?.['in_stock']) {
     expandedFilters.push({
       statusMarker: 'in_stock',
-      attributeMarker: '',
+      attributeMarker: 'price',
       conditionValue: null,
     });
   }
@@ -47,7 +47,7 @@ const setSearchParams = (searchParams?: {
     const filter: IFilterParams = {
       attributeMarker: 'price',
       conditionMarker: 'mth',
-      conditionValue: searchParams?.minPrice,
+      conditionValue: searchParams.minPrice,
       pageUrl: ['shop'],
     };
     expandedFilters.push(filter);
@@ -57,7 +57,7 @@ const setSearchParams = (searchParams?: {
     const filter: IFilterParams = {
       attributeMarker: 'price',
       conditionMarker: 'lth',
-      conditionValue: searchParams?.maxPrice,
+      conditionValue: searchParams.maxPrice,
       pageUrl: ['shop'],
     };
     expandedFilters.push(filter);

@@ -76,7 +76,10 @@ const PriceFilter: React.FC = () => {
           step={STEP}
           min={MIN}
           max={MAX}
-          values={[priceFrom, priceTo]}
+          values={[
+            Number(params.get('minPrice') || priceFrom),
+            Number(params.get('maxPrice') || priceTo),
+          ]}
           onChange={(values) => {
             setPriceFrom(values[0]);
             setPriceTo(values[1]);

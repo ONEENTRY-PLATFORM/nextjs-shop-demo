@@ -50,8 +50,8 @@ const AboutPage = () => {
             />
           </aside>
           <article className="ml-5 flex w-[82%] flex-col max-md:ml-0 max-md:w-full">
-            <section className="text-sm leading-5 text-neutral-600 underline max-md:mt-10 max-md:max-w-full">
-              <p className="text-xl font-bold leading-8 text-neutral-600">
+            <section className="text-sm leading-5 text-neutral-600 max-md:mt-10 max-md:max-w-full">
+              <p className="mb-5 text-xl font-bold leading-8 text-neutral-600">
                 The developers` and CMS users` vast, unique experience became
                 the basis of OneEntry HeadlessCMS. We know what the users want,
                 so we took into account the needs of business owners, users and
@@ -60,18 +60,20 @@ const AboutPage = () => {
               </p>
               {features.map((feature, index) => (
                 <div key={index}>
-                  <h2 className="text-xl font-bold underline">
+                  <h2 className="mb-3 text-xl font-bold underline">
                     {feature.title}
                   </h2>
-                  <p>{feature.description}</p>
+                  <p className="mb-3">{feature.description}</p>
                 </div>
               ))}
-              <h2 className="text-xl font-bold underline">
+              <h2 className="mb-3 mt-4 text-xl font-bold underline">
                 OneEntry functionality is unlimited
               </h2>
               <ul>
                 {listItems.map((item, index) => (
-                  <li key={index}>{item}</li>
+                  <li className="mb-3" key={index}>
+                    {item}
+                  </li>
                 ))}
               </ul>
             </section>

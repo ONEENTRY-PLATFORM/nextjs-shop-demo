@@ -19,6 +19,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const data = await getPageByUrl('shop', 'en_US');
   const { isError, page } = data;
+  console.log(data);
+
   if (isError || !page) {
     return notFound();
   }

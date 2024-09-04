@@ -14,7 +14,6 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
   const params = new URLSearchParams(searchParams);
 
   useEffect(() => {
-    params.delete('in_stock');
     if (available) {
       params.set('in_stock', available ? 'true' : '');
     } else {
