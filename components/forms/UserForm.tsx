@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 // import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
@@ -95,7 +96,6 @@ const UserForm: React.FC = () => {
   if (!isAuth) {
     return;
   }
-
   return (
     <form
       className="flex min-h-full flex-col gap-4 text-xl leading-5"
@@ -106,6 +106,7 @@ const UserForm: React.FC = () => {
           const fieldData = user?.formData.find(
             (item) => item.marker === field.marker,
           );
+          // !!! fieldData
           if (field.marker !== 'email_notifications') {
             return <FormInput key={index} {...field} />;
           }

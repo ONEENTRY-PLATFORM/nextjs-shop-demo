@@ -16,6 +16,7 @@ export default function SidebarMenu() {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);
   // side_web
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { menu, loading, error } = useGetMenu({
     marker: 'side_web',
   });

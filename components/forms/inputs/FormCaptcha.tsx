@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button } from '@headlessui/react';
 import type { Dispatch } from 'react';
 import { useEffect, useRef } from 'react';
@@ -21,6 +22,7 @@ export const FormCaptcha = ({ setToken, setIsCaptcha }: Props) => {
 
   useEffect(() => {
     setIsCaptcha(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onVerify = (token: string) => {

@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FormEvent } from 'react';
 import { useEffect, useMemo } from 'react';
 
 import { useGetOrderStorageByMarkerQuery, useGetProduct } from '@/app/api';
@@ -59,6 +61,7 @@ const CartPage = () => {
       );
       dispatch(addPaymentMethods(data.paymentAccountIdentifiers));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   // add delivery to cart
@@ -78,7 +81,7 @@ const CartPage = () => {
   //   return <EmptyCart />;
   // }
 
-  const onSubmitOrder = (e) => {
+  const onSubmitOrder = (e: FormEvent<HTMLDivElement>) => {
     e.preventDefault();
     console.log(e);
   };

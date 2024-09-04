@@ -1,6 +1,7 @@
 'use client';
 
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { ReactNode, SetStateAction } from 'react';
 import { createContext, useContext, useEffect, useState } from 'react';
 

@@ -5,6 +5,7 @@ import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';
 
 const ProductDetails: React.FC<IProductsEntity> = (product) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { attributeValues, localizeInfos, price } = product;
   const units = attributeValues?.units_product.value;
   const maxUnits = 50;

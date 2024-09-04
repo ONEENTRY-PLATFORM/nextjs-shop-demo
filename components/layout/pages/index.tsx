@@ -1,8 +1,8 @@
 import cart from '../cart/CartPage';
+import payment from '../payment/PaymentPage';
 import about_us from './AboutPage';
 import contact_us from './ContactsPage';
 import favorites from './FavoritesPage';
-import payment from '../payment/PaymentPage';
 import profile from './ProfilePage';
 import services from './ServicesPage';
 

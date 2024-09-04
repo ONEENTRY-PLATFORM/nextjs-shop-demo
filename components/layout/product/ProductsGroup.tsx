@@ -4,8 +4,9 @@ import GroupCard from './group-card/GroupCard';
 
 const ProductsGroup: React.FC<{
   id: number;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 }> = ({ id }) => {
-  const products = [];
+  const products: IProductsEntity[] = [];
 
   return (
     <section className="mb-8 flex flex-col max-md:max-w-full">

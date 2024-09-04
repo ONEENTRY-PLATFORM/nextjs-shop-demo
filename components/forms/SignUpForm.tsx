@@ -83,7 +83,7 @@ const SignUpForm: React.FC = () => {
           phoneSMS: fields.phone_reg.value,
         },
       };
-      setIsLoading(!isLoading);
+      setIsLoading(true);
 
       try {
         const res = await api.AuthProvider.signUp('email', data, 'en_US');
@@ -129,7 +129,7 @@ const SignUpForm: React.FC = () => {
           }
         })}
       </div>
-      <SubmitButton title="SIGN UP" isLoading={isLoading} class="" icon="" />
+      <SubmitButton title="SIGN UP" isLoading={_isLoading} class="" icon="" />
     </form>
   );
 };
