@@ -7,7 +7,7 @@ import type {
 import { Suspense } from 'react';
 
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
-import Loader from '@/components/shared/Loader';
+import { ProductsGridLoader } from '@/components/shared/Loader';
 
 import { getPageByUrl, getProducts } from '../api/serverSideProps';
 
@@ -71,7 +71,6 @@ export default async function CatalogPage({
     offset: currentPage,
     params: { searchParams: searchParams },
   });
-  // console.log(searchParams);
 
   const { isError, products } = data;
   if (isError || !products) {
@@ -81,7 +80,7 @@ export default async function CatalogPage({
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
             gridItems={products.filter(
               (product: IProductsEntity) =>
