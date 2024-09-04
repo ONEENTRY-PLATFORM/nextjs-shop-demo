@@ -10,6 +10,7 @@ import SearchResults from './SearchResults';
 
 const SearchBar: React.FC = () => {
   const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
   const pathname = usePathname();
   const { replace } = useRouter();
   const router = useRouter();
@@ -20,7 +21,6 @@ const SearchBar: React.FC = () => {
   );
 
   const handleSearch = (term: string) => {
-    const params = new URLSearchParams(searchParams);
     if (term) {
       params.set('search', term);
       setState(true);
@@ -33,7 +33,6 @@ const SearchBar: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const params = new URLSearchParams(searchParams);
     router.push(`/shop?${params.toString()}`);
     setState(false);
   };

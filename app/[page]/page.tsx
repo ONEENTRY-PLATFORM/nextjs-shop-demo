@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+// import * as pageComponents from '../../components/layout/pages';
+import { getPageByUrl } from '@/app/api/serverSideProps';
 import CartPage from '@/components/layout/cart/CartPage';
 import AboutPage from '@/components/layout/pages/AboutPage';
 import FavoritesPage from '@/components/layout/pages/FavoritesPage';
@@ -8,8 +10,6 @@ import ProfilePage from '@/components/layout/pages/ProfilePage';
 import ServicesPage from '@/components/layout/pages/ServicesPage';
 import PaymentPage from '@/components/layout/payment/PaymentPage';
 
-// import * as pageComponents from '../../components/layout/pages';
-import { getPageByUrl } from '../api/serverSideProps';
 import WithSidebar from './WithSidebar';
 
 const pages = [
