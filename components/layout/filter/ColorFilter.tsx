@@ -1,3 +1,5 @@
+'use client';
+
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -59,7 +61,12 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
   }, [activeColor]);
 
   if ((!loading && !attributes) || error || loading) {
-    return <Loader />;
+    return (
+      <div>
+        <div className="mb-5 h-5"></div>
+        <div className="mb-9 flex h-5 flex-wrap gap-5 whitespace-nowrap text-sm leading-8 text-slate-300"></div>
+      </div>
+    );
   }
 
   return (

@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
-
-// import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { memo, Suspense, useMemo, useState } from 'react';
+import React, { memo, Suspense, useMemo } from 'react';
 
 import { useGetPage } from '@/app/api/hooks/useGetPage';
 
@@ -34,35 +31,31 @@ const FiltersForm: React.FC = () => {
   }, [pageInfo]);
 
   return (
-    <Suspense fallback={'...Loading'}>
-      <div className="flex w-full flex-col px-10 pb-16 pt-5">
-        {Object.keys(sortedAttributes).map((attribute, index) => {
-          // if (attribute === 'color_filter') {
-          //   return (
-          //     <ColorFilter
-          //       key={index}
-          //       color_filter_title={sortedAttributes[attribute]?.value}
-          //     />
-          //   );
-          // }
+    <div className="flex w-full flex-col px-10 pb-16 pt-5">
+      {Object.keys(sortedAttributes).map((attribute, index) => {
+        if (attribute === 'price_filter') {
+          return <PricePickerFilter key={index} />;
+        }
+        if (attribute === 'availability_filter') {
+          return (
+            <AvailabilityFilter
+              key={index}
+              title={sortedAttributes[attribute]?.value}
+            />
+          );
+        }
+        if (attribute === 'color_filter') {
+          return (
+            <ColorFilter
+              key={index}
+              color_filter_title={sortedAttributes[attribute]?.value}
+            />
+          );
+        }
+      })}
 
-          if (attribute === 'price_filter') {
-            return <PricePickerFilter key={index} />;
-          }
-
-          if (attribute === 'availability_filter') {
-            return (
-              <AvailabilityFilter
-                key={index}
-                title={sortedAttributes[attribute]?.value}
-              />
-            );
-          }
-        })}
-
-        <FilterButtons />
-      </div>
-    </Suspense>
+      <FilterButtons />
+    </div>
   );
 };
 

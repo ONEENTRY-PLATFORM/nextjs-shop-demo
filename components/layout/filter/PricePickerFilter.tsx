@@ -1,3 +1,5 @@
+'use client';
+
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';
@@ -28,7 +30,7 @@ const PriceFilter: React.FC = () => {
   const params = new URLSearchParams(searchParams);
 
   useEffect(() => {
-    if (priceFrom) {
+    if (priceFrom && priceFrom !== MIN) {
       params.set('minPrice', priceFrom.toString());
     } else {
       params.delete('minPrice');
@@ -37,13 +39,25 @@ const PriceFilter: React.FC = () => {
   }, [priceFrom]);
 
   useEffect(() => {
-    if (priceTo) {
+    if (priceTo && priceTo !== MAX) {
       params.set('maxPrice', priceTo.toString());
     } else {
       params.delete('maxPrice');
     }
     replace(`${pathname}?${params.toString()}`);
   }, [priceTo]);
+
+  useEffect(() => {
+    if (!params.get('minPrice')) {
+      setPriceFrom(MIN);
+    }
+  }, [params.get('minPrice')]);
+
+  useEffect(() => {
+    if (!params.get('maxPrice')) {
+      setPriceTo(MAX);
+    }
+  }, [params.get('maxPrice')]);
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
@@ -76,10 +90,7 @@ const PriceFilter: React.FC = () => {
           step={STEP}
           min={MIN}
           max={MAX}
-          values={[
-            Number(params.get('minPrice') || priceFrom),
-            Number(params.get('maxPrice') || priceTo),
-          ]}
+          values={[priceFrom, priceTo]}
           onChange={(values) => {
             setPriceFrom(values[0]);
             setPriceTo(values[1]);
