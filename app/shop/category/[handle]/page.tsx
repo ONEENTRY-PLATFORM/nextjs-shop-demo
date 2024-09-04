@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IFilterParams, IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import { getPageByUrl, getProducts } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
+import { ProductsGridLoader } from '@/components/shared/Loader';
 
 export async function generateMetadata({
   params,
@@ -53,10 +54,21 @@ export async function generateMetadata({
 
 export default async function CatalogPage({
   params,
+  searchParams,
 }: {
+  searchParams?: {
+    search?: string;
+    page?: string;
+    filters?: IFilterParams[];
+  };
   params: { handle: string };
 }) {
-  const data = await getProducts({ limit: 10, offset: 0 });
+  const currentPage = Number(searchParams?.page) || 0;
+  const data = await getProducts({
+    limit: 10,
+    offset: currentPage,
+    params: { searchParams: searchParams },
+  });
   // const data = await getProductsByUrl({ limit: 10, offset: 0, params });
   // !!! Как получить продукты по категории?
 
@@ -68,11 +80,7 @@ export default async function CatalogPage({
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense
-          fallback={
-            <div className="relative aspect-square size-full max-h-[550px] overflow-hidden" />
-          }
-        >
+        <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
             gridItems={products.filter(
               (product: IProductsEntity) =>

@@ -46,8 +46,7 @@ const NavigationMenu: React.FC = async () => {
 
   return (
     <>
-      <MobileMenu menu={navigationItems} />
-      <nav className="relative z-20 flex items-center justify-center border border-solid border-neutral-100 bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-lg:text-sm max-md:px-5 max-md:text-sm">
+      <nav className="relative z-20 items-center justify-center border border-solid border-neutral-100 bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
         <div className="flex w-full max-w-screen-xl items-center justify-center py-7 max-md:px-5">
           <ul className="flex w-full justify-between gap-5 max-md:flex-wrap">
             {navigationItems.map((item, index) => (
@@ -90,6 +89,7 @@ const NavigationMenu: React.FC = async () => {
           </ul>
         </div>
       </nav>
+      <MobileMenu menu={[...categories, ...stickers]} />
     </>
   );
 };
