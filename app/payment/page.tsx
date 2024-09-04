@@ -1,7 +1,4 @@
-import { Suspense } from 'react';
-
 import PaymentPage from '@/components/layout/payment/PaymentPage';
-import Loader from '@/components/shared/Loader';
 
 import WithSidebar from '../[page]/WithSidebar';
 
