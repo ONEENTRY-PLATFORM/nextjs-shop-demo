@@ -1,10 +1,11 @@
-import type { Key } from 'react';
+import { type Key } from 'react';
 
 import { getMenuByMarker } from '@/app/api/serverSideProps';
 
 import NavItemCart from './NavItemCart';
 import NavItemFavorites from './NavItemFavorites';
 import NavItemProfile from './NavItemProfile';
+import MenuButton from './MenuButton';
 
 export default async function NavGroup() {
   const { menu, isError } = await getMenuByMarker({
@@ -29,6 +30,7 @@ export default async function NavGroup() {
             </span>
           );
         })}
+      <MenuButton />
     </div>
   );
 }

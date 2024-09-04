@@ -8,49 +8,38 @@ import {
 } from '@headlessui/react';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { Fragment, Suspense, useEffect, useState } from 'react';
+import { Fragment, Suspense, useContext, useEffect, useState } from 'react';
+
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 interface MenuItemProps {
   label: string;
   href: string;
-  hasDropdown: boolean;
-  categories: any;
 }
 
 export default function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [isOpen, setIsOpen] = useState(false);
-  const openMobileMenu = () => setIsOpen(true);
-  const closeMobileMenu = () => setIsOpen(false);
+  const { open, setOpen } = useContext(OpenDrawerContext);
+  const closeMobileMenu = () => setOpen(false);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
-        setIsOpen(false);
+        setOpen(false);
       }
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [isOpen]);
+  }, [open]);
 
   useEffect(() => {
-    setIsOpen(false);
+    setOpen(false);
   }, [pathname, searchParams]);
 
   return (
     <>
-      <button
-        onClick={openMobileMenu}
-        aria-label="Open menu"
-        className="flex size-10 flex-col items-center justify-center gap-1 rounded-md transition-colors md:hidden dark:border-neutral-700 dark:text-white"
-      >
-        <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
-        <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
-        <span className="block h-0.5 w-8 animate-pulse bg-gray-600"></span>
-      </button>
-
-      <Transition show={isOpen}>
+      <Transition show={open}>
         <Dialog onClose={closeMobileMenu} className="relative z-50">
           <TransitionChild
             as={Fragment}
@@ -72,7 +61,7 @@ export default function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-[-100%]"
           >
-            <DialogPanel className="fixed max-w-[420px] inset-0 flex size-full flex-col bg-white pb-6 dark:bg-black">
+            <DialogPanel className="fixed inset-0 flex size-full max-w-[420px] flex-col bg-white pb-6 dark:bg-black">
               <div className="p-4">
                 <button
                   aria-label="Close menu"
