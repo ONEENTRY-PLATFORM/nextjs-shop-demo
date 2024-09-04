@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 import { useAppSelector } from '@/app/store/hooks';
 import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
-import Loader from '@/components/shared/Loader';
+import { ProductsGridLoader } from '@/components/shared/Loader';
 
 const FavoritesPage = () => {
   const favorites = useAppSelector((state) =>
@@ -19,7 +19,7 @@ const FavoritesPage = () => {
 
   return favorites.length > 0 ? (
     <div className="flex flex-col pb-5 max-md:max-w-full">
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<ProductsGridLoader />}>
         <ProductsGridLayout gridItems={favorites} />
       </Suspense>
     </div>

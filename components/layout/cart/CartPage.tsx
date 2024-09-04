@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FormEvent } from 'react';
 import { useEffect, useMemo } from 'react';
 
 import { useGetOrderStorageByMarkerQuery, useGetProduct } from '@/app/api';
@@ -15,7 +13,6 @@ import {
 } from '@/app/store/reducers/CartSlice';
 import {
   addPaymentMethods,
-  addProducts,
   createOrder,
 } from '@/app/store/reducers/OrderSlice';
 import DeliveryTable from '@/components/layout/cart/DeliveryTable';
@@ -82,7 +79,8 @@ const CartPage = () => {
     return <EmptyCart />;
   }
 
-  const onSubmitOrder = (e: FormEvent<HTMLDivElement>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onSubmitOrder = (e: any) => {
     e.preventDefault();
     // console.log(e);
   };

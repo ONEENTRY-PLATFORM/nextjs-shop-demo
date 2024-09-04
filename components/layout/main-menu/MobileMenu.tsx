@@ -13,8 +13,14 @@ import { Fragment, Suspense, useEffect, useState } from 'react';
 // import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 // import { Menu } from 'lib/shopify/types';
 // import Search, { SearchSkeleton } from './search';
+interface MenuItemProps {
+  label: string;
+  href: string;
+  hasDropdown: boolean;
+  categories: any;
+}
 
-export default function MobileMenu({ menu }: { menu: [] }) {
+export default function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
@@ -84,17 +90,17 @@ export default function MobileMenu({ menu }: { menu: [] }) {
                 </div>
                 {menu.length ? (
                   <ul className="flex w-full flex-col">
-                    {menu.map((item: unknown) => (
+                    {menu.map((item: MenuItemProps) => (
                       <li
                         className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
-                        key={item.title}
+                        key={item.label}
                       >
                         <Link
-                          href={item.path}
+                          href={item.href}
                           prefetch={true}
                           onClick={closeMobileMenu}
                         >
-                          {item.title}
+                          {item.label}
                         </Link>
                       </li>
                     ))}
