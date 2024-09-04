@@ -1,5 +1,5 @@
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
-import React, { useState } from 'react';
+import React from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';

@@ -160,7 +160,7 @@ export const selectCartItems = (state: {
 export const selectCartItemWithIdLength = (
   state: {
     cartReducer: {
-      products: [];
+      products: IProductsEntity[];
     };
   },
   id: number,

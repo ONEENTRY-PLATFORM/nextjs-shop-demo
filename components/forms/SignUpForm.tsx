@@ -24,22 +24,25 @@ const SignUpForm: React.FC = () => {
   ) as object as {
     phone_reg: {
       value: string;
+      valid: boolean;
     };
     email_reg: {
       value: string;
+      valid: boolean;
     };
     password_reg: {
       value: string;
+      valid: boolean;
     };
   };
 
   const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const canSubmit = Object.keys(fields).reduce((isValid, field) => {
-      if (!isValid) {
+      if (!isValid || !field) {
         return false;
       }
-      return fields[field].valid;
+      return fields[field as keyof typeof fields].valid;
     }, true);
 
     if (canSubmit) {
@@ -55,7 +58,7 @@ const SignUpForm: React.FC = () => {
           const candidate = {
             marker: field,
             type: 'string',
-            value: fields[field].value,
+            value: fields[field as keyof typeof fields].value,
           };
           arr.push(candidate);
           return arr;
@@ -91,7 +94,6 @@ const SignUpForm: React.FC = () => {
               login: res.identifier,
               password: fields.password_reg.value,
             });
-
             authenticate();
           } catch (e: any) {
             console.log(e);

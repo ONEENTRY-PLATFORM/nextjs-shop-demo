@@ -55,7 +55,7 @@ const UserForm: React.FC = () => {
           if (field.marker !== 'email_notifications') {
             return {
               marker: field.marker,
-              value: fields[field.marker].value,
+              value: fields[field.marker as keyof typeof fields].value,
               type: 'string',
             };
           }
@@ -107,7 +107,7 @@ const UserForm: React.FC = () => {
             (item) => item.marker === field.marker,
           );
           if (field.marker !== 'email_notifications') {
-            return <FormInput key={index} {...field} {...fieldData} />;
+            return <FormInput key={index} {...field} />;
           }
         })}
       </div>
