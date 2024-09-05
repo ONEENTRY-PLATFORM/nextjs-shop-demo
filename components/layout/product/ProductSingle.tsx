@@ -43,7 +43,12 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
             );
           } else if (block === 'similar') {
             return (
-              <RelatedItems key={block} id={product.id} marker={block} title="Features" />
+              <RelatedItems
+                key={block}
+                id={product.id}
+                marker={block}
+                title="Features"
+              />
             );
           }
         })}

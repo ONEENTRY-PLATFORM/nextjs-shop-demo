@@ -10,7 +10,7 @@ import Sticker from './Sticker';
 
 const ProductCard: React.FC<IProductsEntity> = (product) => {
   const { id, attributeValues, localizeInfos } = product;
-  
+
   return (
     <div className="relative flex size-full flex-col items-center rounded-3xl bg-neutral-100 p-4">
       {/* stickers */}
