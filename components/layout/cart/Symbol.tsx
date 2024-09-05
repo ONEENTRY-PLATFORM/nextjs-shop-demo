@@ -4,6 +4,7 @@ interface SymbolProps {
   data?: Record<string, unknown>;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Symbol: React.FC<SymbolProps> = ({ data = {} }) => {
   return (
     <div className="relative box-border flex shrink-0 flex-col">

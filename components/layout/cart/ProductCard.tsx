@@ -19,12 +19,13 @@ const ProductCard: React.FC<{
     return;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, attributeValues, price, localizeInfos, selected } = product;
 
-  const formattedPrice = UsePrice({
-    amount: price,
-    currency: 'USD',
-  });
+  // const formattedPrice = UsePrice({
+  //   amount: price,
+  //   currency: 'USD',
+  // });
 
   return (
     <article className="flex w-full justify-between gap-5 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">

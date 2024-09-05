@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { IFilterParams, IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IFilterParams,
+  IProductsEntity,
+} from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import { getPageByUrl, getProducts } from '@/app/api/serverSideProps';
