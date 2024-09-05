@@ -9,15 +9,16 @@ import CloseModal from './CloseModal';
 
 function Modal() {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
+  const Form = forms[component] || null;
 
-  if (!open || !component || component === 'FilterForm') {
+  if (
+    !open ||
+    !component ||
+    component === ('FilterForm' || 'MobileMenu') ||
+    !Form
+  ) {
     return null;
   }
-
-  const onButtonClick = () => {
-    setOpen(false);
-  };
-  const Form = forms[component];
 
   return (
     <div className="fixed left-0 top-0 z-50 flex h-screen w-full bg-slate-500/60 backdrop-blur-md">
@@ -27,7 +28,9 @@ function Modal() {
       </div>
       <button
         className="absolute left-0 top-0 z-0 size-full"
-        onClick={onButtonClick}
+        onClick={() => {
+          setOpen(false);
+        }}
       ></button>
     </div>
   );

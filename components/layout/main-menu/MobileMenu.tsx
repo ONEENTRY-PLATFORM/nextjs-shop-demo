@@ -20,7 +20,7 @@ interface MenuItemProps {
 export default function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { open, setOpen } = useContext(OpenDrawerContext);
+  const { open, setOpen, component } = useContext(OpenDrawerContext);
   const closeMobileMenu = () => setOpen(false);
 
   useEffect(() => {
@@ -34,12 +34,14 @@ export default function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
   }, [open]);
 
   useEffect(() => {
-    setOpen(false);
+    if (component === 'MobileMenu') {
+      setOpen(false);
+    }
   }, [pathname, searchParams]);
 
   return (
     <>
-      <Transition show={open}>
+      <Transition show={open && component === 'MobileMenu'}>
         <Dialog onClose={closeMobileMenu} className="relative z-50">
           <TransitionChild
             as={Fragment}
@@ -62,11 +64,11 @@ export default function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
             leaveTo="translate-x-[-100%]"
           >
             <DialogPanel className="fixed inset-0 flex size-full max-w-[420px] flex-col bg-white pb-6 dark:bg-black">
-              <div className="p-4">
+              <div className="p-4 pt-10">
                 <button
                   aria-label="Close menu"
                   onClick={closeMobileMenu}
-                  className="flex aspect-square size-12 shrink-0 items-center justify-center rounded-full bg-[#EEEFF0]"
+                  className="absolute right-2 top-2 flex aspect-square size-12 shrink-0 items-center justify-center rounded-full border border-[#EEEFF0]"
                 >
                   <svg
                     width="14"
@@ -85,16 +87,18 @@ export default function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
                     ></path>
                   </svg>
                 </button>
+
                 <div className="mb-4 w-full">
                   {/* <Suspense fallback={<SearchSkeleton />}>
                     <Search />
                   </Suspense> */}
                 </div>
+
                 {menu.length ? (
                   <ul className="flex w-full flex-col">
                     {menu.map((item: MenuItemProps) => (
                       <li
-                        className="py-2 text-xl text-black transition-colors hover:text-neutral-500 dark:text-white"
+                        className="py-2 text-lg text-black transition-colors hover:text-orange-500 dark:text-white"
                         key={item.label}
                       >
                         <Link

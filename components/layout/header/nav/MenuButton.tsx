@@ -5,11 +5,14 @@ import { useContext } from 'react';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 const MenuButton = () => {
-  const { open, setOpen } = useContext(OpenDrawerContext);
+  const { open, setOpen, setComponent } = useContext(OpenDrawerContext);
 
   return (
     <button
-      onClick={() => setOpen(true)}
+      onClick={() => {
+        setOpen(true);
+        setComponent('MobileMenu');
+      }}
       aria-label="Open menu"
       className="flex size-10 flex-col items-center justify-center gap-1 rounded-md transition-colors md:hidden dark:border-neutral-700 dark:text-white"
     >

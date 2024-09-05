@@ -20,8 +20,8 @@ const FilterButton: React.FC = () => {
       className="flex items-center bg-white"
       aria-label="Filter"
       onClick={() => {
-        setOpen(true);
         setComponent('FilterForm');
+        setOpen(true);
       }}
     >
       <FilterIcon /> Filter

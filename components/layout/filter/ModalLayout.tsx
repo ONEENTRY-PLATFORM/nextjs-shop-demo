@@ -10,6 +10,8 @@ import FiltersForm from './FiltersForm';
 const ModalLayout = () => {
   const { open, component } = useContext(OpenDrawerContext);
 
+  console.log(component);
+
   if (!open || !component || component !== 'FilterForm') {
     return null;
   }
