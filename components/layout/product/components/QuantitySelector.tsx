@@ -37,13 +37,13 @@ const QuantitySelector: React.FC<{
             dispatch(decreaseProductQty({ id: id, quantity: 1 }));
           }
         }}
-        className="relative box-border h-full w-8 self-stretch text-center"
+        className="relative box-border h-full w-8 self-stretch text-center text-slate-800"
         aria-label="Decrease quantity"
       >
         –
       </button>
       <input
-        className="relative box-border w-16 bg-transparent text-center"
+        className="relative box-border w-16 bg-transparent text-center text-slate-800"
         type="number"
         name={'qty_selector_' + id}
         id={'qty_selector_' + id}
@@ -61,7 +61,7 @@ const QuantitySelector: React.FC<{
         onClick={() => {
           dispatch(increaseProductQty({ id: id, quantity: 1 }));
         }}
-        className="relative box-border h-full w-8 text-center"
+        className="relative box-border h-full w-8 text-center text-slate-800"
         aria-label="Increase quantity"
       >
         +

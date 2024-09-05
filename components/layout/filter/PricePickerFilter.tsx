@@ -15,11 +15,11 @@ const PriceFilter: React.FC = () => {
   const { replace } = useRouter();
   const searchParams = useSearchParams();
   const [priceFrom, setPriceFrom] = useState(0);
-  const [priceTo, setPriceTo] = useState(100);
+  const [priceTo, setPriceTo] = useState(300);
 
   const STEP = 10;
   const MIN = 0;
-  const MAX = 100;
+  const MAX = 300;
 
   const priceFromLabel = useAppSelector(
     (state) => state.systemContentReducer.content.price_from,
