@@ -25,7 +25,7 @@ export default function SidebarMenu() {
 
   return (
     <nav>
-      <ul className="flex max-w-[165px] flex-col gap-5 text-base text-neutral-600">
+      <ul className="flex w-full flex-row gap-2 overflow-x-auto overflow-y-hidden py-3 text-base text-neutral-600 md:max-w-[165px] md:flex-col md:gap-5 md:py-0">
         {pages.map((item) => {
           const el = {
             ...item,

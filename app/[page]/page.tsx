@@ -85,7 +85,7 @@ export default async function Page({ params }: { params: { page: string } }) {
   const { pageUrl } = page;
 
   return (
-    <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col">
+    <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col overflow-hidden">
       {pages.map((page, _i) => {
         if (pageUrl !== page.name) {
           return;

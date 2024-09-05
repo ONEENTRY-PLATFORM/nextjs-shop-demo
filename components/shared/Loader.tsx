@@ -69,8 +69,8 @@ export const SearchBarLoader: React.FC = () => {
 
 export const SidebarMenuLoader: React.FC = () => {
   return (
-    <nav>
-      <ul className="flex max-w-[165px] flex-col gap-5 text-base">
+    <div>
+      <ul className="flex w-full flex-row md:gap-5 gap-2 overflow-x-auto overflow-y-hidden py-3 text-base text-neutral-600 md:max-w-[165px] md:flex-col md:py-0">
         {Array.from(Array(5).keys()).map((item) => (
           <li key={item} className={`group flex h-5 justify-start gap-3 pr-5`}>
             <div className="my-auto aspect-square size-5 shrink-0 bg-slate-100" />
@@ -78,7 +78,7 @@ export const SidebarMenuLoader: React.FC = () => {
           </li>
         ))}
       </ul>
-    </nav>
+    </div>
   );
 };
 

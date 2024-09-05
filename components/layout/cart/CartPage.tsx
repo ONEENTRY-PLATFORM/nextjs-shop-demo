@@ -88,7 +88,7 @@ const CartPage = () => {
 
   return (
     <div
-      className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full"
+      className="flex w-full flex-col pb-5 lg:max-w-[730px]"
       onSubmit={(e) => {
         onSubmitOrder(e);
       }}
@@ -107,11 +107,11 @@ const CartPage = () => {
         })}
       </div>
       <form
-        className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full"
+        className="flex w-[730px] max-w-full flex-col pb-5"
         onSubmit={onSubmitOrder}
       >
         <DeliveryTable {...(product as IProductsEntity)} />
-        <div className="mt-4 flex w-[464px] max-w-full flex-col self-end font-bold">
+        <div className="mt-4 flex w-[464px] max-w-full flex-col self-center font-bold lg:self-end">
           <TotalAmount amount={total} />
           <PaymentButton />
         </div>

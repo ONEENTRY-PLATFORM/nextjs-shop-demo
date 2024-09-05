@@ -40,7 +40,7 @@ const ModalLayout = () => {
           leaveFrom="translate-x-0"
           leaveTo="translate-x-[200%]"
         >
-          <DialogPanel className="fixed right-0 top-10 z-20 flex w-[400px] flex-col overflow-hidden rounded-l-3xl bg-white shadow-xl">
+          <DialogPanel className="fixed right-0 top-0 z-20 flex size-full flex-col overflow-auto bg-white shadow-xl md:top-10 md:overflow-hidden md:rounded-l-3xl lg:w-[400px]">
             <FilterHeader />
             <FiltersForm />
           </DialogPanel>

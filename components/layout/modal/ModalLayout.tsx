@@ -22,7 +22,7 @@ function Modal() {
 
   return (
     <div className="fixed left-0 top-0 z-50 flex h-screen w-full bg-slate-500/60 backdrop-blur-md">
-      <div className="relative z-10 m-auto w-full max-w-[420px] overflow-hidden rounded-xl bg-white p-10">
+      <div className="relative z-10 m-auto max-h-full w-[420px] max-w-full overflow-auto rounded-xl bg-white p-10 lg:overflow-x-hidden">
         <CloseModal />
         <Form />
       </div>

@@ -12,7 +12,7 @@ const TotalAmount: React.FC<TotalAmountProps> = ({ amount }) => {
     currency: 'USD',
   });
   return (
-    <div className="self-end text-xl leading-8 text-neutral-600">
+    <div className="self-center text-xl leading-8 text-neutral-600 lg:self-end">
       Total amount: {formattedPrice}
     </div>
   );
