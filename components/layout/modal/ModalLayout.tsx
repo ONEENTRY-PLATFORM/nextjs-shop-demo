@@ -16,7 +16,7 @@ function Modal() {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
   const closeModal = () => setOpen(false);
 
-  const Form = forms[component] || null;
+  const Form = forms[component as keyof typeof forms] || null;
 
   if (
     !open ||
@@ -47,11 +47,11 @@ function Modal() {
         <TransitionChild
           as={Fragment}
           enter="transition-all ease-in-out duration-300"
-          enterFrom="translate-x-[200%]"
-          enterTo="translate-x-[50%]"
+          enterFrom="scale-x-[200%]"
+          enterTo="scale-x-[50%]"
           leave="transition-all ease-in-out duration-200"
-          leaveFrom="translate-x-[50%]"
-          leaveTo="translate-x-[200%]"
+          leaveFrom="scale-x-[50%]"
+          leaveTo="scale-x-[200%]"
         >
           <DialogPanel className="fixed left-1/2 top-1/2 z-20 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-10 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-[400px]">
             <CloseModal />
