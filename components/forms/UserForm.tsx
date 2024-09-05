@@ -106,9 +106,8 @@ const UserForm: React.FC = () => {
           const fieldData = user?.formData.find(
             (item) => item.marker === field.marker,
           );
-          // !!! fieldData
           if (field.marker !== 'email_notifications') {
-            return <FormInput key={index} {...field} />;
+            return <FormInput key={index} {...field} {...fieldData} />;
           }
         })}
       </div>

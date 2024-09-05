@@ -31,7 +31,7 @@ const PaymentPage = () => {
   }, [data, paymentMethods]);
 
   return (
-    <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
+    <div className="flex max-w-[730px] flex-col gap-5 pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>
         {whitelistMethods.map((item, index) => {
           return (
