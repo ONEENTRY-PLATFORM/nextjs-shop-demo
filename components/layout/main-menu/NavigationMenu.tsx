@@ -43,7 +43,7 @@ const NavigationMenu: React.FC = async () => {
       categories: categories,
     },
   ];
-  navigationItems.push(...stickers);
+  navigationItems.push(...(stickers || []));
 
   return (
     <>
@@ -91,7 +91,7 @@ const NavigationMenu: React.FC = async () => {
         </div>
       </nav>
       <Suspense>
-        <MobileMenu menu={[...categories, ...stickers]} />
+        <MobileMenu menu={[...(categories || []), ...(stickers || [])]} />
       </Suspense>
     </>
   );

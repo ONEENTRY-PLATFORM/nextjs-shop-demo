@@ -1,5 +1,3 @@
-// import { Suspense } from 'react';
-
 import OrdersPage from '@/components/layout/orders/OrdersPage';
 
 // import Loader from '@/components/shared/Loader';

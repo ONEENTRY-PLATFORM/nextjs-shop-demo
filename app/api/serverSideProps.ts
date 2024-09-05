@@ -170,6 +170,23 @@ export async function getRelatedProductsById(
   }
 }
 
+// getSimilarProducts
+export async function getSimilarProducts(
+  marker: string,
+  langCode: string,
+): Promise<{
+  products?: IProductsEntity[];
+  isError: boolean;
+  err?: unknown;
+}> {
+  try {
+    const products = await api.Blocks.getSimilarProducts(marker, langCode);
+    return { isError: false, products: products };
+  } catch (err) {
+    return { isError: true, err };
+  }
+}
+
 // getProductById
 export async function getProductById(
   id: number,

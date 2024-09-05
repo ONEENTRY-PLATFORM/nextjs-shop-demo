@@ -1,12 +1,17 @@
-import { getRelatedProductsById } from '@/app/api/serverSideProps';
+import {
+  // getRelatedProductsById,
+  getSimilarProducts,
+} from '@/app/api/serverSideProps';
 
 import ProductCard from './product-card/ProductCard';
 
 const RelatedItems: React.FC<{
-  id: number;
+  id?: number;
+  marker: string;
   title: string;
-}> = async ({ id, title }) => {
-  const data = await getRelatedProductsById(id, 'en_US');
+}> = async ({ id, marker, title }) => {
+  const data = await getSimilarProducts(marker, 'en_US');
+  // const data = await getRelatedProductsById(id, 'en_US');
 
   const { isError, products } = data;
   if (isError || !products) {
@@ -19,15 +24,20 @@ const RelatedItems: React.FC<{
         {title}
       </h3>
 
-      <div className="flex gap-5 max-lg:flex-wrap ">
-        {data.products?.map((product, i) => (
-          <div
-            key={i}
-            className="relative box-border flex w-[calc(_20%_-_1rem_)] shrink-0 flex-col max-xl:w-[calc(_33.3333333%_-_1rem_)] max-md:w-[calc(_50%_-_1rem_)] max-sm:w-full"
-          >
-            <ProductCard {...product} />
-          </div>
-        ))}
+      <div className="flex gap-5 max-lg:flex-wrap overflow-hidden">
+        {data.products?.map((product, i) => {
+          if (i > 4) {
+            return null;
+          }
+          return (
+            <div
+              key={i}
+              className="relative box-border flex w-[calc(_20%_-_1rem_)] shrink-0 flex-col max-xl:w-[calc(_33.3333333%_-_1rem_)] max-md:w-[calc(_50%_-_1rem_)] max-sm:w-full"
+            >
+              <ProductCard {...product} />
+            </div>
+          );
+        })}
       </div>
     </section>
   );

@@ -11,6 +11,7 @@ import VariationsCarousel from './variations/VariationsCarousel';
 const ProductSingle: React.FC<IProductsEntity> = (product) => {
   const { attributeValues, localizeInfos } = product;
 
+  // console.log(product);
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:flex-wrap">
@@ -42,7 +43,7 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
             );
           } else if (block === 'similar') {
             return (
-              <RelatedItems key={block} id={product.id} title="Features" />
+              <RelatedItems key={block} id={product.id} marker={block} title="Features" />
             );
           }
         })}
