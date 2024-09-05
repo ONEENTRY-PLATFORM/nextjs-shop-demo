@@ -19,7 +19,7 @@ export default async function NavGroup() {
   const { pages } = menu;
 
   return (
-    <div className="my-auto flex gap-5 max-md:max-w-full items-center">
+    <div className="my-auto flex items-center gap-5 max-md:max-w-full">
       {Array.isArray(pages) &&
         pages.map((element: { pageUrl: string }, i: Key) => {
           return (

@@ -10,7 +10,7 @@ const EmptyCart = () => {
   );
 
   return (
-    <div className="relative box-border flex shrink-0 flex-col text-center items-center">
+    <div className="relative box-border flex shrink-0 flex-col items-center text-center">
       <Image
         className="mb-5"
         width={100}

@@ -38,7 +38,7 @@ const SearchBar: React.FC = () => {
   };
 
   return (
-    <div className="relative my-auto ml-24 flex h-[60px] w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-gray-400 bg-white px-7 max-md:ml-0 max-md:h-[50px] max-md:max-w-full max-md:px-5 max-sm:hidden max-sm:h-[40px] max-sm:gap-0 max-sm:px-4 max-sm:pr-1 text-slate-800">
+    <div className="relative my-auto ml-24 flex h-[60px] w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-gray-400 bg-white px-7 text-slate-800 max-md:ml-0 max-md:h-[50px] max-md:max-w-full max-md:px-5 max-sm:hidden max-sm:h-[40px] max-sm:gap-0 max-sm:px-4 max-sm:pr-1">
       <form className="flex w-full" onSubmit={(e) => handleSubmit(e)}>
         <label htmlFor="quick-search" className="sr-only">
           {searchPlaceholder}

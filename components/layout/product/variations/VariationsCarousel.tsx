@@ -23,6 +23,7 @@ const VariationsCarousel: React.FC = () => {
           // firstPanelSize="200px"
           align="prev"
           circular={true}
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           onMoveEnd={(e) => {
             // console.log(e);
           }}
