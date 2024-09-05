@@ -6,12 +6,14 @@ interface Props {
 }
 
 const AvailabilityFilter: React.FC<Props> = ({ title }) => {
-  const [available, setAvailability] = useState(false);
   const pathname = usePathname();
   const { replace } = useRouter();
 
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
+  const [available, setAvailability] = useState(
+    params.get('in_stock') ? true : false,
+  );
 
   useEffect(() => {
     if (available) {

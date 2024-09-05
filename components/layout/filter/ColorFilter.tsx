@@ -21,17 +21,18 @@ type Color = {
 };
 
 const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
-  const { attributes, loading, error } = useGetSingleAttributeByMarkerSet({
-    setMarker: 'system_content',
-    attributeMarker: 'color_filters',
-  });
-  const [activeColor, setActiveColor] = useState<string | null>('');
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
 
-  const pathname = usePathname();
-  const { replace } = useRouter();
+  const [activeColor, setActiveColor] = useState<string | null>(params.get('color') || '');
+
+  const { attributes, loading, error } = useGetSingleAttributeByMarkerSet({
+    setMarker: 'system_content',
+    attributeMarker: 'color_filters',
+  });
 
   const colorFilters = useMemo(() => {
     let colors: Color[] = [];
@@ -65,8 +66,8 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
   if ((!loading && !attributes) || error || loading) {
     return (
       <div>
-        <div className="mb-5 h-5"></div>
-        <div className="mb-9 flex h-5 flex-wrap gap-5 whitespace-nowrap text-sm leading-8 text-slate-300"></div>
+        <div className="mb-5 h-5 bg-slate-100">{color_filter_title}</div>
+        <div className="mb-9 flex bg-slate-100 h-5 flex-wrap gap-5 whitespace-nowrap text-sm leading-8 text-slate-300"></div>
       </div>
     );
   }

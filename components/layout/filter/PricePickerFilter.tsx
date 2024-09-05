@@ -14,8 +14,14 @@ const PriceFilter: React.FC = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
-  const [priceFrom, setPriceFrom] = useState(0);
-  const [priceTo, setPriceTo] = useState(300);
+  const params = new URLSearchParams(searchParams);
+
+  const [priceFrom, setPriceFrom] = useState(
+    params.get('minPrice') ? Number(params.get('minPrice')) : 0,
+  );
+  const [priceTo, setPriceTo] = useState(
+    params.get('maxPrice') ? Number(params.get('maxPrice')) : 300,
+  );
 
   const STEP = 10;
   const MIN = 0;
@@ -27,8 +33,6 @@ const PriceFilter: React.FC = () => {
   const priceToLabel = useAppSelector(
     (state) => state.systemContentReducer.content.price_to,
   );
-
-  const params = new URLSearchParams(searchParams);
 
   useEffect(() => {
     if (priceFrom && priceFrom !== MIN) {

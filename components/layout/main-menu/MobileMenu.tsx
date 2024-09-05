@@ -64,8 +64,8 @@ function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
           leaveFrom="translate-x-0"
           leaveTo="translate-x-[-100%]"
         >
-          <DialogPanel className="fixed inset-0 flex size-full max-w-[420px] flex-col bg-white pb-6 dark:bg-black">
-            <div className="p-4 pt-10">
+          <DialogPanel className="fixed inset-0 flex size-full max-w-[420px] flex-col bg-white pb-6">
+            <div className="p-6 pt-10">
               <button
                 aria-label="Close filter"
                 onClick={closeFilter}
@@ -99,7 +99,7 @@ function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
                 <ul className="flex w-full flex-col">
                   {menu.map((item: MenuItemProps) => (
                     <li
-                      className="py-2 text-lg text-black transition-colors hover:text-orange-500 dark:text-white"
+                      className="py-2 text-lg text-black transition-colors hover:text-orange-500"
                       key={item.label}
                     >
                       <Link
