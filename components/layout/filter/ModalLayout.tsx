@@ -15,11 +15,11 @@ import FiltersForm from './FiltersForm';
 
 const ModalLayout = () => {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
-  const closeMobileMenu = () => setOpen(false);
+  const closeFilters = () => setOpen(false);
 
   return (
     <Transition show={open && component === 'FilterForm'}>
-      <Dialog onClose={closeMobileMenu} className="relative z-50">
+      <Dialog onClose={closeFilters} className="relative z-50">
         <TransitionChild
           as={Fragment}
           enter="transition-all ease-in-out duration-300"

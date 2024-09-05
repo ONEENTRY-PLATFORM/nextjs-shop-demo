@@ -1,6 +1,11 @@
 'use client';
-
-import { useContext } from 'react';
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild,
+} from '@headlessui/react';
+import { Fragment, useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
@@ -9,6 +14,8 @@ import CloseModal from './CloseModal';
 
 function Modal() {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
+  const closeModal = () => setOpen(false);
+
   const Form = forms[component] || null;
 
   if (
@@ -21,18 +28,38 @@ function Modal() {
   }
 
   return (
-    <div className="fixed left-0 top-0 z-50 flex h-screen w-full bg-slate-500/60 backdrop-blur-md">
-      <div className="relative z-10 m-auto max-h-full w-[420px] max-w-full overflow-auto rounded-xl bg-white p-10 lg:overflow-x-hidden">
-        <CloseModal />
-        <Form />
-      </div>
-      <button
-        className="absolute left-0 top-0 z-0 size-full"
-        onClick={() => {
-          setOpen(false);
-        }}
-      ></button>
-    </div>
+    <Transition show={open}>
+      <Dialog
+        onClose={closeModal}
+        className="relative z-50 flex h-screen w-full"
+      >
+        <TransitionChild
+          as={Fragment}
+          enter="transition-all ease-in-out duration-300"
+          enterFrom="opacity-0 backdrop-blur-none"
+          enterTo="opacity-100 backdrop-blur-[.5px]"
+          leave="transition-all ease-in-out duration-200"
+          leaveFrom="opacity-100 backdrop-blur-[.5px]"
+          leaveTo="opacity-0 backdrop-blur-none"
+        >
+          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+        </TransitionChild>
+        <TransitionChild
+          as={Fragment}
+          enter="transition-all ease-in-out duration-300"
+          enterFrom="translate-x-[200%]"
+          enterTo="translate-x-[50%]"
+          leave="transition-all ease-in-out duration-200"
+          leaveFrom="translate-x-[50%]"
+          leaveTo="translate-x-[200%]"
+        >
+          <DialogPanel className="fixed left-1/2 top-1/2 z-20 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-10 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-[400px]">
+            <CloseModal />
+            <Form />
+          </DialogPanel>
+        </TransitionChild>
+      </Dialog>
+    </Transition>
   );
 }
 

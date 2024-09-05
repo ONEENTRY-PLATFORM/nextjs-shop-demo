@@ -30,9 +30,8 @@ const PaymentForm: React.FC = () => {
           loading="lazy"
           src="/images/card.svg"
           alt=""
-          className="mb-12 w-full max-w-[350px] self-center"
+          className="w-full max-w-[350px] self-center rounded-2xl shadow-xl"
         />
-
         {/* Image */}
         <div className="absolute left-0 top-0 h-[230px] w-[350px] self-center">
           <div className="creditcard">
@@ -265,6 +264,7 @@ const PaymentForm: React.FC = () => {
               pattern="[0-9]*"
               inputMode="numeric"
               placeholder="000"
+              onAccept={(value) => setCardCode(value)}
               className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
             />
           </div>
