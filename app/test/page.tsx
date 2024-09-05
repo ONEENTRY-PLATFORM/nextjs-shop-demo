@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// 'use client';
+'use client';
 
-// import {
-//   CalendarForm,
-//   ForgotPasswordForm,
-//   PaymentForm,
-//   ResetPasswordForm,
-//   SignInForm,
-//   SignUpForm,
-//   UserForm,
-//   VerificationForm,
-// } from '@/components/forms';
+import {
+  //   CalendarForm,
+  //   ForgotPasswordForm,
+  PaymentForm,
+  //   ResetPasswordForm,
+  //   SignInForm,
+  //   SignUpForm,
+  //   UserForm,
+  //   VerificationForm,
+} from '@/components/forms';
 
 const TestPage = () => {
   return (
@@ -20,7 +20,7 @@ const TestPage = () => {
           {/* <CalendarForm /> */}
           {/* <ForgotPasswordForm /> */}
           {/* <ResetPasswordForm /> */}
-          {/* <PaymentForm /> */}
+          <PaymentForm />
           {/* <SignInForm /> */}
           {/* <SignUpForm /> */}
           {/* <VerificationForm /> */}

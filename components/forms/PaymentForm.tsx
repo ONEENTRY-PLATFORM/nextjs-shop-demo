@@ -9,7 +9,7 @@ import { IMask, IMaskInput } from 'react-imask';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const PaymentForm: React.FC = () => {
-  const [cardNumber, setCardNumber] = useState('0000 0000 0000 0000');
+  const [cardNumber, setCardNumber] = useState('');
   const [cardName, setCardName] = useState('');
   const [cardExp, setCardExp] = useState('01/25');
   const [cardCode, setCardCode] = useState('000');
@@ -20,17 +20,17 @@ const PaymentForm: React.FC = () => {
 
   return (
     <form
-      className="flex min-h-full flex-col gap-4 text-xl leading-5"
+      className="flex min-h-full max-w-full flex-col gap-4 text-xl leading-5"
       onSubmit={onSubmit}
     >
       <div className="relative h-[230px] w-[350px] self-center">
         <Image
-          width={375}
-          height={233}
+          width={350}
+          height={230}
           loading="lazy"
           src="/images/card.svg"
           alt=""
-          className="mb-12 aspect-[1.61] w-full max-w-[375px] self-center max-md:mt-10"
+          className="mb-12 w-full max-w-[350px] self-center"
         />
 
         {/* Image */}
@@ -185,7 +185,7 @@ const PaymentForm: React.FC = () => {
         {/* Image */}
       </div>
 
-      <div className="relative mb-16 box-border flex shrink-0 flex-col gap-5">
+      <div className="relative mb-16 box-border flex max-w-full shrink-0 flex-col gap-5 max-md:mb-6">
         <div className="relative box-border flex shrink-0 flex-col">
           <label htmlFor="name" className="text-base text-gray-400">
             Name
@@ -210,22 +210,22 @@ const PaymentForm: React.FC = () => {
           <IMaskInput
             mask={'0000 0000 0000 0000'}
             radix="."
-            value=""
+            value={cardNumber}
             pattern="[0-9]*"
-            unmask={true}
+            unmask={false}
             id="cardnumber"
             inputMode="numeric"
             inputRef={inputRef}
             onAccept={(value, mask) => {
-              // setCardNumber(value);
+              setCardNumber(value);
             }}
             placeholder="Enter card number"
             className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
           />
         </div>
 
-        <div className="relative box-border flex shrink-0 flex-row justify-between gap-4">
-          <div className="relative box-border flex w-[45%] shrink-0 flex-col">
+        <div className="relative box-border flex shrink-0 flex-row justify-between gap-4 max-md:flex-col">
+          <div className="relative box-border flex w-full shrink-0 flex-col sm:w-[45%]">
             <label htmlFor="expirationdate" className="text-base text-gray-400">
               Expiration (mm/yy)
             </label>
@@ -254,7 +254,7 @@ const PaymentForm: React.FC = () => {
               className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
             />
           </div>
-          <div className="relative box-border flex w-[45%] shrink-0 flex-col">
+          <div className="relative box-border flex w-full shrink-0 flex-col sm:w-[45%]">
             <label htmlFor="securitycode" className="text-base text-gray-400">
               Security Code
             </label>
