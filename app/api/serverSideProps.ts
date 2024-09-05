@@ -187,6 +187,26 @@ export async function getSimilarProducts(
   }
 }
 
+// getSimilarProducts
+export async function getProductsByBlockMarker(
+  marker: string,
+  langCode: string,
+): Promise<{
+  products?: IProductsEntity[];
+  isError: boolean;
+  err?: unknown;
+}> {
+  try {
+    const products = await api.Blocks.getProductsByBlockMarker(
+      marker,
+      langCode,
+    );
+    return { isError: false, products: products };
+  } catch (err) {
+    return { isError: true, err };
+  }
+}
+
 // getProductById
 export async function getProductById(
   id: number,

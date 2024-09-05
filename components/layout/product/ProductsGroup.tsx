@@ -1,12 +1,20 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
+import { getProductsByBlockMarker } from '@/app/api/serverSideProps';
+
 import GroupCard from './group-card/GroupCard';
 
 const ProductsGroup: React.FC<{
-  id: number;
+  marker: string;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-}> = ({ id }) => {
-  const products: IProductsEntity[] = [];
+}> = async ({ marker }) => {
+  // const products: IProductsEntity[] = [];
+  const data = await getProductsByBlockMarker(marker, 'en_US');
+
+  const { isError, products } = data;
+  if (isError || !products) {
+    return null;
+  }
 
   return (
     <section className="mb-8 flex flex-col max-md:max-w-full">

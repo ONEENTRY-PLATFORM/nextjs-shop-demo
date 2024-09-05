@@ -38,7 +38,7 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
           if (block === 'multiply_items_offer') {
             return (
               <span key={block}>
-                <ProductsGroup id={10} />
+                <ProductsGroup marker={block} />
               </span>
             );
           } else if (block === 'similar') {

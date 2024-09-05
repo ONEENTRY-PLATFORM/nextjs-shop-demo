@@ -87,13 +87,7 @@ export default async function ProductPage({
         }}
       />
       <div className="mx-auto flex w-full max-w-screen-xl flex-col bg-white">
-        <Suspense
-          fallback={
-            <div className="relative aspect-square size-full overflow-hidden" />
-          }
-        >
-          <Product {...product} />
-        </Suspense>
+        <Product {...product} />
       </div>
     </>
   );
