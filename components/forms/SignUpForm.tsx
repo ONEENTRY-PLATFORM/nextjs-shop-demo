@@ -15,6 +15,7 @@ import SubmitButton from './inputs/FormSubmitButton';
 
 const SignUpForm: React.FC = () => {
   const [_isLoading, setIsLoading] = useState<boolean>(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
   const { authenticate } = useContext(AuthContext);
   const { setOpen, setComponent } = useContext(OpenDrawerContext);

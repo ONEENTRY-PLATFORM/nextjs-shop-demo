@@ -4,8 +4,8 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { deselectProduct } from '@/app/store/reducers/CartSlice';
-import { UsePrice } from '@/components/utils';
 
+// import { UsePrice } from '@/components/utils';
 import QuantitySelector from '../product/components/QuantitySelector';
 import DeleteButton from './DeleteButton';
 import PriceDisplay from './PriceDisplay';
@@ -32,6 +32,7 @@ const ProductCard: React.FC<{
       <div className="relative flex justify-between gap-5">
         <div className="relative z-10 mb-auto box-border flex shrink-0 flex-row self-center">
           <input
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             onChange={(e) => {
               dispatch(deselectProduct(id));
             }}

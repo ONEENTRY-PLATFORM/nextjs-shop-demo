@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 import { getAttributeByMarker } from '@/app/api/serverSideProps';
 
@@ -89,7 +90,9 @@ const NavigationMenu: React.FC = async () => {
           </ul>
         </div>
       </nav>
-      <MobileMenu menu={[...categories, ...stickers]} />
+      <Suspense>
+        <MobileMenu menu={[...categories, ...stickers]} />
+      </Suspense>
     </>
   );
 };

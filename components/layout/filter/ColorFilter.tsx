@@ -59,6 +59,7 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
       params.delete('color');
     }
     replace(`${pathname}?${params.toString()}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeColor]);
 
   if ((!loading && !attributes) || error || loading) {

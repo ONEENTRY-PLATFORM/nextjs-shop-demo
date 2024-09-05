@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CartIcon = (props: unknown) => {
   return (
     <svg
