@@ -1,5 +1,4 @@
 /* eslint-disable tailwindcss/no-custom-classname */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import '@egjs/react-flicking/dist/flicking.css';

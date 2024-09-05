@@ -19,7 +19,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const data = await getPageByUrl('shop', 'en_US');
   const { isError, page } = data;
-  console.log(data);
 
   if (isError || !page) {
     return notFound();
@@ -69,9 +68,6 @@ export default async function CatalogPage({
     filters?: IFilterParams[];
   };
 }) {
-  // console.log(searchParams);
-  console.log(searchParams);
-
   const data = await getProducts({ limit: 10, offset: 0 });
 
   const { isError, products } = data;

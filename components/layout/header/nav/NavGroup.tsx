@@ -19,15 +19,15 @@ export default async function NavGroup() {
   const { pages } = menu;
 
   return (
-    <div className="my-auto flex gap-5 max-md:max-w-full">
+    <div className="my-auto flex gap-5 max-md:max-w-full items-center">
       {Array.isArray(pages) &&
         pages.map((element: { pageUrl: string }, i: Key) => {
           return (
-            <span key={i}>
+            <div className="flex size-6" key={i}>
               {element.pageUrl === 'profile' && <NavItemProfile key={i} />}
               {element.pageUrl === 'favorites' && <NavItemFavorites />}
               {element.pageUrl === 'cart' && <NavItemCart key={i} />}
-            </span>
+            </div>
           );
         })}
       <MenuButton />

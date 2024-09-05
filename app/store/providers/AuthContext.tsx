@@ -82,7 +82,6 @@ export const AuthProvider = ({ children }: Props) => {
   }, [isError]);
 
   useEffect(() => {
-    // console.log(isAuth);
     if (isAuth) {
       trigger({})
         // .then(
