@@ -4,21 +4,21 @@ import React from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 
-const EmptyCart = () => {
-  const { empty_cart_plug } = useAppSelector(
+const EmptyFavorites = () => {
+  const { empty_favorites_plug } = useAppSelector(
     (state) => state.systemContentReducer.content,
   );
 
   return (
-    <div className="relative box-border flex shrink-0 flex-col text-center">
+    <div className="relative box-border flex shrink-0 flex-col items-center text-center">
       <Image
         className="mb-5"
         width={100}
         height={100}
-        src={'/icons/cart.svg'}
+        src={'/icons/heart.svg'}
         alt={''}
       />
-      <h1 className="mb-5">{empty_cart_plug}</h1>
+      <h1 className="mb-5">{empty_favorites_plug}</h1>
       <Link href="/shop" className="underline">
         Go to shop
       </Link>
@@ -26,4 +26,4 @@ const EmptyCart = () => {
   );
 };
 
-export default EmptyCart;
+export default EmptyFavorites;
