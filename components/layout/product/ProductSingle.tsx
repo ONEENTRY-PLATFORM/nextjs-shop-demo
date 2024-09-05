@@ -20,7 +20,7 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
           alt={localizeInfos.title}
           product={product}
         />
-        <div className="flex w-4/12 grow flex-col max-md:mt-10 max-md:w-full">
+        <div className="flex w-4/12 grow flex-col max-md:w-full">
           <div className="relative mb-6 box-border flex shrink-0 flex-col">
             <VariationsCarousel />
           </div>
