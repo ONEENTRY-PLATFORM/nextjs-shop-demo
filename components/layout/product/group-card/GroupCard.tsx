@@ -19,8 +19,8 @@ const GroupCard: React.FC<GroupCardProps> = ({
   originalPrice,
 }) => {
   const images = product.attributeValues.more_pic.value;
-  const pic1 = images[0].downloadLink;
-  const pic2 = images[1].downloadLink;
+  const pic1 = images[0]?.downloadLink;
+  const pic2 = images[1]?.downloadLink;
 
   return (
     <article className="flex flex-row justify-between rounded-xl bg-neutral-100 p-4">

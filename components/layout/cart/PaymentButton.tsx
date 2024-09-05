@@ -13,7 +13,7 @@ const PaymentButton: React.FC = () => {
         setOpen(true);
         setComponent('PaymentForm');
       }}
-      className="mt-9 self-center rounded-[30px] border border-solid border-orange-500 bg-orange-500 px-16 py-4 text-base uppercase text-white max-md:px-5 lg:self-start"
+      className="mt-9 self-center rounded-[30px] border border-solid border-orange-500 bg-orange-500 px-16 py-4 text-base uppercase text-white max-md:px-8 max-md:py-3 lg:self-start"
     >
       GO TO PAY
     </button>

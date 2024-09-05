@@ -18,7 +18,7 @@ const ProductsGroup: React.FC<{
         These items are cheaper together
       </h3>
 
-      <div className="flex flex-row justify-between gap-2.5 max-md:max-w-full">
+      <div className="flex w-full flex-row justify-between gap-2.5">
         {products?.map((product) => (
           <div
             key={product.id}
