@@ -2,10 +2,11 @@
 
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { FC, Key } from 'react';
 import React from 'react';
 
 import { useSearchProducts } from '@/app/api/hooks/useSearchProducts';
+import Spinner from '@/components/shared/Spinner';
 
 interface SearchResultsProps {
   searchValue: string | undefined;
@@ -23,8 +24,11 @@ const SearchResults: FC<SearchResultsProps> = ({
     name: searchValue || '',
   });
 
-  const { products } = data;
+  const { loading, products } = data;
 
+  if (loading) {
+    return <Spinner />;
+  }
   return state ? (
     <div className="absolute left-0 top-full z-30 mt-px flex w-full flex-col gap-1 rounded-2xl bg-white p-5 shadow-lg">
       <button
@@ -33,7 +37,7 @@ const SearchResults: FC<SearchResultsProps> = ({
       >
         &#10005;
       </button>
-      {products.map((product: IProductsEntity, i: React.Key) => {
+      {products.map((product: IProductsEntity, i: Key) => {
         const { id, localizeInfos, attributeSetIdentifier } = product;
 
         if (attributeSetIdentifier === 'service_product') {

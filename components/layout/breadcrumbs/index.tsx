@@ -1,5 +1,3 @@
-// import { usePathname, useSearchParams } from 'next/navigation';
-
 import BackButton from './BackButton';
 import BreadcrumbsTrail from './BreadcrumbsTrail';
 import FilterButton from './FilterButton';
