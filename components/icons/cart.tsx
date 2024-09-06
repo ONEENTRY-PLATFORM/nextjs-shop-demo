@@ -1,5 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const CartIcon = (props: unknown) => {
+const CartIcon = (props?: { active?: boolean }) => {
+  console.log(props);
+
   return (
     <svg
       width="27"

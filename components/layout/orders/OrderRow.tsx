@@ -16,7 +16,7 @@ const Order = ({ order }: { order: IOrdersByMarkersEntity }) => {
     // formIdentifier
     // isHistory
     // paymentAccountIdentifier
-    // statusIdentifier
+    statusIdentifier,
     totalSum,
   } = order;
   const formattedPrice = UsePrice({
@@ -27,10 +27,11 @@ const Order = ({ order }: { order: IOrdersByMarkersEntity }) => {
   return (
     <Link
       href={'/orders/' + id}
-      className="-mb-px flex border-collapse gap-4 border-y p-4"
+      className="-mb-px flex border-collapse gap-4 border-y p-4 hover:text-orange-500"
     >
-      <div>{createdDate}</div>
-      <div>{formattedPrice}</div>
+      <div className="w-1/2">{createdDate}</div>
+      <div className="w-1/4">{formattedPrice}</div>
+      <div className="w-1/4">{statusIdentifier}</div>
     </Link>
   );
 };
