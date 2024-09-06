@@ -1,4 +1,4 @@
-const FavoritesIcon = () => {
+const FavoritesIcon = (props?: { active?: boolean }) => {
   return (
     <svg
       width="30"
@@ -6,7 +6,10 @@ const FavoritesIcon = () => {
       viewBox="0 0 30 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="size-full fill-slate-700 group-hover:fill-orange-500"
+      className={
+        'size-full fill-slate-700 group-hover:fill-orange-500 ' +
+        (props?.active ? 'fill-orange-500' : '')
+      }
     >
       <path
         fillRule="evenodd"

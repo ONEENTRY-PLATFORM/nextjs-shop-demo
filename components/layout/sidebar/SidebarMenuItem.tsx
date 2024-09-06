@@ -20,7 +20,7 @@ const SidebarMenuItem: React.FC<{
         aria-checked={menuItem.isActive}
       >
         <div className="my-auto aspect-square size-4 shrink-0">
-          <Icon />
+          <Icon active={menuItem.isActive} />
         </div>
         <div>{localizeInfos.menuTitle}</div>
       </Link>
