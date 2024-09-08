@@ -4,7 +4,7 @@ const WithSidebar = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex w-full flex-col items-center">
       <div className="mx-auto flex w-full max-w-screen-xl flex-row max-sm:flex-row max-sm:flex-wrap">
-        <aside className="mt-1.5 w-[210px] pb-8 max-sm:w-full">
+        <aside className="w-[210px] pb-8 max-sm:w-full">
           <SidebarMenu />
         </aside>
         <section className="flex w-full grow flex-col">

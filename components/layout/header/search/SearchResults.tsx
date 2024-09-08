@@ -29,6 +29,8 @@ const SearchResults: FC<SearchResultsProps> = ({
   if (loading) {
     return <Spinner />;
   }
+  console.log(products);
+
   return state ? (
     <div className="absolute left-0 top-full z-30 mt-px flex w-full flex-col gap-1 rounded-2xl bg-white p-5 shadow-lg">
       <button
@@ -37,24 +39,26 @@ const SearchResults: FC<SearchResultsProps> = ({
       >
         &#10005;
       </button>
-      {products.map((product: IProductsEntity, i: Key) => {
-        const { id, localizeInfos, attributeSetIdentifier } = product;
+      {products.length > 0
+        ? products.map((product: IProductsEntity, i: Key) => {
+            const { id, localizeInfos, attributeSetIdentifier } = product;
 
-        if (attributeSetIdentifier === 'service_product') {
-          return;
-        }
-        return (
-          <div key={i} className="flex w-full">
-            <Link
-              href={'/shop/product/' + id}
-              onClick={() => setState(false)}
-              className="flex w-full py-2 hover:text-red-500"
-            >
-              {localizeInfos.title}
-            </Link>
-          </div>
-        );
-      })}
+            if (attributeSetIdentifier === 'service_product') {
+              return;
+            }
+            return (
+              <div key={i} className="flex w-full">
+                <Link
+                  href={'/shop/product/' + id}
+                  onClick={() => setState(false)}
+                  className="flex w-full py-2 hover:text-red-500"
+                >
+                  {localizeInfos.title}
+                </Link>
+              </div>
+            );
+          })
+        : 'Not found'}
     </div>
   ) : null;
 };

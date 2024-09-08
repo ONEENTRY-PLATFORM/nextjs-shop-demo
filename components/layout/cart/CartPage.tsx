@@ -81,7 +81,7 @@ const CartPage = () => {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmitOrder = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitOrder = (e: any) => {
     e.preventDefault();
     // !!!
   };
