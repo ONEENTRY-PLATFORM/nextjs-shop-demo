@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-// import OTPInputs from './inputs/OTPInputs';
 import OtpInput from 'react-otp-input';
 
 import { api, logInUser } from '@/app/api';
@@ -10,6 +9,7 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 
 const VerificationForm: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
+  const [state, setState] = useState(false);
   const [otp, setOtp] = useState('');
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -32,6 +32,7 @@ const VerificationForm: React.FC = () => {
     }
 
     try {
+      setState(true);
       const result = await api.AuthProvider.activateUser(
         'email',
         fields['email_reg'].value,
@@ -44,33 +45,35 @@ const VerificationForm: React.FC = () => {
           password: fields['password_reg'].value,
         });
         authenticate();
+        setState(false);
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
+      setState(false);
     }
   };
 
-  const onResend = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  ) => {
-    e.preventDefault();
+  const onResend = async () => {
     try {
+      setState(true);
       await api.AuthProvider.generateCode(
         'email',
         fields['email_reg'].value,
         'generate_code',
       );
+      setState(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
+      setState(false);
     }
   };
 
   return (
     <form
       className="flex min-h-full flex-col gap-4 text-xl leading-5"
-      onSubmit={onSubmit}
+      onSubmit={(e) => onSubmit(e)}
     >
       <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
         <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
@@ -87,9 +90,9 @@ const VerificationForm: React.FC = () => {
           onChange={setOtp}
           numInputs={6}
           renderInput={(props) => <input {...props} />}
-          containerStyle={'flex justify-between gap-3.5 max-md:gap-2'}
+          containerStyle={'flex justify-between gap-2 max-md:gap-2'}
           inputStyle={
-            'relative mx-auto box-border flex h-[70px] min-w-[50px] shrink-0 flex-col rounded border border-solid border-neutral-100 bg-neutral-100 p-2.5 text-center text-2xl font-medium text-neutral-600 max-md:w-[40px]'
+            'relative mx-auto box-border flex h-[70px] min-w-[40px] shrink-0 flex-col rounded border border-solid border-neutral-100 bg-neutral-100 p-2.5 text-center text-2xl font-medium text-neutral-600 max-md:w-[40px]'
           }
         />
         <div className="-mt-px self-end text-xs text-orange-500 max-md:mr-2.5">
@@ -97,14 +100,14 @@ const VerificationForm: React.FC = () => {
           <button
             className="font-bold text-orange-500"
             type="button"
-            onClick={(e) => onResend(e)}
+            onClick={onResend}
           >
             RESEND
           </button>
         </div>
       </div>
 
-      <FormSubmitButton title="Verify now" class="" icon="" isLoading={false} />
+      <FormSubmitButton title="Verify now" class="" icon="" isLoading={state} />
     </form>
   );
 };

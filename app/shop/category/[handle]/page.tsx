@@ -7,7 +7,11 @@ import type {
 } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import { getPageByUrl, getProducts } from '@/app/api/serverSideProps';
+import {
+  getPageByUrl,
+  getProducts,
+  getProductsByUrl,
+} from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
@@ -68,13 +72,17 @@ export default async function CatalogPage({
   params: { handle: string };
 }) {
   const currentPage = Number(searchParams?.page) || 0;
-  const data = await getProducts({
+  // const data = await getProducts({
+  //   limit: 10,
+  //   offset: currentPage,
+  //   params: { searchParams: searchParams },
+  // });
+  const data = await getProductsByUrl({
     limit: 10,
     offset: currentPage,
-    params: { searchParams: searchParams },
+    params: { ...params, searchParams: searchParams },
   });
-  // const data = await getProductsByUrl({ limit: 10, offset: 0, params });
-  // !!! Как получить продукты по категории?
+  console.log(data);
 
   const { isError, products } = data;
   if (isError || !products) {

@@ -13,7 +13,7 @@ const CloseModal = () => {
 
   return (
     <button
-      className="absolute right-8 top-4 z-10 size-10 rounded-full border border-solid border-slate-200 text-slate-800"
+      className="absolute right-8 top-4 z-10 size-10 rounded-full border border-solid border-slate-200 text-slate-800 transition-colors hover:border-orange-500 hover:text-orange-500"
       onClick={onButtonClick}
     >
       &#10005;
