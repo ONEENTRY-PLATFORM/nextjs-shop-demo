@@ -70,7 +70,7 @@ export const SearchBarLoader: React.FC = () => {
 export const SidebarMenuLoader: React.FC = () => {
   return (
     <div>
-      <ul className="flex w-full flex-row gap-2 overflow-x-auto overflow-y-hidden py-3 text-base text-neutral-600 md:max-w-[165px] md:flex-col md:gap-5 md:py-0">
+      <ul className="flex w-full flex-row gap-2 overflow-hidden py-3 text-base md:max-w-[165px] md:flex-col md:gap-5 md:py-0">
         {Array.from(Array(5).keys()).map((item) => (
           <li key={item} className={`group flex h-5 justify-start gap-3 pr-5`}>
             <div className="my-auto aspect-square size-5 shrink-0 bg-slate-100" />
@@ -90,6 +90,23 @@ export const NavMenuLoader: React.FC = () => {
           key={item}
           className="group relative box-border flex size-6 shrink-0 bg-slate-100"
         ></div>
+      ))}
+    </div>
+  );
+};
+
+export const OrdersTableLoader: React.FC = () => {
+  return (
+    <div className="my-auto flex w-full flex-col max-md:max-w-full">
+      {Array.from(Array(3).keys()).map((item) => (
+        <div
+          key={item}
+          className="relative -mb-px flex h-12 border-collapse gap-4 border-y p-4"
+        >
+          <div className="h-full w-1/2 bg-slate-100"></div>
+          <div className="h-full w-1/4 bg-slate-100"></div>
+          <div className="h-full w-1/4 bg-slate-100"></div>
+        </div>
       ))}
     </div>
   );

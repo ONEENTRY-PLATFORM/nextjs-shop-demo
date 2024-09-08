@@ -24,8 +24,8 @@ export default function SidebarMenu() {
   const pages = menu.pages as Array<IMenusPages & { isActive: boolean }>;
 
   return (
-    <nav>
-      <ul className="flex w-full flex-row gap-2 overflow-x-auto overflow-y-hidden py-3 text-base text-neutral-600 md:max-w-[165px] md:flex-col md:gap-5 md:py-0">
+    <nav className="flex w-full">
+      <ul className="flex w-full flex-row gap-2 overflow-x-auto overflow-y-hidden py-3 text-base text-neutral-600 md:max-w-[165px] md:flex-col md:gap-5 md:overflow-hidden md:py-0">
         {pages.map((item) => {
           const el = {
             ...item,
