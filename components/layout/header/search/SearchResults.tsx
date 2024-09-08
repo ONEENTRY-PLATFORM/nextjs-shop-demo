@@ -29,7 +29,6 @@ const SearchResults: FC<SearchResultsProps> = ({
   if (loading) {
     return <Spinner />;
   }
-  console.log(products);
 
   return state ? (
     <div className="absolute left-0 top-full z-30 mt-px flex w-full flex-col gap-1 rounded-2xl bg-white p-5 shadow-lg">

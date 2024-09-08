@@ -24,7 +24,6 @@ const TableRow: React.FC<TableRowProps> = ({
       </td>
       <td className="px-5 align-middle text-base">
         <input
-          size={40}
           type="text"
           value={value}
           placeholder={placeholder}
@@ -35,6 +34,7 @@ const TableRow: React.FC<TableRowProps> = ({
             setOpen(true);
             setComponent('CalendarForm');
           }}
+          className="w-full"
         />
       </td>
       <td className="table-cell pl-5 align-middle">
@@ -46,6 +46,10 @@ const TableRow: React.FC<TableRowProps> = ({
             src={icon}
             alt=""
             className="aspect-square w-5"
+            onClick={() => {
+              setOpen(true);
+              setComponent('CalendarForm');
+            }}
           />
         )}
       </td>

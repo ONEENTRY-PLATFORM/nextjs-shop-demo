@@ -100,7 +100,6 @@ export async function getProducts(props: {
           limit: limit,
         },
       );
-
       return { isError: false, products: products };
     }
     if (searchValue) {

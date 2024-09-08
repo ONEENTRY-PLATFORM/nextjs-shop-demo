@@ -21,7 +21,7 @@ const PaymentForm: React.FC = () => {
 
   return (
     <form
-      className="flex min-h-full max-w-full flex-col gap-4 text-xl leading-5"
+      className="mx-auto flex min-h-full max-w-[350px] flex-col gap-4 text-xl leading-5"
       onSubmit={onSubmit}
     >
       <div className="relative h-[230px] w-[350px] self-center">
