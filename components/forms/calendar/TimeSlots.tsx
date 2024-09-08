@@ -20,7 +20,7 @@ const TimeSlots: React.FC<TimeSlotsProps> = ({
   setTime,
 }) => {
   return (
-    <div className="mb-5 grid grid-cols-4 grid-rows-4 gap-2.5 rounded-3xl bg-white text-base font-bold tracking-wide text-orange-500">
+    <div className="mx-auto max-w-[320px] mb-5 grid grid-cols-4 grid-rows-4 gap-2.5 rounded-3xl bg-white text-base font-bold tracking-wide text-orange-500">
       {timeSlots.map((slot, index) => (
         <TimeSlot
           key={index}

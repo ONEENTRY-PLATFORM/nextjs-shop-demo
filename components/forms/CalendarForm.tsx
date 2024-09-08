@@ -22,7 +22,7 @@ const CalendarComponent: React.FC = () => {
   };
 
   return (
-    <>
+    <div className="mx-auto max-w-[350px] ">
       <Calendar
         view="month"
         onChange={(value) => {
@@ -35,14 +35,16 @@ const CalendarComponent: React.FC = () => {
         currentTime={time}
         setTime={setTime}
       />
-      <button
-        onClick={onApply}
-        type="button"
-        className="mt-auto w-full max-w-full self-center rounded-[30px] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
-      >
-        Apply
-      </button>
-    </>
+      <div className="flex w-full">
+        <button
+          onClick={onApply}
+          type="button"
+          className="mx-auto mt-auto w-[270px] rounded-[30px] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
+        >
+          Apply
+        </button>
+      </div>
+    </div>
   );
 };
 

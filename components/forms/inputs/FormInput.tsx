@@ -50,7 +50,7 @@ const FormInput: React.FC<IAttributes & { value?: string }> = (field) => {
         type={type}
         id={field.marker}
         placeholder={localizeInfos?.title}
-        className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
+        className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
         required={true}
         onChange={(val) => setValue(val.currentTarget.value)}
         autoComplete={fieldType === 'password' ? 'password' : ''}

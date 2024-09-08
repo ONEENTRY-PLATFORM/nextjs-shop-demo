@@ -199,7 +199,7 @@ const PaymentForm: React.FC = () => {
               setCardName(e.target.value);
             }}
             value={cardName}
-            className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
+            className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
           />
         </div>
 
@@ -220,7 +220,7 @@ const PaymentForm: React.FC = () => {
               setCardNumber(value);
             }}
             placeholder="Enter card number"
-            className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
+            className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
           />
         </div>
 
@@ -251,7 +251,7 @@ const PaymentForm: React.FC = () => {
               type="text"
               inputMode="numeric"
               onAccept={(value) => setCardExp(value)}
-              className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
+              className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
             />
           </div>
           <div className="relative box-border flex w-full shrink-0 flex-col sm:w-[45%]">
@@ -266,7 +266,7 @@ const PaymentForm: React.FC = () => {
               inputMode="numeric"
               placeholder="000"
               onAccept={(value) => setCardCode(value)}
-              className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5"
+              className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
             />
           </div>
         </div>
