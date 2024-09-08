@@ -1,7 +1,7 @@
 import './globals.css';
 
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Lato } from 'next/font/google';
 
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
@@ -14,7 +14,10 @@ import { LanguageProvider } from './store/providers/LanguageContext';
 import { OpenDrawerProvider } from './store/providers/OpenDrawerContext';
 import StoreProvider from './store/providers/StoreProvider';
 
-const inter = Inter({ subsets: ['latin'] });
+const lato = Lato({
+  subsets: ['latin'],
+  weight: ['300', '400', '700', '900'],
+});
 
 export const metadata: Metadata = {
   title: 'OneEntry Shop',
@@ -26,7 +29,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={lato.className + ' flex flex-col min-h-screen'}>
         <StoreProvider>
           <LanguageProvider>
             <AuthProvider>
@@ -34,7 +37,7 @@ export default function RootLayout({
                 <OpenDrawerProvider>
                   <Header />
                   <NavigationMenu />
-                  {children}
+                  <div className="grow">{children}</div>
                   <Footer />
                   <Modal />
                 </OpenDrawerProvider>
