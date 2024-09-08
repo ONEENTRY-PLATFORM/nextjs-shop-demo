@@ -72,17 +72,11 @@ export default async function CatalogPage({
   params: { handle: string };
 }) {
   const currentPage = Number(searchParams?.page) || 0;
-  // const data = await getProducts({
-  //   limit: 10,
-  //   offset: currentPage,
-  //   params: { searchParams: searchParams },
-  // });
   const data = await getProductsByUrl({
     limit: 10,
     offset: currentPage,
     params: { ...params, searchParams: searchParams },
   });
-  console.log(data);
 
   const { isError, products } = data;
   if (isError || !products) {

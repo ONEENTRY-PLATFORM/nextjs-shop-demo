@@ -9,7 +9,7 @@ import { Suspense } from 'react';
 
 import { getPageByUrl, getProducts } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
-import Loader from '@/components/shared/Loader';
+import { ProductsGridLoader } from '@/components/shared/Loader';
 
 export async function generateMetadata({
   params,
@@ -66,8 +66,9 @@ export default async function CatalogPage({
   };
 }) {
   const currentPage = Number(searchParams?.page) || 0;
+  const pageLimit = 10;
   const data = await getProducts({
-    limit: 10,
+    limit: pageLimit,
     offset: currentPage,
     params: { searchParams: searchParams },
   });
@@ -80,7 +81,7 @@ export default async function CatalogPage({
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<ProductsGridLoader limit={pageLimit} />}>
           <ProductsGridLayout
             gridItems={products.filter(
               (product: IProductsEntity) =>

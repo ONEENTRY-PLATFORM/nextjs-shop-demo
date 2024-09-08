@@ -81,17 +81,15 @@ const CartPage = () => {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmitOrder = (e: any) => {
+  const onSubmitOrder = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log(e);
+    // !!!
   };
 
   return (
     <div
       className="flex w-full flex-col pb-5 lg:max-w-[730px]"
-      onSubmit={(e) => {
-        onSubmitOrder(e);
-      }}
+      onSubmit={(e) => onSubmitOrder(e)}
     >
       <div className="mb-4 flex w-full flex-col gap-4">
         {productsInCart?.map((product: IProductsEntity, i: number) => {

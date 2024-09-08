@@ -4,7 +4,7 @@
 // import { Suspense } from 'react';
 
 import WithSidebar from '@/app/[page]/WithSidebar';
-// import { useGetOrderStorageByMarkerQuery } from '@/app/api';
+import { useGetOrderStorageByMarkerQuery } from '@/app/api';
 // import { useAppSelector } from '@/app/store/hooks';
 // import Loader from '@/components/shared/Loader';
 
@@ -13,6 +13,11 @@ export default function CatalogPage({
 }: {
   params: { handle: string };
 }) {
+  // const { data, isLoading, refetch } = useGetOrderStorageByMarkerQuery({
+  //   marker: 'order',
+  // });
+
+  // console.log(data);
   // const { data, isLoading, refetch } = useGetSingleOrderQuery({
   //   marker: params.handle,
   // });

@@ -13,8 +13,9 @@ const PaymentForm: React.FC = () => {
   const [cardName, setCardName] = useState('');
   const [cardExp, setCardExp] = useState('01/25');
   const [cardCode, setCardCode] = useState('000');
-  const onSubmit = (e: { preventDefault: () => void }) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // !!!
   };
   const inputRef = useRef(null);
 

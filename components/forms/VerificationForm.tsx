@@ -25,7 +25,7 @@ const VerificationForm: React.FC = () => {
     };
   };
 
-  const onSubmit = async (e: { preventDefault: () => void }) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (otp.length < 6) {
       return;
