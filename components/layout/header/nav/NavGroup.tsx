@@ -19,14 +19,14 @@ export default async function NavGroup() {
   const { pages } = menu;
 
   return (
-    <div className="my-auto flex items-center gap-10 max-md:max-w-full">
+    <div className="my-auto flex items-center gap-10 max-md:max-w-full max-md:gap-4">
       {Array.isArray(pages) &&
         pages.map((element: { pageUrl: string }, i: Key) => {
           return (
             <div className="flex size-6" key={i}>
-              {element.pageUrl === 'profile' && <NavItemProfile key={i} />}
+              {element.pageUrl === 'profile' && <NavItemProfile />}
               {element.pageUrl === 'favorites' && <NavItemFavorites />}
-              {element.pageUrl === 'cart' && <NavItemCart key={i} />}
+              {element.pageUrl === 'cart' && <NavItemCart />}
             </div>
           );
         })}
