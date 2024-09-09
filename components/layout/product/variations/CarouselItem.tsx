@@ -1,30 +1,37 @@
-'use client';
-
 import Image from 'next/image';
-import { useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 
 interface VariationProps {
+  index: number;
   title: string;
   imageSrc: string;
+  currentIndex: number;
+  setCurrentIndex: Dispatch<SetStateAction<number>>;
 }
 
-const CarouselItem: React.FC<VariationProps> = ({ title, imageSrc }) => {
-  const [state, setState] = useState(false);
+const CarouselItem: React.FC<VariationProps> = ({
+  title,
+  imageSrc,
+  index,
+  currentIndex,
+  setCurrentIndex,
+}) => {
   const onSelect = () => {
-    console.log(title);
-    setState(true);
+    setCurrentIndex(index);
   };
+  const isActive = index === currentIndex;
 
   return (
     <button
       onClick={onSelect}
       className={
-        'relative box-border flex w-1/4 shrink-0 flex-col ' + state
-          ? 'rounded-lg border border-solid border-slate-100'
-          : ''
+        'relative rounded-lg box-border flex w-[30%] shrink-0 flex-col ' +
+        (isActive
+          ? 'border border-solid border-slate-200 text-slate-800'
+          : 'border border-solid border-transparent text-slate-300')
       }
     >
-      <div className="flex max-w-[80px] flex-col gap-1 overflow-hidden whitespace-nowrap text-center text-sm text-slate-300">
+      <div className="flex w-full flex-col gap-1 overflow-hidden whitespace-nowrap pb-1 text-center text-sm">
         <div className="h-[80px] w-full bg-neutral-100">
           <Image
             width={80}

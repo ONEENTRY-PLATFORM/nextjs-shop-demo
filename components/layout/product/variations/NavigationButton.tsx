@@ -1,29 +1,27 @@
-import Image from 'next/image';
+import ArrowLeftIcon from '@/components/icons/arrow-left';
+import ArrowRightIcon from '@/components/icons/arrow-right';
 
 interface NavigationButtonProps {
   direction: 'left' | 'right';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  action: any;
 }
 
-const NavigationButton: React.FC<NavigationButtonProps> = ({ direction }) => {
-  const imageSrc =
-    direction === 'left' ? '/icons/arrow-left.svg' : '/icons/arrow-right.svg';
+const NavigationButton: React.FC<NavigationButtonProps> = ({
+  direction,
+  action,
+}) => {
   const altText = `Navigate ${direction}`;
 
   return (
     <button
       type="button"
       className={
-        'flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white'
+        'group flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white p-2'
       }
+      onClick={action}
     >
-      <Image
-        width={16}
-        height={16}
-        loading="lazy"
-        src={imageSrc}
-        alt={altText}
-        className="my-auto aspect-square w-4 shrink-0 self-stretch"
-      />
+      {direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />}
     </button>
   );
 };
