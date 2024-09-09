@@ -36,6 +36,7 @@ const SearchBar: React.FC = () => {
     router.push(`/shop?${params.toString()}`);
     setState(false);
   };
+  const searchValue = searchParams.get('search')?.toString();
 
   return (
     <div className="relative my-auto ml-6 flex h-[50px] w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-gray-400 bg-white px-7 text-slate-800 max-md:ml-0 max-md:h-[50px] max-md:max-w-full max-md:px-5 max-sm:hidden max-sm:h-[40px] max-sm:gap-0 max-sm:px-4 max-sm:pr-1">
@@ -45,7 +46,7 @@ const SearchBar: React.FC = () => {
         </label>
         <input
           // value={searchParams.get('search')?.toString()}
-          defaultValue={searchParams.get('search')?.toString()}
+          defaultValue={searchValue}
           onChange={(e) => {
             handleSearch(e.target.value);
           }}
@@ -64,7 +65,7 @@ const SearchBar: React.FC = () => {
         </button>
       </form>
       <SearchResults
-        searchValue={searchParams.get('search')?.toString()}
+        searchValue={searchValue}
         state={state}
         setState={setState}
       />

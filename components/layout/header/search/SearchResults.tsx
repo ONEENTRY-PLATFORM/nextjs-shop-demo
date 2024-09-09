@@ -20,13 +20,11 @@ const SearchResults: FC<SearchResultsProps> = ({
   state,
   setState,
 }) => {
-  const data = useSearchProducts({
+  const { loading, products } = useSearchProducts({
     name: searchValue || '',
   });
 
-  const { loading, products } = data;
-
-  if (loading) {
+  if (loading || !products) {
     return <Spinner />;
   }
 

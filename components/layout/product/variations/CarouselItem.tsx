@@ -11,7 +11,7 @@ interface VariationProps {
 const CarouselItem: React.FC<VariationProps> = ({ title, imageSrc }) => {
   const [state, setState] = useState(false);
   const onSelect = () => {
-    console.log('click');
+    console.log(title);
     setState(true);
   };
 

@@ -311,18 +311,22 @@ export const reviewsData = [
 export const variationsItems = [
   {
     title: 'Red',
-    imageSrc: '/images/catalog-img-4.svg',
+    imageSrc: '/images/catalog-img-1.svg',
   },
   {
     title: 'Blue',
-    imageSrc: '/images/catalog-img-4.svg',
+    imageSrc: '/images/catalog-img-2.svg',
   },
   {
     title: 'Green',
-    imageSrc: '/images/catalog-img-4.svg',
+    imageSrc: '/images/catalog-img-3.svg',
   },
   {
     title: 'Yellow',
+    imageSrc: '/images/catalog-img-4.svg',
+  },
+  {
+    title: 'Gray',
     imageSrc: '/images/catalog-img-4.svg',
   },
 ];

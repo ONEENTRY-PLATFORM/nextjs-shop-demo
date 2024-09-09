@@ -23,7 +23,7 @@ const GroupCard: React.FC<GroupCardProps> = ({
   const pic2 = images[1]?.downloadLink;
 
   return (
-    <article className="flex flex-row justify-between rounded-xl bg-neutral-100 p-4">
+    <div className="flex flex-row justify-between rounded-xl bg-[#F6F7F9] p-4">
       <div className="flex gap-2.5">
         <div className="flex w-[37%] flex-col">
           <h2 className="mb-5 text-sm leading-4 text-neutral-600">{title}</h2>
@@ -42,7 +42,7 @@ const GroupCard: React.FC<GroupCardProps> = ({
           {pic2 && <ProductImage imageSrc={pic2} />}
         </div>
       </div>
-    </article>
+    </div>
   );
 };
 

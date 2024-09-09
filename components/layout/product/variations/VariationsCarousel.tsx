@@ -3,7 +3,7 @@ import { variationsItems } from '@/components/data';
 import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 
-const VariationsCarousel: React.FC = () => {
+const VariationsCarousel: React.FC<{ items: [] }> = ({ items }) => {
   return (
     <nav className="flex w-full px-10">
       <div className="flex w-full items-center justify-center gap-1 self-stretch">

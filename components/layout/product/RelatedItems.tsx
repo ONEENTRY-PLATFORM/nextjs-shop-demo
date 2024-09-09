@@ -25,7 +25,7 @@ const RelatedItems: React.FC<{
         {title}
       </h3>
 
-      <div className="flex gap-5 overflow-hidden max-lg:flex-wrap">
+      <div className="flex gap-5 overflow-hidden max-lg:flex-wrap pb-4">
         {data.products?.map((product, i) => {
           if (i > 4) {
             return null;
