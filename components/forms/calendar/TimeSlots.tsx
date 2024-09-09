@@ -1,3 +1,4 @@
+import type { Dispatch } from 'react';
 import React from 'react';
 
 import TimeSlot from './TimeSlot';
@@ -9,11 +10,9 @@ interface TimeSlotsProps {
     isDisabled?: boolean | undefined;
   }>;
   currentTime: string;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  setTime: Function;
+  setTime: Dispatch<React.SetStateAction<string>>;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 const TimeSlots: React.FC<TimeSlotsProps> = ({
   timeSlots,
   currentTime,

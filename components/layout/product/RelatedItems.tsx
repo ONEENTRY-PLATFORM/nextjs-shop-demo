@@ -6,11 +6,9 @@ import {
 import ProductCard from '../catalog/product-card/ProductCard';
 
 const RelatedItems: React.FC<{
-  id?: number;
   marker: string;
   title: string;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-}> = async ({ id, marker, title }) => {
+}> = async ({ marker, title }) => {
   const data = await getSimilarProducts(marker, 'en_US');
   // const data = await getRelatedProductsById(id, 'en_US');
 

@@ -106,8 +106,7 @@ export const RTKApi = createApi({
       },
     }),
     getSingleOrder: build.query<undefined, { id: string }>({
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      queryFn: async ({ id }) => {
+      queryFn: async () => {
         try {
           return { data: undefined };
         } catch (e: any) {

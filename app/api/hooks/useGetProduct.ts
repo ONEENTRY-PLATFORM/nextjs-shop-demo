@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-import { LanguageContext } from '../../store/providers/LanguageContext';
-import { api } from '../api/api';
+import { api } from '@/app/api';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 type UseGetProductProps = {
   id: number;
@@ -22,7 +21,7 @@ export const useGetProduct = ({ id }: UseGetProductProps) => {
       setLoading(true);
       try {
         const result = await api.Products.getProductById(id, activeLanguage);
-        result && setProduct(result);
+        setProduct(result);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setError(e.message);

@@ -3,9 +3,8 @@
 import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-// eslint-disable-next-line import/no-cycle
-import { LanguageContext } from '../../store/providers/LanguageContext';
-import { api } from '../api/api';
+import { api } from '@/app/api';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 type UseGetBlockProps = {
   pageUrl: string | undefined;
@@ -28,9 +27,8 @@ export const useGetBlocksByUrl = ({ pageUrl }: UseGetBlockProps) => {
             activeLanguage,
           );
           setBlocks(result);
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (e) {
-          /** */
+        } catch (e: unknown) {
+          console.log(e);
         }
         setLoading(false);
       })();

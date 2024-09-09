@@ -3,8 +3,8 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-import { LanguageContext } from '../../store/providers/LanguageContext';
-import { api } from '../api/api';
+import { api } from '@/app/api';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 export const useSearchProducts = ({ name }: { name: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -21,9 +21,8 @@ export const useSearchProducts = ({ name }: { name: string }) => {
       try {
         const result = await api.Products.searchProduct(name, activeLanguage);
         setProducts(result);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
-        /** */
+        console.log(e);
       }
       setLoading(false);
     })();

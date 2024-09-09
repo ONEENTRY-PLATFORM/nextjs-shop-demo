@@ -3,8 +3,8 @@
 import type { IProductStatusEntity } from 'oneentry/dist/product-statuses/productStatusesInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-import { LanguageContext } from '../../store/providers/LanguageContext';
-import { api } from '../api/api';
+import { api } from '@/app/api';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 type UseGetStatusProps = {
   marker?: string;

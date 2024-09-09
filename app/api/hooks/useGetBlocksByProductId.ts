@@ -3,8 +3,7 @@
 import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-// eslint-disable-next-line import/no-cycle
-import { LanguageContext } from '../../store/providers/LanguageContext';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 type UseGetBlocksByProductIdProps = {
   productId?: string | number;

@@ -4,7 +4,6 @@ import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
 import { api } from '@/app/api';
-// eslint-disable-next-line import/no-cycle
 import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 type UseGetMenuProps = {

@@ -3,9 +3,8 @@
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-// eslint-disable-next-line import/no-cycle
-import { LanguageContext } from '../../store/providers/LanguageContext';
-import { api } from '../api/api';
+import { api } from '@/app/api';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 type AttributeByMarkerSetProps = {
   setMarker: string;
@@ -40,6 +39,7 @@ export const useGetSingleAttributeByMarkerSet = ({
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLanguage]);
+
   return {
     loading,
     error,

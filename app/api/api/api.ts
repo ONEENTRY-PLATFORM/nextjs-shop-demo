@@ -22,7 +22,6 @@ socket.on('notification', async (res: string) => {
 });
 
 // Initial api definition
-// eslint-disable-next-line import/no-mutable-exports
 export let api = defineOneEntry(PROJECT_URL, {
   langCode: 'en_US',
   token: APP_TOKEN,

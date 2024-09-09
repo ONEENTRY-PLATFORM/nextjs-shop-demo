@@ -4,8 +4,8 @@
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-// eslint-disable-next-line import/no-cycle
-import { LanguageContext } from '../../store/providers/LanguageContext';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
+
 import { api } from '../api/api';
 
 type UseGetBlockByMarkerProps = {
@@ -27,9 +27,8 @@ export const useGetBlockByMarker = ({ marker }: UseGetBlockByMarkerProps) => {
             activeLanguage,
           );
           setBlock(result);
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        } catch (e) {
-          /* empty */
+        } catch (e: unknown) {
+          console.log(e);
         }
         setLoading(false);
       })();

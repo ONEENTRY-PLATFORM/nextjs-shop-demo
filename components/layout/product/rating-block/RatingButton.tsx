@@ -1,5 +1,6 @@
 'use client';
 
+import type { Dispatch } from 'react';
 import React from 'react';
 
 import StarRating from './StarRating';
@@ -8,8 +9,7 @@ interface ReviewSectionProps {
   rating: number;
   reviewCount: number;
   state: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  setState: Function;
+  setState: Dispatch<React.SetStateAction<boolean>>;
 }
 
 const RatingButton: React.FC<ReviewSectionProps> = ({
@@ -52,7 +52,6 @@ const RatingButton: React.FC<ReviewSectionProps> = ({
             fillRule="evenodd"
             clipRule="evenodd"
             d="M0.939123 13.6835C0.561619 13.2804 0.58239 12.6476 0.985514 12.2701L13.4156 0.629985L25.8457 12.2701L24.4786 13.7299L13.4156 3.37L2.35258 13.7299C1.94945 14.1074 1.31663 14.0866 0.939123 13.6835Z"
-            // fill="#4C4D56"
           />
         </svg>
       </div>

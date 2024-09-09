@@ -3,13 +3,13 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { useContext, useEffect, useRef, useState } from 'react';
 
-// eslint-disable-next-line import/no-cycle
-import { LanguageContext } from '../../store/providers/LanguageContext';
-import { api } from '../api/api';
+import { api } from '@/app/api';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 type Props = {
   marker?: string;
 };
+
 export const useGetProductsByBlockMarker = ({ marker }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();

@@ -1,3 +1,4 @@
+import type { Dispatch } from 'react';
 import React from 'react';
 
 interface TimeSlotProps {
@@ -6,8 +7,7 @@ interface TimeSlotProps {
     isDisabled?: boolean;
   };
   currentTime: string;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  setTime: Function;
+  setTime: Dispatch<React.SetStateAction<string>>;
 }
 
 const TimeSlot: React.FC<TimeSlotProps> = ({ slot, currentTime, setTime }) => {
@@ -20,7 +20,6 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ slot, currentTime, setTime }) => {
   } else {
     className += 'border-orange-500 border-solid';
   }
-  // console.log({ currentTime, time });
 
   return (
     <button

@@ -16,15 +16,12 @@ export const useSetPaymentSession = () => {
   const session = useRef<ICreateSessionEntity>();
   const [refetch, setRefetch] = useState<boolean>(false);
   const setSession = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async (orderId: number) => {
       setLoading(true);
       try {
         const result = await api.Payments.createSession(orderId, 'session');
         session.current = result;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (e: any) {
-        // console.log(e);
+      } catch (e: unknown) {
         setError((e as Error).message);
       }
       setLoading(false);

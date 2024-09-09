@@ -3,8 +3,7 @@ import ArrowRightIcon from '@/components/icons/arrow-right';
 
 interface NavigationButtonProps {
   direction: 'left' | 'right';
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  action: any;
+  action: () => void;
 }
 
 const NavigationButton: React.FC<NavigationButtonProps> = ({

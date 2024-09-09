@@ -3,9 +3,8 @@
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-// eslint-disable-next-line import/no-cycle
-import { LanguageContext } from '../../store/providers/LanguageContext';
-import { api } from '../api/api';
+import { api } from '@/app/api';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 type AttributeByMarkerSetProps = {
   setMarker: string;
@@ -30,14 +29,14 @@ export const useGetAttributesByMarker = ({
           activeLanguage,
         );
         setAttributes(result);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (e: any) {
+      } catch (e: unknown) {
         setError((e as Error).message);
       }
       setLoading(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLanguage, refresh]);
+
   return {
     loading,
     error,

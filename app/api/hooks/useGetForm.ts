@@ -4,9 +4,8 @@ import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
 import { useContext, useEffect, useRef, useState } from 'react';
 
-// eslint-disable-next-line import/no-cycle
-import { LanguageContext } from '../../store/providers/LanguageContext';
-import { api } from '../api/api';
+import { api } from '@/app/api';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 type UseGetFormProps = {
   marker: string;
@@ -61,14 +60,14 @@ export const useGetForm = ({ marker }: UseGetFormProps) => {
         );
         appFormData.current = reduced;
         setForm(result);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (e) {
-        // console.log(e);
+      } catch (e: unknown) {
+        console.log(e);
       }
     })();
     setLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLanguage, refetch]);
+
   return {
     loading,
     form,

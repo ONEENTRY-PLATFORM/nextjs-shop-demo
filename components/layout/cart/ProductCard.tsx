@@ -22,11 +22,6 @@ const ProductCard: React.FC<{
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, attributeValues, price, localizeInfos, selected } = product;
 
-  // const formattedPrice = UsePrice({
-  //   amount: price,
-  //   currency: 'USD',
-  // });
-
   return (
     <article className="flex w-full justify-between gap-5 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
       <div className="relative flex justify-between gap-5">
@@ -58,6 +53,7 @@ const ProductCard: React.FC<{
           <h2 className="text-base leading-8">{localizeInfos?.title}</h2>
           <PriceDisplay
             currentPrice={attributeValues.sale?.value}
+            // originalPrice={attributeValues.price?.value}
             originalPrice={attributeValues.price?.value}
           />
         </div>

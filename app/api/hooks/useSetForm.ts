@@ -3,7 +3,7 @@
 import type { IFormsPost } from 'oneentry/dist/formsData/formsDataInterfaces';
 import { useState } from 'react';
 
-import { api } from '../api/api';
+import { api } from '@/app/api';
 
 export const useSetForm = () => {
   const [loading, setLoading] = useState<boolean>(false);

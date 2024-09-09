@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react';
 
 import { api } from '../api/api';
 
-// type UseGetLocalesProps = {};
-
 export const useGetLocales = () => {
   const [locales, setLocales] = useState<ILocalEntity[]>([]);
   const [loading, setLoading] = useState<boolean>(false);

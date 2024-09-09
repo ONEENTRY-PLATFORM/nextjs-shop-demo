@@ -131,7 +131,6 @@ export async function getProductsByUrl(props: {
   isError: boolean;
   err?: unknown;
 }> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { limit, offset, params } = props;
   const expandedFilters = setSearchParams(params?.searchParams);
 

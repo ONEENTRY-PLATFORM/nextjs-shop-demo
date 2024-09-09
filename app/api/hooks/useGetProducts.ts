@@ -6,8 +6,8 @@ import type {
 } from 'oneentry/dist/products/productsInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
-import { LanguageContext } from '../../store/providers/LanguageContext';
-import { api } from '../api/api';
+import { api } from '@/app/api';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 type UseGetProductsProps = {
   pageUrl?: string;
@@ -71,17 +71,17 @@ export const useGetProducts = ({
             (item) => item.attributeSetIdentifier === 'product',
           );
         }
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (e) {
-        /** */
+      } catch (e: unknown) {
+        console.log(e);
       }
     }
   };
 
   useEffect(() => {
     (async () => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      (offset < 1 || disableLoading) && setLoading(true);
+      if (offset < 1 || disableLoading) {
+        setLoading(true);
+      }
       let result = await findProducts();
       result = result?.filter((res) => {
         return res.isVisible;
