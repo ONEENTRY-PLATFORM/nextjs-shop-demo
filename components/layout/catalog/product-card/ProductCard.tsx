@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { Key } from 'react';
 
-import AddToCartButton from '../components/AddToCartButton';
+import AddToCartButton from '../../product/components/AddToCartButton';
 import FavoritesButton from './FavoritesButton';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
@@ -58,7 +58,7 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
         <AddToCartButton
           product={product}
           height={42}
-          className="rounded-3xl border border-solid border-orange-500 px-4 py-2.5 text-center text-sm font-bold text-orange-500"
+          className="rounded-3xl border border-solid border-orange-500 px-4 py-2.5 text-center text-sm font-bold uppercase text-orange-500"
         />
       </div>
       <Link

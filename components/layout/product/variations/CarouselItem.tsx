@@ -19,8 +19,8 @@ const CarouselItem: React.FC<VariationProps> = ({ title, imageSrc }) => {
     <button
       onClick={onSelect}
       className={
-        'relative box-border flex w-1/4 shrink-0 flex-col rounded-lg ' + state
-          ? 'border border-solid border-slate-500'
+        'relative box-border flex w-1/4 shrink-0 flex-col ' + state
+          ? 'rounded-lg border border-solid border-slate-100'
           : ''
       }
     >

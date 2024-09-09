@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import FavoritesButton from '../product-card/FavoritesButton';
+import FavoritesButton from '../../catalog/product-card/FavoritesButton';
 
 interface ProductImageProps {
   imageSrc: string;

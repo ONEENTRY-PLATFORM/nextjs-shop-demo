@@ -20,7 +20,7 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ slot, currentTime, setTime }) => {
   } else {
     className += 'border-orange-500 border-solid';
   }
-  // console.log({currentTime, time});
+  console.log({currentTime, time});
 
   return (
     <button

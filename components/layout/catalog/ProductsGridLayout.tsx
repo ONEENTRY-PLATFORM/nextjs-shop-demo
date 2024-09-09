@@ -1,6 +1,6 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import ProductCard from '../product/product-card/ProductCard';
+import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {
   gridItems: Array<IProductsEntity>;

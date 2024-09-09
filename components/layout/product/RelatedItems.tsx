@@ -3,7 +3,7 @@ import {
   getSimilarProducts,
 } from '@/app/api/serverSideProps';
 
-import ProductCard from './product-card/ProductCard';
+import ProductCard from '../catalog/product-card/ProductCard';
 
 const RelatedItems: React.FC<{
   id?: number;

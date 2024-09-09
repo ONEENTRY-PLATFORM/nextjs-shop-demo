@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -29,9 +30,14 @@ const AddToCartButton: React.FC<AddToCartProps> = ({
     product.statusIdentifier !== 'in_stock'
   ) {
     return (
-      <button onClick={() => {}} type="button" className={className}>
+      <Link
+        href={`/shop/product/` + product.id}
+        onClick={() => {}}
+        type="button"
+        className={className + ' border-slate-300 text-slate-400'}
+      >
         Out of stock
-      </button>
+      </Link>
     );
   }
 
