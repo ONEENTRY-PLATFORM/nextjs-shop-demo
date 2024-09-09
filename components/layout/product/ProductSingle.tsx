@@ -14,7 +14,7 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
   // console.log(product);
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
-      <div className="flex flex-row gap-10 max-md:max-w-full max-md:flex-wrap">
+      <div className="flex flex-row gap-10 max-md:max-w-full max-md:gap-4 max-sm:flex-wrap">
         <ProductImage
           imageSrc={attributeValues.pic?.value.downloadLink}
           alt={localizeInfos.title}

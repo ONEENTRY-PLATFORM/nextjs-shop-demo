@@ -6,7 +6,7 @@ const Logo: React.FC = () => {
     <Link
       href="/"
       prefetch={true}
-      className="relative flex h-[83px] w-full max-w-[300px] items-center outline-none max-md:max-w-[200px] max-sm:max-w-[120px]"
+      className="relative flex h-[83px] w-full max-w-[300px] items-center outline-none max-lg:max-w-[200px] max-md:max-w-[200px] max-sm:max-w-[120px]"
     >
       <Image
         className="aspect-auto w-auto object-contain"

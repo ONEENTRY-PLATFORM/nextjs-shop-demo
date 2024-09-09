@@ -17,7 +17,7 @@ export const ForgotPasswordForm: React.FC = () => {
 
   return (
     <form
-      className="flex min-h-[480px] flex-col gap-4 text-xl leading-5"
+      className="mx-auto flex min-h-[480px] max-w-[350px] flex-col gap-4 text-xl leading-5"
       onSubmit={(e) => onSubmit(e)}
     >
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">

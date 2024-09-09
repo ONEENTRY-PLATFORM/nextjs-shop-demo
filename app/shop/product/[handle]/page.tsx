@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 
 import { getProductById } from '@/app/api/serverSideProps';
 import Product from '@/components/layout/product/ProductSingle';

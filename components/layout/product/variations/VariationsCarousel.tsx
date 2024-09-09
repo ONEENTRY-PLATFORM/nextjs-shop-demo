@@ -1,4 +1,3 @@
-/* eslint-disable tailwindcss/no-custom-classname */
 import { variationsItems } from '@/components/data';
 
 import CarouselItem from './CarouselItem';
@@ -6,18 +5,18 @@ import NavigationButton from './NavigationButton';
 
 const VariationsCarousel: React.FC = () => {
   return (
-    <nav className="flex w-full items-center justify-center self-stretch">
-      <div className="flex gap-1.5 self-stretch">
-        {variationsItems.map((item, idx) => (
+    <nav className="flex w-full px-10">
+      <div className="flex w-full items-center justify-center gap-1 self-stretch">
+        {variationsItems?.map((item, idx) => (
           <CarouselItem key={idx} title={item.title} imageSrc={item.imageSrc} />
         ))}
-        <div>
-          <div className="flicking-arrow-prev is-outside">
-            <NavigationButton direction="left" />
-          </div>
-          <div className="flicking-arrow-next is-outside">
-            <NavigationButton direction="right" />
-          </div>
+      </div>
+      <div className="absolute left-0 top-[calc(_50%_-_20px)] w-full">
+        <div className="absolute left-0">
+          <NavigationButton direction="left" />
+        </div>
+        <div className="absolute right-0">
+          <NavigationButton direction="right" />
         </div>
       </div>
     </nav>

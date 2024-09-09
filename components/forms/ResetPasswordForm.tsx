@@ -12,7 +12,7 @@ const ResetPasswordForm: React.FC = () => {
   return (
     <form
       name="resetPasswordForm"
-      className="flex min-h-full flex-col gap-4 text-xl leading-5"
+      className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
       onSubmit={onResetSubmit}
     >
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">

@@ -72,7 +72,7 @@ const VerificationForm: React.FC = () => {
 
   return (
     <form
-      className="flex min-h-full flex-col gap-4 text-xl leading-5"
+      className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
       onSubmit={(e) => onSubmit(e)}
     >
       <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
@@ -90,12 +90,14 @@ const VerificationForm: React.FC = () => {
           onChange={setOtp}
           numInputs={6}
           renderInput={(props) => <input {...props} />}
-          containerStyle={'flex justify-between gap-2 max-md:gap-2'}
+          containerStyle={
+            'grid max-w-full grid-cols-6 justify-between gap-2 max-md:gap-2'
+          }
           inputStyle={
-            'relative mx-auto box-border flex h-[70px] min-w-[40px] shrink-0 flex-col rounded border border-solid border-neutral-100 bg-neutral-100 p-2.5 text-center text-2xl font-medium text-neutral-600 max-md:w-[40px]'
+            'relative box-border flex h-[70px] min-w-[14%] flex-col rounded border border-solid border-neutral-100 bg-neutral-100 p-2.5 text-center text-2xl font-medium text-neutral-600'
           }
         />
-        <div className="-mt-px self-end text-xs text-orange-500 max-md:mr-2.5">
+        <div className="self-end text-xs text-orange-500 max-md:mr-2.5">
           <span className="text-gray-400">Did not receive the OTP? </span>
           <button
             className="font-bold text-orange-500"

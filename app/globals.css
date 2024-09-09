@@ -29,6 +29,7 @@ body {
 input:focus-visible {
   outline: none !important;
   border-color: #f97316;
+  color: #1e293b;
 }
 
 @layer utilities {

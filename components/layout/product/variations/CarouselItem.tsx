@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { useState } from 'react';
 
 interface VariationProps {
   title: string;
@@ -6,8 +9,21 @@ interface VariationProps {
 }
 
 const CarouselItem: React.FC<VariationProps> = ({ title, imageSrc }) => {
+  const [state, setState] = useState(false);
+  const onSelect = () => {
+    console.log('click');
+    setState(true);
+  };
+
   return (
-    <div className="relative box-border flex w-20 shrink-0 flex-col">
+    <button
+      onClick={onSelect}
+      className={
+        'relative box-border flex w-1/4 shrink-0 flex-col rounded-lg ' + state
+          ? 'border border-solid border-slate-500'
+          : ''
+      }
+    >
       <div className="flex max-w-[80px] flex-col gap-1 overflow-hidden whitespace-nowrap text-center text-sm text-slate-300">
         <div className="h-[80px] w-full bg-neutral-100">
           <Image
@@ -20,7 +36,7 @@ const CarouselItem: React.FC<VariationProps> = ({ title, imageSrc }) => {
         </div>
         <h3 className="w-full text-center leading-4">{title}</h3>
       </div>
-    </div>
+    </button>
   );
 };
 

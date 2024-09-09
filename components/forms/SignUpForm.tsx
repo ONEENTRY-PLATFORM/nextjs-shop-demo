@@ -113,7 +113,7 @@ const SignUpForm: React.FC = () => {
   return (
     <form
       onSubmit={(e) => onSignUp(e)}
-      className="flex min-h-full flex-col gap-4 text-xl leading-5"
+      className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
     >
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">
         <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
@@ -123,7 +123,7 @@ const SignUpForm: React.FC = () => {
           Sign in or create account to quickly manage order
         </p>
       </div>
-      <div className="relative mb-auto box-border flex shrink-0 flex-col gap-4">
+      <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
         {data?.attributes.map((field: IAttributes, index: React.Key) => {
           if (field.marker !== 'email_notifications') {
             return <FormInput key={index} {...field} />;
