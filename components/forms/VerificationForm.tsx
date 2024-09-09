@@ -109,7 +109,7 @@ const VerificationForm: React.FC = () => {
         </div>
       </div>
 
-      <FormSubmitButton title="Verify now" class="" icon="" isLoading={state} />
+      <FormSubmitButton title="Verify now" isLoading={state} />
     </form>
   );
 };

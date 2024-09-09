@@ -4,8 +4,6 @@ import Spinner from '@/components/shared/Spinner';
 
 interface FormSubmitButtonProps {
   title: string;
-  icon: string;
-  class: string;
   isLoading: boolean;
 }
 

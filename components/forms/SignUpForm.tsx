@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import React, { useContext, useState } from 'react';
@@ -96,6 +95,7 @@ const SignUpForm: React.FC = () => {
               password: fields.password_reg.value,
             });
             authenticate();
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (e: any) {
             console.log(e);
           }
@@ -103,6 +103,7 @@ const SignUpForm: React.FC = () => {
           setOpen(true);
           setComponent('VerificationForm');
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         console.log(e);
       }
@@ -130,7 +131,7 @@ const SignUpForm: React.FC = () => {
           }
         })}
       </div>
-      <SubmitButton title="SIGN UP" isLoading={_isLoading} class="" icon="" />
+      <SubmitButton title="SIGN UP" isLoading={_isLoading && isLoading} />
     </form>
   );
 };

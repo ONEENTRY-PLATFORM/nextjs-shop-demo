@@ -272,7 +272,7 @@ const PaymentForm: React.FC = () => {
         </div>
       </div>
 
-      <FormSubmitButton title="Apply" isLoading={false} class="" icon="CH" />
+      <FormSubmitButton title="Apply" isLoading={false} />
     </form>
   );
 };

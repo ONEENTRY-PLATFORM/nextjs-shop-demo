@@ -39,7 +39,7 @@ export const ForgotPasswordForm: React.FC = () => {
         })}
       </div>
 
-      <FormSubmitButton title="SEND" isLoading={isLoading} class="" icon="" />
+      <FormSubmitButton title="SEND" isLoading={isLoading} />
     </form>
   );
 };

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { Key } from 'react';
 import React, { useContext, useState } from 'react';
@@ -13,7 +12,6 @@ import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-// import { useAppSelector } from '@/app/store/hooks';
 import { socialProvidersButtons } from '../data';
 import Spinner from '../shared/Spinner';
 import CreateAccountButton from './inputs/CreateAccountButton';
@@ -24,7 +22,6 @@ import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInForm: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isAuth } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
@@ -60,19 +57,14 @@ const SignInForm: React.FC = () => {
       }
       setOpen(false);
       authenticate();
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e: unknown) {
-      // console.log(e);
+      console.log(e);
     }
   };
 
   const formFields = data?.attributes
     .slice()
     .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
-
-  // if (!isAuth) {
-  //   return;
-  // }
 
   return (
     <form
@@ -83,6 +75,7 @@ const SignInForm: React.FC = () => {
         <h2 className="max-w-full text-xl font-bold text-neutral-600">
           Sign in
         </h2>
+
         <div className="max-w-full text-xs text-gray-400">
           <button
             onClick={() => {
@@ -143,7 +136,7 @@ const SignInForm: React.FC = () => {
           />
         ))}
       </div>
-      <CreateAccountButton title="Create account" icon={''} class={''} />
+      <CreateAccountButton title="Create account" />
     </form>
   );
 };

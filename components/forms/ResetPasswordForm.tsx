@@ -39,12 +39,7 @@ const ResetPasswordForm: React.FC = () => {
         })}
       </div>
 
-      <FormSubmitButton
-        title="CHANGE PASSWORD"
-        isLoading={false}
-        class=""
-        icon=""
-      />
+      <FormSubmitButton title="CHANGE PASSWORD" isLoading={false} />
     </form>
   );
 };

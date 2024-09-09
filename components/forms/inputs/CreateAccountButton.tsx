@@ -6,8 +6,6 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 interface CreateAccountButtonProps {
   title: string;
-  icon: string;
-  class: string;
 }
 
 const CreateAccountButton: React.FC<CreateAccountButtonProps> = ({ title }) => {

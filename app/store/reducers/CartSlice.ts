@@ -68,7 +68,7 @@ export const cartSlice = createSlice({
       state.products[index] = {
         ...state.products[index],
         selected: state.products[index].selected,
-        quantity: qty > units ? units : qty,
+        quantity: qty > units ? Number(units) : qty,
       };
     },
     decreaseProductQty(
@@ -82,7 +82,7 @@ export const cartSlice = createSlice({
       state.products[index] = {
         ...state.products[index],
         selected: state.products[index].selected,
-        quantity: qty < 0 ? 0 : qty,
+        quantity: qty <= 0 ? 1 : qty,
       };
     },
     setProductQty(
@@ -97,7 +97,7 @@ export const cartSlice = createSlice({
       state.products[index] = {
         ...state.products[index],
         selected: state.products[index].selected,
-        quantity: qty < 0 ? 0 : qty > units ? units : qty,
+        quantity: qty <= 0 ? 0 : qty > units ? units : qty,
       };
     },
     removeProduct(state, action: PayloadAction<number>) {
