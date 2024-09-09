@@ -11,10 +11,11 @@ const NavigationButton: React.FC<NavigationButtonProps> = ({
   direction,
   action,
 }) => {
-  const altText = `Navigate ${direction}`;
+  const altText = `${direction}`;
 
   return (
     <button
+      title={altText}
       type="button"
       className={
         'group flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white p-2'

@@ -7,6 +7,7 @@ import { variationsItems } from '@/components/data';
 import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const VariationsCarousel: React.FC<{ items: [] }> = ({ items }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
