@@ -327,7 +327,7 @@ export const variationsItems = [
   },
   {
     title: 'Gray',
-    imageSrc: '/images/catalog-img-4.svg',
+    imageSrc: '/images/catalog-img-5.svg',
   },
 ];
 

@@ -24,12 +24,7 @@ const ProductsGroup: React.FC<{
             key={product.id}
             className="relative box-border flex w-[32.5%] shrink-0 flex-col max-md:w-full"
           >
-            <GroupCard
-              product={product}
-              title={product.localizeInfos.title}
-              currentPrice={product.price}
-              originalPrice={product.price}
-            />
+            <GroupCard product={product} />
           </div>
         ))}
       </div>

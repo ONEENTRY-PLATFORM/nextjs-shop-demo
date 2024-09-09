@@ -12,7 +12,7 @@ import ViewAllButton from './ViewAllButton';
 const ReviewsSection: React.FC = () => {
   const [state, setState] = useState(false);
   return (
-    <div className="mb-16 flex justify-between max-md:flex-wrap">
+    <div className="flex justify-between max-md:flex-wrap">
       <div className="flex flex-col">
         <RatingButton state={state} setState={setState} {...productRating} />
         {state && <ReviewsList />}
