@@ -13,7 +13,7 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
   const productImage = attributeValues.pic.value;
 
   return (
-    <div className="relative flex w-full flex-col items-center rounded-[20px] bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg">
+    <div className="relative flex size-full flex-col items-center rounded-[20px] bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg">
       <div className="z-10 flex justify-between gap-5 self-stretch">
         {[attributeValues.stickers].map(
           (

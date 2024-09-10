@@ -45,9 +45,7 @@ export const AuthProvider = ({ children }: Props) => {
       setIsAuth(false);
       return;
     }
-
     reDefine(refresh, activeLanguage);
-
     await checkToken();
   };
 

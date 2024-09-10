@@ -2,7 +2,8 @@ import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { Key } from 'react';
 import React from 'react';
 
-import { useGetFormByMarkerQuery } from '@/app/api';
+import { api, useGetFormByMarkerQuery } from '@/app/api';
+import { useAppSelector } from '@/app/store/hooks';
 
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
@@ -10,9 +11,32 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 export const ForgotPasswordForm: React.FC = () => {
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const fields = useAppSelector(
+    (state) => state.formFieldsReducer.fields,
+  ) as object as {
+    email_reg: {
+      value: string;
+      valid: boolean;
+    };
+  };
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // !!!
+    try {
+      await api.AuthProvider.generateCode(
+        'email',
+        fields.email_reg.value,
+        'generate_code',
+      );
+      // navigateAuth('activate_user', {
+      //   email: value,
+      //   event: 'reset',
+      //   method: 'email',
+      // });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      console.log(e);
+    }
   };
 
   return (

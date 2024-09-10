@@ -13,6 +13,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 import { socialProvidersButtons } from '../data';
+import Loader from '../shared/Loader';
 import Spinner from '../shared/Spinner';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import ForgotPasswordButton from './inputs/ForgotPasswordButton';
@@ -26,8 +27,9 @@ const SignInForm: React.FC = () => {
   const { setOpen } = useContext(OpenDrawerContext);
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
   const [tab, setTab] = useState('email');
+  const [loading, setLoading] = useState(false);
 
-  const fields = useAppSelector(
+  const { email_reg, password_reg } = useAppSelector(
     (state) => state.formFieldsReducer.fields,
   ) as object as {
     email_reg: {
@@ -40,24 +42,27 @@ const SignInForm: React.FC = () => {
 
   const onSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!fields) {
+    if (!email_reg || !password_reg) {
       return;
     }
-    const login = fields.email_reg?.value;
-    const password = fields.password_reg?.value;
+    const login = email_reg.value;
+    const password = password_reg.value;
 
     try {
+      setLoading(true);
       const result = await logInUser({
         method: 'email',
         login: login,
         password: password,
       });
+      setLoading(false);
       if (result.error) {
         throw new Error(result?.error);
       }
       setOpen(false);
       authenticate();
     } catch (e: unknown) {
+      setLoading(false);
       console.log(e);
     }
   };
@@ -115,7 +120,7 @@ const SignInForm: React.FC = () => {
         type="submit"
         className="relative mt-auto flex w-[282px] max-w-full items-center justify-center self-center rounded-[30px] border border-none border-[black] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
       >
-        {isLoading ? <Spinner /> : 'Sign in'}
+        {isLoading || loading ? <Spinner /> : 'Sign in'}
       </button>
 
       <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm max-md:mt-10">

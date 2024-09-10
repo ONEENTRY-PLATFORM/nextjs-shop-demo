@@ -13,6 +13,7 @@ export default async function SidebarMenu() {
     marker: 'side_web',
     langCode: 'en_US',
   });
+  console.log(menu);
 
   if (isError || !menu) {
     return <SidebarMenuLoader />;
