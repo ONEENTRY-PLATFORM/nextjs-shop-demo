@@ -3,11 +3,7 @@ import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { Key } from 'react';
 import React, { useContext, useState } from 'react';
 
-import {
-  logInUser,
-  // useGetAuthProvidersQuery,
-  useGetFormByMarkerQuery,
-} from '@/app/api';
+import { logInUser, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';

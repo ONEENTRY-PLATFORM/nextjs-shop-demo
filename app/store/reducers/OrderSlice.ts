@@ -19,6 +19,7 @@ type InitialStateType = {
     identifier: string;
   }>;
 };
+
 const initialState: InitialStateType = {
   order: undefined,
 };

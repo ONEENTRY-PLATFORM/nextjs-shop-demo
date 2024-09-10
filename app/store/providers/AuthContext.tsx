@@ -36,7 +36,8 @@ export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<IUserEntity | undefined>();
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
-  const [trigger, { isError }] = useLazyGetMeQuery({ pollingInterval: 5000 });
+  const [trigger, { isError }] =
+    useLazyGetMeQuery(/* { pollingInterval: 5000 } */);
   const { activeLanguage } = useContext(LanguageContext);
 
   const onInit = async () => {
@@ -52,10 +53,10 @@ export const AuthProvider = ({ children }: Props) => {
   const checkToken = async () => {
     trigger({})
       .then(async (res) => {
-        // if (res.error && !res.isLoading) {
-        //   localStorage.setItem('refreshToken', '');
-        //   return setIsAuth(false);
-        // }
+        if (res.error && !res.isLoading) {
+          localStorage.setItem('refreshToken', '');
+          return setIsAuth(false);
+        }
         setUser(res.data);
         setIsAuth(true);
       })
@@ -76,6 +77,7 @@ export const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     if (isError) {
       setIsAuth(false);
+      localStorage.setItem('refreshToken', '');
     }
   }, [isError]);
 
@@ -83,10 +85,10 @@ export const AuthProvider = ({ children }: Props) => {
     if (isAuth) {
       trigger({})
         .then((res) => {
-          // if (res.error && !res.isLoading) {
-          //   localStorage.setItem('refreshToken', '');
-          //   return setIsAuth(false);
-          // }
+          if (res.error && !res.isLoading) {
+            localStorage.setItem('refreshToken', '');
+            return setIsAuth(false);
+          }
           setUser(res.data);
         })
         .catch(() => {

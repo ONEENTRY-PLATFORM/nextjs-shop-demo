@@ -8,8 +8,6 @@ import { socket } from '../utils/socket';
 
 // This function used to update user JWT token
 const saveFunction = async (res: string) => {
-  console.log(res);
-
   localStorage.setItem('refreshToken', res);
 };
 
