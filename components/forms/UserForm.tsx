@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-// import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { FormDataType } from 'oneentry/dist/formsData/formsDataInterfaces';
 import React, { useContext } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
-// import Loader from '../shared/Loader';
+import Loader from '../shared/Loader';
 import FormInput from './inputs/FormInput';
 
 export type InputValue = {
@@ -20,7 +20,7 @@ export type InputValue = {
 };
 
 const UserForm: React.FC = () => {
-  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
+  const { data, isLoading, error } = useGetFormByMarkerQuery({ marker: 'reg' });
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -42,8 +42,6 @@ const UserForm: React.FC = () => {
       value: string;
     };
   };
-
-  const { authenticate } = useContext(AuthContext);
   const { isAuth } = useContext(AuthContext);
 
   const { refreshUser, user } = useContext(AuthContext);
@@ -65,7 +63,6 @@ const UserForm: React.FC = () => {
         .filter(function (el: null) {
           return el !== null;
         });
-
       if (user?.formIdentifier) {
         await api.Users.updateUser({
           formIdentifier: user.formIdentifier,
@@ -83,7 +80,6 @@ const UserForm: React.FC = () => {
           },
         });
       }
-
       refreshUser();
       // setEditing(!editing);
     } catch (e: unknown) {
@@ -93,9 +89,14 @@ const UserForm: React.FC = () => {
     }
   };
 
-  if (!isAuth) {
-    return;
+  if (isLoading || error) {
+    return <Loader />;
   }
+
+  if (!isAuth) {
+    return 'Auth error';
+  }
+
   return (
     <form
       className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
@@ -105,7 +106,7 @@ const UserForm: React.FC = () => {
         {data?.attributes.map((field: IAttributes, index: React.Key) => {
           const fieldData = user?.formData.find(
             (item) => item.marker === field.marker,
-          );
+          ) as FormDataType[];
           if (field.marker !== 'email_notifications') {
             return <FormInput key={index} {...field} {...fieldData} />;
           }

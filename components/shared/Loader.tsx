@@ -3,6 +3,8 @@ import React from 'react';
 
 import SearchIcon from '@/components/icons/search';
 
+import Spinner from './Spinner';
+
 interface LoaderProps {
   data?: Record<string, unknown>;
   limit?: number;
@@ -10,8 +12,8 @@ interface LoaderProps {
 
 const Loader: React.FC<LoaderProps> = ({ data = {} }) => {
   return (
-    <div className="relative aspect-square size-full max-h-[550px] overflow-hidden">
-      ...Loading
+    <div className="relative aspect-square size-full max-h-[250px] overflow-hidden">
+      <Spinner />
     </div>
   );
 };

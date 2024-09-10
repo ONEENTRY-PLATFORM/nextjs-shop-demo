@@ -9,7 +9,7 @@ import Loader from '@/components/shared/Loader';
 import PaymentMethod from './PaymentMethod';
 
 const PaymentPage = () => {
-  const { data } = useGetAccountsQuery({});
+  const { data, error } = useGetAccountsQuery({});
   const [selected, setSelected] = useState<number | undefined>();
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,
@@ -29,6 +29,10 @@ const PaymentPage = () => {
 
     return [];
   }, [data, paymentMethods]);
+
+  if (error) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex max-w-[730px] flex-col gap-5 pb-5 max-md:max-w-full">

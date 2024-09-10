@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type { IOrdersByMarkersEntity } from 'oneentry/dist/orders/ordersInterfaces';
@@ -10,9 +9,12 @@ import Loader, { OrdersTableLoader } from '@/components/shared/Loader';
 import Order from './OrderRow';
 
 const OrdersPage = () => {
-  const { data, isLoading, refetch } = useGetUserOrdersQuery({
+  const { data, isLoading } = useGetUserOrdersQuery({
     marker: 'order',
   });
+  if (!data) {
+    return <Loader />;
+  }
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">

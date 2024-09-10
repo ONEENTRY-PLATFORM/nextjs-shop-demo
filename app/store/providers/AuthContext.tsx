@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
@@ -35,8 +36,7 @@ export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<IUserEntity | undefined>();
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
-  const [trigger, { isError }] =
-    useLazyGetMeQuery(/**{ pollingInterval: 5000 } */);
+  const [trigger, { isError }] = useLazyGetMeQuery({ pollingInterval: 5000 });
   const { activeLanguage } = useContext(LanguageContext);
 
   const onInit = async () => {
@@ -84,19 +84,13 @@ export const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     if (isAuth) {
       trigger({})
-        // .then(
-        //   (res: {
-        //     error: any;
-        //     isLoading: boolean;
-        //     data: SetStateAction<IUserEntity | undefined>;
-        //   }) => {
-        //     if (res.error && !res.isLoading) {
-        //       localStorage.setItem('refreshToken', '');
-        //       return setIsAuth(false);
-        //     }
-        //     setUser(res.data);
-        //   },
-        // )
+        .then((res) => {
+          if (res.error && !res.isLoading) {
+            localStorage.setItem('refreshToken', '');
+            return setIsAuth(false);
+          }
+          setUser(res.data);
+        })
         .catch(() => {
           localStorage.setItem('refreshToken', '');
           setIsAuth(false);

@@ -11,7 +11,6 @@ const GroupCard: React.FC<{
   const images = product.attributeValues?.more_pic.value;
   const pic1 = images[0]?.downloadLink;
   const pic2 = images[1]?.downloadLink;
-  // console.log(product);
 
   return (
     <div className="flex flex-row justify-between rounded-xl bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg">
