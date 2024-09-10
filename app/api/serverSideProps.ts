@@ -273,9 +273,7 @@ export async function getPageByUrl(
   }
 }
 
-/* MenusApi */
-
-// getMenuByMarker - user_web, main_web
+// getMenuByMarker
 export async function getMenuByMarker({
   marker,
   langCode,
@@ -344,25 +342,6 @@ export async function getBlockByMarker({
   try {
     const block = await api.Blocks.getBlockByMarker(marker, langCode);
     return { isError: false, block: block };
-  } catch (e) {
-    return { isError: true, err: e };
-  }
-}
-
-// getBlockByMarker
-export async function getOrderByMarkerAndId({
-  marker,
-  id,
-  langCode,
-}: {
-  marker: string;
-  id: number;
-  langCode: string;
-}) {
-  try {
-    const order = await api.Orders.getOrderByMarkerAndId(marker, id, langCode);
-    // const block = await api.Blocks.getBlockByMarker(marker, langCode);
-    return { isError: false, order: order };
   } catch (e) {
     return { isError: true, err: e };
   }
