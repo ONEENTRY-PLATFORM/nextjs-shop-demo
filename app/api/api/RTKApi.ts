@@ -105,10 +105,16 @@ export const RTKApi = createApi({
         }
       },
     }),
-    getSingleOrder: build.query<undefined, { id: string }>({
-      queryFn: async () => {
+    // eslint-disable-next-line prettier/prettier
+    getSingleOrder: build.query<IOrdersByMarkersEntity, { marker: string; id: number; activeLang: string }>({
+      queryFn: async ({ id, marker, activeLang }) => {
         try {
-          return { data: undefined };
+          const result = await api.Orders.getOrderByMarkerAndId(
+            marker,
+            id,
+            activeLang,
+          );
+          return { data: result };
         } catch (e: any) {
           return { error: e.message };
         }

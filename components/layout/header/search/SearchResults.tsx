@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC, Key } from 'react';
+import type { Dispatch, FC, Key } from 'react';
 import React from 'react';
 
 import { useSearchProducts } from '@/app/api/hooks/useSearchProducts';
@@ -11,8 +11,7 @@ import Spinner from '@/components/shared/Spinner';
 interface SearchResultsProps {
   searchValue: string | undefined;
   state: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  setState: Function;
+  setState: Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SearchResults: FC<SearchResultsProps> = ({

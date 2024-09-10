@@ -349,10 +349,24 @@ export async function getBlockByMarker({
   }
 }
 
-// api.Products.getProductsByPageId
-// api.Products.getProductsEmptyPage(langCode?: string, userQuery?: IProductsQuery): Promise<Array<IProductsEntity>>;
-
-// api.Products.getProductBlockById(id: number)
+// getBlockByMarker
+export async function getOrderByMarkerAndId({
+  marker,
+  id,
+  langCode,
+}: {
+  marker: string;
+  id: number;
+  langCode: string;
+}) {
+  try {
+    const order = await api.Orders.getOrderByMarkerAndId(marker, id, langCode);
+    // const block = await api.Blocks.getBlockByMarker(marker, langCode);
+    return { isError: false, order: order };
+  } catch (e) {
+    return { isError: true, err: e };
+  }
+}
 
 // interface IDefineApi {
 //   Admins: AdminsApi;

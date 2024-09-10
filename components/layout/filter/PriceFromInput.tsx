@@ -1,9 +1,9 @@
+import type { Dispatch } from 'react';
 import React, { memo } from 'react';
 
 const PriceFromInput: React.FC<{
   price: number;
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-  setPrice: Function;
+  setPrice: Dispatch<React.SetStateAction<number>>;
 }> = ({ price, setPrice }) => {
   return (
     <input

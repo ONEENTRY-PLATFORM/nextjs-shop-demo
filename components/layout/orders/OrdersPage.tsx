@@ -14,8 +14,6 @@ const OrdersPage = () => {
     marker: 'order',
   });
 
-  console.log(data);
-
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
       <div className="w-full">
