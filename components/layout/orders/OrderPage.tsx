@@ -4,15 +4,16 @@
 import type { IOrdersByMarkersEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import type { Key } from 'react';
 
-import { useGetUserOrdersQuery } from '@/app/api';
-import Loader, { OrdersTableLoader } from '@/components/shared/Loader';
-
-import Order from './OrderRow';
+import { useGetSingleOrderQuery } from '@/app/api';
+import Loader from '@/components/shared/Loader';
 
 const OrderPage = () => {
-  const { data, isLoading, refetch } = useGetUserOrdersQuery({
+  const { data, isLoading, refetch } = useGetSingleOrderQuery({
     marker: 'order',
+    id: 135,
+    activeLang: 'en_US',
   });
+  console.log(data);
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full"></div>

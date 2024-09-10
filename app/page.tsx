@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api/serverSideProps';
-import CatalogGrid from '@/components/layout/catalog/CatalogGrid';
+import CatalogGrid from '@/components/layout/categories/CatalogGrid';
 import Loader from '@/components/shared/Loader';
 
 // export const revalidate = 10;
