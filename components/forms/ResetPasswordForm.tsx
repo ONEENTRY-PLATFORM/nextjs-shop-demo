@@ -1,5 +1,6 @@
 import React from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 
@@ -8,6 +9,7 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const ResetPasswordForm: React.FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { email_reg, password_reg, password_confirm } = useAppSelector(
     (state) => state.formFieldsReducer.fields,
   ) as object as {

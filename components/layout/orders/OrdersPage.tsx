@@ -1,9 +1,10 @@
 'use client';
 
 import type { IOrdersByMarkersEntity } from 'oneentry/dist/orders/ordersInterfaces';
-import type { Key } from 'react';
+import { type Key, useContext } from 'react';
 
 import { useGetUserOrdersQuery } from '@/app/api';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 import Loader, { OrdersTableLoader } from '@/components/shared/Loader';
 
 import Order from './OrderRow';
@@ -12,8 +13,14 @@ const OrdersPage = () => {
   const { data, isLoading } = useGetUserOrdersQuery({
     marker: 'order',
   });
+  const { isAuth } = useContext(AuthContext);
+
   if (!data) {
     return <Loader />;
+  }
+
+  if (!isAuth) {
+    return 'Auth error';
   }
 
   return (

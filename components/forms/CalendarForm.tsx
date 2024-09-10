@@ -3,18 +3,23 @@ import '@/app/styles/calendar.css';
 import React, { useContext, useState } from 'react';
 import Calendar from 'react-calendar';
 
-import { useAppDispatch } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
-import { setDeliveryData } from '@/app/store/reducers/CartSlice';
+import {
+  selectDeliveryData,
+  setDeliveryData,
+} from '@/app/store/reducers/CartSlice';
 
 import { timeSlotsData } from '../data';
 import TimeSlots from './calendar/TimeSlots';
 
 const CalendarComponent: React.FC = () => {
-  const { setOpen } = useContext(OpenDrawerContext);
   const dispatch = useAppDispatch();
-  const [date, setDate] = useState<Date>(new Date());
-  const [time, setTime] = useState<string>('');
+  const { setOpen } = useContext(OpenDrawerContext);
+  const deliveryData = useAppSelector(selectDeliveryData);
+
+  const [date, setDate] = useState<Date>(new Date(deliveryData.date));
+  const [time, setTime] = useState<string>(deliveryData?.time || '');
 
   const onApply = () => {
     dispatch(setDeliveryData({ date: date.getTime(), time: time }));
@@ -28,7 +33,7 @@ const CalendarComponent: React.FC = () => {
         onChange={(value) => {
           setDate(value as Date);
         }}
-        value={date}
+        value={new Date(date)}
       />
       <TimeSlots
         timeSlots={timeSlotsData}

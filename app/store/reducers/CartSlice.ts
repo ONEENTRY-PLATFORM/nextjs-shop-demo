@@ -157,6 +157,16 @@ export const selectCartItems = (state: {
   cartReducer: { products: IProductsEntity[] };
 }) => state.cartReducer.products;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const selectDeliveryData = (state: {
+  cartReducer: {
+    deliveryData: {
+      date: number;
+      time: string;
+    };
+  };
+}) => state.cartReducer.deliveryData;
+
 export const selectCartItemWithIdLength = (
   state: {
     cartReducer: {

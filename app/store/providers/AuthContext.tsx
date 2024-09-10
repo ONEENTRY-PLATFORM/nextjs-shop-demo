@@ -52,10 +52,10 @@ export const AuthProvider = ({ children }: Props) => {
   const checkToken = async () => {
     trigger({})
       .then(async (res) => {
-        if (res.error && !res.isLoading) {
-          localStorage.setItem('refreshToken', '');
-          return setIsAuth(false);
-        }
+        // if (res.error && !res.isLoading) {
+        //   localStorage.setItem('refreshToken', '');
+        //   return setIsAuth(false);
+        // }
         setUser(res.data);
         setIsAuth(true);
       })
@@ -83,10 +83,10 @@ export const AuthProvider = ({ children }: Props) => {
     if (isAuth) {
       trigger({})
         .then((res) => {
-          if (res.error && !res.isLoading) {
-            localStorage.setItem('refreshToken', '');
-            return setIsAuth(false);
-          }
+          // if (res.error && !res.isLoading) {
+          //   localStorage.setItem('refreshToken', '');
+          //   return setIsAuth(false);
+          // }
           setUser(res.data);
         })
         .catch(() => {

@@ -1,15 +1,17 @@
 'use client';
 
-import { Suspense, useMemo, useState } from 'react';
+import { Suspense, useContext, useMemo, useState } from 'react';
 
 import { useGetAccountsQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 import Loader from '@/components/shared/Loader';
 
 import PaymentMethod from './PaymentMethod';
 
 const PaymentPage = () => {
   const { data, error } = useGetAccountsQuery({});
+  const { isAuth } = useContext(AuthContext);
   const [selected, setSelected] = useState<number | undefined>();
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,
@@ -32,6 +34,10 @@ const PaymentPage = () => {
 
   if (error) {
     return <Loader />;
+  }
+
+  if (!isAuth) {
+    return 'Auth error';
   }
 
   return (

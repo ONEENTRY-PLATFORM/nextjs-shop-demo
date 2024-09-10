@@ -30,7 +30,6 @@ const CartPage = () => {
     marker: 'order',
   });
 
-  // const st = useAppSelector((state) => state.orderReducer);
   const total = useAppSelector(selectCartTotal);
 
   const productsInCart = useAppSelector(selectCartItems) as Array<

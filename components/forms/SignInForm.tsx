@@ -71,6 +71,10 @@ const SignInForm: React.FC = () => {
     .slice()
     .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
     <form
       className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
@@ -118,7 +122,7 @@ const SignInForm: React.FC = () => {
 
       <button
         type="submit"
-        className="relative mt-auto flex w-[282px] max-w-full items-center justify-center self-center rounded-[30px] border border-none border-[black] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
+        className="relative mt-auto flex w-full max-w-[280px] items-center justify-center self-center rounded-[30px] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
       >
         {isLoading || loading ? <Spinner /> : 'Sign in'}
       </button>
