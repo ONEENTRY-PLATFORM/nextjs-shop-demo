@@ -1,25 +1,23 @@
 import Link from 'next/link';
+import type {
+  IMenusEntity,
+  IMenusPages,
+} from 'oneentry/dist/menus/menusInterfaces';
 
-interface LinkItem {
-  text: string;
-  href: string;
-}
+const Menu: React.FC<{
+  menu: IMenusEntity;
+}> = ({ menu }) => {
+  const pages = menu.pages as Array<IMenusPages>;
 
-interface LinkItemsProps {
-  title: string;
-  items: LinkItem[];
-}
-
-const Menu: React.FC<LinkItemsProps> = ({ title, items }) => {
   return (
     <div className="flex w-[21%] flex-col max-md:w-full">
       <nav className="flex flex-col text-neutral-600">
-        <h2 className="mb-5 text-xl font-bold">{title}</h2>
+        <h2 className="mb-5 text-xl font-bold">{menu.localizeInfos.title}</h2>
         <ul className="flex flex-col gap-1.5 text-sm font-semibold">
-          {items.map((link, index) => (
+          {pages.map((page, index) => (
             <li key={index} className="relative box-border">
-              <Link className="hover:text-red-500" href={link.href}>
-                {link.text}
+              <Link className="hover:text-red-500" href={page.pageUrl}>
+                {page.localizeInfos.menuTitle}
               </Link>
             </li>
           ))}

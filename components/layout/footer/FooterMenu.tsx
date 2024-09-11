@@ -1,18 +1,22 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { infoLinks, quickLinks } from '@/components/data';
+import { getMenuByMarker } from '@/app/api/serverSideProps';
 
+// import { infoLinks, quickLinks } from '@/components/data';
 import ContactInfo from './ContactInfo';
 import FooterMenu from './Menu';
 
-interface FooterProps {
-  logoSrc: string;
-}
-
-const FooterMenuSection: React.FC<FooterProps> = ({ logoSrc }) => {
-  // quick_links
-  // info_links
+const FooterMenuSection = async () => {
+  const quickLinks = await getMenuByMarker({
+    marker: 'quick_links',
+    langCode: 'en_US',
+  });
+  const infoLinks = await getMenuByMarker({
+    marker: 'information',
+    langCode: 'en_US',
+  });
+  console.log(infoLinks);
 
   return (
     <div className="flex w-full items-center justify-center bg-gray-200 px-5 py-10 max-md:px-5">
@@ -20,7 +24,7 @@ const FooterMenuSection: React.FC<FooterProps> = ({ logoSrc }) => {
         <Link href="/">
           <Image
             loading="lazy"
-            src={logoSrc}
+            src="/images/logo-250x70.svg"
             width={250}
             height={70}
             alt="OneEntry"
@@ -28,8 +32,8 @@ const FooterMenuSection: React.FC<FooterProps> = ({ logoSrc }) => {
           />
         </Link>
         <ContactInfo />
-        <FooterMenu title={'Quick Link'} items={quickLinks} />
-        <FooterMenu title={'Information'} items={infoLinks} />
+        {quickLinks.menu && <FooterMenu menu={quickLinks.menu} />}
+        {infoLinks.menu && <FooterMenu menu={infoLinks.menu} />}
       </div>
     </div>
   );

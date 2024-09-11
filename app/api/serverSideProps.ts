@@ -4,7 +4,7 @@ import type {
   BlockType,
   // IBlockEntity,
 } from 'oneentry/dist/blocks/blocksInterfaces';
-// import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
+import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {
   IFilterParams,
@@ -358,7 +358,11 @@ export async function getMenuByMarker({
 }: {
   marker: string;
   langCode: string;
-}) {
+}): Promise<{
+  menu?: IMenusEntity;
+  isError: boolean;
+  err?: unknown;
+}> {
   try {
     const menu = await api.Menus.getMenusByMarker(marker, langCode);
     return { isError: false, menu: menu };
