@@ -11,6 +11,7 @@ import {
   getPageByUrl,
   getProducts,
   getProductsByUrl,
+  getProductsTotalCount,
 } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
@@ -71,14 +72,11 @@ export default async function CatalogPage({
     filters?: IFilterParams[];
   };
 }) {
+  const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
-  const pageLimit = 11;
-  const totalProducts = await getProductsByUrl({
-    limit: 100,
-    offset: 0,
+  const { totalCount } = await getProductsTotalCount({
     params: { ...params, searchParams: searchParams },
   });
-  const totalProductsCount = totalProducts?.products?.length || 0;
 
   const data = await getProductsByUrl({
     limit: pageLimit,
@@ -96,11 +94,8 @@ export default async function CatalogPage({
       <div className="flex w-full flex-col items-center gap-5 bg-white">
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
-            gridItems={products.filter(
-              (product: IProductsEntity) =>
-                product.attributeSetIdentifier !== 'service_product',
-            )}
-            totalPages={totalProductsCount / pageLimit}
+            gridItems={products}
+            totalPages={(totalCount || 0) / pageLimit}
           />
         </Suspense>
       </div>

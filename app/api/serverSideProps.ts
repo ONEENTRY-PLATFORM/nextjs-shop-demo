@@ -25,6 +25,14 @@ const setSearchParams = (searchParams?: {
     | Array<IFilterParams & { statusMarker?: string }>
     | undefined = [];
 
+  // check if product has SKU or this is service product
+  const newFilter: IFilterParams = {
+    attributeMarker: 'sku',
+    conditionMarker: 'nin',
+    conditionValue: null,
+  };
+  expandedFilters.push(newFilter);
+
   if (searchParams?.['in_stock']) {
     expandedFilters.push({
       statusMarker: 'in_stock',
@@ -38,7 +46,6 @@ const setSearchParams = (searchParams?: {
       attributeMarker: 'color',
       conditionMarker: 'in',
       conditionValue: searchParams.color,
-      pageUrl: ['shop'],
     };
     expandedFilters.push(newFilter);
   }
@@ -100,7 +107,10 @@ export async function getProducts(props: {
           limit: limit,
         },
       );
-      return { isError: false, products: products };
+      return {
+        isError: false,
+        products: products,
+      };
     }
     if (searchValue) {
       const products = await api.Products.searchProduct(searchValue, 'en_US');
@@ -138,7 +148,7 @@ export async function getProductsTotalCount(props: {
       limit: 100,
       offset: 0,
     });
-    const totalProductsCount = products?.length || 0;
+    const totalProductsCount = products.length || 0;
 
     return { isError: false, totalCount: totalProductsCount };
   } catch (err) {

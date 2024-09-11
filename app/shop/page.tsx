@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
@@ -67,8 +68,8 @@ export default async function CatalogPage({
     filters?: IFilterParams[];
   };
 }) {
+  const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
-  const pageLimit = 11;
   const { totalCount } = await getProductsTotalCount({
     params: { ...params, searchParams: searchParams },
   });
@@ -89,7 +90,7 @@ export default async function CatalogPage({
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
             gridItems={products}
-            totalPages={(totalCount || 0) / (pageLimit - 1)}
+            totalPages={(totalCount || 0) / pageLimit}
           />
         </Suspense>
       </div>
