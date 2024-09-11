@@ -4,10 +4,10 @@ import React, { useContext } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
-import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 export const ForgotPasswordForm: React.FC = () => {
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });

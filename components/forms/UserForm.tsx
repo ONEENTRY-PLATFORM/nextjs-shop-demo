@@ -81,9 +81,7 @@ const UserForm: React.FC = () => {
         });
       }
       refreshUser();
-      // setEditing(!editing);
     } catch (e: unknown) {
-      // Alert.alert(e.message);
       console.error(e);
       refreshUser();
     }

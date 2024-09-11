@@ -1,31 +1,54 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 
 import { api, logInUser } from '@/app/api';
-import { useAppSelector } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { addField } from '@/app/store/reducers/FormFieldsSlice';
 
 import FormSubmitButton from './inputs/FormSubmitButton';
-import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 const VerificationForm: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);
-  const [state, setState] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const [otp, setOtp] = useState('');
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
   ) as object as {
     phone_reg: {
+      valid: boolean;
       value: string;
     };
     email_reg: {
+      valid: boolean;
       value: string;
     };
     password_reg: {
+      valid: boolean;
       value: string;
     };
+    otp_code: {
+      valid: boolean;
+      value: number;
+    };
   };
+
+  useEffect(() => {
+    dispatch(
+      addField({
+        otp_code: {
+          valid: true,
+          value: otp,
+        },
+      }),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [otp]);
+
   const { setComponent } = useContext(OpenDrawerContext);
+  const action = 'activate';
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,42 +57,60 @@ const VerificationForm: React.FC = () => {
     }
 
     try {
-      setState(true);
-      const result = await api.AuthProvider.activateUser(
-        'email',
-        fields['email_reg'].value,
-        otp,
-      );
-      if (result) {
-        await logInUser({
-          method: 'email',
-          login: fields['email_reg'].value,
-          password: fields['password_reg'].value,
-        });
-        authenticate();
-        setComponent('ResetPasswordForm');
-        setState(false);
+      setLoading(true);
+      if (action === 'activate') {
+        const result = await api.AuthProvider.activateUser(
+          'email',
+          fields['email_reg'].value,
+          otp,
+        );
+        if (result) {
+          await logInUser({
+            method: 'email',
+            login: fields['email_reg'].value,
+            password: fields['password_reg'].value,
+          });
+          authenticate();
+          setComponent('ResetPasswordForm');
+          setLoading(false);
+        }
+      } else {
+        const res = await api.AuthProvider.checkCode(
+          'email',
+          fields['email_reg'].value,
+          otp,
+        );
+        if (res) {
+          await logInUser({
+            method: 'email',
+            login: fields['email_reg'].value,
+            password: fields['password_reg'].value,
+          });
+          authenticate();
+          setComponent('ResetPasswordForm');
+          setLoading(false);
+        }
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
-      setState(false);
+      setLoading(false);
     }
   };
 
   const onResend = async () => {
     try {
-      setState(true);
+      setLoading(true);
       await api.AuthProvider.generateCode(
         'email',
         fields['email_reg'].value,
         'generate_code',
       );
-      setState(false);
+      setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
-      setState(false);
+      setLoading(false);
     }
   };
 
@@ -112,7 +153,7 @@ const VerificationForm: React.FC = () => {
         </div>
       </div>
 
-      <FormSubmitButton title="Verify now" isLoading={state} />
+      <FormSubmitButton title="Verify now" isLoading={isLoading} />
     </form>
   );
 };

@@ -1,13 +1,12 @@
 import React, { useContext } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { api } from '@/app/api';
+// import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 import { resetPasswordFormFields } from '../data';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
-import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 const ResetPasswordForm: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -27,7 +26,7 @@ const ResetPasswordForm: React.FC = () => {
       valid: boolean;
     };
   };
-  const { setOpen, setComponent } = useContext(OpenDrawerContext);
+  const { setComponent } = useContext(OpenDrawerContext);
 
   const onResetSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
