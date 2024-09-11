@@ -26,12 +26,12 @@ const setSearchParams = (searchParams?: {
     | undefined = [];
 
   // check if product has SKU or this is service product
-  const newFilter: IFilterParams = {
+  const servicesFilter: IFilterParams = {
     attributeMarker: 'sku',
     conditionMarker: 'nin',
     conditionValue: null,
   };
-  expandedFilters.push(newFilter);
+  expandedFilters.push(servicesFilter);
 
   if (searchParams?.['in_stock']) {
     expandedFilters.push({
@@ -78,6 +78,7 @@ export async function getProducts(props: {
   limit: number;
   offset: number;
   params?: {
+    handle?: string;
     searchParams?: {
       search?: string;
       in_stock?: string;
@@ -107,6 +108,15 @@ export async function getProducts(props: {
           limit: limit,
         },
       );
+      if (params?.handle) {
+        return {
+          isError: false,
+          products: products.filter(
+            (product: IProductsEntity) =>
+              product.attributeValues.stickers?.value.value === params.handle,
+          ),
+        };
+      }
       return {
         isError: false,
         products: products,
@@ -125,6 +135,7 @@ export async function getProducts(props: {
 // getProductsTotalCount
 export async function getProductsTotalCount(props: {
   params?: {
+    handle: string;
     searchParams?: {
       search?: string;
       in_stock?: string;
@@ -142,12 +153,35 @@ export async function getProductsTotalCount(props: {
   const expandedFilters = setSearchParams(params?.searchParams);
 
   try {
-    const products = await api.Products.getProducts(expandedFilters, 'en_US', {
-      sortOrder: 'DESC',
-      sortKey: 'id',
-      limit: 100,
-      offset: 0,
-    });
+    const products = params?.handle
+      ? await api.Products.getProductsByPageUrl(
+          params.handle,
+          expandedFilters,
+          'en_US',
+          {
+            sortOrder: 'DESC',
+            sortKey: 'id',
+            offset: 0,
+            limit: 100,
+          },
+        )
+      : await api.Products.getProducts(expandedFilters, 'en_US', {
+          sortOrder: 'DESC',
+          sortKey: 'id',
+          limit: 100,
+          offset: 0,
+        });
+
+    if (params?.handle) {
+      return {
+        isError: false,
+        totalCount:
+          products.filter(
+            (product: IProductsEntity) =>
+              product.attributeValues.stickers?.value.value === params.handle,
+          ).length || 0,
+      };
+    }
     const totalProductsCount = products.length || 0;
 
     return { isError: false, totalCount: totalProductsCount };

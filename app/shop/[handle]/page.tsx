@@ -10,7 +10,11 @@ import { Suspense } from 'react';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import Loader from '@/components/shared/Loader';
 
-import { getPageByUrl, getProducts } from '../../api/serverSideProps';
+import {
+  getPageByUrl,
+  getProducts,
+  getProductsTotalCount,
+} from '../../api/serverSideProps';
 
 export async function generateMetadata({
   params,
@@ -69,23 +73,20 @@ export default async function CatalogPage({
     filters?: IFilterParams[];
   };
 }) {
+  const pageLimit = 30;
   const currentPage = Number(searchParams?.page) || 0;
-  const pageLimit = 11;
-  const totalProducts = await getProducts({
-    limit: 100,
-    offset: 0,
+  const { totalCount } = await getProductsTotalCount({
     params: { ...params, searchParams: searchParams },
   });
-  const totalProductsCount = totalProducts?.products?.length || 0;
 
-  const data = await getProducts({
+  const { isError, products } = await getProducts({
     limit: pageLimit,
     offset: currentPage,
-    params: { searchParams: searchParams },
+    params: { ...params, searchParams: searchParams },
   });
-  console.log(data);
+  console.log(params);
+  console.log({ isError, products });
 
-  const { isError, products } = data;
   if (isError || !products) {
     return notFound();
   }
@@ -99,7 +100,7 @@ export default async function CatalogPage({
               (product: IProductsEntity) =>
                 product.attributeSetIdentifier !== 'service_product',
             )}
-            totalPages={totalProductsCount / (pageLimit - 1)}
+            totalPages={(totalCount || 0) / pageLimit}
           />
         </Suspense>
       </div>

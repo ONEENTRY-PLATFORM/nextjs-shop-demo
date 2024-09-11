@@ -72,19 +72,19 @@ export default async function CatalogPage({
     filters?: IFilterParams[];
   };
 }) {
+  console.log(params.handle);
+
   const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
   const { totalCount } = await getProductsTotalCount({
     params: { ...params, searchParams: searchParams },
   });
-
-  const data = await getProductsByUrl({
+  const { isError, products } = await getProductsByUrl({
     limit: pageLimit,
     offset: currentPage * pageLimit,
     params: { ...params, searchParams: searchParams },
   });
 
-  const { isError, products } = data;
   if (isError || !products) {
     return notFound();
   }

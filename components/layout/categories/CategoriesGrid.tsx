@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { notFound } from 'next/navigation';
+// import { notFound } from 'next/navigation';
 import type { Key } from 'react';
-import { Suspense } from 'react';
 
-import { getAttributeByMarker, getPageByUrl } from '@/app/api/serverSideProps';
-import Loader from '@/components/shared/Loader';
-
+// import { Suspense } from 'react';
+// import { getAttributeByMarker, getPageByUrl } from '@/app/api/serverSideProps';
+// import Loader from '@/components/shared/Loader';
 import CategoryCard from './CategoryCard';
 
 const CategoriesGrid: React.FC<{ categories: [] }> = ({ categories }) => {
