@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
-// import { api } from '@/app/api';
+import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
@@ -9,46 +9,50 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const ResetPasswordForm: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { email_reg, password_reg, password_confirm } = useAppSelector(
-    (state) => state.formFieldsReducer.fields,
-  ) as object as {
-    email_reg: {
-      value: string;
-      valid: boolean;
+  const [isLoading, setLoading] = useState(false);
+  const { email_reg, password_reg, password_confirm, otp_code } =
+    useAppSelector((state) => state.formFieldsReducer.fields) as object as {
+      email_reg: {
+        value: string;
+        valid: boolean;
+      };
+      password_confirm: {
+        value: string;
+        valid: boolean;
+      };
+      password_reg: {
+        value: string;
+        valid: boolean;
+      };
+      otp_code: {
+        value: number;
+        valid: boolean;
+      };
     };
-    password_confirm: {
-      value: string;
-      valid: boolean;
-    };
-    password_reg: {
-      value: string;
-      valid: boolean;
-    };
-  };
-  const { setComponent } = useContext(OpenDrawerContext);
+  const { setComponent, setAction } = useContext(OpenDrawerContext);
 
   const onResetSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setComponent('ForgotPasswordForm');
-
     try {
-      // const result = await api.AuthProvider.changePassword(
-      //   'email',
-      //   email_reg.value,
-      //   2,
-      //   code,
-      //   password_reg.value,
-      //   password_confirm.value,
-      // );
-      // console.log(result);
-      // if (result) {
-      //   // navigateAuth('auth_sign_in', { method: 'email' });
-      // }
+      setLoading(true);
+      const result = await api.AuthProvider.changePassword(
+        'email',
+        email_reg.value,
+        1,
+        otp_code.value.toString(),
+        password_reg.value,
+        password_confirm.value,
+      );
+      if (result) {
+        setComponent('SignInForm');
+        setAction('');
+      }
+      setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
+      setLoading(false);
     }
   };
 
@@ -82,7 +86,7 @@ const ResetPasswordForm: React.FC = () => {
         })}
       </div>
 
-      <FormSubmitButton title="CHANGE PASSWORD" isLoading={false} />
+      <FormSubmitButton title="CHANGE PASSWORD" isLoading={isLoading} />
     </form>
   );
 };

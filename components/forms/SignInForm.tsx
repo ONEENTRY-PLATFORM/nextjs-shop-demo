@@ -117,6 +117,7 @@ const SignInForm: React.FC = () => {
       </div>
 
       <button
+        disabled={isLoading || loading}
         type="submit"
         className="relative mt-auto flex w-full max-w-[280px] items-center justify-center self-center rounded-[30px] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
       >
@@ -124,7 +125,8 @@ const SignInForm: React.FC = () => {
       </button>
 
       <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm max-md:mt-10">
-        <ForgotPasswordButton title="Forgot Password?" />
+        <div className="font-bold text-gray-800">Forgot Password?</div>
+        {/* <ForgotPasswordButton title="Forgot Password?" /> */}
         <ResetPasswordButton title="Reset password" />
       </div>
 

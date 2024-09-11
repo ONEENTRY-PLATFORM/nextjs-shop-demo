@@ -85,6 +85,7 @@ export default async function CatalogPage({
   if (isError || !products) {
     return notFound();
   }
+  console.log(totalProductsCount / (pageLimit - 1));
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">

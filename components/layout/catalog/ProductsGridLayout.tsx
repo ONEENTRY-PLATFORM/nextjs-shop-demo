@@ -24,7 +24,7 @@ const ProductsGridLayout: React.FC<GridLayoutProps> = ({
           })}
         </div>
         <div className="mt-5 flex w-full justify-center">
-          <Pagination totalPages={totalPages} />
+          {totalPages > 0 && <Pagination totalPages={totalPages} />}
         </div>
       </section>
     </div>
