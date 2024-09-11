@@ -78,74 +78,73 @@ const CartPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmitOrder = (e: any) => {
     e.preventDefault();
-    // dispatch(
-    //   createOrder({
-    //     formIdentifier: 'order',
-    //     formData: [],
-    //     products: productsInOrder,
-    //     paymentAccountIdentifier: '',
-    //   }),
-    // );
-
+    dispatch(
+      createOrder({
+        formIdentifier: 'order',
+        formData: [],
+        products: productsInOrder,
+        paymentAccountIdentifier: '',
+      }),
+    );
     console.log(order);
   };
 
-  const createSession = async (id: number) => {
-    if (!id) {
-      return;
-    }
+  // const createSession = async (id: number) => {
+  //   if (!id) {
+  //     return;
+  //   }
 
-    const { paymentUrl, id: orderId } = await api.Payments.createSession(
-      id,
-      'session',
-    );
-    if (order?.paymentAccountIdentifier === 'cash') {
-      // return navigate('payment_success', { id });
-      return 'payment_success';
-    }
+  //   const { paymentUrl, id: orderId } = await api.Payments.createSession(
+  //     id,
+  //     'session',
+  //   );
+  //   if (order?.paymentAccountIdentifier === 'cash') {
+  //     // return navigate('payment_success', { id });
+  //     return 'payment_success';
+  //   }
 
-    if (paymentUrl) {
-      // navigate('payment_method', { orderId, paymentUrl });
-      return 'payment_method';
-    }
-  };
+  //   if (paymentUrl) {
+  //     // navigate('payment_method', { orderId, paymentUrl });
+  //     return 'payment_method';
+  //   }
+  // };
 
-  const onConfirmOrder = async () => {
-    setIsLoading(true);
-    try {
-      if (order?.formIdentifier && order?.paymentAccountIdentifier) {
-        const editedFormData = order.formData.slice().map((data) => {
-          return {
-            marker: data.marker,
-            type: data.type,
-            value: data.value,
-          };
-        });
-        const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
-          'order',
-          {
-            ...order,
-            formData: editedFormData,
-            formIdentifier: order.formIdentifier,
-            paymentAccountIdentifier: order.paymentAccountIdentifier,
-          },
-        );
+  // const onConfirmOrder = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     if (order?.formIdentifier && order?.paymentAccountIdentifier) {
+  //       const editedFormData = order.formData.slice().map((data) => {
+  //         return {
+  //           marker: data.marker,
+  //           type: data.type,
+  //           value: data.value,
+  //         };
+  //       });
+  //       const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
+  //         'order',
+  //         {
+  //           ...order,
+  //           formData: editedFormData,
+  //           formIdentifier: order.formIdentifier,
+  //           paymentAccountIdentifier: order.paymentAccountIdentifier,
+  //         },
+  //       );
 
-        dispatch(removeAllProducts());
-        dispatch(removeOrder());
+  //       dispatch(removeAllProducts());
+  //       dispatch(removeOrder());
 
-        if (paymentAccountIdentifier !== 'cash') {
-          await createSession(id);
-        } else {
-          // return navigate('orders');
-        }
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      console.error(e);
-    }
-    setIsLoading(false);
-  };
+  //       if (paymentAccountIdentifier !== 'cash') {
+  //         await createSession(id);
+  //       } else {
+  //         // return navigate('orders');
+  //       }
+  //     }
+  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //   } catch (e: any) {
+  //     console.error(e);
+  //   }
+  //   setIsLoading(false);
+  // };
 
   return (
     <div

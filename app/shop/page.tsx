@@ -66,7 +66,7 @@ export default async function CatalogPage({
   };
 }) {
   const currentPage = Number(searchParams?.page) || 0;
-  const pageLimit = 10;
+  const pageLimit = 11;
   const data = await getProducts({
     limit: pageLimit,
     offset: currentPage,

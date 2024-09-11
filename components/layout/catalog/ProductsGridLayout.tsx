@@ -1,5 +1,6 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
+import Pagination from './Pagination';
 import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {
@@ -19,7 +20,7 @@ const ProductsGridLayout: React.FC<GridLayoutProps> = ({ gridItems }) => {
           })}
         </div>
         <div className="mt-5 flex w-full justify-center">
-          {/* <Pagination totalPages={totalPages} /> */}
+          <Pagination totalPages={11} />
         </div>
       </section>
     </div>
