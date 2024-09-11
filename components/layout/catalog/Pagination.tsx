@@ -2,7 +2,7 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
   const pathname = usePathname();
@@ -21,25 +21,26 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   );
 
   return (
-    <div className="flex">
-      {Array.from(Array(totalPages).keys()).map((item) => (
-        <button
-          key={item}
-          className={
-            'size-8 rounded-full ' +
-            (currentPage === Number(item)
-              ? 'bg-neutral-100 text-orange-500'
-              : '')
-          }
-          onClick={() => {
-            router.push(
-              pathname + '?' + createQueryString('page', item.toString()),
-            );
-          }}
-        >
-          {item + 1}
-        </button>
-      ))}
+    <div className="flex gap-1">
+      {totalPages > 1 &&
+        Array.from(Array(totalPages).keys()).map((item) => (
+          <button
+            key={item}
+            className={
+              'size-8 rounded-full border border-neutral-100 border-solid hover:text-orange-500 hover:border-orange-500 transition-colors ' +
+              (currentPage === Number(item)
+                ? 'border-orange-500 text-orange-500'
+                : '')
+            }
+            onClick={() => {
+              router.push(
+                pathname + '?' + createQueryString('page', item.toString()),
+              );
+            }}
+          >
+            {item + 1}
+          </button>
+        ))}
     </div>
   );
 }

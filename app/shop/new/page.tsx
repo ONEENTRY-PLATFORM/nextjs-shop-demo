@@ -57,8 +57,10 @@ export async function generateMetadata({
 }
 
 export default async function CatalogPage({
+  params,
   searchParams,
 }: {
+  params: { handle: string };
   searchParams?: {
     search?: string;
     page?: string;
@@ -66,7 +68,13 @@ export default async function CatalogPage({
   };
 }) {
   const currentPage = Number(searchParams?.page) || 0;
-  const pageLimit = 10;
+  const pageLimit = 11;
+  const totalProducts = await getProducts({
+    limit: 100,
+    offset: 0,
+    params: { ...params, searchParams: searchParams },
+  });
+  const totalProductsCount = totalProducts?.products?.length || 0;
   const data = await getProducts({
     limit: pageLimit,
     offset: currentPage,
@@ -88,6 +96,7 @@ export default async function CatalogPage({
                 product.attributeValues.stickers?.value.value === 'new' &&
                 product.attributeSetIdentifier !== 'service_product',
             )}
+            totalPages={totalProductsCount / (pageLimit - 1)}
           />
         </Suspense>
       </div>

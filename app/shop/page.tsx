@@ -5,11 +5,11 @@ import type {
   IFilterParams,
   IProductsEntity,
 } from 'oneentry/dist/products/productsInterfaces';
+import { Suspense } from 'react';
 
-// import { ProductsGridLoader } from '@/components/shared/Loader';
 import { getPageByUrl, getProducts } from '@/app/api/serverSideProps';
-// import { Suspense } from 'react';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
+import { ProductsGridLoader } from '@/components/shared/Loader';
 
 export async function generateMetadata({
   params,
@@ -57,8 +57,10 @@ export async function generateMetadata({
 }
 
 export default async function CatalogPage({
+  params,
   searchParams,
 }: {
+  params: { handle: string };
   searchParams?: {
     search?: string;
     page?: string;
@@ -67,9 +69,15 @@ export default async function CatalogPage({
 }) {
   const currentPage = Number(searchParams?.page) || 0;
   const pageLimit = 11;
+  const totalProducts = await getProducts({
+    limit: 100,
+    offset: 0,
+    params: { ...params, searchParams: searchParams },
+  });
+  const totalProductsCount = totalProducts?.products?.length || 0;
   const data = await getProducts({
     limit: pageLimit,
-    offset: currentPage,
+    offset: currentPage * pageLimit,
     params: { searchParams: searchParams },
   });
 
@@ -81,12 +89,15 @@ export default async function CatalogPage({
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <ProductsGridLayout
-          gridItems={products.filter(
-            (product: IProductsEntity) =>
-              product.attributeSetIdentifier !== 'service_product',
-          )}
-        />
+        <Suspense fallback={<ProductsGridLoader />}>
+          <ProductsGridLayout
+            gridItems={products.filter(
+              (product: IProductsEntity) =>
+                product.attributeSetIdentifier !== 'service_product',
+            )}
+            totalPages={totalProductsCount / (pageLimit - 1)}
+          />
+        </Suspense>
       </div>
     </section>
   );

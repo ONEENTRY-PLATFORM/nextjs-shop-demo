@@ -5,9 +5,13 @@ import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {
   gridItems: Array<IProductsEntity>;
+  totalPages: number;
 }
 
-const ProductsGridLayout: React.FC<GridLayoutProps> = ({ gridItems }) => {
+const ProductsGridLayout: React.FC<GridLayoutProps> = ({
+  gridItems,
+  totalPages,
+}) => {
   return (
     <div className="relative box-border flex w-full shrink-0 flex-col">
       <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -20,7 +24,7 @@ const ProductsGridLayout: React.FC<GridLayoutProps> = ({ gridItems }) => {
           })}
         </div>
         <div className="mt-5 flex w-full justify-center">
-          <Pagination totalPages={11} />
+          <Pagination totalPages={totalPages} />
         </div>
       </section>
     </div>

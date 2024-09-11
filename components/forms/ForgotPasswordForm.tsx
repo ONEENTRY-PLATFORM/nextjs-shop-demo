@@ -1,12 +1,13 @@
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { Key } from 'react';
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 export const ForgotPasswordForm: React.FC = () => {
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
@@ -19,6 +20,7 @@ export const ForgotPasswordForm: React.FC = () => {
       valid: boolean;
     };
   };
+  const { setComponent } = useContext(OpenDrawerContext);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,6 +30,8 @@ export const ForgotPasswordForm: React.FC = () => {
         fields.email_reg.value,
         'generate_code',
       );
+
+      setComponent('VerificationForm');
       // navigateAuth('activate_user', {
       //   email: value,
       //   event: 'reset',
@@ -35,7 +39,10 @@ export const ForgotPasswordForm: React.FC = () => {
       // });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      console.log(e);
+      console.log(e.statusCode);
+      if (e.statusCode === 400) {
+        setComponent('VerificationForm');
+      }
     }
   };
 

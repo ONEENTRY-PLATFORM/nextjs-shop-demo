@@ -6,6 +6,7 @@ import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
 import FormSubmitButton from './inputs/FormSubmitButton';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 const VerificationForm: React.FC = () => {
   const { authenticate } = useContext(AuthContext);
@@ -24,6 +25,7 @@ const VerificationForm: React.FC = () => {
       value: string;
     };
   };
+  const { setComponent } = useContext(OpenDrawerContext);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,6 +47,7 @@ const VerificationForm: React.FC = () => {
           password: fields['password_reg'].value,
         });
         authenticate();
+        setComponent('ResetPasswordForm');
         setState(false);
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

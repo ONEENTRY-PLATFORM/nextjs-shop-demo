@@ -131,7 +131,6 @@ const SignInForm: React.FC = () => {
       <p className="mx-auto mb-3 text-base font-bold leading-8 text-neutral-600">
         Sign in with
       </p>
-
       <div className="mx-auto flex justify-between gap-5">
         {socialProvidersButtons.map((button, index) => (
           <SocialSignInButton
@@ -141,6 +140,7 @@ const SignInForm: React.FC = () => {
           />
         ))}
       </div>
+
       <CreateAccountButton title="Create account" />
     </form>
   );

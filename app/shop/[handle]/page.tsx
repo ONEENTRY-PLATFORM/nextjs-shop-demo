@@ -69,7 +69,20 @@ export default async function CatalogPage({
     filters?: IFilterParams[];
   };
 }) {
-  const data = await getProducts({ limit: 10, offset: 0 });
+  const currentPage = Number(searchParams?.page) || 0;
+  const pageLimit = 11;
+  const totalProducts = await getProducts({
+    limit: 100,
+    offset: 0,
+    params: { ...params, searchParams: searchParams },
+  });
+  const totalProductsCount = totalProducts?.products?.length || 0;
+
+  const data = await getProducts({
+    limit: pageLimit,
+    offset: currentPage,
+    params: { searchParams: searchParams },
+  });
   console.log(data);
 
   const { isError, products } = data;
@@ -86,6 +99,7 @@ export default async function CatalogPage({
               (product: IProductsEntity) =>
                 product.attributeSetIdentifier !== 'service_product',
             )}
+            totalPages={totalProductsCount / (pageLimit - 1)}
           />
         </Suspense>
       </div>

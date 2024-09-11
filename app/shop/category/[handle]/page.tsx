@@ -64,17 +64,25 @@ export default async function CatalogPage({
   params,
   searchParams,
 }: {
+  params: { handle: string };
   searchParams?: {
     search?: string;
     page?: string;
     filters?: IFilterParams[];
   };
-  params: { handle: string };
 }) {
   const currentPage = Number(searchParams?.page) || 0;
+  const pageLimit = 11;
+  const totalProducts = await getProductsByUrl({
+    limit: 100,
+    offset: 0,
+    params: { ...params, searchParams: searchParams },
+  });
+  const totalProductsCount = totalProducts?.products?.length || 0;
+
   const data = await getProductsByUrl({
-    limit: 10,
-    offset: currentPage,
+    limit: pageLimit,
+    offset: currentPage * pageLimit,
     params: { ...params, searchParams: searchParams },
   });
 
@@ -90,10 +98,9 @@ export default async function CatalogPage({
           <ProductsGridLayout
             gridItems={products.filter(
               (product: IProductsEntity) =>
-                product.attributeValues.category?.value.value ===
-                  params.handle &&
                 product.attributeSetIdentifier !== 'service_product',
             )}
+            totalPages={totalProductsCount / pageLimit}
           />
         </Suspense>
       </div>

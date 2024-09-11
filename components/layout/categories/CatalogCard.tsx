@@ -25,7 +25,6 @@ const CatalogCard: React.FC<CatalogCardProps> = async ({ cardData }) => {
   const sticker = block.attributeValues.stickers;
   const quote = block.attributeValues.quote?.value || '';
 
-  // return;
   return (
     <Link
       href={'shop/' + link?.value || ''}

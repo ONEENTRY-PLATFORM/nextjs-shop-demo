@@ -9,7 +9,7 @@ import ReviewsSection from './reviews-group/ReviewSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 
 const ProductSingle: React.FC<IProductsEntity> = (product) => {
-  const { attributeValues, localizeInfos } = product;
+  const { attributeValues, localizeInfos, id } = product;
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -41,7 +41,14 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
               </span>
             );
           } else if (block === 'similar') {
-            return <RelatedItems key={block} marker={block} title="Features" />;
+            return (
+              <RelatedItems
+                key={block}
+                marker={block}
+                id={id}
+                title="Features"
+              />
+            );
           }
         })}
     </section>
