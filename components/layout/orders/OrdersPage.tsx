@@ -10,17 +10,17 @@ import Loader, { OrdersTableLoader } from '@/components/shared/Loader';
 import Order from './OrderRow';
 
 const OrdersPage = () => {
+  const { isAuth } = useContext(AuthContext);
   const { data, isLoading } = useGetUserOrdersQuery({
     marker: 'order',
   });
-  const { isAuth } = useContext(AuthContext);
-
-  if (!data) {
-    return <Loader />;
-  }
 
   if (!isAuth) {
     return 'Auth error';
+  }
+
+  if (!data) {
+    return <Loader />;
   }
 
   return (

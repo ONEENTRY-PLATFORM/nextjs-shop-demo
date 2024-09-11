@@ -74,13 +74,14 @@ const VerificationForm: React.FC = () => {
           setLoading(false);
         }
       } else if (action === 'checkCode') {
-        const res = await api.AuthProvider.checkCode(
+        const result = await api.AuthProvider.checkCode(
           'email',
           fields['email_reg'].value,
           otp,
         );
-        if (res) {
-          setComponent('ResetPasswordForm');
+        console.log(result);
+        if (result) {
+          // setComponent('ResetPasswordForm');
         }
         setLoading(false);
       }

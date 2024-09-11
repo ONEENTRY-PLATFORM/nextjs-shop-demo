@@ -20,7 +20,7 @@ export const ForgotPasswordForm: React.FC = () => {
       valid: boolean;
     };
   };
-  const { setComponent } = useContext(OpenDrawerContext);
+  const { setComponent, setAction } = useContext(OpenDrawerContext);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -32,6 +32,7 @@ export const ForgotPasswordForm: React.FC = () => {
       );
 
       setComponent('VerificationForm');
+      setAction('checkCode');
       // navigateAuth('activate_user', {
       //   email: value,
       //   event: 'reset',
@@ -39,7 +40,6 @@ export const ForgotPasswordForm: React.FC = () => {
       // });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      console.log(e.statusCode);
       if (e.statusCode === 400) {
         setComponent('VerificationForm');
       }

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   getRelatedProductsById,
-  // getSimilarProducts,
+  getSimilarProducts,
 } from '@/app/api/serverSideProps';
 
 import ProductCard from '../catalog/product-card/ProductCard';
@@ -11,8 +11,9 @@ const RelatedItems: React.FC<{
   marker: string;
   title: string;
 }> = async ({ id, marker, title }) => {
-  // const data = await getSimilarProducts(marker, 'en_US');
-  const data = await getRelatedProductsById(id, 'en_US');
+  const data = await getSimilarProducts(marker, 'en_US');
+  const related = await getRelatedProductsById(id, 'en_US');
+  console.log(related);
 
   const { isError, products } = data;
   if (isError || !products) {
