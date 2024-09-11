@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type {
-  IFilterParams,
-  IProductsEntity,
-} from 'oneentry/dist/products/productsInterfaces';
+import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import { getPageByUrl, getProducts } from '@/app/api/serverSideProps';
+import {
+  getPageByUrl,
+  getProducts,
+  getProductsTotalCount,
+} from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
@@ -69,12 +69,9 @@ export default async function CatalogPage({
 }) {
   const currentPage = Number(searchParams?.page) || 0;
   const pageLimit = 11;
-  const totalProducts = await getProducts({
-    limit: 100,
-    offset: 0,
+  const { totalCount } = await getProductsTotalCount({
     params: { ...params, searchParams: searchParams },
   });
-  const totalProductsCount = totalProducts?.products?.length || 0;
   const data = await getProducts({
     limit: pageLimit,
     offset: currentPage * pageLimit,
@@ -83,20 +80,16 @@ export default async function CatalogPage({
 
   const { isError, products } = data;
   if (isError || !products) {
-    return notFound();
+    return 'isError';
   }
-  console.log(totalProductsCount / (pageLimit - 1));
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
-            gridItems={products.filter(
-              (product: IProductsEntity) =>
-                product.attributeSetIdentifier !== 'service_product',
-            )}
-            totalPages={totalProductsCount / (pageLimit - 1)}
+            gridItems={products}
+            totalPages={(totalCount || 0) / (pageLimit - 1)}
           />
         </Suspense>
       </div>

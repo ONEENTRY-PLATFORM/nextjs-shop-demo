@@ -22,7 +22,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
 
   return (
     <div className="flex gap-1">
-      {Array.from(Array(Math.round(totalPages)).keys()).map((item) => (
+      {Array.from(Array(Math.ceil(totalPages)).keys()).map((item) => (
         <button
           key={item}
           className={

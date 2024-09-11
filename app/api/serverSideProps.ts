@@ -112,6 +112,40 @@ export async function getProducts(props: {
   }
 }
 
+// getProductsTotalCount
+export async function getProductsTotalCount(props: {
+  params?: {
+    searchParams?: {
+      search?: string;
+      in_stock?: string;
+      color?: string;
+      minPrice?: string;
+      maxPrice?: string;
+    };
+  };
+}): Promise<{
+  totalCount?: number;
+  isError: boolean;
+  err?: unknown;
+}> {
+  const { params } = props;
+  const expandedFilters = setSearchParams(params?.searchParams);
+
+  try {
+    const products = await api.Products.getProducts(expandedFilters, 'en_US', {
+      sortOrder: 'DESC',
+      sortKey: 'id',
+      limit: 100,
+      offset: 0,
+    });
+    const totalProductsCount = products?.length || 0;
+
+    return { isError: false, totalCount: totalProductsCount };
+  } catch (err) {
+    return { isError: true, err: err };
+  }
+}
+
 // getProductsByUrl
 export async function getProductsByUrl(props: {
   limit: number;
