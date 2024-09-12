@@ -53,7 +53,6 @@ const ProductCard: React.FC<{
           <h2 className="text-base leading-8">{localizeInfos?.title}</h2>
           <PriceDisplay
             currentPrice={attributeValues.sale?.value}
-            // originalPrice={attributeValues.price?.value}
             originalPrice={attributeValues.price?.value}
           />
         </div>

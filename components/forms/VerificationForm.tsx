@@ -17,6 +17,7 @@ const VerificationForm: React.FC = () => {
 
   const [isLoading, setLoading] = useState(false);
   const [otp, setOtp] = useState('');
+  const [error, setError] = useState('');
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -80,15 +81,15 @@ const VerificationForm: React.FC = () => {
           fields['email_reg'].value,
           otp,
         );
-        console.log(result);
         if (result) {
           // setComponent('ResetPasswordForm');
         }
         setLoading(false);
       }
+      setError('');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      console.log(e);
+      setError(e.message);
       setLoading(false);
     }
   };
@@ -149,6 +150,7 @@ const VerificationForm: React.FC = () => {
       </div>
 
       <FormSubmitButton title="Verify now" isLoading={isLoading} />
+      {error && <div className="text-center text-sm text-red-500">{error}</div>}
     </form>
   );
 };

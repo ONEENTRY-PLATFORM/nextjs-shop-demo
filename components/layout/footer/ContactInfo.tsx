@@ -15,7 +15,7 @@ const ContactInfo: React.FC = async () => {
     email_2,
   } = contactInfo;
   return (
-    <nav className="flex max-w-[240px] grow flex-col font-bold text-neutral-600 max-sm:mb-5">
+    <nav className="flex w-full max-w-[240px] grow flex-col font-bold text-neutral-600 max-md:max-w-[30%] max-sm:mb-5 max-sm:max-w-full">
       <h2 className="mb-5 text-xl">{title}</h2>
       <div className="flex flex-col gap-1.5 whitespace-nowrap text-sm leading-5">
         <div className="mr-auto text-orange-500">{address_title}</div>

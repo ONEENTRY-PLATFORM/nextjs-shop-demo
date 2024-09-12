@@ -21,6 +21,8 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
+  console.log(params);
+
   const data = await getPageByUrl('shop', 'en_US');
   const { isError, page } = data;
   if (isError || !page) {

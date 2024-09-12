@@ -5,8 +5,8 @@ import { SidebarMenuLoader } from '@/components/shared/Loader';
 
 import SidebarMenuItem from './SidebarMenuItem';
 
-// export const revalidate = 10;
-// export const dynamicParams = true;
+export const revalidate = 10;
+export const dynamicParams = true;
 
 export default async function SidebarMenu() {
   const { isError, menu } = await getMenuByMarker({

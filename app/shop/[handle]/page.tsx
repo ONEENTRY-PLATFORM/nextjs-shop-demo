@@ -94,10 +94,7 @@ export default async function CatalogPage({
       <div className="flex w-full flex-col items-center gap-5 bg-white">
         <Suspense fallback={<Loader />}>
           <ProductsGridLayout
-            gridItems={products.filter(
-              (product: IProductsEntity) =>
-                product.attributeSetIdentifier !== 'service_product',
-            )}
+            gridItems={products}
             totalPages={(totalCount || 0) / pageLimit}
           />
         </Suspense>

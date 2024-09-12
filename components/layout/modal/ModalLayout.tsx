@@ -37,12 +37,15 @@ function Modal() {
           as={Fragment}
           enter="transition-all ease-in-out duration-300"
           enterFrom="opacity-0 backdrop-blur-none"
-          enterTo="opacity-100 backdrop-blur-[.5px]"
+          enterTo="opacity-100 backdrop-blur-[5px]"
           leave="transition-all ease-in-out duration-200"
-          leaveFrom="opacity-100 backdrop-blur-[.5px]"
+          leaveFrom="opacity-100 backdrop-blur-[5px]"
           leaveTo="opacity-0 backdrop-blur-none"
         >
-          <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
+          <div
+            className="fixed inset-0 bg-black/30 backdrop-blur-[5px]"
+            aria-hidden="true"
+          />
         </TransitionChild>
         <TransitionChild
           as={Fragment}

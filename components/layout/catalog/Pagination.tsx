@@ -26,7 +26,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
         <button
           key={item}
           className={
-            'size-8 rounded-full border border-neutral-100 border-solid hover:text-orange-500 hover:border-orange-500 transition-colors ' +
+            'size-8 rounded-full border border-neutral-100 border-solid hover:text-orange-500 hover:border-orange-500 text-neutral-700 transition-colors ' +
             (currentPage === Number(item)
               ? 'border-orange-500 text-orange-500'
               : '')

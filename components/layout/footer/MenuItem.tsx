@@ -1,8 +1,5 @@
 import Link from 'next/link';
-import type {
-  IMenusEntity,
-  IMenusPages,
-} from 'oneentry/dist/menus/menusInterfaces';
+import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
 const MenuItem: React.FC<{
   page: IMenusPages;

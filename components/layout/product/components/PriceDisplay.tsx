@@ -24,7 +24,7 @@ const PriceDisplay: React.FC<PriceDisplayProps> = ({
 
   return (
     <div className="flex gap-2.5 self-center font-bold">
-      {currentPrice && (
+      {currentPrice > 0 && (
         <div className="text-lg leading-6 text-orange-500">{price}</div>
       )}
       <div
