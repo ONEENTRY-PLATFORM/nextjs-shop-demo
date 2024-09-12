@@ -1,7 +1,7 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
@@ -17,6 +17,7 @@ const QuantitySelector: React.FC<{
   height: number;
 }> = ({ product, height }) => {
   const { id } = product;
+  const [qty, setQty] = useState(0);
   const dispatch = useAppDispatch();
   const { quantity } = useAppSelector((state) =>
     selectCartItemWithIdLength(state, id),
@@ -24,30 +25,38 @@ const QuantitySelector: React.FC<{
     quantity: number;
   };
 
+  useEffect(() => {
+    setQty(quantity);
+  }, [quantity]);
+
+  if (qty < 1) {
+    return;
+  }
+
   return (
     <div
-      className="flex items-center justify-between gap-2 rounded-3xl bg-stone-50"
+      className="flex items-center justify-between rounded-3xl bg-slate-50"
       style={{ height: height }}
     >
       <button
         onClick={() => {
-          if (quantity <= 1) {
+          if (qty <= 1) {
             dispatch(removeProduct(id));
           } else {
             dispatch(decreaseProductQty({ id: id, quantity: 1 }));
           }
         }}
-        className="relative box-border h-full w-8 self-stretch text-center text-slate-800"
+        className="relative m-1 box-border size-8 rounded-full text-center text-slate-800 hover:bg-slate-100 hover:text-orange-500"
         aria-label="Decrease quantity"
       >
         –
       </button>
       <input
-        className="relative box-border w-16 bg-transparent text-center text-slate-800"
+        className="relative box-border w-16 rounded-full bg-transparent text-center text-slate-800 hover:bg-slate-100 hover:text-orange-500"
         type="number"
         name={'qty_selector_' + id}
         id={'qty_selector_' + id}
-        value={quantity}
+        value={qty}
         onChange={(e) => {
           dispatch(
             setProductQty({
@@ -61,7 +70,7 @@ const QuantitySelector: React.FC<{
         onClick={() => {
           dispatch(increaseProductQty({ id: id, quantity: 1 }));
         }}
-        className="relative box-border h-full w-8 text-center text-slate-800"
+        className="relative m-1 box-border size-8 rounded-full text-center text-slate-800 hover:bg-slate-100 hover:text-orange-500"
         aria-label="Increase quantity"
       >
         +

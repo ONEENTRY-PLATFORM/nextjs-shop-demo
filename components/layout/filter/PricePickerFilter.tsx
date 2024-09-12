@@ -71,7 +71,7 @@ const PriceFilter: React.FC = () => {
       </div>
 
       <div className="mb-10 flex w-full gap-5 self-center">
-        <div className="flex flex-1 gap-2.5 rounded-3xl bg-neutral-100 px-3 py-2.5">
+        <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-2.5">
           <span className="text-base leading-8 text-slate-300">
             {priceFromLabel}
           </span>
@@ -79,7 +79,7 @@ const PriceFilter: React.FC = () => {
             <PriceFromInput price={priceFrom} setPrice={setPriceFrom} />
           </span>
         </div>
-        <div className="flex flex-1 gap-2.5 rounded-3xl bg-neutral-100 p-2.5">
+        <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] p-2.5">
           <span className="self-start text-base leading-8 text-slate-300">
             {priceToLabel}
           </span>

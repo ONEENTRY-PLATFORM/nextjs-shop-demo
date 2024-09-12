@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
@@ -22,8 +23,13 @@ const AddToCartButton: React.FC<AddToCartProps> = ({
   className,
   height,
 }) => {
+  const [productInCart, setInCart] = useState(false);
   const dispatch = useAppDispatch();
   const inCart = useAppSelector((state) => selectIsInCart(state, product.id));
+
+  useEffect(() => {
+    setInCart(inCart);
+  }, [inCart]);
 
   if (
     typeof product.statusIdentifier === 'string' &&
@@ -41,7 +47,7 @@ const AddToCartButton: React.FC<AddToCartProps> = ({
     );
   }
 
-  return !inCart ? (
+  return !productInCart || !inCart ? (
     <button
       onClick={() => {
         dispatch(addProductToCart({ ...product, selected: true, quantity: 1 }));
