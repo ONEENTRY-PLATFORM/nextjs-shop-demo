@@ -33,14 +33,18 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
       >
         {title}
       </label>
-      <div className="flex flex-col justify-center self-center rounded-[30px] bg-neutral-100 py-px">
+      <div className="relative inline-block w-10 select-none align-middle transition duration-200 ease-in">
         <input
           id="availability"
           type="checkbox"
           checked={params.get('in_stock') ? true : false}
           onChange={() => setAvailability(!available)}
-          className="size-[16px] shrink-0 rounded-full bg-orange-500"
+          className="toggle-checkbox absolute block size-6 cursor-pointer appearance-none rounded-full border-4 bg-white"
         />
+        <label
+          htmlFor="availability"
+          className="toggle-label block h-6 cursor-pointer overflow-hidden rounded-full bg-gray-300"
+        ></label>
       </div>
     </div>
   );

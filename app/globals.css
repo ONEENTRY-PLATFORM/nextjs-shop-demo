@@ -26,42 +26,27 @@ body {
   display: none;
 }
 
+
 input:focus-visible {
   outline: none !important;
   border-color: #f97316;
   color: #1e293b;
 }
 
+
+.toggle-checkbox:checked {
+  @apply: right-0 border-orange-500;
+  right: 0;
+  border-color: #f97316;
+}
+.toggle-checkbox:checked + .toggle-label {
+  @apply: bg-orange-500;
+  background-color: #f97316;
+}
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-}
-
-.flicking-arrow-next {
-  position: absolute;
-  right: 10px;
-  top: calc(50% - 10px);
-  z-index: 50;
-}
-
-.flicking-arrow-prev {
-  position: absolute;
-  left: 10px;
-  top: calc(50% - 10px);
-  z-index: 50;
-}
-
-@media (max-width: 767px) {
-  .relative.flex.size-full.p-6.bg-amber-600.overflow-hidden.rounded-3xl {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  .relative.flex.size-full.p-6.bg-amber-600.overflow-hidden.rounded-3xl .z-10.ml-auto.mt-auto.w-60 {
-    margin-left: 0;
-    font-size: 18px;
-    line-height: 24px;
   }
 }

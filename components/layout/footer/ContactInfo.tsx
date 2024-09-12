@@ -1,16 +1,6 @@
 import React from 'react';
 
-const contactInfo = {
-  title: 'Contact Info',
-  address_title: 'Address',
-  address: 'Dubai',
-  phone_title: 'Phone',
-  phone_1: '+9100006789101',
-  phone_2: '+9100006789101',
-  web_title: 'Web',
-  email_1: 'info@oneentry.com',
-  email_2: 'oneentry@gmail.com',
-};
+import { contactInfo } from '@/components/data';
 
 const ContactInfo: React.FC = async () => {
   const {

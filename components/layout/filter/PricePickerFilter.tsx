@@ -66,7 +66,7 @@ const PriceFilter: React.FC = () => {
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
-      <div className="mb-5 ml-2.5 self-start text-base leading-8 text-neutral-600">
+      <div className="mb-5 self-start text-base leading-8 text-neutral-600">
         Price, $
       </div>
 
@@ -89,7 +89,7 @@ const PriceFilter: React.FC = () => {
         </div>
       </div>
 
-      <div className="my-2 flex w-full">
+      <div className="my-2 flex w-full px-2">
         <Range
           label="Select your value"
           step={STEP}
@@ -113,7 +113,7 @@ const PriceFilter: React.FC = () => {
                     ? '#ccc'
                     : index * STEP > priceTo
                       ? '#ccc'
-                      : '#f97316',
+                      : '#ffa03d',
               }}
             />
           )}
@@ -164,7 +164,7 @@ const PriceFilter: React.FC = () => {
           )}
         />
       </div>
-      <div className="mb-5 flex w-full justify-between gap-5 self-center text-base leading-8 text-slate-300">
+      <div className="mb-5 flex w-full justify-between gap-5 self-center px-1 text-base leading-8 text-slate-300">
         <span>{MIN}</span>
         <span>{(MAX - MIN) / 2}</span>
         <span>{MAX}</span>
