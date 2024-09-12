@@ -18,6 +18,9 @@ const NavItemCart: React.FC = () => {
   // const cartCount = useAppSelector(selectBasketCount);
 
   const cartCount = useAppSelector((state) => {
+    if (state.cartReducer.products.length < 1) {
+      return;
+    }
     return state.cartReducer.products
       .map((item) => {
         if (item.attributeSetIdentifier === 'service_product') {
@@ -31,6 +34,9 @@ const NavItemCart: React.FC = () => {
   });
 
   useEffect(() => {
+    if (!cartCount || cartCount < 0) {
+      return;
+    }
     setCount(cartCount);
   }, [cartCount]);
 
