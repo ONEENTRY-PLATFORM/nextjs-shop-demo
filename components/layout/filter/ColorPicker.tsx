@@ -25,7 +25,6 @@ const ColorPicker: React.FC<Props> = ({ code, name, setActiveColor }) => {
         if (isActive) {
           setActiveColor('');
         } else {
-          console.log(isActive);
           setActiveColor(code);
         }
       }}

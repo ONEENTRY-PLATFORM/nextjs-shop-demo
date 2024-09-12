@@ -59,7 +59,6 @@ export const RTKApi = createApi({
       queryFn: async () => {
         try {
           const result = await api.Users.getUser('en_US');
-          // console.log(result);
           return { data: result };
         } catch (e: any) {
           return { error: e.message };

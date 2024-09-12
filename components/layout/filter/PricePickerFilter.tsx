@@ -91,7 +91,7 @@ const PriceFilter: React.FC = () => {
 
       <div className="my-2 flex w-full px-2">
         <Range
-          label="Select your value"
+          label="Select your price"
           step={STEP}
           min={MIN}
           max={MAX}
@@ -159,6 +159,7 @@ const PriceFilter: React.FC = () => {
                 borderRadius: '50%',
                 backgroundColor: '#f97316',
                 boxShadow: '0px 2px 6px #AAA',
+                outline: '3px solid #ec722b80',
               }}
             />
           )}
