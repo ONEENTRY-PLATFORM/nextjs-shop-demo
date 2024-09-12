@@ -1,17 +1,16 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { useEffect, useMemo, useState } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { api, useGetOrderStorageByMarkerQuery, useGetProduct } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addProductToCart,
-  removeAllProducts,
+  // removeAllProducts,
   selectCartItems,
-  selectCartTotal,
 } from '@/app/store/reducers/CartSlice';
 import type { IAppOrder } from '@/app/store/reducers/OrderSlice';
 import {
@@ -32,11 +31,21 @@ const CartPage = () => {
   const [order, setOrder] = useState<IAppOrder | undefined>(undefined);
   const dispatch = useAppDispatch();
   const deliveryData = useGetProduct({ id: 83 });
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, error } = useGetOrderStorageByMarkerQuery({
     marker: 'order',
   });
   const orderData = useAppSelector((state) => state.orderReducer.order);
-  const total = useAppSelector(selectCartTotal);
+
+  const total = useAppSelector((state) => {
+    return state.cartReducer.products.reduce((total, item) => {
+      if (item.selected) {
+        total +=
+          (item.attributeValues.sale?.value || item.price) * item.quantity;
+      }
+      return total;
+    }, 0);
+  });
 
   const productsInCart = useAppSelector(selectCartItems) as Array<
     IProductsEntity & { quantity: number; selected: boolean }

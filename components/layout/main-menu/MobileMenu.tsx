@@ -14,11 +14,6 @@ import { Fragment, useContext, useEffect } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-interface MenuItemProps {
-  label: string;
-  href: string;
-}
-
 function MobileMenu({ menu }: { menu: IMenusPages[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -104,8 +99,8 @@ function MobileMenu({ menu }: { menu: IMenusPages[] }) {
                 <ul className="flex w-full flex-col">
                   {menu.map((item: IMenusPages) => (
                     <li
-                      className="py-2 text-lg text-neutral-800 transition-colors hover:text-orange-500"
                       key={item.localizeInfos.menuTitle}
+                      className="py-2 text-lg text-neutral-800 transition-colors hover:text-orange-500"
                     >
                       <Link
                         href={item.pageUrl}

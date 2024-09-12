@@ -203,25 +203,4 @@ export const selectBasketCount = (state: {
   return totalCount;
 };
 
-export const selectCartTotal = (state: { cartReducer: { products: [] } }) => {
-  return state.cartReducer.products.reduce(
-    (
-      total: number,
-      item: {
-        selected: boolean;
-        price: number;
-        quantity: number;
-        attributeValues: { sale: { value: number } };
-      },
-    ) => {
-      if (item.selected) {
-        total +=
-          (item.attributeValues.sale?.value || item.price) * item.quantity;
-      }
-      return total;
-    },
-    0,
-  );
-};
-
 export default cartSlice.reducer;
