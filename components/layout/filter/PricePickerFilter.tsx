@@ -66,7 +66,7 @@ const PriceFilter: React.FC = () => {
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
-      <div className="mb-5 self-start text-base leading-8 text-neutral-600">
+      <div className="mb-5 self-start text-lg font-medium leading-8 text-neutral-600">
         Price, $
       </div>
 

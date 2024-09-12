@@ -10,18 +10,14 @@ import { Suspense } from 'react';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import Loader from '@/components/shared/Loader';
 
-import {
-  getPageByUrl,
-  getProducts,
-  getProductsTotalCount,
-} from '../../api/serverSideProps';
+import { getPageByUrl, getProducts } from '../../api/serverSideProps';
 
 export async function generateMetadata({
   params,
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  const data = await getPageByUrl('shop', 'en_US');
+  const data = await getPageByUrl(params.handle, 'en_US');
   const { isError, page } = data;
 
   if (isError || !page) {
@@ -75,9 +71,7 @@ export default async function CatalogPage({
 }) {
   const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
-  const { totalCount } = await getProductsTotalCount({
-    params: { ...params, searchParams: searchParams },
-  });
+  const { page } = await getPageByUrl(params.handle, 'en_US');
 
   const { isError, products } = await getProducts({
     limit: pageLimit,
@@ -95,7 +89,7 @@ export default async function CatalogPage({
         <Suspense fallback={<Loader />}>
           <ProductsGridLayout
             gridItems={products}
-            totalPages={(totalCount || 0) / pageLimit}
+            totalPages={(page?.products || 0) / pageLimit}
           />
         </Suspense>
       </div>

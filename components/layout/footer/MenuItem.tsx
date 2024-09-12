@@ -10,7 +10,7 @@ const MenuItem: React.FC<{
 
   return (
     <li className="relative box-border">
-      <Link className="hover:text-red-500" href={page.pageUrl}>
+      <Link className="hover:text-red-500" href={'/' + page.pageUrl}>
         {page.localizeInfos.menuTitle}
       </Link>
     </li>

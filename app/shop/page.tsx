@@ -2,6 +2,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
+import type { ReactElement } from 'react';
 import { Suspense } from 'react';
 
 import {
@@ -12,11 +13,7 @@ import {
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { handle: string };
-}): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const data = await getPageByUrl('shop', 'en_US');
   const { isError, page } = data;
   if (isError || !page) {
@@ -29,7 +26,12 @@ export async function generateMetadata({
     width,
     height,
     altText: alt,
-  } = { url: '', width: 300, height: 300, altText: '' };
+  } = {
+    url: attributeValues.icon.downloadLink,
+    width: 300,
+    height: 300,
+    altText: localizeInfos.title,
+  };
 
   return {
     title: localizeInfos.title,
@@ -58,30 +60,27 @@ export async function generateMetadata({
 }
 
 export default async function CatalogPage({
-  params,
   searchParams,
 }: {
-  params: { handle: string };
   searchParams?: {
     search?: string;
     page?: string;
     filters?: IFilterParams[];
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }) {
   const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
-  const { totalCount } = await getProductsTotalCount({
-    params: { ...params, searchParams: searchParams },
-  });
-  const data = await getProducts({
+
+  const { page } = await getPageByUrl('shop', 'en_US');
+  const { isError, products } = await getProducts({
     limit: pageLimit,
     offset: currentPage * pageLimit,
     params: { searchParams: searchParams },
   });
 
-  const { isError, products } = data;
-  if (isError || !products) {
-    return 'isError';
+  if (isError || !products || !page) {
+    return <div>isError</div>;
   }
 
   return (
@@ -90,7 +89,7 @@ export default async function CatalogPage({
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
             gridItems={products}
-            totalPages={(totalCount || 0) / pageLimit}
+            totalPages={(page?.products || 0) / pageLimit}
           />
         </Suspense>
       </div>

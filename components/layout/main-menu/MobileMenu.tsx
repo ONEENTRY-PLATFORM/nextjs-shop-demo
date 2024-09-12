@@ -6,6 +6,7 @@ import {
   Transition,
   TransitionChild,
 } from '@headlessui/react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Fragment, useContext, useEffect } from 'react';
@@ -21,7 +22,7 @@ function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { open, setOpen, component } = useContext(OpenDrawerContext);
-  const closeFilter = () => setOpen(false);
+  const closeMenu = () => setOpen(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -41,9 +42,16 @@ function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, searchParams]);
 
+  const logo = {
+    src: '/images/logo-250x70.svg',
+    width: 180,
+    height: 50,
+    alt: 'OneEntry',
+  };
+
   return (
     <Transition show={open && component === 'MobileMenu'}>
-      <Dialog onClose={closeFilter} className="relative z-50">
+      <Dialog onClose={closeMenu} className="relative z-50">
         <TransitionChild
           as={Fragment}
           enter="transition-all ease-in-out duration-300"
@@ -53,7 +61,10 @@ function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
           leaveFrom="opacity-100 backdrop-blur-[5px]"
           leaveTo="opacity-0 backdrop-blur-none"
         >
-          <div className="fixed inset-0 bg-black/30 backdrop-blur-[5px]" aria-hidden="true" />
+          <div
+            className="fixed inset-0 bg-black/30 backdrop-blur-[5px]"
+            aria-hidden="true"
+          />
         </TransitionChild>
         <TransitionChild
           as={Fragment}
@@ -65,34 +76,27 @@ function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
           leaveTo="translate-x-[-100%]"
         >
           <DialogPanel className="fixed inset-0 flex size-full max-w-[420px] flex-col bg-white pb-6">
-            <div className="p-6 pt-10">
+            <div className="p-6">
               <button
-                aria-label="Close filter"
-                onClick={closeFilter}
-                className="absolute right-2 top-2 flex aspect-square size-12 shrink-0 items-center justify-center rounded-full border border-[#EEEFF0]"
+                aria-label="Close menu"
+                onClick={closeMenu}
+                className="absolute right-4 top-6 flex aspect-square size-12 shrink-0 items-center justify-center rounded-full border border-[#EEEFF0] text-xl"
               >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0.912089 0.925739C1.11192 0.725769 1.38291 0.613433 1.66546 0.613433C1.94802 0.613433 2.21901 0.725769 2.41884 0.925739L6.99344 5.50494L11.568 0.925739C11.6663 0.823861 11.7839 0.7426 11.9139 0.686697C12.0439 0.630794 12.1838 0.601369 12.3252 0.600138C12.4667 0.598907 12.607 0.625895 12.738 0.679528C12.869 0.733161 12.9879 0.812365 13.088 0.912517C13.188 1.01267 13.2672 1.13176 13.3207 1.26285C13.3743 1.39394 13.4013 1.5344 13.4001 1.67603C13.3988 1.81766 13.3694 1.95763 13.3136 2.08777C13.2577 2.21791 13.1766 2.33561 13.0748 2.434L8.50019 7.01321L13.0748 11.5924C13.2689 11.7936 13.3763 12.063 13.3739 12.3427C13.3714 12.6224 13.2594 12.8899 13.0618 13.0877C12.8642 13.2854 12.597 13.3976 12.3176 13.4001C12.0382 13.4025 11.769 13.295 11.568 13.1007L6.99344 8.52147L2.41884 13.1007C2.21787 13.295 1.94869 13.4025 1.6693 13.4001C1.3899 13.3976 1.12264 13.2854 0.92507 13.0877C0.7275 12.8899 0.615432 12.6224 0.613004 12.3427C0.610576 12.063 0.717983 11.7936 0.912089 11.5924L5.48669 7.01321L0.912089 2.434C0.712321 2.23398 0.600098 1.96271 0.600098 1.67987C0.600098 1.39703 0.712321 1.12577 0.912089 0.925739Z"
-                    fill="#4C4D56"
-                  ></path>
-                  <path
-                    d="M0.912089 0.925739C1.11192 0.725769 1.38291 0.613433 1.66546 0.613433C1.94802 0.613433 2.21901 0.725769 2.41884 0.925739L6.99344 5.50494L11.568 0.925739C11.6663 0.823861 11.7839 0.7426 11.9139 0.686697C12.0439 0.630794 12.1838 0.601369 12.3252 0.600138C12.4667 0.598907 12.607 0.625895 12.738 0.679528C12.869 0.733161 12.9879 0.812365 13.088 0.912517C13.188 1.01267 13.2672 1.13176 13.3207 1.26285C13.3743 1.39394 13.4013 1.5344 13.4001 1.67603C13.3988 1.81766 13.3694 1.95763 13.3136 2.08777C13.2577 2.21791 13.1766 2.33561 13.0748 2.434L8.50019 7.01321L13.0748 11.5924C13.2689 11.7936 13.3763 12.063 13.3739 12.3427C13.3714 12.6224 13.2594 12.8899 13.0618 13.0877C12.8642 13.2854 12.597 13.3976 12.3176 13.4001C12.0382 13.4025 11.769 13.295 11.568 13.1007L6.99344 8.52147L2.41884 13.1007C2.21787 13.295 1.94869 13.4025 1.6693 13.4001C1.3899 13.3976 1.12264 13.2854 0.92507 13.0877C0.7275 12.8899 0.615432 12.6224 0.613004 12.3427C0.610576 12.063 0.717983 11.7936 0.912089 11.5924L5.48669 7.01321L0.912089 2.434C0.712321 2.23398 0.600098 1.96271 0.600098 1.67987C0.600098 1.39703 0.712321 1.12577 0.912089 0.925739Z"
-                    stroke="#4C4D56"
-                  ></path>
-                </svg>
+                &#10005;
               </button>
 
               <div className="mb-4 w-full">
                 {/* <Suspense fallback={<SearchSkeleton />}>
                   <Search />
                 </Suspense> */}
+                <Image
+                  src={logo.src}
+                  width={logo.width}
+                  height={logo.height}
+                  alt={logo.alt}
+                  loading="lazy"
+                  className="aspect-[3.57] max-w-full shrink-0 max-sm:mb-5"
+                />
               </div>
 
               {menu.length ? (
@@ -105,7 +109,7 @@ function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
                       <Link
                         href={item.href}
                         prefetch={true}
-                        onClick={closeFilter}
+                        onClick={closeMenu}
                       >
                         {item.label}
                       </Link>

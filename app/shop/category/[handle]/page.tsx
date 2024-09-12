@@ -21,10 +21,8 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  console.log(params);
+  const { isError, page } = await getPageByUrl(params.handle, 'en_US');
 
-  const data = await getPageByUrl('shop', 'en_US');
-  const { isError, page } = data;
   if (isError || !page) {
     return notFound();
   }
@@ -74,13 +72,10 @@ export default async function CatalogPage({
     filters?: IFilterParams[];
   };
 }) {
-  console.log(params.handle);
-
   const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
-  const { totalCount } = await getProductsTotalCount({
-    params: { ...params, searchParams: searchParams },
-  });
+
+  const { page } = await getPageByUrl(params.handle, 'en_US');
   const { isError, products } = await getProductsByUrl({
     limit: pageLimit,
     offset: currentPage * pageLimit,
@@ -97,7 +92,7 @@ export default async function CatalogPage({
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
             gridItems={products}
-            totalPages={(totalCount || 0) / pageLimit}
+            totalPages={(page?.products || 0) / pageLimit}
           />
         </Suspense>
       </div>

@@ -29,7 +29,7 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
     <div className="mb-9 flex gap-5">
       <label
         htmlFor="availability"
-        className="flex-auto text-base leading-8 text-neutral-600"
+        className="flex-auto text-lg leading-8 text-neutral-600"
       >
         {title}
       </label>
