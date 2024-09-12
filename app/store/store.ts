@@ -1,13 +1,43 @@
 'use client';
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
 import { RTKApi } from '../api';
-import cartReducer from './reducers/CartSlice';
+import cartSlice from './reducers/CartSlice';
 import favoritesReducer from './reducers/FavoritesSlice';
 import formFieldsReducer from './reducers/FormFieldsSlice';
 import orderReducer from './reducers/OrderSlice';
 import systemContentReducer from './reducers/SystemContentSlice';
+
+const createNoopStorage = () => {
+  return {
+    getItem() {
+      return Promise.resolve(null);
+    },
+    setItem(_key: string, value: number) {
+      return Promise.resolve(value);
+    },
+    removeItem() {
+      return Promise.resolve();
+    },
+  };
+};
+
+const storage =
+  typeof window !== 'undefined'
+    ? createWebStorage('local')
+    : createNoopStorage();
+
+const cartReducer = persistReducer(
+  {
+    key: 'cart-slice',
+    storage: storage,
+    whitelist: ['currency', 'products', 'deliveryData'],
+  },
+  cartSlice,
+);
 
 const rootReducer = combineReducers({
   cartReducer,
@@ -22,7 +52,9 @@ export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(RTKApi.middleware),
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }).concat(RTKApi.middleware),
   });
 };
 

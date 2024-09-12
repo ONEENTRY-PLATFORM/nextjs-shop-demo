@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { selectBasketCount } from '@/app/store/reducers/CartSlice';
@@ -13,7 +14,12 @@ const item = {
 };
 
 const NavItemCart: React.FC = () => {
+  const [count, setCount] = useState(0);
   const cartCount = useAppSelector(selectBasketCount);
+
+  useEffect(() => {
+    setCount(cartCount);
+  }, [cartCount]);
 
   return (
     <Link
@@ -23,7 +29,7 @@ const NavItemCart: React.FC = () => {
     >
       <CartIcon />
       <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full bg-orange-400 text-center text-sm leading-4">
-        {cartCount}
+        {count}
       </div>
     </Link>
   );

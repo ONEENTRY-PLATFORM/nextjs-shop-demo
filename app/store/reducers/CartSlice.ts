@@ -1,3 +1,5 @@
+'use client';
+
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
@@ -186,7 +188,7 @@ export const selectBasketCount = (state: {
   };
 }) => {
   const totalCount =
-    state.cartReducer.products.length > 0
+    state.cartReducer.products?.length > 0
       ? state.cartReducer.products
           .map((item) => {
             if (item.attributeSetIdentifier === 'service_product') {
@@ -198,6 +200,7 @@ export const selectBasketCount = (state: {
             return total + num;
           })
       : 0;
+  console.log(state);
   return totalCount;
 };
 
