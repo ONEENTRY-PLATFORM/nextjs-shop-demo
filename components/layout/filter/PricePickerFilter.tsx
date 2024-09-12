@@ -66,12 +66,12 @@ const PriceFilter: React.FC = () => {
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
-      <div className="mb-5 self-start text-lg font-medium leading-8 text-neutral-600">
+      <div className="mb-5 self-start text-lg font-medium leading-8 text-[#4C4D56]">
         Price, $
       </div>
 
-      <div className="mb-10 flex w-full gap-5 self-center">
-        <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-2.5">
+      <div className="mb-6 flex w-full gap-5 self-center">
+        <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-1.5">
           <span className="text-base leading-8 text-slate-300">
             {priceFromLabel}
           </span>
@@ -79,7 +79,7 @@ const PriceFilter: React.FC = () => {
             <PriceFromInput price={priceFrom} setPrice={setPriceFrom} />
           </span>
         </div>
-        <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] p-2.5">
+        <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-1.5">
           <span className="self-start text-base leading-8 text-slate-300">
             {priceToLabel}
           </span>
@@ -89,7 +89,12 @@ const PriceFilter: React.FC = () => {
         </div>
       </div>
 
-      <div className="my-2 flex w-full px-2">
+      <div className="flex w-full justify-between gap-5 self-center text-base leading-8 text-slate-300">
+        <span>{MIN}</span>
+        <span>{(MAX - MIN) / 2}</span>
+        <span>{MAX}</span>
+      </div>
+      <div className="mb-5 flex w-full px-2">
         <Range
           label="Select your price"
           step={STEP}
@@ -158,17 +163,11 @@ const PriceFilter: React.FC = () => {
                 width: '20px',
                 borderRadius: '50%',
                 backgroundColor: '#f97316',
-                boxShadow: '0px 2px 6px #AAA',
                 outline: '3px solid #ec722b80',
               }}
             />
           )}
         />
-      </div>
-      <div className="mb-5 flex w-full justify-between gap-5 self-center px-1 text-base leading-8 text-slate-300">
-        <span>{MIN}</span>
-        <span>{(MAX - MIN) / 2}</span>
-        <span>{MAX}</span>
       </div>
     </div>
   );

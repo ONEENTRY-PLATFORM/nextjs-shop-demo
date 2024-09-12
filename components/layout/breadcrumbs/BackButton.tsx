@@ -8,7 +8,7 @@ const BackButton: React.FC = () => {
   return (
     <button
       type="button"
-      className="group flex size-[36px] items-center justify-center rounded-full border border-solid border-gray-400 bg-white p-2 hover:border-orange-500 md:size-[40px] lg:size-[50px]"
+      className="group flex size-[36px] items-center justify-center rounded-full border border-solid border-gray-400 bg-white p-3.5 transition-colors hover:border-orange-500 md:size-[40px] lg:size-[50px]"
       aria-label="Go back"
       onClick={() => router.back()}
     >

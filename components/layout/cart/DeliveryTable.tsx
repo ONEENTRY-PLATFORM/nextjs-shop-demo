@@ -37,7 +37,7 @@ const DeliveryTable: React.FC<IProductsEntity> = (product) => {
           placeholder={order_info_time_placeholder}
         />
 
-        <tr className="table-row h-[50px] gap-5 border-y border-solid border-neutral-400 max-md:max-w-full max-md:flex-wrap">
+        <tr className="table-row h-[50px] gap-5 border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
           <td className="self-stretch align-middle text-sm">
             <label htmlFor={'address'}>Address</label>
           </td>
@@ -55,7 +55,7 @@ const DeliveryTable: React.FC<IProductsEntity> = (product) => {
         </tr>
 
         {product && (
-          <tr className="table-row h-[50px] gap-5 border-b border-solid border-neutral-400 max-md:max-w-full max-md:flex-wrap">
+          <tr className="table-row h-[50px] gap-5 border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
             <td className="table-cell align-middle">
               <Image
                 loading="lazy"

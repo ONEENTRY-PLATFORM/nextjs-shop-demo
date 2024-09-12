@@ -8,7 +8,7 @@ const DeleteButton: React.FC<IProductsEntity> = (product) => {
   const dispatch = useAppDispatch();
   return (
     <button
-      className="group relative box-border flex size-8 shrink-0 flex-col items-center justify-center"
+      className="group relative box-border flex size-5 shrink-0 flex-col items-center justify-center"
       aria-label="Delete item"
       onClick={() => {
         dispatch(removeProduct(product.id));

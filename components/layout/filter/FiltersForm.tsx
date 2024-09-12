@@ -36,19 +36,19 @@ const FiltersForm: React.FC = () => {
         if (attribute === 'price_filter') {
           return <PricePickerFilter key={index} />;
         }
-        if (attribute === 'availability_filter') {
-          return (
-            <AvailabilityFilter
-              key={index}
-              title={sortedAttributes[attribute]?.value}
-            />
-          );
-        }
         if (attribute === 'color_filter') {
           return (
             <ColorFilter
               key={index}
               color_filter_title={sortedAttributes[attribute]?.value}
+            />
+          );
+        }
+        if (attribute === 'availability_filter') {
+          return (
+            <AvailabilityFilter
+              key={index}
+              title={sortedAttributes[attribute]?.value}
             />
           );
         }

@@ -76,7 +76,7 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
 
   return (
     <div>
-      <div className="mb-5 text-lg ">{color_filter_title}</div>
+      <div className="mb-5 text-lg text-[#4C4D56]">{color_filter_title}</div>
       <div className="mb-9 flex flex-wrap gap-5 whitespace-nowrap text-sm leading-8 text-slate-400">
         {colorFilters.map((color, index) => {
           return (
