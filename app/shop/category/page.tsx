@@ -63,6 +63,7 @@ export default async function CategoryPage({
     setMarker: 'product',
     langCode: 'en_US',
   });
+  console.log(params);
 
   if (isError) {
     return notFound();

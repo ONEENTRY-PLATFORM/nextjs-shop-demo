@@ -1,88 +1,113 @@
 import Link from 'next/link';
+import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
+import type { Key } from 'react';
 import { Suspense } from 'react';
 
-import { getAttributeByMarker } from '@/app/api/serverSideProps';
+import { getMenuByMarker } from '@/app/api/serverSideProps';
 
 import MobileMenu from './MobileMenu';
 import NavigationMenuItem from './NavigationMenuItem';
 
+function flatMenuToNested(data: [] | Array<IMenusPages>, pid: number | null) {
+  return data.reduce((r: IMenusPages[], element: IMenusPages) => {
+    if (pid == element.parentId) {
+      const object = { ...element };
+      const children = flatMenuToNested(data, element.id);
+
+      if (children.length) {
+        object.children = children;
+      }
+
+      r.push(object);
+    }
+
+    return r;
+  }, []);
+}
+
 const NavigationMenu: React.FC = async () => {
-  const stickersData = await getAttributeByMarker({
-    attributeMarker: 'stickers',
-    setMarker: 'product',
+  const { isError, menu } = await getMenuByMarker({
+    marker: 'main_web',
     langCode: 'en_US',
   });
-  const stickers = stickersData.attribute?.listTitles.map(
-    (sticker: { title: string; value: string }) => {
-      return {
-        label: sticker.title,
-        href: '/shop/' + sticker.value,
-      };
-    },
+
+  if (!menu || !menu.pages || isError) {
+    return;
+  }
+
+  const mainMenu = flatMenuToNested(
+    Array.isArray(menu.pages) ? menu.pages : [],
+    null,
   );
 
-  const categoryData = await getAttributeByMarker({
-    attributeMarker: 'category',
-    setMarker: 'product',
-    langCode: 'en_US',
-  });
-  const categories = categoryData.attribute?.listTitles.map(
-    (category: { title: string; value: string }) => {
-      return {
-        label: category.title,
-        href: '/shop/category/' + category.value,
-      };
-    },
-  );
+  // const stickersData = await getAttributeByMarker({
+  //   attributeMarker: 'stickers',
+  //   setMarker: 'product',
+  //   langCode: 'en_US',
+  // });
+  // const stickers = stickersData.attribute?.listTitles.map(
+  //   (sticker: { title: string; value: string }) => {
+  //     return {
+  //       label: sticker.title,
+  //       href: '/shop/' + sticker.value,
+  //     };
+  //   },
+  // );
 
-  const navigationItems = [
-    {
-      label: 'Category',
-      href: '#',
-      hasDropdown: true,
-      categories: categories,
-    },
-  ];
-  navigationItems.push(...(stickers || []));
+  // const categoryData = await getAttributeByMarker({
+  //   attributeMarker: 'category',
+  //   setMarker: 'product',
+  //   langCode: 'en_US',
+  // });
+  // const categories = categoryData.attribute?.listTitles.map(
+  //   (category: { title: string; value: string }) => {
+  //     return {
+  //       label: category.title,
+  //       href: '/shop/category/' + category.value,
+  //     };
+  //   },
+  // );
+
+  // const navigationItems = [
+  //   {
+  //     label: 'Category',
+  //     href: '#',
+  //     hasDropdown: true,
+  //     categories: categories,
+  //   },
+  // ];
+  // navigationItems.push(...(stickers || []));
 
   return (
     <>
       <nav className="relative z-20 items-center justify-center bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
         <div className="flex w-full max-w-screen-xl items-center justify-center py-5 max-md:px-5">
           <ul className="flex w-full justify-between gap-5 max-md:flex-wrap">
-            {navigationItems.map((item, index) => (
+            {mainMenu.map((item: IMenusPages, index: Key) => (
               <li
                 key={index}
                 className="group my-auto flex justify-between gap-5 whitespace-nowrap py-1"
               >
                 <NavigationMenuItem
-                  label={item.label}
-                  href={item.href}
-                  hasDropdown={item.hasDropdown}
+                  label={item.localizeInfos.menuTitle}
+                  href={'/shop/' + item.pageUrl}
+                  hasDropdown={item.children ? true : false}
                 />
 
-                {item.hasDropdown && (
+                {Array.isArray(item.children) && (
                   <ul className="absolute z-10 mt-6 hidden flex-col gap-4 bg-white px-6 py-8 leading-8 shadow-lg group-hover:flex">
-                    {item.categories?.map(
-                      (
-                        it: {
-                          href: string;
-                          label: string;
-                        },
-                        i: React.Key,
-                      ) => {
-                        return (
-                          <li key={i}>
-                            <Link
-                              href={it.href}
-                              className="transition-colors duration-300 ease-in-out hover:text-red-500 focus:outline-none"
-                            >
-                              {it.label}
-                            </Link>
-                          </li>
-                        );
-                      },
-                    )}
+                    {item.children.map((it: IMenusPages, i: React.Key) => {
+                      return (
+                        <li key={i}>
+                          <Link
+                            href={'/shop/category/' + it.pageUrl}
+                            className="transition-colors duration-300 ease-in-out hover:text-red-500 focus:outline-none"
+                          >
+                            {it.localizeInfos.menuTitle}
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 )}
               </li>
@@ -91,7 +116,7 @@ const NavigationMenu: React.FC = async () => {
         </div>
       </nav>
       <Suspense>
-        <MobileMenu menu={[...(categories || []), ...(stickers || [])]} />
+        <MobileMenu menu={Array.isArray(menu.pages) ? menu.pages : []} />
       </Suspense>
     </>
   );

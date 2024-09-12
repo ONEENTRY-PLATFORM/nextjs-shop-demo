@@ -2,20 +2,15 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
-import type { ReactElement } from 'react';
 import { Suspense } from 'react';
 
-import {
-  getPageByUrl,
-  getProducts,
-  getProductsTotalCount,
-} from '@/app/api/serverSideProps';
+import { getPageByUrl, getProducts } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await getPageByUrl('shop', 'en_US');
-  const { isError, page } = data;
+  const { isError, page } = await getPageByUrl('shop', 'en_US');
+
   if (isError || !page) {
     return notFound();
   }

@@ -1,18 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type {
-  IFilterParams,
-  IProductsEntity,
-} from 'oneentry/dist/products/productsInterfaces';
+import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import {
-  getPageByUrl,
-  getProducts,
-  getProductsByUrl,
-  getProductsTotalCount,
-} from '@/app/api/serverSideProps';
+import { getPageByUrl, getProductsByUrl } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
@@ -81,6 +73,7 @@ export default async function CatalogPage({
     offset: currentPage * pageLimit,
     params: { ...params, searchParams: searchParams },
   });
+  console.log(params);
 
   if (isError || !products) {
     return notFound();

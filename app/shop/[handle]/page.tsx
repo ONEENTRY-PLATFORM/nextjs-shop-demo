@@ -1,16 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type {
-  IFilterParams,
-  IProductsEntity,
-} from 'oneentry/dist/products/productsInterfaces';
+import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import Loader from '@/components/shared/Loader';
 
-import { getPageByUrl, getProducts } from '../../api/serverSideProps';
+import { getPageByUrl, getProductsByUrl } from '../../api/serverSideProps';
 
 export async function generateMetadata({
   params,
@@ -73,9 +70,9 @@ export default async function CatalogPage({
   const currentPage = Number(searchParams?.page) || 0;
   const { page } = await getPageByUrl(params.handle, 'en_US');
 
-  const { isError, products } = await getProducts({
+  const { isError, products } = await getProductsByUrl({
     limit: pageLimit,
-    offset: currentPage,
+    offset: currentPage * pageLimit,
     params: { ...params, searchParams: searchParams },
   });
 

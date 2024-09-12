@@ -9,6 +9,7 @@ import {
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
+import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import { Fragment, useContext, useEffect } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -18,7 +19,7 @@ interface MenuItemProps {
   href: string;
 }
 
-function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
+function MobileMenu({ menu }: { menu: IMenusPages[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { open, setOpen, component } = useContext(OpenDrawerContext);
@@ -101,17 +102,17 @@ function MobileMenu({ menu }: { menu: MenuItemProps[] }) {
 
               {menu.length ? (
                 <ul className="flex w-full flex-col">
-                  {menu.map((item: MenuItemProps) => (
+                  {menu.map((item: IMenusPages) => (
                     <li
-                      className="py-2 text-lg text-black transition-colors hover:text-orange-500"
-                      key={item.label}
+                      className="py-2 text-lg text-neutral-800 transition-colors hover:text-orange-500"
+                      key={item.localizeInfos.menuTitle}
                     >
                       <Link
-                        href={item.href}
+                        href={item.pageUrl}
                         prefetch={true}
                         onClick={closeMenu}
                       >
-                        {item.label}
+                        {item.localizeInfos.menuTitle}
                       </Link>
                     </li>
                   ))}
