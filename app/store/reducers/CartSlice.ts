@@ -200,7 +200,6 @@ export const selectBasketCount = (state: {
             return total + num;
           })
       : 0;
-  console.log(state);
   return totalCount;
 };
 

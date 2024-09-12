@@ -13,10 +13,11 @@ import {
   selectCartItems,
   selectCartTotal,
 } from '@/app/store/reducers/CartSlice';
+import type { IAppOrder } from '@/app/store/reducers/OrderSlice';
 import {
   addPaymentMethods,
   createOrder,
-  removeOrder,
+  // removeOrder,
 } from '@/app/store/reducers/OrderSlice';
 import DeliveryTable from '@/components/layout/cart/DeliveryTable';
 import PaymentButton from '@/components/layout/cart/PaymentButton';
@@ -26,19 +27,32 @@ import TotalAmount from '@/components/layout/cart/TotalAmount';
 import EmptyCart from './EmptyCart';
 
 const CartPage = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [cartTotal, setCartTotal] = useState(0);
+  const [order, setOrder] = useState<IAppOrder | undefined>(undefined);
   const dispatch = useAppDispatch();
-  const { product } = useGetProduct({ id: 83 });
+  const deliveryData = useGetProduct({ id: 83 });
   const { data, error } = useGetOrderStorageByMarkerQuery({
     marker: 'order',
   });
-  const order = useAppSelector((state) => state.orderReducer.order);
-
+  const orderData = useAppSelector((state) => state.orderReducer.order);
   const total = useAppSelector(selectCartTotal);
 
   const productsInCart = useAppSelector(selectCartItems) as Array<
     IProductsEntity & { quantity: number; selected: boolean }
   >;
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
+
+  useEffect(() => {
+    setOrder(orderData);
+  }, [orderData]);
+
+  useEffect(() => {
+    setCartTotal(total);
+  }, [total]);
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce((results: Array<IOrderProductData>, item) => {
@@ -59,19 +73,25 @@ const CartPage = () => {
 
   // add delivery to cart
   useEffect(() => {
-    if (!product) {
+    if (!deliveryData || !deliveryData.product) {
       return;
     }
     const index = productsInCart.findIndex(
-      (p: { id: number }) => p.id === product.id,
+      (p: { id: number }) => p.id === deliveryData.product?.id,
     );
     if (index === -1) {
-      dispatch(addProductToCart({ ...product, selected: true, quantity: 1 }));
+      dispatch(
+        addProductToCart({
+          ...deliveryData.product,
+          selected: true,
+          quantity: 1,
+        }),
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product]);
+  }, [deliveryData]);
 
-  if (productsInCart.length < 2) {
+  if (productsInCart.length < 2 || isLoading) {
     return <EmptyCart />;
   }
 
@@ -151,26 +171,28 @@ const CartPage = () => {
       className="flex w-full flex-col pb-5 lg:max-w-[730px]"
       onSubmit={(e) => onSubmitOrder(e)}
     >
-      <div className="mb-4 flex w-full flex-col gap-4">
-        {productsInCart?.map((product: IProductsEntity, i: number) => {
-          if (product.id === 83) {
-            return;
-          }
-          return (
-            <ProductCard
-              key={i}
-              product={product as IProductsEntity & { selected: boolean }}
-            />
-          );
-        })}
-      </div>
+      {productsInCart.length > 0 && (
+        <div className="mb-4 flex w-full flex-col gap-4">
+          {productsInCart.map((product: IProductsEntity, i: number) => {
+            if (product.id === 83) {
+              return;
+            }
+            return (
+              <ProductCard
+                key={i}
+                product={product as IProductsEntity & { selected: boolean }}
+              />
+            );
+          })}
+        </div>
+      )}
       <form
         className="flex w-[730px] max-w-full flex-col pb-5"
         onSubmit={onSubmitOrder}
       >
-        <DeliveryTable {...(product as IProductsEntity)} />
+        <DeliveryTable {...(deliveryData.product as IProductsEntity)} />
         <div className="mt-4 flex w-[464px] max-w-full flex-col self-center font-bold lg:self-end">
-          <TotalAmount amount={total} />
+          <TotalAmount amount={cartTotal} />
           <PaymentButton />
         </div>
       </form>

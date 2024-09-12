@@ -80,8 +80,6 @@ export const RTKApi = createApi({
       queryFn: async ({ marker }) => {
         try {
           const result = await api.Orders.getOrderByMarker(marker);
-          console.log(result);
-
           return { data: result };
         } catch (e: any) {
           return { error: e.message };
