@@ -12,6 +12,7 @@ const FooterMenuSection = async () => {
     marker: 'quick_links',
     langCode: 'en_US',
   });
+  console.log(quickLinks);
   const infoLinks = await getMenuByMarker({
     marker: 'information',
     langCode: 'en_US',

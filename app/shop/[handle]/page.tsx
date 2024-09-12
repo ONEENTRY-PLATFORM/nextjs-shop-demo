@@ -73,7 +73,7 @@ export default async function CatalogPage({
     filters?: IFilterParams[];
   };
 }) {
-  const pageLimit = 30;
+  const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
   const { totalCount } = await getProductsTotalCount({
     params: { ...params, searchParams: searchParams },
@@ -84,8 +84,6 @@ export default async function CatalogPage({
     offset: currentPage,
     params: { ...params, searchParams: searchParams },
   });
-  console.log(params);
-  console.log({ isError, products });
 
   if (isError || !products) {
     return notFound();

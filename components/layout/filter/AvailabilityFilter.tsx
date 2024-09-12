@@ -33,7 +33,7 @@ const AvailabilityFilter: React.FC<Props> = ({ title }) => {
       >
         {title}
       </label>
-      <div className="flex flex-col self-center justify-center rounded-[30px] bg-neutral-100 py-px">
+      <div className="flex flex-col justify-center self-center rounded-[30px] bg-neutral-100 py-px">
         <input
           id="availability"
           type="checkbox"

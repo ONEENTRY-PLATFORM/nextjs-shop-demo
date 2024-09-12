@@ -12,6 +12,7 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 const VerificationForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { setComponent, action } = useContext(OpenDrawerContext);
 
   const [isLoading, setLoading] = useState(false);
