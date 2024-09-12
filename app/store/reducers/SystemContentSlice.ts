@@ -94,7 +94,7 @@ const initialState: InitialStateType = {
 };
 
 export const systemContentSlice = createSlice({
-  name: 'featured-object-slice',
+  name: 'system-slice',
   initialState,
   reducers: {
     addContent(state, action: PayloadAction<ContentType>) {

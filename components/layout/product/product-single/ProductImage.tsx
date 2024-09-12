@@ -24,7 +24,7 @@ const ProductImage: React.FC<ProductImageProps> = ({
         sizes="(min-width: 1024px) 30vw, 100vw"
         src={imageSrc}
         alt={alt}
-        className="size-full shrink-0 bg-slate-50 object-cover"
+        className="size-full rounded-xl bg-slate-50 object-cover"
       />
     </div>
   );

@@ -7,9 +7,9 @@ import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import { RTKApi } from '../api';
 import cartSlice from './reducers/CartSlice';
 import favoritesSlice from './reducers/FavoritesSlice';
-import formFieldsReducer from './reducers/FormFieldsSlice';
-import orderReducer from './reducers/OrderSlice';
-import systemContentReducer from './reducers/SystemContentSlice';
+import formFieldsSlice from './reducers/FormFieldsSlice';
+import orderSlice from './reducers/OrderSlice';
+import systemContentSlice from './reducers/SystemContentSlice';
 
 const createNoopStorage = () => {
   return {
@@ -39,7 +39,6 @@ const cartReducer = persistReducer(
   },
   cartSlice,
 );
-
 const favoritesReducer = persistReducer(
   {
     key: 'favorites-slice',
@@ -48,6 +47,33 @@ const favoritesReducer = persistReducer(
     whitelist: ['products'],
   },
   favoritesSlice,
+);
+const formFieldsReducer = persistReducer(
+  {
+    key: 'form-fields',
+    storage: storage,
+    version: 1,
+    whitelist: ['fields'],
+  },
+  formFieldsSlice,
+);
+const orderReducer = persistReducer(
+  {
+    key: 'favorites-slice',
+    storage: storage,
+    version: 1,
+    whitelist: ['products'],
+  },
+  orderSlice,
+);
+const systemContentReducer = persistReducer(
+  {
+    key: 'system-slice',
+    storage: storage,
+    version: 1,
+    whitelist: ['content'],
+  },
+  systemContentSlice,
 );
 
 const rootReducer = combineReducers({
