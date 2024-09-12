@@ -33,7 +33,7 @@ const PaymentMethod: React.FC<Props> = ({
     >
       <div className={'flex-row items-center space-x-3'}>
         {account?.localizeInfos?.title}
-        <div className="absolute bottom-2 right-2 size-6 rounded-full bg-slate-300">
+        <div className="absolute bottom-2 right-2 size-6 rounded-full bg-slate-50">
           +
         </div>
       </div>

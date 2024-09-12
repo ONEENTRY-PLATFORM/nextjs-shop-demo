@@ -38,7 +38,7 @@ const ProductCard: React.FC<{
           />
         </div>
 
-        <div className="relative h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-300">
+        <div className="relative h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-50">
           <Image
             width={130}
             height={150}

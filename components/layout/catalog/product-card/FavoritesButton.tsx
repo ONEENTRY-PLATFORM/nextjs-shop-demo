@@ -1,6 +1,7 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
@@ -10,24 +11,36 @@ import {
 } from '@/app/store/reducers/FavoritesSlice';
 
 const FavoritesButton: React.FC<IProductsEntity> = (product) => {
+  const [isFav, setIsFav] = useState(false);
   const dispatch = useAppDispatch();
   const isFavorites = useAppSelector((state) =>
     selectIsFavorites(state, product.id),
   );
+
+  useEffect(() => {
+    if (!isFavorites) {
+      return;
+    }
+    setIsFav(isFavorites);
+  }, [isFavorites]);
+
+  if (!product) {
+    return;
+  }
 
   return (
     <button
       type="button"
       className="relative box-border flex size-[26px] shrink-0 flex-col items-center justify-center"
       onClick={() => {
-        if (isFavorites) {
+        if (isFav) {
           dispatch(removeFavorites(product.id));
         } else {
           dispatch(addFavorites(product));
         }
       }}
     >
-      {!isFavorites ? (
+      {!isFav ? (
         <svg
           width="20"
           height="16"
