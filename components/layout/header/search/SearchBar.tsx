@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { useDebounce } from 'use-debounce';
 
 import { useAppSelector } from '@/app/store/hooks';
 import SearchIcon from '@/components/icons/search';
@@ -20,6 +21,8 @@ const SearchBar: React.FC = () => {
   const searchPlaceholder = useAppSelector(
     (state) => state.systemContentReducer.content.search_placeholder,
   );
+  const searchValue = searchParams.get('search')?.toString();
+  const [value] = useDebounce(searchValue, 1000);
 
   useEffect(() => {
     setPlaceholder(searchPlaceholder);
@@ -41,7 +44,6 @@ const SearchBar: React.FC = () => {
     router.push(`/shop?${params.toString()}`);
     setState(false);
   };
-  const searchValue = searchParams.get('search')?.toString();
 
   return (
     <div className="relative my-auto ml-6 flex h-[50px] w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-gray-400 bg-white px-7 text-slate-800 max-md:ml-0 max-md:h-[50px] max-md:max-w-full max-md:px-5 max-sm:hidden max-sm:h-[40px] max-sm:gap-0 max-sm:px-4 max-sm:pr-1">
@@ -51,7 +53,7 @@ const SearchBar: React.FC = () => {
         </label>
         <input
           // value={searchParams.get('search')?.toString()}
-          defaultValue={searchValue}
+          defaultValue={value}
           onChange={(e) => {
             handleSearch(e.target.value);
           }}
@@ -69,11 +71,7 @@ const SearchBar: React.FC = () => {
           <SearchIcon />
         </button>
       </form>
-      <SearchResults
-        searchValue={searchValue}
-        state={state}
-        setState={setState}
-      />
+      <SearchResults searchValue={value} state={state} setState={setState} />
     </div>
   );
 };

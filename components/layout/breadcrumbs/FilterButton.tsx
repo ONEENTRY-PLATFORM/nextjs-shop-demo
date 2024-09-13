@@ -17,7 +17,7 @@ const FilterButton: React.FC = () => {
   return (
     <button
       type="button"
-      className="group flex items-center bg-white text-slate-800 transition-colors hover:text-orange-500"
+      className="group flex items-center gap-2 bg-white text-slate-800 transition-colors hover:text-orange-500"
       aria-label="Filter"
       onClick={() => {
         setComponent('FilterForm');

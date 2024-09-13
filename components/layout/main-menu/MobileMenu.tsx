@@ -76,7 +76,7 @@ function MobileMenu({ menu }: { menu: IMenusPages[] }) {
               <button
                 aria-label="Close menu"
                 onClick={closeMenu}
-                className="absolute right-4 top-6 flex aspect-square size-12 shrink-0 items-center justify-center rounded-full border border-[#EEEFF0] text-xl"
+                className="absolute right-4 top-6 flex aspect-square size-12 shrink-0 items-center justify-center rounded-full border border-[#EEEFF0] text-xl text-slate-700"
               >
                 &#10005;
               </button>

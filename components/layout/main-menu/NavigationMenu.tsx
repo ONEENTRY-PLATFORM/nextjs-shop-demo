@@ -95,7 +95,7 @@ const NavigationMenu: React.FC = async () => {
                 />
 
                 {Array.isArray(item.children) && (
-                  <ul className="absolute z-10 mt-6 hidden flex-col gap-4 bg-white px-6 py-8 leading-8 shadow-lg group-hover:flex">
+                  <ul className="absolute z-10 mt-8 hidden flex-col gap-3 rounded-b-2xl bg-white p-6 leading-8 shadow-lg group-hover:flex">
                     {item.children.map((it: IMenusPages, i: React.Key) => {
                       return (
                         <li key={i}>
