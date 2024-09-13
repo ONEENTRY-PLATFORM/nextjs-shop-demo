@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: Props) => {
   const { activeLanguage } = useContext(LanguageContext);
 
   const onInit = async () => {
-    const refresh = localStorage.getItem('refreshToken');
+    const refresh = localStorage.getItem('refresh-token');
     if (!refresh) {
       setIsAuth(false);
       return;
@@ -54,14 +54,14 @@ export const AuthProvider = ({ children }: Props) => {
     trigger({})
       .then(async (res) => {
         if (res.error && !res.isLoading) {
-          localStorage.setItem('refreshToken', '');
+          localStorage.setItem('refresh-token', '');
           return setIsAuth(false);
         }
         setUser(res.data);
         setIsAuth(true);
       })
       .catch(async () => {
-        localStorage.setItem('refreshToken', '');
+        localStorage.setItem('refresh-token', '');
         setIsAuth(false);
       });
   };
@@ -77,7 +77,7 @@ export const AuthProvider = ({ children }: Props) => {
   useEffect(() => {
     if (isError) {
       setIsAuth(false);
-      localStorage.setItem('refreshToken', '');
+      localStorage.setItem('refresh-token', '');
     }
   }, [isError]);
 
@@ -86,13 +86,13 @@ export const AuthProvider = ({ children }: Props) => {
       trigger({})
         .then((res) => {
           if (res.error && !res.isLoading) {
-            localStorage.setItem('refreshToken', '');
+            localStorage.setItem('refresh-token', '');
             return setIsAuth(false);
           }
           setUser(res.data);
         })
         .catch(() => {
-          localStorage.setItem('refreshToken', '');
+          localStorage.setItem('refresh-token', '');
           setIsAuth(false);
         });
     }

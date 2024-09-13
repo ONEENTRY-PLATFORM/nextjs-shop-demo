@@ -82,7 +82,7 @@ const VerificationForm: React.FC = () => {
           otp,
         );
         if (result) {
-          // setComponent('ResetPasswordForm');
+          setComponent('ResetPasswordForm');
         }
         setLoading(false);
       }

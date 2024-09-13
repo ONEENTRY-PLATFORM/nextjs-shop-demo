@@ -5,6 +5,7 @@ import { type Key, useContext } from 'react';
 
 import { useGetUserOrdersQuery } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+import AuthError from '@/components/shared/AuthError';
 import Loader, { OrdersTableLoader } from '@/components/shared/Loader';
 
 import Order from './OrderRow';
@@ -16,7 +17,7 @@ const OrdersPage = () => {
   });
 
   if (!isAuth) {
-    return 'Auth error';
+    return <AuthError />;
   }
 
   if (!data) {

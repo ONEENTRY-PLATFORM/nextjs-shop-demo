@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { IAuthPostBody } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 
-import { api } from '../api/api';
+import { api } from '@/app/api';
 
 type LogInProps = { method: string; login: string; password: string };
 
@@ -36,7 +36,7 @@ type LogOutProps = { marker: string; token?: string };
 export const logOutUser = async ({ marker }: LogOutProps) => {
   try {
     // @ts-ignore
-    const token = localStorage.getItem('refreshToken', res);
+    const token = localStorage.getItem('refresh-token', res);
     if (!token) {
       throw Error('No token provided');
     }

@@ -11,6 +11,7 @@ import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
+import AuthError from '../shared/AuthError';
 import Loader from '../shared/Loader';
 import Spinner from '../shared/Spinner';
 import FormInput from './inputs/FormInput';
@@ -98,7 +99,7 @@ const UserForm: FC = () => {
   }
 
   if (!isAuth || error) {
-    return 'Auth error';
+    return <AuthError />;
   }
 
   return (

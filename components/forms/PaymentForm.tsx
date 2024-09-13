@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable tailwindcss/no-custom-classname */
 import '@/app/styles/payment.css';
 
@@ -9,15 +8,17 @@ import { IMask, IMaskInput } from 'react-imask';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const PaymentForm: React.FC = () => {
+  const inputRef = useRef(null);
+
   const [cardNumber, setCardNumber] = useState('');
   const [cardName, setCardName] = useState('');
   const [cardExp, setCardExp] = useState('01/25');
   const [cardCode, setCardCode] = useState('000');
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // !!!
   };
-  const inputRef = useRef(null);
 
   return (
     <form

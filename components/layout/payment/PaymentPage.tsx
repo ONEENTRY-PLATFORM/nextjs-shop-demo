@@ -5,6 +5,8 @@ import { Suspense, useContext, useMemo, useState } from 'react';
 import { useGetAccountsQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import AuthError from '@/components/shared/AuthError';
 import Loader from '@/components/shared/Loader';
 
 import PaymentMethod from './PaymentMethod';
@@ -16,6 +18,7 @@ const PaymentPage = () => {
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,
   );
+  const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   const whitelistMethods = useMemo(() => {
     if (data) {
@@ -31,8 +34,8 @@ const PaymentPage = () => {
     return [];
   }, [data, paymentMethods]);
 
-  if (!isAuth) {
-    return 'Auth error';
+  if (!isAuth || error) {
+    return <AuthError />;
   }
 
   if (error) {
