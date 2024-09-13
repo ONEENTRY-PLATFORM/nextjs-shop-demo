@@ -4,21 +4,8 @@ import type { IOrdersByMarkersEntity } from 'oneentry/dist/orders/ordersInterfac
 import { UsePrice } from '@/components/utils';
 
 const Order = ({ order }: { order: IOrdersByMarkersEntity }) => {
-  const {
-    id,
-    createdDate,
-    currency,
-    // paymentAccountLocalizeInfos,
-    // products,
-    // statusIdentifier,
-    // attributeSetIdentifier
-    // formData
-    // formIdentifier
-    // isHistory
-    // paymentAccountIdentifier
-    statusIdentifier,
-    totalSum,
-  } = order;
+  const { id, createdDate, currency, statusIdentifier, totalSum } = order;
+
   const formattedPrice = UsePrice({
     amount: totalSum,
     currency: currency,
@@ -27,7 +14,7 @@ const Order = ({ order }: { order: IOrdersByMarkersEntity }) => {
   return (
     <Link
       href={'/orders/' + id}
-      className="-mb-px flex border-collapse gap-4 border-y p-4 hover:text-orange-500"
+      className="-mb-px flex border-collapse gap-4 border-y p-4 text-slate-700 hover:text-orange-500"
     >
       <div className="w-1/2">{createdDate}</div>
       <div className="w-1/4">{formattedPrice}</div>

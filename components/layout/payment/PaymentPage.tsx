@@ -62,8 +62,6 @@ const PaymentPage = () => {
 
   const onConfirmOrder = async () => {
     setIsLoading(true);
-    console.log('onConfirmOrder');
-
     try {
       if (order?.formIdentifier && order?.paymentAccountIdentifier) {
         const editedFormData = order.formData.slice().map((data) => {
