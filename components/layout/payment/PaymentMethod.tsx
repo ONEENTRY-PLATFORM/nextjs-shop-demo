@@ -1,48 +1,36 @@
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
-import React, { useContext } from 'react';
 
-import { useAppDispatch } from '@/app/store/hooks';
-import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
+import { PaymentForm } from '@/components/forms';
 
 type Props = {
   account: IAccountsEntity;
-  selected?: number;
-  index: number;
-  setSelected: (index: number | undefined) => void;
 };
 
-const PaymentMethod: React.FC<Props> = ({
-  account,
-  selected,
-  setSelected,
-  index,
-}) => {
-  const { setOpen, setComponent } = useContext(OpenDrawerContext);
+const PaymentMethod: React.FC<Props> = ({ account }) => {
   const dispatch = useAppDispatch();
+  const orderData = useAppSelector((state) => state.orderReducer.order);
+  const isActive = orderData?.paymentAccountIdentifier === account.identifier;
 
   return (
-    <button
+    <div
       onClick={() => {
-        dispatch(
-          addPaymentMethod(selected === index ? '' : account.identifier),
-        );
-        setSelected(selected === index ? undefined : index);
-        setOpen(true);
-        setComponent('PaymentForm');
+        dispatch(addPaymentMethod(account.identifier));
       }}
       className={
-        'relative h-32 w-48 flex-row items-center justify-between rounded-md border border-solid border-neutral-300 bg-transparent p-2.5 transition-shadow hover:shadow-lg'
+        'relative min-h-32 flex-row items-center justify-between rounded-md border border-solid border-neutral-300 bg-transparent p-2.5 transition-shadow hover:shadow-lg ' +
+        (isActive ? 'w-full' : 'w-48')
       }
     >
       <div className={'flex-row items-center space-x-3'}>
         {account?.localizeInfos?.title}
-        <div className="absolute bottom-2 right-2 size-6 rounded-full bg-slate-50">
-          +
+        <div className="absolute bottom-2 right-2 size-6 rounded-full bg-slate-50 text-center">
+          {isActive ? '-' : '+'}
         </div>
       </div>
-      {/* <Select selected={selected === index} /> */}
-    </button>
+      <PaymentForm />
+    </div>
   );
 };
 

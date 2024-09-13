@@ -14,6 +14,7 @@ import {
 import type { IAppOrder } from '@/app/store/reducers/OrderSlice';
 import {
   addPaymentMethods,
+  addProducts,
   createOrder,
   // removeOrder,
 } from '@/app/store/reducers/OrderSlice';
@@ -26,25 +27,11 @@ import EmptyCart from './EmptyCart';
 
 const CartPage = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [cartTotal, setCartTotal] = useState(0);
   const [order, setOrder] = useState<IAppOrder | undefined>(undefined);
   const dispatch = useAppDispatch();
   const deliveryData = useGetProduct({ id: 83 });
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data, error } = useGetOrderStorageByMarkerQuery({
-    marker: 'order',
-  });
   const orderData = useAppSelector((state) => state.orderReducer.order);
-
-  const total = useAppSelector((state) => {
-    return state.cartReducer.products.reduce((total, item) => {
-      if (item.selected) {
-        total +=
-          (item.attributeValues.sale?.value || item.price) * item.quantity;
-      }
-      return total;
-    }, 0);
-  });
 
   const productsInCart = useAppSelector(selectCartItems) as Array<
     IProductsEntity & { quantity: number; selected: boolean }
@@ -52,6 +39,15 @@ const CartPage = () => {
 
   useEffect(() => {
     setIsLoading(false);
+    dispatch(
+      createOrder({
+        formIdentifier: 'order',
+        formData: [],
+        products: productsInOrder,
+        paymentAccountIdentifier: '',
+      }),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -60,13 +56,6 @@ const CartPage = () => {
     }
     setOrder(orderData);
   }, [orderData]);
-
-  useEffect(() => {
-    if (!total) {
-      return;
-    }
-    setCartTotal(total);
-  }, [total]);
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce((results: Array<IOrderProductData>, item) => {
@@ -79,11 +68,11 @@ const CartPage = () => {
   }, [productsInCart]);
 
   useEffect(() => {
-    if (data) {
-      dispatch(addPaymentMethods(data.paymentAccountIdentifiers));
+    if (productsInOrder) {
+      dispatch(addProducts(productsInOrder));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data]);
+  }, [productsInOrder]);
 
   // add delivery to cart
   useEffect(() => {
@@ -112,74 +101,9 @@ const CartPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmitOrder = (e: any) => {
     e.preventDefault();
-    dispatch(
-      createOrder({
-        formIdentifier: 'order',
-        formData: [],
-        products: productsInOrder,
-        paymentAccountIdentifier: '',
-      }),
-    );
     // !!!
     console.log(order);
   };
-
-  // const createSession = async (id: number) => {
-  //   if (!id) {
-  //     return;
-  //   }
-
-  //   const { paymentUrl, id: orderId } = await api.Payments.createSession(
-  //     id,
-  //     'session',
-  //   );
-  //   if (order?.paymentAccountIdentifier === 'cash') {
-  //     // return navigate('payment_success', { id });
-  //     return 'payment_success';
-  //   }
-
-  //   if (paymentUrl) {
-  //     // navigate('payment_method', { orderId, paymentUrl });
-  //     return 'payment_method';
-  //   }
-  // };
-
-  // const onConfirmOrder = async () => {
-  //   setIsLoading(true);
-  //   try {
-  //     if (order?.formIdentifier && order?.paymentAccountIdentifier) {
-  //       const editedFormData = order.formData.slice().map((data) => {
-  //         return {
-  //           marker: data.marker,
-  //           type: data.type,
-  //           value: data.value,
-  //         };
-  //       });
-  //       const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
-  //         'order',
-  //         {
-  //           ...order,
-  //           formData: editedFormData,
-  //           formIdentifier: order.formIdentifier,
-  //           paymentAccountIdentifier: order.paymentAccountIdentifier,
-  //         },
-  //       );
-
-  //       dispatch(removeAllProducts());
-  //       dispatch(removeOrder());
-
-  //       if (paymentAccountIdentifier !== 'cash') {
-  //         await createSession(id);
-  //       } else {
-  //         // return navigate('orders');
-  //       }
-  //     }
-  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   } catch (e: any) {
-  //     console.error(e);
-  //   }
-  //   setIsLoading(false);
-  // };
 
   return (
     <div className="flex w-full flex-col pb-5 lg:max-w-[730px]">
@@ -204,7 +128,7 @@ const CartPage = () => {
       >
         <DeliveryTable {...(deliveryData.product as IProductsEntity)} />
         <div className="mt-4 flex w-[464px] max-w-full flex-col self-center font-bold lg:self-end">
-          <TotalAmount amount={cartTotal} />
+          <TotalAmount />
           <PaymentButton />
         </div>
       </form>
