@@ -217,7 +217,7 @@ const PaymentForm: React.FC = () => {
             id="cardnumber"
             inputMode="numeric"
             inputRef={inputRef}
-            onAccept={(value, mask) => {
+            onAccept={(value) => {
               setCardNumber(value);
             }}
             placeholder="Enter card number"

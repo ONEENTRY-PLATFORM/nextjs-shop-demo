@@ -46,6 +46,7 @@ const PaymentPage = () => {
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { paymentUrl, id: orderId } = await api.Payments.createSession(
       id,
       'session',
@@ -101,14 +102,13 @@ const PaymentPage = () => {
     }
   };
 
-  if (!isAuth) {
+  if (!isAuth || error) {
     return <AuthError />;
   }
 
   if (isLoading) {
     return <Loader />;
   }
-  console.log(whitelistMethods);
 
   return (
     <div className="flex max-w-[730px] flex-col gap-5 pb-5 max-md:max-w-full">

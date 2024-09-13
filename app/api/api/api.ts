@@ -7,8 +7,8 @@ import { defineOneEntry } from 'oneentry';
 import { socket } from '../utils/socket';
 
 // This function used to update user JWT token
-const saveFunction = async (res: string) => {
-  localStorage.setItem('refresh-token', res);
+const saveFunction = async (refreshToken: string) => {
+  localStorage.setItem('refresh-token', refreshToken);
 };
 
 socket.on('connect', () => {
@@ -29,13 +29,15 @@ export let api = defineOneEntry(PROJECT_URL, {
 });
 
 // This function used to update api config
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function reDefine(refreshToken: string, langCode?: string) {
   api = defineOneEntry(PROJECT_URL, {
-    langCode: langCode || 'en_US',
+    langCode: 'en_US',
     token: APP_TOKEN,
     auth: {
       saveFunction,
       refreshToken,
     },
   });
+  console.log(api);
 }

@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
+import type { FC } from 'react';
 
-import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
-
-const PaymentButton: React.FC = () => {
+const PaymentButton: FC = () => {
   return (
     <button
       type="submit"

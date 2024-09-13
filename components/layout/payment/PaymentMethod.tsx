@@ -12,7 +12,7 @@ const PaymentMethod: React.FC<Props> = ({ account, onConfirmOrder }) => {
   const dispatch = useAppDispatch();
   const orderData = useAppSelector((state) => state.orderReducer.order);
   const isActive = orderData?.paymentAccountIdentifier === account.identifier;
-  
+
   return (
     <div
       onClick={() => {
@@ -26,8 +26,10 @@ const PaymentMethod: React.FC<Props> = ({ account, onConfirmOrder }) => {
       }
     >
       <div className={'flex-col'}>
-        <h1 className="text-bold text-lg">{account?.localizeInfos?.title}</h1>
-        <p className="text-sm">Payment description {account?.localizeInfos?.title}</p>
+        <h1 className="text-lg">{account?.localizeInfos?.title}</h1>
+        <p className="text-sm">
+          Payment description {account?.localizeInfos?.title}
+        </p>
         <button
           onClick={() => {
             if (isActive) {
@@ -48,7 +50,6 @@ const PaymentMethod: React.FC<Props> = ({ account, onConfirmOrder }) => {
           Apply
         </button>
       )}
-      {/* {isActive && <PaymentForm />} */}
     </div>
   );
 };
