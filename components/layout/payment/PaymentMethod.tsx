@@ -1,7 +1,8 @@
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
 
 type Props = {
@@ -17,6 +18,7 @@ const PaymentMethod: React.FC<Props> = ({
   setSelected,
   index,
 }) => {
+  const { setOpen, setComponent } = useContext(OpenDrawerContext);
   const dispatch = useAppDispatch();
 
   return (
@@ -26,6 +28,8 @@ const PaymentMethod: React.FC<Props> = ({
           addPaymentMethod(selected === index ? '' : account.identifier),
         );
         setSelected(selected === index ? undefined : index);
+        setOpen(true);
+        setComponent('PaymentForm');
       }}
       className={
         'relative h-32 w-48 flex-row items-center justify-between rounded-md border border-solid border-neutral-300 bg-transparent p-2.5 transition-shadow hover:shadow-lg'

@@ -12,6 +12,7 @@ const RelatedItems: React.FC<{
   title: string;
 }> = async ({ id, marker, title }) => {
   const data = await getSimilarProducts(marker, 'en_US');
+  // !!!
   const related = await getRelatedProductsById(id, 'en_US');
   console.log(related);
 

@@ -5,7 +5,7 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
-import Loader from '@/components/shared/Loader';
+import { ProductsGridLoader } from '@/components/shared/Loader';
 
 import { getPageByUrl, getProductsByUrl } from '../../api/serverSideProps';
 
@@ -83,7 +83,7 @@ export default async function CatalogPage({
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
             gridItems={products}
             totalPages={(page?.products || 0) / pageLimit}

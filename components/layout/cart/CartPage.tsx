@@ -4,8 +4,7 @@ import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { useEffect, useMemo, useState } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { api, useGetOrderStorageByMarkerQuery, useGetProduct } from '@/app/api';
+import { useGetOrderStorageByMarkerQuery, useGetProduct } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addProductToCart,
@@ -115,6 +114,7 @@ const CartPage = () => {
         paymentAccountIdentifier: '',
       }),
     );
+    // !!!
     console.log(order);
   };
 

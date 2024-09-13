@@ -25,7 +25,7 @@ const ProductCard: React.FC<{
   return (
     <article className="flex w-full justify-between gap-5 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
       <div className="relative flex justify-between gap-5">
-        <div className="relative z-10 mb-auto box-border flex shrink-0 flex-row self-center">
+        <div className="relative z-10 mb-auto box-border flex shrink-0 flex-row self-center overflow-hidden rounded-md">
           <input
             onChange={() => {
               dispatch(deselectProduct(id));
@@ -34,7 +34,7 @@ const ProductCard: React.FC<{
             name={'deselectProduct-' + id}
             id=""
             checked={selected}
-            className="size-5 bg-orange-500 "
+            className="size-5 border-spacing-3 rounded-lg border border-solid accent-orange-500 ring-2 ring-orange-700"
           />
         </div>
 

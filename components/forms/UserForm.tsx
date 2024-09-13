@@ -4,13 +4,15 @@
 import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FormDataType } from 'oneentry/dist/formsData/formsDataInterfaces';
-import React, { useContext } from 'react';
+import type { FC, FormEvent, Key } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
 import Loader from '../shared/Loader';
+import Spinner from '../shared/Spinner';
 import FormInput from './inputs/FormInput';
 
 export type InputValue = {
@@ -19,7 +21,8 @@ export type InputValue = {
   [key: string]: unknown;
 };
 
-const UserForm: React.FC = () => {
+const UserForm: FC = () => {
+  const [loading, setLoading] = useState(false);
   const { data, isLoading, error } = useGetFormByMarkerQuery({ marker: 'reg' });
 
   const fields = useAppSelector(
@@ -46,11 +49,12 @@ const UserForm: React.FC = () => {
 
   const { refreshUser, user } = useContext(AuthContext);
 
-  const onUpdateUserData = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onUpdateUserData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const formData: IAuthFormData[] = data?.attributes
-        .map((field: IAttributes, index: React.Key) => {
+        .map((field: IAttributes, index: Key) => {
           if (field.marker !== 'email_notifications') {
             return {
               marker: field.marker,
@@ -81,9 +85,11 @@ const UserForm: React.FC = () => {
         });
       }
       refreshUser();
+      setLoading(false);
     } catch (e: unknown) {
       console.error(e);
       refreshUser();
+      setLoading(false);
     }
   };
 
@@ -101,7 +107,7 @@ const UserForm: React.FC = () => {
       onSubmit={(e) => onUpdateUserData(e)}
     >
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-        {data?.attributes.map((field: IAttributes, index: React.Key) => {
+        {data?.attributes.map((field: IAttributes, index: Key) => {
           const fieldData = user?.formData.find(
             (item) => item.marker === field.marker,
           ) as FormDataType[];
@@ -113,9 +119,9 @@ const UserForm: React.FC = () => {
 
       <button
         type="submit"
-        className="mt-auto flex w-[282px] max-w-full items-center justify-center self-center rounded-[30px] border border-none border-[black] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
+        className="mt-auto flex w-[280px] max-w-full items-center justify-center self-center rounded-[30px] border border-none border-[black] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
       >
-        Save
+        {isLoading ? <Spinner /> : 'Save'}
       </button>
     </form>
   );

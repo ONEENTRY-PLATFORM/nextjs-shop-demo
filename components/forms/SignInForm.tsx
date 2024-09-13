@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { IAttributes } from 'oneentry/dist/base/utils';
-import type { Key } from 'react';
+import type { FC, Key } from 'react';
 import React, { useContext, useState } from 'react';
 
 import { logInUser, useGetFormByMarkerQuery } from '@/app/api';
@@ -17,7 +17,7 @@ import FormInput from './inputs/FormInput';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
-const SignInForm: React.FC = () => {
+const SignInForm: FC = () => {
   const { authenticate } = useContext(AuthContext);
   const { isAuth } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
@@ -124,7 +124,7 @@ const SignInForm: React.FC = () => {
         {isLoading || loading ? <Spinner /> : 'Sign in'}
       </button>
 
-      <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm max-md:mt-10">
+      <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm">
         <div className="font-bold text-gray-800">Forgot Password?</div>
         {/* <ForgotPasswordButton title="Forgot Password?" /> */}
         <ResetPasswordButton title="Reset password" />

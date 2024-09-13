@@ -28,16 +28,15 @@ const PaymentPage = () => {
         }
       });
     }
-
     return [];
   }, [data, paymentMethods]);
 
-  if (error) {
-    return <Loader />;
-  }
-
   if (!isAuth) {
     return 'Auth error';
+  }
+
+  if (error) {
+    return <Loader />;
   }
 
   return (

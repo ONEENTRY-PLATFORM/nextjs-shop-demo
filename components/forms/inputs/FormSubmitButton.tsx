@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 
 import Spinner from '@/components/shared/Spinner';
 
@@ -7,10 +7,7 @@ interface FormSubmitButtonProps {
   isLoading: boolean;
 }
 
-const FormSubmitButton: React.FC<FormSubmitButtonProps> = ({
-  title,
-  isLoading,
-}) => {
+const FormSubmitButton: FC<FormSubmitButtonProps> = ({ title, isLoading }) => {
   return (
     <button
       disabled={isLoading}

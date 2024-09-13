@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import SearchIcon from '@/components/icons/search';
@@ -15,10 +15,15 @@ const SearchBar: React.FC = () => {
   const { replace } = useRouter();
   const router = useRouter();
   const [state, setState] = useState(false);
+  const [placeholder, setPlaceholder] = useState('');
 
   const searchPlaceholder = useAppSelector(
     (state) => state.systemContentReducer.content.search_placeholder,
   );
+
+  useEffect(() => {
+    setPlaceholder(searchPlaceholder);
+  }, [searchPlaceholder]);
 
   const handleSearch = (term: string) => {
     if (term) {
@@ -42,7 +47,7 @@ const SearchBar: React.FC = () => {
     <div className="relative my-auto ml-6 flex h-[50px] w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-gray-400 bg-white px-7 text-slate-800 max-md:ml-0 max-md:h-[50px] max-md:max-w-full max-md:px-5 max-sm:hidden max-sm:h-[40px] max-sm:gap-0 max-sm:px-4 max-sm:pr-1">
       <form className="flex w-full" onSubmit={handleSubmit}>
         <label htmlFor="quick-search" className="sr-only">
-          {searchPlaceholder}
+          {placeholder}
         </label>
         <input
           // value={searchParams.get('search')?.toString()}
@@ -51,7 +56,7 @@ const SearchBar: React.FC = () => {
             handleSearch(e.target.value);
           }}
           type="search"
-          placeholder={searchPlaceholder}
+          placeholder={placeholder}
           id="quick-search"
           name="quick-search"
           className="h-auto w-full self-stretch border-none text-lg outline-none max-md:max-w-full max-md:px-5"
@@ -60,7 +65,7 @@ const SearchBar: React.FC = () => {
           type="submit"
           className="group relative m-auto box-border flex shrink-0 flex-col p-2.5"
         >
-          <span className="sr-only">{searchPlaceholder}</span>
+          <span className="sr-only">{placeholder}</span>
           <SearchIcon />
         </button>
       </form>
