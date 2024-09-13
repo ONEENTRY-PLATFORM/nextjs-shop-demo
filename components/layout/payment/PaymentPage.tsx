@@ -18,9 +18,9 @@ const PaymentPage = () => {
   const { isAuth } = useContext(AuthContext);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isComplete, setIsComplete] = useState(false);
 
   const { data, error } = useGetAccountsQuery({});
-  const [selected, setSelected] = useState<number | undefined>();
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,
   );
@@ -62,6 +62,8 @@ const PaymentPage = () => {
 
   const onConfirmOrder = async () => {
     setIsLoading(true);
+    console.log('onConfirmOrder');
+
     try {
       if (order?.formIdentifier && order?.paymentAccountIdentifier) {
         const editedFormData = order.formData.slice().map((data) => {
@@ -87,7 +89,9 @@ const PaymentPage = () => {
         if (paymentAccountIdentifier !== 'cash') {
           await createSession(id);
         } else {
+          setIsComplete(true);
           // return navigate('orders');
+          return;
         }
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -101,15 +105,25 @@ const PaymentPage = () => {
     return <AuthError />;
   }
 
-  if (error) {
+  if (isLoading) {
     return <Loader />;
+  }
+
+  if (isComplete) {
+    return 'isComplete';
   }
 
   return (
     <div className="flex max-w-[730px] flex-col gap-5 pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>
         {whitelistMethods.map((item, index) => {
-          return <PaymentMethod key={index} account={item} />;
+          return (
+            <PaymentMethod
+              key={index}
+              account={item}
+              onConfirmOrder={onConfirmOrder}
+            />
+          );
         })}
       </Suspense>
     </div>
