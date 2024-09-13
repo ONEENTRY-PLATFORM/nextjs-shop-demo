@@ -1,13 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 
 const EmptyCart = () => {
+  const [emptyText, setEmptyText] = useState('');
   const { empty_cart_plug } = useAppSelector(
     (state) => state.systemContentReducer.content,
   );
+
+  useEffect(() => {
+    if (!empty_cart_plug) {
+      return;
+    }
+    setEmptyText(empty_cart_plug);
+  }, [empty_cart_plug]);
 
   return (
     <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
@@ -18,7 +26,7 @@ const EmptyCart = () => {
         src={'/icons/cart.svg'}
         alt={''}
       />
-      <h1 className="mb-5">{empty_cart_plug}</h1>
+      <h1 className="mb-5">{emptyText}</h1>
       <Link href="/shop" className="underline">
         Go to shop
       </Link>

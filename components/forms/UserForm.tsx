@@ -22,6 +22,7 @@ export type InputValue = {
 };
 
 const UserForm: FC = () => {
+  const { isAuth } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const { data, isLoading, error } = useGetFormByMarkerQuery({ marker: 'reg' });
 
@@ -45,7 +46,6 @@ const UserForm: FC = () => {
       value: string;
     };
   };
-  const { isAuth } = useContext(AuthContext);
 
   const { refreshUser, user } = useContext(AuthContext);
 
@@ -93,11 +93,11 @@ const UserForm: FC = () => {
     }
   };
 
-  if (isLoading || error) {
+  if (isLoading || loading) {
     return <Loader />;
   }
 
-  if (!isAuth) {
+  if (!isAuth || error) {
     return 'Auth error';
   }
 

@@ -55,10 +55,16 @@ const CartPage = () => {
   }, []);
 
   useEffect(() => {
+    if (!orderData) {
+      return;
+    }
     setOrder(orderData);
   }, [orderData]);
 
   useEffect(() => {
+    if (!total) {
+      return;
+    }
     setCartTotal(total);
   }, [total]);
 
@@ -176,10 +182,7 @@ const CartPage = () => {
   // };
 
   return (
-    <div
-      className="flex w-full flex-col pb-5 lg:max-w-[730px]"
-      onSubmit={(e) => onSubmitOrder(e)}
-    >
+    <div className="flex w-full flex-col pb-5 lg:max-w-[730px]">
       {productsInCart.length > 0 && (
         <div className="mb-4 flex w-full flex-col gap-4">
           {productsInCart.map((product: IProductsEntity, i: number) => {
