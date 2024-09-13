@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Suspense, useContext, useMemo, useState } from 'react';
 
 import { api, useGetAccountsQuery } from '@/app/api';
@@ -13,18 +14,18 @@ import Loader from '@/components/shared/Loader';
 import PaymentMethod from './PaymentMethod';
 
 const PaymentPage = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
-
   const { isAuth } = useContext(AuthContext);
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [isComplete, setIsComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { data, error } = useGetAccountsQuery({});
+
+  const order = useAppSelector((state) => state.orderReducer.order);
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,
   );
-  const order = useAppSelector((state) => state.orderReducer.order);
 
   const whitelistMethods = useMemo(() => {
     if (data) {
@@ -51,18 +52,20 @@ const PaymentPage = () => {
     );
     if (order?.paymentAccountIdentifier === 'cash') {
       // return navigate('payment_success', { id });
+      router.push('/orders');
       return 'payment_success';
     }
 
     if (paymentUrl) {
       // navigate('payment_method', { orderId, paymentUrl });
+      router.push('/orders');
       return 'payment_method';
     }
   };
 
   const onConfirmOrder = async () => {
-    setIsLoading(true);
     try {
+      setIsLoading(true);
       if (order?.formIdentifier && order?.paymentAccountIdentifier) {
         const editedFormData = order.formData.slice().map((data) => {
           return {
@@ -87,29 +90,25 @@ const PaymentPage = () => {
         if (paymentAccountIdentifier !== 'cash') {
           await createSession(id);
         } else {
-          setIsComplete(true);
-          // return navigate('orders');
-          return;
+          router.push('/orders');
         }
+        setIsLoading(false);
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.error(e);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
-  if (!isAuth || error) {
+  if (!isAuth) {
     return <AuthError />;
   }
 
   if (isLoading) {
     return <Loader />;
   }
-
-  if (isComplete) {
-    return 'isComplete';
-  }
+  console.log(whitelistMethods);
 
   return (
     <div className="flex max-w-[730px] flex-col gap-5 pb-5 max-md:max-w-full">

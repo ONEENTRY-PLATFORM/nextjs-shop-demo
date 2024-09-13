@@ -1,23 +1,18 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { useEffect, useMemo, useState } from 'react';
 
-import { useGetOrderStorageByMarkerQuery, useGetProduct } from '@/app/api';
+import { useGetProduct } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addProductToCart,
-  // removeAllProducts,
   selectCartItems,
 } from '@/app/store/reducers/CartSlice';
 import type { IAppOrder } from '@/app/store/reducers/OrderSlice';
-import {
-  addPaymentMethods,
-  addProducts,
-  createOrder,
-  // removeOrder,
-} from '@/app/store/reducers/OrderSlice';
+import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import DeliveryTable from '@/components/layout/cart/DeliveryTable';
 import PaymentButton from '@/components/layout/cart/PaymentButton';
 import ProductCard from '@/components/layout/cart/ProductCard';
@@ -26,6 +21,7 @@ import TotalAmount from '@/components/layout/cart/TotalAmount';
 import EmptyCart from './EmptyCart';
 
 const CartPage = () => {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [order, setOrder] = useState<IAppOrder | undefined>(undefined);
   const dispatch = useAppDispatch();
@@ -101,8 +97,7 @@ const CartPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmitOrder = (e: any) => {
     e.preventDefault();
-    // !!!
-    console.log(order);
+    router.push('/payment');
   };
 
   return (

@@ -50,6 +50,7 @@ const DeliveryTable: React.FC<IProductsEntity> = (product) => {
               name="address"
               placeholder={order_info_address_placeholder}
               onChange={(e) => setAddress(e.target.value)}
+              required
             />
           </td>
         </tr>

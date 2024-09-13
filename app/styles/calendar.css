@@ -28,6 +28,7 @@
 .react-calendar__navigation button {
   min-width: 44px;
   background: none;
+  color: #636363;
 }
 .react-calendar__navigation button:disabled {
   background-color: #f0f0f0;
@@ -44,6 +45,7 @@ button.react-calendar__navigation__label {
 }
 .react-calendar__month-view__weekdays__weekday {
   padding: 0.5em;
+  color: #636363;
 }
 .react-calendar__month-view__weekNumbers .react-calendar__tile {
   display: flex;

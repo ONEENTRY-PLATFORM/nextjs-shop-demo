@@ -34,7 +34,7 @@ const ProductCard: React.FC<{
             name={'deselectProduct-' + id}
             id=""
             checked={selected}
-            className="size-5 border-spacing-3 rounded-lg border border-solid accent-orange-500 ring-2 ring-orange-700"
+            className="size-5 border-spacing-3 accent-orange-500 ring-2 ring-orange-700"
           />
         </div>
 
