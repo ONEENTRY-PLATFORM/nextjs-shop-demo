@@ -63,7 +63,7 @@ const ProductCard: React.FC<{
         ></Link>
       </div>
 
-      <div className="z-10 flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:ml-6 max-sm:flex">
+      <div className="z-10 flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:ml-8 max-sm:flex">
         <QuantitySelector product={product} height={42} />
         <DeleteButton {...product} />
       </div>

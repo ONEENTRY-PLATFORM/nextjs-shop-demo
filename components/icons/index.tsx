@@ -8,6 +8,7 @@ import like from './like';
 import orders from './orders';
 import payment from './payment';
 import profile from './profile';
+import logout from './profile';
 import search from './search';
 
 export {
@@ -17,6 +18,7 @@ export {
   favorites,
   filter,
   like,
+  logout,
   orders,
   payment,
   profile,

@@ -5,8 +5,8 @@ import { SidebarMenuLoader } from '@/components/shared/Loader';
 
 import SidebarMenuItem from './SidebarMenuItem';
 
-export const revalidate = 10;
-export const dynamicParams = true;
+// export const revalidate = 10;
+// export const dynamicParams = true;
 
 export default async function SidebarMenu() {
   const { isError, menu } = await getMenuByMarker({
@@ -26,6 +26,18 @@ export default async function SidebarMenu() {
         {pages.map((item) => {
           return <SidebarMenuItem key={item.id} menuItem={item} />;
         })}
+        <SidebarMenuItem
+          menuItem={
+            {
+              id: 1000,
+              pageUrl: 'logout',
+              localizeInfos: { menuTitle: 'Logout' },
+              parentId: null,
+              position: 10,
+              isActive: false,
+            } as IMenusPages & { isActive: boolean }
+          }
+        />
       </ul>
     </nav>
   );

@@ -64,13 +64,15 @@ const DeliveryTable: React.FC<IProductsEntity> = (product) => {
                 alt="delivery"
                 width={125}
                 height={107}
-                className="aspect-[1.16] w-[125px] max-w-full shrink-0 p-4"
+                className="aspect-[1.16] w-[125px] max-w-full shrink-0 p-4 max-sm:p-0"
               />
             </td>
             <td className="table-cell px-5 align-middle">
               <div className="mt-2 flex flex-col self-start">
-                <div className="text-base">{product?.localizeInfos?.title}</div>
-                <div className="mt-4 text-xl font-bold leading-8">
+                <div className="mb-4 text-base max-sm:mb-2">
+                  {product?.localizeInfos?.title}
+                </div>
+                <div className="mb-2 text-xl font-bold leading-8">
                   {UsePrice({
                     amount: product?.price,
                     currency: 'USD',
