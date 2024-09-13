@@ -1,16 +1,16 @@
 'use client';
 
-// import { useRouter } from 'next/navigation';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import type { FC } from 'react';
 
-const HistoryBack: React.FC = () => {
-  // const router = useRouter();
+const HistoryBack: FC = () => {
+  const router = useRouter();
   return (
     <button
       type="button"
       className="group flex size-12 items-center justify-center rounded-full border border-solid border-slate-200 bg-white p-2 transition-colors duration-200 hover:border-orange-500 md:size-[40px] lg:size-[50px] lg:p-3.5"
       aria-label="Go back"
-      // onClick={() => router.back()}
+      onClick={() => router.back()}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

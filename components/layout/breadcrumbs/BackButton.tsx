@@ -8,7 +8,7 @@ const BackButton: FC = () => {
   return (
     <button
       type="button"
-      className="group flex size-[36px] items-center justify-center rounded-full border border-solid border-gray-400 bg-white p-2 transition-colors hover:border-orange-500 md:size-[40px] lg:size-[50px] lg:p-3.5"
+      className="group flex size-9 items-center justify-center rounded-full border border-solid border-gray-400 bg-white p-2 transition-colors hover:border-orange-500 md:size-[40px] lg:size-[50px] lg:p-3.5"
       aria-label="Go back"
       onClick={() => router.back()}
     >
