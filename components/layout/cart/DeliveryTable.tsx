@@ -2,23 +2,27 @@ import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import React, { useState } from 'react';
 
-import { useAppSelector } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import {
+  selectDeliveryData,
+  setDeliveryData,
+} from '@/app/store/reducers/CartSlice';
 import { UsePrice } from '@/components/utils';
 
 import TableRow from './DeliveryTableRow';
 
 const DeliveryTable: React.FC<IProductsEntity> = (product) => {
-  const deliveryData = useAppSelector(
-    (state) => state.cartReducer.deliveryData,
-  );
+  const dispatch = useAppDispatch();
+  // const deliveryData = useAppSelector(
+  //   (state) => state.cartReducer.deliveryData,
+  // );
+  const deliveryData = useAppSelector(selectDeliveryData);
   const date = new Date(deliveryData.date).toLocaleDateString('en-US');
   const {
     order_info_date_placeholder,
     order_info_time_placeholder,
     order_info_address_placeholder,
   } = useAppSelector((state) => state.systemContentReducer.content);
-
-  const [address, setAddress] = useState('');
 
   return (
     <table className="table w-full border-collapse text-neutral-600">
@@ -32,7 +36,7 @@ const DeliveryTable: React.FC<IProductsEntity> = (product) => {
 
         <TableRow
           label={'Time'}
-          value={deliveryData?.time || ''}
+          value={deliveryData.time}
           icon={'/icons/time.svg'}
           placeholder={order_info_time_placeholder}
         />
@@ -45,11 +49,18 @@ const DeliveryTable: React.FC<IProductsEntity> = (product) => {
             <input
               size={40}
               type="text"
-              value={address}
+              value={deliveryData.address}
               id="address"
               name="address"
               placeholder={order_info_address_placeholder}
-              onChange={(e) => setAddress(e.target.value)}
+              onChange={(e) => {
+                dispatch(
+                  setDeliveryData({
+                    ...deliveryData,
+                    address: e.target.value,
+                  }),
+                );
+              }}
               required
             />
           </td>

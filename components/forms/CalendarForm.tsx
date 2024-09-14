@@ -19,10 +19,16 @@ const CalendarComponent: React.FC = () => {
   const deliveryData = useAppSelector(selectDeliveryData);
 
   const [date, setDate] = useState<Date>(new Date(deliveryData.date));
-  const [time, setTime] = useState<string>(deliveryData?.time || '');
+  const [time, setTime] = useState<string>(deliveryData.time);
 
   const onApply = () => {
-    dispatch(setDeliveryData({ date: date.getTime(), time: time }));
+    dispatch(
+      setDeliveryData({
+        date: date.getTime(),
+        time: time,
+        address: deliveryData.address,
+      }),
+    );
     setOpen(false);
   };
 

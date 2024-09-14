@@ -10,6 +10,7 @@ type InitialStateType = {
   deliveryData: {
     date: number;
     time: string;
+    address: string;
   };
 };
 
@@ -18,6 +19,7 @@ const initialState: InitialStateType = {
   deliveryData: {
     date: new Date().getTime(),
     time: '',
+    address: '',
   },
 };
 
@@ -119,13 +121,12 @@ export const cartSlice = createSlice({
     },
     setDeliveryData(
       state,
-      action: PayloadAction<{ date: number; time: string }>,
+      action: PayloadAction<{ date: number; time: string; address: string }>,
     ) {
-      const date = action.payload.date;
-      const time = action.payload.time;
       state.deliveryData = {
-        date: date,
-        time: time,
+        date: action.payload.date,
+        time: action.payload.time,
+        address: action.payload.address,
       };
     },
   },
@@ -165,6 +166,7 @@ export const selectDeliveryData = (state: {
     deliveryData: {
       date: number;
       time: string;
+      address: string;
     };
   };
 }) => state.cartReducer.deliveryData;
