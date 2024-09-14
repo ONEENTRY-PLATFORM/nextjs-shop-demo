@@ -3,27 +3,10 @@ import ArrowRightIcon from '@/components/icons/arrow-right';
 
 interface NavigationButtonProps {
   direction: 'left' | 'right';
-  action: () => void;
 }
 
-const NavigationButton: React.FC<NavigationButtonProps> = ({
-  direction,
-  action,
-}) => {
-  const altText = `${direction}`;
-
-  return (
-    <button
-      title={altText}
-      type="button"
-      className={
-        'group flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500'
-      }
-      onClick={action}
-    >
-      {direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />}
-    </button>
-  );
+const NavigationButton: React.FC<NavigationButtonProps> = ({ direction }) => {
+  return direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />;
 };
 
 export default NavigationButton;

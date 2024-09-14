@@ -1,6 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import type { FC } from 'react';
+import { useState } from 'react';
+import Carousel from 'react-simply-carousel';
 
 import { variationsItems } from '@/components/data';
 
@@ -8,56 +10,67 @@ import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const VariationsCarousel: React.FC<{ items: [] }> = ({ items }) => {
+const VariationsCarousel: FC<{ items: [] }> = ({ items }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [isHovered, setIsHovered] = useState<boolean>(false);
-
-  const prevSlide = (): void => {
-    setCurrentIndex(
-      (prevIndex) =>
-        (prevIndex - 1 + variationsItems.length) % variationsItems.length,
-    );
-  };
-  const nextSlide = (): void => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % variationsItems.length);
-  };
-
-  useEffect(() => {
-    // if (!isHovered) {
-    //   const interval = setInterval(() => {
-    //     nextSlide();
-    //   }, 3000);
-    //   return () => {
-    //     clearInterval(interval);
-    //   };
-    // }
-  }, [isHovered]);
 
   return (
-    <nav
-      className="flex w-full px-10"
-      onMouseOver={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="flex w-full items-center justify-center gap-[3%] self-stretch overflow-hidden">
-        {variationsItems?.map((item, idx) => (
-          <CarouselItem
-            key={idx}
-            title={item.title}
-            imageSrc={item.imageSrc}
-            index={idx}
-            currentIndex={currentIndex}
-            setCurrentIndex={setCurrentIndex}
-          />
-        ))}
-      </div>
-      <div className="absolute left-0 top-[calc(_50%_-_20px)] w-full">
-        <div className="absolute left-0">
-          <NavigationButton direction="left" action={prevSlide} />
-        </div>
-        <div className="absolute right-0">
-          <NavigationButton direction="right" action={nextSlide} />
-        </div>
+    <nav className="flex w-full">
+      <div className="flex w-full items-center justify-center self-stretch">
+        <Carousel
+          infinite
+          containerProps={{
+            style: {
+              width: '100%',
+              justifyContent: 'space-between',
+              userSelect: 'none',
+            },
+            className:
+              'flex min-w-full w-full items-center justify-center gap-[3%] self-stretch overflow-hidden',
+          }}
+          preventScrollOnSwipe
+          swipeTreshold={60}
+          activeSlideIndex={currentIndex}
+          activeSlideProps={{
+            style: {},
+          }}
+          onRequestChange={setCurrentIndex}
+          itemsToShow={3}
+          speed={400}
+          centerMode={false}
+          forwardBtnProps={{
+            children: <NavigationButton direction="right" />,
+            style: {
+              width: 30,
+              height: 30,
+              minWidth: 30,
+              alignSelf: 'center',
+            },
+            className:
+              'group flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500',
+          }}
+          backwardBtnProps={{
+            children: <NavigationButton direction="left" />,
+            style: {
+              width: 30,
+              height: 30,
+              minWidth: 30,
+              alignSelf: 'center',
+            },
+            className:
+              'group flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500',
+          }}
+        >
+          {variationsItems.map((item, idx) => (
+            <CarouselItem
+              key={idx}
+              title={item.title}
+              imageSrc={item.imageSrc}
+              index={idx}
+              currentIndex={currentIndex}
+              setCurrentIndex={setCurrentIndex}
+            />
+          ))}
+        </Carousel>
       </div>
     </nav>
   );
