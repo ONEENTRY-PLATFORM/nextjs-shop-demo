@@ -1,10 +1,12 @@
-import React from 'react';
+import type { FC } from 'react';
 
 import CatalogCard from './CatalogCard';
 
-const CatalogGrid: React.FC<{
+interface CatalogGridProps {
   blocks: Array<string>;
-}> = async ({ blocks }) => {
+}
+
+const CatalogGrid: FC<CatalogGridProps> = async ({ blocks }) => {
   if (blocks?.length < 1) {
     return;
   }

@@ -28,7 +28,7 @@ const Sticker: React.FC<IconButtonProps> = ({ sticker }) => {
         width={24}
         height={24}
         loading="lazy"
-        src={sticker.value.extended.value.downloadLink}
+        src={sticker.value.extended?.value.downloadLink}
         alt={sticker.value.title}
         className="relative shrink-0"
       />

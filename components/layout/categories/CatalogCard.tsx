@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type React from 'react';
+import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api/serverSideProps';
 
@@ -9,7 +10,7 @@ interface CatalogCardProps {
   index: number;
 }
 
-const CatalogCard: React.FC<CatalogCardProps> = async ({ cardData }) => {
+const CatalogCard: FC<CatalogCardProps> = async ({ cardData }) => {
   const { block, isError } = await getBlockByMarker({
     marker: cardData,
     langCode: 'en_US',
@@ -33,12 +34,12 @@ const CatalogCard: React.FC<CatalogCardProps> = async ({ cardData }) => {
       <div
         className={`relative flex size-full p-6 ${class_name?.value} overflow-hidden rounded-3xl`}
       >
-        {sticker ? (
+        {sticker?.value[0] ? (
           <div className="absolute left-3 top-3 z-10">
             <Image
               width={30}
               height={30}
-              src={sticker?.value.extended?.value.downloadLink}
+              src={sticker?.value[0]?.extended?.value.downloadLink}
               alt={''}
             />
           </div>

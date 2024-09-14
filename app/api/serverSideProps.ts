@@ -1,9 +1,5 @@
-// import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
-import type {
-  BlockType,
-  // IBlockEntity,
-} from 'oneentry/dist/blocks/blocksInterfaces';
+import type { BlockType } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {

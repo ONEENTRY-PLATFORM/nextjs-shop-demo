@@ -69,7 +69,7 @@ export default async function ProductPage({
     '@type': 'Product',
     name: localizeInfos.title,
     description: attributeValues.description?.value,
-    image: attributeValues.pic.value?.downloadLink,
+    image: attributeValues.pic?.value?.downloadLink,
     offers: {
       '@type': 'AggregateOffer',
       availability: statusIdentifier

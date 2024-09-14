@@ -1,14 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import Image from 'next/image';
 import Link from 'next/link';
+import type { FC } from 'react';
 
-// import type { Key } from 'react';
-// import { Suspense } from 'react';
-// import { getPageByUrl } from '@/app/api/serverSideProps';
+interface CategoryCardProps {
+  category: { title: string; link: string };
+}
 
-const CategoryCard: React.FC<{ category: { title: string; link: string } }> = ({
-  category,
-}) => {
+const CategoryCard: FC<CategoryCardProps> = ({ category }) => {
   return (
     <Link
       href={category.link}

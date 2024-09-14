@@ -10,7 +10,7 @@ import Sticker from './Sticker';
 
 const ProductCard: React.FC<IProductsEntity> = (product) => {
   const { id, attributeValues, localizeInfos } = product;
-  const productImage = attributeValues.pic.value;
+  const productImage = attributeValues.pic?.value;
 
   return (
     <div className="relative flex size-full flex-col items-center rounded-[20px] bg-[#F6F7F9] p-4 transition-shadow duration-500 hover:shadow-xl">

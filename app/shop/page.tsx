@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
     height,
     altText: alt,
   } = {
-    url: attributeValues.icon.downloadLink,
+    url: attributeValues.icon?.downloadLink,
     width: 300,
     height: 300,
     altText: localizeInfos.title,

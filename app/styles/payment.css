@@ -1,18 +1,4 @@
-/* CREDIT CARD IMAGE STYLING */
-#ccsingle {
-  position: absolute;
-  right: 15px;
-  top: 20px;
-}
-#ccsingle svg {
-  width: 100px;
-  max-height: 60px;
-}
-
 /* FRONT OF CARD */
-#svgname {
-  text-transform: uppercase;
-}
 #cardfront .st2 {
   fill: #4C4D56;
 }
@@ -56,7 +42,6 @@
   fill: #C4C4C4;
 }
 #cardback .st6 {
-  font-family: 'Source Code Pro', monospace;
   font-weight: 400;
 }
 #cardback .st7 {
@@ -73,9 +58,6 @@
 }
 #cardback .st11 {
   fill: #EAEAEA;
-}
-#cardback .st12 {
-  font-family: 'Rock Salt', cursive;
 }
 #cardback .st13 {
   font-size: 37.769px;
