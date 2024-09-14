@@ -1,7 +1,7 @@
 'use client';
 
 import type { IOrdersByMarkersEntity } from 'oneentry/dist/orders/ordersInterfaces';
-import { type Key, useContext } from 'react';
+import { type Key, useContext, useEffect, useState } from 'react';
 
 import { useGetUserOrdersQuery } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
@@ -12,9 +12,18 @@ import Order from './OrderRow';
 
 const OrdersPage = () => {
   const { isAuth } = useContext(AuthContext);
+  const [ordersData, setOrdersData] = useState([] as IOrdersByMarkersEntity[]);
+
   const { data, isLoading } = useGetUserOrdersQuery({
     marker: 'order',
   });
+
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+    setOrdersData(data);
+  }, [data]);
 
   if (!isAuth) {
     return <AuthError />;
@@ -35,7 +44,7 @@ const OrdersPage = () => {
         {isLoading ? (
           <OrdersTableLoader />
         ) : (
-          data?.map((order: IOrdersByMarkersEntity, i: Key) => {
+          ordersData.map((order: IOrdersByMarkersEntity, i: Key) => {
             return <Order key={i} order={order} />;
           })
         )}

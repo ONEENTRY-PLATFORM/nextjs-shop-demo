@@ -16,6 +16,7 @@ const OrderPage: React.FC<{ id: number }> = ({ id }) => {
     id: id,
     activeLang: 'en_US',
   });
+
   if (isLoading || !data) {
     return <Loader />;
   }
@@ -57,10 +58,29 @@ const OrderPage: React.FC<{ id: number }> = ({ id }) => {
               </div>
             );
           }
+
           if (field.marker === 'date') {
+            const d = new Date(field.value.fullDate);
+            const year = new Intl.DateTimeFormat('en', {
+              year: 'numeric',
+            }).format(d);
+            const month = new Intl.DateTimeFormat('en', {
+              month: 'short',
+            }).format(d);
+            const day = new Intl.DateTimeFormat('en', {
+              day: '2-digit',
+            }).format(d);
+
             return (
               <div key={i} className="flex gap-2">
-                <b>Delivery: </b> {field.value.fullDate}
+                <b>Delivery date: </b> {`${day}-${month}-${year}`}
+              </div>
+            );
+          }
+          if (field.marker === 'time') {
+            return (
+              <div key={i} className="flex gap-2">
+                <b>Delivery time: </b> {field.value}
               </div>
             );
           }

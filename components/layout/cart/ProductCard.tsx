@@ -19,8 +19,7 @@ const ProductCard: React.FC<{
     return;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { id, attributeValues, price, localizeInfos, selected } = product;
+  const { id, attributeValues, localizeInfos, selected } = product;
 
   return (
     <article className="flex w-full justify-between gap-5 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
@@ -32,7 +31,7 @@ const ProductCard: React.FC<{
             }}
             type="checkbox"
             name={'deselectProduct-' + id}
-            id=""
+            id={'deselectProduct-' + id}
             checked={selected}
             className="size-5 border-spacing-3 accent-orange-500 ring-2 ring-orange-700"
           />

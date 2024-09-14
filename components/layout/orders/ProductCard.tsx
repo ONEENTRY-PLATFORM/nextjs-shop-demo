@@ -21,7 +21,7 @@ const ProductCard: React.FC<{ product: IOrderProducts; currency: string }> = ({
 
   return (
     <div className="relative flex w-full flex-row gap-4">
-      <div className="relative h-[150px] min-w-[130px] border border-solid border-gray-200">
+      <div className="relative h-[150px] min-w-[130px]">
         <Image
           fill
           sizes="(min-width: 300px) 66vw, 100vw"

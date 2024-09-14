@@ -12,7 +12,7 @@ import { socialProvidersButtons } from '../data';
 import Loader from '../shared/Loader';
 import Spinner from '../shared/Spinner';
 import CreateAccountButton from './inputs/CreateAccountButton';
-import ForgotPasswordButton from './inputs/ForgotPasswordButton';
+// import ForgotPasswordButton from './inputs/ForgotPasswordButton';
 import FormInput from './inputs/FormInput';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';

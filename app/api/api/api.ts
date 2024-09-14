@@ -29,15 +29,13 @@ export let api = defineOneEntry(PROJECT_URL, {
 });
 
 // This function used to update api config
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function reDefine(refreshToken: string, langCode?: string) {
   api = defineOneEntry(PROJECT_URL, {
-    langCode: 'en_US',
+    langCode: langCode || 'en_US',
     token: APP_TOKEN,
     auth: {
       saveFunction,
       refreshToken,
     },
   });
-  console.log(api);
 }
