@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import React, { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 
@@ -10,10 +11,11 @@ import { addField } from '@/app/store/reducers/FormFieldsSlice';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const VerificationForm: React.FC = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { setComponent, action } = useContext(OpenDrawerContext);
+  const { setOpen, setComponent, action } = useContext(OpenDrawerContext);
 
   const [isLoading, setLoading] = useState(false);
   const [otp, setOtp] = useState('');
@@ -41,6 +43,9 @@ const VerificationForm: React.FC = () => {
   };
 
   useEffect(() => {
+    if (!otp) {
+      return;
+    }
     dispatch(
       addField({
         otp_code: {
@@ -60,22 +65,7 @@ const VerificationForm: React.FC = () => {
 
     try {
       setLoading(true);
-      if (action === 'activateUser') {
-        const result = await api.AuthProvider.activateUser(
-          'email',
-          fields['email_reg'].value,
-          otp,
-        );
-        if (result) {
-          await logInUser({
-            method: 'email',
-            login: fields['email_reg'].value,
-            password: fields['password_reg'].value,
-          });
-          authenticate();
-          setLoading(false);
-        }
-      } else if (action === 'checkCode') {
+      if (action !== 'activateUser') {
         const result = await api.AuthProvider.checkCode(
           'email',
           fields['email_reg'].value,
@@ -85,6 +75,29 @@ const VerificationForm: React.FC = () => {
           setComponent('ResetPasswordForm');
         }
         setLoading(false);
+      } else {
+        const result = await api.AuthProvider.activateUser(
+          'email',
+          fields['email_reg'].value,
+          otp,
+        );
+        if (result) {
+          try {
+            await logInUser({
+              method: 'email',
+              login: fields['email_reg'].value,
+              password: fields['password_reg'].value,
+            });
+            authenticate();
+            // redirect after activate user with otp
+            router.push('/profile');
+            setLoading(false);
+            setOpen(false);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          } catch (e: any) {
+            console.log(e);
+          }
+        }
       }
       setError('');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -97,11 +110,12 @@ const VerificationForm: React.FC = () => {
   const onResend = async () => {
     try {
       setLoading(true);
-      await api.AuthProvider.generateCode(
+      const res = await api.AuthProvider.generateCode(
         'email',
         fields['email_reg'].value,
         'generate_code',
       );
+      console.log(res);
       setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {

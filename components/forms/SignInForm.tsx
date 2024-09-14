@@ -24,6 +24,7 @@ const SignInForm: FC = () => {
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
   const [tab, setTab] = useState('email');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const { email_reg, password_reg } = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -35,6 +36,10 @@ const SignInForm: FC = () => {
       value: string;
     };
   };
+
+  const formFields = data?.attributes
+    .slice()
+    .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
 
   const onSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,15 +62,14 @@ const SignInForm: FC = () => {
       }
       setOpen(false);
       authenticate();
-    } catch (e: unknown) {
+      setError('');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
       setLoading(false);
       console.log(e);
+      setError(e.message);
     }
   };
-
-  const formFields = data?.attributes
-    .slice()
-    .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
 
   if (isLoading) {
     return <Loader />;
@@ -144,6 +148,7 @@ const SignInForm: FC = () => {
       </div>
 
       <CreateAccountButton title="Create account" />
+      {error && <div className="text-center text-sm text-red-500">{error}</div>}
     </form>
   );
 };

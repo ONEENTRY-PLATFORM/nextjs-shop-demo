@@ -1,6 +1,7 @@
 import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
-import React, { useContext, useState } from 'react';
+import type { FC, FormEvent } from 'react';
+import { useContext, useState } from 'react';
 
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { logInUser } from '@/app/api';
@@ -12,11 +13,11 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
-const SignUpForm: React.FC = () => {
-  const [_isLoading, setIsLoading] = useState<boolean>(false);
+const SignUpForm: FC = () => {
+  const [loading, setIsLoading] = useState<boolean>(false);
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
   const { authenticate } = useContext(AuthContext);
-  const { setOpen, setComponent } = useContext(OpenDrawerContext);
+  const { setOpen, setComponent, setAction } = useContext(OpenDrawerContext);
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -34,8 +35,9 @@ const SignUpForm: React.FC = () => {
       valid: boolean;
     };
   };
+  const [error, setError] = useState('');
 
-  const onSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const canSubmit = Object.keys(fields).reduce((isValid, field) => {
       if (!isValid || !field) {
@@ -59,7 +61,9 @@ const SignUpForm: React.FC = () => {
             type: 'string',
             value: fields[field as keyof typeof fields].value,
           };
-          arr.push(candidate);
+          if (field !== 'otp_code') {
+            arr.push(candidate);
+          }
           return arr;
         },
         [],
@@ -101,9 +105,12 @@ const SignUpForm: React.FC = () => {
         } else {
           setOpen(true);
           setComponent('VerificationForm');
+          setAction('activateUser');
         }
+        setError('');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
+        setError(e.message);
         console.log(e);
       }
       setIsLoading(false);
@@ -130,7 +137,8 @@ const SignUpForm: React.FC = () => {
           }
         })}
       </div>
-      <SubmitButton title="SIGN UP" isLoading={_isLoading && isLoading} />
+      <SubmitButton title="SIGN UP" isLoading={loading || isLoading} />
+      {error && <div className="text-center text-sm text-red-500">{error}</div>}
     </form>
   );
 };

@@ -56,7 +56,7 @@ function Modal() {
           leaveFrom="scale-x-[50%]"
           leaveTo="scale-x-[200%]"
         >
-          <DialogPanel className="fixed left-1/2 top-1/2 z-20 flex size-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-10 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-[550px] max-w-full">
+          <DialogPanel className="fixed left-1/2 top-1/2 z-20 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-10 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-[550px]">
             <CloseModal />
             <Form />
           </DialogPanel>

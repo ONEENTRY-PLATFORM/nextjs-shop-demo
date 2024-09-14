@@ -1,4 +1,5 @@
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
+import type { FC } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
@@ -8,7 +9,7 @@ type Props = {
   onConfirmOrder: () => Promise<void> | undefined;
 };
 
-const PaymentMethod: React.FC<Props> = ({ account, onConfirmOrder }) => {
+const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
   const dispatch = useAppDispatch();
   const orderData = useAppSelector((state) => state.orderReducer.order);
   const isActive = orderData?.paymentAccountIdentifier === account.identifier;
