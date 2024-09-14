@@ -22,7 +22,7 @@ const ProductsGroup: React.FC<{
         {products?.map((product) => (
           <div
             key={product.id}
-            className="relative box-border flex w-[32.5%] shrink-0 flex-col max-md:w-full"
+            className="relative box-border flex w-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%]"
           >
             <GroupCard product={product} />
           </div>

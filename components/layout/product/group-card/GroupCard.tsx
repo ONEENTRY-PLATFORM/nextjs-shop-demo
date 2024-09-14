@@ -13,7 +13,7 @@ const GroupCard: React.FC<{
   const pic2 = images[1]?.downloadLink;
 
   return (
-    <div className="flex flex-row justify-between rounded-xl bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg">
+    <div className="flex flex-row justify-between rounded-xl bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg md:flex-col">
       <div className="flex gap-2.5">
         <div className="flex w-[37%] flex-col">
           <h2 className="mb-5 text-sm leading-4 text-neutral-600">

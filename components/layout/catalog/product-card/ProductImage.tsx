@@ -1,11 +1,12 @@
 import Image from 'next/image';
+import type { FC } from 'react';
 
 interface ProductImageProps {
   imageSrc: string;
   alt: string;
 }
 
-const ProductImage: React.FC<ProductImageProps> = ({ imageSrc, alt }) => {
+const ProductImage: FC<ProductImageProps> = ({ imageSrc, alt }) => {
   return (
     <div className="relative size-40">
       <Image

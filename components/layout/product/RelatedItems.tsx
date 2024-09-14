@@ -27,19 +27,12 @@ const RelatedItems: React.FC<{
         {title}
       </h3>
 
-      <div className="flex gap-5 overflow-hidden pb-4 max-lg:flex-wrap">
+      <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
         {data.products?.map((product, i) => {
           if (i > 4) {
             return null;
           }
-          return (
-            <div
-              key={i}
-              className="relative box-border flex w-[calc(_20%_-_1rem_)] shrink-0 flex-col max-xl:w-[calc(_33.3333333%_-_1rem_)] max-md:w-[calc(_50%_-_1rem_)] max-sm:w-full"
-            >
-              <ProductCard {...product} />
-            </div>
-          );
+          return <ProductCard key={i} {...product} />;
         })}
       </div>
     </section>

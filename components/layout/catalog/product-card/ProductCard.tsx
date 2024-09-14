@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { Key } from 'react';
+import type { FC, Key } from 'react';
 
 import AddToCartButton from '../../product/components/AddToCartButton';
 import FavoritesButton from './FavoritesButton';
@@ -8,7 +8,7 @@ import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 import Sticker from './Sticker';
 
-const ProductCard: React.FC<IProductsEntity> = (product) => {
+const ProductCard: FC<IProductsEntity> = (product) => {
   const { id, attributeValues, localizeInfos } = product;
   const productImage = attributeValues.pic?.value;
 
@@ -45,7 +45,7 @@ const ProductCard: React.FC<IProductsEntity> = (product) => {
         alt={localizeInfos.title}
       />
 
-      <div className="z-10 mb-5 mt-auto flex w-[153px] max-w-full flex-col gap-2.5">
+      <div className="z-10 mb-5 mt-auto flex w-full max-w-[160px] flex-col gap-2.5">
         <h2 className="text-center text-sm leading-4 text-neutral-600">
           {localizeInfos.title}
         </h2>
