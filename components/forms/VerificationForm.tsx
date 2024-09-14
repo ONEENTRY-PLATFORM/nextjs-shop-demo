@@ -1,4 +1,5 @@
 import { useRouter } from 'next/navigation';
+import type { FC, FormEvent } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 
@@ -8,9 +9,10 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { addField } from '@/app/store/reducers/FormFieldsSlice';
 
+import ErrorMessage from './inputs/ErrorMessage';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const VerificationForm: React.FC = () => {
+const VerificationForm: FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);
@@ -57,7 +59,7 @@ const VerificationForm: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [otp]);
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (otp.length < 6) {
       return;
@@ -65,6 +67,7 @@ const VerificationForm: React.FC = () => {
 
     try {
       setLoading(true);
+      setError('');
       if (action !== 'activateUser') {
         const result = await api.AuthProvider.checkCode(
           'email',
@@ -89,17 +92,16 @@ const VerificationForm: React.FC = () => {
               password: fields['password_reg'].value,
             });
             authenticate();
-            // redirect after activate user with otp
             router.push('/profile');
-            setLoading(false);
             setOpen(false);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (e: any) {
             console.log(e);
+            setError(e.message);
           }
+          setLoading(false);
         }
       }
-      setError('');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setError(e.message);
@@ -110,16 +112,24 @@ const VerificationForm: React.FC = () => {
   const onResend = async () => {
     try {
       setLoading(true);
-      const res = await api.AuthProvider.generateCode(
-        'email',
-        fields['email_reg'].value,
-        'generate_code',
-      );
-      console.log(res);
+      setError('');
+      try {
+        await api.AuthProvider.generateCode(
+          'email',
+          fields['email_reg'].value,
+          'generate_code',
+        );
+        authenticate();
+        setOpen(false);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        setError(e.message);
+      }
       setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
+      setError(e.message);
       setLoading(false);
     }
   };
@@ -164,7 +174,7 @@ const VerificationForm: React.FC = () => {
       </div>
 
       <FormSubmitButton title="Verify now" isLoading={isLoading} />
-      {error && <div className="text-center text-sm text-red-500">{error}</div>}
+      {error && <ErrorMessage error={error} />}
     </form>
   );
 };

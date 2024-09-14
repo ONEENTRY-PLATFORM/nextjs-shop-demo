@@ -30,14 +30,8 @@ export const ForgotPasswordForm: React.FC = () => {
         fields.email_reg.value,
         'generate_code',
       );
-
       setComponent('VerificationForm');
       setAction('checkCode');
-      // navigateAuth('activate_user', {
-      //   email: value,
-      //   event: 'reset',
-      //   method: 'email',
-      // });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       if (e.statusCode === 400) {

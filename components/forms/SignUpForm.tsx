@@ -10,14 +10,18 @@ import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
+import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
 const SignUpForm: FC = () => {
-  const [loading, setIsLoading] = useState<boolean>(false);
-  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
   const { authenticate } = useContext(AuthContext);
   const { setOpen, setComponent, setAction } = useContext(OpenDrawerContext);
+
+  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
+
+  const [loading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -35,7 +39,6 @@ const SignUpForm: FC = () => {
       valid: boolean;
     };
   };
-  const [error, setError] = useState('');
 
   const onSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -101,6 +104,7 @@ const SignUpForm: FC = () => {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (e: any) {
             console.log(e);
+            setError(e.message);
           }
         } else {
           setOpen(true);
@@ -138,7 +142,7 @@ const SignUpForm: FC = () => {
         })}
       </div>
       <SubmitButton title="SIGN UP" isLoading={loading || isLoading} />
-      {error && <div className="text-center text-sm text-red-500">{error}</div>}
+      {error && <ErrorMessage error={error} />}
     </form>
   );
 };

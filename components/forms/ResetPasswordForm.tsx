@@ -5,11 +5,11 @@ import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 import { resetPasswordFormFields } from '../data';
+import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const ResetPasswordForm: React.FC = () => {
-  const [isLoading, setLoading] = useState(false);
   const { email_reg, password_reg, password_confirm, otp_code } =
     useAppSelector((state) => state.formFieldsReducer.fields) as object as {
       email_reg: {
@@ -30,6 +30,8 @@ const ResetPasswordForm: React.FC = () => {
       };
     };
   const { setComponent, setAction } = useContext(OpenDrawerContext);
+  const [isLoading, setLoading] = useState(false);
+  const [isError, setError] = useState('');
 
   const onResetSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,7 +53,7 @@ const ResetPasswordForm: React.FC = () => {
       setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      console.log(e);
+      setError(e.message);
       setLoading(false);
     }
   };
@@ -87,6 +89,7 @@ const ResetPasswordForm: React.FC = () => {
       </div>
 
       <FormSubmitButton title="CHANGE PASSWORD" isLoading={isLoading} />
+      {isError && <ErrorMessage error={isError} />}
     </form>
   );
 };

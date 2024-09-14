@@ -14,6 +14,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '../shared/AuthError';
 import Loader from '../shared/Loader';
 import Spinner from '../shared/Spinner';
+import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 
 export type InputValue = {
@@ -23,9 +24,11 @@ export type InputValue = {
 };
 
 const UserForm: FC = () => {
-  const { isAuth } = useContext(AuthContext);
-  const [loading, setLoading] = useState(false);
+  const { isAuth, refreshUser, user } = useContext(AuthContext);
   const { data, isLoading, error } = useGetFormByMarkerQuery({ marker: 'reg' });
+
+  const [loading, setLoading] = useState(false);
+  const [isError, setError] = useState('');
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -47,8 +50,6 @@ const UserForm: FC = () => {
       value: string;
     };
   };
-
-  const { refreshUser, user } = useContext(AuthContext);
 
   const onUpdateUserData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -86,11 +87,13 @@ const UserForm: FC = () => {
         });
       }
       refreshUser();
+      setError('');
       setLoading(false);
-    } catch (e: unknown) {
-      console.error(e);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
       refreshUser();
       setLoading(false);
+      setError(e.message);
     }
   };
 
@@ -124,6 +127,7 @@ const UserForm: FC = () => {
       >
         {isLoading ? <Spinner /> : 'Save'}
       </button>
+      {isError && <ErrorMessage error={isError} />}
     </form>
   );
 };

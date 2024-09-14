@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { useRouter } from 'next/navigation';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, Key } from 'react';
 import React, { useContext, useState } from 'react';
@@ -12,19 +13,23 @@ import { socialProvidersButtons } from '../data';
 import Loader from '../shared/Loader';
 import Spinner from '../shared/Spinner';
 import CreateAccountButton from './inputs/CreateAccountButton';
-// import ForgotPasswordButton from './inputs/ForgotPasswordButton';
+import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInForm: FC = () => {
+  const router = useRouter();
+
   const { authenticate } = useContext(AuthContext);
   const { isAuth } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
+
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
-  const [tab, setTab] = useState('email');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+
+  const [tab, setTab] = useState<string>('email');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
 
   const { email_reg, password_reg } = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -46,15 +51,13 @@ const SignInForm: FC = () => {
     if (!email_reg || !password_reg) {
       return;
     }
-    const login = email_reg.value;
-    const password = password_reg.value;
 
     try {
       setLoading(true);
       const result = await logInUser({
         method: 'email',
-        login: login,
-        password: password,
+        login: email_reg.value,
+        password: password_reg.value,
       });
       setLoading(false);
       if (result.error) {
@@ -63,10 +66,10 @@ const SignInForm: FC = () => {
       setOpen(false);
       authenticate();
       setError('');
+      router.push('/profile');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setLoading(false);
-      console.log(e);
       setError(e.message);
     }
   };
@@ -130,7 +133,6 @@ const SignInForm: FC = () => {
 
       <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm">
         <div className="font-bold text-gray-800">Forgot Password?</div>
-        {/* <ForgotPasswordButton title="Forgot Password?" /> */}
         <ResetPasswordButton title="Reset password" />
       </div>
 
@@ -148,7 +150,7 @@ const SignInForm: FC = () => {
       </div>
 
       <CreateAccountButton title="Create account" />
-      {error && <div className="text-center text-sm text-red-500">{error}</div>}
+      {error && <ErrorMessage error={error} />}
     </form>
   );
 };
