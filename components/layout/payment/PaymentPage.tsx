@@ -16,11 +16,11 @@ import PaymentMethod from './PaymentMethod';
 const PaymentPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { isAuth } = useContext(AuthContext);
+
+  const { isAuth, user } = useContext(AuthContext);
+  const { data, error } = useGetAccountsQuery({});
 
   const [isLoading, setIsLoading] = useState(false);
-
-  const { data, error } = useGetAccountsQuery({});
 
   const order = useAppSelector((state) => state.orderReducer.order);
   const paymentMethods = useAppSelector(
@@ -68,7 +68,9 @@ const PaymentPage = () => {
     try {
       setIsLoading(true);
       if (order?.formIdentifier && order?.paymentAccountIdentifier) {
-        const editedFormData = order.formData.slice().map((data) => {
+        console.log(order);
+
+        const orderFormData = order.formData.slice().map((data) => {
           return {
             marker: data.marker,
             type: data.type,
@@ -79,7 +81,7 @@ const PaymentPage = () => {
           'order',
           {
             ...order,
-            formData: editedFormData,
+            formData: orderFormData,
             formIdentifier: order.formIdentifier,
             paymentAccountIdentifier: order.paymentAccountIdentifier,
           },

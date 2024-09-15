@@ -1,4 +1,5 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
@@ -8,8 +9,11 @@ import RelatedItems from './RelatedItems';
 import ReviewsSection from './reviews-group/ReviewSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 
-const ProductSingle: React.FC<IProductsEntity> = (product) => {
-  const { attributeValues, localizeInfos, id } = product;
+const ProductSingle: FC<IProductsEntity & { blocks: Array<string> }> = (
+  product,
+) => {
+  const { attributeValues, localizeInfos, id, blocks } = product;
+  // console.log(product);
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -32,8 +36,8 @@ const ProductSingle: React.FC<IProductsEntity> = (product) => {
 
       <ReviewsSection />
 
-      {Array.isArray(product.blocks) &&
-        product.blocks.map((block: string) => {
+      {Array.isArray(blocks) &&
+        blocks.map((block: string) => {
           if (block === 'multiply_items_offer') {
             return (
               <span key={block}>

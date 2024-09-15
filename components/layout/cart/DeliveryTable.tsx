@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import React, { useState } from 'react';
+import type { FC } from 'react';
+import React from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
@@ -11,13 +12,9 @@ import { UsePrice } from '@/components/utils';
 
 import TableRow from './DeliveryTableRow';
 
-const DeliveryTable: React.FC<IProductsEntity> = (product) => {
+const DeliveryTable: FC<IProductsEntity> = (product) => {
   const dispatch = useAppDispatch();
-  // const deliveryData = useAppSelector(
-  //   (state) => state.cartReducer.deliveryData,
-  // );
   const deliveryData = useAppSelector(selectDeliveryData);
-  const date = new Date(deliveryData.date).toLocaleDateString('en-US');
   const {
     order_info_date_placeholder,
     order_info_time_placeholder,
@@ -29,7 +26,7 @@ const DeliveryTable: React.FC<IProductsEntity> = (product) => {
       <tbody>
         <TableRow
           label={'Date'}
-          value={date}
+          value={new Date(deliveryData.date).toLocaleDateString('en-US')}
           icon={'/icons/calendar.svg'}
           placeholder={order_info_date_placeholder}
         />

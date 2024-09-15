@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  getRelatedProductsById,
+  // getRelatedProductsById,
   getSimilarProducts,
 } from '@/app/api/serverSideProps';
 
@@ -11,12 +11,11 @@ const RelatedItems: React.FC<{
   marker: string;
   title: string;
 }> = async ({ id, marker, title }) => {
-  const data = await getSimilarProducts(marker, 'en_US');
+  const { isError, products } = await getSimilarProducts(marker, 'en_US');
   // !!!
-  const related = await getRelatedProductsById(id, 'en_US');
-  console.log(related);
+  // const related = await getRelatedProductsById(id, 'en_US');
+  // console.log(related);
 
-  const { isError, products } = data;
   if (isError || !products) {
     return null;
   }
@@ -28,10 +27,7 @@ const RelatedItems: React.FC<{
       </h3>
 
       <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-        {data.products?.map((product, i) => {
-          if (i > 4) {
-            return null;
-          }
+        {products.map((product, i) => {
           return <ProductCard key={i} {...product} />;
         })}
       </div>

@@ -19,13 +19,15 @@ const ProductImage: React.FC<ProductImageProps> = ({
       <div className="absolute right-2 top-2 z-10">
         <FavoritesButton {...product} />
       </div>
-      <Image
-        fill
-        sizes="(min-width: 1024px) 30vw, 100vw"
-        src={imageSrc}
-        alt={alt}
-        className="size-full rounded-xl bg-slate-50 object-cover"
-      />
+      {imageSrc && (
+        <Image
+          fill
+          sizes="(min-width: 1024px) 30vw, 100vw"
+          src={imageSrc}
+          alt={alt}
+          className="size-full rounded-xl bg-slate-50 object-cover"
+        />
+      )}
     </div>
   );
 };
