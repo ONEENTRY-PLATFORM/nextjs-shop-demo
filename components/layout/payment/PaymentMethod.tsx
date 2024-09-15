@@ -11,6 +11,7 @@ type Props = {
 
 const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
   const dispatch = useAppDispatch();
+
   const orderData = useAppSelector((state) => state.orderReducer.order);
   const isActive = orderData?.paymentAccountIdentifier === account.identifier;
 

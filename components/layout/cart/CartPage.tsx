@@ -11,8 +11,13 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addProductToCart,
   selectCartItems,
+  selectDeliveryData,
 } from '@/app/store/reducers/CartSlice';
-import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
+import {
+  addData,
+  addProducts,
+  createOrder,
+} from '@/app/store/reducers/OrderSlice';
 import DeliveryTable from '@/components/layout/cart/DeliveryTable';
 import PaymentButton from '@/components/layout/cart/PaymentButton';
 import ProductCard from '@/components/layout/cart/ProductCard';
@@ -25,7 +30,9 @@ const CartPage: FC = () => {
   const dispatch = useAppDispatch();
 
   const [isLoading, setIsLoading] = useState(true);
-  const deliveryData = useGetProduct({ id: 83 });
+  const delivery = useGetProduct({ id: 83 });
+
+  const deliveryData = useAppSelector(selectDeliveryData);
 
   const productsInCart = useAppSelector(selectCartItems) as Array<
     IProductsEntity & { quantity: number; selected: boolean }
@@ -46,7 +53,14 @@ const CartPage: FC = () => {
     dispatch(
       createOrder({
         formIdentifier: 'order',
-        formData: [],
+        formData: [
+          // {
+          //   marker: 'date',
+          //   type: 'string',
+          //   value: '',
+          //   valid: true,
+          // },
+        ],
         products: productsInOrder,
         paymentAccountIdentifier: '',
       }),
@@ -63,23 +77,23 @@ const CartPage: FC = () => {
 
   // add delivery to cart
   useEffect(() => {
-    if (!deliveryData || !deliveryData.product) {
+    if (!delivery || !delivery.product) {
       return;
     }
     const index = productsInCart.findIndex(
-      (p: { id: number }) => p.id === deliveryData.product?.id,
+      (p: { id: number }) => p.id === delivery.product?.id,
     );
     if (index === -1) {
       dispatch(
         addProductToCart({
-          ...deliveryData.product,
+          ...delivery.product,
           selected: true,
           quantity: 1,
         }),
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deliveryData]);
+  }, [delivery]);
 
   if (productsInCart.length < 2 || isLoading) {
     return <EmptyCart />;
@@ -88,6 +102,37 @@ const CartPage: FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmitOrder = (e: any) => {
     e.preventDefault();
+    const address = deliveryData.address;
+    const date = deliveryData.date;
+    const time = deliveryData.time;
+    dispatch(
+      addData({
+        marker: 'time',
+        type: 'string',
+        value: time,
+        valid: time ? true : false,
+      }),
+    );
+    dispatch(
+      addData({
+        marker: 'date',
+        type: 'date',
+        value: {
+          fullDate: new Date(date).toISOString(),
+          formattedValue: new Date(date).toDateString() + ' 00:00',
+          formatString: 'YYYY-MM-DD',
+        },
+        valid: date ? true : false,
+      }),
+    );
+    dispatch(
+      addData({
+        marker: 'order_address',
+        type: 'string',
+        value: address,
+        valid: address ? true : false,
+      }),
+    );
     router.push('/payment');
   };
 
@@ -112,7 +157,7 @@ const CartPage: FC = () => {
         className="flex w-[730px] max-w-full flex-col pb-5"
         onSubmit={onSubmitOrder}
       >
-        <DeliveryTable {...(deliveryData.product as IProductsEntity)} />
+        <DeliveryTable {...(delivery.product as IProductsEntity)} />
         <div className="mt-4 flex w-[464px] max-w-full flex-col self-center font-bold lg:self-end">
           <TotalAmount />
           <PaymentButton />

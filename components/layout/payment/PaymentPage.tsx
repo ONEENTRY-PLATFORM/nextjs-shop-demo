@@ -17,6 +17,7 @@ const PaymentPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isAuth, user } = useContext(AuthContext);
   const { data, error } = useGetAccountsQuery({});
 
@@ -85,6 +86,7 @@ const PaymentPage = () => {
             formIdentifier: order.formIdentifier,
             paymentAccountIdentifier: order.paymentAccountIdentifier,
           },
+          'en_US',
         );
 
         dispatch(removeAllProducts());
