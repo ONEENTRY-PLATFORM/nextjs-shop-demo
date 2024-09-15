@@ -69,8 +69,6 @@ const PaymentPage = () => {
     try {
       setIsLoading(true);
       if (order?.formIdentifier && order?.paymentAccountIdentifier) {
-        console.log(order);
-
         const orderFormData = order.formData.slice().map((data) => {
           return {
             marker: data.marker,

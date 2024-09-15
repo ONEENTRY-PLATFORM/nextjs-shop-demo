@@ -6,7 +6,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
-import { useGetProduct } from '@/app/api';
+import { useGetFormByMarkerQuery, useGetProduct } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addProductToCart,

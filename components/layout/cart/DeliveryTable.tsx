@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Image from 'next/image';
+import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { FC, Key } from 'react';
 import React from 'react';
 
+import { useGetFormByMarkerQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   selectDeliveryData,
@@ -12,9 +15,16 @@ import { UsePrice } from '@/components/utils';
 
 import TableRow from './DeliveryTableRow';
 
-const DeliveryTable: FC<IProductsEntity> = (product) => {
+const DeliveryTable: FC<IProductsEntity> = (delivery) => {
   const dispatch = useAppDispatch();
+
+  const { data } = useGetFormByMarkerQuery({ marker: 'order' });
   const deliveryData = useAppSelector(selectDeliveryData);
+
+  const attrs = data?.attributes.filter(
+    (attr: IAttributes) => attr.marker !== 'time2',
+  );
+
   const {
     order_info_date_placeholder,
     order_info_time_placeholder,
@@ -24,46 +34,68 @@ const DeliveryTable: FC<IProductsEntity> = (product) => {
   return (
     <table className="table w-full border-collapse text-neutral-600">
       <tbody>
-        <TableRow
-          label={'Date'}
-          value={new Date(deliveryData.date).toLocaleDateString('en-US')}
-          icon={'/icons/calendar.svg'}
-          placeholder={order_info_date_placeholder}
-        />
+        {attrs?.map((attr: IAttributes, i: Key) => {
+          const marker = attr.marker;
 
-        <TableRow
-          label={'Time'}
-          value={deliveryData.time}
-          icon={'/icons/time.svg'}
-          placeholder={order_info_time_placeholder}
-        />
+          if (marker === 'date') {
+            return (
+              <TableRow
+                key={i}
+                field={attr}
+                label={'Date'}
+                value={new Date(deliveryData.date).toLocaleDateString('en-US')}
+                icon={'/icons/calendar.svg'}
+                placeholder={order_info_date_placeholder}
+              />
+            );
+          }
+          if (marker === 'time') {
+            return (
+              <TableRow
+                key={i}
+                field={attr}
+                label={'Time'}
+                value={deliveryData.time}
+                icon={'/icons/time.svg'}
+                placeholder={order_info_time_placeholder}
+              />
+            );
+          }
+          if (marker === 'order_address') {
+            return (
+              <tr
+                key={i}
+                className="table-row h-[50px] gap-5 border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
+              >
+                <td className="self-stretch align-middle text-sm">
+                  <label htmlFor={'address'}>Address</label>
+                </td>
+                <td className="px-5 align-middle text-base">
+                  <input
+                    size={40}
+                    type="text"
+                    value={deliveryData.address}
+                    id="address"
+                    name="address"
+                    placeholder={order_info_address_placeholder}
+                    onChange={(e) => {
+                      dispatch(
+                        setDeliveryData({
+                          ...deliveryData,
+                          address: e.target.value,
+                        }),
+                      );
+                    }}
+                    required
+                  />
+                </td>
+              </tr>
+            );
+          }
+          return;
+        })}
 
-        <tr className="table-row h-[50px] gap-5 border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
-          <td className="self-stretch align-middle text-sm">
-            <label htmlFor={'address'}>Address</label>
-          </td>
-          <td className="px-5 align-middle text-base">
-            <input
-              size={40}
-              type="text"
-              value={deliveryData.address}
-              id="address"
-              name="address"
-              placeholder={order_info_address_placeholder}
-              onChange={(e) => {
-                dispatch(
-                  setDeliveryData({
-                    ...deliveryData,
-                    address: e.target.value,
-                  }),
-                );
-              }}
-              required
-            />
-          </td>
-        </tr>
-
-        {product && (
+        {delivery && (
           <tr className="table-row h-[50px] gap-5 border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
             <td className="table-cell align-middle">
               <Image
@@ -78,11 +110,11 @@ const DeliveryTable: FC<IProductsEntity> = (product) => {
             <td className="table-cell px-5 align-middle">
               <div className="mt-2 flex flex-col self-start">
                 <div className="mb-4 text-base max-sm:mb-2">
-                  {product?.localizeInfos?.title}
+                  {delivery?.localizeInfos?.title}
                 </div>
                 <div className="mb-2 text-xl font-bold leading-8">
                   {UsePrice({
-                    amount: product?.price,
+                    amount: delivery?.price,
                     currency: 'USD',
                   })}
                 </div>

@@ -66,7 +66,7 @@ const SignInForm: FC = () => {
       setOpen(false);
       authenticate();
       setError('');
-      router.push('/profile');
+      // router.push('/profile');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setLoading(false);

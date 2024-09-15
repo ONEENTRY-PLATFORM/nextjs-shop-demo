@@ -10,13 +10,14 @@ const Order = ({ order }: { order: IOrdersByMarkersEntity }) => {
     amount: totalSum,
     currency: currency,
   });
+  const date = new Date(createdDate).toUTCString();
 
   return (
     <Link
       href={'/orders/' + id}
       className="-mb-px flex border-collapse gap-4 border-y p-4 text-slate-700 hover:text-orange-500"
     >
-      <div className="w-1/2">{createdDate}</div>
+      <div className="w-1/2">{date}</div>
       <div className="w-1/4">{formattedPrice}</div>
       <div className="w-1/4">{statusIdentifier}</div>
     </Link>

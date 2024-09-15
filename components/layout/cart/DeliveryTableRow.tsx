@@ -1,22 +1,28 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Image from 'next/image';
+import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { FC } from 'react';
 import React, { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 interface TableRowProps {
+  field: IAttributes;
   label: string;
   value: string;
   placeholder: string;
   icon?: string;
 }
 
-const TableRow: React.FC<TableRowProps> = ({
+const DeliveryTableRow: FC<TableRowProps> = ({
+  field,
   label,
   value,
   icon,
   placeholder,
 }) => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
+
   return (
     <tr className="table-row h-[50px] gap-5 border-t border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
       <td className="self-stretch align-middle text-sm">
@@ -44,7 +50,7 @@ const TableRow: React.FC<TableRowProps> = ({
             height={20}
             loading="lazy"
             src={icon}
-            alt=""
+            alt={placeholder}
             className="aspect-square w-5"
             onClick={() => {
               setOpen(true);
@@ -57,4 +63,4 @@ const TableRow: React.FC<TableRowProps> = ({
   );
 };
 
-export default TableRow;
+export default DeliveryTableRow;

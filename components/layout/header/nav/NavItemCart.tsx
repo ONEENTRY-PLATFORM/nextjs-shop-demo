@@ -1,10 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
-// import { selectBasketCount } from '@/app/store/reducers/CartSlice';
 import CartIcon from '@/components/icons/cart';
 
 const item = {
@@ -13,13 +13,12 @@ const item = {
   title: 'Cart',
 };
 
-const NavItemCart: React.FC = () => {
+const NavItemCart: FC = () => {
   const [count, setCount] = useState(0);
-  // const cartCount = useAppSelector(selectBasketCount);
 
   const cartCount = useAppSelector((state) => {
     if (state.cartReducer.products.length < 1) {
-      return;
+      return 0;
     }
     return state.cartReducer.products
       .map((item) => {
@@ -34,9 +33,6 @@ const NavItemCart: React.FC = () => {
   });
 
   useEffect(() => {
-    if (!cartCount || cartCount < 0) {
-      return;
-    }
     setCount(cartCount);
   }, [cartCount]);
 
