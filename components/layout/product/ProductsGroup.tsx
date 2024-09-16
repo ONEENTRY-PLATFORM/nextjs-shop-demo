@@ -1,14 +1,16 @@
+import type { FC } from 'react';
+
 import { getProductsByBlockMarker } from '@/app/api/serverSideProps';
 
 import GroupCard from './group-card/GroupCard';
 
-const ProductsGroup: React.FC<{
+const ProductsGroup: FC<{
   marker: string;
-  langCode: string;
-}> = async ({ marker, langCode }) => {
+}> = async ({ marker }) => {
+  const langCode = 'en_US';
   const { isError, products } = await getProductsByBlockMarker(
     marker,
-    'en_US',
+    langCode,
     {
       limit: 5,
       offset: 0,

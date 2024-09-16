@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import type { FC } from 'react';
 import React from 'react';
 
 import LikeIcon from '@/components/icons/like';
@@ -13,7 +14,11 @@ interface UserCommentProps {
   rating: number;
 }
 
-const UserComment: React.FC<UserCommentProps> = ({
+interface ReviewCardProps {
+  review: UserCommentProps;
+}
+
+const UserComment: FC<UserCommentProps> = ({
   name,
   content,
   likeCount,
@@ -47,11 +52,7 @@ const UserComment: React.FC<UserCommentProps> = ({
   );
 };
 
-interface ReviewCardProps {
-  review: UserCommentProps;
-}
-
-const ReviewCard: React.FC<ReviewCardProps> = ({ review }) => {
+const ReviewCard: FC<ReviewCardProps> = ({ review }) => {
   return (
     <article className="relative box-border flex shrink-0 flex-col">
       <UserComment {...review} />

@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import type { FC } from 'react';
+
 import {
   // getRelatedProductsById,
   getSimilarProducts,
@@ -6,17 +8,19 @@ import {
 
 import ProductCard from '../catalog/product-card/ProductCard';
 
-const RelatedItems: React.FC<{
-  id: number;
+const RelatedItems: FC<{
   marker: string;
   title: string;
-}> = async ({ id, marker, title }) => {
+}> = async ({ marker, title }) => {
   const { isError, products } = await getSimilarProducts(marker, 'en_US', {
     offset: 0,
     limit: 5,
   });
   // !!!
-  // const related = await getRelatedProductsById(id, 'en_US', {offset: 0, limit: 5, });
+  // const related = await getRelatedProductsById(id, 'en_US', {
+  //   offset: 0,
+  //   limit: 5,
+  // });
   // console.log(related);
 
   if (isError || !products) {

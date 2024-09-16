@@ -18,7 +18,8 @@ const ReviewSection: React.FC = () => {
     <section className="flex flex-row gap-5 max-md:max-w-full">
       <div className="flex grow flex-col text-base font-bold uppercase text-orange-500 max-md:mt-8 max-md:max-w-full">
         <div className="mb-12">
-          <ReviewCard />
+          {/* <ReviewCard review={} /> */}
+          ??ReviewCard
         </div>
         <div className="flex flex-col gap-5 max-md:mt-10 max-md:max-w-full">
           {reviewsData.map((review) => (

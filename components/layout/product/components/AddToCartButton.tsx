@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -18,7 +19,7 @@ interface AddToCartProps {
   height: number;
 }
 
-const AddToCartButton: React.FC<AddToCartProps> = ({
+const AddToCartButton: FC<AddToCartProps> = ({
   product,
   className,
   height,

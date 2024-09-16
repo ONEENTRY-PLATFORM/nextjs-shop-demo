@@ -4,13 +4,16 @@ import type { FC } from 'react';
 import { useState } from 'react';
 import Carousel from 'react-simply-carousel';
 
-import { variationsItems } from '@/components/data';
-
 import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const VariationsCarousel: FC<{ items: [] }> = ({ items }) => {
+const VariationsCarousel: FC<{
+  items: Array<{
+    title: string;
+    imageSrc: string;
+  }>;
+}> = ({ items }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   return (
@@ -60,7 +63,7 @@ const VariationsCarousel: FC<{ items: [] }> = ({ items }) => {
               'group flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500',
           }}
         >
-          {variationsItems.map((item, idx) => (
+          {items.map((item, idx) => (
             <CarouselItem
               key={idx}
               title={item.title}
