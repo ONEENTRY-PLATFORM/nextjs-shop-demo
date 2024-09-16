@@ -13,7 +13,7 @@ const ProductSingle: FC<IProductsEntity & { blocks: Array<string> }> = (
   product,
 ) => {
   const { attributeValues, localizeInfos, id, blocks } = product;
-  // console.log(product);
+  console.log(product);
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -41,7 +41,7 @@ const ProductSingle: FC<IProductsEntity & { blocks: Array<string> }> = (
           if (block === 'multiply_items_offer') {
             return (
               <span key={block}>
-                <ProductsGroup marker={block} />
+                <ProductsGroup marker={block} langCode={'en_US'} />
               </span>
             );
           } else if (block === 'similar') {

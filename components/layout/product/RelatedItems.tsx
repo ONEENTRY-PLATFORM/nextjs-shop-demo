@@ -12,7 +12,7 @@ const RelatedItems: React.FC<{
   title: string;
 }> = async ({ id, marker, title }) => {
   const { isError, products } = await getSimilarProducts(marker, 'en_US', {
-    offset: 2,
+    offset: 0,
     limit: 5,
   });
   // !!!

@@ -4,13 +4,17 @@ import GroupCard from './group-card/GroupCard';
 
 const ProductsGroup: React.FC<{
   marker: string;
-}> = async ({ marker }) => {
-  const data = await getProductsByBlockMarker(marker, 'en_US', {
-    limit: 5,
-    offset: 0,
-  });
+  langCode: string;
+}> = async ({ marker, langCode }) => {
+  const { isError, products } = await getProductsByBlockMarker(
+    marker,
+    'en_US',
+    {
+      limit: 5,
+      offset: 0,
+    },
+  );
 
-  const { isError, products } = data;
   if (isError || !products) {
     return null;
   }

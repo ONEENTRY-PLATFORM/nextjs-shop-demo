@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 
 import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';
 
-const ProductDetails: React.FC<IProductsEntity> = (product) => {
+const ProductDetails: FC<IProductsEntity> = (product) => {
   const { attributeValues, localizeInfos } = product;
   const units = attributeValues?.units_product.value;
   const maxUnits = 50;
@@ -19,10 +20,10 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
       <p className="mt-3 text-sm leading-4 text-neutral-600">
         <Link
           href={
-            '/shop/category/' + product.attributeValues.category.value.value
+            '/shop/category/' + product.attributeValues.category?.value.value
           }
         >
-          {product.attributeValues.category.value.title}
+          {product.attributeValues.category?.value.title}
         </Link>
       </p>
 
