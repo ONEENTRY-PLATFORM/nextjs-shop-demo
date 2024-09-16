@@ -2,10 +2,11 @@ import type {
   IMenusEntity,
   IMenusPages,
 } from 'oneentry/dist/menus/menusInterfaces';
+import type { FC } from 'react';
 
 import MenuItem from './MenuItem';
 
-const Menu: React.FC<{
+const Menu: FC<{
   menu: IMenusEntity;
 }> = ({ menu }) => {
   const pages = menu.pages as Array<IMenusPages>;
@@ -15,7 +16,7 @@ const Menu: React.FC<{
   }
 
   return (
-    <div className="max-xs:w-full flex w-[21%] flex-col max-md:max-w-[30%] max-sm:w-[45%]">
+    <div className="flex w-[21%] flex-col max-md:max-w-[30%] max-sm:w-[45%] max-xs:w-full">
       <nav className="flex flex-col text-neutral-600">
         <h2 className="mb-5 text-xl font-bold">{menu.localizeInfos.title}</h2>
         <ul className="flex flex-col gap-1.5 text-sm font-semibold">

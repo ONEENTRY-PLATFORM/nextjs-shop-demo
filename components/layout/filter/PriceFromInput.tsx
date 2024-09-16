@@ -1,9 +1,9 @@
-import type { Dispatch } from 'react';
-import React, { memo } from 'react';
+import type { Dispatch, FC, SetStateAction } from 'react';
+import { memo } from 'react';
 
-const PriceFromInput: React.FC<{
+const PriceFromInput: FC<{
   price: number;
-  setPrice: Dispatch<React.SetStateAction<number>>;
+  setPrice: Dispatch<SetStateAction<number>>;
 }> = ({ price, setPrice }) => {
   return (
     <input

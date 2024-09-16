@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { memo, useMemo } from 'react';
+import type { FC } from 'react';
+import { memo, useMemo } from 'react';
 
 import { useGetPage } from '@/app/api/hooks/useGetPage';
 
@@ -20,7 +21,7 @@ function sortObjectFieldsByPosition(obj: Record<any, any>) {
   return sortedObj;
 }
 
-const FiltersForm: React.FC = () => {
+const FiltersForm: FC = () => {
   const { pageInfo } = useGetPage({ pageUrl: 'catalog_filters' });
 
   const sortedAttributes: Record<any, any> = useMemo(() => {

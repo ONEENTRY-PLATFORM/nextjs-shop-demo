@@ -1,11 +1,12 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   title?: string;
 }
 
-const AvailabilityFilter: React.FC<Props> = ({ title }) => {
+const AvailabilityFilter: FC<Props> = ({ title }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
 

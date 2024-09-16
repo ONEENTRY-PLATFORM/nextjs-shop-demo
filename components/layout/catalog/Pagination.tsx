@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import type { FC } from 'react';
 import { useCallback } from 'react';
 
-export default function Pagination({ totalPages }: { totalPages: number }) {
+const Pagination: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -42,4 +42,6 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
       ))}
     </div>
   );
-}
+};
+
+export default Pagination;

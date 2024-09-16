@@ -1,9 +1,9 @@
-import React from 'react';
+import type { FC } from 'react';
 
 import CloseModal from './CloseModal';
 import HistoryBack from './HistoryBack';
 
-const FilterHeader: React.FC = () => {
+const FilterHeader: FC = () => {
   return (
     <header className="flex w-full flex-col justify-center whitespace-nowrap bg-[#F6F7F9] p-8 text-2xl font-bold text-neutral-600">
       <div className="flex justify-between gap-5">

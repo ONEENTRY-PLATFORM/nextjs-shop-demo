@@ -1,15 +1,15 @@
 import { useSearchParams } from 'next/navigation';
-import type { Dispatch } from 'react';
-import React, { memo } from 'react';
+import type { Dispatch, FC, SetStateAction } from 'react';
+import { memo } from 'react';
 
-interface Props {
+interface ColorPickerProps {
   code: string;
   name: string;
   key: number;
-  setActiveColor: Dispatch<React.SetStateAction<string>>;
+  setActiveColor: Dispatch<SetStateAction<string>>;
 }
 
-const ColorPicker: React.FC<Props> = ({ code, name, setActiveColor }) => {
+const ColorPicker: FC<ColorPickerProps> = ({ code, name, setActiveColor }) => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const currentColor = params.get('color');

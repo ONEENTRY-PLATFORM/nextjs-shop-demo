@@ -2,7 +2,8 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import type { FC } from 'react';
+import { useEffect, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';
 
 import { useAppSelector } from '@/app/store/hooks';
@@ -10,7 +11,7 @@ import { useAppSelector } from '@/app/store/hooks';
 import PriceFromInput from './PriceFromInput';
 import PriceToInput from './PriceToInput';
 
-const PriceFilter: React.FC = () => {
+const PriceFilter: FC = () => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();

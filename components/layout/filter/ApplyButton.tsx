@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import type { FC } from 'react';
+import { useContext } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-const ApplyButton: React.FC = () => {
+const ApplyButton: FC = () => {
   const { setOpen } = useContext(OpenDrawerContext);
   const { apply_button_placeholder } = useAppSelector(
     (state) => state.systemContentReducer.content,

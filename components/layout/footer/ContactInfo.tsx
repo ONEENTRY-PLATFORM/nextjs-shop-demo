@@ -1,8 +1,8 @@
-import React from 'react';
+import type { FC } from 'react';
 
 import { contactInfo } from '@/components/data';
 
-const ContactInfo: React.FC = async () => {
+const ContactInfo: FC = async () => {
   const {
     title,
     address_title,

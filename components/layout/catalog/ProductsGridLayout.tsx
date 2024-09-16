@@ -1,4 +1,5 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 
 import Pagination from './Pagination';
 import ProductCard from './product-card/ProductCard';
@@ -8,10 +9,7 @@ interface GridLayoutProps {
   totalPages: number;
 }
 
-const ProductsGridLayout: React.FC<GridLayoutProps> = ({
-  gridItems,
-  totalPages,
-}) => {
+const ProductsGridLayout: FC<GridLayoutProps> = ({ gridItems, totalPages }) => {
   return (
     <div className="relative box-border flex w-full shrink-0 flex-col">
       <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">

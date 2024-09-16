@@ -1,6 +1,7 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -10,7 +11,7 @@ import {
   selectIsFavorites,
 } from '@/app/store/reducers/FavoritesSlice';
 
-const FavoritesButton: React.FC<IProductsEntity> = (product) => {
+const FavoritesButton: FC<IProductsEntity> = (product) => {
   const [isFav, setIsFav] = useState(false);
   const dispatch = useAppDispatch();
   const isFavorites = useAppSelector((state) =>

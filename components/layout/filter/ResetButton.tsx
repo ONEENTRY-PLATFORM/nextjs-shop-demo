@@ -1,9 +1,10 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import type { FC } from 'react';
 import React from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 
-const ResetButton: React.FC = () => {
+const ResetButton: FC = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
