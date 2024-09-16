@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import type { FC } from 'react';
 import React from 'react';
 
 import SearchIcon from '@/components/icons/search';
@@ -8,9 +9,10 @@ import Spinner from './Spinner';
 interface LoaderProps {
   data?: Record<string, unknown>;
   limit?: number;
+  offset?: number;
 }
 
-const Loader: React.FC<LoaderProps> = ({ data = {} }) => {
+const Loader: FC<LoaderProps> = ({ data = {} }) => {
   return (
     <div className="relative aspect-square size-full max-h-[250px] overflow-hidden">
       <Spinner />
@@ -18,7 +20,10 @@ const Loader: React.FC<LoaderProps> = ({ data = {} }) => {
   );
 };
 
-export const CategoriesLoader: React.FC<LoaderProps> = ({ data = {} }) => {
+export const CategoriesLoader: FC<LoaderProps> = ({
+  data = {},
+  limit = 10,
+}) => {
   return (
     <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
       {Array.from(Array(4).keys()).map((item) => (
@@ -29,7 +34,7 @@ export const CategoriesLoader: React.FC<LoaderProps> = ({ data = {} }) => {
           <div
             className={`relative flex size-full h-64 overflow-hidden rounded-3xl p-6`}
           >
-            <h2 className="z-10 mt-auto uppercase">xxx</h2>
+            <h2 className="z-10 mt-auto uppercase text-transparent">xxx</h2>
             <div className="size-full rounded-3xl bg-gray-200" />
           </div>
         </div>
@@ -38,7 +43,7 @@ export const CategoriesLoader: React.FC<LoaderProps> = ({ data = {} }) => {
   );
 };
 
-export const ProductsGridLoader: React.FC<LoaderProps> = ({
+export const ProductsGridLoader: FC<LoaderProps> = ({
   data = {},
   limit = 10,
 }) => {
@@ -61,7 +66,7 @@ export const ProductsGridLoader: React.FC<LoaderProps> = ({
   );
 };
 
-export const OrdersListLoader: React.FC<LoaderProps> = ({
+export const OrdersListLoader: FC<LoaderProps> = ({
   data = {},
   limit = 10,
 }) => {
@@ -77,7 +82,7 @@ export const OrdersListLoader: React.FC<LoaderProps> = ({
   );
 };
 
-export const SearchBarLoader: React.FC = () => {
+export const SearchBarLoader: FC<LoaderProps> = ({ data = {}, limit = 10 }) => {
   return (
     <div className="relative my-auto ml-24 flex h-[60px] w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-gray-400 bg-white px-7 max-md:ml-0 max-md:h-[50px] max-md:max-w-full max-md:px-5 max-sm:h-[40px] max-sm:gap-0 max-sm:px-4 max-sm:pr-1">
       <div className="flex w-full">
@@ -89,7 +94,10 @@ export const SearchBarLoader: React.FC = () => {
   );
 };
 
-export const SidebarMenuLoader: React.FC = () => {
+export const SidebarMenuLoader: FC<LoaderProps> = ({
+  data = {},
+  limit = 10,
+}) => {
   return (
     <div>
       <ul className="flex w-full flex-row gap-2 overflow-hidden py-3 text-base md:max-w-[165px] md:flex-col md:gap-5 md:py-0">
@@ -104,7 +112,7 @@ export const SidebarMenuLoader: React.FC = () => {
   );
 };
 
-export const NavMenuLoader: React.FC = () => {
+export const NavMenuLoader: FC<LoaderProps> = ({ data = {}, limit = 10 }) => {
   return (
     <div className="my-auto flex gap-5 max-md:max-w-full">
       {Array.from(Array(3).keys()).map((item) => (
@@ -117,7 +125,10 @@ export const NavMenuLoader: React.FC = () => {
   );
 };
 
-export const OrdersTableLoader: React.FC = () => {
+export const OrdersTableLoader: FC<LoaderProps> = ({
+  data = {},
+  limit = 10,
+}) => {
   return (
     <div className="my-auto flex w-full flex-col max-md:max-w-full">
       {Array.from(Array(3).keys()).map((item) => (

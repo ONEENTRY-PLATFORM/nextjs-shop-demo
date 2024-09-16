@@ -31,16 +31,19 @@ const AddToCartButton: React.FC<AddToCartProps> = ({
     setInCart(inCart);
   }, [inCart]);
 
-  if (
+  const inStock =
     typeof product.statusIdentifier === 'string' &&
-    product.statusIdentifier !== 'in_stock'
-  ) {
+    product.statusIdentifier !== 'in_stock';
+
+  if (inStock) {
     return (
       <Link
         href={`/shop/product/` + product.id}
         onClick={() => {}}
         type="button"
-        className={className + ' border-slate-300 text-slate-400'}
+        className={
+          'border-slate-300 text-slate-400 bg-transparent ' + className
+        }
       >
         Out of stock
       </Link>
@@ -53,7 +56,7 @@ const AddToCartButton: React.FC<AddToCartProps> = ({
         dispatch(addProductToCart({ ...product, selected: true, quantity: 1 }));
       }}
       type="button"
-      className={className}
+      className={className + ' text-white'}
     >
       Add to cart
     </button>

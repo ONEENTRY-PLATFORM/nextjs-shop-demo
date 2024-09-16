@@ -48,7 +48,7 @@ const ProductDetails: React.FC<IProductsEntity> = (product) => {
       <AddToCartButton
         product={product}
         height={50}
-        className="rounded-[30px] border border-solid border-orange-500 bg-orange-500 px-5 py-4 text-center text-base font-bold uppercase text-white max-md:px-5"
+        className="rounded-[30px] border border-solid border-orange-500 bg-orange-500 px-5 py-4 text-center text-base font-bold uppercase max-md:px-5"
       />
     </div>
   );
