@@ -15,8 +15,12 @@ const ReviewsSection: React.FC = () => {
     <div className="flex justify-between max-md:flex-wrap">
       <div className="flex flex-col">
         <RatingButton state={state} setState={setState} {...productRating} />
-        {state && <ReviewsList />}
-        {state && <ViewAllButton />}
+        {state && (
+          <>
+            <ReviewsList />
+            <ViewAllButton />
+          </>
+        )}
       </div>
       {state && <RatingBlock {...productRating} />}
     </div>

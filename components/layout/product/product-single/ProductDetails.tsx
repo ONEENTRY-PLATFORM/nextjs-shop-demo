@@ -17,6 +17,7 @@ const ProductDetails: FC<IProductsEntity> = (product) => {
         {localizeInfos?.title}
       </h1>
 
+      {/* !!! category */}
       <p className="mt-3 text-sm leading-4 text-neutral-600">
         <Link
           href={
@@ -26,6 +27,7 @@ const ProductDetails: FC<IProductsEntity> = (product) => {
           {product.attributeValues.category?.value.title}
         </Link>
       </p>
+      {/* !!! category */}
 
       <div className="mb-5 mt-4 text-left text-xl font-bold leading-8 text-neutral-600">
         <PriceDisplay
@@ -49,7 +51,7 @@ const ProductDetails: FC<IProductsEntity> = (product) => {
       <AddToCartButton
         product={product}
         height={50}
-        className="rounded-[30px] border border-solid border-orange-500 bg-orange-500 px-5 py-4 text-center text-base font-bold uppercase max-md:px-5"
+        className="rounded-[30px] border border-solid border-orange-500 bg-orange-500 px-5 py-4 text-center text-base font-bold uppercase text-white max-md:px-5"
       />
     </div>
   );
