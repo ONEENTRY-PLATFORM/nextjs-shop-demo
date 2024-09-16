@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 import CategoriesGrid from '@/components/layout/categories/CategoriesGrid';
-import Loader from '@/components/shared/Loader';
+import Loader, { CategoriesLoader } from '@/components/shared/Loader';
 
 import { getAttributeByMarker, getPageByUrl } from '../../api/serverSideProps';
 
@@ -25,7 +25,12 @@ export async function generateMetadata({
     width,
     height,
     altText: alt,
-  } = { url: '', width: 300, height: 300, altText: '' };
+  } = {
+    url: attributeValues.icon?.downloadLink,
+    width: 300,
+    height: 300,
+    altText: localizeInfos.title,
+  };
 
   return {
     title: localizeInfos.title,
@@ -58,10 +63,12 @@ export default async function CategoryPage({
 }: {
   params: { handle: string };
 }) {
+  const langCode = 'en_US';
+
   const { isError, attribute } = await getAttributeByMarker({
     attributeMarker: 'category',
     setMarker: 'product',
-    langCode: 'en_US',
+    langCode: langCode,
   });
 
   if (isError) {
@@ -80,7 +87,7 @@ export default async function CategoryPage({
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<CategoriesLoader />}>
           <CategoriesGrid categories={categories} />
         </Suspense>
       </div>

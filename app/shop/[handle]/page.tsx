@@ -27,7 +27,12 @@ export async function generateMetadata({
     width,
     height,
     altText: alt,
-  } = { url: '', width: 300, height: 300, altText: '' };
+  } = {
+    url: attributeValues.icon?.downloadLink,
+    width: 300,
+    height: 300,
+    altText: localizeInfos.title,
+  };
 
   return {
     title: localizeInfos.title,
@@ -67,10 +72,13 @@ export default async function CatalogPage({
   };
 }) {
   const pageLimit = 10;
+  const langCode = 'en_US';
+
   const currentPage = Number(searchParams?.page) || 0;
   const { page } = await getPageByUrl(params.handle, 'en_US');
 
   const { isError, products } = await getProductsByUrl({
+    langCode: langCode,
     limit: pageLimit,
     offset: currentPage * pageLimit,
     params: { ...params, searchParams: searchParams },

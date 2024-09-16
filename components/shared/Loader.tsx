@@ -18,6 +18,26 @@ const Loader: React.FC<LoaderProps> = ({ data = {} }) => {
   );
 };
 
+export const CategoriesLoader: React.FC<LoaderProps> = ({ data = {} }) => {
+  return (
+    <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
+      {Array.from(Array(4).keys()).map((item) => (
+        <div
+          key={item}
+          className="relative flex w-1/4 grow flex-col justify-center text-2xl font-bold text-white max-md:w-full"
+        >
+          <div
+            className={`relative flex size-full h-64 overflow-hidden rounded-3xl p-6`}
+          >
+            <h2 className="z-10 mt-auto uppercase">xxx</h2>
+            <div className="size-full rounded-3xl bg-gray-200" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export const ProductsGridLoader: React.FC<LoaderProps> = ({
   data = {},
   limit = 10,

@@ -4,7 +4,13 @@ import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import { getPageByUrl, getProducts } from '@/app/api/serverSideProps';
+import {
+  getBlockByMarker,
+  getPageByUrl,
+  getProducts,
+  getProductsByBlockMarker,
+  getSimilarProducts,
+} from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
@@ -62,15 +68,17 @@ export default async function CatalogPage({
     page?: string;
     filters?: IFilterParams[];
   };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }) {
   const pageLimit = 10;
-  const currentPage = Number(searchParams?.page) || 0;
+  const langCode = 'en_US';
 
-  const { page } = await getPageByUrl('shop', 'en_US');
+  const currentPage = Number(searchParams?.page) || 0;
+  const { page } = await getPageByUrl('shop', langCode);
+
   const { isError, products } = await getProducts({
     limit: pageLimit,
     offset: currentPage * pageLimit,
+    langCode: langCode,
     params: { searchParams: searchParams },
   });
 

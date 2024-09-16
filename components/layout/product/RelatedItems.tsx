@@ -11,9 +11,12 @@ const RelatedItems: React.FC<{
   marker: string;
   title: string;
 }> = async ({ id, marker, title }) => {
-  const { isError, products } = await getSimilarProducts(marker, 'en_US');
+  const { isError, products } = await getSimilarProducts(marker, 'en_US', {
+    offset: 2,
+    limit: 5,
+  });
   // !!!
-  // const related = await getRelatedProductsById(id, 'en_US');
+  // const related = await getRelatedProductsById(id, 'en_US', {offset: 0, limit: 5, });
   // console.log(related);
 
   if (isError || !products) {

@@ -9,8 +9,7 @@ import type {
 
 import { api } from '@/app/api';
 
-/* ProductApi */
-const setSearchParams = (searchParams?: {
+const getSearchParams = (searchParams?: {
   search?: string;
   in_stock?: string;
   color?: string;
@@ -69,10 +68,13 @@ const setSearchParams = (searchParams?: {
   return expandedFilters;
 };
 
+/* api.Products */
+
 // getProducts
 export async function getProducts(props: {
   limit: number;
   offset: number;
+  langCode: string;
   params?: {
     handle?: string;
     searchParams?: {
@@ -88,15 +90,15 @@ export async function getProducts(props: {
   isError: boolean;
   err?: unknown;
 }> {
-  const { limit, offset, params } = props;
+  const { limit, offset, params, langCode } = props;
   const searchValue = params?.searchParams?.search || '';
-  const expandedFilters = setSearchParams(params?.searchParams);
+  const expandedFilters = getSearchParams(params?.searchParams);
 
   try {
     if (searchValue === '') {
       const products = await api.Products.getProducts(
         expandedFilters,
-        'en_US',
+        langCode,
         {
           sortOrder: 'DESC',
           sortKey: 'id',
@@ -130,8 +132,9 @@ export async function getProducts(props: {
 
 // getProductsByUrl
 export async function getProductsByUrl(props: {
-  limit: number;
   offset: number;
+  limit: number;
+  langCode: string;
   params: {
     handle: string;
     searchParams?: {
@@ -147,14 +150,14 @@ export async function getProductsByUrl(props: {
   isError: boolean;
   err?: unknown;
 }> {
-  const { limit, offset, params } = props;
-  const expandedFilters = setSearchParams(params?.searchParams);
+  const { limit, offset, params, langCode } = props;
+  const expandedFilters = getSearchParams(params?.searchParams);
 
   try {
     const products = await api.Products.getProductsByPageUrl(
       params.handle,
       expandedFilters,
-      'en_US',
+      langCode,
       {
         sortOrder: 'DESC',
         sortKey: 'id',
@@ -185,43 +188,6 @@ export async function getRelatedProductsById(
   }
 }
 
-// getSimilarProducts
-export async function getSimilarProducts(
-  marker: string,
-  langCode: string,
-): Promise<{
-  products?: IProductsEntity[];
-  isError: boolean;
-  err?: unknown;
-}> {
-  try {
-    const products = await api.Blocks.getSimilarProducts(marker, langCode);
-    return { isError: false, products: products };
-  } catch (err) {
-    return { isError: true, err };
-  }
-}
-
-// getSimilarProducts
-export async function getProductsByBlockMarker(
-  marker: string,
-  langCode: string,
-): Promise<{
-  products?: IProductsEntity[];
-  isError: boolean;
-  err?: unknown;
-}> {
-  try {
-    const products = await api.Blocks.getProductsByBlockMarker(
-      marker,
-      langCode,
-    );
-    return { isError: false, products: products };
-  } catch (err) {
-    return { isError: true, err };
-  }
-}
-
 // getProductById
 export async function getProductById(
   id: number,
@@ -239,7 +205,98 @@ export async function getProductById(
   }
 }
 
-/* PageApi */
+// api.Blocks
+
+// getSimilarProducts
+export async function getSimilarProducts(
+  marker: string,
+  langCode: string,
+  props: {
+    offset: number;
+    limit: number;
+  },
+): Promise<{
+  products?: IProductsEntity[];
+  isError: boolean;
+  err?: unknown;
+}> {
+  try {
+    const { limit, offset } = props;
+
+    const products = await api.Blocks.getSimilarProducts(
+      marker,
+      langCode,
+      offset,
+      limit,
+    );
+
+    return { isError: false, products: products };
+  } catch (err) {
+    return { isError: true, err };
+  }
+}
+
+// getProductsByBlockMarker
+export async function getProductsByBlockMarker(
+  marker: string,
+  langCode: string,
+  props: {
+    offset: number;
+    limit: number;
+  },
+): Promise<{
+  products?: IProductsEntity[];
+  isError: boolean;
+  err?: unknown;
+}> {
+  const { limit, offset } = props;
+
+  try {
+    const products = await api.Blocks.getProductsByBlockMarker(
+      marker,
+      langCode,
+      offset,
+      limit,
+    );
+    return { isError: false, products: products };
+  } catch (err) {
+    return { isError: true, err };
+  }
+}
+
+// getBlocks
+export async function getBlocks({
+  type,
+  langCode,
+}: {
+  type: BlockType;
+  langCode: string;
+}) {
+  try {
+    const blocks = await api.Blocks.getBlocks(type, langCode);
+    return { isError: false, blocks: blocks };
+  } catch (e) {
+    return { isError: true, err: e };
+  }
+}
+
+// getBlockByMarker
+export async function getBlockByMarker({
+  marker,
+  langCode,
+}: {
+  marker: string;
+  langCode: string;
+}) {
+  try {
+    const block = await api.Blocks.getBlockByMarker(marker, langCode);
+    return { isError: false, block: block };
+  } catch (e) {
+    return { isError: true, err: e };
+  }
+}
+
+/* api.Pages */
 
 // getPages
 export async function getPages(langCode: string): Promise<{
@@ -289,6 +346,8 @@ export async function getPageByUrl(
   }
 }
 
+// api.Menus
+
 // getMenuByMarker
 export async function getMenuByMarker({
   marker,
@@ -308,6 +367,8 @@ export async function getMenuByMarker({
     return { isError: true, err: e };
   }
 }
+
+// api.AttributesSets
 
 // getAttributeByMarker
 export async function getAttributeByMarker({
@@ -330,38 +391,6 @@ export async function getAttributeByMarker({
       langCode,
     );
     return { isError: false, attribute: attribute };
-  } catch (e) {
-    return { isError: true, err: e };
-  }
-}
-
-// getBlocks
-export async function getBlocks({
-  type,
-  langCode,
-}: {
-  type: BlockType;
-  langCode: string;
-}) {
-  try {
-    const blocks = await api.Blocks.getBlocks(type, langCode);
-    return { isError: false, blocks: blocks };
-  } catch (e) {
-    return { isError: true, err: e };
-  }
-}
-
-// getBlockByMarker
-export async function getBlockByMarker({
-  marker,
-  langCode,
-}: {
-  marker: string;
-  langCode: string;
-}) {
-  try {
-    const block = await api.Blocks.getBlockByMarker(marker, langCode);
-    return { isError: false, block: block };
   } catch (e) {
     return { isError: true, err: e };
   }
