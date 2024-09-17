@@ -1,3 +1,5 @@
+import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
+
 export const UsePrice = ({
   amount,
   currency,
@@ -24,4 +26,21 @@ export const sortObjectFieldsByPosition = (obj: Record<any, any>) => {
     sortedObj[key] = value;
   }
   return sortedObj;
+};
+
+export const flatMenuToNested = (
+  data: [] | Array<IMenusPages>,
+  pid: number | null,
+) => {
+  return data.reduce((r: IMenusPages[], element: IMenusPages) => {
+    if (pid == element.parentId) {
+      const object = { ...element };
+      const children = flatMenuToNested(data, element.id);
+      if (children.length) {
+        object.children = children;
+      }
+      r.push(object);
+    }
+    return r;
+  }, []);
 };

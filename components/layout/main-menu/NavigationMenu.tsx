@@ -4,26 +4,10 @@ import type { Key } from 'react';
 import { Suspense } from 'react';
 
 import { getMenuByMarker } from '@/app/api/serverSideProps';
+import { flatMenuToNested } from '@/components/utils';
 
 import MobileMenu from './MobileMenu';
 import NavigationMenuItem from './NavigationMenuItem';
-
-function flatMenuToNested(data: [] | Array<IMenusPages>, pid: number | null) {
-  return data.reduce((r: IMenusPages[], element: IMenusPages) => {
-    if (pid == element.parentId) {
-      const object = { ...element };
-      const children = flatMenuToNested(data, element.id);
-
-      if (children.length) {
-        object.children = children;
-      }
-
-      r.push(object);
-    }
-
-    return r;
-  }, []);
-}
 
 const NavigationMenu: React.FC = async () => {
   const { isError, menu } = await getMenuByMarker({

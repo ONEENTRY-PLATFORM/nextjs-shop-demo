@@ -82,9 +82,6 @@ function MobileMenu({ menu }: { menu: IMenusPages[] }) {
               </button>
 
               <div className="mb-4 w-full">
-                {/* <Suspense fallback={<SearchSkeleton />}>
-                  <Search />
-                </Suspense> */}
                 <Image
                   src={logo.src}
                   width={logo.width}
@@ -103,7 +100,7 @@ function MobileMenu({ menu }: { menu: IMenusPages[] }) {
                       className="py-2 text-lg text-neutral-800 transition-colors hover:text-orange-500"
                     >
                       <Link
-                        href={item.pageUrl}
+                        href={'/shop/category/' + item.pageUrl}
                         prefetch={true}
                         onClick={closeMenu}
                       >
