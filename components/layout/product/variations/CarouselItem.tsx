@@ -37,8 +37,8 @@ const CarouselItem: React.FC<VariationProps> = ({
             width={80}
             height={80}
             src={imageSrc}
-            alt="Product"
-            className="size-full shrink-0 rounded-lg object-cover"
+            alt={title}
+            className="aspect-auto size-full w-auto shrink-0 rounded-lg object-cover"
           />
         </div>
         <h3 className="w-full text-center leading-4">{title}</h3>

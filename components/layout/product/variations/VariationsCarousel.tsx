@@ -38,7 +38,7 @@ const VariationsCarousel: FC<{
           onRequestChange={setCurrentIndex}
           itemsToShow={3}
           speed={400}
-          centerMode={false}
+          centerMode={true}
           forwardBtnProps={{
             children: <NavigationButton direction="right" />,
             style: {

@@ -15,7 +15,7 @@ const ProductImage: React.FC<ProductImageProps> = ({
   product,
 }) => {
   return (
-    <div className="relative mb-10 flex h-[280px] w-[30%] grow flex-col max-md:w-full max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
+    <>
       <div className="absolute right-2 top-2 z-10">
         <FavoritesButton {...product} />
       </div>
@@ -24,11 +24,11 @@ const ProductImage: React.FC<ProductImageProps> = ({
           fill
           sizes="(min-width: 1024px) 30vw, 100vw"
           src={imageSrc}
-          alt={alt}
+          alt={alt || ''}
           className="size-full rounded-xl bg-slate-50 object-cover"
         />
       )}
-    </div>
+    </>
   );
 };
 

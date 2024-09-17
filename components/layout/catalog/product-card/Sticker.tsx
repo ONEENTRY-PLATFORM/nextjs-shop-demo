@@ -19,10 +19,12 @@ const Sticker: FC<IconButtonProps> = ({ sticker }) => {
   if (!sticker?.value) {
     return;
   }
+
   const title = sticker.value.title;
   const imgSrc =
     sticker.value.extended?.value.downloadLink ||
-    sticker.value[0].extended?.value.downloadLink;
+    (Array.isArray(sticker.value) &&
+      sticker.value[0].extended?.value.downloadLink);
 
   return (
     <button
@@ -35,7 +37,7 @@ const Sticker: FC<IconButtonProps> = ({ sticker }) => {
           height={24}
           loading="lazy"
           src={imgSrc}
-          alt={title}
+          alt={title || '...'}
           className="relative shrink-0"
         />
       )}
