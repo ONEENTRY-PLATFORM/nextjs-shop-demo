@@ -4,9 +4,12 @@ import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 import CategoriesGrid from '@/components/layout/categories/CategoriesGrid';
-import Loader, { CategoriesLoader } from '@/components/shared/Loader';
+import { CategoriesLoader } from '@/components/shared/Loader';
 
-import { getAttributeByMarker, getPageByUrl } from '../../api/serverSideProps';
+import {
+  getPageByUrl,
+  getSingleAttributeByMarkerSet,
+} from '../../api/serverSideProps';
 
 export async function generateMetadata({
   params,
@@ -65,7 +68,7 @@ export default async function CategoryPage({
 }) {
   const langCode = 'en_US';
 
-  const { isError, attribute } = await getAttributeByMarker({
+  const { isError, attribute } = await getSingleAttributeByMarkerSet({
     attributeMarker: 'category',
     setMarker: 'product',
     langCode: langCode,

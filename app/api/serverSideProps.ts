@@ -371,8 +371,8 @@ export async function getMenuByMarker({
 
 // api.AttributesSets
 
-// getAttributeByMarker
-export async function getAttributeByMarker({
+// getSingleAttributeByMarkerSet
+export async function getSingleAttributeByMarkerSet({
   attributeMarker,
   setMarker,
   langCode,
@@ -397,6 +397,9 @@ export async function getAttributeByMarker({
   }
 }
 
+// api.Locales
+
+// getLocales
 export async function getLocales(): Promise<{
   locales?: ILocalEntity[];
   isError: boolean;

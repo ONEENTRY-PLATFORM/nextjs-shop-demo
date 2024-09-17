@@ -40,44 +40,6 @@ const NavigationMenu: React.FC = async () => {
     null,
   );
 
-  // const stickersData = await getAttributeByMarker({
-  //   attributeMarker: 'stickers',
-  //   setMarker: 'product',
-  //   langCode: 'en_US',
-  // });
-  // const stickers = stickersData.attribute?.listTitles.map(
-  //   (sticker: { title: string; value: string }) => {
-  //     return {
-  //       label: sticker.title,
-  //       href: '/shop/' + sticker.value,
-  //     };
-  //   },
-  // );
-
-  // const categoryData = await getAttributeByMarker({
-  //   attributeMarker: 'category',
-  //   setMarker: 'product',
-  //   langCode: 'en_US',
-  // });
-  // const categories = categoryData.attribute?.listTitles.map(
-  //   (category: { title: string; value: string }) => {
-  //     return {
-  //       label: category.title,
-  //       href: '/shop/category/' + category.value,
-  //     };
-  //   },
-  // );
-
-  // const navigationItems = [
-  //   {
-  //     label: 'Category',
-  //     href: '#',
-  //     hasDropdown: true,
-  //     categories: categories,
-  //   },
-  // ];
-  // navigationItems.push(...(stickers || []));
-
   return (
     <>
       <nav className="relative z-20 items-center justify-center bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
