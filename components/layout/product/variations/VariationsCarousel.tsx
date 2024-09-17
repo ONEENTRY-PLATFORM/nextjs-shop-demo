@@ -1,5 +1,6 @@
 'use client';
 
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { useState } from 'react';
 import Carousel from 'react-simply-carousel';
@@ -8,26 +9,23 @@ import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 
 const VariationsCarousel: FC<{
-  items: Array<{
-    title: string;
-    imageSrc: string;
-  }>;
+  items: Array<IProductsEntity> | undefined;
 }> = ({ items }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   return (
     <nav className="flex w-full">
-      <div className="flex w-full items-center justify-center self-stretch">
+      <div className="flex h-[110px] w-full items-center justify-center self-stretch">
         <Carousel
           infinite
           containerProps={{
             style: {
               width: '100%',
-              justifyContent: 'space-between',
+              justifyContent: 'center',
               userSelect: 'none',
             },
             className:
-              'flex min-w-full w-full items-center justify-center gap-[3%] self-stretch overflow-hidden',
+              'flex mx-auto min-w-full flex-col w-full items-center justify-center gap-[3%] self-stretch overflow-hidden',
           }}
           preventScrollOnSwipe
           swipeTreshold={60}
@@ -42,31 +40,26 @@ const VariationsCarousel: FC<{
           forwardBtnProps={{
             children: <NavigationButton direction="right" />,
             style: {
-              width: 30,
-              height: 30,
               minWidth: 30,
               alignSelf: 'center',
             },
             className:
-              'group flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500',
+              'absolute top-[calc(_50%_-_15px)] z-10 right-0 size-30 group flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500',
           }}
           backwardBtnProps={{
             children: <NavigationButton direction="left" />,
             style: {
-              width: 30,
-              height: 30,
               minWidth: 30,
               alignSelf: 'center',
             },
             className:
-              'group flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500',
+              'absolute top-[calc(_50%_-_15px)] z-10 left-0 size-30 group flex aspect-square w-8 items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500',
           }}
         >
-          {items.map((item, idx) => (
+          {items?.map((item: IProductsEntity, idx: number) => (
             <CarouselItem
               key={idx}
-              title={item.title}
-              imageSrc={item.imageSrc}
+              item={item}
               index={idx}
               currentIndex={currentIndex}
               setCurrentIndex={setCurrentIndex}

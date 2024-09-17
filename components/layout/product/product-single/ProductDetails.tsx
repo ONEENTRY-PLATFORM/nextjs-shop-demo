@@ -5,16 +5,19 @@ import type { FC } from 'react';
 import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';
 
-const ProductDetails: FC<IProductsEntity> = (product) => {
+const ProductDetails: FC<IProductsEntity & { productPages?: [] }> = (
+  product,
+) => {
   const { attributeValues, localizeInfos } = product;
   const units = attributeValues?.units_product.value;
   const maxUnits = 50;
   const width = (units / maxUnits) * 100;
+  console.log(product.productPages);
 
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-full">
       <h1 className="text-xl leading-6 text-neutral-600">
-        {localizeInfos?.title}
+        {localizeInfos.title}
       </h1>
 
       {/* !!! category */}

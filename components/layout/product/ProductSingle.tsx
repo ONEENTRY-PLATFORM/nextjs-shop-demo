@@ -1,6 +1,7 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
+import { getSimilarProducts } from '@/app/api/serverSideProps';
 import { variationsItems } from '@/components/data';
 
 import ProductDescription from './product-single/ProductDescription';
@@ -11,10 +12,15 @@ import RelatedItems from './RelatedItems';
 import ReviewsSection from './ReviewsSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 
-const ProductSingle: FC<IProductsEntity & { blocks: Array<string> }> = (
-  product,
-) => {
+const ProductSingle: FC<
+  IProductsEntity & { blocks?: Array<string>; productPages?: [] }
+> = async (product) => {
   const { attributeValues, localizeInfos, blocks } = product;
+
+  const { products } = await getSimilarProducts('similar', 'en_US', {
+    offset: 0,
+    limit: 10,
+  });
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -31,7 +37,7 @@ const ProductSingle: FC<IProductsEntity & { blocks: Array<string> }> = (
 
         <div className="flex w-4/12 grow flex-col max-md:w-full">
           <div className="relative mb-6 box-border flex shrink-0 flex-col">
-            <VariationsCarousel items={variationsItems} />
+            <VariationsCarousel items={products} />
           </div>
 
           {attributeValues.description && (

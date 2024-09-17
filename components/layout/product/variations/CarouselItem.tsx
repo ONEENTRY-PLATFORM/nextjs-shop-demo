@@ -1,17 +1,16 @@
 import Image from 'next/image';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { Dispatch, SetStateAction } from 'react';
 
 interface VariationProps {
   index: number;
-  title: string;
-  imageSrc: string;
+  item: IProductsEntity;
   currentIndex: number;
   setCurrentIndex: Dispatch<SetStateAction<number>>;
 }
 
 const CarouselItem: React.FC<VariationProps> = ({
-  title,
-  imageSrc,
+  item,
   index,
   currentIndex,
   setCurrentIndex,
@@ -20,6 +19,12 @@ const CarouselItem: React.FC<VariationProps> = ({
     setCurrentIndex(index);
   };
   const isActive = index === currentIndex;
+
+  const title = item.localizeInfos.title;
+  const picVal = item.attributeValues.pic.value;
+  const imageSrc = Array.isArray(picVal)
+    ? picVal[0].downloadLink
+    : picVal.downloadLink;
 
   return (
     <button
@@ -32,13 +37,13 @@ const CarouselItem: React.FC<VariationProps> = ({
       }
     >
       <div className="flex w-full flex-col gap-1 overflow-hidden whitespace-nowrap pb-1 text-center text-sm">
-        <div className="h-[80px] w-full bg-neutral-100">
+        <div className="h-[80px] w-full bg-neutral-100 flex items-center">
           <Image
             width={80}
             height={80}
             src={imageSrc}
             alt={title}
-            className="aspect-auto size-full w-auto shrink-0 rounded-lg object-cover"
+            className="aspect-auto size-full h-auto min-w-full shrink-0 rounded-lg object-cover"
           />
         </div>
         <h3 className="w-full text-center leading-4">{title}</h3>
