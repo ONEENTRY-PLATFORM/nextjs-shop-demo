@@ -8,6 +8,7 @@ const ProductsGroup: FC<{
   marker: string;
 }> = async ({ marker }) => {
   const langCode = 'en_US';
+  // together - Together products block in product page
   const { isError, products } = await getProductsByBlockMarker(
     marker,
     langCode,
