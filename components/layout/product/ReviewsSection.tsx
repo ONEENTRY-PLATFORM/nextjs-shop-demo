@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 
 import { productRating } from '@/components/data';
 
-import RatingBlock from '../rating-block/RatingBlock';
-import RatingButton from '../rating-block/RatingButton';
-import ReviewsList from './ReviewsList';
-import ViewAllButton from './ViewAllButton';
+import RatingBlock from './rating-block/RatingBlock';
+import RatingButton from './rating-block/RatingButton';
+import ReviewsList from './reviews-group/ReviewsList';
+import ViewAllButton from './reviews-group/ViewAllButton';
 
 const ReviewsSection: React.FC = () => {
   const [state, setState] = useState(false);

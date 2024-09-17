@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
+import type { FC } from 'react';
 
 import * as icons from '../../icons';
 
-const SidebarMenuItem: React.FC<{
+const SidebarMenuItem: FC<{
   menuItem: IMenusPages & { isActive: boolean };
 }> = ({ menuItem }) => {
   const paths = usePathname();

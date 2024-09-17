@@ -8,14 +8,14 @@ import ProductDetails from './product-single/ProductDetails';
 import ProductImage from './product-single/ProductImage';
 import ProductsGroup from './ProductsGroup';
 import RelatedItems from './RelatedItems';
-import ReviewsSection from './reviews-group/ReviewSection';
+import ReviewsSection from './ReviewsSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 
 const ProductSingle: FC<IProductsEntity & { blocks: Array<string> }> = (
   product,
 ) => {
   const { attributeValues, localizeInfos, blocks } = product;
-  console.log(product);
+  // console.log(product);
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
