@@ -2,6 +2,8 @@ import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { Dispatch, SetStateAction } from 'react';
 
+import Placeholder from '@/components/shared/Placeholder';
+
 interface VariationProps {
   index: number;
   item: IProductsEntity;
@@ -32,21 +34,25 @@ const CarouselItem: React.FC<VariationProps> = ({
       className={
         'relative rounded-lg box-border flex w-[100px] shrink-0 flex-col ' +
         (isActive
-          ? 'border border-solid border-slate-200 text-slate-800'
+          ? 'border border-solid border-slate-50 text-slate-800'
           : 'border border-solid border-transparent text-slate-300')
       }
     >
       <div className="flex w-full flex-col gap-1 overflow-hidden whitespace-nowrap pb-1 text-center text-sm">
-        <div className="flex h-[80px] w-full items-center bg-neutral-100">
-          <Image
-            width={80}
-            height={80}
-            src={imageSrc}
-            alt={title}
-            className="aspect-auto size-full h-auto min-w-full shrink-0 rounded-lg object-cover"
-          />
+        <div className="flex h-[80px] w-full items-center">
+          {imageSrc ? (
+            <Image
+              width={80}
+              height={80}
+              src={imageSrc}
+              alt={title}
+              className="aspect-auto size-full h-auto min-w-full shrink-0 rounded-lg object-cover"
+            />
+          ) : (
+            <Placeholder />
+          )}
         </div>
-        <h3 className="w-full text-center leading-4">{title}</h3>
+        <h3 className="w-full text-center text-xs leading-4">{title}</h3>
       </div>
     </button>
   );

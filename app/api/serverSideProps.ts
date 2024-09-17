@@ -1,5 +1,6 @@
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { BlockType } from 'oneentry/dist/blocks/blocksInterfaces';
+import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
 import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {
@@ -391,6 +392,19 @@ export async function getAttributeByMarker({
       langCode,
     );
     return { isError: false, attribute: attribute };
+  } catch (e) {
+    return { isError: true, err: e };
+  }
+}
+
+export async function getLocales(): Promise<{
+  locales?: ILocalEntity[];
+  isError: boolean;
+  err?: unknown;
+}> {
+  try {
+    const locales = await api.Locales.getLocales();
+    return { isError: false, locales: locales };
   } catch (e) {
     return { isError: true, err: e };
   }

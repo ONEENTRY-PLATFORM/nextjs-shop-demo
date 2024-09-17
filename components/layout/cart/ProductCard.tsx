@@ -4,6 +4,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { deselectProduct } from '@/app/store/reducers/CartSlice';
+import Placeholder from '@/components/shared/Placeholder';
 
 // import { UsePrice } from '@/components/utils';
 import QuantitySelector from '../product/components/QuantitySelector';
@@ -20,6 +21,10 @@ const ProductCard: React.FC<{
   }
 
   const { id, attributeValues, localizeInfos, selected } = product;
+  const imgSrc = attributeValues.pic?.value.downloadLink;
+  const title = localizeInfos?.title;
+
+  console.log(imgSrc);
 
   return (
     <article className="flex w-full justify-between gap-5 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
@@ -38,18 +43,22 @@ const ProductCard: React.FC<{
         </div>
 
         <div className="relative h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-50">
-          <Image
-            width={130}
-            height={150}
-            loading="lazy"
-            src={attributeValues.pic?.value.downloadLink}
-            alt={localizeInfos?.title}
-            className="size-full shrink-0 self-start object-cover"
-          />
+          {imgSrc ? (
+            <Image
+              width={130}
+              height={150}
+              loading="lazy"
+              src={imgSrc}
+              alt={title}
+              className="size-full shrink-0 self-start object-cover"
+            />
+          ) : (
+            <Placeholder />
+          )}
         </div>
 
         <div className="flex flex-col gap-5 self-start text-neutral-600">
-          <h2 className="text-base leading-8">{localizeInfos?.title}</h2>
+          <h2 className="text-base leading-8">{title}</h2>
           <PriceDisplay
             currentPrice={attributeValues.sale?.value}
             originalPrice={attributeValues.price?.value}

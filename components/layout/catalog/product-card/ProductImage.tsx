@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import type { FC } from 'react';
 
+import Placeholder from '@/components/shared/Placeholder';
+
 interface ProductImageProps {
   imageSrc: string;
   alt: string;
@@ -9,7 +11,7 @@ interface ProductImageProps {
 const ProductImage: FC<ProductImageProps> = ({ imageSrc, alt }) => {
   return (
     <div className="relative size-40">
-      {imageSrc && (
+      {imageSrc ? (
         <Image
           fill
           sizes="(min-width: 300px) 66vw, 100vw"
@@ -17,6 +19,8 @@ const ProductImage: FC<ProductImageProps> = ({ imageSrc, alt }) => {
           alt={alt}
           className="size-40 shrink-0 object-cover"
         />
+      ) : (
+        <Placeholder />
       )}
     </div>
   );

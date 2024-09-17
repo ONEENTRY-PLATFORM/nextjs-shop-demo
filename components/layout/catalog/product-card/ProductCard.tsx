@@ -2,8 +2,8 @@ import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
 
+import FavoritesButton from '../../../shared/FavoritesButton';
 import AddToCartButton from '../../product/components/AddToCartButton';
-import FavoritesButton from './FavoritesButton';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 import Sticker from './Sticker';

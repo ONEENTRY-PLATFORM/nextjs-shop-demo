@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import FavoritesButton from '../../catalog/product-card/FavoritesButton';
+import Placeholder from '@/components/shared/Placeholder';
+
+import FavoritesButton from '../../../shared/FavoritesButton';
 
 interface ProductImageProps {
   imageSrc: string;
@@ -9,7 +11,7 @@ interface ProductImageProps {
   product: IProductsEntity;
 }
 
-const ProductImage: React.FC<ProductImageProps> = ({
+const ProductImage: React.FC<ProductImageProps> = async ({
   imageSrc,
   alt,
   product,
@@ -19,7 +21,7 @@ const ProductImage: React.FC<ProductImageProps> = ({
       <div className="absolute right-2 top-2 z-10">
         <FavoritesButton {...product} />
       </div>
-      {imageSrc && (
+      {imageSrc ? (
         <Image
           fill
           sizes="(min-width: 1024px) 30vw, 100vw"
@@ -27,6 +29,8 @@ const ProductImage: React.FC<ProductImageProps> = ({
           alt={alt || ''}
           className="size-full rounded-xl bg-slate-50 object-cover"
         />
+      ) : (
+        <Placeholder />
       )}
     </>
   );

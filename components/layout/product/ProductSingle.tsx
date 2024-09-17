@@ -1,7 +1,7 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import { getSimilarProducts } from '@/app/api/serverSideProps';
+import { getLocales, getSimilarProducts } from '@/app/api/serverSideProps';
 
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
@@ -15,11 +15,16 @@ const ProductSingle: FC<
   IProductsEntity & { blocks?: Array<string>; productPages?: [] }
 > = async (product) => {
   const { attributeValues, localizeInfos, blocks } = product;
+  const { locales } = await getLocales();
 
-  const { products } = await getSimilarProducts('similar', 'en_US', {
-    offset: 0,
-    limit: 10,
-  });
+  const { products } = await getSimilarProducts(
+    'similar',
+    locales?.[0].code || 'en_US',
+    {
+      offset: 0,
+      limit: 10,
+    },
+  );
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
