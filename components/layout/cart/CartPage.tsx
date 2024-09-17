@@ -6,7 +6,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
-import { useGetFormByMarkerQuery, useGetProduct } from '@/app/api';
+import { useGetProduct } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addProductToCart,
@@ -102,17 +102,9 @@ const CartPage: FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmitOrder = (e: any) => {
     e.preventDefault();
-    const address = deliveryData.address;
     const date = deliveryData.date;
     const time = deliveryData.time;
-    dispatch(
-      addData({
-        marker: 'time',
-        type: 'string',
-        value: time,
-        valid: time ? true : false,
-      }),
-    );
+    const address = deliveryData.address;
     dispatch(
       addData({
         marker: 'date',
@@ -123,6 +115,14 @@ const CartPage: FC = () => {
           formatString: 'YYYY-MM-DD',
         },
         valid: date ? true : false,
+      }),
+    );
+    dispatch(
+      addData({
+        marker: 'time',
+        type: 'string',
+        value: time,
+        valid: time ? true : false,
       }),
     );
     dispatch(

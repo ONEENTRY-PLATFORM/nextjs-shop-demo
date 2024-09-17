@@ -115,7 +115,6 @@ export async function getProducts(props: {
           ),
         };
       }
-      console.log(products);
       return {
         isError: false,
         products: products,

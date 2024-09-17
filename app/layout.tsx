@@ -22,6 +22,9 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: 'OneEntry Shop',
   description: 'OneEntry next-js shop',
+  openGraph: {
+    type: 'website',
+  },
 };
 
 export default function RootLayout({

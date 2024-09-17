@@ -7,7 +7,6 @@ import Carousel from 'react-simply-carousel';
 import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const VariationsCarousel: FC<{
   items: Array<{
     title: string;

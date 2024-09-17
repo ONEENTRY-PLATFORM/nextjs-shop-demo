@@ -15,7 +15,6 @@ const ProductSingle: FC<IProductsEntity & { blocks: Array<string> }> = (
   product,
 ) => {
   const { attributeValues, localizeInfos, blocks } = product;
-  // console.log(product);
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
