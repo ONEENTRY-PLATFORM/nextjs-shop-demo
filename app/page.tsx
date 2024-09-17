@@ -4,8 +4,8 @@ import { getPageByUrl } from '@/app/api/serverSideProps';
 import CatalogGrid from '@/components/layout/categories/CatalogGrid';
 import Loader from '@/components/shared/Loader';
 
-// export const revalidate = 10;
-// export const dynamicParams = true;
+export const revalidate = 10;
+export const dynamicParams = true;
 
 const HomePage = async () => {
   const { page, isError } = await getPageByUrl('home_web', 'en_US');
