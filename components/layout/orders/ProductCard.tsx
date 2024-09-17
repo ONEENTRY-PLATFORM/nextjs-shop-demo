@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
 
+import Placeholder from '@/components/shared/Placeholder';
 import { UsePrice } from '@/components/utils';
 
 const ProductCard: React.FC<{ product: IOrderProducts; currency: string }> = ({
@@ -22,13 +23,17 @@ const ProductCard: React.FC<{ product: IOrderProducts; currency: string }> = ({
   return (
     <div className="relative flex w-full flex-row gap-4">
       <div className="relative h-[150px] min-w-[130px]">
-        <Image
-          fill
-          sizes="(min-width: 300px) 66vw, 100vw"
-          src={productImage}
-          alt={title}
-          className="size-full shrink-0 object-cover"
-        />
+        {productImage ? (
+          <Image
+            fill
+            sizes="(min-width: 300px) 66vw, 100vw"
+            src={productImage}
+            alt={title}
+            className="size-full shrink-0 object-cover"
+          />
+        ) : (
+          <Placeholder />
+        )}
       </div>
       <div className="mb-5 flex w-full flex-col gap-2.5">
         <h2 className="text-base">{title}</h2>

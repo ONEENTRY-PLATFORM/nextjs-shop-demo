@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-// import * as pageComponents from '../../components/layout/pages';
 import { getPageByUrl } from '@/app/api/serverSideProps';
 import CartPage from '@/components/layout/cart/CartPage';
 import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
@@ -67,11 +66,9 @@ export async function generateMetadata({
   return {
     title: localizeInfos.title,
     description: localizeInfos.title,
-    // openGraph: {
-    //   publishedTime: page.createdAt,
-    //   modifiedTime: page.updatedAt,
-    //   type: 'article',
-    // },
+    openGraph: {
+      type: 'article',
+    },
   };
 }
 
@@ -86,15 +83,15 @@ export default async function Page({ params }: { params: { page: string } }) {
 
   return (
     <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col overflow-hidden">
-      {pages.map((page, _i) => {
-        if (pageUrl !== page.name) {
+      {pages.map((p, _i) => {
+        if (pageUrl !== p.name) {
           return;
         }
 
-        return page.templateType === 'withSidebar' ? (
-          <WithSidebar key={_i}>{page.component}</WithSidebar>
+        return p.templateType === 'withSidebar' ? (
+          <WithSidebar key={_i}>{p.component}</WithSidebar>
         ) : (
-          <div key={_i}>{page.component}</div>
+          <div key={_i}>{p.component}</div>
         );
       })}
     </div>

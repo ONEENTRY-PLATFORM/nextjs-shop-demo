@@ -19,9 +19,6 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
   );
 
   useEffect(() => {
-    if (!isFavorites) {
-      return;
-    }
     setIsFav(isFavorites);
   }, [isFavorites]);
 

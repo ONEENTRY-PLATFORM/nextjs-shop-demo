@@ -24,8 +24,6 @@ const ProductCard: React.FC<{
   const imgSrc = attributeValues.pic?.value.downloadLink;
   const title = localizeInfos?.title;
 
-  console.log(imgSrc);
-
   return (
     <article className="flex w-full justify-between gap-5 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row">
       <div className="relative flex justify-between gap-5">
