@@ -23,7 +23,7 @@ const CarouselItem: React.FC<VariationProps> = ({
   const title = item.localizeInfos.title;
   const picVal = item.attributeValues.pic.value;
   const imageSrc = Array.isArray(picVal)
-    ? picVal[0].downloadLink
+    ? picVal[0]?.downloadLink
     : picVal.downloadLink;
 
   return (
@@ -37,7 +37,7 @@ const CarouselItem: React.FC<VariationProps> = ({
       }
     >
       <div className="flex w-full flex-col gap-1 overflow-hidden whitespace-nowrap pb-1 text-center text-sm">
-        <div className="h-[80px] w-full bg-neutral-100 flex items-center">
+        <div className="flex h-[80px] w-full items-center bg-neutral-100">
           <Image
             width={80}
             height={80}

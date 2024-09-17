@@ -38,9 +38,9 @@ const ProductCard: FC<IProductsEntity> = (product) => {
 
       <ProductImage
         imageSrc={
-          productImage.length
-            ? productImage[0].downloadLink
-            : productImage.downloadLink
+          Array.isArray(productImage)
+            ? productImage[0]?.downloadLink
+            : productImage?.downloadLink
         }
         alt={localizeInfos.title}
       />

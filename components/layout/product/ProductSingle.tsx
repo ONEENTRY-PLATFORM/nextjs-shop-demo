@@ -2,7 +2,6 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 
 import { getSimilarProducts } from '@/app/api/serverSideProps';
-import { variationsItems } from '@/components/data';
 
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';

@@ -5,7 +5,7 @@ import type { FC } from 'react';
 import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';
 
-const ProductDetails: FC<IProductsEntity & { productPages?: [] }> = (
+const ProductDetails: FC<IProductsEntity & { productPages?: [] }> = async (
   product,
 ) => {
   const { attributeValues, localizeInfos } = product;
