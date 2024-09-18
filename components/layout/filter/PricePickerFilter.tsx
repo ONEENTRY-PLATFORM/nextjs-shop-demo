@@ -35,7 +35,7 @@ const PriceFilter: FC = () => {
     (state) => state.systemContentReducer.content.price_to,
   );
 
-  // minPrice
+  // params minPrice
   useEffect(() => {
     if (priceFrom && priceFrom !== MIN) {
       params.set('minPrice', priceFrom.toString());
@@ -45,7 +45,7 @@ const PriceFilter: FC = () => {
     replace(`${pathname}?${params.toString()}`);
   }, [priceFrom]);
 
-  // maxPrice
+  // params maxPrice
   useEffect(() => {
     if (priceTo && priceTo !== MAX) {
       params.set('maxPrice', priceTo.toString());

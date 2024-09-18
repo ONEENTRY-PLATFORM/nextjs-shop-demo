@@ -6,7 +6,6 @@ import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInter
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { useGetSingleAttributeByMarkerSet } from '@/app/api';
-import Loader from '@/components/shared/Loader';
 
 import ColorPicker from './ColorPicker';
 
@@ -69,7 +68,7 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
     return (
       <div>
         <div className="mb-5 h-5 bg-slate-100">{color_filter_title}</div>
-        <div className="mb-9 flex h-5 flex-wrap gap-5 whitespace-nowrap bg-slate-100 text-sm leading-8 text-slate-400"></div>
+        <div className="mb-9 flex h-5 flex-wrap gap-5 whitespace-nowrap bg-slate-100 text-sm leading-8"></div>
       </div>
     );
   }

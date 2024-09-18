@@ -5,11 +5,11 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import {
-  getBlockByMarker,
+  // getBlockByMarker,
   getPageByUrl,
   getProducts,
-  getProductsByBlockMarker,
-  getSimilarProducts,
+  // getProductsByBlockMarker,
+  // getSimilarProducts,
 } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
