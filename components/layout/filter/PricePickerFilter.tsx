@@ -17,16 +17,16 @@ const PriceFilter: FC = () => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
 
-  const [priceFrom, setPriceFrom] = useState(
-    params.get('minPrice') ? Number(params.get('minPrice')) : 0,
-  );
-  const [priceTo, setPriceTo] = useState(
-    params.get('maxPrice') ? Number(params.get('maxPrice')) : 300,
-  );
-
   const STEP = 10;
   const MIN = 0;
   const MAX = 300;
+
+  const [priceFrom, setPriceFrom] = useState(
+    params.get('minPrice') ? Number(params.get('minPrice')) : MIN,
+  );
+  const [priceTo, setPriceTo] = useState(
+    params.get('maxPrice') ? Number(params.get('maxPrice')) : MAX,
+  );
 
   const priceFromLabel = useAppSelector(
     (state) => state.systemContentReducer.content.price_from,
@@ -35,6 +35,7 @@ const PriceFilter: FC = () => {
     (state) => state.systemContentReducer.content.price_to,
   );
 
+  // minPrice
   useEffect(() => {
     if (priceFrom && priceFrom !== MIN) {
       params.set('minPrice', priceFrom.toString());
@@ -44,6 +45,7 @@ const PriceFilter: FC = () => {
     replace(`${pathname}?${params.toString()}`);
   }, [priceFrom]);
 
+  // maxPrice
   useEffect(() => {
     if (priceTo && priceTo !== MAX) {
       params.set('maxPrice', priceTo.toString());
@@ -53,12 +55,14 @@ const PriceFilter: FC = () => {
     replace(`${pathname}?${params.toString()}`);
   }, [priceTo]);
 
+  // setPriceFrom
   useEffect(() => {
     if (!params.get('minPrice')) {
       setPriceFrom(MIN);
     }
   }, [params.get('minPrice')]);
 
+  // setPriceTo
   useEffect(() => {
     if (!params.get('maxPrice')) {
       setPriceTo(MAX);

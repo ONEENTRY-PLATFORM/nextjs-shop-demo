@@ -59,7 +59,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const CategoryPage = async () => {
-  // export default async function CategoryPage() {
   const langCode = 'en_US';
   const { pages, isError } = await getChildPagesByParentUrl(
     'category',
@@ -77,7 +76,6 @@ const CategoryPage = async () => {
       imgSrc: page.attributeValues.pic.value[0].downloadLink,
     };
   });
-  console.log(pages[0].attributeValues.pic.value[0].downloadLink);
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
