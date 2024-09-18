@@ -31,6 +31,7 @@ export const useGetForm = ({ marker }: UseGetFormProps) => {
   const appFormData = useRef<FormDataType | null>(null);
   const [refetch, setRefetch] = useState(false);
   const { activeLanguage } = useContext(LanguageContext);
+
   useEffect(() => {
     setLoading(true);
     (async () => {

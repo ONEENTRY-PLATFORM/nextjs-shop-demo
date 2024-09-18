@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* @import'./styles/components.scss'; */
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -33,7 +35,6 @@ input:focus-visible {
   color: #1e293b;
 }
 
-
 .toggle-checkbox:checked {
   @apply: right-0 border-orange-500;
   right: 0;
@@ -44,6 +45,96 @@ input:focus-visible {
   background-color: #f97316;
 }
 
+@layer components {
+  .btn {
+    @apply 
+      justify-center 
+      items-center 
+      transition-colors
+      duration-300
+      disabled:border-slate-300
+      disabled:text-slate-400
+      disabled:bg-transparent
+      rounded-[30px];
+  }
+
+  .btn-lg {
+    @apply 
+      px-5
+      py-4
+      h-[60px]
+      text-base
+      font-bold 
+      uppercase;
+  }
+
+  .btn-md {
+    @apply 
+      px-5
+      py-2.5
+      h-[46px]
+      text-base
+      font-bold 
+      uppercase;
+  }
+
+  .btn-primary {
+    @apply 
+      text-white 
+      bg-orange-500 
+      border-orange-500
+      hover:bg-orange-600 
+      focus-visible:outline-orange-600;
+  }
+
+  .btn-o {
+    @apply 
+      justify-center 
+      items-center 
+      border
+      border-solid 
+      transition-colors
+      duration-300 
+      disabled:border-neutral-300 
+      disabled:text-neutral-300 
+      bg-transparent;
+  }
+
+  .btn-o-lg {
+    @apply 
+      px-10 
+      py-4 
+      text-xl 
+      font-bold 
+      tracking-wide 
+      uppercase 
+      border-2
+      rounded-[30px];
+  }
+
+  .btn-o-primary {
+    @apply 
+      text-orange-500 
+      border-orange-500 
+      hover:border-orange-600 
+      hover:text-orange-600 
+      focus-visible:outline-orange-600
+      focus-visible:text-orange-600
+      bg-transparent;
+  }
+
+  .btn-o-gray {
+    @apply 
+      text-slate-400 
+      border-neutral-300 
+      hover:border-slate-400 
+      hover:text-slate-400 
+      hover:bg-transparent
+      focus-visible:outline-slate-400
+      focus-visible:text-slate-400;
+  }
+
+}
 
 @layer utilities {
   .text-balance {

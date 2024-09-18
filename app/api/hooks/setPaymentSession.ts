@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type {
   ICreateSessionEntity,
   // ISessionBody,
-  ISessionEntity,
+  // ISessionEntity,
 } from 'oneentry/dist/payments/paymentsInterfaces';
 import { useCallback, useRef, useState } from 'react';
 

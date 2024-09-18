@@ -42,9 +42,7 @@ const AddToCartButton: FC<AddToCartProps> = ({
         href={`/shop/product/` + product.id}
         onClick={() => {}}
         type="button"
-        className={
-          'border-slate-300 text-slate-400 bg-transparent ' + className
-        }
+        className={'btn btn-o btn-o-gray ' + className}
       >
         Out of stock
       </Link>
