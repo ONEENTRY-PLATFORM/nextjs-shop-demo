@@ -5,12 +5,12 @@ import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
-  decreaseProductQty,
-  increaseProductQty,
-  removeProduct,
   selectCartItemWithIdLength,
   setProductQty,
 } from '@/app/store/reducers/CartSlice';
+
+import DecreaseButton from './DecreaseButton';
+import IncreaseButton from './IncreaseButton';
 
 const QuantitySelector: React.FC<{
   product: IProductsEntity;
@@ -35,24 +35,12 @@ const QuantitySelector: React.FC<{
 
   return (
     <div
-      className="flex items-center justify-between rounded-3xl bg-slate-50"
+      className="flex items-center justify-between rounded-3xl bg-slate-50 px-2"
       style={{ height: height }}
     >
-      <button
-        onClick={() => {
-          if (qty <= 1) {
-            dispatch(removeProduct(id));
-          } else {
-            dispatch(decreaseProductQty({ id: id, quantity: 1 }));
-          }
-        }}
-        className="relative m-1 box-border size-8 rounded-full text-center text-slate-800 hover:bg-slate-100 hover:text-orange-500"
-        aria-label="Decrease quantity"
-      >
-        –
-      </button>
+      <IncreaseButton id={id} qty={qty} />
       <input
-        className="relative box-border w-16 rounded-full bg-transparent text-center text-slate-800 hover:bg-slate-100 hover:text-orange-500"
+        className="relative box-border h-8 w-16 rounded-full bg-transparent text-center text-slate-800 hover:bg-slate-100 hover:text-orange-500"
         type="number"
         name={'qty_selector_' + id}
         id={'qty_selector_' + id}
@@ -66,15 +54,7 @@ const QuantitySelector: React.FC<{
           );
         }}
       />
-      <button
-        onClick={() => {
-          dispatch(increaseProductQty({ id: id, quantity: 1 }));
-        }}
-        className="relative m-1 box-border size-8 rounded-full text-center text-slate-800 hover:bg-slate-100 hover:text-orange-500"
-        aria-label="Increase quantity"
-      >
-        +
-      </button>
+      <DecreaseButton id={id} qty={qty} />
     </div>
   );
 };

@@ -57,7 +57,7 @@ const AddToCartButton: FC<AddToCartProps> = ({
         dispatch(addProductToCart({ ...product, selected: true, quantity: 1 }));
       }}
       type="button"
-      className={className + ' text-orange-500'}
+      className={className + ' text-white'}
     >
       Add to cart
     </button>

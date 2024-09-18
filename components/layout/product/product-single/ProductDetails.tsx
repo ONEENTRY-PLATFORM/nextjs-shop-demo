@@ -12,7 +12,7 @@ const ProductDetails: FC<IProductsEntity & { productPages?: [] }> = async (
   const units = attributeValues?.units_product.value;
   const maxUnits = 50;
   const width = (units / maxUnits) * 100;
-  console.log(product.productPages);
+  // console.log(product.productPages);
 
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-full">

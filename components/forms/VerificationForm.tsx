@@ -96,7 +96,6 @@ const VerificationForm: FC = () => {
             setOpen(false);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (e: any) {
-            console.log(e);
             setError(e.message);
           }
           setLoading(false);
@@ -128,7 +127,6 @@ const VerificationForm: FC = () => {
       setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
-      console.log(e);
       setError(e.message);
       setLoading(false);
     }

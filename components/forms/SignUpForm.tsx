@@ -103,7 +103,6 @@ const SignUpForm: FC = () => {
             authenticate();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (e: any) {
-            console.log(e);
             setError(e.message);
           }
         } else {
@@ -115,7 +114,6 @@ const SignUpForm: FC = () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setError(e.message);
-        console.log(e);
       }
       setIsLoading(false);
     }

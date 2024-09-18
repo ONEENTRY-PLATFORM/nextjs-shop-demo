@@ -16,7 +16,7 @@ socket.on('connect', () => {
 });
 
 socket.on('notification', async (res: string) => {
-  console.log('=>(api.ts:16) res', res);
+  console.log('=> res', res);
 });
 
 // Initial api definition
