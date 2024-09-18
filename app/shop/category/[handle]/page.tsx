@@ -8,6 +8,7 @@ import { getPageByUrl, getProductsByUrl } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
+// generateMetadata
 export async function generateMetadata({
   params,
 }: {
@@ -58,6 +59,7 @@ export async function generateMetadata({
   };
 }
 
+// CatalogPage
 export default async function CatalogPage({
   params,
   searchParams,

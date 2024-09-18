@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { getProductById } from '@/app/api/serverSideProps';
 import Product from '@/components/layout/product/ProductSingle';
 
+// generateMetadata
 export async function generateMetadata({
   params,
 }: {
@@ -48,6 +49,7 @@ export async function generateMetadata({
   };
 }
 
+// ProductPage
 export default async function ProductPage({
   params,
 }: {

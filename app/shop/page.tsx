@@ -1,16 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import {
-  // getBlockByMarker,
-  getPageByUrl,
-  getProducts,
-  // getProductsByBlockMarker,
-  // getSimilarProducts,
-} from '@/app/api/serverSideProps';
+import { getPageByUrl, getProducts } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
@@ -60,7 +53,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function CatalogPage({
+const ShopPage = async ({
   searchParams,
 }: {
   searchParams?: {
@@ -68,7 +61,7 @@ export default async function CatalogPage({
     page?: string;
     filters?: IFilterParams[];
   };
-}) {
+}) => {
   const pageLimit = 10;
   const langCode = 'en_US';
 
@@ -98,4 +91,6 @@ export default async function CatalogPage({
       </div>
     </section>
   );
-}
+};
+
+export default ShopPage;

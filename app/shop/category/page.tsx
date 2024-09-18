@@ -12,6 +12,7 @@ import {
   getPageByUrl,
 } from '../../api/serverSideProps';
 
+// generateMetadata
 export async function generateMetadata(): Promise<Metadata> {
   const { isError, page } = await getPageByUrl('category', 'en_US');
 
@@ -58,6 +59,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+// CategoryPage
 const CategoryPage = async () => {
   const langCode = 'en_US';
   const { pages, isError } = await getChildPagesByParentUrl(
