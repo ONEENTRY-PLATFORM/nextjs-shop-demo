@@ -1,16 +1,18 @@
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { Key } from 'react';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
+import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 export const ForgotPasswordForm: React.FC = () => {
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
+  const [isError, setError] = useState('');
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -34,8 +36,11 @@ export const ForgotPasswordForm: React.FC = () => {
       setAction('checkCode');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
+      setError(e.message);
       if (e.statusCode === 400) {
-        setComponent('VerificationForm');
+        setTimeout(() => {
+          setComponent('VerificationForm');
+        }, 800);
       }
     }
   };
@@ -65,6 +70,7 @@ export const ForgotPasswordForm: React.FC = () => {
       </div>
 
       <FormSubmitButton title="SEND" isLoading={isLoading} />
+      {isError && <ErrorMessage error={isError} />}
     </form>
   );
 };

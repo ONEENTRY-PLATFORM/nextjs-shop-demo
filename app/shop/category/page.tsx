@@ -1,23 +1,20 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import { Suspense } from 'react';
 
 import CategoriesGrid from '@/components/layout/categories/CategoriesGrid';
 import { CategoriesLoader } from '@/components/shared/Loader';
 
 import {
+  getChildPagesByParentUrl,
   getPageByUrl,
-  getSingleAttributeByMarkerSet,
 } from '../../api/serverSideProps';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { handle: string };
-}): Promise<Metadata> {
-  const data = await getPageByUrl('shop', 'en_US');
-  const { isError, page } = data;
+export async function generateMetadata(): Promise<Metadata> {
+  const { isError, page } = await getPageByUrl('category', 'en_US');
+
   if (isError || !page) {
     return notFound();
   }
@@ -61,31 +58,26 @@ export async function generateMetadata({
   };
 }
 
-export default async function CategoryPage({
-  params,
-}: {
-  params: { handle: string };
-}) {
+const CategoryPage = async () => {
+  // export default async function CategoryPage() {
   const langCode = 'en_US';
+  const { pages, isError } = await getChildPagesByParentUrl(
+    'category',
+    langCode,
+  );
 
-  const { isError, attribute } = await getSingleAttributeByMarkerSet({
-    attributeMarker: 'category',
-    setMarker: 'product',
-    langCode: langCode,
-  });
-
-  if (isError) {
+  if (isError || !pages) {
     return notFound();
   }
 
-  const categories = attribute?.listTitles.map(
-    (category: { title: string; value: string }) => {
-      return {
-        title: category.title,
-        link: '/shop/category/' + category.value,
-      };
-    },
-  );
+  const categories = pages.map((page: IPagesEntity) => {
+    return {
+      title: page.localizeInfos.title,
+      link: '/shop/category/' + page.pageUrl,
+      imgSrc: page.attributeValues.pic.value[0].downloadLink,
+    };
+  });
+  console.log(pages[0].attributeValues.pic.value[0].downloadLink);
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -96,4 +88,6 @@ export default async function CategoryPage({
       </div>
     </section>
   );
-}
+};
+
+export default CategoryPage;

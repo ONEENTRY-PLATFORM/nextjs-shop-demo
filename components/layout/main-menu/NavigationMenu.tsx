@@ -36,7 +36,11 @@ const NavigationMenu: React.FC = async () => {
               >
                 <NavigationMenuItem
                   label={item.localizeInfos.menuTitle}
-                  href={'/shop/' + item.pageUrl}
+                  href={
+                    item.pageUrl === 'category'
+                      ? '/category/'
+                      : '/shop/' + item.pageUrl
+                  }
                   hasDropdown={item.children ? true : false}
                 />
 

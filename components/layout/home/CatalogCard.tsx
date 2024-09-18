@@ -4,6 +4,7 @@ import type React from 'react';
 import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api/serverSideProps';
+import Placeholder from '@/components/shared/Placeholder';
 
 interface CatalogCardProps {
   marker: string;
@@ -24,15 +25,17 @@ const CatalogCard: FC<CatalogCardProps> = async ({ marker, className }) => {
     return null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { title, bg_web, link } = block.attributeValues;
-  const imageSrc = bg_web?.value[0]?.downloadLink || '/images/placeholder.jpg';
+  const imageSrc = bg_web?.value[0]?.downloadLink;
   const sticker = block.attributeValues.stickers;
-  const quote = block.attributeValues.quote?.value || '';
+  const quote = block.attributeValues.quote?.value;
 
   return (
     <Link
-      href={'shop/' + link?.value || ''}
+      target={link.value.indexOf('http') === -1 ? '' : '_blank'}
+      href={
+        (link.value.indexOf('http') === -1 ? 'shop/' : '') + link?.value || ''
+      }
       className={`relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
     >
       <div
@@ -55,7 +58,7 @@ const CatalogCard: FC<CatalogCardProps> = async ({ marker, className }) => {
         {quote && (
           <p className="z-10 ml-auto mt-auto w-60 max-sm:ml-0">{quote}</p>
         )}
-        {imageSrc && (
+        {imageSrc ? (
           <Image
             fill
             sizes="(min-width: 1024px) 66vw, 100vw"
@@ -63,6 +66,8 @@ const CatalogCard: FC<CatalogCardProps> = async ({ marker, className }) => {
             alt={title?.value || ''}
             className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover"
           />
+        ) : (
+          <Placeholder />
         )}
       </div>
     </Link>
