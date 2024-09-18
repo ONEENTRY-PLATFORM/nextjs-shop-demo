@@ -18,6 +18,7 @@ export { useGetBlockByMarker } from './hooks/useGetBlockByMarker';
 export { useGetConfig } from './hooks/useGetConfig';
 export { useGetForm } from './hooks/useGetForm';
 export { useGetLocales } from './hooks/useGetLocales';
+export { useGetProduct } from './hooks/useGetProduct';
 export { useGetSimilarProducts } from './hooks/useGetSimilarProducts';
 export { useGetSingleAttributeByMarkerSet } from './hooks/useGetSingleAttributeByMarkerSet';
 export { useGetStatus } from './hooks/useGetStatus';

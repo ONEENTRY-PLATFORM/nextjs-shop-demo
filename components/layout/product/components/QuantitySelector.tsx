@@ -38,7 +38,7 @@ const QuantitySelector: React.FC<{
       className="flex items-center justify-between rounded-3xl bg-slate-50 px-2"
       style={{ height: height }}
     >
-      <IncreaseButton id={id} qty={qty} />
+      <DecreaseButton id={id} qty={qty} />
       <input
         className="relative box-border h-8 w-16 rounded-full bg-transparent text-center text-slate-800 hover:bg-slate-100 hover:text-orange-500"
         type="number"
@@ -54,7 +54,7 @@ const QuantitySelector: React.FC<{
           );
         }}
       />
-      <DecreaseButton id={id} qty={qty} />
+      <IncreaseButton id={id} qty={qty} />
     </div>
   );
 };
