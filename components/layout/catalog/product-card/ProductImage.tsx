@@ -10,7 +10,7 @@ interface ProductImageProps {
 
 const ProductImage: FC<ProductImageProps> = ({ imageSrc, alt }) => {
   return (
-    <div className="relative size-40">
+    <div className="relative mb-3 size-40">
       {imageSrc ? (
         <Image
           fill
