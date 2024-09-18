@@ -10,6 +10,7 @@ const CatalogGrid: FC<CatalogGridProps> = async ({ blocks }) => {
   if (blocks?.length < 1) {
     return;
   }
+  console.log(blocks);
 
   return (
     <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">

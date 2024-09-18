@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Action, PayloadAction } from '@reduxjs/toolkit';
+// import type { Action, PayloadAction } from '@reduxjs/toolkit';
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
-import { HYDRATE } from 'next-redux-wrapper';
+// import { HYDRATE } from 'next-redux-wrapper';
 import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
 import type {
@@ -18,20 +18,20 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 
 import { api } from './api';
 
-type RootState = any; // normally inferred from state
+// type RootState = any; // normally inferred from state
 
-function isHydrateAction(action: Action): action is PayloadAction<RootState> {
-  return action.type === HYDRATE;
-}
+// function isHydrateAction(action: Action): action is PayloadAction<RootState> {
+//   return action.type === HYDRATE;
+// }
 
 export const RTKApi = createApi({
   reducerPath: 'api',
   baseQuery: fakeBaseQuery(),
-  extractRehydrationInfo(action, { reducerPath }): any {
-    if (isHydrateAction(action)) {
-      return action.payload[reducerPath];
-    }
-  },
+  // extractRehydrationInfo(action, { reducerPath }): any {
+  //   if (isHydrateAction(action)) {
+  //     return action.payload[reducerPath];
+  //   }
+  // },
   endpoints: (build) => ({
     // eslint-disable-next-line prettier/prettier
     getBlocksByPageUrl: build.query<IPositionBlock[], { pageUrl: string; activeLang: string; }>({
