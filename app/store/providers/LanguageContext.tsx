@@ -22,7 +22,9 @@ type ProviderProps = {
   children: ReactNode;
 };
 export const LanguageProvider = ({ children }: ProviderProps) => {
-  const [languagesData, setLanguagesData] = useState<DropdownItem[]>([]);
+  const [languagesData, setLanguagesData] = useState<
+    { label: string; value: string }[]
+  >([]);
   const [activeLanguage, setActiveLanguage] = useState<LanguageEnum>(
     LanguageEnum.EN,
   );

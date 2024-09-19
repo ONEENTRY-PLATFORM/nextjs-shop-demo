@@ -6,14 +6,16 @@ import {
   Transition,
   TransitionChild,
 } from '@headlessui/react';
-import React, { Fragment, useContext } from 'react';
+import type { FC } from 'react';
+import { Fragment, useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 import FilterHeader from './FilterHeader';
 import FiltersForm from './FiltersForm';
 
-const ModalLayout = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const FilterModal: FC<{ prices: any }> = ({ prices }) => {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
   const closeFilters = () => setOpen(false);
 
@@ -42,7 +44,7 @@ const ModalLayout = () => {
         >
           <DialogPanel className="fixed right-0 top-0 z-20 flex size-full flex-col overflow-auto bg-white shadow-xl md:top-10 md:overflow-hidden md:rounded-l-3xl lg:h-auto lg:w-[400px]">
             <FilterHeader />
-            <FiltersForm />
+            <FiltersForm prices={prices} />
           </DialogPanel>
         </TransitionChild>
       </Dialog>
@@ -50,4 +52,4 @@ const ModalLayout = () => {
   );
 };
 
-export default ModalLayout;
+export default FilterModal;

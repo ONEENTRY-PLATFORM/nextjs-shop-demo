@@ -46,8 +46,15 @@ export type ContentType = {
   [key: string]: unknown;
 };
 
+type FiltersDataType = {
+  prices: {
+    min: number;
+    max: number;
+  };
+};
 type InitialStateType = {
   content: ContentType;
+  filtersData: FiltersDataType;
 };
 
 const initialState: InitialStateType = {
@@ -91,6 +98,12 @@ const initialState: InitialStateType = {
     order_info_comment_placeholder: '',
     order_info_address_placeholder: '',
   },
+  filtersData: {
+    prices: {
+      min: 0,
+      max: 100,
+    },
+  },
 };
 
 export const systemContentSlice = createSlice({
@@ -100,15 +113,18 @@ export const systemContentSlice = createSlice({
     addContent(state, action: PayloadAction<ContentType>) {
       state.content = action.payload;
     },
+    addFiltersData(state, action: PayloadAction<FiltersDataType>) {
+      state.content.filtersData = action.payload;
+    },
   },
 });
 
-export const getFeaturedButtonContent = (state: {
-  featuredObjectReducer: { content: { buttons: unknown } };
+export const getFiltersData = (state: {
+  systemContentReducer: { filtersData: FiltersDataType };
 }) => {
-  return state.featuredObjectReducer.content.buttons;
+  return state.systemContentReducer.filtersData;
 };
 
-export const { addContent } = systemContentSlice.actions;
+export const { addContent, addFiltersData } = systemContentSlice.actions;
 
 export default systemContentSlice.reducer;

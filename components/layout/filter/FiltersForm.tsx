@@ -21,7 +21,7 @@ function sortObjectFieldsByPosition(obj: Record<any, any>) {
   return sortedObj;
 }
 
-const FiltersForm: FC = () => {
+const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
   const { pageInfo } = useGetPage({ pageUrl: 'catalog_filters' });
 
   const sortedAttributes: Record<any, any> = useMemo(() => {
@@ -35,7 +35,7 @@ const FiltersForm: FC = () => {
     <div className="flex w-full flex-col px-10 pb-16 pt-5">
       {Object.keys(sortedAttributes).map((attribute, index) => {
         if (attribute === 'price_filter') {
-          return <PricePickerFilter key={index} />;
+          return <PricePickerFilter key={index} prices={prices} />;
         }
         if (attribute === 'color_filter') {
           return (

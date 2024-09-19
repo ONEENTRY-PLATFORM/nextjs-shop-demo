@@ -11,15 +11,16 @@ import { useAppSelector } from '@/app/store/hooks';
 import PriceFromInput from './PriceFromInput';
 import PriceToInput from './PriceToInput';
 
-const PriceFilter: FC = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PriceFilter: FC<{ prices: any }> = ({ prices }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
 
   const STEP = 10;
-  const MIN = 0;
-  const MAX = 300;
+  const MIN = prices.min;
+  const MAX = prices.max;
 
   const [priceFrom, setPriceFrom] = useState(
     params.get('minPrice') ? Number(params.get('minPrice')) : MIN,

@@ -59,6 +59,16 @@ input:focus-visible {
       rounded-[30px];
   }
 
+  .btn-xl {
+    @apply 
+      px-5
+      py-4
+      h-[60px]
+      text-xl
+      font-bold 
+      uppercase;
+  }
+
   .btn-lg {
     @apply 
       px-5

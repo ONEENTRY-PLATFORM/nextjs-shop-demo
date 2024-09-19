@@ -11,10 +11,7 @@ const ApplyButton: FC = () => {
   );
 
   return (
-    <button
-      onClick={() => setOpen(false)}
-      className="whitespace-nowrap rounded-[30px] bg-orange-500 px-3.5 py-4 text-xl font-bold text-white"
-    >
+    <button onClick={() => setOpen(false)} className="btn btn-xl btn-primary">
       {apply_button_placeholder}
     </button>
   );

@@ -24,10 +24,7 @@ const ResetButton: FC = () => {
   };
 
   return (
-    <button
-      onClick={onReset}
-      className="whitespace-nowrap rounded-[30px] border border-solid border-orange-500 px-16 py-4 text-xl font-bold text-orange-500"
-    >
+    <button onClick={onReset} className="btn btn-xl btn-o btn-o-primary">
       {reset_button_placeholder}
     </button>
   );
