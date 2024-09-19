@@ -18,7 +18,7 @@ const PaymentPage = () => {
   const dispatch = useAppDispatch();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { isAuth, user } = useContext(AuthContext);
+  const { isAuth } = useContext(AuthContext);
   const { data, error } = useGetAccountsQuery({});
 
   const [isLoading, setIsLoading] = useState(false);
@@ -53,13 +53,11 @@ const PaymentPage = () => {
       'session',
     );
     if (order?.paymentAccountIdentifier === 'cash') {
-      // return navigate('payment_success', { id });
       router.push('/orders');
       return 'payment_success';
     }
 
     if (paymentUrl) {
-      // navigate('payment_method', { orderId, paymentUrl });
       router.push('/orders');
       return 'payment_method';
     }
