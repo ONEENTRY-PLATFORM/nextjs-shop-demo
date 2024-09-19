@@ -28,7 +28,7 @@ body {
   display: none;
 }
 
-
+/* forms */
 input:focus-visible {
   outline: none !important;
   border-color: #f97316;
@@ -45,6 +45,7 @@ input:focus-visible {
   background-color: #f97316;
 }
 
+/* components */
 @layer components {
   .btn {
     @apply 
@@ -61,8 +62,8 @@ input:focus-visible {
   .btn-lg {
     @apply 
       px-5
-      py-4
-      h-[60px]
+      py-3
+      h-[50px]
       text-base
       font-bold 
       uppercase;
@@ -71,8 +72,8 @@ input:focus-visible {
   .btn-md {
     @apply 
       px-5
-      py-2.5
-      h-[46px]
+      py-2
+      h-[42px]
       text-base
       font-bold 
       uppercase;
@@ -80,6 +81,8 @@ input:focus-visible {
 
   .btn-primary {
     @apply 
+      transition-all 
+      duration-500
       text-white 
       bg-orange-500 
       border-orange-500
