@@ -1,8 +1,9 @@
+import type { FC } from 'react';
 import React from 'react';
 
-const ApplyButton: React.FC = () => {
+const ApplyButton: FC = () => {
   return (
-    <button className="whitespace-nowrap rounded-[50px] border border-solid border-orange-500 px-8 py-2.5 text-center text-sm font-bold text-orange-500">
+    <button className="btn btn-lg btn-o btn-o-primary text-sm font-bold">
       APPLY
     </button>
   );

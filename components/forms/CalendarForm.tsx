@@ -33,7 +33,7 @@ const CalendarComponent: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-[350px] ">
+    <div className="mx-auto max-w-[350px] max-sm:max-w-[300px] ">
       <Calendar
         view="month"
         onChange={(value) => {
@@ -50,7 +50,7 @@ const CalendarComponent: React.FC = () => {
         <button
           onClick={onApply}
           type="button"
-          className="btn btn-xl btn-primary mx-auto mt-auto w-[270px] text-base uppercase text-white max-md:mt-10 max-md:px-5"
+          className="btn btn-xl btn-primary mx-auto mt-auto w-[270px] uppercase text-white max-md:mt-10 max-md:px-5"
         >
           Apply
         </button>
