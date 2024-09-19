@@ -15,7 +15,7 @@ const EmptyFavorites = () => {
         viewBox="0 0 100 80"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="mb-5"
+        className="mb-5 size-20"
       >
         <path
           fillRule="evenodd"
@@ -24,8 +24,10 @@ const EmptyFavorites = () => {
           fill="#4C4D56"
         />
       </svg>
-      <h1 className="mb-5">{empty_favorites_plug}</h1>
-      <Link href="/shop" className="underline">
+      <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
+        {empty_favorites_plug}
+      </h1>
+      <Link href="/shop" className="btn btn-sm btn-o btn-o-primary">
         Go to shop
       </Link>
     </div>

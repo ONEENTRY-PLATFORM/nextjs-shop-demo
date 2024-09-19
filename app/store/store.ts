@@ -1,4 +1,3 @@
-'use client';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { createWrapper } from 'next-redux-wrapper';
 import { persistReducer } from 'redux-persist';

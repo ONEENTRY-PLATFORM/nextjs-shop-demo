@@ -73,9 +73,9 @@ export const AuthProvider = ({ children }: Props) => {
   }, [refetch, activeLanguage]);
 
   useEffect(() => {
-    if (isError) {
-      setIsAuth(false);
-      localStorage.setItem('refresh-token', '');
+    const refresh = localStorage.getItem('refresh-token');
+    if (isError && refresh) {
+      setRefetch(true);
     }
   }, [isError]);
 
@@ -88,6 +88,7 @@ export const AuthProvider = ({ children }: Props) => {
             return setIsAuth(false);
           }
           setUser(res.data);
+          setIsAuth(true);
         })
         .catch(() => {
           localStorage.setItem('refresh-token', '');
@@ -95,7 +96,7 @@ export const AuthProvider = ({ children }: Props) => {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetchUser]);
+  }, [refetch, refetchUser]);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
