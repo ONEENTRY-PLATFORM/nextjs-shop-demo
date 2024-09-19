@@ -34,8 +34,10 @@ export const CategoriesLoader: FC<LoaderProps> = ({
           <div
             className={`relative flex size-full h-64 overflow-hidden rounded-3xl p-6`}
           >
-            <h2 className="z-10 mt-auto uppercase text-transparent">xxx</h2>
-            <div className="size-full rounded-3xl bg-gray-200" />
+            <h2 className="animate-loader z-10 mt-auto uppercase text-transparent">
+              xxx
+            </h2>
+            <div className="animate-loader size-full rounded-3xl" />
           </div>
         </div>
       ))}
@@ -48,7 +50,7 @@ export const ProductsGridLoader: FC<LoaderProps> = ({
   limit = 10,
 }) => {
   const cls =
-    'relative flex size-full flex-col min-h-[360px] items-center rounded-3xl bg-neutral-100 p-4';
+    'relative flex size-full flex-col min-h-[360px] items-center rounded-3xl animate-loader p-4';
 
   return (
     <div className="relative box-border flex w-full shrink-0 flex-col">
@@ -71,7 +73,7 @@ export const OrdersListLoader: FC<LoaderProps> = ({
   limit = 10,
 }) => {
   const cls =
-    'relative flex size-full flex-col min-h-[60px] items-center rounded-3xl bg-neutral-100 p-4';
+    'relative flex size-full flex-col min-h-[60px] items-center rounded-3xl animate-loader p-4';
 
   return (
     <div className="relative box-border flex w-full shrink-0 flex-col">
@@ -103,8 +105,8 @@ export const SidebarMenuLoader: FC<LoaderProps> = ({
       <ul className="flex w-full flex-row gap-2 overflow-hidden py-3 text-base md:max-w-[165px] md:flex-col md:gap-5 md:py-0">
         {Array.from(Array(5).keys()).map((item) => (
           <li key={item} className={`group flex h-5 justify-start gap-3 pr-5`}>
-            <div className="my-auto aspect-square size-5 shrink-0 bg-slate-100" />
-            <div className={'h-5 min-w-full bg-slate-100'} />
+            <div className="animate-loader my-auto aspect-square size-5 shrink-0" />
+            <div className={'animate-loader h-5 min-w-full'} />
           </li>
         ))}
       </ul>
@@ -118,7 +120,7 @@ export const NavMenuLoader: FC<LoaderProps> = ({ data = {}, limit = 10 }) => {
       {Array.from(Array(3).keys()).map((item) => (
         <div
           key={item}
-          className="group relative box-border flex size-6 shrink-0 bg-slate-100"
+          className="animate-loader relative box-border flex size-6 shrink-0"
         ></div>
       ))}
     </div>
@@ -136,9 +138,9 @@ export const OrdersTableLoader: FC<LoaderProps> = ({
           key={item}
           className="relative -mb-px flex h-12 border-collapse gap-4 border-y p-4"
         >
-          <div className="h-full w-1/2 bg-slate-100"></div>
-          <div className="h-full w-1/4 bg-slate-100"></div>
-          <div className="h-full w-1/4 bg-slate-100"></div>
+          <div className="animate-loader h-full w-1/2"></div>
+          <div className="animate-loader h-full w-1/4"></div>
+          <div className="animate-loader h-full w-1/4"></div>
         </div>
       ))}
     </div>

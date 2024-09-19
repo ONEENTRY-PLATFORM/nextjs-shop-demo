@@ -29,7 +29,7 @@ export let api = defineOneEntry(PROJECT_URL, {
 });
 
 // This function used to update api config
-export function reDefine(refreshToken: string, langCode?: string) {
+export async function reDefine(refreshToken: string, langCode?: string) {
   api = defineOneEntry(PROJECT_URL, {
     langCode: langCode || 'en_US',
     token: APP_TOKEN,

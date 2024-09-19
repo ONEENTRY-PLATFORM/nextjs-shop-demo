@@ -26,9 +26,15 @@ const config: Config = {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
+        'gradient-loader': {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '200% 50%' },
+          '100%': { backgroundPosition: '50% 50%' },
+        },
       },
       animation: {
         spinner: 'spin 60s linear infinite',
+        gradient: 'gradient-loader 5s ease infinite',
       },
     },
   },
