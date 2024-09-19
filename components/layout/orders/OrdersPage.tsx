@@ -10,6 +10,9 @@ import { OrdersTableLoader } from '@/components/shared/Loader';
 
 import Order from './OrderRow';
 
+// export const revalidate = 10;
+// export const dynamicParams = true;
+
 const OrdersPage = () => {
   const { isAuth } = useContext(AuthContext);
 

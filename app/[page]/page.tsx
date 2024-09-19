@@ -7,6 +7,7 @@ import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
 import AboutPage from '@/components/layout/pages/AboutPage';
 import ServicesPage from '@/components/layout/pages/ServicesPage';
 import PaymentPage from '@/components/layout/payment/PaymentPage';
+import LogoutPage from '@/components/layout/profile/LogoutPage';
 import ProfilePage from '@/components/layout/profile/ProfilePage';
 
 import WithSidebar from './WithSidebar';
@@ -47,6 +48,12 @@ const pages = [
     name: 'services',
     title: 'Services',
     component: <ServicesPage />,
+  },
+  {
+    templateType: '',
+    name: 'logout',
+    title: 'logout',
+    component: <LogoutPage />,
   },
 ];
 

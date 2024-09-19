@@ -26,18 +26,18 @@ export default async function SidebarMenu() {
         {pages.map((item) => {
           return <SidebarMenuItem key={item.id} menuItem={item} />;
         })}
-        <SidebarMenuItem
+        {/* <SidebarMenuItem
           menuItem={
             {
               id: 1000,
               pageUrl: 'logout',
               localizeInfos: { menuTitle: 'Logout' },
               parentId: null,
-              position: 10,
+              position: 100,
               isActive: false,
             } as IMenusPages & { isActive: boolean }
           }
-        />
+        /> */}
       </ul>
     </nav>
   );

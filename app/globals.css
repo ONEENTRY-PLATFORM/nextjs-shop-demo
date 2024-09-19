@@ -161,7 +161,13 @@ input:focus-visible {
   }
 
   .animate-loader {
-    @apply animate-gradient bg-gradient-to-r from-slate-100 via-slate-200 to-slate-100 bg-[length:300%_100%];
+    @apply 
+      animate-gradient 
+      bg-gradient-to-r 
+      from-slate-100 
+      via-slate-200 
+      to-slate-100 
+      bg-[length:300%_100%];
   }
 }
 

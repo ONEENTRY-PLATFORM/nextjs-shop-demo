@@ -30,19 +30,3 @@ export const logInUser = async ({ method, login, password }: LogInProps) => {
     return { error: (e as Error).message };
   }
 };
-
-type LogOutProps = { marker: string; token?: string };
-
-export const logOutUser = async ({ marker }: LogOutProps) => {
-  try {
-    // @ts-ignore
-    const token = localStorage.getItem('refresh-token', res);
-    if (!token) {
-      throw Error('No token provided');
-    }
-    const result = await api.AuthProvider.logout(marker, token);
-    return { data: result };
-  } catch (e: unknown) {
-    return { error: (e as Error).message };
-  }
-};

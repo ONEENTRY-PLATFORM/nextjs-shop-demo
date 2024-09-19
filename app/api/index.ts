@@ -18,5 +18,6 @@ export { useGetProduct } from './hooks/useGetProduct';
 export { useGetSingleAttributeByMarkerSet } from './hooks/useGetSingleAttributeByMarkerSet';
 export { useSearchProducts } from './hooks/useSearchProducts';
 export { useSetForm } from './hooks/useSetForm';
-export { logInUser, logOutUser } from './utils/logInUser';
+export { logInUser } from './utils/logInUser';
+export { logOutUser } from './utils/logOutUser';
 export { socket } from './utils/socket';
