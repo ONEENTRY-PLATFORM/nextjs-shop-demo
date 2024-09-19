@@ -4,6 +4,7 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 // import { HYDRATE } from 'next-redux-wrapper';
 import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
 import type {
   IOrdersByMarkersEntity,
@@ -41,6 +42,17 @@ export const RTKApi = createApi({
             pageUrl,
             activeLang,
           );
+          return { data: result };
+        } catch (e: any) {
+          return { error: e.message };
+        }
+      },
+    }),
+    // eslint-disable-next-line prettier/prettier
+    getBlockByMarker: build.query<IBlockEntity, { marker: string; activeLang: string }>({
+      queryFn: async ({ marker, activeLang }) => {
+        try {
+          const result = await api.Blocks.getBlockByMarker(marker, activeLang);
           return { data: result };
         } catch (e: any) {
           return { error: e.message };
@@ -136,6 +148,7 @@ export const RTKApi = createApi({
 });
 
 export const {
+  useGetBlockByMarkerQuery,
   useGetBlocksByPageUrlQuery,
   useGetFormByMarkerQuery,
   useLazyGetFormByMarkerQuery,

@@ -3,6 +3,7 @@ export {
   RTKApi,
   useGetAccountsQuery,
   useGetAuthProvidersQuery,
+  useGetBlockByMarkerQuery,
   useGetBlocksByPageUrlQuery,
   useGetFormByMarkerQuery,
   useGetOrderStorageByMarkerQuery,
@@ -13,7 +14,6 @@ export {
   useLazyGetMeQuery,
   useLazyGetPaymentSessionByIdQuery,
 } from './api/RTKApi';
-export { useGetBlockByMarker } from './hooks/useGetBlockByMarker';
 export { useGetConfig } from './hooks/useGetConfig';
 export { useGetForm } from './hooks/useGetForm';
 export { useGetLocales } from './hooks/useGetLocales';
