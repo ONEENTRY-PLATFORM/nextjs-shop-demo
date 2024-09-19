@@ -10,11 +10,9 @@ export {
   useGetPaymentSessionByIdQuery,
   useGetSingleOrderQuery,
   useGetUserOrdersQuery,
-  useLazyGetFormByMarkerQuery,
   useLazyGetMeQuery,
   useLazyGetPaymentSessionByIdQuery,
 } from './api/RTKApi';
-export { useGetConfig } from './hooks/useGetConfig';
 export { useGetForm } from './hooks/useGetForm';
 export { useGetLocales } from './hooks/useGetLocales';
 export { useGetProduct } from './hooks/useGetProduct';

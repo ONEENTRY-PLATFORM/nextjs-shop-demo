@@ -21,6 +21,22 @@ import { api } from './api';
 
 // type RootState = any; // normally inferred from state
 
+interface BlockByMarkerProps {
+  marker: string;
+  activeLang: string;
+}
+
+interface BlocksByPageUrlProps {
+  pageUrl: string;
+  activeLang: string;
+}
+
+interface SingleOrderProps {
+  marker: string;
+  id: number;
+  activeLang: string;
+}
+
 // function isHydrateAction(action: Action): action is PayloadAction<RootState> {
 //   return action.type === HYDRATE;
 // }
@@ -34,8 +50,7 @@ export const RTKApi = createApi({
   //   }
   // },
   endpoints: (build) => ({
-    // eslint-disable-next-line prettier/prettier
-    getBlocksByPageUrl: build.query<IPositionBlock[], { pageUrl: string; activeLang: string; }>({
+    getBlocksByPageUrl: build.query<IPositionBlock[], BlocksByPageUrlProps>({
       queryFn: async ({ pageUrl, activeLang }) => {
         try {
           const result = await api.Pages.getBlocksByPageUrl(
@@ -48,8 +63,7 @@ export const RTKApi = createApi({
         }
       },
     }),
-    // eslint-disable-next-line prettier/prettier
-    getBlockByMarker: build.query<IBlockEntity, { marker: string; activeLang: string }>({
+    getBlockByMarker: build.query<IBlockEntity, BlockByMarkerProps>({
       queryFn: async ({ marker, activeLang }) => {
         try {
           const result = await api.Blocks.getBlockByMarker(marker, activeLang);
@@ -129,8 +143,7 @@ export const RTKApi = createApi({
         }
       },
     }),
-    // eslint-disable-next-line prettier/prettier
-    getSingleOrder: build.query<IOrdersByMarkersEntity, { marker: string; id: number; activeLang: string }>({
+    getSingleOrder: build.query<IOrdersByMarkersEntity, SingleOrderProps>({
       queryFn: async ({ id, marker, activeLang }) => {
         try {
           const result = await api.Orders.getOrderByMarkerAndId(
@@ -151,7 +164,6 @@ export const {
   useGetBlockByMarkerQuery,
   useGetBlocksByPageUrlQuery,
   useGetFormByMarkerQuery,
-  useLazyGetFormByMarkerQuery,
   useGetAuthProvidersQuery,
   useLazyGetMeQuery,
   useGetAccountsQuery,
