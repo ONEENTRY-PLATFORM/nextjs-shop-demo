@@ -10,7 +10,7 @@ const ProductCard: React.FC<{ product: IOrderProducts; currency: string }> = ({
   currency,
 }) => {
   const { id, title, price, quantity, previewImage } = product;
-  const productImage = previewImage?.[0].downloadLink;
+  const productImage = previewImage?.[0]?.downloadLink || '';
   const formattedPrice = UsePrice({
     amount: price,
     currency: currency,

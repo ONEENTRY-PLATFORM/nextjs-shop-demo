@@ -13,7 +13,6 @@ export {
   useLazyGetMeQuery,
   useLazyGetPaymentSessionByIdQuery,
 } from './api/RTKApi';
-export { useGetForm } from './hooks/useGetForm';
 export { useGetLocales } from './hooks/useGetLocales';
 export { useGetProduct } from './hooks/useGetProduct';
 export { useGetSingleAttributeByMarkerSet } from './hooks/useGetSingleAttributeByMarkerSet';

@@ -7,6 +7,9 @@ export const UsePrice = ({
   amount: number | string;
   currency: string;
 }) => {
+  if (currency === 'USDT') {
+    return amount + ' USDT';
+  }
   const formattedPrice = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: currency,

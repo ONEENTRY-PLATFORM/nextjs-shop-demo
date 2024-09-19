@@ -18,7 +18,8 @@ const TimeSlot: React.FC<TimeSlotProps> = ({ slot, currentTime, setTime }) => {
   } else if (isDisabled) {
     className += 'border-solid border-slate-300 text-slate-300';
   } else {
-    className += 'border-orange-500 border-solid';
+    className +=
+      'border-orange-500 border-solid hover:border-red-500 hover:text-red-500';
   }
 
   return (
