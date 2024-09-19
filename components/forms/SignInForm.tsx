@@ -15,6 +15,7 @@ import Spinner from '../shared/Spinner';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
+import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
@@ -123,13 +124,7 @@ const SignInForm: FC = () => {
         })}
       </div>
 
-      <button
-        disabled={isLoading || loading}
-        type="submit"
-        className="relative mt-auto flex w-full max-w-[280px] items-center justify-center self-center rounded-[30px] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
-      >
-        {isLoading || loading ? <Spinner /> : 'Sign in'}
-      </button>
+      <FormSubmitButton title="Sign in" isLoading={loading} />
 
       <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm">
         <div className="font-bold text-gray-800">Forgot Password?</div>

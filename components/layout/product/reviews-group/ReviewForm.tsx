@@ -11,10 +11,7 @@ const ReviewForm: React.FC = () => {
         className="h-32 w-full rounded border border-gray-300 p-2"
         placeholder="Write your review here"
       />
-      <button
-        type="submit"
-        className="mt-4 rounded bg-orange-500 px-4 py-2 text-white"
-      >
+      <button type="submit" className="btn btn-lg btn-primary mt-4">
         Submit Review
       </button>
     </form>

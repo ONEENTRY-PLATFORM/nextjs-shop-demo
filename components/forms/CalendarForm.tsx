@@ -50,7 +50,7 @@ const CalendarComponent: React.FC = () => {
         <button
           onClick={onApply}
           type="button"
-          className="btn btn-xl btn-primary mx-auto mt-auto w-[270px] uppercase text-white max-md:mt-10 max-md:px-5"
+          className="btn btn-xl btn-primary mx-auto mt-auto w-[270px] max-md:mt-10"
         >
           Apply
         </button>

@@ -16,7 +16,7 @@ const AuthError = () => {
           setComponent('SignInForm');
         }}
         type="button"
-        className="mr-auto w-auto rounded-[30px] border border-solid border-orange-500 px-10 py-2 text-base font-bold uppercase text-orange-500 max-md:px-5"
+        className="btn btn-sm btn-o btn-o-primary mr-auto w-auto"
       >
         Log in
       </button>

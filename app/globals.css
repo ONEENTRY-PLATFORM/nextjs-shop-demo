@@ -49,6 +49,8 @@ input:focus-visible {
 @layer components {
   .btn {
     @apply 
+      flex
+      relative
       justify-center 
       items-center 
       transition-colors
@@ -56,6 +58,7 @@ input:focus-visible {
       disabled:border-slate-300
       disabled:text-slate-400
       disabled:bg-transparent
+      max-w-full
       rounded-[30px];
   }
 
@@ -65,7 +68,7 @@ input:focus-visible {
       py-4
       h-[60px]
       text-xl
-      font-bold 
+      font-semibold 
       uppercase;
   }
 
@@ -74,8 +77,8 @@ input:focus-visible {
       px-5
       py-3
       h-[50px]
-      text-base
-      font-bold 
+      text-lg
+      font-semibold
       uppercase;
   }
 
@@ -85,7 +88,17 @@ input:focus-visible {
       py-2
       h-[42px]
       text-base
-      font-bold 
+      font-semibold 
+      uppercase;
+  }
+
+  .btn-sm {
+    @apply 
+      px-5
+      py-1.5
+      h-[36px]
+      text-sm
+      font-semibold 
       uppercase;
   }
 

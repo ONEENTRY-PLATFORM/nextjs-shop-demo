@@ -18,7 +18,7 @@ const CreateAccountButton: React.FC<CreateAccountButtonProps> = ({ title }) => {
         setComponent('SignUpForm');
       }}
       type="button"
-      className="mx-auto w-auto rounded-[30px] border-2 border-solid border-orange-500 px-10 py-3 text-lg font-bold uppercase text-orange-500 max-md:px-5"
+      className="btn btn-lg btn-o btn-o-primary mx-auto w-[280px] border-2 leading-6"
     >
       {title}
     </button>

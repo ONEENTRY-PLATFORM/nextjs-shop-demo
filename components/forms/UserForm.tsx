@@ -16,6 +16,7 @@ import Loader from '../shared/Loader';
 import Spinner from '../shared/Spinner';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
+import SubmitButton from './inputs/FormSubmitButton';
 
 export type InputValue = {
   value: string;
@@ -97,7 +98,7 @@ const UserForm: FC = () => {
     }
   };
 
-  if (isLoading || loading) {
+  if (isLoading) {
     return <Loader />;
   }
 
@@ -121,12 +122,7 @@ const UserForm: FC = () => {
         })}
       </div>
 
-      <button
-        type="submit"
-        className="mt-auto flex w-[280px] max-w-full items-center justify-center self-center rounded-[30px] border border-none border-[black] bg-orange-500 px-5 py-4 text-base font-medium uppercase text-white max-md:mt-10 max-md:px-5"
-      >
-        {isLoading ? <Spinner /> : 'Save'}
-      </button>
+      <SubmitButton title="Save" isLoading={loading} />
       {isError && <ErrorMessage error={isError} />}
     </form>
   );
