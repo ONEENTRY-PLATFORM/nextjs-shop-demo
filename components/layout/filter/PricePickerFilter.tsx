@@ -19,8 +19,8 @@ const PriceFilter: FC<{ prices: any }> = ({ prices }) => {
   const params = new URLSearchParams(searchParams);
 
   const STEP = 10;
-  const MIN = prices.min;
-  const MAX = prices.max;
+  const MIN = prices?.min || 0;
+  const MAX = prices?.max || 100;
 
   const [priceFrom, setPriceFrom] = useState(
     params.get('minPrice') ? Number(params.get('minPrice')) : MIN,

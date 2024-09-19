@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Suspense } from 'react';
 
+import { getPageByUrl } from '@/app/api/serverSideProps';
 import Loader from '@/components/shared/Loader';
 
 const image = {
@@ -40,11 +41,14 @@ const listItems = [
   'OneEntry offers a full set of tools to make your work comfortable.',
 ];
 
-const list_title = 'OneEntry functionality is unlimited';
-const text =
-  'The developers` and CMS users` vast, unique experience became the basis of OneEntry HeadlessCMS. We know what the users want, so we took into account the needs of business owners, users and developers to create our product. All the tools we`ve developed are aimed to improve the processes of project management.';
-
-const AboutPage = () => {
+const AboutPage = async () => {
+  const { page, isError } = await getPageByUrl('about_us', 'en_US');
+  if (!page || isError) {
+    return;
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { attributeValues, localizeInfos } = page;
+  // attributeValues.list_title.value
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>
@@ -63,18 +67,20 @@ const AboutPage = () => {
           <div className="ml-5 flex w-[82%] flex-col max-md:ml-0 max-md:w-full">
             <section className="text-sm leading-5 text-neutral-600 max-md:mt-10 max-md:max-w-full">
               <h1 className="mb-5 text-xl font-bold leading-8 text-neutral-600">
-                {text}
+                {attributeValues.title.value}
               </h1>
-              {features.map((feature, index) => (
-                <div key={index}>
-                  <h2 className="mb-3 text-xl font-bold underline">
-                    {feature.title}
-                  </h2>
-                  <p className="mb-3">{feature.description}</p>
-                </div>
-              ))}
+              <div className="flex flex-col gap-3">
+                {features.map((feature, index) => (
+                  <div key={index}>
+                    <h2 className="mb-3 text-xl font-bold underline">
+                      {feature.title}
+                    </h2>
+                    <p>{feature.description}</p>
+                  </div>
+                ))}
+              </div>
               <h2 className="mb-3 mt-4 text-xl font-bold underline">
-                {list_title}
+                {attributeValues.list_title.value}
               </h2>
               <ul>
                 {listItems.map((item, index) => (

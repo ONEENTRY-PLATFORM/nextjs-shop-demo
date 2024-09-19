@@ -50,7 +50,7 @@ const pages = [
     component: <ServicesPage />,
   },
   {
-    templateType: '',
+    templateType: 'withSidebar',
     name: 'logout',
     title: 'logout',
     component: <LogoutPage />,

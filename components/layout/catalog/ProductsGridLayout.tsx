@@ -29,7 +29,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({ gridItems, totalPages }) => {
           </div>
         </section>
       </div>
-      <FilterModal prices={gridItems[0].additional.prices} />
+      <FilterModal prices={gridItems[0]?.additional.prices} />
     </>
   );
 };
