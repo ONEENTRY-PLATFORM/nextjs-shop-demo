@@ -9,6 +9,7 @@ export const dynamicParams = true;
 
 const HomePage = async () => {
   const { page, isError } = await getPageByUrl('home_web', 'en_US');
+  console.log(page);
 
   if (isError || !page?.blocks) {
     return null;

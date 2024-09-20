@@ -88,6 +88,7 @@ export async function getProducts(props: {
   };
 }): Promise<{
   products?: IProductsEntity[];
+  total?: number;
   isError: boolean;
   err?: unknown;
 }> {
@@ -97,20 +98,17 @@ export async function getProducts(props: {
 
   try {
     if (searchValue === '') {
-      const products = await api.Products.getProducts(
-        expandedFilters,
-        langCode,
-        {
-          sortOrder: 'DESC',
-          sortKey: 'id',
-          offset: offset,
-          limit: limit,
-        },
-      );
+      const data = await api.Products.getProducts(expandedFilters, langCode, {
+        sortOrder: 'DESC',
+        sortKey: 'id',
+        offset: offset,
+        limit: limit,
+      });
       if (params?.handle) {
         return {
           isError: false,
-          products: products.filter(
+          total: data.total,
+          products: data.items.filter(
             (product: IProductsEntity) =>
               product.attributeValues.stickers?.value.value === params.handle,
           ),
@@ -118,14 +116,15 @@ export async function getProducts(props: {
       }
       return {
         isError: false,
-        products: products,
+        products: data.items,
+        total: data.total,
       };
     }
     if (searchValue) {
       const products = await api.Products.searchProduct(searchValue, 'en_US');
-      return { isError: false, products: products };
+      return { isError: false, products: products, total: 100 };
     }
-    return { isError: false, products: [] };
+    return { isError: false, products: [], total: 0 };
   } catch (err) {
     return { isError: true, err: err };
   }
@@ -148,6 +147,7 @@ export async function getProductsByUrl(props: {
   };
 }): Promise<{
   products?: IProductsEntity[];
+  total?: number;
   isError: boolean;
   err?: unknown;
 }> {
@@ -155,7 +155,7 @@ export async function getProductsByUrl(props: {
   const expandedFilters = getSearchParams(params?.searchParams);
 
   try {
-    const products = await api.Products.getProductsByPageUrl(
+    const data = await api.Products.getProductsByPageUrl(
       params.handle,
       expandedFilters,
       langCode,
@@ -166,7 +166,7 @@ export async function getProductsByUrl(props: {
         limit: limit,
       },
     );
-    return { isError: false, products: products };
+    return { isError: false, products: data.items, total: data.total };
   } catch (err) {
     return { isError: true, err: err };
   }
@@ -178,12 +178,13 @@ export async function getRelatedProductsById(
   langCode: string,
 ): Promise<{
   products?: IProductsEntity[];
+  total?: number;
   isError: boolean;
   err?: unknown;
 }> {
   try {
-    const products = await api.Products.getRelatedProductsById(id, langCode);
-    return { isError: false, products: products };
+    const data = await api.Products.getRelatedProductsById(id, langCode);
+    return { isError: false, products: data.items, total: data.total };
   } catch (err) {
     return { isError: true, err };
   }
