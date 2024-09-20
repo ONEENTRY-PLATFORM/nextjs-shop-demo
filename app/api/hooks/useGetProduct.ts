@@ -16,17 +16,19 @@ export const useGetProduct = ({ id }: UseGetProductProps) => {
   const [error, setError] = useState<string | undefined>();
   const { activeLanguage } = useContext(LanguageContext);
   const [refetch, setRefetch] = useState(false);
+
   useEffect(() => {
     (async () => {
       setLoading(true);
       try {
         const result = await api.Products.getProductById(id, activeLanguage);
         setProduct(result);
+        setLoading(false);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setError(e.message);
+        setLoading(false);
       }
-      setLoading(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLanguage, refetch]);

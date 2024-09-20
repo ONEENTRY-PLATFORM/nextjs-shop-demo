@@ -32,10 +32,11 @@ export const useGetSingleAttributeByMarkerSet = ({
           activeLanguage,
         );
         setAttributes(result);
+        setLoading(false);
       } catch (e: unknown) {
         setError((e as Error).message);
+        setLoading(false);
       }
-      setLoading(false);
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeLanguage]);

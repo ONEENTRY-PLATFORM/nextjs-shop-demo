@@ -1,11 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
+import type { FC } from 'react';
 
 import Placeholder from '@/components/shared/Placeholder';
 import { UsePrice } from '@/components/utils';
 
-const ProductCard: React.FC<{ product: IOrderProducts; currency: string }> = ({
+const ProductCard: FC<{ product: IOrderProducts; currency: string }> = ({
   product,
   currency,
 }) => {

@@ -9,7 +9,6 @@ export {
   useGetOrderStorageByMarkerQuery,
   useGetPaymentSessionByIdQuery,
   useGetSingleOrderQuery,
-  useGetUserOrdersQuery,
   useLazyGetMeQuery,
   useLazyGetPaymentSessionByIdQuery,
 } from './api/RTKApi';

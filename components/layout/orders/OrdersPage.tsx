@@ -1,29 +1,25 @@
 'use client';
 
-import type { IOrdersByMarkersEntity } from 'oneentry/dist/orders/ordersInterfaces';
+import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import { type Key, useContext } from 'react';
 
-import { useGetUserOrdersQuery } from '@/app/api';
+import { useGetUserOrders } from '@/app/api/hooks/useGetUserOrders';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
 import { OrdersTableLoader } from '@/components/shared/Loader';
 
 import Order from './OrderRow';
 
-// export const revalidate = 10;
-// export const dynamicParams = true;
-
 const OrdersPage = () => {
   const { isAuth } = useContext(AuthContext);
 
-  const { data, isLoading } = useGetUserOrdersQuery({
+  const { orders, loading } = useGetUserOrders({
     marker: 'order',
   });
 
   if (!isAuth) {
     return <AuthError />;
   }
-  console.log({ data, isLoading });
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
@@ -33,10 +29,10 @@ const OrdersPage = () => {
           <div className="w-1/4">Total</div>
           <div className="w-1/4">Status</div>
         </div>
-        {!data ? (
+        {!orders || loading ? (
           <OrdersTableLoader />
         ) : (
-          data?.map((order: IOrdersByMarkersEntity, i: Key) => {
+          orders?.items.map((order: IOrderByMarkerEntity, i: Key) => {
             return <Order key={i} order={order} />;
           })
         )}

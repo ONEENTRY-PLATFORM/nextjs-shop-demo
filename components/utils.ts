@@ -18,6 +18,29 @@ export const UsePrice = ({
   return formattedPrice;
 };
 
+export const UseDate = ({
+  fullDate,
+  format = 'en',
+}: {
+  fullDate: number | string | Date;
+  format: string;
+}) => {
+  const d = new Date(fullDate);
+  const year = new Intl.DateTimeFormat(format, {
+    year: 'numeric',
+  }).format(d);
+  const month = new Intl.DateTimeFormat(format, {
+    month: 'short',
+  }).format(d);
+  const day = new Intl.DateTimeFormat(format, {
+    day: '2-digit',
+  }).format(d);
+
+  const date = day + '-' + month + '-' + year;
+
+  return date;
+};
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const sortObjectFieldsByPosition = (obj: Record<any, any>) => {
   const entries = Object.entries(obj);

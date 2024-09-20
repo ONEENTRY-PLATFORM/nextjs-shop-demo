@@ -33,7 +33,7 @@ const FooterMenuSection = async () => {
             height={logo.height}
             alt={logo.alt}
             loading="lazy"
-            className="aspect-[3.57] w-[253px] max-w-full max-lg:max-w-[180px] shrink-0 max-sm:mb-5"
+            className="aspect-[3.57] w-[250px] max-w-full shrink-0 max-lg:max-w-[180px] max-sm:mb-5"
           />
         </Link>
         <ContactInfo />

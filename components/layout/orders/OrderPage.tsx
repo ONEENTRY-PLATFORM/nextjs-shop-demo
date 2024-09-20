@@ -1,16 +1,16 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
-import type { Key } from 'react';
+import type { FC, Key } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
 import Loader from '@/components/shared/Loader';
-import { UsePrice } from '@/components/utils';
+import { UseDate, UsePrice } from '@/components/utils';
 
 import ProductCard from './ProductCard';
 
-const OrderPage: React.FC<{ id: number }> = ({ id }) => {
+const OrderPage: FC<{ id: number }> = ({ id }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, isLoading, refetch } = useGetSingleOrderQuery({
     marker: 'order',
     id: id,
@@ -50,42 +50,55 @@ const OrderPage: React.FC<{ id: number }> = ({ id }) => {
         <div className="flex gap-2">
           <b>Total Amount: </b> {formattedTotal}
         </div>
-        {formData.map((field, i) => {
-          if (field.marker === 'order_address') {
-            return (
-              <div key={i} className="flex gap-2">
-                <b>Address:</b> {field.value}
-              </div>
-            );
-          }
+        {formData.map(
+          (
+            field: {
+              marker: string;
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              value: any;
+            },
+            i: Key,
+          ) => {
+            if (field.marker === 'order_address') {
+              return (
+                <div key={i} className="flex gap-2">
+                  <b>Address:</b> {field.value}
+                </div>
+              );
+            }
 
-          if (field.marker === 'date') {
-            const d = new Date(field.value.fullDate);
-            const year = new Intl.DateTimeFormat('en', {
-              year: 'numeric',
-            }).format(d);
-            const month = new Intl.DateTimeFormat('en', {
-              month: 'short',
-            }).format(d);
-            const day = new Intl.DateTimeFormat('en', {
-              day: '2-digit',
-            }).format(d);
+            if (field.marker === 'date') {
+              const date = UseDate({
+                fullDate: field.value.fullDate,
+                format: 'en',
+              });
+              // const d = new Date(field.value.fullDate);
+              // const year = new Intl.DateTimeFormat('en', {
+              //   year: 'numeric',
+              // }).format(d);
+              // const month = new Intl.DateTimeFormat('en', {
+              //   month: 'short',
+              // }).format(d);
+              // const day = new Intl.DateTimeFormat('en', {
+              //   day: '2-digit',
+              // }).format(d);
 
-            return (
-              <div key={i} className="flex gap-2">
-                <b>Delivery date: </b> {`${day}-${month}-${year}`}
-              </div>
-            );
-          }
-          if (field.marker === 'time') {
-            return (
-              <div key={i} className="flex gap-2">
-                <b>Delivery time: </b> {field.value}
-              </div>
-            );
-          }
-          return;
-        })}
+              return (
+                <div key={i} className="flex gap-2">
+                  <b>Delivery date: </b> {date}
+                </div>
+              );
+            }
+            if (field.marker === 'time') {
+              return (
+                <div key={i} className="flex gap-2">
+                  <b>Delivery time: </b> {field.value}
+                </div>
+              );
+            }
+            return;
+          },
+        )}
         <div className="flex gap-2">
           <b>Status of Payment: </b> {statusIdentifier}
         </div>

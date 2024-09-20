@@ -8,7 +8,7 @@ const HistoryBack: FC = () => {
   return (
     <button
       type="button"
-      className="group flex size-12 items-center justify-center rounded-full border border-solid border-slate-200 bg-white transition-colors duration-200 hover:border-orange-500 md:size-[40px] lg:size-[50px] lg:p-3.5 md:p-3 max-sm:p-3"
+      className="group flex size-12 items-center justify-center rounded-full border border-solid border-slate-200 bg-white transition-colors duration-200 hover:border-orange-500 max-sm:p-3 md:size-[40px] md:p-3 lg:size-[50px] lg:p-3.5"
       aria-label="Go back"
       onClick={() => router.back()}
     >

@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import type { IOrdersByMarkersEntity } from 'oneentry/dist/orders/ordersInterfaces';
+import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 
 import { UsePrice } from '@/components/utils';
 
-const Order = ({ order }: { order: IOrdersByMarkersEntity }) => {
+const Order = ({ order }: { order: IOrderByMarkerEntity }) => {
   const { id, createdDate, currency, statusIdentifier, totalSum } = order;
 
   const formattedPrice = UsePrice({

@@ -1,12 +1,14 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 import React from 'react';
+
+import Placeholder from '@/components/shared/Placeholder';
 
 import ApplyButton from './ApplyButton';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
-import Placeholder from '@/components/shared/Placeholder';
 
-const GroupCard: React.FC<{
+const GroupCard: FC<{
   product: IProductsEntity;
 }> = ({ product }) => {
   const images = product.attributeValues?.more_pic.value;
@@ -15,7 +17,7 @@ const GroupCard: React.FC<{
 
   return (
     <div className="flex flex-row justify-between rounded-xl bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg max-md:flex-col">
-      <div className="flex gap-2.5 min-w-full">
+      <div className="flex min-w-full gap-2.5">
         <div className="flex w-[37%] flex-col">
           <h2 className="mb-5 text-sm leading-4 text-neutral-600">
             {product.localizeInfos.title}
@@ -29,7 +31,7 @@ const GroupCard: React.FC<{
 
         <div className="flex w-[63%] flex-row justify-between">
           {pic1 ? <ProductImage imageSrc={pic1} /> : <Placeholder />}
-          <div className="my-auto aspect-square w-4 text-center shrink-0 fill-neutral-600">
+          <div className="my-auto aspect-square w-4 shrink-0 fill-neutral-600 text-center">
             +
           </div>
           {pic2 ? <ProductImage imageSrc={pic2} /> : <Placeholder />}

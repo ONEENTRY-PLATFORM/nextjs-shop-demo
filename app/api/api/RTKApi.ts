@@ -7,7 +7,8 @@ import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvi
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
 import type {
-  IOrdersByMarkersEntity,
+  IOrderByMarkerEntity,
+  IOrdersByMarkerEntity,
   IOrdersEntity,
 } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
@@ -133,17 +134,7 @@ export const RTKApi = createApi({
         }
       },
     }),
-    getUserOrders: build.query<IOrdersByMarkersEntity[], { marker: string }>({
-      queryFn: async ({ marker }) => {
-        try {
-          const result = await api.Orders.getAllOrdersByMarker(marker);
-          return { data: result };
-        } catch (e: any) {
-          return { error: e.message };
-        }
-      },
-    }),
-    getSingleOrder: build.query<IOrdersByMarkersEntity, SingleOrderProps>({
+    getSingleOrder: build.query<IOrderByMarkerEntity, SingleOrderProps>({
       queryFn: async ({ id, marker, activeLang }) => {
         try {
           const result = await api.Orders.getOrderByMarkerAndId(
@@ -170,6 +161,5 @@ export const {
   useGetPaymentSessionByIdQuery,
   useLazyGetPaymentSessionByIdQuery,
   useGetOrderStorageByMarkerQuery,
-  useGetUserOrdersQuery,
   useGetSingleOrderQuery,
 } = RTKApi;
