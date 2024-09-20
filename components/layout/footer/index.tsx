@@ -9,7 +9,7 @@ export default async function Footer() {
   return (
     <footer className="w-full">
       <FooterMenuSection />
-      <div className="w-full bg-black px-5 py-11 text-center text-white max-md:max-w-full max-md:px-5">
+      <div className="w-full bg-black px-5 py-11 text-center text-white max-md:max-w-full max-md:p-5">
         <div className="">
           &copy; {copyrightDate} {SITE_NAME}, by{' '}
           <span className="text-orange-500">{COMPANY_NAME}</span>

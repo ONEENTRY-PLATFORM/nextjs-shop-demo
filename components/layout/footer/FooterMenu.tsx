@@ -25,7 +25,7 @@ const FooterMenuSection = async () => {
 
   return (
     <div className="flex w-full items-center justify-center bg-gray-200 px-5 py-10 max-md:px-5">
-      <div className="flex w-full max-w-screen-xl flex-row flex-wrap items-start justify-between max-md:gap-16 max-sm:gap-6">
+      <div className="flex w-full max-w-screen-xl flex-row flex-wrap items-start justify-between max-md:justify-start max-md:gap-16 max-sm:gap-6">
         <Link href="/" className="max-md:w-full">
           <Image
             src={logo.src}
@@ -33,7 +33,7 @@ const FooterMenuSection = async () => {
             height={logo.height}
             alt={logo.alt}
             loading="lazy"
-            className="aspect-[3.57] w-[253px] max-w-full shrink-0 max-sm:mb-5"
+            className="aspect-[3.57] w-[253px] max-w-full max-lg:max-w-[180px] shrink-0 max-sm:mb-5"
           />
         </Link>
         <ContactInfo />

@@ -16,7 +16,7 @@ const Menu: FC<{
   }
 
   return (
-    <div className="flex w-[21%] flex-col max-md:max-w-[30%] max-sm:w-[45%] max-xs:w-full">
+    <div className="flex flex-col max-lg:w-[21%] max-md:w-[50%] max-sm:w-[45%] max-xs:w-full">
       <nav className="flex flex-col text-neutral-600">
         <h2 className="mb-5 text-xl font-bold">{menu.localizeInfos.title}</h2>
         <ul className="flex flex-col gap-1.5 text-sm font-semibold">
