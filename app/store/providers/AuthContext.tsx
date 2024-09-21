@@ -54,9 +54,10 @@ export const AuthProvider = ({ children }: Props) => {
         if (res.error && !res.isLoading) {
           localStorage.setItem('refresh-token', '');
           return setIsAuth(false);
+        } else {
+          setUser(res.data);
+          setIsAuth(true);
         }
-        setUser(res.data);
-        setIsAuth(true);
       })
       .catch(async () => {
         localStorage.setItem('refresh-token', '');
@@ -81,19 +82,7 @@ export const AuthProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (isAuth) {
-      trigger({})
-        .then((res) => {
-          if (res.error && !res.isLoading) {
-            localStorage.setItem('refresh-token', '');
-            return setIsAuth(false);
-          }
-          setUser(res.data);
-          setIsAuth(true);
-        })
-        .catch(() => {
-          localStorage.setItem('refresh-token', '');
-          setIsAuth(false);
-        });
+      checkToken();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, refetchUser]);

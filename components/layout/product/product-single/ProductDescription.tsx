@@ -1,3 +1,5 @@
+import parse from 'html-react-parser';
+
 interface ProductDescriptionProps {
   description: string;
 }
@@ -5,7 +7,11 @@ interface ProductDescriptionProps {
 const ProductDescription: React.FC<ProductDescriptionProps> = ({
   description,
 }) => {
-  return <p className="text-sm leading-5 text-neutral-600">{description}</p>;
+  return (
+    <div className="text-sm leading-5 text-neutral-600">
+      {parse(description)}
+    </div>
+  );
 };
 
 export default ProductDescription;

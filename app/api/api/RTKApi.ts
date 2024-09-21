@@ -8,7 +8,7 @@ import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
 import type {
   IOrderByMarkerEntity,
-  IOrdersByMarkerEntity,
+  // IOrdersByMarkerEntity,
   IOrdersEntity,
 } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
@@ -98,6 +98,10 @@ export const RTKApi = createApi({
       queryFn: async () => {
         try {
           const result = await api.Users.getUser('en_US');
+          if (!result) {
+            localStorage.setItem('refresh-token', '');
+            return { error: 'getUser error' };
+          }
           return { data: result };
         } catch (e: any) {
           return { error: e.message };

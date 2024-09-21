@@ -16,8 +16,8 @@ const ProductSingle: FC<
 > = async (product) => {
   const { attributeValues, localizeInfos, blocks } = product;
 
-  const related = await getRelatedProductsById(product.id, 'en_US');
-
+  const relatedData = await getRelatedProductsById(product.id, 'en_US');
+  const description = attributeValues.description.value[0].htmlValue;
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:gap-4 max-sm:flex-wrap">
@@ -32,15 +32,16 @@ const ProductSingle: FC<
         </div>
 
         <div className="flex w-4/12 grow flex-col max-md:w-full">
-          <div className="relative mb-6 box-border flex shrink-0 flex-col">
-            <VariationsCarousel items={related.products} />
-          </div>
-
-          {attributeValues.description && (
-            <ProductDescription
-              description={attributeValues.description.value.plainValue}
-            />
+          {relatedData.total && relatedData.total > 0 && (
+            <div className="relative mb-6 box-border flex shrink-0 flex-col">
+              <VariationsCarousel
+                items={relatedData.products}
+                total={relatedData.total}
+              />
+            </div>
           )}
+
+          {description && <ProductDescription description={description} />}
         </div>
 
         <ProductDetails {...product} />
