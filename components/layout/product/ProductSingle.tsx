@@ -1,11 +1,7 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import {
-  getBlockByMarker,
-  getLocales,
-  getRelatedProductsById,
-} from '@/app/api/serverSideProps';
+import { getRelatedProductsById } from '@/app/api/serverSideProps';
 
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
@@ -19,7 +15,6 @@ const ProductSingle: FC<
   IProductsEntity & { blocks?: Array<string>; productPages?: [] }
 > = async (product) => {
   const { attributeValues, localizeInfos, blocks } = product;
-  const { locales } = await getLocales();
 
   const related = await getRelatedProductsById(product.id, 'en_US');
 

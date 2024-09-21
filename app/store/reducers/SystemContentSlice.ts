@@ -52,6 +52,7 @@ type FiltersDataType = {
     max: number;
   };
 };
+
 type InitialStateType = {
   content: ContentType;
   filtersData: FiltersDataType;
