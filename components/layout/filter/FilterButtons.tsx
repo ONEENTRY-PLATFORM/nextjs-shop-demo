@@ -5,7 +5,7 @@ import ResetButton from './ResetButton';
 
 const FilterButtons: FC = () => {
   return (
-    <div className="relative box-border flex shrink-0 flex-col gap-4">
+    <div className="relative mt-auto box-border flex shrink-0 flex-col gap-4">
       <ResetButton />
       <ApplyButton />
     </div>

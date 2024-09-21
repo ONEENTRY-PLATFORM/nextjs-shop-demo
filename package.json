@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.1.8",
+    "@next/env": "^14.2.13",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/react-redux": "^7.1.33",
     "clsx": "^2.1.1",
@@ -20,7 +21,7 @@
     "next-intl": "^3.19.4",
     "next-redux-wrapper": "^8.1.0",
     "nuqs": "^1.19.1",
-    "oneentry": "^1.0.85",
+    "oneentry": "^1.0.86",
     "react": "^18.3.1",
     "react-calendar": "^5.0.0",
     "react-dom": "^18.3.1",

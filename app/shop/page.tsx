@@ -68,7 +68,7 @@ const ShopPage = async ({
   const currentPage = Number(searchParams?.page) || 0;
   const { page } = await getPageByUrl('shop', langCode);
 
-  const { isError, products } = await getProducts({
+  const { isError, products, total } = await getProducts({
     limit: pageLimit,
     offset: currentPage * pageLimit,
     langCode: langCode,
@@ -85,7 +85,7 @@ const ShopPage = async ({
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
             gridItems={products}
-            totalPages={(page?.products || 0) / pageLimit}
+            totalPages={(total || 0) / pageLimit}
           />
         </Suspense>
       </div>

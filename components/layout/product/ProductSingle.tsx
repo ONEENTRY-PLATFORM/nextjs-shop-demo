@@ -51,14 +51,14 @@ const ProductSingle: FC<
       <ProductsGroup marker={'multiply_items_offer'} />
       <RelatedItems marker={'cross_selling'} id={product.id} />
 
-      {/* {Array.isArray(blocks) &&
+      {Array.isArray(blocks) &&
         blocks.map((block: string) => {
           if (block === 'multiply_items_offer') {
             return <ProductsGroup key={block} marker={block} />;
           } else if (block === 'similar') {
-            return <RelatedItems key={block} marker={block} title="Features" />;
+            return <RelatedItems key={block} marker={block} id={product.id} />;
           }
-        })} */}
+        })}
     </section>
   );
 };

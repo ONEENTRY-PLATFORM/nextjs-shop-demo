@@ -12,9 +12,13 @@ const VariationsCarousel: FC<{
   items: Array<IProductsEntity> | undefined;
 }> = ({ items }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  if (!items || items.length < 1) {
+    return;
+  }
 
   return (
     <nav className="flex w-full">
+      <h2 className="w-full">Cross sells</h2>
       <div className="flex h-[110px] w-full items-center justify-center self-stretch">
         <Carousel
           infinite

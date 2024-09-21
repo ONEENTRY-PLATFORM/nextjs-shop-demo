@@ -75,9 +75,8 @@ export default async function CatalogPage({
   const langCode = 'en_US';
 
   const currentPage = Number(searchParams?.page) || 0;
-  const { page } = await getPageByUrl(params.handle, 'en_US');
 
-  const { isError, products } = await getProductsByUrl({
+  const { isError, products, total } = await getProductsByUrl({
     langCode: langCode,
     limit: pageLimit,
     offset: currentPage * pageLimit,
@@ -94,7 +93,7 @@ export default async function CatalogPage({
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
             gridItems={products}
-            totalPages={(page?.products || 0) / pageLimit}
+            totalPages={(total || 0) / pageLimit}
           />
         </Suspense>
       </div>
