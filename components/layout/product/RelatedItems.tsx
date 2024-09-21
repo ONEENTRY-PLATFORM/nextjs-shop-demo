@@ -2,39 +2,35 @@
 import type { FC } from 'react';
 
 import {
-  // getRelatedProductsById,
-  getSimilarProducts,
+  getBlockByMarker,
+  getRelatedProductsById,
 } from '@/app/api/serverSideProps';
 
 import ProductCard from '../catalog/product-card/ProductCard';
 
 const RelatedItems: FC<{
+  id: number;
   marker: string;
-  title: string;
-}> = async ({ marker, title }) => {
-  const { isError, products } = await getSimilarProducts(marker, 'en_US', {
-    offset: 0,
-    limit: 5,
+}> = async ({ id, marker }) => {
+  const langCode = 'en_US';
+  const { isError, block } = await getBlockByMarker({
+    marker: marker,
+    langCode: langCode,
   });
-  // !!!
-  // const related = await getRelatedProductsById(id, 'en_US', {
-  //   offset: 0,
-  //   limit: 5,
-  // });
-  // console.log(related);
+  // console.log();
 
-  if (isError || !products) {
+  if (isError || !block) {
     return null;
   }
 
   return (
     <section className="flex flex-col max-md:max-w-full">
       <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
-        {title}
+        {block.localizeInfos.title}
       </h3>
 
       <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-        {products.map((product, i) => {
+        {block.products?.map((product, i) => {
           return <ProductCard key={i} {...product} />;
         })}
       </div>

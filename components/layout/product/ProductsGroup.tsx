@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import { getProductsByBlockMarker } from '@/app/api/serverSideProps';
+import { getBlockByMarker } from '@/app/api/serverSideProps';
 
 import GroupCard from './group-card/GroupCard';
 
@@ -8,17 +8,9 @@ const ProductsGroup: FC<{
   marker: string;
 }> = async ({ marker }) => {
   const langCode = 'en_US';
-  // together - Together products block in product page
-  const { isError, products } = await getProductsByBlockMarker(
-    marker,
-    langCode,
-    {
-      limit: 5,
-      offset: 0,
-    },
-  );
+  const { isError, block } = await getBlockByMarker({ marker, langCode });
 
-  if (isError || !products) {
+  if (isError || !block) {
     return null;
   }
 
@@ -29,7 +21,7 @@ const ProductsGroup: FC<{
       </h3>
 
       <div className="flex w-full flex-row justify-between gap-2.5">
-        {products?.map((product) => (
+        {block.products?.map((product) => (
           <div
             key={product.id}
             className="relative box-border flex w-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%]"

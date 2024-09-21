@@ -209,63 +209,6 @@ export async function getProductById(
 
 // api.Blocks
 
-// getSimilarProducts
-export async function getSimilarProducts(
-  marker: string,
-  langCode: string,
-  props: {
-    offset: number;
-    limit: number;
-  },
-): Promise<{
-  products?: IProductsEntity[];
-  isError: boolean;
-  err?: unknown;
-}> {
-  try {
-    const { limit, offset } = props;
-
-    const products = await api.Blocks.getSimilarProducts(
-      marker,
-      langCode,
-      offset,
-      limit,
-    );
-
-    return { isError: false, products: products };
-  } catch (err) {
-    return { isError: true, err };
-  }
-}
-
-// getProductsByBlockMarker
-export async function getProductsByBlockMarker(
-  marker: string,
-  langCode: string,
-  props: {
-    offset: number;
-    limit: number;
-  },
-): Promise<{
-  products?: IProductsEntity[];
-  isError: boolean;
-  err?: unknown;
-}> {
-  const { limit, offset } = props;
-
-  try {
-    const products = await api.Blocks.getProductsByBlockMarker(
-      marker,
-      langCode,
-      offset,
-      limit,
-    );
-    return { isError: false, products: products };
-  } catch (err) {
-    return { isError: true, err };
-  }
-}
-
 // getBlocks
 export async function getBlocks({
   type,

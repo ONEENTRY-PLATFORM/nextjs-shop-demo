@@ -1,7 +1,11 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import { getLocales, getSimilarProducts } from '@/app/api/serverSideProps';
+import {
+  getBlockByMarker,
+  getLocales,
+  getRelatedProductsById,
+} from '@/app/api/serverSideProps';
 
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
@@ -17,14 +21,7 @@ const ProductSingle: FC<
   const { attributeValues, localizeInfos, blocks } = product;
   const { locales } = await getLocales();
 
-  const { products } = await getSimilarProducts(
-    'similar',
-    locales?.[0].code || 'en_US',
-    {
-      offset: 0,
-      limit: 10,
-    },
-  );
+  const related = await getRelatedProductsById(product.id, 'en_US');
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -41,7 +38,7 @@ const ProductSingle: FC<
 
         <div className="flex w-4/12 grow flex-col max-md:w-full">
           <div className="relative mb-6 box-border flex shrink-0 flex-col">
-            <VariationsCarousel items={products} />
+            <VariationsCarousel items={related.products} />
           </div>
 
           {attributeValues.description && (
@@ -56,14 +53,17 @@ const ProductSingle: FC<
 
       <ReviewsSection />
 
-      {Array.isArray(blocks) &&
+      <ProductsGroup marker={'multiply_items_offer'} />
+      <RelatedItems marker={'cross_selling'} id={product.id} />
+
+      {/* {Array.isArray(blocks) &&
         blocks.map((block: string) => {
           if (block === 'multiply_items_offer') {
             return <ProductsGroup key={block} marker={block} />;
           } else if (block === 'similar') {
             return <RelatedItems key={block} marker={block} title="Features" />;
           }
-        })}
+        })} */}
     </section>
   );
 };
