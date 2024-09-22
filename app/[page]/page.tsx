@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { getPageByUrl } from '@/app/api/serverSideProps';
+import { useGetPageByUrl } from '@/app/api';
 import CartPage from '@/components/layout/cart/CartPage';
 import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
 import AboutPage from '@/components/layout/pages/AboutPage';
@@ -18,7 +18,8 @@ export async function generateMetadata({
 }: {
   params: { page: string };
 }): Promise<Metadata> {
-  const { page, isError } = await getPageByUrl(params.page, 'en_US');
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { page, isError } = await useGetPageByUrl(params.page, 'en_US');
 
   if (isError || !page) {
     return notFound();
@@ -36,7 +37,7 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { page: string } }) {
-  const { page, isError } = await getPageByUrl(params.page, 'en_US');
+  const { page, isError } = await useGetPageByUrl(params.page, 'en_US');
 
   if (isError || !page) {
     return notFound();

@@ -4,18 +4,17 @@ import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import { useGetProducts } from '@/app/api/hooks/useGetProducts';
+import { useGetPageByUrl, useGetProducts } from '@/app/api';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
-
-import { getPageByUrl, getProducts } from '../../api/serverSideProps';
 
 export async function generateMetadata({
   params,
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  const data = await getPageByUrl(params.handle, 'en_US');
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const data = await useGetPageByUrl(params.handle, 'en_US');
   const { isError, page } = data;
 
   if (isError || !page) {

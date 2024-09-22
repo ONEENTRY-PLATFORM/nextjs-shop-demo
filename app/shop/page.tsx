@@ -3,11 +3,10 @@ import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
+import { useGetProducts } from '@/app/api';
 import { getPageByUrl } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
-
-import { useGetProducts } from '../api/hooks/useGetProducts';
 
 export async function generateMetadata(): Promise<Metadata> {
   const { isError, page } = await getPageByUrl('shop', 'en_US');

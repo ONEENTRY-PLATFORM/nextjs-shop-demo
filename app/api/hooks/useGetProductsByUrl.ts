@@ -3,8 +3,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import { api } from '../api/api';
 import getSearchParams from '../utils/getSearchParams';
 
-// useGetProductsByUrl
-const useGetProductsByUrl = async (props: {
+export const useGetProductsByUrl = async (props: {
   offset: number;
   limit: number;
   langCode: string;
@@ -45,5 +44,3 @@ const useGetProductsByUrl = async (props: {
     return { isError: true, err: err };
   }
 };
-
-export default useGetProductsByUrl;

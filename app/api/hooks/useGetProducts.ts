@@ -1,10 +1,10 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import { api } from '../api/api';
+import { api } from '@/app/api';
+
 import getSearchParams from '../utils/getSearchParams';
 
-// getProducts
-export async function useGetProducts(props: {
+export const useGetProducts = async (props: {
   limit: number;
   offset: number;
   langCode: string;
@@ -23,7 +23,7 @@ export async function useGetProducts(props: {
   total?: number;
   isError: boolean;
   err?: unknown;
-}> {
+}> => {
   const { limit, offset, params, langCode } = props;
   // const searchValue = params?.searchParams?.search || '';
   const expandedFilters = getSearchParams(params?.searchParams, params?.handle);
@@ -43,4 +43,4 @@ export async function useGetProducts(props: {
   } catch (err) {
     return { isError: true, err: err };
   }
-}
+};
