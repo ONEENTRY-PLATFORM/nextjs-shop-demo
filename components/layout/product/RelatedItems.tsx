@@ -17,7 +17,7 @@ const RelatedItems: FC<{
     marker: marker,
     langCode: langCode,
   });
-  // console.log();
+  console.log(block);
 
   if (isError || !block) {
     return null;
@@ -30,7 +30,7 @@ const RelatedItems: FC<{
       </h3>
 
       <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-        {block.products?.map((product, i) => {
+        {block.similarProducts?.map((product, i) => {
           return <ProductCard key={i} {...product} />;
         })}
       </div>

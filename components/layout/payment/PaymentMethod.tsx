@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { FC, Key } from 'react';
 
@@ -26,11 +27,11 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
       }}
       className={
         'relative w-full flex-row text-slate-700 items-center justify-between rounded-md border border-solid border-neutral-300 bg-transparent p-4 cursor-pointer ' +
-        (isActive ? 'min-h-36' : ' min-h-10')
+        clsx(isActive && 'min-h-36', ' min-h-10')
       }
     >
       <div className={'flex-col'}>
-        <h1 className="text-lg">{account?.localizeInfos?.title}</h1>
+        <h2 className="text-lg">{account?.localizeInfos?.title}</h2>
         <p className="mb-4 text-base">
           Payment description {account?.localizeInfos?.title}
         </p>
@@ -93,13 +94,13 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
                   }
 
                   if (field.marker === 'date') {
-                    const date = UseDate({
-                      fullDate: field.value.fullDate,
-                      format: 'en',
-                    });
                     return (
                       <div key={i} className="flex gap-2">
-                        <b>Delivery date: </b> {date}
+                        <b>Delivery date: </b>{' '}
+                        {UseDate({
+                          fullDate: field.value.fullDate,
+                          format: 'en',
+                        })}
                       </div>
                     );
                   }

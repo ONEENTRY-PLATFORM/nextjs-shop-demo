@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
@@ -23,7 +24,8 @@ const SidebarMenuItem: FC<{
   return (
     <li>
       <Link
-        className={`mr-auto flex justify-start gap-3 whitespace-nowrap hover:text-orange-500 ${isActive ? 'text-orange-500' : ''} group`}
+        className={`mr-auto flex justify-start gap-3 whitespace-nowrap hover:text-orange-500 
+          ${clsx(isActive && 'text-orange-500')} group`}
         href={'/' + pageUrl}
         aria-checked={isActive}
       >

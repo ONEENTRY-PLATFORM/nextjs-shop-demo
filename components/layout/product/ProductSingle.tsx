@@ -49,8 +49,8 @@ const ProductSingle: FC<
 
       <ReviewsSection />
 
-      <ProductsGroup marker={'multiply_items_offer'} />
-      <RelatedItems marker={'cross_selling'} id={product.id} />
+      {/* <ProductsGroup marker={'multiply_items_offer'} />
+      <RelatedItems marker={'cross_selling'} id={product.id} /> */}
 
       {Array.isArray(blocks) &&
         blocks.map((block: string) => {
