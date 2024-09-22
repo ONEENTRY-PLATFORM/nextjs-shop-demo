@@ -31,7 +31,7 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
     >
       <div className={'flex-col'}>
         <h1 className="text-lg">{account?.localizeInfos?.title}</h1>
-        <p className="text-md mb-4">
+        <p className="mb-4 text-base">
           Payment description {account?.localizeInfos?.title}
         </p>
         <button

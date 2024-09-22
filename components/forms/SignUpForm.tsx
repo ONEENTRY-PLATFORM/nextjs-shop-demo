@@ -129,7 +129,15 @@ const SignUpForm: FC = () => {
           Sign up
         </h2>
         <p className="text-xs text-gray-400 max-md:max-w-full">
-          <button onClick={() => {setComponent('SignInForm')}} className="underline">Sign in</button> or create account to quickly manage order
+          <button
+            onClick={() => {
+              setComponent('SignInForm');
+            }}
+            className="underline"
+          >
+            Sign in
+          </button>{' '}
+          or create account to quickly manage order
         </p>
       </div>
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
