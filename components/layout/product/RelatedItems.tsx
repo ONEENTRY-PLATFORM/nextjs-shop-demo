@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { FC } from 'react';
 
-import {
-  getBlockByMarker,
-  getRelatedProductsById,
-} from '@/app/api/serverSideProps';
+import { getBlockByMarker } from '@/app/api/serverSideProps';
 
 import ProductCard from '../catalog/product-card/ProductCard';
 
@@ -17,7 +14,6 @@ const RelatedItems: FC<{
     marker: marker,
     langCode: langCode,
   });
-  console.log(block);
 
   if (isError || !block) {
     return null;

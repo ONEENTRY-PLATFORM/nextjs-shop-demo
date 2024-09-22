@@ -169,39 +169,39 @@ import { api } from '@/app/api';
 // }
 
 // getRelatedProductsById
-export async function getRelatedProductsById(
-  id: number,
-  langCode: string,
-): Promise<{
-  products?: IProductsEntity[];
-  total?: number;
-  isError: boolean;
-  err?: unknown;
-}> {
-  try {
-    const data = await api.Products.getRelatedProductsById(id, langCode);
-    return { isError: false, products: data.items, total: data.total };
-  } catch (err) {
-    return { isError: true, err };
-  }
-}
+// export async function getRelatedProductsById(
+//   id: number,
+//   langCode: string,
+// ): Promise<{
+//   products?: IProductsEntity[];
+//   total?: number;
+//   isError: boolean;
+//   err?: unknown;
+// }> {
+//   try {
+//     const data = await api.Products.getRelatedProductsById(id, langCode);
+//     return { isError: false, products: data.items, total: data.total };
+//   } catch (err) {
+//     return { isError: true, err };
+//   }
+// }
 
 // getProductById
-export async function getProductById(
-  id: number,
-  langCode: string,
-): Promise<{
-  product?: IProductsEntity;
-  isError: boolean;
-  err?: unknown;
-}> {
-  try {
-    const product = await api.Products.getProductById(id, langCode);
-    return { isError: false, product: product };
-  } catch (err) {
-    return { isError: true, err };
-  }
-}
+// export async function getProductById(
+//   id: number,
+//   langCode: string,
+// ): Promise<{
+//   product?: IProductsEntity;
+//   isError: boolean;
+//   err?: unknown;
+// }> {
+//   try {
+//     const product = await api.Products.getProductById(id, langCode);
+//     return { isError: false, product: product };
+//   } catch (err) {
+//     return { isError: true, err };
+//   }
+// }
 
 // api.Blocks
 

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import { getProductById } from '@/app/api/serverSideProps';
+import { getProductById } from '@/app/api';
 import Product from '@/components/layout/product/ProductSingle';
 
 // generateMetadata

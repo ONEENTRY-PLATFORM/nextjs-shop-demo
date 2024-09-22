@@ -4,9 +4,9 @@ import { api } from '../api/api';
 import getSearchParams from '../utils/getSearchParams';
 
 export const getProductsByPageUrl = async (props: {
-  offset: number;
-  limit: number;
   langCode: string;
+  limit: number;
+  offset: number;
   params: {
     handle: string;
     searchParams?: {
@@ -24,8 +24,8 @@ export const getProductsByPageUrl = async (props: {
   err?: unknown;
 }> => {
   const { limit, offset, params, langCode } = props;
-  const { searchParams, handle } = params;
-  const expandedFilters = getSearchParams(searchParams, handle);
+  const { searchParams } = params;
+  const expandedFilters = getSearchParams(searchParams);
 
   try {
     const data = await api.Products.getProductsByPageUrl(

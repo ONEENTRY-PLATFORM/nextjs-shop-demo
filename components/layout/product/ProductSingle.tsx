@@ -1,7 +1,7 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import { getRelatedProductsById } from '@/app/api/serverSideProps';
+import { getRelatedProductsById } from '@/app/api';
 
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
