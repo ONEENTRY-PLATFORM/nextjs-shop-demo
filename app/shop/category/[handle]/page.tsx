@@ -4,7 +4,8 @@ import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import { getPageByUrl, getProductsByUrl } from '@/app/api/serverSideProps';
+import useGetProductsByUrl from '@/app/api/hooks/useGetProductsByUrl';
+import { getPageByUrl } from '@/app/api/serverSideProps';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
@@ -75,7 +76,7 @@ export default async function CatalogPage({
   const langCode = 'en_US';
   const currentPage = Number(searchParams?.page) || 0;
 
-  const { isError, products, total } = await getProductsByUrl({
+  const { isError, products, total } = await useGetProductsByUrl({
     langCode: langCode,
     limit: pageLimit,
     offset: currentPage * pageLimit,

@@ -4,14 +4,11 @@ import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
+import { useGetProducts } from '@/app/api/hooks/useGetProducts';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
-import {
-  getPageByUrl,
-  getProducts,
-  getProductsByUrl,
-} from '../../api/serverSideProps';
+import { getPageByUrl, getProducts } from '../../api/serverSideProps';
 
 export async function generateMetadata({
   params,
@@ -80,7 +77,7 @@ export default async function CatalogPage({
 
   const currentPage = Number(searchParams?.page) || 0;
 
-  const { isError, products, total } = await getProducts({
+  const { isError, products, total } = await useGetProducts({
     langCode: langCode,
     limit: pageLimit,
     offset: currentPage * pageLimit,
