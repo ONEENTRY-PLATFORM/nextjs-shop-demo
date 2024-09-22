@@ -10,13 +10,16 @@ import type {
 
 import { api } from '@/app/api';
 
-const getSearchParams = (searchParams?: {
-  search?: string;
-  in_stock?: string;
-  color?: string;
-  minPrice?: string;
-  maxPrice?: string;
-}) => {
+const getSearchParams = (
+  searchParams?: {
+    search?: string;
+    in_stock?: string;
+    color?: string;
+    minPrice?: string;
+    maxPrice?: string;
+  },
+  handle?: string,
+) => {
   const expandedFilters:
     | Array<IFilterParams & { statusMarker?: string }>
     | undefined = [];
@@ -28,6 +31,15 @@ const getSearchParams = (searchParams?: {
     conditionValue: null,
   };
   expandedFilters.push(servicesFilter);
+
+  if (handle) {
+    const stickersFilter: IFilterParams = {
+      attributeMarker: 'stickers',
+      conditionMarker: 'in',
+      conditionValue: handle,
+    };
+    expandedFilters.push(stickersFilter);
+  }
 
   if (searchParams?.['in_stock']) {
     expandedFilters.push({
@@ -93,38 +105,21 @@ export async function getProducts(props: {
   err?: unknown;
 }> {
   const { limit, offset, params, langCode } = props;
-  const searchValue = params?.searchParams?.search || '';
-  const expandedFilters = getSearchParams(params?.searchParams);
+  // const searchValue = params?.searchParams?.search || '';
+  const expandedFilters = getSearchParams(params?.searchParams, params?.handle);
 
   try {
-    if (searchValue === '') {
-      const data = await api.Products.getProducts(expandedFilters, langCode, {
-        sortOrder: 'DESC',
-        sortKey: 'id',
-        offset: offset,
-        limit: limit,
-      });
-      if (params?.handle) {
-        return {
-          isError: false,
-          total: data.total,
-          products: data.items.filter(
-            (product: IProductsEntity) =>
-              product.attributeValues.stickers?.value.value === params.handle,
-          ),
-        };
-      }
-      return {
-        isError: false,
-        products: data.items,
-        total: data.total,
-      };
-    }
-    if (searchValue) {
-      const products = await api.Products.searchProduct(searchValue, 'en_US');
-      return { isError: false, products: products, total: 100 };
-    }
-    return { isError: false, products: [], total: 0 };
+    const data = await api.Products.getProducts(expandedFilters, langCode, {
+      sortOrder: 'DESC',
+      sortKey: 'id',
+      offset: offset,
+      limit: limit,
+    });
+    return {
+      isError: false,
+      products: data.items,
+      total: data.total,
+    };
   } catch (err) {
     return { isError: true, err: err };
   }
@@ -152,7 +147,8 @@ export async function getProductsByUrl(props: {
   err?: unknown;
 }> {
   const { limit, offset, params, langCode } = props;
-  const expandedFilters = getSearchParams(params?.searchParams);
+  const { searchParams, handle } = params;
+  const expandedFilters = getSearchParams(searchParams, handle);
 
   try {
     const data = await api.Products.getProductsByPageUrl(

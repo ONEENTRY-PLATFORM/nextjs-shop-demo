@@ -7,7 +7,11 @@ import { Suspense } from 'react';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
-import { getPageByUrl, getProductsByUrl } from '../../api/serverSideProps';
+import {
+  getPageByUrl,
+  getProducts,
+  getProductsByUrl,
+} from '../../api/serverSideProps';
 
 export async function generateMetadata({
   params,
@@ -76,12 +80,14 @@ export default async function CatalogPage({
 
   const currentPage = Number(searchParams?.page) || 0;
 
-  const { isError, products, total } = await getProductsByUrl({
+  const { isError, products, total } = await getProducts({
     langCode: langCode,
     limit: pageLimit,
     offset: currentPage * pageLimit,
     params: { ...params, searchParams: searchParams },
   });
+
+  console.log(total);
 
   if (isError || !products) {
     return notFound();

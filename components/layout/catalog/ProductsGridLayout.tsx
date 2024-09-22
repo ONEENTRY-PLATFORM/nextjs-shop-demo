@@ -7,11 +7,14 @@ import Pagination from './Pagination';
 import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {
-  gridItems: Array<IProductsEntity>;
+  gridItems?: Array<IProductsEntity>;
   totalPages: number;
 }
 
 const ProductsGridLayout: FC<GridLayoutProps> = ({ gridItems, totalPages }) => {
+  if (!gridItems) {
+    return;
+  }
   return (
     <>
       <div className="relative box-border flex w-full shrink-0 flex-col">
@@ -29,7 +32,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({ gridItems, totalPages }) => {
           </div>
         </section>
       </div>
-      <FilterModal prices={gridItems[0]?.additional.prices} />
+      <FilterModal prices={gridItems?.[0]?.additional.prices} />
     </>
   );
 };
