@@ -133,7 +133,7 @@ export const OrdersTableLoader: FC<LoaderProps> = ({
 }) => {
   return (
     <div className="my-auto flex w-full flex-col max-md:max-w-full">
-      {Array.from(Array(3).keys()).map((item) => (
+      {Array.from(Array(10).keys()).map((item) => (
         <div
           key={item}
           className="relative -mb-px flex h-12 border-collapse gap-4 border-y p-4"
