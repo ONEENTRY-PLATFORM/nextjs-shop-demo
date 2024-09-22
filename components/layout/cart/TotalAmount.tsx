@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '@/app/store/hooks';
 import { UsePrice } from '@/components/utils';
 
-const TotalAmount = () => {
+const TotalAmount = ({ className }: { className: string }) => {
   const [cartTotal, setCartTotal] = useState(0);
   const total = useAppSelector((state) => {
     return state.cartReducer.products.reduce((total, item) => {
@@ -28,7 +28,7 @@ const TotalAmount = () => {
   });
 
   return (
-    <div className="self-center text-xl leading-8 text-neutral-600 lg:self-end">
+    <div className={'self-center ' + className}>
       Total amount: {formattedPrice}
     </div>
   );

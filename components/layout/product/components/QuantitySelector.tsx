@@ -40,7 +40,7 @@ const QuantitySelector: React.FC<{
     >
       <DecreaseButton id={id} qty={qty} />
       <input
-        className="relative box-border h-8 w-16 rounded-full bg-transparent text-center text-slate-800 hover:bg-slate-100 hover:text-orange-500"
+        className="relative box-border h-8 w-16 rounded-full bg-transparent text-center text-slate-700 hover:bg-slate-100 hover:text-orange-500 hover:shadow-inner"
         type="number"
         name={'qty_selector_' + id}
         id={'qty_selector_' + id}

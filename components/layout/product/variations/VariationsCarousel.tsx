@@ -20,7 +20,7 @@ const VariationsCarousel: FC<{
 
   return (
     <>
-      <h2 className="mb-3 w-full">Cross sells</h2>
+      <h2 className="mb-3 w-full text-neutral-600">Cross sells</h2>
       <nav className="flex w-full">
         <div className="flex h-[110px] w-full items-center justify-center self-stretch">
           <Carousel

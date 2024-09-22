@@ -17,7 +17,7 @@ const IncreaseButton: FC<{
       onClick={() => {
         dispatch(increaseProductQty({ id: id, quantity: 1 }));
       }}
-      className="relative m-1 box-border size-8 rounded-full text-center text-slate-800 transition-all duration-500 hover:bg-slate-100 hover:text-orange-500 hover:shadow-xl"
+      className="relative m-1 box-border size-8 rounded-full text-center text-slate-700 transition-all duration-500 hover:bg-slate-100 hover:text-orange-500 hover:shadow-inner"
       aria-label="Increase quantity"
     >
       +

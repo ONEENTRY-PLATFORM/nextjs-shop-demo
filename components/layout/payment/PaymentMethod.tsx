@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
 import { UseDate } from '@/components/utils';
 
+import TotalAmount from '../cart/TotalAmount';
+
 type Props = {
   account: IAccountsEntity;
   onConfirmOrder: () => Promise<void> | undefined;
@@ -31,7 +33,7 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
       }
     >
       <div className={'flex-col'}>
-        <h2 className="text-lg">{account?.localizeInfos?.title}</h2>
+        <h2 className="text-lg font-bold">{account?.localizeInfos?.title}</h2>
         <p className="mb-4 text-base">
           Payment description {account?.localizeInfos?.title}
         </p>
@@ -49,9 +51,9 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
 
       {isActive && (
         <>
-          <div className="flex flex-col text-[#4C4D56]">
-            <div className="flex max-w-[430px] flex-col gap-4 pb-5 max-md:max-w-full">
-              <div className="flex">
+          <div className="flex flex-wrap justify-between text-[#4C4D56]">
+            <div className="flex w-2/3 flex-col max-md:max-w-full">
+              <div className="flex border border-solid p-2">
                 <div className="w-1/2 font-bold">Product</div>
                 <div className="w-1/4 font-bold">Price</div>
                 <div className="w-1/4 font-bold">Quantity</div>
@@ -63,19 +65,15 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
                   return;
                 }
                 return (
-                  <div key={i} className="flex">
+                  <div key={i} className="-mt-px flex border border-solid p-2">
                     <div className="w-1/2">{title}</div>
                     <div className="w-1/4">{price}</div>
                     <div className="w-1/4">{quantity}</div>
                   </div>
                 );
               })}
-              <div className="flex gap-2">
-                {/* <b>Total Amount: </b> {formattedTotal} */}
-              </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <hr className="mb-1" />
+            <div className="flex w-1/4 flex-col border border-solid p-2 max-md:max-w-full">
               {orderData?.formData.map(
                 (
                   field: {
@@ -87,7 +85,7 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
                 ) => {
                   if (field.marker === 'order_address') {
                     return (
-                      <div key={i} className="flex gap-2">
+                      <div key={i} className="flex flex-col">
                         <b>Address:</b> {field.value}
                       </div>
                     );
@@ -95,7 +93,7 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
 
                   if (field.marker === 'date') {
                     return (
-                      <div key={i} className="flex gap-2">
+                      <div key={i} className="flex flex-col">
                         <b>Delivery date: </b>{' '}
                         {UseDate({
                           fullDate: field.value.fullDate,
@@ -106,7 +104,7 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
                   }
                   if (field.marker === 'time') {
                     return (
-                      <div key={i} className="flex gap-2">
+                      <div key={i} className="flex flex-col">
                         <b>Delivery time: </b> {field.value}
                       </div>
                     );
@@ -114,7 +112,11 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
                   return;
                 },
               )}
-              <hr className="mt-1" />
+            </div>
+            <div className="mt-2 flex">
+              <TotalAmount
+                className={'text-base leading-8 text-neutral-600 lg:self-end'}
+              />
             </div>
           </div>
           <button

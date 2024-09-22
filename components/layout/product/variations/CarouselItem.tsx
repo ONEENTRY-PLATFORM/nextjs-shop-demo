@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { Dispatch, SetStateAction } from 'react';
@@ -33,9 +34,11 @@ const CarouselItem: React.FC<VariationProps> = ({
       onClick={onSelect}
       className={
         'relative rounded-lg box-border flex w-[100px] shrink-0 flex-col ' +
-        (isActive
-          ? 'border border-solid border-slate-50 text-slate-800'
-          : 'border border-solid border-transparent text-slate-300')
+        clsx(
+          isActive
+            ? 'border border-solid border-slate-50 text-slate-700'
+            : 'border border-solid border-transparent text-slate-300',
+        )
       }
     >
       <div className="flex w-full flex-col gap-1 overflow-hidden whitespace-nowrap pb-1 text-center text-sm">

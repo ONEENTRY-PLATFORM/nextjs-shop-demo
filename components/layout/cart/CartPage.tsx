@@ -53,14 +53,7 @@ const CartPage: FC = () => {
     dispatch(
       createOrder({
         formIdentifier: 'order',
-        formData: [
-          // {
-          //   marker: 'date',
-          //   type: 'string',
-          //   value: '',
-          //   valid: true,
-          // },
-        ],
+        formData: [],
         products: productsInOrder,
         paymentAccountIdentifier: '',
       }),
@@ -159,7 +152,7 @@ const CartPage: FC = () => {
       >
         <DeliveryTable {...(delivery.product as IProductsEntity)} />
         <div className="mt-4 flex w-[464px] max-w-full flex-col self-center font-bold lg:self-end">
-          <TotalAmount />
+          <TotalAmount className={'text-lg leading-6 text-neutral-700'} />
           <PaymentButton />
         </div>
       </form>
