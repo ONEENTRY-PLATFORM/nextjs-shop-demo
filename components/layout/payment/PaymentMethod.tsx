@@ -1,8 +1,9 @@
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
-import type { FC } from 'react';
+import type { FC, Key } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
+import { UseDate } from '@/components/utils';
 
 type Props = {
   account: IAccountsEntity;
@@ -13,6 +14,7 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
   const dispatch = useAppDispatch();
 
   const orderData = useAppSelector((state) => state.orderReducer.order);
+  const productsInCart = useAppSelector((state) => state.cartReducer.products);
   const isActive = orderData?.paymentAccountIdentifier === account.identifier;
 
   return (
@@ -29,7 +31,7 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
     >
       <div className={'flex-col'}>
         <h1 className="text-lg">{account?.localizeInfos?.title}</h1>
-        <p className="text-sm">
+        <p className="text-md mb-4">
           Payment description {account?.localizeInfos?.title}
         </p>
         <button
@@ -45,12 +47,82 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
       </div>
 
       {isActive && (
-        <button
-          onClick={() => onConfirmOrder()}
-          className="mt-5 rounded-[30px] border border-solid border-orange-500 bg-transparent px-16 py-2 text-base uppercase text-orange-500 max-md:px-8 max-md:py-3 lg:self-start"
-        >
-          Apply
-        </button>
+        <>
+          <div className="flex flex-col text-[#4C4D56]">
+            <div className="flex max-w-[430px] flex-col gap-4 pb-5 max-md:max-w-full">
+              <div className="flex">
+                <div className="w-1/2 font-bold">Product</div>
+                <div className="w-1/4 font-bold">Price</div>
+                <div className="w-1/4 font-bold">Quantity</div>
+              </div>
+              {productsInCart.map((product, i) => {
+                const { localizeInfos, selected, quantity, price } = product;
+                const title = localizeInfos?.title;
+                if (!selected) {
+                  return;
+                }
+                return (
+                  <div key={i} className="flex">
+                    <div className="w-1/2">{title}</div>
+                    <div className="w-1/4">{price}</div>
+                    <div className="w-1/4">{quantity}</div>
+                  </div>
+                );
+              })}
+              <div className="flex gap-2">
+                {/* <b>Total Amount: </b> {formattedTotal} */}
+              </div>
+            </div>
+            <div className="flex flex-col gap-2">
+              <hr className="mb-1" />
+              {orderData?.formData.map(
+                (
+                  field: {
+                    marker: string;
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    value: any;
+                  },
+                  i: Key,
+                ) => {
+                  if (field.marker === 'order_address') {
+                    return (
+                      <div key={i} className="flex gap-2">
+                        <b>Address:</b> {field.value}
+                      </div>
+                    );
+                  }
+
+                  if (field.marker === 'date') {
+                    const date = UseDate({
+                      fullDate: field.value.fullDate,
+                      format: 'en',
+                    });
+                    return (
+                      <div key={i} className="flex gap-2">
+                        <b>Delivery date: </b> {date}
+                      </div>
+                    );
+                  }
+                  if (field.marker === 'time') {
+                    return (
+                      <div key={i} className="flex gap-2">
+                        <b>Delivery time: </b> {field.value}
+                      </div>
+                    );
+                  }
+                  return;
+                },
+              )}
+              <hr className="mt-1" />
+            </div>
+          </div>
+          <button
+            onClick={() => onConfirmOrder()}
+            className="btn btn-o btn-sm btn-o-primary mt-5 px-12"
+          >
+            Apply
+          </button>
+        </>
       )}
     </div>
   );
