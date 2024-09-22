@@ -3,10 +3,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // import { useRouter } from 'next/navigation';
 import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { IFormsPost } from 'oneentry/dist/formsData/formsDataInterfaces';
 import type { FC, FormEvent, Key } from 'react';
 import React, { useState } from 'react';
 
-import { logInUser, useGetFormByMarkerQuery } from '@/app/api';
+import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 
 import Loader from '../shared/Loader';
@@ -22,7 +23,7 @@ const ContactUsForm: FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  const { first_nme, email } = useAppSelector(
+  const { first_nme, email, surname, topic, text, spam } = useAppSelector(
     (state) => state.formFieldsReducer.fields,
   ) as object as {
     first_nme: {
@@ -30,6 +31,18 @@ const ContactUsForm: FC = () => {
     };
     email: {
       value: string;
+    };
+    surname: {
+      value: string;
+    };
+    topic: {
+      value: string;
+    };
+    text: {
+      value: string;
+    };
+    spam: {
+      value: boolean;
     };
   };
 
@@ -39,25 +52,66 @@ const ContactUsForm: FC = () => {
 
   const onSubmitForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!first_nme || !email) {
-      return;
-    }
 
-    try {
-      setLoading(true);
-      // const result = await logInUser({
-      //   method: 'email',
-      //   first_nme: first_nme.value,
-      //   email: email.value,
-      // });
-      setLoading(false);
-      // if (result.error) {
-      //   throw new Error(result?.error);
-      // }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      setLoading(false);
-      setError(e.message);
+    const emptyFormData: { marker: string; value: string }[] = [];
+    // console.log(formFields);
+    if (formFields) {
+      const propertiesArray = Object.keys(formFields);
+      const transformedFormData = propertiesArray?.reduce(
+        (formData, currentValue) => {
+          let newData = {
+            marker: currentValue,
+            type: 'string',
+            value: formFields[currentValue].value,
+          };
+          console.log(newData);
+          if (currentValue === 'topic') {
+            newData = {
+              marker: currentValue,
+              type: 'list',
+              value: {
+                title: formFields[currentValue].value,
+                value: formFields[currentValue].value,
+              },
+            };
+          }
+
+          if (currentValue === 'text') {
+            newData = {
+              marker: currentValue,
+              type: 'text',
+              value: [
+                {
+                  htmlValue: '<p>${appFormData[currentValue].value}</p>',
+                  plainValue: formFields[currentValue].value,
+                },
+              ],
+            };
+          }
+
+          if (newData) {
+            formData.push(newData);
+          }
+          return formData;
+        },
+        emptyFormData,
+      );
+      const formData: IFormsPost = {
+        formIdentifier: 'contact_us',
+        formData: transformedFormData,
+      };
+      console.log(formData);
+      try {
+        setLoading(true);
+        // await api.FormData.postFormsData(formData);
+        setLoading(false);
+        // dispatch(clearAllFieldsContactUs());
+        // navigate('home');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        setLoading(false);
+        setError(e.message);
+      }
     }
   };
 
@@ -84,8 +138,11 @@ const ContactUsForm: FC = () => {
                 isLoading={loading}
               />
             );
+          } else if (field.type === 'spam') {
+            return 'SPAM';
+          } else {
+            return <FormInput key={index} {...field} />;
           }
-          return <FormInput key={index} {...field} />;
         })}
       </div>
 

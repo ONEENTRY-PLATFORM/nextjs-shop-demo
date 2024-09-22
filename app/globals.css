@@ -50,20 +50,17 @@ input:focus-visible {
   h1, .h1 {
     @apply 
       text-2xl
-      font-bold
-      text-slate-700;
+      font-bold;
   }
   h2, .h2 {
     @apply 
       text-xl
-      font-bold
-      text-slate-700;
+      font-bold;
   }
   h3, .h3 {
     @apply 
       text-lg
-      font-bold
-      text-slate-700;
+      font-bold;
   }
 
   .btn {

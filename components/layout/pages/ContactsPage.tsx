@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FC, Key } from 'react';
 import { Suspense } from 'react';
@@ -10,7 +11,7 @@ const ContactsPage: FC<{ page: any }> = async ({ page }) => {
   const { localizeInfos, attributeValues, forms, blocks } = page;
   const { title, htmlContent } = localizeInfos;
   const { icon } = attributeValues;
-  console.log(blocks);
+  // console.log(blocks);
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">

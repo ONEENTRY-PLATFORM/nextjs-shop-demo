@@ -1,5 +1,5 @@
 import type { IAttributes } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { FC, Key } from 'react';
 import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
@@ -17,7 +17,7 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
 
   const fieldType = (FormFieldsEnum as unknown as FormFieldsEnum)[
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    field.marker as any
+    field.type as any
   ];
   const minLength = field.marker === 'card_cvc' ? 3 : 0;
   const maxLength = field.marker === 'card_cvc' ? 3 : 50;
@@ -41,14 +41,13 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
   if (!field || !type) {
     return;
   }
-  console.log(field);
-  console.log(type);
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
       <label htmlFor={field.marker} className="text-base text-gray-400">
         {localizeInfos?.title}
       </label>
+      {/* inputType select */}
       {type === 'list' && (
         <select
           id={field.marker}
@@ -57,9 +56,16 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
           value={value}
           onChange={(val) => setValue(val.currentTarget.value)}
         >
-          <option value={1}>1</option>
+          {field.listTitles.map((option, i: Key) => {
+            return (
+              <option key={i} value={option.value as string}>
+                {option.title}
+              </option>
+            );
+          })}
         </select>
       )}
+      {/* inputType textarea */}
       {type === 'textarea' && (
         <textarea
           id={field.marker}
@@ -70,7 +76,8 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
           value={value}
         />
       )}
-      {type !== 'textarea' && (
+      {/* inputType text/password/email... */}
+      {type !== 'textarea' && type !== 'list' && (
         <input
           type={type}
           id={field.marker}
@@ -84,6 +91,7 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
           value={value}
         />
       )}
+      {/* password button */}
       {fieldType === 'password' && (
         <button
           onClick={(e) => {
