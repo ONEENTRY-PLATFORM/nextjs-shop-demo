@@ -5,57 +5,13 @@ import { getPageByUrl } from '@/app/api/serverSideProps';
 import CartPage from '@/components/layout/cart/CartPage';
 import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
 import AboutPage from '@/components/layout/pages/AboutPage';
+import ContactsPage from '@/components/layout/pages/ContactsPage';
 import ServicesPage from '@/components/layout/pages/ServicesPage';
 import PaymentPage from '@/components/layout/payment/PaymentPage';
 import LogoutPage from '@/components/layout/profile/LogoutPage';
 import ProfilePage from '@/components/layout/profile/ProfilePage';
 
 import WithSidebar from './WithSidebar';
-
-const pages = [
-  {
-    templateType: 'withSidebar',
-    name: 'profile',
-    title: 'profile',
-    component: <ProfilePage />,
-  },
-  {
-    templateType: 'withSidebar',
-    name: 'cart',
-    title: 'cart',
-    component: <CartPage />,
-  },
-  {
-    templateType: 'withSidebar',
-    name: 'payment',
-    title: 'payment',
-    component: <PaymentPage />,
-  },
-  {
-    templateType: 'withSidebar',
-    name: 'favorites',
-    title: 'favorites',
-    component: <FavoritesPage />,
-  },
-  {
-    templateType: '',
-    name: 'about_us',
-    title: 'About us',
-    component: <AboutPage />,
-  },
-  {
-    templateType: '',
-    name: 'services',
-    title: 'Services',
-    component: <ServicesPage />,
-  },
-  {
-    templateType: 'withSidebar',
-    name: 'logout',
-    title: 'logout',
-    component: <LogoutPage />,
-  },
-];
 
 export async function generateMetadata({
   params,
@@ -88,17 +44,68 @@ export default async function Page({ params }: { params: { page: string } }) {
 
   const { pageUrl } = page;
 
+  const pages = [
+    {
+      templateType: 'withSidebar',
+      name: 'profile',
+      title: 'profile',
+      component: <ProfilePage />,
+    },
+    {
+      templateType: 'withSidebar',
+      name: 'cart',
+      title: 'cart',
+      component: <CartPage />,
+    },
+    {
+      templateType: 'withSidebar',
+      name: 'payment',
+      title: 'payment',
+      component: <PaymentPage />,
+    },
+    {
+      templateType: 'withSidebar',
+      name: 'favorites',
+      title: 'favorites',
+      component: <FavoritesPage />,
+    },
+    {
+      templateType: '',
+      name: 'about_us',
+      title: 'About us',
+      component: <AboutPage />,
+    },
+    {
+      templateType: '',
+      name: 'services',
+      title: 'Services',
+      component: <ServicesPage />,
+    },
+    {
+      templateType: 'withSidebar',
+      name: 'logout',
+      title: 'logout',
+      component: <LogoutPage />,
+    },
+    {
+      templateType: '',
+      name: 'contact_us',
+      title: 'Contacts',
+      component: <ContactsPage page={page} />,
+    },
+  ];
+
   return (
     <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col overflow-hidden">
-      {pages.map((p, _i) => {
+      {pages.map((p, i) => {
         if (pageUrl !== p.name) {
           return;
         }
 
         return p.templateType === 'withSidebar' ? (
-          <WithSidebar key={_i}>{p.component}</WithSidebar>
+          <WithSidebar key={i}>{p.component}</WithSidebar>
         ) : (
-          <div key={_i}>{p.component}</div>
+          <div key={i}>{p.component}</div>
         );
       })}
     </div>

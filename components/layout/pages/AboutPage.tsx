@@ -1,11 +1,12 @@
 import parse from 'html-react-parser';
 import Image from 'next/image';
+import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api/serverSideProps';
 import Loader from '@/components/shared/Loader';
 
-const AboutPage = async () => {
+const AboutPage: FC = async () => {
   const { page, isError } = await getPageByUrl('about_us', 'en_US');
   if (!page || isError) {
     return;

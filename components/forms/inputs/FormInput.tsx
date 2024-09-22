@@ -1,4 +1,5 @@
 import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { FC } from 'react';
 import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
@@ -7,7 +8,7 @@ import { FormFieldsEnum } from '@/app/types/enum';
 import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
 
-const FormInput: React.FC<IAttributes & { value?: string }> = (field) => {
+const FormInput: FC<IAttributes & { value?: string }> = (field) => {
   const { localizeInfos } = field;
   const [value, setValue] = useState<string>(field.value || '');
   const [type, setType] = useState<string>('');
@@ -37,27 +38,52 @@ const FormInput: React.FC<IAttributes & { value?: string }> = (field) => {
     setType(fieldType || 'text');
   }, [fieldType]);
 
-  if (!field) {
+  if (!field || !type) {
     return;
   }
+  console.log(field);
+  console.log(type);
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
       <label htmlFor={field.marker} className="text-base text-gray-400">
         {localizeInfos?.title}
       </label>
-      <input
-        type={type}
-        id={field.marker}
-        placeholder={localizeInfos?.title}
-        className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
-        required={true}
-        onChange={(val) => setValue(val.currentTarget.value)}
-        autoComplete={fieldType === 'password' ? 'password' : ''}
-        minLength={minLength}
-        maxLength={maxLength}
-        value={value}
-      />
+      {type === 'list' && (
+        <select
+          id={field.marker}
+          className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
+          required={true}
+          value={value}
+          onChange={(val) => setValue(val.currentTarget.value)}
+        >
+          <option value={1}>1</option>
+        </select>
+      )}
+      {type === 'textarea' && (
+        <textarea
+          id={field.marker}
+          placeholder={localizeInfos?.title}
+          className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
+          required={true}
+          onChange={(val) => setValue(val.currentTarget.value)}
+          value={value}
+        />
+      )}
+      {type !== 'textarea' && (
+        <input
+          type={type}
+          id={field.marker}
+          placeholder={localizeInfos?.title}
+          className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
+          required={true}
+          onChange={(val) => setValue(val.currentTarget.value)}
+          autoComplete={fieldType === 'password' ? 'password' : ''}
+          minLength={minLength}
+          maxLength={maxLength}
+          value={value}
+        />
+      )}
       {fieldType === 'password' && (
         <button
           onClick={(e) => {

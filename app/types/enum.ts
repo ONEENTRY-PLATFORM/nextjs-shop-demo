@@ -25,6 +25,10 @@ export enum FormFieldsEnum {
   password = 'password',
   phone = 'tel',
   date = 'date',
+  text = 'textarea',
+  list = 'list',
+  spam = 'spam',
+  button = 'button',
 
   email_reg = email,
   email_notifications = email,

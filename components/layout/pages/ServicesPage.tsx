@@ -1,8 +1,9 @@
+import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import Loader from '@/components/shared/Loader';
 
-const ServicesPage = () => {
+const ServicesPage: FC = async () => {
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>Services Page</Suspense>

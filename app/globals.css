@@ -47,6 +47,25 @@ input:focus-visible {
 
 /* components */
 @layer components {
+  h1, .h1 {
+    @apply 
+      text-2xl
+      font-bold
+      text-slate-700;
+  }
+  h2, .h2 {
+    @apply 
+      text-xl
+      font-bold
+      text-slate-700;
+  }
+  h3, .h3 {
+    @apply 
+      text-lg
+      font-bold
+      text-slate-700;
+  }
+
   .btn {
     @apply 
       flex
