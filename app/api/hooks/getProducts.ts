@@ -4,7 +4,7 @@ import { api } from '@/app/api';
 
 import getSearchParams from '../utils/getSearchParams';
 
-export const useGetProducts = async (props: {
+export const getProducts = async (props: {
   limit: number;
   offset: number;
   langCode: string;

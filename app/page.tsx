@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { useGetPageByUrl } from '@/app/api';
+import { getPageByUrl } from '@/app/api';
 import CatalogGrid from '@/components/layout/home/CatalogGrid';
 import Loader from '@/components/shared/Loader';
 
@@ -8,7 +8,7 @@ import Loader from '@/components/shared/Loader';
 // export const dynamicParams = true;
 
 const HomePage = async () => {
-  const { page, isError } = await useGetPageByUrl('home_web', 'en_US');
+  const { page, isError } = await getPageByUrl('home_web', 'en_US');
 
   if (isError || !page?.blocks) {
     return null;

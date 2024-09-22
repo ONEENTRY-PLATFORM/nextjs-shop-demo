@@ -12,11 +12,11 @@ export {
   useLazyGetMeQuery,
   useLazyGetPaymentSessionByIdQuery,
 } from './api/RTKApi';
+export { getPageByUrl } from './hooks/getPageByUrl';
+export { getProducts } from './hooks/getProducts';
+export { getProductsByPageUrl } from './hooks/getProductsByPageUrl';
 export { useGetLocales } from './hooks/useGetLocales';
-export { useGetPageByUrl } from './hooks/useGetPageByUrl';
 export { useGetProduct } from './hooks/useGetProduct';
-export { useGetProducts } from './hooks/useGetProducts';
-export { useGetProductsByUrl } from './hooks/useGetProductsByUrl';
 export { useGetSingleAttributeByMarkerSet } from './hooks/useGetSingleAttributeByMarkerSet';
 export { useSearchProducts } from './hooks/useSearchProducts';
 export { useSetForm } from './hooks/useSetForm';

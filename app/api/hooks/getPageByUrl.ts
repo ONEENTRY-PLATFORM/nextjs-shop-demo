@@ -2,7 +2,7 @@ import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 
 import { api } from '../api/api';
 
-export const useGetPageByUrl = async (
+export const getPageByUrl = async (
   url: string,
   langCode: string,
 ): Promise<{

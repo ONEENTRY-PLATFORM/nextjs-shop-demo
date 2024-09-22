@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
-import { useGetPageByUrl } from '@/app/api';
+import { getPageByUrl } from '@/app/api';
 
 export default async function NotFound() {
-  const { page, isError } = await useGetPageByUrl('404', 'en_US');
+  const { page, isError } = await getPageByUrl('404', 'en_US');
 
   if (isError || !page) {
     return (

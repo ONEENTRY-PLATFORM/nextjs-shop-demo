@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import { useGetPageByUrl, useGetProductsByUrl } from '@/app/api';
+import { getPageByUrl, getProductsByPageUrl } from '@/app/api';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
@@ -14,8 +14,7 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { isError, page } = await useGetPageByUrl(params.handle, 'en_US');
+  const { isError, page } = await getPageByUrl(params.handle, 'en_US');
 
   if (isError || !page) {
     return notFound();
@@ -76,7 +75,7 @@ export default async function CatalogPage({
   const langCode = 'en_US';
   const currentPage = Number(searchParams?.page) || 0;
 
-  const { isError, products, total } = await useGetProductsByUrl({
+  const { isError, products, total } = await getProductsByPageUrl({
     langCode: langCode,
     limit: pageLimit,
     offset: currentPage * pageLimit,

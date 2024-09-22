@@ -4,169 +4,169 @@ import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
 import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type {
-  IFilterParams,
+  // IFilterParams,
   IProductsEntity,
 } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
 
-const getSearchParams = (
-  searchParams?: {
-    search?: string;
-    in_stock?: string;
-    color?: string;
-    minPrice?: string;
-    maxPrice?: string;
-  },
-  handle?: string,
-) => {
-  const expandedFilters:
-    | Array<IFilterParams & { statusMarker?: string }>
-    | undefined = [];
+// const getSearchParams = (
+//   searchParams?: {
+//     search?: string;
+//     in_stock?: string;
+//     color?: string;
+//     minPrice?: string;
+//     maxPrice?: string;
+//   },
+//   handle?: string,
+// ) => {
+//   const expandedFilters:
+//     | Array<IFilterParams & { statusMarker?: string }>
+//     | undefined = [];
 
-  // check if product has SKU or this is service product
-  const servicesFilter: IFilterParams = {
-    attributeMarker: 'sku',
-    conditionMarker: 'nin',
-    conditionValue: null,
-  };
-  expandedFilters.push(servicesFilter);
+//   // check if product has SKU or this is service product
+//   const servicesFilter: IFilterParams = {
+//     attributeMarker: 'sku',
+//     conditionMarker: 'nin',
+//     conditionValue: null,
+//   };
+//   expandedFilters.push(servicesFilter);
 
-  if (handle) {
-    const stickersFilter: IFilterParams = {
-      attributeMarker: 'stickers',
-      conditionMarker: 'in',
-      conditionValue: handle,
-    };
-    expandedFilters.push(stickersFilter);
-  }
+//   if (handle) {
+//     const stickersFilter: IFilterParams = {
+//       attributeMarker: 'stickers',
+//       conditionMarker: 'in',
+//       conditionValue: handle,
+//     };
+//     expandedFilters.push(stickersFilter);
+//   }
 
-  if (searchParams?.['in_stock']) {
-    expandedFilters.push({
-      statusMarker: 'in_stock',
-      attributeMarker: 'price',
-      conditionValue: null,
-    });
-  }
+//   if (searchParams?.['in_stock']) {
+//     expandedFilters.push({
+//       statusMarker: 'in_stock',
+//       attributeMarker: 'price',
+//       conditionValue: null,
+//     });
+//   }
 
-  if (searchParams?.color) {
-    const newFilter: IFilterParams = {
-      attributeMarker: 'color',
-      conditionMarker: 'in',
-      conditionValue: searchParams.color,
-    };
-    expandedFilters.push(newFilter);
-  }
+//   if (searchParams?.color) {
+//     const newFilter: IFilterParams = {
+//       attributeMarker: 'color',
+//       conditionMarker: 'in',
+//       conditionValue: searchParams.color,
+//     };
+//     expandedFilters.push(newFilter);
+//   }
 
-  if (searchParams?.minPrice) {
-    const filter: IFilterParams = {
-      attributeMarker: 'price',
-      conditionMarker: 'mth',
-      conditionValue: searchParams.minPrice,
-      pageUrl: ['shop'],
-    };
-    expandedFilters.push(filter);
-  }
+//   if (searchParams?.minPrice) {
+//     const filter: IFilterParams = {
+//       attributeMarker: 'price',
+//       conditionMarker: 'mth',
+//       conditionValue: searchParams.minPrice,
+//       pageUrl: ['shop'],
+//     };
+//     expandedFilters.push(filter);
+//   }
 
-  if (searchParams?.maxPrice) {
-    const filter: IFilterParams = {
-      attributeMarker: 'price',
-      conditionMarker: 'lth',
-      conditionValue: searchParams.maxPrice,
-      pageUrl: ['shop'],
-    };
-    expandedFilters.push(filter);
-  }
+//   if (searchParams?.maxPrice) {
+//     const filter: IFilterParams = {
+//       attributeMarker: 'price',
+//       conditionMarker: 'lth',
+//       conditionValue: searchParams.maxPrice,
+//       pageUrl: ['shop'],
+//     };
+//     expandedFilters.push(filter);
+//   }
 
-  return expandedFilters;
-};
+//   return expandedFilters;
+// };
 
 /* api.Products */
 
 // getProducts
-export async function getProducts(props: {
-  limit: number;
-  offset: number;
-  langCode: string;
-  params?: {
-    handle?: string;
-    searchParams?: {
-      search?: string;
-      in_stock?: string;
-      color?: string;
-      minPrice?: string;
-      maxPrice?: string;
-    };
-  };
-}): Promise<{
-  products?: IProductsEntity[];
-  total?: number;
-  isError: boolean;
-  err?: unknown;
-}> {
-  const { limit, offset, params, langCode } = props;
-  // const searchValue = params?.searchParams?.search || '';
-  const expandedFilters = getSearchParams(params?.searchParams, params?.handle);
+// export async function getProducts(props: {
+//   limit: number;
+//   offset: number;
+//   langCode: string;
+//   params?: {
+//     handle?: string;
+//     searchParams?: {
+//       search?: string;
+//       in_stock?: string;
+//       color?: string;
+//       minPrice?: string;
+//       maxPrice?: string;
+//     };
+//   };
+// }): Promise<{
+//   products?: IProductsEntity[];
+//   total?: number;
+//   isError: boolean;
+//   err?: unknown;
+// }> {
+//   const { limit, offset, params, langCode } = props;
+//   // const searchValue = params?.searchParams?.search || '';
+//   const expandedFilters = getSearchParams(params?.searchParams, params?.handle);
 
-  try {
-    const data = await api.Products.getProducts(expandedFilters, langCode, {
-      sortOrder: 'DESC',
-      sortKey: 'id',
-      offset: offset,
-      limit: limit,
-    });
-    return {
-      isError: false,
-      products: data.items,
-      total: data.total,
-    };
-  } catch (err) {
-    return { isError: true, err: err };
-  }
-}
+//   try {
+//     const data = await api.Products.getProducts(expandedFilters, langCode, {
+//       sortOrder: 'DESC',
+//       sortKey: 'id',
+//       offset: offset,
+//       limit: limit,
+//     });
+//     return {
+//       isError: false,
+//       products: data.items,
+//       total: data.total,
+//     };
+//   } catch (err) {
+//     return { isError: true, err: err };
+//   }
+// }
 
 // getProductsByUrl
-export async function getProductsByUrl(props: {
-  offset: number;
-  limit: number;
-  langCode: string;
-  params: {
-    handle: string;
-    searchParams?: {
-      search?: string;
-      in_stock?: string;
-      color?: string;
-      minPrice?: string;
-      maxPrice?: string;
-    };
-  };
-}): Promise<{
-  products?: IProductsEntity[];
-  total?: number;
-  isError: boolean;
-  err?: unknown;
-}> {
-  const { limit, offset, params, langCode } = props;
-  const { searchParams, handle } = params;
-  const expandedFilters = getSearchParams(searchParams, handle);
+// export async function getProductsByUrl(props: {
+//   offset: number;
+//   limit: number;
+//   langCode: string;
+//   params: {
+//     handle: string;
+//     searchParams?: {
+//       search?: string;
+//       in_stock?: string;
+//       color?: string;
+//       minPrice?: string;
+//       maxPrice?: string;
+//     };
+//   };
+// }): Promise<{
+//   products?: IProductsEntity[];
+//   total?: number;
+//   isError: boolean;
+//   err?: unknown;
+// }> {
+//   const { limit, offset, params, langCode } = props;
+//   const { searchParams, handle } = params;
+//   const expandedFilters = getSearchParams(searchParams, handle);
 
-  try {
-    const data = await api.Products.getProductsByPageUrl(
-      params.handle,
-      expandedFilters,
-      langCode,
-      {
-        sortOrder: 'DESC',
-        sortKey: 'id',
-        offset: offset,
-        limit: limit,
-      },
-    );
-    return { isError: false, products: data.items, total: data.total };
-  } catch (err) {
-    return { isError: true, err: err };
-  }
-}
+//   try {
+//     const data = await api.Products.getProductsByPageUrl(
+//       params.handle,
+//       expandedFilters,
+//       langCode,
+//       {
+//         sortOrder: 'DESC',
+//         sortKey: 'id',
+//         offset: offset,
+//         limit: limit,
+//       },
+//     );
+//     return { isError: false, products: data.items, total: data.total };
+//   } catch (err) {
+//     return { isError: true, err: err };
+//   }
+// }
 
 // getRelatedProductsById
 export async function getRelatedProductsById(

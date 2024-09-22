@@ -3,11 +3,11 @@ import Image from 'next/image';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 
-import { useGetPageByUrl } from '@/app/api';
+import { getPageByUrl } from '@/app/api';
 import Loader from '@/components/shared/Loader';
 
 const AboutPage: FC = async () => {
-  const { page, isError } = await useGetPageByUrl('about_us', 'en_US');
+  const { page, isError } = await getPageByUrl('about_us', 'en_US');
   if (!page || isError) {
     return;
   }

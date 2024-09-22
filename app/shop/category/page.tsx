@@ -4,19 +4,15 @@ import { notFound } from 'next/navigation';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import { Suspense } from 'react';
 
-import { useGetPageByUrl } from '@/app/api';
+import { getPageByUrl } from '@/app/api';
 import CategoriesGrid from '@/components/layout/categories/CategoriesGrid';
 import { CategoriesLoader } from '@/components/shared/Loader';
 
-import {
-  getChildPagesByParentUrl,
-  getPageByUrl,
-} from '../../api/serverSideProps';
+import { getChildPagesByParentUrl } from '../../api/serverSideProps';
 
 // generateMetadata
 export async function generateMetadata(): Promise<Metadata> {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { isError, page } = await useGetPageByUrl('category', 'en_US');
+  const { isError, page } = await getPageByUrl('category', 'en_US');
 
   if (isError || !page) {
     return notFound();
