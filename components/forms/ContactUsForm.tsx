@@ -1,13 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-// import { useRouter } from 'next/navigation';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IFormsPost } from 'oneentry/dist/formsData/formsDataInterfaces';
 import type { FC, FormEvent, Key } from 'react';
 import React, { useState } from 'react';
 
-import { api, useGetFormByMarkerQuery } from '@/app/api';
+import { useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 
 import Loader from '../shared/Loader';
@@ -18,7 +17,6 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const ContactUsForm: FC = () => {
-  // const router = useRouter();
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'contact_us' });
 
   const [token, setToken] = useState<string>('');
@@ -48,10 +46,6 @@ const ContactUsForm: FC = () => {
       value: boolean;
     };
   };
-
-  // const { first_nme, email, surname, topic, text, spam } = fieldsData;
-
-  console.log(fieldsData);
 
   const formFields = data?.attributes
     .slice()
@@ -109,18 +103,19 @@ const ContactUsForm: FC = () => {
         }
         return formData;
       }, emptyFormData);
+
       const formData: IFormsPost = {
         formIdentifier: 'contact_us',
         formData: transformedFormData,
       };
       console.log(formFields);
+      console.log(formData);
 
       try {
         setLoading(true);
         // await api.FormData.postFormsData(formData);
         setLoading(false);
         // dispatch(clearAllFieldsContactUs());
-        // navigate('home');
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setLoading(false);

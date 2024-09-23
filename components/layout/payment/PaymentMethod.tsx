@@ -11,9 +11,10 @@ import TotalAmount from '../cart/TotalAmount';
 type Props = {
   account: IAccountsEntity;
   onConfirmOrder: () => Promise<void> | undefined;
+  onEditOrder: () => Promise<void> | undefined;
 };
 
-const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
+const PaymentMethod: FC<Props> = ({ account, onConfirmOrder, onEditOrder }) => {
   const dispatch = useAppDispatch();
 
   const orderData = useAppSelector((state) => state.orderReducer.order);
@@ -73,7 +74,7 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
                 );
               })}
             </div>
-            <div className="flex w-1/4 flex-col border border-solid p-2 max-md:max-w-full">
+            <div className="flex w-1/3 flex-col border border-solid px-6 py-2 max-md:max-w-full">
               {orderData?.formData.map(
                 (
                   field: {
@@ -90,7 +91,6 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
                       </div>
                     );
                   }
-
                   if (field.marker === 'date') {
                     return (
                       <div key={i} className="flex flex-col">
@@ -115,16 +115,26 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder }) => {
             </div>
             <div className="mt-2 flex">
               <TotalAmount
-                className={'text-base leading-8 text-neutral-600 lg:self-end'}
+                className={
+                  'text-base font-bold leading-8 text-neutral-600 lg:self-end'
+                }
               />
             </div>
           </div>
-          <button
-            onClick={() => onConfirmOrder()}
-            className="btn btn-o btn-sm btn-o-primary mt-5 px-12"
-          >
-            Apply
-          </button>
+          <div className="flex gap-4">
+            <button
+              onClick={() => onConfirmOrder()}
+              className="btn btn-o btn-sm btn-o-primary mt-5 px-12"
+            >
+              Apply
+            </button>
+            <button
+              onClick={() => onEditOrder()}
+              className="btn btn-o btn-sm btn-o-primary mt-5 px-12"
+            >
+              Edit
+            </button>
+          </div>
         </>
       )}
     </div>

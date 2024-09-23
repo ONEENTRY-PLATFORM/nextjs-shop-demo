@@ -23,7 +23,7 @@ const ProductCard: FC<{ product: IOrderProducts; currency: string }> = ({
 
   return (
     <div className="relative flex w-full flex-row gap-4">
-      <div className="relative h-[150px] min-w-[130px]">
+      <div className="relative h-[150px] w-[320px]">
         {productImage ? (
           <Image
             fill

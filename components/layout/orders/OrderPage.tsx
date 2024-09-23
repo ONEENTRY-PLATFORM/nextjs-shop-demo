@@ -102,7 +102,19 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
         <div className="flex gap-2">
           <b>Status of Payment: </b> {statusIdentifier}
         </div>
-        <hr className="mt-4" />
+        <hr className="my-4" />
+      </div>
+      <div className="flex gap-4">
+        {statusIdentifier !== 'created' && (
+          <button className="btn btn-sm btn-o btn-o-primary">
+            Repeat order
+          </button>
+        )}
+        {statusIdentifier === 'created' && (
+          <button className="btn btn-sm btn-o btn-o-primary">
+            Cancel order
+          </button>
+        )}
       </div>
     </div>
   );

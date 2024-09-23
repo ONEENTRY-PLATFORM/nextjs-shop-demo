@@ -52,13 +52,14 @@ const PaymentPage = () => {
       id,
       'session',
     );
-    if (order?.paymentAccountIdentifier === 'cash') {
-      router.push('/orders');
-      return 'payment_success';
-    }
+    // if (order?.paymentAccountIdentifier === 'cash') {
+    //   router.push('/orders');
+    //   return 'payment_success';
+    // }
+    console.log(paymentUrl);
 
     if (paymentUrl) {
-      router.push('/orders');
+      router.push(paymentUrl);
       return 'payment_method';
     }
   };
@@ -102,6 +103,10 @@ const PaymentPage = () => {
     }
   };
 
+  const onEditOrder = async () => {
+    router.push('/cart');
+  };
+
   if (!isAuth || error) {
     return <AuthError />;
   }
@@ -119,6 +124,7 @@ const PaymentPage = () => {
               key={index}
               account={item}
               onConfirmOrder={onConfirmOrder}
+              onEditOrder={onEditOrder}
             />
           );
         })}
