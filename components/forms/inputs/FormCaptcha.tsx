@@ -2,6 +2,7 @@
 import { Button } from '@headlessui/react';
 import type { Dispatch } from 'react';
 import { useEffect, useRef } from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 import { useAppSelector } from '@/app/store/hooks';
 
@@ -29,20 +30,13 @@ export const FormCaptcha = ({ setToken, setIsCaptcha }: Props) => {
     setToken(token);
   };
 
-  const onExpire = () => {
-    console.warn('expired!');
-  };
-
-  const onLoad = () => {
-    console.log('loading');
-  };
-
-  const onError = (e: unknown) => {
-    console.log('error ' + e);
-  };
-
   return (
     <>
+      <ReCAPTCHA
+        ref={recaptcha}
+        sitekey="6Lc8mQwqAAAAAASbSC4ANjN7Rsq-xC63iMX8HWG9"
+        onChange={onVerify}
+      />
       {/* <Recaptcha
         ref={recaptcha}
         siteKey="6Lc8mQwqAAAAAASbSC4ANjN7Rsq-xC63iMX8HWG9"

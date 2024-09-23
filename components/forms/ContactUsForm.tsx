@@ -13,6 +13,7 @@ import { useAppSelector } from '@/app/store/hooks';
 import Loader from '../shared/Loader';
 // import Spinner from '../shared/Spinner';
 import ErrorMessage from './inputs/ErrorMessage';
+import { FormCaptcha } from './inputs/FormCaptcha';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
@@ -20,10 +21,12 @@ const ContactUsForm: FC = () => {
   // const router = useRouter();
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'contact_us' });
 
+  const [token, setToken] = useState<string>('');
+  const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  const { first_nme, email, surname, topic, text, spam } = useAppSelector(
+  const fieldsData = useAppSelector(
     (state) => state.formFieldsReducer.fields,
   ) as object as {
     first_nme: {
@@ -46,6 +49,10 @@ const ContactUsForm: FC = () => {
     };
   };
 
+  // const { first_nme, email, surname, topic, text, spam } = fieldsData;
+
+  console.log(fieldsData);
+
   const formFields = data?.attributes
     .slice()
     .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
@@ -53,54 +60,61 @@ const ContactUsForm: FC = () => {
   const onSubmitForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const emptyFormData: { marker: string; value: string }[] = [];
-    // console.log(formFields);
+    const emptyFormData: {
+      marker: string;
+      type: string;
+      value: string | object;
+    }[] = [];
+
     if (formFields) {
       const propertiesArray = Object.keys(formFields);
-      const transformedFormData = propertiesArray?.reduce(
-        (formData, currentValue) => {
-          let newData = {
-            marker: currentValue,
-            type: 'string',
-            value: formFields[currentValue].value,
+      const transformedFormData = propertiesArray?.reduce((formData, i) => {
+        const type = formFields[i].type;
+        const marker = formFields[i].marker;
+        const value = fieldsData[marker as keyof typeof fieldsData].value;
+        let newData = {
+          marker: marker,
+          type: 'string',
+          value: value,
+        } as {
+          marker: string;
+          type: string;
+          value: string | object;
+        };
+
+        if (type === 'list') {
+          newData = {
+            marker: marker,
+            type: 'list',
+            value: {
+              title: value,
+              value: value,
+            },
           };
-          console.log(newData);
-          if (currentValue === 'topic') {
-            newData = {
-              marker: currentValue,
-              type: 'list',
-              value: {
-                title: formFields[currentValue].value,
-                value: formFields[currentValue].value,
+        }
+        if (type === 'text') {
+          newData = {
+            marker: marker,
+            type: 'text',
+            value: [
+              {
+                htmlValue: '',
+                plainValue: value,
               },
-            };
-          }
-
-          if (currentValue === 'text') {
-            newData = {
-              marker: currentValue,
-              type: 'text',
-              value: [
-                {
-                  htmlValue: '<p>${appFormData[currentValue].value}</p>',
-                  plainValue: formFields[currentValue].value,
-                },
-              ],
-            };
-          }
-
-          if (newData) {
-            formData.push(newData);
-          }
-          return formData;
-        },
-        emptyFormData,
-      );
+            ],
+          };
+        }
+        if (newData) {
+          formData.push(newData);
+        }
+        return formData;
+      }, emptyFormData);
       const formData: IFormsPost = {
         formIdentifier: 'contact_us',
         formData: transformedFormData,
       };
-      console.log(formData);
+      console.log(formFields);
+
       try {
         setLoading(true);
         // await api.FormData.postFormsData(formData);
@@ -139,7 +153,13 @@ const ContactUsForm: FC = () => {
               />
             );
           } else if (field.type === 'spam') {
-            return 'SPAM';
+            return (
+              <FormCaptcha
+                key={index}
+                setToken={setToken}
+                setIsCaptcha={setIsCaptcha}
+              />
+            );
           } else {
             return <FormInput key={index} {...field} />;
           }
