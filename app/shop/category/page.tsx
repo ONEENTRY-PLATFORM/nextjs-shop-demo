@@ -5,10 +5,9 @@ import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
+import { getChildPagesByParentUrl } from '@/app/api';
 import CategoriesGrid from '@/components/layout/categories/CategoriesGrid';
 import { CategoriesLoader } from '@/components/shared/Loader';
-
-import { getChildPagesByParentUrl } from '../../api/serverSideProps';
 
 // generateMetadata
 export async function generateMetadata(): Promise<Metadata> {
