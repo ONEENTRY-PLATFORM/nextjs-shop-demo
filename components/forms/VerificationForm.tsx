@@ -69,11 +69,17 @@ const VerificationForm: FC = () => {
       setLoading(true);
       setError('');
       if (action !== 'activateUser') {
-        const result = await api.AuthProvider.checkCode(
+        // const result = await api.AuthProvider.checkCode(
+        //   'email',
+        //   fields['email_reg'].value,
+        //   otp,
+        // );
+        const result = await api.AuthProvider.activateUser(
           'email',
           fields['email_reg'].value,
           otp,
         );
+        console.log(result);
         if (result) {
           setComponent('ResetPasswordForm');
         }

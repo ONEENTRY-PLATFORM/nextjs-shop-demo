@@ -1,6 +1,6 @@
 import type { IAttributes } from 'oneentry/dist/base/utils';
-import type { Key } from 'react';
-import React, { useContext, useState } from 'react';
+import type { FC, FormEvent, Key } from 'react';
+import { useContext, useState } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -10,7 +10,7 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-export const ForgotPasswordForm: React.FC = () => {
+export const ForgotPasswordForm: FC = () => {
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
   const [isError, setError] = useState('');
 
@@ -24,7 +24,7 @@ export const ForgotPasswordForm: React.FC = () => {
   };
   const { setComponent, setAction } = useContext(OpenDrawerContext);
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await api.AuthProvider.generateCode(

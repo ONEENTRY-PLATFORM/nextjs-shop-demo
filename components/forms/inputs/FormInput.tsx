@@ -17,7 +17,7 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
 
   const fieldType = (FormFieldsEnum as unknown as FormFieldsEnum)[
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    field.type as any
+    field.marker.indexOf('password') !== -1 ? 'password' : (field.type as any)
   ];
   const minLength = field.marker === 'card_cvc' ? 3 : 0;
   const maxLength = field.marker === 'card_cvc' ? 3 : 50;
@@ -41,6 +41,12 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
   if (!field || !type) {
     return;
   }
+
+  // possible types
+  // list as select
+  // textarea
+  // password
+  // simple input
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
