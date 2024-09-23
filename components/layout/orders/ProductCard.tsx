@@ -48,7 +48,7 @@ const ProductCard: FC<{ product: IOrderProducts; currency: string }> = ({
       </div>
       <Link
         href={`/shop/product/` + id}
-        className="absolute left-0 top-0 z-0 flex size-full"
+        className="absolute left-0 top-0 z-0 flex size-full rounded-lg hover:border hover:border-solid"
       ></Link>
     </div>
   );

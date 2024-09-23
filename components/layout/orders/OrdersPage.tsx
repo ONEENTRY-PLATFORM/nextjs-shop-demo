@@ -1,5 +1,5 @@
 'use client';
-
+import { useSearchParams } from 'next/navigation';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import { type Key, useContext } from 'react';
 
@@ -8,14 +8,23 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
 import { OrdersTableLoader } from '@/components/shared/Loader';
 
+import Pagination from '../catalog/Pagination';
 import Order from './OrderRow';
 
 const OrdersPage = () => {
+  const pageLimit = 10;
   const { isAuth } = useContext(AuthContext);
+  const searchParams = useSearchParams();
+
+  const currentPage = Number(searchParams.get('page')) || 0;
 
   const { orders, loading } = useGetUserOrders({
     marker: 'order',
+    langCode: 'en_US',
+    limit: pageLimit,
+    offset: currentPage * pageLimit,
   });
+  const totalPages = 2;
 
   if (!isAuth) {
     return <AuthError />;
@@ -29,13 +38,18 @@ const OrdersPage = () => {
           <div className="w-1/4">Total</div>
           <div className="w-1/4">Status</div>
         </div>
-        {!orders || loading ? (
-          <OrdersTableLoader />
-        ) : (
-          orders?.items.map((order: IOrderByMarkerEntity, i: Key) => {
-            return <Order key={i} order={order} />;
-          })
-        )}
+        <div className="mb-4 flex flex-col">
+          {!orders || loading ? (
+            <OrdersTableLoader />
+          ) : (
+            orders?.items.map((order: IOrderByMarkerEntity, i: Key) => {
+              return <Order key={i} order={order} />;
+            })
+          )}
+        </div>
+        <div className="mx-auto flex flex-row justify-center">
+          {totalPages > 1 && <Pagination totalPages={totalPages} />}
+        </div>
       </div>
     </div>
   );

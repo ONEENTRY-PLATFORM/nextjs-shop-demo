@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }: Props) => {
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
   const [trigger, { isError }] = useLazyGetMeQuery({
-    pollingInterval: isAuth ? 10000 : 0,
+    pollingInterval: isAuth ? 10000 : 3000,
   });
   const { activeLanguage } = useContext(LanguageContext);
 

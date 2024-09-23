@@ -52,10 +52,10 @@ const PaymentPage = () => {
       id,
       'session',
     );
-    // if (order?.paymentAccountIdentifier === 'cash') {
-    //   router.push('/orders');
-    //   return 'payment_success';
-    // }
+    if (order?.paymentAccountIdentifier === 'cash') {
+      router.push('/orders');
+      return 'payment_success';
+    }
     console.log(paymentUrl);
 
     if (paymentUrl) {
