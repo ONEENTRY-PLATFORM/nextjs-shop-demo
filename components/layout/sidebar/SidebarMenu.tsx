@@ -1,6 +1,6 @@
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
-import { getMenuByMarker } from '@/app/api/serverSideProps';
+import { getMenuByMarker } from '@/app/api';
 import { SidebarMenuLoader } from '@/components/shared/Loader';
 
 import SidebarMenuItem from './SidebarMenuItem';
@@ -9,10 +9,7 @@ import SidebarMenuItem from './SidebarMenuItem';
 // export const dynamicParams = true;
 
 export default async function SidebarMenu() {
-  const { isError, menu } = await getMenuByMarker({
-    marker: 'side_web',
-    langCode: 'en_US',
-  });
+  const { isError, menu } = await getMenuByMarker('side_web', 'en_US');
 
   if (isError || !menu) {
     return <SidebarMenuLoader />;

@@ -2,7 +2,7 @@ import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attribu
 
 import { api } from '../api/api';
 
-export async function getSingleAttributeByMarkerSet({
+export const getSingleAttributeByMarkerSet = async ({
   attributeMarker,
   setMarker,
   langCode,
@@ -14,7 +14,7 @@ export async function getSingleAttributeByMarkerSet({
   attribute?: IAttributesSetsEntity;
   isError: boolean;
   err?: unknown;
-}> {
+}> => {
   try {
     const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
       attributeMarker,
@@ -25,4 +25,4 @@ export async function getSingleAttributeByMarkerSet({
   } catch (e) {
     return { isError: true, err: e };
   }
-}
+};

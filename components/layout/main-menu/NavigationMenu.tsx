@@ -3,17 +3,14 @@ import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { Key } from 'react';
 import { Suspense } from 'react';
 
-import { getMenuByMarker } from '@/app/api/serverSideProps';
+import { getMenuByMarker } from '@/app/api';
 import { flatMenuToNested } from '@/components/utils';
 
 import MobileMenu from './MobileMenu';
 import NavigationMenuItem from './NavigationMenuItem';
 
 const NavigationMenu: React.FC = async () => {
-  const { isError, menu } = await getMenuByMarker({
-    marker: 'main_web',
-    langCode: 'en_US',
-  });
+  const { isError, menu } = await getMenuByMarker('main_web', 'en_US');
 
   if (!menu || !menu.pages || isError) {
     return;

@@ -1,6 +1,6 @@
 import { type Key } from 'react';
 
-import { getMenuByMarker } from '@/app/api/serverSideProps';
+import { getMenuByMarker } from '@/app/api';
 
 import MenuButton from './MenuButton';
 import NavItemCart from './NavItemCart';
@@ -8,10 +8,7 @@ import NavItemFavorites from './NavItemFavorites';
 import NavItemProfile from './NavItemProfile';
 
 export default async function NavGroup() {
-  const { menu, isError } = await getMenuByMarker({
-    marker: 'user_web',
-    langCode: 'en_US',
-  });
+  const { menu, isError } = await getMenuByMarker('user_web', 'en_US');
 
   if (isError || !menu) {
     return;
