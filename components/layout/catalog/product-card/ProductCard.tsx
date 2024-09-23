@@ -13,7 +13,8 @@ const ProductCard: FC<IProductsEntity> = (product) => {
   const productImage = attributeValues.pic?.value;
 
   return (
-    <div className="relative flex size-full flex-col items-center rounded-[20px] bg-[#F6F7F9] p-4 transition-shadow duration-500 hover:shadow-xl">
+    <div className="product-card">
+      {/* stickers */}
       <div className="z-10 flex justify-between gap-5 self-stretch">
         {[attributeValues.stickers].map(
           (
@@ -36,6 +37,7 @@ const ProductCard: FC<IProductsEntity> = (product) => {
         <FavoritesButton {...product} />
       </div>
 
+      {/* ProductImage */}
       <ProductImage
         imageSrc={
           Array.isArray(productImage)
@@ -45,6 +47,7 @@ const ProductCard: FC<IProductsEntity> = (product) => {
         alt={localizeInfos.title}
       />
 
+      {/* Product Data */}
       <div className="z-10 mb-5 mt-auto flex w-full max-w-[160px] flex-col gap-2.5">
         <h2 className="text-center text-sm leading-4 text-neutral-600">
           {localizeInfos.title}
@@ -61,6 +64,7 @@ const ProductCard: FC<IProductsEntity> = (product) => {
           className="btn btn-md btn-primary"
         />
       </div>
+
       <Link
         href={`/shop/product/` + id}
         className="absolute left-0 top-0 z-0 flex size-full"

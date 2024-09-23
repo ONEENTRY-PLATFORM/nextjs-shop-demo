@@ -222,20 +222,20 @@ export async function getBlocks({
 }
 
 // getBlockByMarker
-export async function getBlockByMarker({
-  marker,
-  langCode,
-}: {
-  marker: string;
-  langCode: string;
-}) {
-  try {
-    const block = await api.Blocks.getBlockByMarker(marker, langCode);
-    return { isError: false, block: block };
-  } catch (e) {
-    return { isError: true, err: e };
-  }
-}
+// export async function getBlockByMarker({
+//   marker,
+//   langCode,
+// }: {
+//   marker: string;
+//   langCode: string;
+// }) {
+//   try {
+//     const block = await api.Blocks.getBlockByMarker(marker, langCode);
+//     return { isError: false, block: block };
+//   } catch (e) {
+//     return { isError: true, err: e };
+//   }
+// }
 
 /* api.Pages */
 
@@ -271,21 +271,21 @@ export async function getPageById(
 }
 
 // getPageByUrl
-export async function getPageByUrl(
-  url: string,
-  langCode: string,
-): Promise<{
-  page?: IPagesEntity;
-  isError: boolean;
-  err?: unknown;
-}> {
-  try {
-    const page = await api.Pages.getPageByUrl(url, langCode);
-    return { isError: false, page: page };
-  } catch (err) {
-    return { isError: true, err: err };
-  }
-}
+// export async function getPageByUrl(
+//   url: string,
+//   langCode: string,
+// ): Promise<{
+//   page?: IPagesEntity;
+//   isError: boolean;
+//   err?: unknown;
+// }> {
+//   try {
+//     const page = await api.Pages.getPageByUrl(url, langCode);
+//     return { isError: false, page: page };
+//   } catch (err) {
+//     return { isError: true, err: err };
+//   }
+// }
 
 // getChildPagesByParentUrl
 export async function getChildPagesByParentUrl(

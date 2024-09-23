@@ -3,7 +3,7 @@ import Link from 'next/link';
 import type React from 'react';
 import type { FC } from 'react';
 
-import { getBlockByMarker } from '@/app/api/serverSideProps';
+import { getBlockByMarker } from '@/app/api';
 import Placeholder from '@/components/shared/Placeholder';
 
 interface CatalogCardProps {

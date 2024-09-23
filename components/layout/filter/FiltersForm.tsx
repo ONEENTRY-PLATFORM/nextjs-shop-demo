@@ -11,7 +11,7 @@ import ColorFilter from './ColorFilter';
 import FilterButtons from './FilterButtons';
 import PricePickerFilter from './PricePickerFilter';
 
-const FiltersForm: FC<{ prices: any }> = async ({ prices }) => {
+const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
   const { pageInfo } = useGetPage({ pageUrl: 'catalog_filters' });
 
   const sortedAttributes: Record<any, any> = useMemo(() => {

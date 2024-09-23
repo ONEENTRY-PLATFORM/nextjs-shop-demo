@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import { getBlockByMarker } from '@/app/api/serverSideProps';
+import { getBlockByMarker } from '@/app/api';
 
 import GroupCard from './group-card/GroupCard';
 

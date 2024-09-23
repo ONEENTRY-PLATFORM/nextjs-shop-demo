@@ -1,6 +1,6 @@
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 
-import { api } from '../api/api';
+import { api } from '@/app/api';
 
 export const getPageByUrl = async (
   url: string,
@@ -8,12 +8,12 @@ export const getPageByUrl = async (
 ): Promise<{
   page?: IPagesEntity;
   isError: boolean;
-  err?: unknown;
+  error?: unknown;
 }> => {
   try {
     const page = await api.Pages.getPageByUrl(url, langCode);
     return { isError: false, page: page };
-  } catch (err) {
-    return { isError: true, err: err };
+  } catch (error) {
+    return { isError: true, error: error };
   }
 };

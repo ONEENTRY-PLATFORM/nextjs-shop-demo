@@ -17,6 +17,7 @@ export { useGetProduct } from './hooks/useGetProduct';
 export { useGetSingleAttributeByMarkerSet } from './hooks/useGetSingleAttributeByMarkerSet';
 export { useSearchProducts } from './hooks/useSearchProducts';
 export { useSetForm } from './hooks/useSetForm';
+export { getBlockByMarker } from './server/getBlockByMarker';
 export { getPageByUrl } from './server/getPageByUrl';
 export { getProductById } from './server/getProductById';
 export { getProducts } from './server/getProducts';

@@ -7,9 +7,10 @@ import {
   TransitionChild,
 } from '@headlessui/react';
 import type { FC } from 'react';
-import { Fragment, useContext } from 'react';
+import { Fragment, Suspense, useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import Loader from '@/components/shared/Loader';
 
 import FilterHeader from './FilterHeader';
 import FiltersForm from './FiltersForm';
@@ -44,7 +45,9 @@ const FilterModal: FC<{ prices: any }> = ({ prices }) => {
         >
           <DialogPanel className="fixed right-0 top-0 z-20 flex size-full flex-col overflow-auto bg-white shadow-xl md:top-10 md:overflow-hidden md:rounded-l-3xl lg:h-auto lg:w-[400px]">
             <FilterHeader />
-            <FiltersForm prices={prices} />
+            <Suspense fallback={<Loader />}>
+              <FiltersForm prices={prices} />
+            </Suspense>
           </DialogPanel>
         </TransitionChild>
       </Dialog>
