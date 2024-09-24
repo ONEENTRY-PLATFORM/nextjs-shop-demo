@@ -10,8 +10,11 @@ import Profile from '@/components/icons/profile';
 
 const LogoutMenuItem: FC = () => {
   const router = useRouter();
-  const { authenticate } = useContext(AuthContext);
+  const { authenticate, isAuth } = useContext(AuthContext);
 
+  if (!isAuth) {
+    return;
+  }
   const onLogout = async () => {
     await logOutUser({ marker: 'email' });
     authenticate();

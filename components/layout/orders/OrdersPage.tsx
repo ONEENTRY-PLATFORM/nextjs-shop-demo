@@ -18,13 +18,14 @@ const OrdersPage = () => {
 
   const currentPage = Number(searchParams.get('page')) || 0;
 
-  const { orders, loading } = useGetUserOrders({
+  const { orders, loading, total } = useGetUserOrders({
     marker: 'order',
     langCode: 'en_US',
     limit: pageLimit,
     offset: currentPage * pageLimit,
   });
-  const totalPages = 2;
+
+  const totalPages = total / pageLimit;
 
   if (!isAuth) {
     return <AuthError />;

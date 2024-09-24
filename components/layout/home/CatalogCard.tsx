@@ -22,14 +22,10 @@ const CatalogCard: FC<CatalogCardProps> = async ({ marker, className }) => {
     return null;
   }
 
-  const { title, bg_web, link } = block.attributeValues;
+  const { title, bg_web, link = '' } = block.attributeValues;
   const imageSrc = bg_web?.value[0]?.downloadLink;
   const sticker = block.attributeValues.stickers;
   const quote = block.attributeValues.quote?.value;
-
-  if (!link?.value) {
-    return;
-  }
 
   return (
     <Link
@@ -42,7 +38,7 @@ const CatalogCard: FC<CatalogCardProps> = async ({ marker, className }) => {
       <div
         className={`relative flex size-full p-6 ${className.class_name} overflow-hidden rounded-3xl`}
       >
-        {sticker?.value[0] ? (
+        {sticker?.value[0] && (
           <div className="absolute left-3 top-3 z-10">
             <Image
               width={30}
@@ -51,8 +47,6 @@ const CatalogCard: FC<CatalogCardProps> = async ({ marker, className }) => {
               alt={''}
             />
           </div>
-        ) : (
-          ''
         )}
 
         <h2 className="z-10 mt-auto uppercase">{title?.value || ''}</h2>

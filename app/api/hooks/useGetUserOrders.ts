@@ -19,10 +19,12 @@ export const useGetUserOrders = ({
 }): {
   loading: boolean;
   orders: IOrdersByMarkerEntity | undefined;
+  total: number;
   refetch: () => void;
 } => {
   const [loading, setLoading] = useState<boolean>(false);
   const [orders, setOrders] = useState<IOrdersByMarkerEntity>();
+  const [total, setTotal] = useState<number>(0);
   const [refetch, setRefetch] = useState<boolean>(false);
   const { activeLanguage } = useContext(LanguageContext);
 
@@ -40,6 +42,7 @@ export const useGetUserOrders = ({
           offset || 0,
         );
         setOrders(result);
+        setTotal(result.total);
         setLoading(false);
       } catch (e) {
         console.log(e);
@@ -47,10 +50,12 @@ export const useGetUserOrders = ({
       }
     })();
   }, [refetch, activeLanguage, marker, langCode, limit, offset]);
+  console.log(orders);
 
   return {
     loading,
     orders,
+    total,
     refetch() {
       setRefetch(!refetch);
     },
