@@ -16,10 +16,7 @@ interface CatalogCardProps {
 }
 
 const CatalogCard: FC<CatalogCardProps> = async ({ marker, className }) => {
-  const { block, isError } = await getBlockByMarker({
-    marker: marker,
-    langCode: 'en_US',
-  });
+  const { block, isError } = await getBlockByMarker(marker, 'en_US');
 
   if (!block || !block.attributeValues || !block.isVisible || isError) {
     return null;

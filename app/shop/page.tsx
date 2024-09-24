@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
-import { getPageByUrl, getProducts } from '@/app/api';
+import { getBlockByMarker, getPageByUrl, getProducts } from '@/app/api';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
@@ -61,11 +61,13 @@ const ShopPage = async ({
     filters?: IFilterParams[];
   };
 }) => {
-  const pageLimit = 10;
-  const langCode = 'en_US';
-
   const currentPage = Number(searchParams?.page) || 0;
+
+  const langCode = 'en_US';
   const { page } = await getPageByUrl('shop', langCode);
+  const { block } = await getBlockByMarker('main_catalog', langCode);
+
+  const pageLimit = block?.quantity || 10;
 
   const { isError, products, total } = await getProducts({
     limit: pageLimit,

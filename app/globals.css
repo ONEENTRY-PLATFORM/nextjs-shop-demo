@@ -49,18 +49,15 @@ input:focus-visible {
 @layer components {
   h1, .h1 {
     @apply 
-      text-2xl
-      font-bold;
+      text-2xl;
   }
   h2, .h2 {
     @apply 
-      text-xl
-      font-bold;
+      text-xl;
   }
   h3, .h3 {
     @apply 
-      text-lg
-      font-bold;
+      text-lg;
   }
 
   .btn {

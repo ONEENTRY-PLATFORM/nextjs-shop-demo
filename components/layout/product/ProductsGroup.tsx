@@ -8,7 +8,7 @@ const ProductsGroup: FC<{
   marker: string;
 }> = async ({ marker }) => {
   const langCode = 'en_US';
-  const { isError, block } = await getBlockByMarker({ marker, langCode });
+  const { isError, block } = await getBlockByMarker(marker, langCode);
 
   if (isError || !block) {
     return null;

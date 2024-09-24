@@ -10,10 +10,7 @@ const RelatedItems: FC<{
   marker: string;
 }> = async ({ id, marker }) => {
   const langCode = 'en_US';
-  const { isError, block } = await getBlockByMarker({
-    marker: marker,
-    langCode: langCode,
-  });
+  const { isError, block } = await getBlockByMarker(marker, langCode);
 
   if (isError || !block) {
     return null;
