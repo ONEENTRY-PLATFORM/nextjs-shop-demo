@@ -8,18 +8,16 @@ import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 export const useGetUserOrders = ({
   marker,
-  langCode,
   limit,
   offset,
 }: {
   marker: string;
-  langCode?: string;
   limit?: number;
   offset?: number;
 }): {
   loading: boolean;
-  orders: IOrdersByMarkerEntity | undefined;
-  total: number;
+  orders?: IOrdersByMarkerEntity;
+  total?: number;
   refetch: () => void;
 } => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,7 +35,7 @@ export const useGetUserOrders = ({
       try {
         const result = await api.Orders.getAllOrdersByMarker(
           marker,
-          langCode || activeLanguage,
+          activeLanguage,
           limit || 10,
           offset || 0,
         );
@@ -49,8 +47,7 @@ export const useGetUserOrders = ({
         setLoading(false);
       }
     })();
-  }, [refetch, activeLanguage, marker, langCode, limit, offset]);
-  console.log(orders);
+  }, [refetch, activeLanguage, marker, limit, offset]);
 
   return {
     loading,

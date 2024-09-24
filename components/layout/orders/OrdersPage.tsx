@@ -1,9 +1,10 @@
 'use client';
+
 import { useSearchParams } from 'next/navigation';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import { type Key, useContext } from 'react';
 
-import { useGetUserOrders } from '@/app/api/hooks/useGetUserOrders';
+import { useGetUserOrders } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
 import { OrdersTableLoader } from '@/components/shared/Loader';
@@ -13,24 +14,22 @@ import Order from './OrderRow';
 
 const OrdersPage = () => {
   const pageLimit = 10;
-  const langCode = 'en_US';
-  const { isAuth } = useContext(AuthContext);
-  const searchParams = useSearchParams();
 
+  const searchParams = useSearchParams();
+  const { isAuth, user } = useContext(AuthContext);
   const currentPage = Number(searchParams.get('page')) || 0;
 
-  const { orders, loading, total, refetch } = useGetUserOrders({
+  const { orders, loading, total } = useGetUserOrders({
     marker: 'order',
-    langCode: langCode,
     limit: pageLimit,
     offset: currentPage * pageLimit,
   });
 
-  const totalPages = total / pageLimit;
-
-  if (!isAuth) {
+  if (!isAuth || !user) {
     return <AuthError />;
   }
+
+  const totalPages = Number(total) / pageLimit;
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">

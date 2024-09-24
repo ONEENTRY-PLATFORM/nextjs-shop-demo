@@ -97,9 +97,6 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
       </div>
       <div className="flex flex-col gap-3">
         <hr className="mb-4" />
-        <div className="flex gap-2">
-          <b>Total Amount: </b> {formattedTotal}
-        </div>
         {formData.map(
           (
             field: {
@@ -151,6 +148,9 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
         )}
         <div className="flex gap-2">
           <b>Status of Payment: </b> {statusIdentifier}
+        </div>
+        <div className="flex gap-2">
+          <b>Total Amount: </b> {formattedTotal}
         </div>
         <hr className="my-4" />
       </div>
