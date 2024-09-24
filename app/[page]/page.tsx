@@ -10,7 +10,6 @@ import PaymentCanceled from '@/components/layout/pages/PaymentCanceled';
 import PaymentSuccess from '@/components/layout/pages/PaymentSuccess';
 import ServicesPage from '@/components/layout/pages/ServicesPage';
 import PaymentPage from '@/components/layout/payment/PaymentPage';
-import LogoutPage from '@/components/layout/profile/LogoutPage';
 import ProfilePage from '@/components/layout/profile/ProfilePage';
 
 import WithSidebar from './WithSidebar';
@@ -82,18 +81,6 @@ export default async function Page({ params }: { params: { page: string } }) {
       name: 'services',
       title: 'Services',
       component: <ServicesPage />,
-    },
-    {
-      templateType: 'withSidebar',
-      name: 'logout',
-      title: 'logout',
-      component: <LogoutPage />,
-    },
-    {
-      templateType: '',
-      name: 'contact_us',
-      title: 'Contacts',
-      component: <ContactsPage page={page} />,
     },
     {
       templateType: '',

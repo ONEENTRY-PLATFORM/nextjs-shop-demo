@@ -3,10 +3,8 @@ import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import { getMenuByMarker } from '@/app/api';
 import { SidebarMenuLoader } from '@/components/shared/Loader';
 
+import LogoutMenuItem from './LogoutMenuItem';
 import SidebarMenuItem from './SidebarMenuItem';
-
-// export const revalidate = 10;
-// export const dynamicParams = true;
 
 export default async function SidebarMenu() {
   const { isError, menu } = await getMenuByMarker('side_web', 'en_US');
@@ -23,18 +21,7 @@ export default async function SidebarMenu() {
         {pages.map((item) => {
           return <SidebarMenuItem key={item.id} menuItem={item} />;
         })}
-        {/* <SidebarMenuItem
-          menuItem={
-            {
-              id: 1000,
-              pageUrl: 'logout',
-              localizeInfos: { menuTitle: 'Logout' },
-              parentId: null,
-              position: 100,
-              isActive: false,
-            } as IMenusPages & { isActive: boolean }
-          }
-        /> */}
+        <LogoutMenuItem />
       </ul>
     </nav>
   );
