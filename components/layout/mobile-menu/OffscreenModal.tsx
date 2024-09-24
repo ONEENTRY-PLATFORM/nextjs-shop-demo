@@ -7,14 +7,17 @@ import {
   TransitionChild,
 } from '@headlessui/react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
+import type { Key } from 'react';
 import { Fragment, useContext, useEffect } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-function MobileMenu({ menu }: { menu: IMenusPages[] }) {
+import MobileMenu from './MobileMenu';
+import MobileMenuItem from './MobileMenuItem';
+
+function OffscreenModal({ menu }: { menu: IMenusPages[] }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { open, setOpen, component } = useContext(OpenDrawerContext);
@@ -92,24 +95,7 @@ function MobileMenu({ menu }: { menu: IMenusPages[] }) {
                 />
               </div>
 
-              {menu.length ? (
-                <ul className="flex w-full flex-col">
-                  {menu.map((item: IMenusPages) => (
-                    <li
-                      key={item.localizeInfos.menuTitle}
-                      className="py-2 text-lg text-neutral-800 transition-colors hover:text-orange-500"
-                    >
-                      <Link
-                        href={'/shop/category/' + item.pageUrl}
-                        prefetch={true}
-                        onClick={closeMenu}
-                      >
-                        {item.localizeInfos.menuTitle}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
+              <MobileMenu menu={menu} />
             </div>
           </DialogPanel>
         </TransitionChild>
@@ -118,4 +104,4 @@ function MobileMenu({ menu }: { menu: IMenusPages[] }) {
   );
 }
 
-export default MobileMenu;
+export default OffscreenModal;

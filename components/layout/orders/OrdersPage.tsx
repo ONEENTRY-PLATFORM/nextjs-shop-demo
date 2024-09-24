@@ -13,6 +13,7 @@ import Order from './OrderRow';
 
 const OrdersPage = () => {
   const pageLimit = 10;
+  const langCode = 'en_US';
   const { isAuth } = useContext(AuthContext);
   const searchParams = useSearchParams();
 
@@ -20,7 +21,7 @@ const OrdersPage = () => {
 
   const { orders, loading, total } = useGetUserOrders({
     marker: 'order',
-    langCode: 'en_US',
+    langCode: langCode,
     limit: pageLimit,
     offset: currentPage * pageLimit,
   });

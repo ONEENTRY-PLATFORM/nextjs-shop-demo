@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 import { getMenuByMarker } from '@/app/api';
 import { flatMenuToNested } from '@/components/utils';
 
-import MobileMenu from './MobileMenu';
+import OffscreenModal from '../mobile-menu/OffscreenModal';
 import NavigationMenuItem from './NavigationMenuItem';
 
 const NavigationMenu: React.FC = async () => {
@@ -59,7 +59,7 @@ const NavigationMenu: React.FC = async () => {
         </div>
       </nav>
       <Suspense>
-        <MobileMenu menu={Array.isArray(menu.pages) ? menu.pages : []} />
+        <OffscreenModal menu={mainMenu} />
       </Suspense>
     </>
   );

@@ -18,41 +18,44 @@ const HomePage = async () => {
   const blocksData = [
     // home_banner:
     {
-      class_name: 'bg-amber-600 max-sm:flex-col',
-      width: 'w-full',
+      width: 'w-full max-sm:flex-col',
       height: 'h-[175px]',
     },
     // offer_best_seller:
     {
-      class_name: 'bg-purple-600',
       width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
       height: 'h-[260px]',
     },
     // offer_promotion:
     {
-      class_name: 'bg-blue-500',
       width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
       height: 'h-[260px]',
     },
     // offer_offer_day:
     {
-      class_name: 'bg-lime-700',
       width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
       height: 'h-[260px]',
     },
     // offer_new_arrivals:
     {
-      class_name: 'bg-teal-300',
       width: 'w-full md:w-[calc(_50%_-_0.65rem)]',
       height: 'h-[260px]',
     },
     // offer_youtube:
     {
-      class_name: 'bg-amber-300',
       width: 'w-full lg:w-[calc(_50%_-_0.65rem)]',
       height: 'h-[260px]',
     },
   ];
+
+  const blocksColors = {
+    home_banner: 'bg-amber-600 w-full max-sm:flex-col',
+    offer_best_seller: 'bg-purple-600',
+    offer_promotion: 'bg-blue-500',
+    offer_offer_day: 'bg-lime-700',
+    offer_new_arrivals: 'bg-teal-300',
+    offer_youtube: 'bg-amber-300',
+  };
 
   return (
     <main className="flex flex-col items-center justify-between gap-16 p-5 pb-16">
@@ -60,7 +63,8 @@ const HomePage = async () => {
         <div className="flex w-full flex-col items-center gap-5 bg-white">
           <Suspense fallback={<Loader />}>
             <BlocksGrid
-              classNames={blocksData}
+              blocksData={blocksData}
+              blocksColors={blocksColors}
               blocks={blocks as Array<string>}
             />
           </Suspense>

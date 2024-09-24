@@ -14,8 +14,9 @@ import IncreaseButton from './IncreaseButton';
 
 const QuantitySelector: React.FC<{
   product: IProductsEntity;
+  className?: string;
   height: number;
-}> = ({ product, height }) => {
+}> = ({ product, height, className }) => {
   const { id } = product;
   const [qty, setQty] = useState(0);
   const dispatch = useAppDispatch();
@@ -35,7 +36,10 @@ const QuantitySelector: React.FC<{
 
   return (
     <div
-      className="flex items-center justify-between rounded-3xl bg-slate-50 px-2"
+      className={
+        'flex items-center justify-between rounded-3xl bg-slate-50 px-2' +
+        className
+      }
       style={{ height: height }}
     >
       <DecreaseButton id={id} qty={qty} />

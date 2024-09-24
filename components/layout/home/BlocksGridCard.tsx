@@ -8,8 +8,8 @@ import Placeholder from '@/components/shared/Placeholder';
 
 interface BlocksGridCardProps {
   marker: string;
+  bgColor: string;
   className: {
-    class_name: string;
     width: string;
     height: string;
   };
@@ -18,6 +18,7 @@ interface BlocksGridCardProps {
 const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   marker,
   className,
+  bgColor,
 }) => {
   const { block, isError } = await getBlockByMarker(marker, 'en_US');
 
@@ -40,7 +41,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
       className={`relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
     >
       <div
-        className={`relative flex size-full p-6 ${className.class_name} overflow-hidden rounded-3xl`}
+        className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}
       >
         {sticker?.value[0] && (
           <div className="absolute left-3 top-3 z-10">

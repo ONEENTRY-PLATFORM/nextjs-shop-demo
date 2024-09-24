@@ -1,20 +1,32 @@
 import type { FC } from 'react';
 
-import CatalogCard from './BlocksGridCard';
+import BlocksGridCard from './BlocksGridCard';
 
 interface BlocksGridProps {
   blocks: Array<string>;
-  classNames: object;
+  blocksData: object;
+  blocksColors: object;
 }
 
-const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, classNames }) => {
+const BlocksGrid: FC<BlocksGridProps> = async ({
+  blocks,
+  blocksData,
+  blocksColors,
+}) => {
   return (
     <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
       {blocks?.length > 1 &&
         blocks.map((block, index) => {
-          const className = classNames[index as keyof typeof classNames];
+          const className = blocksData[index as keyof typeof blocksData];
+          const bgColor = blocksColors[block as keyof typeof blocksData];
+
           return (
-            <CatalogCard key={index} marker={block} className={className} />
+            <BlocksGridCard
+              key={index}
+              marker={block}
+              className={className}
+              bgColor={bgColor}
+            />
           );
         })}
     </div>
