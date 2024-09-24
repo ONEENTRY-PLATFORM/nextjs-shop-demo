@@ -6,6 +6,8 @@ import CartPage from '@/components/layout/cart/CartPage';
 import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
 import AboutPage from '@/components/layout/pages/AboutPage';
 import ContactsPage from '@/components/layout/pages/ContactsPage';
+import PaymentCanceled from '@/components/layout/pages/PaymentCanceled';
+import PaymentSuccess from '@/components/layout/pages/PaymentSuccess';
 import ServicesPage from '@/components/layout/pages/ServicesPage';
 import PaymentPage from '@/components/layout/payment/PaymentPage';
 import LogoutPage from '@/components/layout/profile/LogoutPage';
@@ -92,6 +94,24 @@ export default async function Page({ params }: { params: { page: string } }) {
       name: 'contact_us',
       title: 'Contacts',
       component: <ContactsPage page={page} />,
+    },
+    {
+      templateType: '',
+      name: 'contact_us',
+      title: 'Contacts',
+      component: <ContactsPage page={page} />,
+    },
+    {
+      templateType: '',
+      name: 'payment_success',
+      title: 'Payment Success',
+      component: <PaymentSuccess />,
+    },
+    {
+      templateType: '',
+      name: 'payment_canceled',
+      title: 'Payment Canceled',
+      component: <PaymentCanceled />,
     },
   ];
 
