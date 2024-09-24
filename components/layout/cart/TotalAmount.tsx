@@ -27,11 +27,7 @@ const TotalAmount = ({ className }: { className: string }) => {
     currency: 'USD',
   });
 
-  return (
-    <div className={'self-center ' + className}>
-      Total amount: {formattedPrice}
-    </div>
-  );
+  return <div className={className}>Total amount: {formattedPrice}</div>;
 };
 
 export default TotalAmount;

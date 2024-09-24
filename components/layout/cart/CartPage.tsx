@@ -151,9 +151,13 @@ const CartPage: FC = () => {
         onSubmit={onSubmitOrder}
       >
         <DeliveryTable {...(delivery.product as IProductsEntity)} />
-        <div className="mt-4 flex w-[464px] max-w-full flex-col self-center font-bold lg:self-end">
-          <TotalAmount className={'text-lg leading-6 text-neutral-700'} />
-          <PaymentButton />
+        <div className="mt-4 flex w-full flex-col">
+          <TotalAmount
+            className={
+              'flex self-center text-lg font-bold leading-6 text-slate-700 lg:self-end'
+            }
+          />
+          <PaymentButton className="self-end max-lg:self-center" />
         </div>
       </form>
     </div>

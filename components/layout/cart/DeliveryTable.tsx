@@ -104,7 +104,7 @@ const DeliveryTable: FC<IProductsEntity> = (delivery) => {
                 alt="delivery"
                 width={125}
                 height={107}
-                className="aspect-[1.16] w-[125px] max-w-full shrink-0 p-4 max-sm:p-0"
+                className="aspect-[1.16] w-[125px] max-w-full shrink-0 p-4 max-sm:p-2"
               />
             </td>
             <td className="table-cell px-5 align-middle">
