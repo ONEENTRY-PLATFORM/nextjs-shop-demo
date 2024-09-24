@@ -53,8 +53,8 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder, onEditOrder }) => {
       {isActive && (
         <>
           <div className="flex flex-wrap justify-between text-[#4C4D56]">
-            <div className="flex w-2/3 flex-col max-md:max-w-full">
-              <div className="flex border border-solid p-2">
+            <div className="flex w-2/3 flex-col border border-solid max-md:max-w-full">
+              <div className="flex border-b border-solid p-2">
                 <div className="w-1/2 font-bold">Product</div>
                 <div className="w-1/4 font-bold">Price</div>
                 <div className="w-1/4 font-bold">Quantity</div>
@@ -66,7 +66,10 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder, onEditOrder }) => {
                   return;
                 }
                 return (
-                  <div key={i} className="-mt-px flex border border-solid p-2">
+                  <div
+                    key={i}
+                    className="-mt-px flex border-b border-solid p-2"
+                  >
                     <div className="w-1/2">{title}</div>
                     <div className="w-1/4">{price}</div>
                     <div className="w-1/4">{quantity}</div>

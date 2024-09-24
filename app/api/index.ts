@@ -31,6 +31,7 @@ export { getProducts } from './server/getProducts';
 export { getProductsByPageUrl } from './server/getProductsByPageUrl';
 export { getRelatedProductsById } from './server/getRelatedProductsById';
 export { getSingleAttributeByMarkerSet } from './server/getSingleAttributeByMarkerSet';
+export { updateOrderByMarkerAndId } from './server/updateOrderByMarkerAndId';
 export { logInUser } from './utils/logInUser';
 export { logOutUser } from './utils/logOutUser';
 export { socket } from './utils/socket';

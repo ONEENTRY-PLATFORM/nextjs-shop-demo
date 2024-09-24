@@ -1,15 +1,26 @@
 'use client';
-
-import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
+import { useRouter } from 'next/navigation';
+import type {
+  IOrderData,
+  IOrderProducts,
+} from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC, Key } from 'react';
 
-import { useGetSingleOrderQuery } from '@/app/api';
+import {
+  getProductById,
+  updateOrderByMarkerAndId,
+  useGetSingleOrderQuery,
+} from '@/app/api';
+import { useAppDispatch } from '@/app/store/hooks';
+import { addProductToCart } from '@/app/store/reducers/CartSlice';
 import Loader from '@/components/shared/Loader';
 import { UseDate, UsePrice } from '@/components/utils';
 
 import ProductCard from './ProductCard';
 
 const OrderPage: FC<{ id: number }> = ({ id }) => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, isLoading, refetch } = useGetSingleOrderQuery({
     marker: 'order',
@@ -33,6 +44,45 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
     amount: totalSum,
     currency: currency,
   });
+
+  const cancelOrder = async () => {
+    const formData = {
+      ...data,
+      statusIdentifier: 'canceled',
+    } as unknown as IOrderData;
+    console.log('cancelOrder');
+    console.log(data);
+    console.log(formData);
+
+    await updateOrderByMarkerAndId({
+      marker: 'order',
+      id,
+      data: formData,
+    });
+    return;
+  };
+
+  const repeatOrder = () => {
+    data.products.map(async (p) => {
+      if (p.id === 83) {
+        return;
+      }
+      const { product } = await getProductById(Number(p.id), 'en_US');
+      if (!product) {
+        return;
+      }
+      dispatch(
+        addProductToCart({
+          ...product,
+          selected: true,
+          quantity: p.quantity || 0,
+        }),
+      );
+      return product;
+    });
+    router.push('/cart');
+    return null;
+  };
 
   return (
     <div className="flex flex-col text-[#4C4D56]">
@@ -106,12 +156,18 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
       </div>
       <div className="flex gap-4">
         {statusIdentifier !== 'created' && (
-          <button className="btn btn-sm btn-o btn-o-primary">
+          <button
+            onClick={() => repeatOrder()}
+            className="btn btn-sm btn-o btn-o-primary"
+          >
             Repeat order
           </button>
         )}
         {statusIdentifier === 'created' && (
-          <button className="btn btn-sm btn-o btn-o-primary">
+          <button
+            onClick={() => cancelOrder()}
+            className="btn btn-sm btn-o btn-o-primary"
+          >
             Cancel order
           </button>
         )}
