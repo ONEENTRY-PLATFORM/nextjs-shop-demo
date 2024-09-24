@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// import { useRouter } from 'next/navigation';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, Key } from 'react';
 import React, { useContext, useState } from 'react';
@@ -11,7 +10,6 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 import { socialProvidersButtons } from '../data';
 import Loader from '../shared/Loader';
-// import Spinner from '../shared/Spinner';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
@@ -20,8 +18,6 @@ import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInForm: FC = () => {
-  // const router = useRouter();
-
   const { authenticate } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
 
@@ -61,12 +57,16 @@ const SignInForm: FC = () => {
       });
       setLoading(false);
       if (result.error) {
-        throw new Error(result?.error);
+        if ('accessToken'.indexOf(result.error) === -1) {
+          throw new Error('User not activated.');
+        } else {
+          throw new Error(result.error);
+        }
+      } else {
+        setOpen(false);
+        authenticate();
+        setError('');
       }
-      setOpen(false);
-      authenticate();
-      setError('');
-      // router.push('/profile');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setLoading(false);

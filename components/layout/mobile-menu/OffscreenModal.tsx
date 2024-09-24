@@ -9,13 +9,11 @@ import {
 import Image from 'next/image';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-import type { Key } from 'react';
 import { Fragment, useContext, useEffect } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 import MobileMenu from './MobileMenu';
-import MobileMenuItem from './MobileMenuItem';
 
 function OffscreenModal({ menu }: { menu: IMenusPages[] }) {
   const pathname = usePathname();

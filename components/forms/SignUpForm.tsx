@@ -93,6 +93,7 @@ const SignUpForm: FC = () => {
 
       try {
         const res = await api.AuthProvider.signUp('email', data, 'en_US');
+        console.log(res);
         if (res.isActive) {
           try {
             await logInUser({
