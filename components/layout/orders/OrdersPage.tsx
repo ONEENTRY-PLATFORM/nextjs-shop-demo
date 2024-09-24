@@ -19,7 +19,7 @@ const OrdersPage = () => {
 
   const currentPage = Number(searchParams.get('page')) || 0;
 
-  const { orders, loading, total } = useGetUserOrders({
+  const { orders, loading, total, refetch } = useGetUserOrders({
     marker: 'order',
     langCode: langCode,
     limit: pageLimit,

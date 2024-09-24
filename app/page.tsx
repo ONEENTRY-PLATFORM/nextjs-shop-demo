@@ -47,7 +47,6 @@ const HomePage = async () => {
       height: 'h-[260px]',
     },
   ];
-
   const blocksColors = {
     home_banner: 'bg-amber-600 w-full max-sm:flex-col',
     offer_best_seller: 'bg-purple-600',
