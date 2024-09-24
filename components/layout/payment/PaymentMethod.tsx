@@ -53,7 +53,7 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder, onEditOrder }) => {
       {isActive && (
         <>
           <div className="flex flex-wrap justify-between text-[#4C4D56]">
-            <div className="flex w-2/3 flex-col border border-solid max-md:max-w-full">
+            <div className="flex w-2/3 flex-col border border-solid max-md:w-full max-md:max-w-full">
               <div className="flex border-b border-solid p-2">
                 <div className="w-1/2 font-bold">Product</div>
                 <div className="w-1/4 font-bold">Price</div>
@@ -77,7 +77,7 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder, onEditOrder }) => {
                 );
               })}
             </div>
-            <div className="flex w-1/3 flex-col border border-solid px-6 py-2 max-md:max-w-full">
+            <div className="flex w-1/3 flex-col border border-solid px-6 py-2 max-md:w-full max-md:max-w-full max-md:border-t-0 max-md:px-2">
               {orderData?.formData.map(
                 (
                   field: {
@@ -89,14 +89,20 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder, onEditOrder }) => {
                 ) => {
                   if (field.marker === 'order_address') {
                     return (
-                      <div key={i} className="flex flex-col">
+                      <div
+                        key={i}
+                        className="flex flex-col max-md:flex-row max-md:gap-2"
+                      >
                         <b>Address:</b> {field.value}
                       </div>
                     );
                   }
                   if (field.marker === 'date') {
                     return (
-                      <div key={i} className="flex flex-col">
+                      <div
+                        key={i}
+                        className="flex flex-col max-md:flex-row max-md:gap-2"
+                      >
                         <b>Delivery date: </b>{' '}
                         {UseDate({
                           fullDate: field.value.fullDate,
@@ -107,7 +113,10 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder, onEditOrder }) => {
                   }
                   if (field.marker === 'time') {
                     return (
-                      <div key={i} className="flex flex-col">
+                      <div
+                        key={i}
+                        className="flex flex-col max-md:flex-row max-md:gap-2"
+                      >
                         <b>Delivery time: </b> {field.value}
                       </div>
                     );
@@ -124,16 +133,16 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder, onEditOrder }) => {
               />
             </div>
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 max-md:mb-8 max-sm:flex-col-reverse max-sm:flex-wrap max-sm:gap-0">
             <button
               onClick={() => onConfirmOrder()}
-              className="btn btn-o btn-sm btn-o-primary mt-5 px-12"
+              className="btn btn-o btn-sm btn-o-primary mt-5 px-12 max-md:w-full"
             >
-              Apply
+              {account.identifier === 'cash' ? 'Apply' : 'Pay with stripe'}
             </button>
             <button
               onClick={() => onEditOrder()}
-              className="btn btn-o btn-sm btn-o-primary mt-5 px-12"
+              className="btn btn-o btn-sm btn-o-primary mt-5 px-12 max-md:w-full"
             >
               Edit
             </button>

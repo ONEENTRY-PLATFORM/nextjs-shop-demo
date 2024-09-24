@@ -21,7 +21,7 @@ const ProductSingle: FC<
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:gap-4 max-sm:flex-wrap">
-        <div className="relative mb-10 flex h-[280px] w-[30%] grow flex-col max-md:w-full max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
+        <div className="relative mb-10 flex h-[280px] w-[30%] grow flex-col max-md:mb-4 max-md:w-full max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
           {attributeValues.pic && (
             <ProductImage
               imageSrc={attributeValues.pic.value.downloadLink}

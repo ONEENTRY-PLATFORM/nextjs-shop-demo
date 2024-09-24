@@ -27,6 +27,10 @@ const CatalogCard: FC<CatalogCardProps> = async ({ marker, className }) => {
   const sticker = block.attributeValues.stickers;
   const quote = block.attributeValues.quote?.value;
 
+  if (!link?.value) {
+    return;
+  }
+
   return (
     <Link
       target={link.value.indexOf('http') === -1 ? '' : '_blank'}
