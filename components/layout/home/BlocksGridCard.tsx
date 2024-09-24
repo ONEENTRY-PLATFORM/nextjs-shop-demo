@@ -6,7 +6,7 @@ import type { FC } from 'react';
 import { getBlockByMarker } from '@/app/api';
 import Placeholder from '@/components/shared/Placeholder';
 
-interface CatalogCardProps {
+interface BlocksGridCardProps {
   marker: string;
   className: {
     class_name: string;
@@ -15,7 +15,10 @@ interface CatalogCardProps {
   };
 }
 
-const CatalogCard: FC<CatalogCardProps> = async ({ marker, className }) => {
+const BlocksGridCard: FC<BlocksGridCardProps> = async ({
+  marker,
+  className,
+}) => {
   const { block, isError } = await getBlockByMarker(marker, 'en_US');
 
   if (!block || !block.attributeValues || !block.isVisible || isError) {
@@ -26,13 +29,14 @@ const CatalogCard: FC<CatalogCardProps> = async ({ marker, className }) => {
   const imageSrc = bg_web?.value[0]?.downloadLink;
   const sticker = block.attributeValues.stickers;
   const quote = block.attributeValues.quote?.value;
+  const href =
+    (link.value.indexOf('http') === -1 ? 'shop/' : '') + link?.value || '';
+  const linkTarget = link.value.indexOf('http') === -1 ? '' : '_blank';
 
   return (
     <Link
-      target={link.value.indexOf('http') === -1 ? '' : '_blank'}
-      href={
-        (link.value.indexOf('http') === -1 ? 'shop/' : '') + link?.value || ''
-      }
+      target={linkTarget}
+      href={href}
       className={`relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
     >
       <div
@@ -69,4 +73,4 @@ const CatalogCard: FC<CatalogCardProps> = async ({ marker, className }) => {
   );
 };
 
-export default CatalogCard;
+export default BlocksGridCard;

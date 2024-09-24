@@ -1,18 +1,18 @@
 import type { FC } from 'react';
 
-import CatalogCard from './CatalogCard';
+import CatalogCard from './BlocksGridCard';
 
-interface CatalogGridProps {
+interface BlocksGridProps {
   blocks: Array<string>;
   classNames: object;
 }
 
-const CatalogGrid: FC<CatalogGridProps> = async ({ blocks, classNames }) => {
+const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, classNames }) => {
   return (
     <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
       {blocks?.length > 1 &&
         blocks.map((block, index) => {
-          const className = classNames[block as keyof typeof classNames];
+          const className = classNames[index as keyof typeof classNames];
           return (
             <CatalogCard key={index} marker={block} className={className} />
           );
@@ -21,4 +21,4 @@ const CatalogGrid: FC<CatalogGridProps> = async ({ blocks, classNames }) => {
   );
 };
 
-export default CatalogGrid;
+export default BlocksGrid;
