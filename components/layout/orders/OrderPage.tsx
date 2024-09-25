@@ -1,27 +1,21 @@
 'use client';
-import { useRouter } from 'next/navigation';
+
 import type {
-  IOrderData,
   IOrderProducts,
 } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC, Key } from 'react';
 
 import {
-  getProductById,
-  updateOrderByMarkerAndId,
   useGetSingleOrderQuery,
 } from '@/app/api';
-import { useAppDispatch } from '@/app/store/hooks';
-import { addProductToCart } from '@/app/store/reducers/CartSlice';
 import Loader from '@/components/shared/Loader';
 import { UseDate, UsePrice } from '@/components/utils';
 
-import ProductCard from './ProductCard';
+import ProductCard from './components/ProductCard';
+import CancelOrderButton from './components/CancelOrderButton';
+import RepeatOrderButton from './components/RepeatOrderButton';
 
 const OrderPage: FC<{ id: number }> = ({ id }) => {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, isLoading, refetch } = useGetSingleOrderQuery({
     marker: 'order',
     id: id,
@@ -44,43 +38,6 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
     amount: totalSum,
     currency: currency,
   });
-
-  const cancelOrder = async () => {
-    const formData = {
-      ...data,
-      products: data.products.map((product) => ({
-        productId: product.id,
-        quantity: product.quantity
-      })),
-      statusIdentifier: 'canceled',
-    } as unknown as IOrderData;
-
-    const order = await updateOrderByMarkerAndId('order', id, formData );
-
-    return;
-  };
-
-  const repeatOrder = () => {
-    data.products.map(async (p) => {
-      if (p.id === 83) {
-        return;
-      }
-      const { product } = await getProductById(Number(p.id), 'en_US');
-      if (!product) {
-        return;
-      }
-      dispatch(
-        addProductToCart({
-          ...product,
-          selected: true,
-          quantity: p.quantity || 0,
-        }),
-      );
-      return product;
-    });
-    router.push('/cart');
-    return null;
-  };
 
   return (
     <div className="flex flex-col text-[#4C4D56]">
@@ -145,22 +102,8 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
         <hr className="my-4" />
       </div>
       <div className="flex gap-4">
-        {statusIdentifier !== 'created' && (
-          <button
-            onClick={() => repeatOrder()}
-            className="btn btn-sm btn-o btn-o-primary"
-          >
-            Repeat order
-          </button>
-        )}
-        {statusIdentifier === 'created' && (
-          <button
-            onClick={() => cancelOrder()}
-            className="btn btn-sm btn-o btn-o-primary"
-          >
-            Cancel order
-          </button>
-        )}
+        <RepeatOrderButton data={data} isLoading={isLoading} />
+        <CancelOrderButton data={data} isLoading={isLoading} refetch={refetch} />
       </div>
     </div>
   );
