@@ -6,6 +6,7 @@ import { type Key, useContext, useEffect, useState } from 'react';
 
 import { getAllOrdersByMarker, getBlockByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 import AuthError from '@/components/shared/AuthError';
 import { OrdersTableLoader } from '@/components/shared/Loader';
 
@@ -15,6 +16,7 @@ import Order from './components/OrderRow';
 const OrdersPage = () => {
   const searchParams = useSearchParams();
   const { isAuth, user } = useContext(AuthContext);
+  const { activeLanguage } = useContext(LanguageContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [settings, setSettings] = useState<Record<string, any>>();
@@ -23,7 +25,6 @@ const OrdersPage = () => {
 
   const currentPage = Number(searchParams.get('page')) || 0;
   const pageLimit = settings?.orders_limit.value || 10;
-  const langCode = 'en_US';
 
   useEffect(() => {
     if (!isAuth) {
@@ -31,7 +32,10 @@ const OrdersPage = () => {
     }
     (async () => {
       try {
-        const { block } = await getBlockByMarker('orders_settings', langCode);
+        const { block } = await getBlockByMarker(
+          'orders_settings',
+          activeLanguage,
+        );
         if (block) {
           setSettings(block.attributeValues);
         }
@@ -45,7 +49,7 @@ const OrdersPage = () => {
             marker: 'order',
             limit: pageLimit,
             offset: currentPage * pageLimit,
-            langCode: langCode,
+            langCode: activeLanguage,
           });
           if (orders) {
             setOrders(orders);
@@ -56,14 +60,14 @@ const OrdersPage = () => {
         }
       }
     })();
-  }, [currentPage, isAuth, pageLimit, user]);
+  }, [activeLanguage, currentPage, isAuth, pageLimit, user]);
 
   if (!isAuth || !user) {
     return <AuthError />;
   }
 
   if (!settings) {
-    return;
+    return 'Settings error';
   }
 
   const totalPages = Math.floor(total / pageLimit);

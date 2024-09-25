@@ -6,7 +6,6 @@ import type { FC, Key } from 'react';
 import { useGetSingleOrderQuery } from '@/app/api';
 import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 import Loader from '@/components/shared/Loader';
-import { UseDate, UsePrice } from '@/components/utils';
 
 import CancelOrderButton from './components/CancelOrderButton';
 import OrderDataTable from './components/OrderDataTable';
@@ -29,13 +28,8 @@ const OrderPage: FC<{
     return <Loader />;
   }
 
-  const {
-    currency,
-    products,
-    statusIdentifier,
-    totalSum,
-    paymentAccountIdentifier,
-  } = data;
+  const { currency, products, statusIdentifier, paymentAccountIdentifier } =
+    data;
 
   const { go_to_pay_title, repeat_order_title, cancel_order_title } = settings;
 

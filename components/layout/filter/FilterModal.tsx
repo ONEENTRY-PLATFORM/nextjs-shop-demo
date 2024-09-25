@@ -12,7 +12,7 @@ import { Fragment, Suspense, useContext } from 'react';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import Loader from '@/components/shared/Loader';
 
-import FilterHeader from './FilterHeader';
+import FilterHeader from './components/header/FilterHeader';
 import FiltersForm from './FiltersForm';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

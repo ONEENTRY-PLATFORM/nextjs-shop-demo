@@ -6,10 +6,10 @@ import { useGetPage } from '@/app/api/hooks/useGetPage';
 import Loader from '@/components/shared/Loader';
 import { sortObjectFieldsByPosition } from '@/components/utils';
 
-import AvailabilityFilter from './AvailabilityFilter';
-import ColorFilter from './ColorFilter';
-import FilterButtons from './FilterButtons';
-import PricePickerFilter from './PricePickerFilter';
+import AvailabilityFilter from './components/AvailabilityFilter';
+import FilterButtons from './components/buttons/FilterButtons';
+import ColorFilter from './components/color/ColorFilter';
+import PricePickerFilter from './components/price/PricePickerFilter';
 
 const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
   const { pageInfo } = useGetPage('catalog_filters');
