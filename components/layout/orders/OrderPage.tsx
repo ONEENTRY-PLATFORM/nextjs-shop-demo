@@ -32,12 +32,12 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
     return <Loader />;
   }
   const {
-    createdDate,
     currency,
     formData,
     products,
     statusIdentifier,
     totalSum,
+    paymentAccountLocalizeInfos,
   } = data;
 
   const formattedTotal = UsePrice({
@@ -136,10 +136,13 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
           },
         )}
         <div className="flex gap-2">
-          <b>Status of Payment: </b> {statusIdentifier}
+          <b>Status of payment: </b> {statusIdentifier}
         </div>
         <div className="flex gap-2">
-          <b>Total Amount: </b> {formattedTotal}
+          <b>Payment account: </b> {paymentAccountLocalizeInfos.title}
+        </div>
+        <div className="flex gap-2 text-lg">
+          <b>Total amount: </b> {formattedTotal}
         </div>
         <hr className="my-4" />
       </div>

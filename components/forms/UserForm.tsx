@@ -85,6 +85,8 @@ const UserForm: FC = () => {
             phonePush: [],
             phoneSMS: fields['phone_reg'].value,
           },
+          // !!! USER STATE
+          state: {}
         });
       }
       refreshUser();

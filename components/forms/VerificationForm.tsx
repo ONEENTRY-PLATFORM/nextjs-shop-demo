@@ -86,7 +86,7 @@ const VerificationForm: FC = () => {
           fields['email_reg'].value,
           otp,
         );
-
+        // if activate User logInUser and authenticate
         if (result) {
           try {
             await logInUser({
@@ -120,11 +120,9 @@ const VerificationForm: FC = () => {
       try {
         await api.AuthProvider.generateCode(
           'email',
-          fields['email_reg'].value,
+          fields.email_reg.value,
           'generate_code',
         );
-        authenticate();
-        setOpen(false);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setError(e.message);
