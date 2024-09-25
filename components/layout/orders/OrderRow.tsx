@@ -5,7 +5,14 @@ import { UsePrice } from '@/components/utils';
 
 import OrderPage from './OrderPage';
 
-const Order = ({ order }: { order: IOrderByMarkerEntity }) => {
+const Order = ({
+  order,
+  settings,
+}: {
+  order: IOrderByMarkerEntity;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  settings: Record<string, any> | undefined;
+}) => {
   const { id, createdDate, currency, statusIdentifier, totalSum } = order;
 
   const formattedPrice = UsePrice({
@@ -35,7 +42,7 @@ const Order = ({ order }: { order: IOrderByMarkerEntity }) => {
       </button>
       {state && (
         <div className="p-4">
-          <OrderPage id={Number(id)} />
+          <OrderPage id={Number(id)} settings={settings} />
         </div>
       )}
     </>

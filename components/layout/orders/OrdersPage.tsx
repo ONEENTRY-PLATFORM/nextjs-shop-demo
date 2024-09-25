@@ -62,7 +62,7 @@ const OrdersPage = () => {
     return <AuthError />;
   }
 
-  const totalPages = Number(total) / (settings?.orders_limit.value || 30);
+  const totalPages = Number(total) / (settings?.orders_limit.value || 10);
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
@@ -77,7 +77,7 @@ const OrdersPage = () => {
             <OrdersTableLoader />
           ) : (
             orders?.map((order: IOrderByMarkerEntity, i: Key) => {
-              return <Order key={i} order={order} />;
+              return <Order key={i} order={order} settings={settings} />;
             })
           )}
         </div>

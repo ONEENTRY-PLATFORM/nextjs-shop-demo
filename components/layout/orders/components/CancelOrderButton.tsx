@@ -12,7 +12,8 @@ const CancelOrderButton: FC<{
   isLoading: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   refetch: any;
-}> = ({ data, isLoading, refetch }) => {
+  title: string;
+}> = ({ data, isLoading, refetch, title }) => {
   const { statusIdentifier } = data;
 
   const cancelOrder = async () => {
@@ -36,7 +37,7 @@ const CancelOrderButton: FC<{
         onClick={() => cancelOrder()}
         className="btn btn-sm btn-o btn-o-primary"
       >
-        Cancel order
+        {title}
       </button>
     )
   );

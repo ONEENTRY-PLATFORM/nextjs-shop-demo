@@ -11,8 +11,9 @@ import { addProductToCart } from '@/app/store/reducers/CartSlice';
 const RepeatOrderButton: FC<{
   data: IOrderByMarkerEntity;
   isLoading: boolean;
+  title: string;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-}> = ({ data, isLoading }) => {
+}> = ({ data, isLoading, title }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -46,7 +47,7 @@ const RepeatOrderButton: FC<{
         onClick={() => repeatOrder()}
         className="btn btn-sm btn-o btn-o-primary"
       >
-        Repeat order
+        {title}
       </button>
     )
   );

@@ -6,10 +6,12 @@ import type { FC } from 'react';
 import Placeholder from '@/components/shared/Placeholder';
 import { UsePrice } from '@/components/utils';
 
-const ProductCard: FC<{ product: IOrderProducts; currency: string }> = ({
-  product,
-  currency,
-}) => {
+const ProductCard: FC<{
+  product: IOrderProducts;
+  currency: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  settings: Record<string, any>;
+}> = ({ product, currency, settings }) => {
   const { id, title, price, quantity, previewImage } = product;
   const productImage = previewImage?.[0]?.downloadLink || '';
   const formattedPrice = UsePrice({
@@ -20,6 +22,8 @@ const ProductCard: FC<{ product: IOrderProducts; currency: string }> = ({
     amount: price * Number(quantity),
     currency: currency,
   });
+
+  const { product_qty_title, product_card_title } = settings;
 
   return (
     <div className="relative flex w-full flex-row gap-4">
@@ -40,10 +44,10 @@ const ProductCard: FC<{ product: IOrderProducts; currency: string }> = ({
         <h2 className="text-base">{title}</h2>
         <div className="text-base">{formattedPrice}</div>
         <div className="text-base">
-          <b>Quantity:</b> {quantity}
+          <b>{product_qty_title}:</b> {quantity}
         </div>
         <div className="text-base">
-          <b>Subtotal:</b> {formattedSubtotal}
+          <b>{product_card_title}:</b> {formattedSubtotal}
         </div>
       </div>
       <Link

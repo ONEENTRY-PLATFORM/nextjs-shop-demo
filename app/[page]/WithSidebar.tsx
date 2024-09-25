@@ -2,12 +2,13 @@ import SidebarMenu from '@/components/layout/sidebar/SidebarMenu';
 
 const WithSidebar = ({
   children,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   data,
 }: {
   children: React.ReactNode;
   data?: string;
 }) => {
-  console.log(data);
+  // console.log(data);
 
   return (
     <div className="flex w-full flex-col items-center">
