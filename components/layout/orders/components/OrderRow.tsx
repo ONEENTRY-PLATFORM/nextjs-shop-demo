@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import { UsePrice } from '@/components/utils';
 
-import OrderPage from './OrderPage';
+import OrderPage from '../OrderPage';
 
 const Order = ({
   order,

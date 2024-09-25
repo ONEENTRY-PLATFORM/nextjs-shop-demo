@@ -10,7 +10,7 @@ import AuthError from '@/components/shared/AuthError';
 import { OrdersTableLoader } from '@/components/shared/Loader';
 
 import Pagination from '../catalog/Pagination';
-import Order from './OrderRow';
+import Order from './components/OrderRow';
 
 const OrdersPage = () => {
   const searchParams = useSearchParams();
@@ -22,10 +22,8 @@ const OrdersPage = () => {
   const [total, setTotal] = useState<number>(0);
 
   const currentPage = Number(searchParams.get('page')) || 0;
-  const pageLimit = settings?.orders_limit.value;
+  const pageLimit = settings?.orders_limit.value || 10;
   const langCode = 'en_US';
-
-  const totalPages = Number(total) / (settings?.orders_limit.value || 10);
 
   useEffect(() => {
     if (!isAuth) {
@@ -64,13 +62,20 @@ const OrdersPage = () => {
     return <AuthError />;
   }
 
+  if (!settings) {
+    return;
+  }
+
+  const totalPages = Math.floor(total / pageLimit);
+  const { date_title, total_title, status_title } = settings;
+
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
       <div className="w-full">
         <div className="-mb-px flex w-full border-collapse gap-4 border-y p-4 text-slate-700">
-          <div className="w-1/2">{settings?.date_title.value}</div>
-          <div className="w-1/4">{settings?.total_title.value}</div>
-          <div className="w-1/4">{settings?.total_title.value}</div>
+          <div className="w-1/2">{date_title.value}</div>
+          <div className="w-1/4">{total_title.value}</div>
+          <div className="w-1/4">{status_title.value}</div>
         </div>
         <div className="mb-4 flex flex-col">
           {!orders ? (

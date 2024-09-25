@@ -17,7 +17,7 @@ const RepeatOrderButton: FC<{
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const { statusIdentifier, products } = data;
+  const { products } = data;
 
   const repeatOrder = () => {
     products.map(async (p) => {
@@ -42,14 +42,12 @@ const RepeatOrderButton: FC<{
   };
 
   return (
-    statusIdentifier !== 'created' && (
-      <button
-        onClick={() => repeatOrder()}
-        className="btn btn-sm btn-o btn-o-primary"
-      >
-        {title}
-      </button>
-    )
+    <button
+      onClick={() => repeatOrder()}
+      className="btn btn-sm btn-o btn-o-primary"
+    >
+      {title}
+    </button>
   );
 };
 

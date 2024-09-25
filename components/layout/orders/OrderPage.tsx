@@ -9,6 +9,7 @@ import Loader from '@/components/shared/Loader';
 import { UseDate, UsePrice } from '@/components/utils';
 
 import CancelOrderButton from './components/CancelOrderButton';
+import OrderDataTable from './components/OrderDataTable';
 import ProductCard from './components/ProductCard';
 import RepeatOrderButton from './components/RepeatOrderButton';
 
@@ -30,27 +31,13 @@ const OrderPage: FC<{
 
   const {
     currency,
-    formData,
     products,
     statusIdentifier,
     totalSum,
     paymentAccountIdentifier,
-    paymentAccountLocalizeInfos,
   } = data;
 
-  const formattedTotal = UsePrice({
-    amount: totalSum,
-    currency: currency,
-  });
-
-  const {
-    status_of_payment_title,
-    payment_account_title,
-    go_to_pay_title,
-    total_amount_title,
-    repeat_order_title,
-    cancel_order_title,
-  } = settings;
+  const { go_to_pay_title, repeat_order_title, cancel_order_title } = settings;
 
   return (
     <div className="flex flex-col text-[#4C4D56]">
@@ -69,81 +56,32 @@ const OrderPage: FC<{
           );
         })}
       </div>
-      <div className="flex flex-col gap-3">
-        <hr className="mb-4" />
-        {formData.map(
-          (
-            field: {
-              marker: string;
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              value: any;
-            },
-            i: Key,
-          ) => {
-            if (field.marker === 'order_address') {
-              return (
-                <div key={i} className="flex gap-2">
-                  <b>Address:</b> {field.value}
-                </div>
-              );
-            }
-            if (field.marker === 'date') {
-              const date = UseDate({
-                fullDate: field.value.fullDate,
-                format: 'en',
-              });
-
-              return (
-                <div key={i} className="flex gap-2">
-                  <b>Delivery date: </b> {date}
-                </div>
-              );
-            }
-            if (field.marker === 'time') {
-              return (
-                <div key={i} className="flex gap-2">
-                  <b>Delivery time: </b> {field.value}
-                </div>
-              );
-            }
-            return;
-          },
-        )}
-        <div className="flex gap-2">
-          <b>{status_of_payment_title.value}:</b> {statusIdentifier}
-        </div>
-        <div className="flex gap-2">
-          <div>
-            <b>{payment_account_title.value}:</b>{' '}
-            {paymentAccountLocalizeInfos.title}
-          </div>
-          {paymentAccountIdentifier === 'stripe' &&
-            statusIdentifier === 'created' && (
-              <button
-                className="btn btn-sm btn-o-primary"
-                onClick={onConfirmOrder}
-              >
-                {go_to_pay_title.value}
-              </button>
-            )}
-        </div>
-        <div className="flex gap-2 text-lg">
-          <b>{total_amount_title.value}: </b> {formattedTotal}
-        </div>
-        <hr className="my-4" />
-      </div>
+      <OrderDataTable settings={settings} data={data} />
       <div className="flex gap-4">
-        <RepeatOrderButton
-          data={data}
-          title={repeat_order_title.value}
-          isLoading={isLoading}
-        />
-        <CancelOrderButton
-          data={data}
-          title={cancel_order_title.value}
-          isLoading={isLoading}
-          refetch={refetch}
-        />
+        {statusIdentifier !== 'created' && (
+          <RepeatOrderButton
+            data={data}
+            title={repeat_order_title.value}
+            isLoading={isLoading}
+          />
+        )}
+        {statusIdentifier === 'created' && (
+          <CancelOrderButton
+            data={data}
+            title={cancel_order_title.value}
+            isLoading={isLoading}
+            refetch={refetch}
+          />
+        )}
+        {paymentAccountIdentifier === 'stripe' &&
+          statusIdentifier === 'created' && (
+            <button
+              className="btn btn-sm btn-o btn-o-primary"
+              onClick={onConfirmOrder}
+            >
+              {go_to_pay_title.value}
+            </button>
+          )}
       </div>
     </div>
   );

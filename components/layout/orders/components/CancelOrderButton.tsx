@@ -14,8 +14,6 @@ const CancelOrderButton: FC<{
   refetch: any;
   title: string;
 }> = ({ data, isLoading, refetch, title }) => {
-  const { statusIdentifier } = data;
-
   const cancelOrder = async () => {
     const formData = {
       ...data,
@@ -32,14 +30,12 @@ const CancelOrderButton: FC<{
   };
 
   return (
-    statusIdentifier === 'created' && (
-      <button
-        onClick={() => cancelOrder()}
-        className="btn btn-sm btn-o btn-o-primary"
-      >
-        {title}
-      </button>
-    )
+    <button
+      onClick={() => cancelOrder()}
+      className="btn btn-sm btn-o btn-o-primary"
+    >
+      {title}
+    </button>
   );
 };
 
