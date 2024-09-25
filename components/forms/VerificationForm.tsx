@@ -69,22 +69,18 @@ const VerificationForm: FC = () => {
       setLoading(true);
       setError('');
       if (action !== 'activateUser') {
+        // checkCode
         const result = await api.AuthProvider.checkCode(
           'email',
           fields['email_reg'].value,
           otp,
         );
-        // const result = await api.AuthProvider.activateUser(
-        //   'email',
-        //   fields['email_reg'].value,
-        //   otp,
-        // );
-        console.log(result);
         if (result) {
           setComponent('ResetPasswordForm');
         }
         setLoading(false);
       } else {
+        // activateUser
         const result = await api.AuthProvider.activateUser(
           'email',
           fields['email_reg'].value,
@@ -105,9 +101,11 @@ const VerificationForm: FC = () => {
           } catch (e: any) {
             setError(e.message);
           }
-          setLoading(false);
+        } else {
+          setError('Error');
         }
       }
+      setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setError(e.message);

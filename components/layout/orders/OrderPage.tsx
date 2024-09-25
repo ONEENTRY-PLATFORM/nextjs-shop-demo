@@ -86,7 +86,6 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
 
   return (
     <div className="flex flex-col text-[#4C4D56]">
-      <div className="mb-4 flex">№{createdDate}</div>
       <div className="flex max-w-[430px] flex-col gap-4 pb-5 max-md:max-w-full">
         {products.map((product: IOrderProducts, i: Key) => {
           if (product.id === 83) {
@@ -119,16 +118,6 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
                 fullDate: field.value.fullDate,
                 format: 'en',
               });
-              // const d = new Date(field.value.fullDate);
-              // const year = new Intl.DateTimeFormat('en', {
-              //   year: 'numeric',
-              // }).format(d);
-              // const month = new Intl.DateTimeFormat('en', {
-              //   month: 'short',
-              // }).format(d);
-              // const day = new Intl.DateTimeFormat('en', {
-              //   day: '2-digit',
-              // }).format(d);
 
               return (
                 <div key={i} className="flex gap-2">

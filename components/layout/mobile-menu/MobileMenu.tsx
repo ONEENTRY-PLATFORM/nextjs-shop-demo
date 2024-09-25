@@ -13,7 +13,7 @@ function MobileMenu({
   className?: string;
 }) {
   return menu.length ? (
-    <ul className={'flex w-full flex-col ' + className}>
+    <ul className={'flex flex-col ' + className}>
       {menu.map((item: IMenusPages, index: Key) => (
         <MobileMenuItem key={index} item={item} />
       ))}

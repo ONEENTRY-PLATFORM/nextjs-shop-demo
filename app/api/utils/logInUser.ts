@@ -20,12 +20,9 @@ export const logInUser = async ({ method, login, password }: LogInProps) => {
       ],
     };
     const result = await api.AuthProvider.auth(method, preparedData);
-    // @ts-ignore
-    if (!result?.error && result?.accessToken) {
+    if (result && result.accessToken && result.refreshToken) {
       return { data: result };
     }
-    // @ts-ignore
-    throw new Error(result?.error);
   } catch (e: unknown) {
     return { error: (e as Error).message };
   }

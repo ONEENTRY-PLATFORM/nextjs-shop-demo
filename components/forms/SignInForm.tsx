@@ -55,8 +55,7 @@ const SignInForm: FC = () => {
         login: email_reg.value,
         password: password_reg.value,
       });
-      setLoading(false);
-      if (result.error) {
+      if (result && result.error) {
         if ('accessToken'.indexOf(result.error) === -1) {
           throw new Error('User not activated.');
         } else {
@@ -67,6 +66,7 @@ const SignInForm: FC = () => {
         authenticate();
         setError('');
       }
+      setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setLoading(false);
