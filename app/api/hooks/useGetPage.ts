@@ -6,11 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import { api } from '@/app/api';
 import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
-type UseGetPageProps = {
-  pageUrl: string | undefined;
-};
-
-export const useGetPage = ({ pageUrl }: UseGetPageProps) => {
+export const useGetPage = (pageUrl: string) => {
   const [page, setPage] = useState<IPagesEntity>();
   const [loading, setLoading] = useState<boolean>(false);
   const [refresh, setRefresh] = useState(false);

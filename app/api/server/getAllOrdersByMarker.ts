@@ -14,18 +14,19 @@ export const getAllOrdersByMarker = async ({
   langCode: string;
 }): Promise<{
   orders?: IOrderByMarkerEntity[];
-  isError: boolean;
-  err?: unknown;
+  total?: number;
+  isError?: boolean;
+  error?: unknown;
 }> => {
   try {
     const data = await api.Orders.getAllOrdersByMarker(
       marker,
       langCode,
-      limit || 10,
-      offset || 0,
+      limit,
+      offset,
     );
-    return { isError: false, orders: data.items };
+    return { orders: data.items, total: data.total };
   } catch (e) {
-    return { isError: true, err: e };
+    return { isError: true, error: e };
   }
 };

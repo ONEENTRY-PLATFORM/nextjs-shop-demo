@@ -12,7 +12,7 @@ import FilterButtons from './FilterButtons';
 import PricePickerFilter from './PricePickerFilter';
 
 const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
-  const { pageInfo } = useGetPage({ pageUrl: 'catalog_filters' });
+  const { pageInfo } = useGetPage('catalog_filters');
 
   const sortedAttributes: Record<any, any> = useMemo(() => {
     if (!pageInfo) {

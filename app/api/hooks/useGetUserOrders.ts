@@ -39,8 +39,10 @@ export const useGetUserOrders = ({
           limit || 10,
           offset || 0,
         );
-        setOrders(result);
-        setTotal(result.total);
+        if (result) {
+          setOrders(result);
+          setTotal(result.total);
+        }
         setLoading(false);
       } catch (e) {
         console.log(e);
