@@ -72,7 +72,7 @@ const CategoryPage = async () => {
     return {
       title: page.localizeInfos.title,
       link: '/shop/category/' + page.pageUrl,
-      imgSrc: page.attributeValues.pic.value[0].downloadLink,
+      imgSrc: page.attributeValues.pic?.value[0].downloadLink,
     };
   });
 
