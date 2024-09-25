@@ -18,7 +18,7 @@ const TestPage = () => {
   const { data, error } = useGetOrderStorageByMarkerQuery({
     marker: 'order',
   });
-  console.log(data);
+  // console.log(data);
 
   return (
     <main className="flex flex-col items-center justify-between gap-16 p-5">

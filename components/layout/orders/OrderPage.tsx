@@ -18,15 +18,17 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
     activeLang: 'en_US',
   });
 
-  if (isLoading || !data) {
+  if (!data) {
     return <Loader />;
   }
+
   const {
     currency,
     formData,
     products,
     statusIdentifier,
     totalSum,
+    paymentAccountIdentifier,
     paymentAccountLocalizeInfos,
   } = data;
 
@@ -90,7 +92,15 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
           <b>Status of payment: </b> {statusIdentifier}
         </div>
         <div className="flex gap-2">
-          <b>Payment account: </b> {paymentAccountLocalizeInfos.title}
+          <div>
+            <b>Payment account: </b> {paymentAccountLocalizeInfos.title}
+          </div>
+          {paymentAccountIdentifier === 'stripe' &&
+            statusIdentifier === 'created' && (
+              <button className="btn btn-sm btn-o-primary" onClick={() => {}}>
+                Go to pay
+              </button>
+            )}
         </div>
         <div className="flex gap-2 text-lg">
           <b>Total amount: </b> {formattedTotal}

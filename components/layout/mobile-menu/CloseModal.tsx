@@ -1,5 +1,5 @@
-const CloseModal = ({ closeMenu } : { closeMenu: () => void }) => {
-  return(
+const CloseModal = ({ closeMenu }: { closeMenu: () => void }) => {
+  return (
     <button
       aria-label="Close menu"
       onClick={closeMenu}
@@ -8,6 +8,6 @@ const CloseModal = ({ closeMenu } : { closeMenu: () => void }) => {
       &#10005;
     </button>
   );
-}
+};
 
 export default CloseModal;

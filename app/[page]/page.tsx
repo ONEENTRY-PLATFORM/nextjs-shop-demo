@@ -110,7 +110,9 @@ export default async function Page({ params }: { params: { page: string } }) {
         }
 
         return p.templateType === 'withSidebar' ? (
-          <WithSidebar key={i}>{p.component}</WithSidebar>
+          <WithSidebar data={''} key={i}>
+            {p.component}
+          </WithSidebar>
         ) : (
           <div key={i}>{p.component}</div>
         );

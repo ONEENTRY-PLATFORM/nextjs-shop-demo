@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type {
   IOrderByMarkerEntity,
   IOrderData,
@@ -6,7 +7,12 @@ import type { FC } from 'react';
 
 import { updateOrderByMarkerAndId } from '@/app/api';
 
-const CancelOrderButton: FC<{ data: IOrderByMarkerEntity; isLoading: boolean; refetch: any; }> = ({ data, isLoading, refetch }) => {
+const CancelOrderButton: FC<{
+  data: IOrderByMarkerEntity;
+  isLoading: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  refetch: any;
+}> = ({ data, isLoading, refetch }) => {
   const { statusIdentifier } = data;
 
   const cancelOrder = async () => {
@@ -14,12 +20,12 @@ const CancelOrderButton: FC<{ data: IOrderByMarkerEntity; isLoading: boolean; re
       ...data,
       products: data.products.map((product) => ({
         productId: product.id,
-        quantity: product.quantity
+        quantity: product.quantity,
       })),
       statusIdentifier: 'canceled',
     } as unknown as IOrderData;
 
-    const order = await updateOrderByMarkerAndId('order', data.id, formData );
+    const order = await updateOrderByMarkerAndId('order', data.id, formData);
     refetch();
     return;
   };

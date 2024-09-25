@@ -1,6 +1,14 @@
 import SidebarMenu from '@/components/layout/sidebar/SidebarMenu';
 
-const WithSidebar = ({ children }: { children: React.ReactNode }) => {
+const WithSidebar = ({
+  children,
+  data,
+}: {
+  children: React.ReactNode;
+  data?: string;
+}) => {
+  console.log(data);
+
   return (
     <div className="flex w-full flex-col items-center">
       <div className="mx-auto flex w-full max-w-screen-xl flex-row max-md:flex-row max-md:flex-wrap">

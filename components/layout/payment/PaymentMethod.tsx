@@ -2,20 +2,24 @@ import clsx from 'clsx';
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { FC, Key } from 'react';
 
+import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Loader from '@/components/shared/Loader';
 import { UseDate } from '@/components/utils';
 
 import TotalAmount from '../cart/TotalAmount';
+import ConfirmOrderButton from './ConfirmOrderButton';
+import EditOrderButton from './EditOrderButton';
 
-type Props = {
+type PaymentMethodProps = {
   account: IAccountsEntity;
-  onConfirmOrder: () => Promise<void> | undefined;
-  onEditOrder: () => Promise<void> | undefined;
 };
 
-const PaymentMethod: FC<Props> = ({ account, onConfirmOrder, onEditOrder }) => {
+const PaymentMethod: FC<PaymentMethodProps> = ({ account }) => {
   const dispatch = useAppDispatch();
+  const { isLoading, onConfirmOrder } = useCreateOrder();
 
   const orderData = useAppSelector((state) => state.orderReducer.order);
   const productsInCart = useAppSelector((state) => state.cartReducer.products);
@@ -134,18 +138,12 @@ const PaymentMethod: FC<Props> = ({ account, onConfirmOrder, onEditOrder }) => {
             </div>
           </div>
           <div className="flex gap-4 max-md:mb-8 max-sm:flex-col-reverse max-sm:flex-wrap max-sm:gap-0">
-            <button
-              onClick={() => onConfirmOrder()}
-              className="btn btn-o btn-sm btn-o-primary mt-5 px-12 max-md:w-full"
-            >
-              {account.identifier === 'cash' ? 'Apply' : 'Pay with stripe'}
-            </button>
-            <button
-              onClick={() => onEditOrder()}
-              className="btn btn-o btn-sm btn-o-primary mt-5 px-12 max-md:w-full"
-            >
-              Edit
-            </button>
+            <ConfirmOrderButton
+              account={account}
+              isLoading={isLoading}
+              onConfirmOrder={onConfirmOrder}
+            />
+            <EditOrderButton isLoading={isLoading} />
           </div>
         </>
       )}

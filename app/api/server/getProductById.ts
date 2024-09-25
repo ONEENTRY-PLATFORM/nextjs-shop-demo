@@ -7,13 +7,13 @@ export const getProductById = async (
   langCode: string,
 ): Promise<{
   product?: IProductsEntity;
-  isError: boolean;
-  err?: unknown;
+  isError?: boolean;
+  error?: unknown;
 }> => {
   try {
     const product = await api.Products.getProductById(id, langCode);
-    return { isError: false, product: product };
-  } catch (err) {
-    return { isError: true, err };
+    return { product: product };
+  } catch (error) {
+    return { isError: true, error };
   }
 };
