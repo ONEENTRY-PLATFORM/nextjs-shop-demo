@@ -1,16 +1,18 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC } from 'react';
 
-import {
-  getProductById,
-} from '@/app/api';
+import { getProductById } from '@/app/api';
 import { useAppDispatch } from '@/app/store/hooks';
 import { addProductToCart } from '@/app/store/reducers/CartSlice';
-import { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 
-const RepeatOrderButton: FC<{ data: IOrderByMarkerEntity; isLoading: boolean }> = ({ data, isLoading }) => {
+const RepeatOrderButton: FC<{
+  data: IOrderByMarkerEntity;
+  isLoading: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+}> = ({ data, isLoading }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 

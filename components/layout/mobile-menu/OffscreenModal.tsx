@@ -13,6 +13,7 @@ import { Fragment, useContext, useEffect } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
+import CloseModal from './CloseModal';
 import MobileMenu from './MobileMenu';
 
 function OffscreenModal({ menu }: { menu: IMenusPages[] }) {
@@ -74,13 +75,7 @@ function OffscreenModal({ menu }: { menu: IMenusPages[] }) {
         >
           <DialogPanel className="fixed inset-0 flex size-full max-w-[420px] flex-col bg-white pb-6">
             <div className="p-6">
-              <button
-                aria-label="Close menu"
-                onClick={closeMenu}
-                className="absolute right-4 top-6 flex aspect-square size-12 shrink-0 items-center justify-center rounded-full border border-[#EEEFF0] text-xl text-slate-700"
-              >
-                &#10005;
-              </button>
+              <CloseModal closeMenu={closeMenu} />
 
               <div className="mb-4 w-full">
                 <Image

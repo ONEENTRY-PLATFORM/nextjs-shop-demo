@@ -10,7 +10,6 @@ import { useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 
 import Loader from '../shared/Loader';
-// import Spinner from '../shared/Spinner';
 import ErrorMessage from './inputs/ErrorMessage';
 import { FormCaptcha } from './inputs/FormCaptcha';
 import FormInput from './inputs/FormInput';

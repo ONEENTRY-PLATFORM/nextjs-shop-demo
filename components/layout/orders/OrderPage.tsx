@@ -1,18 +1,14 @@
 'use client';
 
-import type {
-  IOrderProducts,
-} from 'oneentry/dist/orders/ordersInterfaces';
+import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC, Key } from 'react';
 
-import {
-  useGetSingleOrderQuery,
-} from '@/app/api';
+import { useGetSingleOrderQuery } from '@/app/api';
 import Loader from '@/components/shared/Loader';
 import { UseDate, UsePrice } from '@/components/utils';
 
-import ProductCard from './components/ProductCard';
 import CancelOrderButton from './components/CancelOrderButton';
+import ProductCard from './components/ProductCard';
 import RepeatOrderButton from './components/RepeatOrderButton';
 
 const OrderPage: FC<{ id: number }> = ({ id }) => {
@@ -103,7 +99,11 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
       </div>
       <div className="flex gap-4">
         <RepeatOrderButton data={data} isLoading={isLoading} />
-        <CancelOrderButton data={data} isLoading={isLoading} refetch={refetch} />
+        <CancelOrderButton
+          data={data}
+          isLoading={isLoading}
+          refetch={refetch}
+        />
       </div>
     </div>
   );

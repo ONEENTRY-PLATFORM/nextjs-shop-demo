@@ -4,14 +4,13 @@ import type { FC } from 'react';
 
 import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';
+import ProductUnits from './ProductUnits';
 
 const ProductDetails: FC<IProductsEntity & { productPages?: [] }> = async (
   product,
 ) => {
   const { attributeValues, localizeInfos } = product;
   const units = attributeValues?.units_product.value;
-  const maxUnits = 50;
-  const width = (units / maxUnits) * 100;
 
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-full">
@@ -38,17 +37,7 @@ const ProductDetails: FC<IProductsEntity & { productPages?: [] }> = async (
         />
       </div>
 
-      <div className="relative mb-6 box-border flex shrink-0 flex-col ">
-        <div className="self-end text-sm text-slate-300">{units} units</div>
-        <div className="z-10 mt-1.5 flex w-full flex-row justify-start rounded-xl bg-zinc-300">
-          <div
-            className={'mr-auto h-[3px] shrink-0 rounded-xl bg-orange-500'}
-            style={{
-              width: width + '%',
-            }}
-          />
-        </div>
-      </div>
+      <ProductUnits units={units} />
 
       <AddToCartButton
         product={product}
