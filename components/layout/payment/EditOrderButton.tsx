@@ -17,9 +17,11 @@ const EditOrderButton: FC<EditOrderButtonProps> = ({ isLoading }) => {
 
   return (
     <button
+      disabled={isLoading}
       onClick={() => onEditOrder()}
       className="btn btn-o btn-sm btn-o-primary mt-5 px-12 max-md:w-full"
     >
+      {isLoading && <Loader />}
       Edit order
     </button>
   );

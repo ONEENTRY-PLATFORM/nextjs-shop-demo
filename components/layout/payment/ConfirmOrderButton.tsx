@@ -18,9 +18,11 @@ const ConfirmOrderButton: FC<ConfirmOrderButtonProps> = ({
 }) => {
   return (
     <button
+      disabled={isLoading}
       onClick={() => onConfirmOrder()}
       className="btn btn-o btn-sm btn-o-primary mt-5 px-12 max-md:w-full"
     >
+      {isLoading && <Loader />}
       {account.identifier === 'cash' ? 'Apply' : 'Pay with stripe'}
     </button>
   );

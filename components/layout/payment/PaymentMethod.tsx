@@ -1,17 +1,18 @@
 import clsx from 'clsx';
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
-import type { FC, Key } from 'react';
+import type { FC } from 'react';
 
 import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Loader from '@/components/shared/Loader';
-import { UseDate } from '@/components/utils';
 
 import TotalAmount from '../cart/TotalAmount';
 import ConfirmOrderButton from './ConfirmOrderButton';
 import EditOrderButton from './EditOrderButton';
+import OrderDataTable from './OrderDataTable';
+import OrderProductsTable from './OrderProductsTable';
 
 type PaymentMethodProps = {
   account: IAccountsEntity;
@@ -22,7 +23,6 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ account }) => {
   const { isLoading, onConfirmOrder } = useCreateOrder();
 
   const orderData = useAppSelector((state) => state.orderReducer.order);
-  const productsInCart = useAppSelector((state) => state.cartReducer.products);
   const isActive = orderData?.paymentAccountIdentifier === account.identifier;
 
   return (
@@ -58,76 +58,10 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ account }) => {
         <>
           <div className="flex flex-wrap justify-between text-[#4C4D56]">
             <div className="flex w-2/3 flex-col border border-solid max-md:w-full max-md:max-w-full">
-              <div className="flex border-b border-solid p-2">
-                <div className="w-1/2 font-bold">Product</div>
-                <div className="w-1/4 font-bold">Price</div>
-                <div className="w-1/4 font-bold">Quantity</div>
-              </div>
-              {productsInCart.map((product, i) => {
-                const { localizeInfos, selected, quantity, price } = product;
-                const title = localizeInfos?.title;
-                if (!selected) {
-                  return;
-                }
-                return (
-                  <div
-                    key={i}
-                    className="-mt-px flex border-b border-solid p-2"
-                  >
-                    <div className="w-1/2">{title}</div>
-                    <div className="w-1/4">{price}</div>
-                    <div className="w-1/4">{quantity}</div>
-                  </div>
-                );
-              })}
+              <OrderProductsTable account={account} />
             </div>
             <div className="flex w-1/3 flex-col border border-solid px-6 py-2 max-md:w-full max-md:max-w-full max-md:border-t-0 max-md:px-2">
-              {orderData?.formData.map(
-                (
-                  field: {
-                    marker: string;
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    value: any;
-                  },
-                  i: Key,
-                ) => {
-                  if (field.marker === 'order_address') {
-                    return (
-                      <div
-                        key={i}
-                        className="flex flex-col max-md:flex-row max-md:gap-2"
-                      >
-                        <b>Address:</b> {field.value}
-                      </div>
-                    );
-                  }
-                  if (field.marker === 'date') {
-                    return (
-                      <div
-                        key={i}
-                        className="flex flex-col max-md:flex-row max-md:gap-2"
-                      >
-                        <b>Delivery date: </b>{' '}
-                        {UseDate({
-                          fullDate: field.value.fullDate,
-                          format: 'en',
-                        })}
-                      </div>
-                    );
-                  }
-                  if (field.marker === 'time') {
-                    return (
-                      <div
-                        key={i}
-                        className="flex flex-col max-md:flex-row max-md:gap-2"
-                      >
-                        <b>Delivery time: </b> {field.value}
-                      </div>
-                    );
-                  }
-                  return;
-                },
-              )}
+              <OrderDataTable account={account} />
             </div>
             <div className="mt-2 flex">
               <TotalAmount

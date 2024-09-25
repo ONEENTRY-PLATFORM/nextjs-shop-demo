@@ -4,6 +4,7 @@ import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC, Key } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
+import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 import Loader from '@/components/shared/Loader';
 import { UseDate, UsePrice } from '@/components/utils';
 
@@ -17,6 +18,7 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
     id: id,
     activeLang: 'en_US',
   });
+  const { onConfirmOrder } = useCreateOrder();
 
   if (!data) {
     return <Loader />;
@@ -97,7 +99,10 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
           </div>
           {paymentAccountIdentifier === 'stripe' &&
             statusIdentifier === 'created' && (
-              <button className="btn btn-sm btn-o-primary" onClick={() => {}}>
+              <button
+                className="btn btn-sm btn-o-primary"
+                onClick={onConfirmOrder}
+              >
                 Go to pay
               </button>
             )}

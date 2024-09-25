@@ -99,6 +99,7 @@ export const RTKApi = createApi({
         try {
           const result = await api.Users.getUser('en_US');
           if (!result) {
+            // !!!
             localStorage.setItem('refresh-token', '');
             return { error: 'getUser error' };
           }
