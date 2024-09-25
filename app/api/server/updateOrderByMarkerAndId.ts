@@ -5,22 +5,17 @@ import type {
 
 import { api } from '../api/api';
 
-export const updateOrderByMarkerAndId = async ({
-  marker,
-  id,
-  data,
-}: {
-  marker: string;
-  id: number;
-  data: IOrderData;
-}): Promise<{
+export const updateOrderByMarkerAndId = async (
+  marker: string,
+  id: number,
+  data: IOrderData,
+): Promise<{
   order?: IBaseOrdersEntity;
   isError: boolean;
   err?: unknown;
 }> => {
   try {
     const order = await api.Orders.updateOrderByMarkerAndId(marker, id, data);
-    console.log(order);
     return { isError: false, order: order };
   } catch (e) {
     return { isError: true, err: e };

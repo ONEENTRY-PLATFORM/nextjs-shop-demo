@@ -48,17 +48,15 @@ const OrderPage: FC<{ id: number }> = ({ id }) => {
   const cancelOrder = async () => {
     const formData = {
       ...data,
+      products: data.products.map((product) => ({
+        productId: product.id,
+        quantity: product.quantity
+      })),
       statusIdentifier: 'canceled',
     } as unknown as IOrderData;
-    console.log('cancelOrder');
-    console.log(data);
-    console.log(formData);
 
-    await updateOrderByMarkerAndId({
-      marker: 'order',
-      id,
-      data: formData,
-    });
+    const order = await updateOrderByMarkerAndId('order', id, formData );
+
     return;
   };
 

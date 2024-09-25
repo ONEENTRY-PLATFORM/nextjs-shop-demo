@@ -81,7 +81,6 @@ export default async function CatalogPage({
     offset: currentPage * pageLimit,
     params: { ...params, searchParams: searchParams },
   });
-  console.log(total);
 
   if (isError || !products) {
     return notFound();

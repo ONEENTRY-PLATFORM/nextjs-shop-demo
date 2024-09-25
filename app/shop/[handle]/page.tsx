@@ -83,8 +83,6 @@ export default async function CatalogPage({
     params: { ...params, searchParams: searchParams },
   });
 
-  console.log(total);
-
   if (isError || !products) {
     return notFound();
   }

@@ -108,8 +108,6 @@ const ContactUsForm: FC = () => {
         formIdentifier: 'contact_us',
         formData: transformedFormData,
       };
-      console.log(formFields);
-      console.log(formData);
 
       try {
         setLoading(true);

@@ -7,11 +7,9 @@ import ContactUsForm from '@/components/forms/ContactUsForm';
 import Loader from '@/components/shared/Loader';
 
 const ContactsPage: FC<{ page: any }> = async ({ page }) => {
-  // console.log(page);
   const { localizeInfos, attributeValues, forms, blocks } = page;
   const { title, htmlContent } = localizeInfos;
   const { icon } = attributeValues;
-  // console.log(blocks);
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">

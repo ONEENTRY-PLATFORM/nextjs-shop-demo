@@ -45,29 +45,6 @@ export const socialProvidersButtons = [
   },
 ];
 
-export const variationsItems = [
-  {
-    title: 'Red',
-    imageSrc: '/images/catalog-img-1.svg',
-  },
-  {
-    title: 'Blue',
-    imageSrc: '/images/catalog-img-2.svg',
-  },
-  {
-    title: 'Green',
-    imageSrc: '/images/catalog-img-3.svg',
-  },
-  {
-    title: 'Yellow',
-    imageSrc: '/images/catalog-img-4.svg',
-  },
-  {
-    title: 'Gray',
-    imageSrc: '/images/catalog-img-5.svg',
-  },
-];
-
 // timeSlots
 export const timeSlotsData = [
   {
@@ -137,7 +114,7 @@ export const reviewsData = [
     rating: 5,
   },
   {
-    name: 'Ahmet L.',
+    name: 'Sit consequat',
     avatarSrc: '',
     content:
       'Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
@@ -146,7 +123,7 @@ export const reviewsData = [
     rating: 3,
   },
   {
-    name: 'Ahmet M.',
+    name: 'Diam eget',
     avatarSrc: '',
     content:
       'Lorem ipsum dolor sit amet consectetur. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
@@ -155,7 +132,7 @@ export const reviewsData = [
     rating: 2,
   },
   {
-    name: 'Ahmet N.',
+    name: 'Lorem ipsum',
     avatarSrc: '',
     content:
       'Lorem ipsum dolor. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
