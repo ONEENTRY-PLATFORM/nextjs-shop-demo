@@ -58,7 +58,7 @@ const formFieldsReducer = persistReducer(
 );
 const orderReducer = persistReducer(
   {
-    key: 'favorites-slice',
+    key: 'order-slice',
     storage: storage,
     version: 1,
     whitelist: ['products'],

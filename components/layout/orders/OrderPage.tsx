@@ -43,7 +43,6 @@ const OrderPage: FC<{
     currency: currency,
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {
     status_of_payment_title,
     payment_account_title,
@@ -88,7 +87,6 @@ const OrderPage: FC<{
                 </div>
               );
             }
-
             if (field.marker === 'date') {
               const date = UseDate({
                 fullDate: field.value.fullDate,
@@ -112,11 +110,12 @@ const OrderPage: FC<{
           },
         )}
         <div className="flex gap-2">
-          <b>{status_of_payment_title}: </b> {statusIdentifier}
+          <b>{status_of_payment_title.value}:</b> {statusIdentifier}
         </div>
         <div className="flex gap-2">
           <div>
-            <b>{payment_account_title}: </b> {paymentAccountLocalizeInfos.title}
+            <b>{payment_account_title.value}:</b>{' '}
+            {paymentAccountLocalizeInfos.title}
           </div>
           {paymentAccountIdentifier === 'stripe' &&
             statusIdentifier === 'created' && (
@@ -124,24 +123,24 @@ const OrderPage: FC<{
                 className="btn btn-sm btn-o-primary"
                 onClick={onConfirmOrder}
               >
-                {go_to_pay_title}
+                {go_to_pay_title.value}
               </button>
             )}
         </div>
         <div className="flex gap-2 text-lg">
-          <b>{total_amount_title}: </b> {formattedTotal}
+          <b>{total_amount_title.value}: </b> {formattedTotal}
         </div>
         <hr className="my-4" />
       </div>
       <div className="flex gap-4">
         <RepeatOrderButton
           data={data}
-          title={repeat_order_title}
+          title={repeat_order_title.value}
           isLoading={isLoading}
         />
         <CancelOrderButton
           data={data}
-          title={cancel_order_title}
+          title={cancel_order_title.value}
           isLoading={isLoading}
           refetch={refetch}
         />

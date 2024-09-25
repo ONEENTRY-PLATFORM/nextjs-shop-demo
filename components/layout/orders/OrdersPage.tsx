@@ -25,6 +25,8 @@ const OrdersPage = () => {
   const pageLimit = settings?.orders_limit.value;
   const langCode = 'en_US';
 
+  const totalPages = Number(total) / (settings?.orders_limit.value || 10);
+
   useEffect(() => {
     if (!isAuth) {
       return;
@@ -61,8 +63,6 @@ const OrdersPage = () => {
   if (!isAuth || !user) {
     return <AuthError />;
   }
-
-  const totalPages = Number(total) / (settings?.orders_limit.value || 10);
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">

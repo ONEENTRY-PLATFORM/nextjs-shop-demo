@@ -44,10 +44,10 @@ const ProductCard: FC<{
         <h2 className="text-base">{title}</h2>
         <div className="text-base">{formattedPrice}</div>
         <div className="text-base">
-          <b>{product_qty_title}:</b> {quantity}
+          <b>{product_qty_title.value}:</b> {quantity}
         </div>
         <div className="text-base">
-          <b>{product_card_title}:</b> {formattedSubtotal}
+          <b>{product_card_title.value}:</b> {formattedSubtotal}
         </div>
       </div>
       <Link
