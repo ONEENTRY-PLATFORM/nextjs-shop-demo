@@ -7,13 +7,8 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '@/app/store/hooks';
 import CartIcon from '@/components/icons/cart';
 
-const item = {
-  icon: '/icons/cart.svg',
-  href: '/cart',
-  title: 'Cart',
-};
-
-const NavItemCart: FC = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const NavItemCart: FC<{ item: any }> = ({ item }) => {
   const [count, setCount] = useState(0);
 
   const cartCount = useAppSelector((state) => {
@@ -36,10 +31,12 @@ const NavItemCart: FC = () => {
     setCount(cartCount);
   }, [cartCount]);
 
+  const { pageUrl, localizeInfos } = item;
+
   return (
     <Link
-      href={item.href}
-      title={item.title}
+      href={'/' + pageUrl}
+      title={localizeInfos.menuTitle}
       className="group relative box-border flex size-6 shrink-0 flex-col"
     >
       <CartIcon />

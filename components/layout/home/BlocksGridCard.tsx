@@ -4,6 +4,7 @@ import type React from 'react';
 import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
+import Loader from '@/components/shared/Loader';
 import Placeholder from '@/components/shared/Placeholder';
 
 interface BlocksGridCardProps {
@@ -23,7 +24,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   const { block, isError } = await getBlockByMarker(marker, 'en_US');
 
   if (!block || !block.attributeValues || !block.isVisible || isError) {
-    return null;
+    return <Loader />;
   }
 
   const { title, bg_web, link = '' } = block.attributeValues;
@@ -61,6 +62,8 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
         {imageSrc ? (
           <Image
             fill
+            loading="eager"
+            decoding="auto"
             sizes="(min-width: 1024px) 66vw, 100vw"
             src={imageSrc}
             alt={title?.value || ''}
