@@ -3,7 +3,7 @@ import type {
   IOrderData,
 } from 'oneentry/dist/orders/ordersInterfaces';
 
-import { api } from '../api/api';
+import { api } from '@/app/api';
 
 export const updateOrderByMarkerAndId = async (
   marker: string,

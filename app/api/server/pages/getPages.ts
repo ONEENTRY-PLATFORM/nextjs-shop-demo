@@ -1,6 +1,6 @@
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 
-import { api } from '../api/api';
+import { api } from '@/app/api';
 
 export async function getPages(langCode: string): Promise<{
   pages?: IPagesEntity[];

@@ -1,6 +1,6 @@
 import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 
-import { api } from '../api/api';
+import { api } from '@/app/api';
 
 export const getMenuByMarker = async (
   marker: string,

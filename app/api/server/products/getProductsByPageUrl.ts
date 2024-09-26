@@ -1,7 +1,7 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import { api } from '../api/api';
-import getSearchParams from '../utils/getSearchParams';
+import { api } from '@/app/api';
+import getSearchParams from '@/app/api/utils/getSearchParams';
 
 export const getProductsByPageUrl = async (props: {
   langCode: string;
