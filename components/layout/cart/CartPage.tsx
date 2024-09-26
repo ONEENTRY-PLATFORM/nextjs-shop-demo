@@ -12,13 +12,8 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addProductToCart,
   selectCartItems,
-  selectDeliveryData,
 } from '@/app/store/reducers/CartSlice';
-import {
-  addData,
-  addProducts,
-  createOrder,
-} from '@/app/store/reducers/OrderSlice';
+import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import DeliveryTable from '@/components/layout/cart/DeliveryTable';
 import PaymentButton from '@/components/layout/cart/PaymentButton';
 import ProductCard from '@/components/layout/cart/ProductCard';
@@ -26,14 +21,13 @@ import TotalAmount from '@/components/layout/cart/TotalAmount';
 
 import EmptyCart from './EmptyCart';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CartPage: FC<{ page: IPagesEntity }> = ({ page }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const [isLoading, setIsLoading] = useState(true);
   const delivery = useGetProduct({ id: 83 });
-
-  const deliveryData = useAppSelector(selectDeliveryData);
 
   const productsInCart = useAppSelector(selectCartItems) as Array<
     IProductsEntity & { quantity: number; selected: boolean }
@@ -62,6 +56,7 @@ const CartPage: FC<{ page: IPagesEntity }> = ({ page }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // add products to order
   useEffect(() => {
     if (productsInOrder) {
       dispatch(addProducts(productsInOrder));
@@ -69,7 +64,7 @@ const CartPage: FC<{ page: IPagesEntity }> = ({ page }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productsInOrder]);
 
-  // add delivery to cart
+  // add delivery product to cart
   useEffect(() => {
     if (!delivery || !delivery.product) {
       return;
@@ -93,43 +88,6 @@ const CartPage: FC<{ page: IPagesEntity }> = ({ page }) => {
     return <EmptyCart />;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmitOrder = (e: any) => {
-    e.preventDefault();
-    const date = deliveryData.date;
-    const time = deliveryData.time;
-    const address = deliveryData.address;
-    dispatch(
-      addData({
-        marker: 'date',
-        type: 'date',
-        value: {
-          fullDate: new Date(date).toISOString(),
-          formattedValue: new Date(date).toDateString() + ' 00:00',
-          formatString: 'YYYY-MM-DD',
-        },
-        valid: date ? true : false,
-      }),
-    );
-    dispatch(
-      addData({
-        marker: 'time',
-        type: 'string',
-        value: time,
-        valid: time ? true : false,
-      }),
-    );
-    dispatch(
-      addData({
-        marker: 'order_address',
-        type: 'string',
-        value: address,
-        valid: address ? true : false,
-      }),
-    );
-    router.push('/payment');
-  };
-
   return (
     <div className="flex w-full flex-col pb-5 lg:max-w-[730px]">
       {productsInCart.length > 0 && (
@@ -149,7 +107,10 @@ const CartPage: FC<{ page: IPagesEntity }> = ({ page }) => {
       )}
       <form
         className="flex w-[730px] max-w-full flex-col pb-5"
-        onSubmit={onSubmitOrder}
+        onSubmit={(e) => {
+          e.preventDefault();
+          router.push('/payment');
+        }}
       >
         <DeliveryTable {...(delivery.product as IProductsEntity)} />
         <div className="mt-4 flex w-full flex-col">

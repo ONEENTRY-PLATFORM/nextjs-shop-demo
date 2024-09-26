@@ -31,7 +31,6 @@ export const useCreateOrder = () => {
       router.push('/orders');
       return 'payment_success';
     }
-    // console.log(paymentUrl);
 
     if (paymentUrl) {
       router.push(paymentUrl);

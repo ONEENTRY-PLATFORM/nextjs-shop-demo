@@ -3,7 +3,7 @@ import Image from 'next/image';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -11,6 +11,7 @@ import {
   selectDeliveryData,
   setDeliveryData,
 } from '@/app/store/reducers/CartSlice';
+import { addData } from '@/app/store/reducers/OrderSlice';
 import { UsePrice } from '@/components/utils';
 
 import TableRow from './DeliveryTableRow';
@@ -30,6 +31,43 @@ const DeliveryTable: FC<IProductsEntity> = (delivery) => {
     order_info_time_placeholder,
     order_info_address_placeholder,
   } = useAppSelector((state) => state.systemContentReducer.content);
+
+  // set delivery data onChange
+  useEffect(() => {
+    const date = deliveryData.date;
+    const time = deliveryData.time;
+    const address = deliveryData.address;
+
+    dispatch(
+      addData({
+        marker: 'date',
+        type: 'date',
+        value: {
+          fullDate: new Date(date).toISOString(),
+          formattedValue: new Date(date).toDateString() + ' 00:00',
+          formatString: 'YYYY-MM-DD',
+        },
+        valid: date ? true : false,
+      }),
+    );
+    dispatch(
+      addData({
+        marker: 'time',
+        type: 'string',
+        value: time,
+        valid: time ? true : false,
+      }),
+    );
+    dispatch(
+      addData({
+        marker: 'order_address',
+        type: 'string',
+        value: address,
+        valid: address ? true : false,
+      }),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deliveryData]);
 
   return (
     <table className="table w-full border-collapse text-neutral-600">
