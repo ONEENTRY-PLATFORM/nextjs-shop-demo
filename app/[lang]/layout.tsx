@@ -45,8 +45,8 @@ export default async function RootLayout({
                   <Header params={params} />
                   <NavigationMenu params={params} />
                   <div className="grow">{children}</div>
-                  <Footer />
-                  <Modal />
+                  <Footer params={params} />
+                  <Modal params={params} />
                 </OpenDrawerProvider>
               </ContentContextProvider>
             </AuthProvider>

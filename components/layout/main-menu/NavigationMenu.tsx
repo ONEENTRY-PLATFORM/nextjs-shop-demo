@@ -37,7 +37,7 @@ const NavigationMenu: FC<{ params: { lang: string } }> = async ({
               >
                 <NavigationMenuItem
                   label={item.localizeInfos.menuTitle}
-                  href={'/shop/' + item.pageUrl}
+                  href={'/' + lang + '/shop/' + item.pageUrl}
                   hasDropdown={item.children ? true : false}
                 />
 
@@ -47,7 +47,7 @@ const NavigationMenu: FC<{ params: { lang: string } }> = async ({
                       return (
                         <li key={i}>
                           <Link
-                            href={'/shop/category/' + it.pageUrl}
+                            href={'/' + lang + '/shop/category/' + it.pageUrl}
                             className="transition-colors duration-300 ease-in-out hover:text-red-500 focus:outline-none"
                           >
                             {it.localizeInfos.menuTitle}

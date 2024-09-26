@@ -1,10 +1,12 @@
 'use client';
+
 import {
   Dialog,
   DialogPanel,
   Transition,
   TransitionChild,
 } from '@headlessui/react';
+import type { FC } from 'react';
 import { Fragment, useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -12,7 +14,8 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import * as forms from '../../forms/';
 import CloseModal from './CloseModal';
 
-function Modal() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+const Modal: FC<{ params: any }> = ({ params }) => {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
   const closeModal = () => setOpen(false);
 
@@ -64,6 +67,6 @@ function Modal() {
       </Dialog>
     </Transition>
   );
-}
+};
 
 export default Modal;

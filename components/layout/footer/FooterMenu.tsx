@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { FC } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 
 import ContactInfo from './ContactInfo';
 import FooterMenu from './Menu';
@@ -13,8 +15,8 @@ const logo = {
   alt: 'OneEntry',
 };
 
-const FooterMenuSection = async () => {
-  const langCode = 'en_US';
+const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const quickLinks = await getMenuByMarker('quick_links', langCode);
   const infoLinks = await getMenuByMarker('information', langCode);
 

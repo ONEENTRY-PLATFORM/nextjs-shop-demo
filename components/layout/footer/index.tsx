@@ -1,14 +1,18 @@
+import type { FC } from 'react';
+
 import FooterMenuSection from './FooterMenu';
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
-export default async function Footer() {
+const Footer: FC<{ params: { lang: string } }> = async ({
+  params: { lang },
+}) => {
   const currentYear = new Date().getFullYear();
   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
 
   return (
     <footer className="w-full">
-      <FooterMenuSection />
+      <FooterMenuSection lang={lang} />
       <div className="w-full bg-black px-5 py-11 text-center text-white max-md:max-w-full max-md:p-5">
         <div className="">
           &copy; {copyrightDate} {SITE_NAME}, by{' '}
@@ -17,4 +21,6 @@ export default async function Footer() {
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;
