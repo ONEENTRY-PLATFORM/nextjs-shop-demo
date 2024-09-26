@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import parse from 'html-react-parser';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { FC, Key } from 'react';
-import { Suspense } from 'react';
 
 import ContactUsForm from '@/components/forms/ContactUsForm';
-import Loader from '@/components/shared/Loader';
 
 const ContactsPage: FC<{ page: IPagesEntity }> = async ({ page }) => {
   const { localizeInfos, forms } = page;
@@ -12,15 +10,15 @@ const ContactsPage: FC<{ page: IPagesEntity }> = async ({ page }) => {
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
-      <Suspense fallback={<Loader />}>
-        <h1>{title}</h1>
-        {htmlContent && <div>{htmlContent}</div>}
+      <div className="flex flex-col items-center">
+        <h1 className="mb-3">{title}</h1>
+        {htmlContent && <div className="mb-6">{parse(htmlContent)}</div>}
         {forms?.map((form: string, i: Key) => {
           if (form === 'contact_us') {
-            return <ContactUsForm key={i} />;
+            return <ContactUsForm key={i} className="" />;
           }
         })}
-      </Suspense>
+      </div>
     </div>
   );
 };

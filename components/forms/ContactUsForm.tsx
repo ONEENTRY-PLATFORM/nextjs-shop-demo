@@ -15,7 +15,7 @@ import { FormCaptcha } from './inputs/FormCaptcha';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const ContactUsForm: FC = () => {
+const ContactUsForm: FC<{ className: string }> = ({ className }) => {
   const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'contact_us' });
 
   const [token, setToken] = useState<string>('');
@@ -127,13 +127,12 @@ const ContactUsForm: FC = () => {
 
   return (
     <form
-      className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+      className={
+        'flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5 ' +
+        className
+      }
       onSubmit={(e) => onSubmitForm(e)}
     >
-      <div className="relative box-border flex shrink-0 flex-col gap-2.5">
-        <h2 className="max-w-full text-neutral-600">CS</h2>
-      </div>
-
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
         {formFields?.map((field: IAttributes, index: Key) => {
           if (field.type === 'button') {
