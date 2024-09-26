@@ -1,17 +1,12 @@
 import parse from 'html-react-parser';
 import Image from 'next/image';
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 
-import { getPageByUrl } from '@/app/api';
 import Loader from '@/components/shared/Loader';
 
-const AboutPage: FC = async () => {
-  const { page, isError } = await getPageByUrl('about_us', 'en_US');
-  if (!page || isError) {
-    return;
-  }
-
+const AboutPage: FC<{ page: IPagesEntity }> = async ({ page }) => {
   const { attributeValues } = page;
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">

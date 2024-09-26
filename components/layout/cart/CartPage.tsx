@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { useEffect, useMemo, useState } from 'react';
@@ -25,7 +26,7 @@ import TotalAmount from '@/components/layout/cart/TotalAmount';
 
 import EmptyCart from './EmptyCart';
 
-const CartPage: FC = () => {
+const CartPage: FC<{ page: IPagesEntity }> = ({ page }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 

@@ -1,5 +1,7 @@
 'use client';
 
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
+import type { FC } from 'react';
 import { Suspense, useContext, useMemo } from 'react';
 
 import { useGetAccountsQuery } from '@/app/api';
@@ -10,7 +12,7 @@ import Loader from '@/components/shared/Loader';
 
 import PaymentMethod from './PaymentMethod';
 
-const PaymentPage = () => {
+const PaymentPage: FC<{ page: IPagesEntity }> = ({ page }) => {
   const { isAuth } = useContext(AuthContext);
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,

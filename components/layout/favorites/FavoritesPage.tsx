@@ -1,6 +1,8 @@
 'use client';
 
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
@@ -10,7 +12,7 @@ import { ProductsGridLoader } from '@/components/shared/Loader';
 
 import EmptyFavorites from './EmptyFavorites';
 
-const FavoritesPage = () => {
+const FavoritesPage: FC<{ page: IPagesEntity }> = ({ page }) => {
   const favorites = useAppSelector((state) =>
     selectFavoritesItems(state),
   ) as Array<IProductsEntity>;
