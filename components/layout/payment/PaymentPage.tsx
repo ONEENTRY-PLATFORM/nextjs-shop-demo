@@ -12,6 +12,7 @@ import Loader from '@/components/shared/Loader';
 
 import PaymentMethod from './PaymentMethod';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PaymentPage: FC<{ page: IPagesEntity }> = ({ page }) => {
   const { isAuth } = useContext(AuthContext);
   const paymentMethods = useAppSelector(

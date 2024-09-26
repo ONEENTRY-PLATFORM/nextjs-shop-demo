@@ -43,51 +43,51 @@ export default async function Page({ params }: { params: { page: string } }) {
     return notFound();
   }
 
-  const { pageUrl } = page;
+  const { pageUrl, templateIdentifier } = page;
 
   const pages = [
     {
-      templateType: 'withSidebar',
+      templateType: templateIdentifier,
       name: 'profile',
       component: <ProfilePage page={page} />,
     },
     {
-      templateType: 'withSidebar',
+      templateType: templateIdentifier,
       name: 'cart',
       component: <CartPage page={page} />,
     },
     {
-      templateType: 'withSidebar',
+      templateType: templateIdentifier,
       name: 'payment',
       component: <PaymentPage page={page} />,
     },
     {
-      templateType: 'withSidebar',
+      templateType: templateIdentifier,
       name: 'favorites',
       component: <FavoritesPage page={page} />,
     },
     {
-      templateType: '',
+      templateType: templateIdentifier,
       name: 'about_us',
       component: <AboutPage page={page} />,
     },
     {
-      templateType: '',
+      templateType: templateIdentifier,
       name: 'services',
       component: <ServicesPage page={page} />,
     },
     {
-      templateType: '',
+      templateType: templateIdentifier,
       name: 'contact_us',
       component: <ContactsPage page={page} />,
     },
     {
-      templateType: '',
+      templateType: templateIdentifier,
       name: 'payment_success',
       component: <PaymentSuccess page={page} />,
     },
     {
-      templateType: '',
+      templateType: templateIdentifier,
       name: 'payment_canceled',
       component: <PaymentCanceled page={page} />,
     },

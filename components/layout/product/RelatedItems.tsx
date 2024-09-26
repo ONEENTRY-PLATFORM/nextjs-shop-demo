@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
@@ -6,13 +5,12 @@ import { getBlockByMarker } from '@/app/api';
 import ProductCard from '../catalog/product-card/ProductCard';
 
 const RelatedItems: FC<{
-  id: number;
   marker: string;
-}> = async ({ id, marker }) => {
+}> = async ({ marker }) => {
   const langCode = 'en_US';
   const { isError, block } = await getBlockByMarker(marker, langCode);
 
-  if (isError || !block) {
+  if (isError || !block || !block.similarProducts) {
     return null;
   }
 
@@ -21,9 +19,8 @@ const RelatedItems: FC<{
       <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
         {block.localizeInfos.title}
       </h3>
-
       <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-        {block.similarProducts?.map((product, i) => {
+        {block.similarProducts.map((product, i) => {
           return <ProductCard key={i} {...product} />;
         })}
       </div>

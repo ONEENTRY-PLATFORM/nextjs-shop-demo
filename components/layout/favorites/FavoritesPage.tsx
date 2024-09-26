@@ -12,6 +12,7 @@ import { ProductsGridLoader } from '@/components/shared/Loader';
 
 import EmptyFavorites from './EmptyFavorites';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const FavoritesPage: FC<{ page: IPagesEntity }> = ({ page }) => {
   const favorites = useAppSelector((state) =>
     selectFavoritesItems(state),
