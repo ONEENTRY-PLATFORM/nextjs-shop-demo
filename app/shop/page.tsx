@@ -8,7 +8,8 @@ import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { isError, page } = await getPageByUrl('shop', 'en_US');
+  const langCode = 'en_US';
+  const { isError, page } = await getPageByUrl('shop', langCode);
   if (isError || !page) {
     return notFound();
   }

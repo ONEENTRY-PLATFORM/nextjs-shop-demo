@@ -14,9 +14,10 @@ import VariationsCarousel from './variations/VariationsCarousel';
 const ProductSingle: FC<
   IProductsEntity & { blocks?: Array<string>; productPages?: [] }
 > = async (product) => {
+  const langCode = 'en_US';
   const { attributeValues, localizeInfos, blocks } = product;
 
-  const relatedData = await getRelatedProductsById(product.id, 'en_US');
+  const relatedData = await getRelatedProductsById(product.id, langCode);
   const description = attributeValues.description.value[0].htmlValue;
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">

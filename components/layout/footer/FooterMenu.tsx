@@ -14,8 +14,9 @@ const logo = {
 };
 
 const FooterMenuSection = async () => {
-  const quickLinks = await getMenuByMarker('quick_links', 'en_US');
-  const infoLinks = await getMenuByMarker('information', 'en_US');
+  const langCode = 'en_US';
+  const quickLinks = await getMenuByMarker('quick_links', langCode);
+  const infoLinks = await getMenuByMarker('information', langCode);
 
   return (
     <div className="flex w-full items-center justify-center bg-gray-200 px-5 py-10 max-md:px-5">

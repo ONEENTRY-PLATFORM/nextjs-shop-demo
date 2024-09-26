@@ -9,6 +9,7 @@ import { removeAllProducts } from '@/app/store/reducers/CartSlice';
 import { removeOrder } from '@/app/store/reducers/OrderSlice';
 
 export const useCreateOrder = () => {
+  const langCode = 'en_US';
   const router = useRouter();
   const dispatch = useAppDispatch();
   const order = useAppSelector((state) => state.orderReducer.order);
@@ -57,7 +58,7 @@ export const useCreateOrder = () => {
             formIdentifier: order.formIdentifier,
             paymentAccountIdentifier: order.paymentAccountIdentifier,
           },
-          'en_US',
+          langCode,
         );
 
         dispatch(removeAllProducts());

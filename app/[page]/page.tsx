@@ -19,7 +19,8 @@ export async function generateMetadata({
 }: {
   params: { page: string };
 }): Promise<Metadata> {
-  const { page, isError } = await getPageByUrl(params.page, 'en_US');
+  const langCode = 'en_US';
+  const { page, isError } = await getPageByUrl(params.page, langCode);
 
   if (isError || !page) {
     return notFound();
@@ -37,7 +38,8 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { page: string } }) {
-  const { page, isError } = await getPageByUrl(params.page, 'en_US');
+  const langCode = 'en_US';
+  const { page, isError } = await getPageByUrl(params.page, langCode);
 
   if (isError || !page) {
     return notFound();

@@ -13,8 +13,8 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const data = await getPageByUrl(params.handle, 'en_US');
+  const langCode = 'en_US';
+  const data = await getPageByUrl(params.handle, langCode);
   const { isError, page } = data;
 
   if (isError || !page) {

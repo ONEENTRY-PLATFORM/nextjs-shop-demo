@@ -10,9 +10,10 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
+  const langCode = 'en_US';
   const { isError, product } = await getProductById(
     Number(params.handle),
-    'en_US',
+    langCode,
   );
 
   if (isError || !product) {
@@ -55,9 +56,10 @@ export default async function ProductPage({
 }: {
   params: { handle: string };
 }) {
+  const langCode = 'en_US';
   const { isError, product } = await getProductById(
     Number(params.handle),
-    'en_US',
+    langCode,
   );
 
   if (isError || !product) {

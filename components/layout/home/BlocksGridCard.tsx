@@ -21,7 +21,8 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   className,
   bgColor,
 }) => {
-  const { block, isError } = await getBlockByMarker(marker, 'en_US');
+  const langCode = 'en_US';
+  const { block, isError } = await getBlockByMarker(marker, langCode);
 
   if (!block || !block.attributeValues || !block.isVisible || isError) {
     return <Loader />;

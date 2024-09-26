@@ -11,7 +11,8 @@ import { CategoriesLoader } from '@/components/shared/Loader';
 
 // generateMetadata
 export async function generateMetadata(): Promise<Metadata> {
-  const { isError, page } = await getPageByUrl('category', 'en_US');
+  const langCode = 'en_US';
+  const { isError, page } = await getPageByUrl('category', langCode);
 
   if (isError || !page) {
     return notFound();

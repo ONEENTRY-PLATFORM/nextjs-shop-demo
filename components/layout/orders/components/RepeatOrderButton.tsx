@@ -14,6 +14,7 @@ const RepeatOrderButton: FC<{
   title: string;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 }> = ({ data, isLoading, title }) => {
+  const langCode = 'en_US';
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -24,7 +25,7 @@ const RepeatOrderButton: FC<{
       if (p.id === 83) {
         return;
       }
-      const { product } = await getProductById(Number(p.id), 'en_US');
+      const { product } = await getProductById(Number(p.id), langCode);
       if (!product) {
         return;
       }

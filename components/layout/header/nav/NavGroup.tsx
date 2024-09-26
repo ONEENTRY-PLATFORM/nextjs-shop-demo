@@ -8,7 +8,8 @@ import NavItemFavorites from './NavItemFavorites';
 import NavItemProfile from './NavItemProfile';
 
 export default async function NavGroup() {
-  const { menu, isError } = await getMenuByMarker('user_web', 'en_US');
+  const langCode = 'en_US';
+  const { menu, isError } = await getMenuByMarker('user_web', langCode);
 
   if (isError || !menu) {
     return;

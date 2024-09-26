@@ -17,10 +17,11 @@ const OrderPage: FC<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   settings: Record<string, any> | undefined;
 }> = ({ id, settings }) => {
+  const langCode = 'en_US';
   const { data, isLoading, refetch } = useGetSingleOrderQuery({
     marker: 'order',
     id: id,
-    activeLang: 'en_US',
+    activeLang: langCode,
   });
   const { onConfirmOrder } = useCreateOrder();
 

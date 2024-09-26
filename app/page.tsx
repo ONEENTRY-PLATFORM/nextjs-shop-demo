@@ -9,7 +9,8 @@ import Loader from '@/components/shared/Loader';
 // export const dynamicParams = true;
 
 const HomePage = async () => {
-  const { page, isError } = await getPageByUrl('home_web', 'en_US');
+  const langCode = 'en_US';
+  const { page, isError } = await getPageByUrl('home_web', langCode);
 
   if (isError || !page?.blocks) {
     return null;

@@ -7,7 +7,8 @@ import LogoutMenuItem from './LogoutMenuItem';
 import SidebarMenuItem from './SidebarMenuItem';
 
 export default async function SidebarMenu() {
-  const { isError, menu } = await getMenuByMarker('side_web', 'en_US');
+  const langCode = 'en_US';
+  const { isError, menu } = await getMenuByMarker('side_web', langCode);
 
   if (isError || !menu) {
     return <SidebarMenuLoader />;

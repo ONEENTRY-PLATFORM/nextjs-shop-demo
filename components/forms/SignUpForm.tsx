@@ -15,6 +15,7 @@ import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
 const SignUpForm: FC = () => {
+  const langCode = 'en_US';
   const { authenticate } = useContext(AuthContext);
   const { setOpen, setComponent, setAction } = useContext(OpenDrawerContext);
 
@@ -92,7 +93,7 @@ const SignUpForm: FC = () => {
       setIsLoading(true);
 
       try {
-        const res = await api.AuthProvider.signUp('email', data, 'en_US');
+        const res = await api.AuthProvider.signUp('email', data, langCode);
         // if user active try login else Verification and activateUser
         if (res && res.isActive) {
           try {

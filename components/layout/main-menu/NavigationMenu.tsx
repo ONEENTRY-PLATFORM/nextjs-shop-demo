@@ -10,7 +10,8 @@ import OffscreenModal from '../mobile-menu/OffscreenModal';
 import NavigationMenuItem from './NavigationMenuItem';
 
 const NavigationMenu: React.FC = async () => {
-  const { isError, menu } = await getMenuByMarker('main_web', 'en_US');
+  const langCode = 'en_US';
+  const { isError, menu } = await getMenuByMarker('main_web', langCode);
 
   if (!menu || !menu.pages || isError) {
     return;
