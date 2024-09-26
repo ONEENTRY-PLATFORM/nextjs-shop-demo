@@ -1,6 +1,6 @@
 export enum LanguageEnum {
-  EN = 'en_US',
-  FR = 'fr_FR',
+  en = 'en_US',
+  fr = 'fr_FR',
 }
 
 export enum Sizes {

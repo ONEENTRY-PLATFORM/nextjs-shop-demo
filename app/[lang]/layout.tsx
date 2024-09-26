@@ -8,11 +8,12 @@ import Header from '@/components/layout/header';
 import NavigationMenu from '@/components/layout/main-menu/NavigationMenu';
 import Modal from '@/components/layout/modal/ModalLayout';
 
-import { AuthProvider } from './store/providers/AuthContext';
-import { ContentContextProvider } from './store/providers/ContentContext';
-import { LanguageProvider } from './store/providers/LanguageContext';
-import { OpenDrawerProvider } from './store/providers/OpenDrawerContext';
-import StoreProvider from './store/providers/StoreProvider';
+import { AuthProvider } from '../store/providers/AuthContext';
+import { ContentContextProvider } from '../store/providers/ContentContext';
+import { LanguageProvider } from '../store/providers/LanguageContext';
+import { OpenDrawerProvider } from '../store/providers/OpenDrawerContext';
+import StoreProvider from '../store/providers/StoreProvider';
+import { LanguageEnum } from '../types/enum';
 
 const lato = Lato({
   subsets: ['latin'],
@@ -29,17 +30,20 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-}: Readonly<{ children: React.ReactNode }>) {
+  params,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+}: Readonly<{ children: React.ReactNode; params: any }>) {
+  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   return (
-    <html lang="en">
+    <html lang={langCode}>
       <body className={lato.className + ' flex flex-col min-h-screen'}>
         <StoreProvider>
           <LanguageProvider>
             <AuthProvider>
               <ContentContextProvider>
                 <OpenDrawerProvider>
-                  <Header />
-                  <NavigationMenu />
+                  <Header params={params} />
+                  <NavigationMenu params={params} />
                   <div className="grow">{children}</div>
                   <Footer />
                   <Modal />

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import OrdersPage from '@/components/layout/orders/OrdersPage';
 
-import WithSidebar from '../[page]/WithSidebar';
+import WithSidebar from '../[lang]/[page]/WithSidebar';
 
 const Page = async () => {
   return (

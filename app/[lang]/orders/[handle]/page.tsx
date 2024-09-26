@@ -1,4 +1,4 @@
-import WithSidebar from '@/app/[page]/WithSidebar';
+import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
 import OrderPage from '@/components/layout/orders/OrderPage';
 
 export default function CatalogPage({

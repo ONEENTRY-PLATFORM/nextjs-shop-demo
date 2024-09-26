@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { FC } from 'react';
 
-const Logo: React.FC = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Logo: FC<{ params: any }> = async ({ params }) => {
+  console.log(params.lang);
   return (
     <Link
-      href="/"
+      href={'/' + params.lang}
       prefetch={true}
       className="relative flex h-[83px] w-full max-w-[300px] items-center outline-none max-lg:max-w-[200px] max-md:max-w-[200px] max-sm:max-w-[120px]"
     >

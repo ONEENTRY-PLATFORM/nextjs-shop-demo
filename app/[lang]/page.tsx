@@ -5,12 +5,19 @@ import { blocksColors, blocksData } from '@/components/data';
 import BlocksGrid from '@/components/layout/home/BlocksGrid';
 import Loader from '@/components/shared/Loader';
 
+import { LanguageEnum } from '../types/enum';
+
 // export const revalidate = 10;
 // export const dynamicParams = true;
 
-const HomePage = async () => {
-  const langCode = 'en_US';
+const IndexPage = async ({
+  params: { lang },
+}: {
+  params: { lang: string };
+}) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { page, isError } = await getPageByUrl('home_web', langCode);
+  // console.log(params);
 
   if (isError || !page?.blocks) {
     return null;
@@ -34,4 +41,4 @@ const HomePage = async () => {
   );
 };
 
-export default HomePage;
+export default IndexPage;
