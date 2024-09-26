@@ -2,7 +2,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 
 import { api } from '@/app/api';
 
-import getSearchParams from '../utils/getSearchParams';
+import getSearchParams from '../../utils/getSearchParams';
 
 export const getProducts = async (props: {
   limit: number;

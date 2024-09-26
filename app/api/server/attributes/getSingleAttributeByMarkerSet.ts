@@ -1,6 +1,6 @@
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 
-import { api } from '../api/api';
+import { api } from '@/app/api';
 
 export const getSingleAttributeByMarkerSet = async ({
   attributeMarker,
