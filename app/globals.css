@@ -28,6 +28,19 @@ body {
   display: none;
 }
 
+#filter::-webkit-scrollbar {
+  width: 10px;
+}
+
+#filter::-webkit-scrollbar-track {
+  background-color: #F6F7F9;
+}
+
+#filter::-webkit-scrollbar-thumb {
+  background-color: #c8cace;
+  border-radius: 6px;
+}
+
 /* forms */
 input:focus-visible {
   outline: none !important;
@@ -83,6 +96,7 @@ input:focus-visible {
       text-xl
       font-semibold 
       uppercase
+      max-md:h-[50px]
       max-md:text-lg;
   }
 
@@ -94,6 +108,7 @@ input:focus-visible {
       text-lg
       font-semibold
       uppercase
+      max-md:h-[42px]
       max-md:text-base;
   }
 
@@ -104,7 +119,8 @@ input:focus-visible {
       h-[42px]
       text-base
       font-semibold 
-      uppercase;
+      uppercase
+      max-md:h-[36px];
   }
 
   .btn-sm {
@@ -114,7 +130,8 @@ input:focus-visible {
       h-[36px]
       text-sm
       font-semibold 
-      uppercase;
+      uppercase
+      max-md:h-[32px];
   }
 
   .btn-primary {

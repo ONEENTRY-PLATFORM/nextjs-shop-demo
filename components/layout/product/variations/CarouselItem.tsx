@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -55,7 +56,11 @@ const CarouselItem: React.FC<VariationProps> = ({
             <Placeholder />
           )}
         </div>
-        <h3 className="w-full text-center text-xs leading-4">{title}</h3>
+        <h3 className="w-full text-center text-xs leading-4">
+          <Link href={'/shop/product/' + item.id} title={title}>
+            {title}
+          </Link>
+        </h3>
       </div>
     </button>
   );

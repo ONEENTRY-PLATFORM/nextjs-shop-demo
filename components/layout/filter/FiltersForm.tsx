@@ -26,7 +26,10 @@ const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
   }
 
   return (
-    <div className="flex min-h-[600px] w-full flex-col px-10 pb-16 pt-5">
+    <div
+      id="filter"
+      className="flex size-full h-auto flex-col overflow-x-hidden overscroll-y-auto px-10 pb-16 pt-5 max-md:max-h-full"
+    >
       {Object.keys(sortedAttributes).map((attribute, index) => {
         if (attribute === 'price_filter') {
           return <PricePickerFilter key={index} prices={prices} />;
@@ -48,7 +51,6 @@ const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
           );
         }
       })}
-
       <FilterButtons />
     </div>
   );
