@@ -107,9 +107,7 @@ input:focus-visible {
       h-[50px]
       text-lg
       font-semibold
-      uppercase
-      max-md:h-[42px]
-      max-md:text-base;
+      uppercase;
   }
 
   .btn-md {
@@ -119,8 +117,7 @@ input:focus-visible {
       h-[42px]
       text-base
       font-semibold 
-      uppercase
-      max-md:h-[36px];
+      uppercase;
   }
 
   .btn-sm {
@@ -130,8 +127,7 @@ input:focus-visible {
       h-[36px]
       text-sm
       font-semibold 
-      uppercase
-      max-md:h-[32px];
+      uppercase;
   }
 
   .btn-primary {

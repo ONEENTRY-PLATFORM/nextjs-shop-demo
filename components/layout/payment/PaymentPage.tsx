@@ -1,15 +1,21 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
-import { Suspense, useContext, useMemo } from 'react';
+import { Suspense, useContext, useEffect, useMemo, useState } from 'react';
 
 import { useGetAccountsQuery } from '@/app/api';
-import { useAppSelector } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+import { selectCartItems } from '@/app/store/reducers/CartSlice';
+import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import AuthError from '@/components/shared/AuthError';
 import Loader from '@/components/shared/Loader';
 
+import EmptyCart from '../cart/EmptyCart';
 import PaymentMethod from './PaymentMethod';
 
 const PaymentPage: FC<{ page: IPagesEntity; lang: string }> = ({
@@ -22,6 +28,10 @@ const PaymentPage: FC<{ page: IPagesEntity; lang: string }> = ({
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,
   );
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const { data, error } = useGetAccountsQuery({});
 
@@ -39,8 +49,47 @@ const PaymentPage: FC<{ page: IPagesEntity; lang: string }> = ({
     return [];
   }, [data, paymentMethods]);
 
+  const productsInCart = useAppSelector(selectCartItems) as Array<
+    IProductsEntity & { quantity: number; selected: boolean }
+  >;
+
+  const productsInOrder = useMemo(() => {
+    return productsInCart.reduce((results: Array<IOrderProductData>, item) => {
+      results.push({
+        productId: item.id,
+        quantity: item.quantity,
+      });
+      return results;
+    }, []);
+  }, [productsInCart]);
+
+  useEffect(() => {
+    setIsLoading(false);
+    dispatch(
+      createOrder({
+        formIdentifier: 'order',
+        formData: [],
+        products: productsInOrder,
+        paymentAccountIdentifier: '',
+      }),
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // add products to order
+  useEffect(() => {
+    if (productsInOrder) {
+      dispatch(addProducts(productsInOrder));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productsInOrder]);
+
   if (!isAuth || error) {
     return <AuthError />;
+  }
+
+  if (productsInCart.length < 2 || isLoading) {
+    return <EmptyCart />;
   }
 
   return (

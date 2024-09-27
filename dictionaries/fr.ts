@@ -1,9 +1,9 @@
 export default {
-  "server-component": {
-    "welcome": "Welcome"
+  'server-component': {
+    welcome: 'Welcome',
   },
-  "counter": {
-    "increment": "Increment",
-    "decrement": "Decrement"
-  }
-}
+  counter: {
+    increment: 'Increment',
+    decrement: 'Decrement',
+  },
+};

@@ -12,12 +12,20 @@ const LangSelector: FC<{ locales: any; lang: string }> = ({
   const pathname = usePathname();
   const { replace } = useRouter();
 
+  if (!lang) {
+    return;
+  }
+
   const onChange = (e: any) => {
     replace('/' + e.target.value);
   };
 
   return (
-    <select defaultValue={lang} onChange={onChange} className="uppercase">
+    <select
+      defaultValue={lang}
+      onChange={onChange}
+      className="uppercase text-neutral-600"
+    >
       {locales?.map((locale: any, i: Key) => {
         return (
           <option key={i} value={locale.shortCode}>

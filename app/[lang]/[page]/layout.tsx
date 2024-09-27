@@ -1,9 +1,15 @@
 import Breadcrumbs from '@/components/layout/breadcrumbs';
 
-function Layout({ children }: { children: React.ReactNode }) {
+function Layout({
+  children,
+  params: { lang },
+}: {
+  children: React.ReactNode;
+  params: { lang: string };
+}) {
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs lang={lang} />
       <main className="flex flex-col p-5">{children}</main>
     </>
   );

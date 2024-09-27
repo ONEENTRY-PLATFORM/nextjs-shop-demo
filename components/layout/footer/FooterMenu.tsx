@@ -23,7 +23,7 @@ const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
   return (
     <div className="flex w-full items-center justify-center bg-gray-200 px-5 py-10 max-md:px-5">
       <div className="flex w-full max-w-screen-xl flex-row flex-wrap items-start justify-between max-md:justify-start max-md:gap-16 max-sm:gap-6">
-        <Link href="/" className="max-md:w-full">
+        <Link href={'/' + lang + '/'} className="max-md:w-full">
           <Image
             src={logo.src}
             width={logo.width}
@@ -34,8 +34,8 @@ const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
           />
         </Link>
         <ContactInfo />
-        {quickLinks.menu && <FooterMenu menu={quickLinks.menu} />}
-        {infoLinks.menu && <FooterMenu menu={infoLinks.menu} />}
+        {quickLinks.menu && <FooterMenu menu={quickLinks.menu} lang={lang} />}
+        {infoLinks.menu && <FooterMenu menu={infoLinks.menu} lang={lang} />}
       </div>
     </div>
   );

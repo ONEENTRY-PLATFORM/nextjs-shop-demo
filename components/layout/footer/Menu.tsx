@@ -8,7 +8,8 @@ import MenuItem from './MenuItem';
 
 const Menu: FC<{
   menu: IMenusEntity;
-}> = ({ menu }) => {
+  lang: string;
+}> = ({ menu, lang }) => {
   const pages = menu.pages as Array<IMenusPages>;
 
   if (pages.length < 1) {
@@ -21,7 +22,7 @@ const Menu: FC<{
         <h2 className="mb-5 text-xl font-bold">{menu.localizeInfos.title}</h2>
         <ul className="flex flex-col gap-1.5 text-sm font-semibold">
           {pages.map((page, index) => (
-            <MenuItem key={index} page={page} />
+            <MenuItem key={index} page={page} lang={lang} />
           ))}
         </ul>
       </nav>

@@ -26,6 +26,8 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
 }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { block, isError } = await getBlockByMarker(marker, langCode);
+  // console.log(lang);
+  // console.log(block);
 
   if (!block || !block.attributeValues || !block.isVisible || isError) {
     return <Loader />;

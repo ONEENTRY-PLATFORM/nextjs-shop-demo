@@ -2,15 +2,19 @@ import Link from 'next/link';
 
 const BreadcrumbItem: React.FC<{
   link: string;
+  lang: string;
   isLast: boolean;
-}> = ({ link, isLast }) => {
+}> = ({ link, isLast, lang }) => {
+  console.log(link);
+  console.log(lang);
+
   return (
     <>
       {!isLast ? (
         <>
           /{' '}
           <Link
-            href={'/' + link}
+            href={'/' + lang + '/' + link}
             className="my-auto text-base hover:text-orange-500"
           >
             {link[0].toUpperCase() +

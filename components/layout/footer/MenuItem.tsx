@@ -7,7 +7,8 @@ import type { FC } from 'react';
 
 const MenuItem: FC<{
   page: IMenusPages;
-}> = ({ page }) => {
+  lang: string;
+}> = ({ page, lang }) => {
   const paths = usePathname();
   if (!page) {
     return;
@@ -18,7 +19,7 @@ const MenuItem: FC<{
     <li className="relative box-border">
       <Link
         className={'hover:text-red-500 ' + (isActive ? 'text-red-500' : '')}
-        href={'/' + page.pageUrl}
+        href={'/' + lang + '/' + page.pageUrl}
       >
         {page.localizeInfos.menuTitle}
       </Link>
