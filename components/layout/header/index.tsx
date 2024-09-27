@@ -17,7 +17,7 @@ const Header: FC<{ lang: string }> = async ({ lang }) => {
             <SearchBar />
           </Suspense>
           <Suspense fallback={<NavMenuLoader />}>
-            <NavGroup />
+            <NavGroup lang={lang} />
           </Suspense>
         </div>
       </section>

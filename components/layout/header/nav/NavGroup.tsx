@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import { type Key } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
@@ -7,7 +8,7 @@ import NavItemCart from './NavItemCart';
 import NavItemFavorites from './NavItemFavorites';
 import NavItemProfile from './NavItemProfile';
 
-export default async function NavGroup() {
+const NavGroup: FC<{ lang: string }> = async ({ lang }) => {
   const langCode = 'en_US';
   const { menu, isError } = await getMenuByMarker('user_web', langCode);
 
@@ -31,4 +32,6 @@ export default async function NavGroup() {
       <MenuButton />
     </div>
   );
-}
+};
+
+export default NavGroup;

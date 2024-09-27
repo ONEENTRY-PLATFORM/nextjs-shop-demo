@@ -6,6 +6,7 @@ import ContactUsForm from '@/components/forms/ContactUsForm';
 
 const ContactsPage: FC<{ page: IPagesEntity; lang: string }> = async ({
   page,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   lang,
 }) => {
   const { localizeInfos, forms } = page;
