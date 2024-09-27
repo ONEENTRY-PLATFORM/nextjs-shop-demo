@@ -56,47 +56,47 @@ export default async function Page({
     {
       templateType: templateIdentifier,
       name: 'profile',
-      component: <ProfilePage page={page} />,
+      component: <ProfilePage page={page} lang={params.lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'cart',
-      component: <CartPage page={page} />,
+      component: <CartPage page={page} lang={params.lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment',
-      component: <PaymentPage page={page} />,
+      component: <PaymentPage page={page} lang={params.lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'favorites',
-      component: <FavoritesPage page={page} />,
+      component: <FavoritesPage page={page} lang={params.lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'about_us',
-      component: <AboutPage page={page} />,
+      component: <AboutPage page={page} lang={params.lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'services',
-      component: <ServicesPage page={page} />,
+      component: <ServicesPage page={page} lang={params.lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'contact_us',
-      component: <ContactsPage page={page} />,
+      component: <ContactsPage page={page} lang={params.lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_success',
-      component: <PaymentSuccess page={page} />,
+      component: <PaymentSuccess page={page} lang={params.lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_canceled',
-      component: <PaymentCanceled page={page} />,
+      component: <PaymentCanceled page={page} lang={params.lang} />,
     },
   ];
 
@@ -108,7 +108,7 @@ export default async function Page({
         }
 
         return p.templateType === 'withSidebar' ? (
-          <WithSidebar data={''} key={i}>
+          <WithSidebar lang={params.lang} key={i}>
             {p.component}
           </WithSidebar>
         ) : (

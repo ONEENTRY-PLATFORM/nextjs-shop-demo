@@ -4,7 +4,10 @@ import type { FC, Key } from 'react';
 
 import ContactUsForm from '@/components/forms/ContactUsForm';
 
-const ContactsPage: FC<{ page: IPagesEntity }> = async ({ page }) => {
+const ContactsPage: FC<{ page: IPagesEntity; lang: string }> = async ({
+  page,
+  lang,
+}) => {
   const { localizeInfos, forms } = page;
   const { title, htmlContent } = localizeInfos;
 

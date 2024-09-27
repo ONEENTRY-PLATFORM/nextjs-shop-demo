@@ -1,6 +1,6 @@
-import React from 'react';
+import type { FC } from 'react';
 
-const ReviewForm: React.FC = () => {
+const ReviewForm: FC = () => {
   return (
     <form className="relative box-border flex shrink-0 flex-col">
       <label htmlFor="reviewInput" className="sr-only">

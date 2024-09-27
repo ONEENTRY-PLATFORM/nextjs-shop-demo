@@ -8,7 +8,12 @@ import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 import Sticker from './Sticker';
 
-const ProductCard: FC<IProductsEntity> = (product) => {
+const ProductCard: FC<{ product: IProductsEntity; lang: string }> = ({
+  product,
+  lang,
+}) => {
+  console.log(product);
+
   const { id, attributeValues, localizeInfos } = product;
   const productImage = attributeValues.pic?.value;
 
@@ -66,7 +71,7 @@ const ProductCard: FC<IProductsEntity> = (product) => {
       </div>
 
       <Link
-        href={'/shop/product/' + id}
+        href={'/' + lang + '/shop/product/' + id}
         className="absolute left-0 top-0 z-0 flex size-full"
       ></Link>
     </div>

@@ -3,7 +3,10 @@ import Image from 'next/image';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { FC } from 'react';
 
-const AboutPage: FC<{ page: IPagesEntity }> = ({ page }) => {
+const AboutPage: FC<{ page: IPagesEntity; lang: string }> = ({
+  page,
+  lang,
+}) => {
   const { attributeValues } = page;
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">

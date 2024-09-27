@@ -94,6 +94,7 @@ export default async function CatalogPage({
           <ProductsGridLayout
             gridItems={products}
             totalPages={(total || 0) / pageLimit}
+            lang={params.lang}
           />
         </Suspense>
       </div>

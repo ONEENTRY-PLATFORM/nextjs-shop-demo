@@ -1,13 +1,15 @@
 import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 
 import GroupCard from './group-card/GroupCard';
 
 const ProductsGroup: FC<{
   marker: string;
-}> = async ({ marker }) => {
-  const langCode = 'en_US';
+  lang: string;
+}> = async ({ marker, lang }) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { isError, block } = await getBlockByMarker(marker, langCode);
 
   if (isError || !block) {

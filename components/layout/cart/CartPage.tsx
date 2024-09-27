@@ -22,7 +22,7 @@ import TotalAmount from '@/components/layout/cart/TotalAmount';
 import EmptyCart from './EmptyCart';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const CartPage: FC<{ page: IPagesEntity }> = ({ page }) => {
+const CartPage: FC<{ page: IPagesEntity; lang: string }> = ({ page, lang }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 

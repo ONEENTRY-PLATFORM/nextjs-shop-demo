@@ -94,6 +94,7 @@ const ShopPage = async ({
           <ProductsGridLayout
             gridItems={products}
             totalPages={(total || 0) / pageLimit}
+            lang={lang}
           />
         </Suspense>
       </div>

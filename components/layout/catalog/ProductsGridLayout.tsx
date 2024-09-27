@@ -9,9 +9,14 @@ import ProductCard from './product-card/ProductCard';
 interface GridLayoutProps {
   gridItems?: Array<IProductsEntity>;
   totalPages: number;
+  lang: string;
 }
 
-const ProductsGridLayout: FC<GridLayoutProps> = ({ gridItems, totalPages }) => {
+const ProductsGridLayout: FC<GridLayoutProps> = ({
+  gridItems,
+  totalPages,
+  lang,
+}) => {
   if (!gridItems) {
     return;
   }
@@ -24,7 +29,9 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({ gridItems, totalPages }) => {
               if (!product.isVisible) {
                 return;
               }
-              return <ProductCard key={product.id} {...product} />;
+              return (
+                <ProductCard key={product.id} product={product} lang={lang} />
+              );
             })}
           </div>
           <div className="mt-5 flex w-full justify-center">

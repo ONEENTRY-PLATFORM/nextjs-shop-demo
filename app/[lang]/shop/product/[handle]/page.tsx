@@ -92,7 +92,7 @@ export default async function ProductPage({
         }}
       />
       <div className="mx-auto flex w-full max-w-screen-xl flex-col bg-white">
-        <Product {...product} />
+        <Product lang={lang} product={product} />
       </div>
     </>
   );

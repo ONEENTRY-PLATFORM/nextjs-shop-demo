@@ -2,6 +2,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 
 import { getRelatedProductsById } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
@@ -11,10 +12,14 @@ import RelatedItems from './RelatedItems';
 import ReviewsSection from './ReviewsSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 
-const ProductSingle: FC<
-  IProductsEntity & { blocks?: Array<string>; productPages?: [] }
-> = async (product) => {
-  const langCode = 'en_US';
+const ProductSingle: FC<{
+  product: IProductsEntity & {
+    blocks?: Array<string>;
+    productPages?: [];
+  };
+  lang: string;
+}> = async ({ product, lang }) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { attributeValues, localizeInfos, blocks } = product;
 
   const relatedData = await getRelatedProductsById(product.id, langCode);
@@ -53,9 +58,9 @@ const ProductSingle: FC<
       {Array.isArray(blocks) &&
         blocks.map((block: string) => {
           if (block === 'multiply_items_offer') {
-            return <ProductsGroup key={block} marker={block} />;
+            return <ProductsGroup key={block} marker={block} lang={''} />;
           } else if (block === 'similar') {
-            return <RelatedItems key={block} marker={block} />;
+            return <RelatedItems key={block} marker={block} lang={''} />;
           }
         })}
     </section>
