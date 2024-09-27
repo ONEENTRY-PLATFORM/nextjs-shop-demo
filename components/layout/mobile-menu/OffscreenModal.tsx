@@ -16,7 +16,8 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import CloseModal from './CloseModal';
 import MobileMenu from './MobileMenu';
 
-function OffscreenModal({ menu }: { menu: IMenusPages[] }) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { open, setOpen, component } = useContext(OpenDrawerContext);
@@ -88,7 +89,7 @@ function OffscreenModal({ menu }: { menu: IMenusPages[] }) {
                 />
               </div>
 
-              <MobileMenu menu={menu} />
+              <MobileMenu menu={menu} lang={lang} />
             </div>
           </DialogPanel>
         </TransitionChild>

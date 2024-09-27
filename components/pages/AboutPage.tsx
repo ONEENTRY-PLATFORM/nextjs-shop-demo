@@ -9,7 +9,8 @@ const AboutPage: FC<{ page: IPagesEntity; lang: string }> = ({
   lang,
 }) => {
   const { attributeValues } = page;
-  console.log(attributeValues.list?.value[0].htmlValue);
+  const content = attributeValues?.content?.value[0] || '';
+  const list = attributeValues.list?.value[0] || '';
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
@@ -29,13 +30,15 @@ const AboutPage: FC<{ page: IPagesEntity; lang: string }> = ({
             <h1 className="mb-5 text-xl font-bold leading-8 text-neutral-600">
               {attributeValues.title?.value}
             </h1>
-            <div className="flex flex-col gap-3">
-              {parse(attributeValues?.content?.value[0].htmlValue || '')}
-            </div>
+            {content && (
+              <div className="flex flex-col gap-3">
+                {parse(content.htmlValue || content.plainValue)}
+              </div>
+            )}
             <h2 className="mb-3 mt-4 text-xl font-bold underline">
               {attributeValues.list_title?.value}
             </h2>
-            {parse(attributeValues.list?.value[0].htmlValue || '')}
+            {list && parse(list.htmlValue || list.plainValue)}
           </section>
         </div>
       </section>

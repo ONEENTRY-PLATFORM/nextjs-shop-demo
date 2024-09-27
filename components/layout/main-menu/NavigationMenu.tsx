@@ -61,7 +61,7 @@ const NavigationMenu: FC<{ lang: string }> = async ({ lang }) => {
         </div>
       </nav>
       <Suspense>
-        <OffscreenModal menu={mainMenu} />
+        <OffscreenModal menu={mainMenu} lang={lang} />
       </Suspense>
     </>
   );

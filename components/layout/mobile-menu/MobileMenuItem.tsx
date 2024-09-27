@@ -8,13 +8,13 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 import MobileMenu from './MobileMenu';
 
-function MobileMenuItem({ item }: { item: IMenusPages }) {
+function MobileMenuItem({ item, lang }: { item: IMenusPages; lang: string }) {
   const { setOpen } = useContext(OpenDrawerContext);
   const hasChild = Array.isArray(item.children) && item.children.length > 0;
   const href =
     item.pageUrl === 'category'
-      ? '/shop/category/'
-      : '/shop/category/' + item.pageUrl;
+      ? '/' + lang + '/shop/category/'
+      : '/' + lang + '/shop/category/' + item.pageUrl;
   const [openSubmenu, setOpenSubmenu] = useState(false);
 
   return (
@@ -59,6 +59,7 @@ function MobileMenuItem({ item }: { item: IMenusPages }) {
       {Array.isArray(item.children) && hasChild && (
         <MobileMenu
           menu={item.children}
+          lang={lang}
           className={'px-2 ' + (!openSubmenu ? 'hidden' : 'visible')}
         />
       )}
