@@ -13,7 +13,6 @@ import NavigationMenuItem from './NavigationMenuItem';
 const NavigationMenu: FC<{ lang: string }> = async ({ lang }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { isError, menu } = await getMenuByMarker('main_web', langCode);
-
   if (!menu || !menu.pages || isError) {
     return;
   }

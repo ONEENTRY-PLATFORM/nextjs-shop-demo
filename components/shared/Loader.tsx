@@ -20,13 +20,10 @@ const Loader: FC<LoaderProps> = ({ data = {} }) => {
   );
 };
 
-export const CategoriesLoader: FC<LoaderProps> = ({
-  data = {},
-  limit = 10,
-}) => {
+export const CategoriesLoader: FC<LoaderProps> = ({ data = {}, limit = 4 }) => {
   return (
     <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
-      {Array.from(Array(4).keys()).map((item) => (
+      {Array.from(Array(limit).keys()).map((item) => (
         <div
           key={item}
           className="relative flex w-1/4 grow flex-col justify-center text-2xl font-bold text-white max-md:w-full"
@@ -98,12 +95,12 @@ export const SearchBarLoader: FC<LoaderProps> = ({ data = {}, limit = 10 }) => {
 
 export const SidebarMenuLoader: FC<LoaderProps> = ({
   data = {},
-  limit = 10,
+  limit = 5,
 }) => {
   return (
     <div>
       <ul className="flex w-full flex-row gap-2 overflow-hidden py-3 text-base md:max-w-[165px] md:flex-col md:gap-5 md:py-0">
-        {Array.from(Array(5).keys()).map((item) => (
+        {Array.from(Array(limit).keys()).map((item) => (
           <li key={item} className={`group flex h-5 justify-start gap-3 pr-5`}>
             <div className="animate-loader my-auto aspect-square size-5 shrink-0" />
             <div className={'animate-loader h-5 min-w-full'} />
@@ -114,10 +111,10 @@ export const SidebarMenuLoader: FC<LoaderProps> = ({
   );
 };
 
-export const NavMenuLoader: FC<LoaderProps> = ({ data = {}, limit = 10 }) => {
+export const NavMenuLoader: FC<LoaderProps> = ({ data = {}, limit = 3 }) => {
   return (
     <div className="my-auto flex gap-5 max-md:max-w-full">
-      {Array.from(Array(3).keys()).map((item) => (
+      {Array.from(Array(limit).keys()).map((item) => (
         <div
           key={item}
           className="animate-loader relative box-border flex size-6 shrink-0"
@@ -133,7 +130,7 @@ export const OrdersTableLoader: FC<LoaderProps> = ({
 }) => {
   return (
     <div className="my-auto flex w-full flex-col max-md:max-w-full">
-      {Array.from(Array(10).keys()).map((item) => (
+      {Array.from(Array(limit).keys()).map((item) => (
         <div
           key={item}
           className="relative -mb-px flex h-12 border-collapse gap-4 border-y p-4"

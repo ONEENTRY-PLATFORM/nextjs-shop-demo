@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { usePathname, useRouter } from 'next/navigation';
 import type { FC, Key } from 'react';
 
@@ -8,8 +9,7 @@ const LangSelector: FC<{ locales: any; lang: string }> = ({
   locales,
   lang,
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const pathname = usePathname();
+  // const pathname = usePathname();
   const { replace } = useRouter();
 
   if (!lang) {

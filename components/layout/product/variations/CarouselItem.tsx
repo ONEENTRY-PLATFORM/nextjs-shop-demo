@@ -25,7 +25,7 @@ const CarouselItem: React.FC<VariationProps> = ({
   const isActive = index === currentIndex;
 
   const title = item.localizeInfos.title;
-  const picVal = item.attributeValues.pic.value;
+  const picVal = item.attributeValues.pic?.value || '';
   const imageSrc = Array.isArray(picVal)
     ? picVal[0]?.downloadLink
     : picVal.downloadLink;
