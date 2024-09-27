@@ -18,6 +18,8 @@ import type {
 } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 
+import { LanguageEnum } from '@/app/types/enum';
+
 import { api } from './api';
 
 // type RootState = any; // normally inferred from state
@@ -84,20 +86,24 @@ export const RTKApi = createApi({
         }
       },
     }),
-    getFormByMarker: build.query<IFormsEntity, { marker: string }>({
-      queryFn: async ({ marker }) => {
+    getFormByMarker: build.query<
+      IFormsEntity,
+      { marker: string; lang: string }
+    >({
+      queryFn: async ({ marker, lang }) => {
         try {
-          const result = await api.Forms.getFormByMarker(marker);
+          const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+          const result = await api.Forms.getFormByMarker(marker, langCode);
           return { data: result };
         } catch (e: any) {
           return { error: e.message };
         }
       },
     }),
-    getMe: build.query<IUserEntity, object>({
-      queryFn: async () => {
+    getMe: build.query<IUserEntity, { langCode: string }>({
+      queryFn: async ({ langCode }) => {
         try {
-          const result = await api.Users.getUser('en_US');
+          const result = await api.Users.getUser(langCode);
           if (!result) {
             return { error: 'getUser error' };
           }

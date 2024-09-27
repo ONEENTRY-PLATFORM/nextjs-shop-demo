@@ -29,7 +29,7 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
   return (
     <button
       type="button"
-      className="relative box-border flex size-[26px] shrink-0 flex-col items-center justify-center"
+      className="relative ml-auto box-border flex size-[26px] shrink-0 flex-col items-center justify-center"
       onClick={() => {
         if (isFav) {
           dispatch(removeFavorites(product.id));

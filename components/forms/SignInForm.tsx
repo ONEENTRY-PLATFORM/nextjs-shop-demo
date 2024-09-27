@@ -17,11 +17,14 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 import SocialSignInButton from './inputs/SocialSignInButton';
 
-const SignInForm: FC = () => {
+const SignInForm: FC<{ lang: string }> = ({ lang }) => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
 
-  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
+  const { data, isLoading } = useGetFormByMarkerQuery({
+    marker: 'reg',
+    lang,
+  });
 
   const [tab, setTab] = useState<string>('email');
   const [loading, setLoading] = useState<boolean>(false);

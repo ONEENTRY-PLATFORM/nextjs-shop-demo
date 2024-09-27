@@ -1,30 +1,32 @@
 'use client';
 
 import type { IOrdersByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { api } from '@/app/api';
-import { LanguageContext } from '@/app/store/providers/LanguageContext';
+import { LanguageEnum } from '@/app/types/enum';
 
 export const useGetUserOrders = ({
   marker,
   limit,
   offset,
+  lang,
 }: {
   marker: string;
   limit?: number;
   offset?: number;
+  lang?: string;
 }): {
   loading: boolean;
   orders?: IOrdersByMarkerEntity;
   total?: number;
   refetch: () => void;
 } => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const [loading, setLoading] = useState<boolean>(false);
   const [orders, setOrders] = useState<IOrdersByMarkerEntity>();
   const [total, setTotal] = useState<number>(0);
   const [refetch, setRefetch] = useState<boolean>(false);
-  const { activeLanguage } = useContext(LanguageContext);
 
   useEffect(() => {
     if (!marker) {
@@ -35,7 +37,7 @@ export const useGetUserOrders = ({
       try {
         const result = await api.Orders.getAllOrdersByMarker(
           marker,
-          activeLanguage,
+          langCode,
           limit || 10,
           offset || 0,
         );
@@ -49,7 +51,7 @@ export const useGetUserOrders = ({
         setLoading(false);
       }
     })();
-  }, [refetch, activeLanguage, marker, limit, offset]);
+  }, [refetch, langCode, marker, limit, offset]);
 
   return {
     loading,

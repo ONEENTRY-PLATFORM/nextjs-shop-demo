@@ -8,7 +8,7 @@ import { IMask, IMaskInput } from 'react-imask';
 
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const PaymentForm: FC = () => {
+const PaymentForm: FC<{ lang: string }> = ({ lang }) => {
   const inputRef = useRef(null);
 
   const [cardNumber, setCardNumber] = useState('');

@@ -20,13 +20,14 @@ export const LanguageContext = createContext<ContextProps>({
 
 type ProviderProps = {
   children: ReactNode;
+  lang: string;
 };
-export const LanguageProvider = ({ children }: ProviderProps) => {
+export const LanguageProvider = ({ children, lang }: ProviderProps) => {
   const [languagesData, setLanguagesData] = useState<
     { label: string; value: string }[]
   >([]);
   const [activeLanguage, setActiveLanguage] = useState<LanguageEnum>(
-    LanguageEnum.en,
+    LanguageEnum[lang as keyof typeof LanguageEnum],
   );
   const { locales } = useGetLocales();
 

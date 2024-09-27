@@ -12,7 +12,8 @@ import { addField } from '@/app/store/reducers/FormFieldsSlice';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const VerificationForm: FC = () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);

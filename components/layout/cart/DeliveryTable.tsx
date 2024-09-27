@@ -19,12 +19,14 @@ import TableRow from './DeliveryTableRow';
 const DeliveryTable: FC<IProductsEntity> = (delivery) => {
   const dispatch = useAppDispatch();
 
-  const { data } = useGetFormByMarkerQuery({ marker: 'order' });
-  const deliveryData = useAppSelector(selectDeliveryData);
-
+  const { data } = useGetFormByMarkerQuery({
+    marker: 'order',
+    lang: 'en',
+  });
   const attrs = data?.attributes.filter(
     (attr: IAttributes) => attr.marker !== 'time2',
   );
+  const deliveryData = useAppSelector(selectDeliveryData);
 
   const {
     order_info_date_placeholder,

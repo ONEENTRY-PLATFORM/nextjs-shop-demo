@@ -10,7 +10,7 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const ResetPasswordForm: FC = () => {
+const ResetPasswordForm: FC<{ lang: string }> = ({ lang }) => {
   const { email_reg, password_reg, password_confirm, otp_code } =
     useAppSelector((state) => state.formFieldsReducer.fields) as object as {
       email_reg: {

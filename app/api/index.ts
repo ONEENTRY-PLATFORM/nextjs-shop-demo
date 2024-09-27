@@ -15,6 +15,7 @@ export {
 export { useGetLocales } from './hooks/useGetLocales';
 export { useGetProduct } from './hooks/useGetProduct';
 export { useGetSingleAttributeByMarkerSet } from './hooks/useGetSingleAttributeByMarkerSet';
+export { useGetUserOrders } from './hooks/useGetUserOrders';
 export { useSearchProducts } from './hooks/useSearchProducts';
 export { useSetForm } from './hooks/useSetForm';
 export { getSingleAttributeByMarkerSet } from './server/attributes/getSingleAttributeByMarkerSet';

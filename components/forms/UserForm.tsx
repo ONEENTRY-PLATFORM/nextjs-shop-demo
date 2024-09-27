@@ -24,9 +24,12 @@ export type InputValue = {
   [key: string]: unknown;
 };
 
-const UserForm: FC = () => {
+const UserForm: FC<{ lang: string }> = ({ lang }) => {
   const { isAuth, refreshUser, user } = useContext(AuthContext);
-  const { data, isLoading, error } = useGetFormByMarkerQuery({ marker: 'reg' });
+  const { data, isLoading, error } = useGetFormByMarkerQuery({
+    marker: 'reg',
+    lang,
+  });
 
   const [loading, setLoading] = useState(false);
   const [isError, setError] = useState('');

@@ -25,11 +25,12 @@ export const AuthContext = createContext<ContextProps>({
   refreshUser: () => {},
 });
 
-type Props = {
+type AuthProviderProps = {
   children: ReactNode;
+  langCode: string;
 };
 
-export const AuthProvider = ({ children }: Props) => {
+export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [user, setUser] = useState<IUserEntity | undefined>();
@@ -46,12 +47,14 @@ export const AuthProvider = ({ children }: Props) => {
       setIsAuth(false);
       return;
     }
-    await reDefine(refresh, activeLanguage);
+    await reDefine(refresh, langCode);
     await checkToken();
   };
 
   const checkToken = async () => {
-    trigger({})
+    trigger({
+      langCode,
+    })
       .then(async (res) => {
         if (res.error && !res.isLoading) {
           localStorage.setItem('refresh-token', '');

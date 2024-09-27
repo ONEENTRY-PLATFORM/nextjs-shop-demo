@@ -10,8 +10,12 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-export const ForgotPasswordForm: FC = () => {
-  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
+export const ForgotPasswordForm: FC<{ lang: string }> = ({ lang }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { data, isLoading, error } = useGetFormByMarkerQuery({
+    marker: 'reg',
+    lang,
+  });
   const [isError, setError] = useState('');
 
   const fields = useAppSelector(

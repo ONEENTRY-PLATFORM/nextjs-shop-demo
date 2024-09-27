@@ -9,17 +9,20 @@ import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { LanguageEnum } from '@/app/types/enum';
 
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
-const SignUpForm: FC = () => {
-  const langCode = 'en_US';
+const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen, setComponent, setAction } = useContext(OpenDrawerContext);
 
-  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'reg' });
+  const { data, isLoading } = useGetFormByMarkerQuery({
+    marker: 'reg',
+    lang,
+  });
 
   const [loading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -93,6 +96,7 @@ const SignUpForm: FC = () => {
       setIsLoading(true);
 
       try {
+        const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
         const res = await api.AuthProvider.signUp('email', data, langCode);
         // if user active try login else Verification and activateUser
         if (res && res.isActive) {

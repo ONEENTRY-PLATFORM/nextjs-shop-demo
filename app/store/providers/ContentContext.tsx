@@ -16,12 +16,13 @@ const ContentContext = createContext({});
 
 type Props = {
   children: ReactNode;
+  langCode: string;
 };
 
-export const ContentContextProvider = ({ children }: Props) => {
+export const ContentContextProvider = ({ children, langCode }: Props) => {
   const { data } = useGetBlockByMarkerQuery({
     marker: 'system_content',
-    activeLang: 'en_US',
+    activeLang: langCode,
   });
   const { attributes } = useGetSingleAttributeByMarkerSet({
     setMarker: 'system_content',

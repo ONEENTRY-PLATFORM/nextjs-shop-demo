@@ -39,9 +39,9 @@ export default async function RootLayout({
     <html lang={langCode}>
       <body className={lato.className + ' flex flex-col min-h-screen'}>
         <StoreProvider>
-          <LanguageProvider>
-            <AuthProvider>
-              <ContentContextProvider>
+          <LanguageProvider lang={lang}>
+            <AuthProvider langCode={langCode}>
+              <ContentContextProvider langCode={langCode}>
                 <OpenDrawerProvider>
                   <Header lang={lang} />
                   <NavigationMenu lang={lang} />

@@ -15,8 +15,14 @@ import { FormCaptcha } from './inputs/FormCaptcha';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const ContactUsForm: FC<{ className: string }> = ({ className }) => {
-  const { data, isLoading } = useGetFormByMarkerQuery({ marker: 'contact_us' });
+const ContactUsForm: FC<{ className: string; lang: string }> = ({
+  className,
+  lang,
+}) => {
+  const { data, isLoading } = useGetFormByMarkerQuery({
+    marker: 'contact_us',
+    lang,
+  });
 
   const [token, setToken] = useState<string>('');
   const [isCaptcha, setIsCaptcha] = useState<boolean>(false);

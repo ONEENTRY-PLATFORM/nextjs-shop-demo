@@ -11,8 +11,8 @@ import FilterButtons from './components/buttons/FilterButtons';
 import ColorFilter from './components/color/ColorFilter';
 import PricePickerFilter from './components/price/PricePickerFilter';
 
-const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
-  const { pageInfo } = useGetPage('catalog_filters');
+const FiltersForm: FC<{ prices: any; lang: string }> = ({ prices, lang }) => {
+  const { pageInfo } = useGetPage('catalog_filters', lang);
 
   const sortedAttributes: Record<any, any> = useMemo(() => {
     if (!pageInfo) {

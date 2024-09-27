@@ -14,7 +14,7 @@ import {
 import { timeSlotsData } from '../data';
 import TimeSlots from './calendar/TimeSlots';
 
-const CalendarComponent: FC = () => {
+const CalendarForm: FC<{ lang: string }> = ({ lang }) => {
   const dispatch = useAppDispatch();
   const { setOpen } = useContext(OpenDrawerContext);
   const deliveryData = useAppSelector(selectDeliveryData);
@@ -36,6 +36,7 @@ const CalendarComponent: FC = () => {
   return (
     <div className="mx-auto max-w-[350px] max-sm:max-w-[300px] ">
       <Calendar
+        // locale={lang}
         view="month"
         onChange={(value) => {
           setDate(value as Date);
@@ -60,4 +61,4 @@ const CalendarComponent: FC = () => {
   );
 };
 
-export default CalendarComponent;
+export default CalendarForm;
