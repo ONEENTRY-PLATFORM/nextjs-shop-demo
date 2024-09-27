@@ -45,6 +45,7 @@ export default async function Page({
 }) {
   const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   const { page, isError } = await getPageByUrl(params.page, langCode);
+  // console.log(page);
 
   if (isError || !page) {
     return notFound();

@@ -85,7 +85,6 @@ const CategoryPage = async ({
       imgSrc: page.attributeValues.opengraph_image?.value[0]?.downloadLink,
     };
   });
-  console.log(pages[0].attributeValues.opengraph_image.value[0].downloadLink);
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
