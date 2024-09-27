@@ -1,13 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { ReactNode } from 'react';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 import { reDefine, useLazyGetMeQuery } from '@/app/api';
-
-import { LanguageContext } from './LanguageContext';
 
 type ContextProps = {
   isAuth: boolean;
@@ -39,7 +36,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
   const [trigger, { isError }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 5000 : 0,
   });
-  const { activeLanguage } = useContext(LanguageContext);
 
   const onInit = async () => {
     const refresh = localStorage.getItem('refresh-token');
@@ -76,7 +72,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       setIsLoading(false);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetch, activeLanguage]);
+  }, [refetch, langCode]);
 
   useEffect(() => {
     const refresh = localStorage.getItem('refresh-token');

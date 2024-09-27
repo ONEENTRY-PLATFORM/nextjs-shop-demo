@@ -27,7 +27,7 @@ const CartPage: FC<{ page: IPagesEntity; lang: string }> = ({ page, lang }) => {
   const dispatch = useAppDispatch();
 
   const [isLoading, setIsLoading] = useState(true);
-  const delivery = useGetProduct({ id: 83 });
+  const delivery = useGetProduct({ id: 83, lang });
 
   const productsInCart = useAppSelector(selectCartItems) as Array<
     IProductsEntity & { quantity: number; selected: boolean }

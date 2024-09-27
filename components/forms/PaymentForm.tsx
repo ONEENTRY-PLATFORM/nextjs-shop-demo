@@ -8,6 +8,7 @@ import { IMask, IMaskInput } from 'react-imask';
 
 import FormSubmitButton from './inputs/FormSubmitButton';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PaymentForm: FC<{ lang: string }> = ({ lang }) => {
   const inputRef = useRef(null);
 

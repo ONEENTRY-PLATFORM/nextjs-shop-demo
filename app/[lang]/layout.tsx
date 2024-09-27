@@ -31,7 +31,6 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params: { lang },
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: Readonly<{ children: React.ReactNode; params: { lang: string } }>) {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 

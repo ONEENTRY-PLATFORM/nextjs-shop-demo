@@ -36,7 +36,7 @@ const CalendarForm: FC<{ lang: string }> = ({ lang }) => {
   return (
     <div className="mx-auto max-w-[350px] max-sm:max-w-[300px] ">
       <Calendar
-        // locale={lang}
+        locale={lang}
         view="month"
         onChange={(value) => {
           setDate(value as Date);
