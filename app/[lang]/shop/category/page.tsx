@@ -6,12 +6,17 @@ import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 import CategoriesGrid from '@/components/layout/categories/CategoriesGrid';
 import { CategoriesLoader } from '@/components/shared/Loader';
 
 // generateMetadata
-export async function generateMetadata(): Promise<Metadata> {
-  const langCode = 'en_US';
+export async function generateMetadata({
+  params,
+}: {
+  params: { handle: string; lang: string };
+}): Promise<Metadata> {
+  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   const { isError, page } = await getPageByUrl('category', langCode);
 
   if (isError || !page) {
@@ -58,8 +63,12 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 // CategoryPage
-const CategoryPage = async () => {
-  const langCode = 'en_US';
+const CategoryPage = async ({
+  params: { lang },
+}: {
+  params: { lang: string };
+}) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { pages, isError } = await getChildPagesByParentUrl(
     'category',
     langCode,
@@ -72,7 +81,7 @@ const CategoryPage = async () => {
   const categories = pages.map((page: IPagesEntity) => {
     return {
       title: page.localizeInfos.title,
-      link: '/shop/category/' + page.pageUrl,
+      link: lang + '/shop/category/' + page.pageUrl,
       imgSrc: page.attributeValues.pic?.value[0].downloadLink,
     };
   });

@@ -1,20 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import { getPageByUrl, getProductsByPageUrl } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
 // generateMetadata
 export async function generateMetadata({
-  params,
+  params: { handle, lang },
 }: {
-  params: { handle: string };
+  params: { handle: string; lang: string };
 }): Promise<Metadata> {
-  const { isError, page } = await getPageByUrl(params.handle, 'en_US');
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const { isError, page } = await getPageByUrl(handle, langCode);
 
   if (isError || !page) {
     return notFound();
@@ -64,7 +65,7 @@ export default async function CatalogPage({
   params,
   searchParams,
 }: {
-  params: { handle: string };
+  params: { handle: string; lang: string };
   searchParams?: {
     search?: string;
     page?: string;
@@ -72,7 +73,8 @@ export default async function CatalogPage({
   };
 }) {
   const pageLimit = 10;
-  const langCode = 'en_US';
+
+  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   const currentPage = Number(searchParams?.page) || 0;
 
   const { isError, products, total } = await getProductsByPageUrl({

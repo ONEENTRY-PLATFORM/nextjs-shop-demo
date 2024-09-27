@@ -5,15 +5,16 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import { getPageByUrl, getProducts } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
 export async function generateMetadata({
   params,
 }: {
-  params: { handle: string };
+  params: { handle: string; lang: string };
 }): Promise<Metadata> {
-  const langCode = 'en_US';
+  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   const data = await getPageByUrl(params.handle, langCode);
   const { isError, page } = data;
 
@@ -64,7 +65,7 @@ export default async function CatalogPage({
   params,
   searchParams,
 }: {
-  params: { handle: string };
+  params: { handle: string; lang: string };
   searchParams?: {
     search?: string;
     page?: string;
@@ -72,8 +73,7 @@ export default async function CatalogPage({
   };
 }) {
   const pageLimit = 10;
-  const langCode = 'en_US';
-
+  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   const currentPage = Number(searchParams?.page) || 0;
 
   const { isError, products, total } = await getProducts({

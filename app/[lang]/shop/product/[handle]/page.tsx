@@ -9,9 +9,9 @@ import Product from '@/components/layout/product/ProductSingle';
 export async function generateMetadata({
   params,
 }: {
-  params: { handle: string };
+  params: { handle: string; lang: string };
 }): Promise<Metadata> {
-  const langCode = 'en_US';
+  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   const { isError, product } = await getProductById(
     Number(params.handle),
     langCode,

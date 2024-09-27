@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getPageByUrl } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 import CartPage from '@/components/layout/cart/CartPage';
 import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
 import PaymentPage from '@/components/layout/payment/PaymentPage';
@@ -17,9 +18,9 @@ import WithSidebar from './WithSidebar';
 export async function generateMetadata({
   params,
 }: {
-  params: { page: string };
+  params: { page: string; lang: string };
 }): Promise<Metadata> {
-  const langCode = 'en_US';
+  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   const { page, isError } = await getPageByUrl(params.page, langCode);
 
   if (isError || !page) {
@@ -37,8 +38,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params }: { params: { page: string } }) {
-  const langCode = 'en_US';
+export default async function Page({
+  params,
+}: {
+  params: { page: string; lang: string };
+}) {
+  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   const { page, isError } = await getPageByUrl(params.page, langCode);
 
   if (isError || !page) {

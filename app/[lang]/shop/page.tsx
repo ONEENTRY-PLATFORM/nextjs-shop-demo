@@ -8,8 +8,12 @@ import { LanguageEnum } from '@/app/types/enum';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
-export async function generateMetadata(): Promise<Metadata> {
-  const langCode = 'en_US';
+export async function generateMetadata({
+  params,
+}: {
+  params: { page: string; lang: string };
+}): Promise<Metadata> {
+  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   const { isError, page } = await getPageByUrl('shop', langCode);
   if (isError || !page) {
     return notFound();
@@ -55,22 +59,21 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const ShopPage = async ({
-  searchParams,
   params: { lang },
+  searchParams,
 }: {
+  params: { lang: string };
   searchParams?: {
     search?: string;
     page?: string;
     filters?: IFilterParams[];
   };
-  params: { lang: string };
 }) => {
-  const currentPage = Number(searchParams?.page) || 0;
-
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { page } = await getPageByUrl('shop', langCode);
   const { block } = await getBlockByMarker('main_catalog', langCode);
 
+  const currentPage = Number(searchParams?.page) || 0;
   const pageLimit = block?.quantity || 10;
 
   const { isError, products, total } = await getProducts({
