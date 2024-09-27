@@ -8,7 +8,7 @@ import Placeholder from '@/components/shared/Placeholder';
 
 // import { UsePrice } from '@/components/utils';
 import QuantitySelector from '../product/components/QuantitySelector';
-import DeleteButton from './DeleteButton';
+import DeleteButton from './components/DeleteButton';
 import PriceDisplay from './PriceDisplay';
 
 const ProductCard: React.FC<{

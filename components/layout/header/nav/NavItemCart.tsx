@@ -8,7 +8,7 @@ import { useAppSelector } from '@/app/store/hooks';
 import CartIcon from '@/components/icons/cart';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const NavItemCart: FC<{ item: any }> = ({ item }) => {
+const NavItemCart: FC<{ item: any; lang: string }> = ({ item, lang }) => {
   const [count, setCount] = useState(0);
 
   const cartCount = useAppSelector((state) => {
@@ -35,7 +35,7 @@ const NavItemCart: FC<{ item: any }> = ({ item }) => {
 
   return (
     <Link
-      href={'/' + pageUrl}
+      href={'/' + lang + '/' + pageUrl}
       title={localizeInfos.menuTitle}
       className="group relative box-border flex size-6 shrink-0 flex-col"
     >

@@ -8,7 +8,7 @@ import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Loader from '@/components/shared/Loader';
 
-import TotalAmount from '../cart/TotalAmount';
+import TotalAmount from '../cart/components/TotalAmount';
 import ConfirmOrderButton from './components/ConfirmOrderButton';
 import EditOrderButton from './components/EditOrderButton';
 import OrderDataTable from './components/OrderDataTable';

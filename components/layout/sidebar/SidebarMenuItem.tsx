@@ -10,7 +10,8 @@ import * as icons from '../../icons';
 
 const SidebarMenuItem: FC<{
   menuItem: IMenusPages & { isActive: boolean };
-}> = ({ menuItem }) => {
+  lang: string;
+}> = ({ menuItem, lang }) => {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);
 
@@ -26,7 +27,7 @@ const SidebarMenuItem: FC<{
       <Link
         className={`mr-auto flex justify-start gap-3 whitespace-nowrap hover:text-orange-500 
           ${clsx(isActive && 'text-orange-500')} group`}
-        href={'/' + pageUrl}
+        href={'/' + lang + '/' + pageUrl}
         aria-checked={isActive}
       >
         <div className="my-auto aspect-square size-4 shrink-0">

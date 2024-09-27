@@ -13,7 +13,7 @@ type ContextProps = {
   setActiveLanguage: Dispatch<LanguageEnum>;
 };
 export const LanguageContext = createContext<ContextProps>({
-  activeLanguage: LanguageEnum.EN,
+  activeLanguage: LanguageEnum.en,
   setActiveLanguage(): void {},
   languagesData: null,
 });
@@ -26,7 +26,7 @@ export const LanguageProvider = ({ children }: ProviderProps) => {
     { label: string; value: string }[]
   >([]);
   const [activeLanguage, setActiveLanguage] = useState<LanguageEnum>(
-    LanguageEnum.EN,
+    LanguageEnum.en,
   );
   const { locales } = useGetLocales();
 

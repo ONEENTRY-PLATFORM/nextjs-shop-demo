@@ -9,7 +9,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import ProfileIcon from '@/components/icons/profile';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-const NavItemProfile: FC<{ item: any }> = ({ item }) => {
+const NavItemProfile: FC<{ item: any; lang: string }> = ({ item, lang }) => {
   const { open, setOpen, setComponent } = useContext(OpenDrawerContext);
   const { isAuth } = useContext(AuthContext);
 
@@ -26,7 +26,7 @@ const NavItemProfile: FC<{ item: any }> = ({ item }) => {
     </button>
   ) : (
     <Link
-      href={'/profile'}
+      href={'/' + lang + '/profile'}
       title={'Profile'}
       className="group relative box-border flex size-6 shrink-0"
     >
