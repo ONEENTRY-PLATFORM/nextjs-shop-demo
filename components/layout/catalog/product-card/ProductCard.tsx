@@ -66,7 +66,7 @@ const ProductCard: FC<IProductsEntity> = (product) => {
       </div>
 
       <Link
-        href={`/shop/product/` + id}
+        href={'/shop/product/' + id}
         className="absolute left-0 top-0 z-0 flex size-full"
       ></Link>
     </div>

@@ -1,5 +1,6 @@
 import '@/app/styles/calendar.css';
 
+import type { FC } from 'react';
 import React, { useContext, useState } from 'react';
 import Calendar from 'react-calendar';
 
@@ -13,7 +14,7 @@ import {
 import { timeSlotsData } from '../data';
 import TimeSlots from './calendar/TimeSlots';
 
-const CalendarComponent: React.FC = () => {
+const CalendarComponent: FC = () => {
   const dispatch = useAppDispatch();
   const { setOpen } = useContext(OpenDrawerContext);
   const deliveryData = useAppSelector(selectDeliveryData);

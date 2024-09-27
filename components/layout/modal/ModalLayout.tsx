@@ -15,7 +15,7 @@ import * as forms from '../../forms/';
 import CloseModal from './CloseModal';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-const Modal: FC<{ params: any }> = ({ params }) => {
+const Modal: FC<{ lang: string }> = ({ lang }) => {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
   const closeModal = () => setOpen(false);
 
@@ -61,7 +61,7 @@ const Modal: FC<{ params: any }> = ({ params }) => {
         >
           <DialogPanel className="fixed left-1/2 top-1/2 z-20 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-6 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-[550px] lg:p-10">
             <CloseModal />
-            <Form />
+            <Form lang={lang} />
           </DialogPanel>
         </TransitionChild>
       </Dialog>

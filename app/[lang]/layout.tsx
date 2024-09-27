@@ -30,10 +30,11 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params,
+  params: { lang },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-}: Readonly<{ children: React.ReactNode; params: any }>) {
-  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
+}: Readonly<{ children: React.ReactNode; params: { lang: string } }>) {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+
   return (
     <html lang={langCode}>
       <body className={lato.className + ' flex flex-col min-h-screen'}>
@@ -42,11 +43,11 @@ export default async function RootLayout({
             <AuthProvider>
               <ContentContextProvider>
                 <OpenDrawerProvider>
-                  <Header params={params} />
-                  <NavigationMenu params={params} />
+                  <Header lang={lang} />
+                  <NavigationMenu lang={langCode} />
                   <div className="grow">{children}</div>
-                  <Footer params={params} />
-                  <Modal params={params} />
+                  <Footer lang={langCode} />
+                  <Modal lang={langCode} />
                 </OpenDrawerProvider>
               </ContentContextProvider>
             </AuthProvider>

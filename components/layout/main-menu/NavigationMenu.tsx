@@ -10,9 +10,7 @@ import { flatMenuToNested } from '@/components/utils';
 import OffscreenModal from '../mobile-menu/OffscreenModal';
 import NavigationMenuItem from './NavigationMenuItem';
 
-const NavigationMenu: FC<{ params: { lang: string } }> = async ({
-  params: { lang },
-}) => {
+const NavigationMenu: FC<{ lang: string }> = async ({ lang }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { isError, menu } = await getMenuByMarker('main_web', langCode);
 

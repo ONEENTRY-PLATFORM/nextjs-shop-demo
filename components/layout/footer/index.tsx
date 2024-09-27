@@ -4,9 +4,7 @@ import FooterMenuSection from './FooterMenu';
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
-const Footer: FC<{ params: { lang: string } }> = async ({
-  params: { lang },
-}) => {
+const Footer: FC<{ lang: string }> = async ({ lang }) => {
   const currentYear = new Date().getFullYear();
   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
 

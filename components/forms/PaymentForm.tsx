@@ -2,12 +2,13 @@
 import '@/app/styles/payment.css';
 
 import Image from 'next/image';
+import type { FC } from 'react';
 import React, { useRef, useState } from 'react';
 import { IMask, IMaskInput } from 'react-imask';
 
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const PaymentForm: React.FC = () => {
+const PaymentForm: FC = () => {
   const inputRef = useRef(null);
 
   const [cardNumber, setCardNumber] = useState('');

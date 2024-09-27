@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import React, { useContext, useState } from 'react';
 
 import { api } from '@/app/api';
@@ -9,7 +10,7 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const ResetPasswordForm: React.FC = () => {
+const ResetPasswordForm: FC = () => {
   const { email_reg, password_reg, password_confirm, otp_code } =
     useAppSelector((state) => state.formFieldsReducer.fields) as object as {
       email_reg: {

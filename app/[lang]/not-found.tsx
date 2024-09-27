@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { getPageByUrl } from '@/app/api';
 
-export default async function NotFound() {
+const NotFound = async ({ params: { lang } }: { params: { lang: string } }) => {
   const langCode = 'en_US';
   const { page, isError } = await getPageByUrl('404', langCode);
 
@@ -28,4 +28,6 @@ export default async function NotFound() {
       </Link>
     </div>
   );
-}
+};
+
+export default NotFound;
