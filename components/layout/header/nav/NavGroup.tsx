@@ -26,9 +26,15 @@ const NavGroup: FC<{ lang: string }> = async ({ lang }) => {
         pages.map((item: { pageUrl: string }, i: Key) => {
           return (
             <div className="flex size-6" key={i}>
-              {item.pageUrl === 'profile' && <NavItemProfile item={item} lang={lang} />}
-              {item.pageUrl === 'favorites' && <NavItemFavorites item={item} lang={lang} />}
-              {item.pageUrl === 'cart' && <NavItemCart item={item} lang={lang} />}
+              {item.pageUrl === 'profile' && (
+                <NavItemProfile item={item} lang={lang} />
+              )}
+              {item.pageUrl === 'favorites' && (
+                <NavItemFavorites item={item} lang={lang} />
+              )}
+              {item.pageUrl === 'cart' && (
+                <NavItemCart item={item} lang={lang} />
+              )}
             </div>
           );
         })}

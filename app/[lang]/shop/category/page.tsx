@@ -81,10 +81,11 @@ const CategoryPage = async ({
   const categories = pages.map((page: IPagesEntity) => {
     return {
       title: page.localizeInfos.title,
-      link: lang + '/shop/category/' + page.pageUrl,
-      imgSrc: page.attributeValues.pic?.value[0].downloadLink,
+      link: '/' + lang + '/shop/category/' + page.pageUrl,
+      imgSrc: page.attributeValues.opengraph_image?.value[0]?.downloadLink,
     };
   });
+  console.log(pages[0].attributeValues.opengraph_image.value[0].downloadLink);
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">

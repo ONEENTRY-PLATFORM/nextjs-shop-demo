@@ -14,10 +14,10 @@ import {
   selectCartItems,
 } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
+import TotalAmount from '@/components/layout/cart/components/TotalAmount';
 import DeliveryTable from '@/components/layout/cart/DeliveryTable';
 import PaymentButton from '@/components/layout/cart/PaymentButton';
 import ProductCard from '@/components/layout/cart/ProductCard';
-import TotalAmount from '@/components/layout/cart/components/TotalAmount';
 
 import EmptyCart from './EmptyCart';
 

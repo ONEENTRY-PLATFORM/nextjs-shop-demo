@@ -8,17 +8,16 @@ const LangSelector: FC<{ locales: any; lang: string }> = ({
   locales,
   lang,
 }) => {
-  // const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const pathname = usePathname();
   const { replace } = useRouter();
-  
+
   const onChange = (e: any) => {
-    // router.push(  + '/');
     replace('/' + e.target.value);
   };
 
   return (
-    <select defaultValue={lang} onChange={onChange} className='uppercase'>
+    <select defaultValue={lang} onChange={onChange} className="uppercase">
       {locales?.map((locale: any, i: Key) => {
         return (
           <option key={i} value={locale.shortCode}>

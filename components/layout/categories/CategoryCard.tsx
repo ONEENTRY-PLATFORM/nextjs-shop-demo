@@ -15,7 +15,7 @@ const CategoryCard: FC<CategoryCardProps> = ({
       className="relative flex w-1/4 grow flex-col justify-center text-2xl font-bold text-white max-md:w-full"
     >
       <div
-        className={`relative flex size-full h-64 overflow-hidden rounded-3xl p-6`}
+        className={`relative flex size-full h-64 overflow-hidden rounded-3xl bg-slate-100 p-6`}
       >
         <h2 className="z-10 mt-auto uppercase">{title}</h2>
         <Image

@@ -4,12 +4,14 @@ import type React from 'react';
 import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 import Placeholder from '@/components/shared/Placeholder';
 
 interface BlocksGridCardProps {
   marker: string;
   bgColor: string;
+  lang: string;
   className: {
     width: string;
     height: string;
@@ -20,8 +22,9 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   marker,
   className,
   bgColor,
+  lang,
 }) => {
-  const langCode = 'en_US';
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { block, isError } = await getBlockByMarker(marker, langCode);
 
   if (!block || !block.attributeValues || !block.isVisible || isError) {
@@ -33,8 +36,9 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   const sticker = block.attributeValues.stickers;
   const quote = block.attributeValues.quote?.value;
   const href =
-    (link.value.indexOf('http') === -1 ? 'shop/' : '') + link?.value || '';
-  const linkTarget = link.value.indexOf('http') === -1 ? '' : '_blank';
+    (link.value?.indexOf('http') === -1 ? '/' + lang + '/shop/' : '') +
+      link?.value || '';
+  const linkTarget = link.value?.indexOf('http') === -1 ? '' : '_blank';
 
   return (
     <Link

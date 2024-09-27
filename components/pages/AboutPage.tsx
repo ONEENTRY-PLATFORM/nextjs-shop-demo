@@ -5,6 +5,7 @@ import type { FC } from 'react';
 
 const AboutPage: FC<{ page: IPagesEntity; lang: string }> = ({
   page,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   lang,
 }) => {
   const { attributeValues } = page;
