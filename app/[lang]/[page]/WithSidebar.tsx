@@ -7,6 +7,8 @@ const WithSidebar = ({
   children: React.ReactNode;
   lang: string;
 }) => {
+  console.log(lang);
+
   return (
     <div className="flex w-full flex-col items-center">
       <div className="mx-auto flex w-full max-w-screen-xl flex-row max-md:flex-row max-md:flex-wrap">

@@ -8,10 +8,9 @@ const LangSelector: FC<{ locales: any; lang: string }> = ({
   locales,
   lang,
 }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const pathname = usePathname();
   const { replace } = useRouter();
-  console.log(pathname);
   
   const onChange = (e: any) => {
     // router.push(  + '/');

@@ -12,8 +12,6 @@ const ProductCard: FC<{ product: IProductsEntity; lang: string }> = ({
   product,
   lang,
 }) => {
-  console.log(product);
-
   const { id, attributeValues, localizeInfos } = product;
   const productImage = attributeValues.pic?.value;
 

@@ -17,7 +17,6 @@ const IndexPage = async ({
 }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { page, isError } = await getPageByUrl('home_web', langCode);
-  // console.log(params);
 
   if (isError || !page?.blocks) {
     return null;
