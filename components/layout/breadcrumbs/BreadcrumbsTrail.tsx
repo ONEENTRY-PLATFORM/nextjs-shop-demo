@@ -27,8 +27,8 @@ const BreadcrumbsTrail: FC<{ lang: string }> = ({ lang }) => {
               <li key={index}>
                 <BreadcrumbItem
                   link={link}
-                  isLast={index === pathNames.length - 1}
                   lang={lang}
+                  isLast={index === pathNames.length - 1}
                 />
               </li>
             ),

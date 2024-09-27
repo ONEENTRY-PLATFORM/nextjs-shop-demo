@@ -28,7 +28,7 @@ const PaymentPage: FC<{ page: IPagesEntity; lang: string }> = ({
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,
   );
-  const router = useRouter();
+  // const router = useRouter();
   const dispatch = useAppDispatch();
 
   const [isLoading, setIsLoading] = useState(true);

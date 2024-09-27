@@ -20,7 +20,7 @@ const SidebarMenuItem: FC<{
   }
   const { pageUrl, localizeInfos } = menuItem;
   const Icon = icons[pageUrl as keyof typeof icons];
-  const isActive = menuItem.pageUrl === pathNames[0];
+  const isActive = menuItem.pageUrl === pathNames[1];
 
   return (
     <li>

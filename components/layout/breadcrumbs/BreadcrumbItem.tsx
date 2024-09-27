@@ -5,9 +5,6 @@ const BreadcrumbItem: React.FC<{
   lang: string;
   isLast: boolean;
 }> = ({ link, isLast, lang }) => {
-  console.log(link);
-  console.log(lang);
-
   return (
     <>
       {!isLast ? (

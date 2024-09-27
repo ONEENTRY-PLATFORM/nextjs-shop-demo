@@ -13,7 +13,7 @@ const MenuItem: FC<{
   if (!page) {
     return;
   }
-  const isActive = paths === '/' + page.pageUrl;
+  const isActive = paths === '/' + lang + '/' + page.pageUrl;
 
   return (
     <li className="relative box-border">

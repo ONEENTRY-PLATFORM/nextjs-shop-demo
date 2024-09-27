@@ -26,17 +26,27 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
 }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { block, isError } = await getBlockByMarker(marker, langCode);
-  // console.log(lang);
-  // console.log(block);
 
   if (!block || !block.attributeValues || !block.isVisible || isError) {
     return <Loader />;
   }
 
-  const { title, bg_web, link = '' } = block.attributeValues;
+  const attributeValues =
+    block.attributeValues[langCode] || block.attributeValues;
+
+  const { title, bg_web, link = '' } = attributeValues;
+  // console.log(block);
+  console.log(attributeValues);
+
   const imageSrc = bg_web?.value[0]?.downloadLink;
-  const sticker = block.attributeValues.stickers;
-  const quote = block.attributeValues.quote?.value;
+  const sticker =
+    block.attributeValues?.stickers ||
+    block.attributeValues[langCode]?.stickers;
+
+  const stickerImage = sticker?.value[0]?.extended?.value?.downloadLink;
+  const quote =
+    block.attributeValues.quote?.value ||
+    block.attributeValues[langCode]?.quote?.value;
   const href =
     (link.value?.indexOf('http') === -1 ? '/' + lang + '/shop/' : '') +
       link?.value || '';
@@ -53,12 +63,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
       >
         {sticker?.value[0] && (
           <div className="absolute left-3 top-3 z-10">
-            <Image
-              width={30}
-              height={30}
-              src={sticker.value[0].extended?.value.downloadLink}
-              alt={''}
-            />
+            <Image width={30} height={30} src={stickerImage} alt={''} />
           </div>
         )}
 
