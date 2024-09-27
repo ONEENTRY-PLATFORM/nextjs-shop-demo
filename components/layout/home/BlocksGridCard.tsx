@@ -35,18 +35,11 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
     block.attributeValues[langCode] || block.attributeValues;
 
   const { title, bg_web, link = '' } = attributeValues;
-  // console.log(block);
-  console.log(attributeValues);
 
   const imageSrc = bg_web?.value[0]?.downloadLink;
-  const sticker =
-    block.attributeValues?.stickers ||
-    block.attributeValues[langCode]?.stickers;
-
+  const sticker = attributeValues?.stickers;
   const stickerImage = sticker?.value[0]?.extended?.value?.downloadLink;
-  const quote =
-    block.attributeValues.quote?.value ||
-    block.attributeValues[langCode]?.quote?.value;
+  const quote = attributeValues.quote?.value;
   const href =
     (link.value?.indexOf('http') === -1 ? '/' + lang + '/shop/' : '') +
       link?.value || '';
@@ -61,7 +54,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
       <div
         className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}
       >
-        {sticker?.value[0] && (
+        {stickerImage && (
           <div className="absolute left-3 top-3 z-10">
             <Image width={30} height={30} src={stickerImage} alt={''} />
           </div>
