@@ -24,7 +24,7 @@ const Sticker: FC<IconButtonProps> = ({ sticker }) => {
   const imgSrc =
     sticker.value.extended?.value.downloadLink ||
     (Array.isArray(sticker.value) &&
-      sticker.value[0].extended?.value.downloadLink);
+      sticker.value[0]?.extended?.value.downloadLink);
 
   return (
     <button

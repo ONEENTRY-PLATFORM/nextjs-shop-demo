@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getProductById } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 import Product from '@/components/layout/product/ProductSingle';
 
 // generateMetadata
@@ -52,15 +53,12 @@ export async function generateMetadata({
 
 // ProductPage
 export default async function ProductPage({
-  params,
+  params: { handle, lang },
 }: {
-  params: { handle: string };
+  params: { handle: string; lang: string };
 }) {
-  const langCode = 'en_US';
-  const { isError, product } = await getProductById(
-    Number(params.handle),
-    langCode,
-  );
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const { isError, product } = await getProductById(Number(handle), langCode);
 
   if (isError || !product) {
     return notFound();

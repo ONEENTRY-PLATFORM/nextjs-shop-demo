@@ -4,6 +4,7 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import { getBlockByMarker, getPageByUrl, getProducts } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
@@ -55,16 +56,18 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const ShopPage = async ({
   searchParams,
+  params: { lang },
 }: {
   searchParams?: {
     search?: string;
     page?: string;
     filters?: IFilterParams[];
   };
+  params: { lang: string };
 }) => {
   const currentPage = Number(searchParams?.page) || 0;
 
-  const langCode = 'en_US';
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { page } = await getPageByUrl('shop', langCode);
   const { block } = await getBlockByMarker('main_catalog', langCode);
 
