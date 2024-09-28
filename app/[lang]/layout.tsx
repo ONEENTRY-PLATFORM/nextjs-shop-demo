@@ -38,8 +38,8 @@ export default async function RootLayout({
 
   // !!! dictionary
   const dictionary = await getDictionary(lang as Locale);
-  const dictionaryData = dictionary(langCode);
-  console.log(dictionaryData);
+  // const dictionaryData = dictionary(langCode);
+  console.log(dictionary);
 
   return (
     <html lang={langCode}>
