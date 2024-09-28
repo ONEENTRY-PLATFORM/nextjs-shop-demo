@@ -13,6 +13,7 @@ import PricePickerFilter from './components/price/PricePickerFilter';
 
 const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
   const { pageInfo } = useGetPage('catalog_filters');
+  console.log(pageInfo);
 
   const sortedAttributes: Record<any, any> = useMemo(() => {
     if (!pageInfo) {

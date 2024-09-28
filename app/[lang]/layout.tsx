@@ -37,9 +37,8 @@ export default async function RootLayout({
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
   // !!! dictionary
-  const dictionary = await getDictionary(lang as Locale);
-  // const dictionaryData = dictionary(langCode);
-  console.log(dictionary);
+  const globalData = await getDictionary(lang as Locale);
+  // console.log(dictionary);
 
   return (
     <html lang={langCode}>
@@ -47,7 +46,7 @@ export default async function RootLayout({
         <StoreProvider>
           <LanguageProvider lang={lang}>
             <AuthProvider langCode={langCode}>
-              <ContentContextProvider langCode={langCode}>
+              <ContentContextProvider globalData={globalData}>
                 <OpenDrawerProvider>
                   <Header lang={lang} />
                   <NavigationMenu lang={lang} />

@@ -41,13 +41,6 @@ function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, searchParams]);
 
-  const logo = {
-    src: '/images/logo-250x70.svg',
-    width: 180,
-    height: 50,
-    alt: 'OneEntry',
-  };
-
   return (
     <Transition show={open && component === 'MobileMenu'}>
       <Dialog onClose={closeMenu} className="relative z-50">
@@ -80,10 +73,10 @@ function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
 
               <div className="mb-4 w-full">
                 <Image
-                  src={logo.src}
-                  width={logo.width}
-                  height={logo.height}
-                  alt={logo.alt}
+                  src={'/images/logo-250x70.svg'}
+                  width={180}
+                  height={50}
+                  alt={'OneEntry'}
                   loading="lazy"
                   className="aspect-[3.57] max-w-full shrink-0 max-sm:mb-5"
                 />
