@@ -6,7 +6,9 @@ import { useAppSelector } from '@/app/store/hooks';
 
 const EmptyCart = () => {
   const [emptyText, setEmptyText] = useState('');
-  const { empty_cart_plug } = useAppSelector(
+  const [goShopText, setGoShopText] = useState('');
+
+  const { empty_cart_plug, go_to_shop } = useAppSelector(
     (state) => state.systemContentReducer.content,
   );
 
@@ -14,9 +16,15 @@ const EmptyCart = () => {
     if (!empty_cart_plug) {
       return;
     }
-    setEmptyText(empty_cart_plug);
+    setEmptyText(empty_cart_plug.value);
   }, [empty_cart_plug]);
-  // go_to_shop
+
+  useEffect(() => {
+    if (!go_to_shop) {
+      return;
+    }
+    setGoShopText(go_to_shop.value);
+  }, [go_to_shop]);
 
   return (
     <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
@@ -31,7 +39,7 @@ const EmptyCart = () => {
         {emptyText}
       </h1>
       <Link href="/shop" className="btn btn-sm btn-o btn-o-primary">
-        Go to shop
+        {goShopText}
       </Link>
     </div>
   );

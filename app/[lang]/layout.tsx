@@ -13,6 +13,7 @@ import { AuthProvider } from '../store/providers/AuthContext';
 import { ContentContextProvider } from '../store/providers/ContentContext';
 import { LanguageProvider } from '../store/providers/LanguageContext';
 import { OpenDrawerProvider } from '../store/providers/OpenDrawerContext';
+import { useServerProvider } from '../store/providers/ServerProvider';
 import StoreProvider from '../store/providers/StoreProvider';
 import { LanguageEnum } from '../types/enum';
 import { getDictionary } from './dictionaries';
@@ -36,6 +37,7 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode; params: { lang: string } }>) {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const dict = await getDictionary(lang as Locale);
+  useServerProvider('dict', dict);
 
   return (
     <html lang={langCode}>
@@ -45,10 +47,10 @@ export default async function RootLayout({
             <AuthProvider langCode={langCode}>
               <ContentContextProvider dict={dict}>
                 <OpenDrawerProvider>
-                  <Header lang={lang} dict={dict} />
+                  <Header lang={lang} />
                   <NavigationMenu lang={lang} />
                   <div className="grow">{children}</div>
-                  <Footer lang={lang} dict={dict} />
+                  <Footer lang={lang} />
                   <Modal lang={lang} />
                 </OpenDrawerProvider>
               </ContentContextProvider>

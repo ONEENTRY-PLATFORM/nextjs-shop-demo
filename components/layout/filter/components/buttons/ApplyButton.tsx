@@ -7,7 +7,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 const ApplyButton: FC = () => {
   const { setOpen } = useContext(OpenDrawerContext);
   const { apply_button_placeholder } = useAppSelector(
-    (state) => state.systemContentReducer.content.attributeValues,
+    (state) => state.systemContentReducer.content,
   ) as {
     apply_button_placeholder: {
       value: string;

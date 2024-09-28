@@ -19,7 +19,6 @@ const IndexPage = async ({
     return null;
   }
   const { blocks } = page;
-
   return (
     <main className="flex flex-col items-center justify-between gap-16 p-5 pb-16">
       <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">

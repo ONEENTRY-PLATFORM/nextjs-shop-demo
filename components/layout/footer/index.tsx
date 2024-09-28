@@ -5,7 +5,7 @@ import FooterMenuSection from './FooterMenu';
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-const Footer: FC<{ lang: string; dict: any }> = async ({ lang, dict }) => {
+const Footer: FC<{ lang: string }> = async ({ lang }) => {
   const currentYear = new Date().getFullYear();
   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
 

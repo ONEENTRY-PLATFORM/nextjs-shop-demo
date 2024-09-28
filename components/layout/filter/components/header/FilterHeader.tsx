@@ -7,7 +7,7 @@ import HistoryBack from './HistoryBack';
 
 const FilterHeader: FC = () => {
   const { open_filters_button } = useAppSelector(
-    (state) => state.systemContentReducer.content.attributeValues,
+    (state) => state.systemContentReducer.content,
   ) as {
     open_filters_button: {
       value: string;

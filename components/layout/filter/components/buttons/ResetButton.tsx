@@ -10,8 +10,8 @@ const ResetButton: FC = () => {
   const { replace } = useRouter();
   const params = new URLSearchParams(searchParams);
 
-  const attributeValues = useAppSelector(
-    (state) => state.systemContentReducer.content.attributeValues,
+  const { reset_button_placeholder } = useAppSelector(
+    (state) => state.systemContentReducer.content,
   ) as {
     reset_button_placeholder: {
       value: string;
@@ -29,7 +29,7 @@ const ResetButton: FC = () => {
 
   return (
     <button onClick={onReset} className="btn btn-xl btn-o btn-o-primary">
-      {attributeValues.reset_button_placeholder.value}
+      {reset_button_placeholder.value}
     </button>
   );
 };

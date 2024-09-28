@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useAppSelector } from '@/app/store/hooks';
 
 const EmptyFavorites = () => {
-  const { empty_favorites_plug } = useAppSelector(
+  const { empty_favorites_plug, go_to_shop } = useAppSelector(
     (state) => state.systemContentReducer.content,
   );
 
@@ -25,10 +25,10 @@ const EmptyFavorites = () => {
         />
       </svg>
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
-        {empty_favorites_plug}
+        {empty_favorites_plug.value}
       </h1>
       <Link href="/shop" className="btn btn-sm btn-o btn-o-primary">
-        Go to shop
+        {go_to_shop.value}
       </Link>
     </div>
   );

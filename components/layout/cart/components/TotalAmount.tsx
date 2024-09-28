@@ -26,7 +26,7 @@ const TotalAmount = ({ className }: { className: string }) => {
     amount: cartTotal,
     currency: 'USD',
   });
-
+  // order_info_total
   return <div className={className}>Total amount: {formattedPrice}</div>;
 };
 

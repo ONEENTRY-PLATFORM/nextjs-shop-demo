@@ -88,7 +88,7 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
                 label={'Date'}
                 value={new Date(deliveryData.date).toLocaleDateString('en-US')}
                 icon={'/icons/calendar.svg'}
-                placeholder={order_info_date_placeholder}
+                placeholder={order_info_date_placeholder.value}
               />
             );
           }
@@ -100,7 +100,7 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
                 label={'Time'}
                 value={deliveryData.time}
                 icon={'/icons/time.svg'}
-                placeholder={order_info_time_placeholder}
+                placeholder={order_info_time_placeholder.value}
               />
             );
           }
@@ -112,7 +112,7 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
               >
                 <td className="self-stretch align-middle text-sm">
                   <label htmlFor={'address'}>
-                    {order_info_address_placeholder}
+                    {order_info_address_placeholder.value}
                   </label>
                 </td>
                 <td className="px-5 align-middle text-base">
@@ -122,7 +122,7 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
                     value={deliveryData.address}
                     id="address"
                     name="address"
-                    placeholder={order_info_address_placeholder}
+                    placeholder={order_info_address_placeholder.value}
                     onChange={(e) => {
                       dispatch(
                         setDeliveryData({
