@@ -11,7 +11,8 @@ import NavigationButton from './NavigationButton';
 const VariationsCarousel: FC<{
   items: Array<IProductsEntity> | undefined;
   total: number;
-}> = ({ items, total }) => {
+  lang: string;
+}> = ({ items, total, lang }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   if (!items || items.length < 1 || total < 1) {
@@ -65,6 +66,7 @@ const VariationsCarousel: FC<{
             key={idx}
             item={item}
             index={idx}
+            lang={lang}
             currentIndex={currentIndex}
             setCurrentIndex={setCurrentIndex}
           />

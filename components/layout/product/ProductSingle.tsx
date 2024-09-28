@@ -20,7 +20,7 @@ const ProductSingle: FC<{
 }> = async ({ product, lang }) => {
   const { attributeValues, localizeInfos, blocks, id } = product;
 
-  const relatedData = await getRelatedProductsById(id, lang);
+  const { products, total } = await getRelatedProductsById(id, lang);
   const description = attributeValues.description?.value[0].htmlValue;
 
   return (
@@ -37,12 +37,9 @@ const ProductSingle: FC<{
         </div>
 
         <div className="flex w-4/12 grow flex-col max-md:w-full">
-          {relatedData.total && relatedData.total > 0 && (
+          {total && total > 0 && (
             <div className="relative mb-6 box-border flex shrink-0 flex-col">
-              <VariationsCarousel
-                items={relatedData.products}
-                total={relatedData.total}
-              />
+              <VariationsCarousel items={products} total={total} lang={lang} />
             </div>
           )}
 

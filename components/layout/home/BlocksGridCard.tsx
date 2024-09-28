@@ -12,6 +12,7 @@ import Placeholder from '@/components/shared/Placeholder';
 interface BlocksGridCardProps {
   marker: string;
   bgColor: string;
+  lang: string;
   className: {
     width: string;
     height: string;
@@ -20,11 +21,12 @@ interface BlocksGridCardProps {
 
 const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   marker,
-  className,
   bgColor,
+  lang,
+  className,
 }) => {
-  const [lang] = useServerProvider('lang');
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  console.log(langCode);
   const { block, isError } = await getBlockByMarker(marker, langCode);
 
   if (!block || !block.attributeValues || !block.isVisible || isError) {

@@ -8,6 +8,7 @@ import Placeholder from '@/components/shared/Placeholder';
 
 interface VariationProps {
   index: number;
+  lang: string;
   item: IProductsEntity;
   currentIndex: number;
   setCurrentIndex: Dispatch<SetStateAction<number>>;
@@ -15,6 +16,7 @@ interface VariationProps {
 
 const CarouselItem: React.FC<VariationProps> = ({
   item,
+  lang,
   index,
   currentIndex,
   setCurrentIndex,
@@ -57,7 +59,7 @@ const CarouselItem: React.FC<VariationProps> = ({
           )}
         </div>
         <h3 className="w-full text-center text-xs leading-4">
-          <Link href={'/shop/product/' + item.id} title={title}>
+          <Link href={'/' + lang + '/shop/product/' + item.id} title={title}>
             {title}
           </Link>
         </h3>

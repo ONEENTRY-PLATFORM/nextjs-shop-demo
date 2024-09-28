@@ -1,9 +1,7 @@
-export default {
-  'server-component': {
-    welcome: 'Welcome',
-  },
-  counter: {
-    increment: 'Increment',
-    decrement: 'Decrement',
-  },
+const dict = () => {
+  return {
+    return_home: 'Retour à la maison',
+  };
 };
+
+export default dict;

@@ -29,6 +29,7 @@ const IndexPage = async ({
               blocksData={blocksData}
               blocksColors={blocksColors}
               blocks={blocks as Array<string>}
+              lang={lang}
             />
           </Suspense>
         </div>
