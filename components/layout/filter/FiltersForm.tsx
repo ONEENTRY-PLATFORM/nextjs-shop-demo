@@ -7,7 +7,8 @@ import Loader from '@/components/shared/Loader';
 import { sortObjectFieldsByPosition } from '@/components/utils';
 
 import AvailabilityFilter from './components/AvailabilityFilter';
-import FilterButtons from './components/buttons/FilterButtons';
+import ApplyButton from './components/buttons/ApplyButton';
+import ResetButton from './components/buttons/ResetButton';
 import ColorFilter from './components/color/ColorFilter';
 import PricePickerFilter from './components/price/PricePickerFilter';
 
@@ -52,7 +53,10 @@ const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
           );
         }
       })}
-      <FilterButtons />
+      <div className="relative mt-auto box-border flex shrink-0 flex-col gap-4">
+        <ResetButton />
+        <ApplyButton />
+      </div>
     </div>
   );
 };

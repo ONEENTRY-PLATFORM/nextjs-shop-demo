@@ -10,8 +10,13 @@ const ResetButton: FC = () => {
   const { replace } = useRouter();
   const params = new URLSearchParams(searchParams);
 
-  const data = useAppSelector((state) => state.systemContentReducer.content);
-  console.log(data);
+  const attributeValues = useAppSelector(
+    (state) => state.systemContentReducer.content.attributeValues,
+  ) as {
+    reset_button_placeholder: {
+      value: string;
+    };
+  };
 
   const onReset = () => {
     params.delete('search');
@@ -24,7 +29,7 @@ const ResetButton: FC = () => {
 
   return (
     <button onClick={onReset} className="btn btn-xl btn-o btn-o-primary">
-      {/* {reset_button_placeholder} */}
+      {attributeValues.reset_button_placeholder.value}
     </button>
   );
 };
