@@ -7,14 +7,15 @@ import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import NavigationMenu from '@/components/layout/main-menu/NavigationMenu';
 import Modal from '@/components/layout/modal/ModalLayout';
+import type { Locale } from '@/i18n-config';
 
 import { AuthProvider } from '../store/providers/AuthContext';
 import { ContentContextProvider } from '../store/providers/ContentContext';
 import { LanguageProvider } from '../store/providers/LanguageContext';
 import { OpenDrawerProvider } from '../store/providers/OpenDrawerContext';
-import { useServerProvider } from '../store/providers/ServerProvider';
 import StoreProvider from '../store/providers/StoreProvider';
 import { LanguageEnum } from '../types/enum';
+import { getDictionary } from './dictionaries';
 
 const lato = Lato({
   subsets: ['latin'],
@@ -35,7 +36,10 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode; params: { lang: string } }>) {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  useServerProvider('lang', lang);
+  // !!! dictionary
+  const dictionary = await getDictionary(lang as Locale);
+  const dictionaryData = dictionary(langCode);
+  console.log(dictionaryData);
 
   return (
     <html lang={langCode}>

@@ -4,7 +4,6 @@ import type React from 'react';
 import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 import Placeholder from '@/components/shared/Placeholder';
@@ -26,8 +25,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   className,
 }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  console.log(langCode);
-  const { block, isError } = await getBlockByMarker(marker, langCode);
+  const { block, isError } = await getBlockByMarker(marker, lang);
 
   if (!block || !block.attributeValues || !block.isVisible || isError) {
     return <Loader />;
