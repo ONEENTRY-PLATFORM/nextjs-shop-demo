@@ -11,12 +11,14 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 export const ForgotPasswordForm: FC<{ lang: string }> = ({ lang }) => {
+  const { setComponent, setAction } = useContext(OpenDrawerContext);
+  const [isError, setError] = useState<string>('');
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, isLoading, error } = useGetFormByMarkerQuery({
     marker: 'reg',
     lang,
   });
-  const [isError, setError] = useState('');
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -26,7 +28,6 @@ export const ForgotPasswordForm: FC<{ lang: string }> = ({ lang }) => {
       valid: boolean;
     };
   };
-  const { setComponent, setAction } = useContext(OpenDrawerContext);
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

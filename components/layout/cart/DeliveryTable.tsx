@@ -16,12 +16,15 @@ import { UsePrice } from '@/components/utils';
 
 import TableRow from './DeliveryTableRow';
 
-const DeliveryTable: FC<IProductsEntity> = (delivery) => {
+const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
+  delivery,
+  lang,
+}) => {
   const dispatch = useAppDispatch();
 
   const { data } = useGetFormByMarkerQuery({
     marker: 'order',
-    lang: 'en',
+    lang,
   });
   const attrs = data?.attributes.filter(
     (attr: IAttributes) => attr.marker !== 'time2',

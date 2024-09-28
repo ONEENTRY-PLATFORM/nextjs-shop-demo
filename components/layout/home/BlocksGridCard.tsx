@@ -75,7 +75,9 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
             className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover"
           />
         ) : (
-          <Placeholder />
+          <div className="invert opacity-15 absolute left-0 top-0 z-0 size-full rounded-3xl object-cover">
+            <Placeholder />
+          </div>
         )}
       </div>
     </Link>

@@ -10,7 +10,7 @@ const ProductDetails: FC<IProductsEntity & { productPages?: [] }> = async (
   product,
 ) => {
   const { attributeValues, localizeInfos } = product;
-  const units = attributeValues?.units_product.value;
+  const units = attributeValues?.units_product?.value;
 
   return (
     <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-full">

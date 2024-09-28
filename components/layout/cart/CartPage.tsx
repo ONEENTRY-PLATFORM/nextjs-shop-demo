@@ -112,7 +112,10 @@ const CartPage: FC<{ page: IPagesEntity; lang: string }> = ({ page, lang }) => {
           router.push('/payment');
         }}
       >
-        <DeliveryTable {...(delivery.product as IProductsEntity)} />
+        <DeliveryTable
+          lang={lang}
+          delivery={delivery.product as IProductsEntity}
+        />
         <div className="mt-4 flex w-full flex-col">
           <TotalAmount
             className={

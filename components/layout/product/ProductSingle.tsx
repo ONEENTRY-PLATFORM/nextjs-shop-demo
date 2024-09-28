@@ -2,7 +2,6 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 
 import { getRelatedProductsById } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
 
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
@@ -19,11 +18,11 @@ const ProductSingle: FC<{
   };
   lang: string;
 }> = async ({ product, lang }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { attributeValues, localizeInfos, blocks } = product;
+  const { attributeValues, localizeInfos, blocks, id } = product;
 
-  const relatedData = await getRelatedProductsById(product.id, langCode);
-  const description = attributeValues.description.value[0].htmlValue;
+  const relatedData = await getRelatedProductsById(id, lang);
+  const description = attributeValues.description?.value[0].htmlValue;
+
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:gap-4 max-sm:flex-wrap">
