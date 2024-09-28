@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type {
   IOrderByMarkerEntity,
   IOrderData,
@@ -13,6 +12,7 @@ const CancelOrderButton: FC<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   refetch: any;
   title: string;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 }> = ({ data, isLoading, refetch, title }) => {
   const cancelOrder = async () => {
     const formData = {
@@ -26,7 +26,7 @@ const CancelOrderButton: FC<{
 
     const order = await updateOrderByMarkerAndId('order', data.id, formData);
     refetch();
-    return;
+    return order;
   };
 
   return (

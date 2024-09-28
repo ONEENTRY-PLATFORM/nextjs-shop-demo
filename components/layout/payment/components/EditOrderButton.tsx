@@ -1,14 +1,12 @@
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Loader from '@/components/shared/Loader';
 
 type EditOrderButtonProps = {
   isLoading: boolean;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const EditOrderButton: FC<EditOrderButtonProps> = ({ isLoading }) => {
   const router = useRouter();
   const onEditOrder = async () => {

@@ -7,13 +7,6 @@ import { getBlockByMarker, getMenuByMarker } from '@/app/api';
 import ContactInfo from './ContactInfo';
 import FooterMenu from './Menu';
 
-const logo = {
-  src: '/images/logo-250x70.svg',
-  width: 250,
-  height: 70,
-  alt: 'OneEntry',
-};
-
 const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
   const quickLinks = await getMenuByMarker('quick_links', lang);
   const infoLinks = await getMenuByMarker('information', lang);
@@ -24,10 +17,10 @@ const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
       <div className="flex w-full max-w-screen-xl flex-row flex-wrap items-start justify-between max-md:justify-start max-md:gap-16 max-sm:gap-6">
         <Link href={'/' + lang + '/'} className="max-md:w-full">
           <Image
-            src={logo.src}
-            width={logo.width}
-            height={logo.height}
-            alt={logo.alt}
+            src={'/images/logo-250x70.svg'}
+            width={250}
+            height={70}
+            alt={'OneEntry'}
             loading="lazy"
             className="aspect-[3.57] w-[250px] max-w-full shrink-0 max-lg:max-w-[180px] max-sm:mb-5"
           />

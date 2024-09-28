@@ -5,6 +5,7 @@ import type { FC } from 'react';
 import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
+import { LanguageEnum } from '@/app/types/enum';
 
 import TotalAmount from '../cart/components/TotalAmount';
 import ConfirmOrderButton from './components/ConfirmOrderButton';
@@ -14,10 +15,11 @@ import OrderProductsTable from './components/OrderProductsTable';
 
 type PaymentMethodProps = {
   account: IAccountsEntity;
+  lang: string;
 };
 
-const PaymentMethod: FC<PaymentMethodProps> = ({ account }) => {
-  const langCode = 'en_US';
+const PaymentMethod: FC<PaymentMethodProps> = ({ account, lang }) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const dispatch = useAppDispatch();
   const { isLoading, onConfirmOrder } = useCreateOrder({ langCode });
 

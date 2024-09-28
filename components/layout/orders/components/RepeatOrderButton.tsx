@@ -7,14 +7,17 @@ import type { FC } from 'react';
 import { getProductById } from '@/app/api';
 import { useAppDispatch } from '@/app/store/hooks';
 import { addProductToCart } from '@/app/store/reducers/CartSlice';
+import { LanguageEnum } from '@/app/types/enum';
+import Loader from '@/components/shared/Loader';
 
 const RepeatOrderButton: FC<{
   data: IOrderByMarkerEntity;
-  isLoading: boolean;
   title: string;
+  isLoading: boolean;
+  lang: string;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-}> = ({ data, isLoading, title }) => {
-  const langCode = 'en_US';
+}> = ({ data, isLoading, title, lang }) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -47,7 +50,7 @@ const RepeatOrderButton: FC<{
       onClick={() => repeatOrder()}
       className="btn btn-sm btn-o btn-o-primary"
     >
-      {title}
+      {title} {isLoading && <Loader />}
     </button>
   );
 };
