@@ -13,7 +13,6 @@ const dict = async (langCode: string): Promise<any> => {
     //   langCode,
     // });
     return { ...block?.attributeValues };
-    // return { ...block, ...attribute };
   } catch (e) {
     // console.log(e);
   }

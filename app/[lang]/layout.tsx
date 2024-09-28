@@ -35,7 +35,7 @@ export default async function RootLayout({
   params: { lang },
 }: Readonly<{ children: React.ReactNode; params: { lang: string } }>) {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { block } = await getDictionary(lang as Locale);
+  const dict = await getDictionary(lang as Locale);
 
   return (
     <html lang={langCode}>
@@ -43,12 +43,12 @@ export default async function RootLayout({
         <StoreProvider>
           <LanguageProvider lang={lang}>
             <AuthProvider langCode={langCode}>
-              <ContentContextProvider systemContent={block?.attributeValues}>
+              <ContentContextProvider dict={dict}>
                 <OpenDrawerProvider>
-                  <Header lang={lang} />
+                  <Header lang={lang} dict={dict} />
                   <NavigationMenu lang={lang} />
                   <div className="grow">{children}</div>
-                  <Footer lang={lang} />
+                  <Footer lang={lang} dict={dict} />
                   <Modal lang={lang} />
                 </OpenDrawerProvider>
               </ContentContextProvider>

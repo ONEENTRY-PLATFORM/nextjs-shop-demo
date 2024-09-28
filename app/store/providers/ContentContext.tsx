@@ -11,18 +11,18 @@ const ContentContext = createContext({});
 type Props = {
   children: ReactNode;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  systemContent: any;
+  dict: any;
 };
 
-export const ContentContextProvider = ({ children, systemContent }: Props) => {
+export const ContentContextProvider = ({ children, dict }: Props) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (systemContent) {
-      dispatch(addContent(systemContent));
+    if (dict) {
+      dispatch(addContent(dict));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [systemContent]);
+  }, [dict]);
 
   return <ContentContext.Provider value>{children}</ContentContext.Provider>;
 };

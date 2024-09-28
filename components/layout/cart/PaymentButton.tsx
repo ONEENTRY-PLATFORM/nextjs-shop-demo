@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 
 const PaymentButton: FC<{ className?: string }> = (className) => {
+  // go_to_pay_placeholder
   return (
     <button
       type="submit"

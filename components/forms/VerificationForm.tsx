@@ -17,7 +17,6 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { setOpen, setComponent, action } = useContext(OpenDrawerContext);
 
   const [isLoading, setLoading] = useState(false);
@@ -144,9 +143,11 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
       <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
         <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
           Verification
+          {/* verification */}
         </h2>
         <p className="text-xs text-gray-400 max-md:max-w-full">
           Enter your OTP code here
+          {/* enter_otp_code */}
         </p>
       </div>
 

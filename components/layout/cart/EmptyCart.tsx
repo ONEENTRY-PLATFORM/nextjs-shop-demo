@@ -16,6 +16,7 @@ const EmptyCart = () => {
     }
     setEmptyText(empty_cart_plug);
   }, [empty_cart_plug]);
+  // go_to_shop
 
   return (
     <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
