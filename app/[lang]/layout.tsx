@@ -35,9 +35,13 @@ export default async function RootLayout({
   children,
   params: { lang },
 }: Readonly<{ children: React.ReactNode; params: { lang: string } }>) {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const dict = await getDictionary(lang as Locale);
-  useServerProvider('dict', dict);
+  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
+
+  useServerProvider('lang', lang);
+  const [langCode] = useServerProvider(
+    'langCode',
+    LanguageEnum[lang as keyof typeof LanguageEnum],
+  );
 
   return (
     <html lang={langCode}>

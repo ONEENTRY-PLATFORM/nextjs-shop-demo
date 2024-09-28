@@ -2,6 +2,7 @@ import type { FC } from 'react';
 import { type Key } from 'react';
 
 import { getLocales, getMenuByMarker } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 import { NavMenuLoader } from '@/components/shared/Loader';
 
@@ -11,12 +12,10 @@ import NavItemCart from './NavItemCart';
 import NavItemFavorites from './NavItemFavorites';
 import NavItemProfile from './NavItemProfile';
 
-interface NavGroupProps {
-  lang: string;
-}
+const NavGroup: FC = async () => {
+  const [lang] = useServerProvider('lang');
+  const [langCode] = useServerProvider('langCode');
 
-const NavGroup: FC<NavGroupProps> = async ({ lang }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { menu, isError } = await getMenuByMarker('user_web', langCode);
   const { locales } = await getLocales();
 

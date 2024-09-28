@@ -2,7 +2,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { FC } from 'react';
 
-const Logo: FC<{ lang: string }> = async ({ lang }) => {
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
+
+const Logo: FC = async () => {
+  const [lang] = useServerProvider('lang');
+
   return (
     <Link
       href={'/' + lang}

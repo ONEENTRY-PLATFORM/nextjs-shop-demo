@@ -13,6 +13,7 @@ const dict = async (langCode: string): Promise<any> => {
     //   langCode,
     // });
     return { ...block?.attributeValues };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     // console.log(e);
   }
