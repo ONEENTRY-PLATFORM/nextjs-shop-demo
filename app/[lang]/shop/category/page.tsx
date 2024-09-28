@@ -6,7 +6,6 @@ import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
 import CategoriesGrid from '@/components/layout/categories/CategoriesGrid';
 import { CategoriesLoader } from '@/components/shared/Loader';
 
@@ -16,8 +15,7 @@ export async function generateMetadata({
 }: {
   params: { handle: string; lang: string };
 }): Promise<Metadata> {
-  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
-  const { isError, page } = await getPageByUrl('category', langCode);
+  const { isError, page } = await getPageByUrl('category', params.lang);
 
   if (isError || !page) {
     return notFound();
@@ -68,11 +66,7 @@ const CategoryPage = async ({
 }: {
   params: { lang: string };
 }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { pages, isError } = await getChildPagesByParentUrl(
-    'category',
-    langCode,
-  );
+  const { pages, isError } = await getChildPagesByParentUrl('category', lang);
 
   if (isError || !pages) {
     return notFound();

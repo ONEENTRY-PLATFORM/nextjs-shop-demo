@@ -1,13 +1,14 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 
 import getSearchParams from '../../utils/getSearchParams';
 
 export const getProducts = async (props: {
   limit: number;
   offset: number;
-  langCode: string;
+  lang: string;
   params?: {
     handle?: string;
     searchParams?: {
@@ -24,7 +25,8 @@ export const getProducts = async (props: {
   isError: boolean;
   err?: unknown;
 }> => {
-  const { limit, offset, params, langCode } = props;
+  const { limit, offset, params, lang } = props;
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   // const searchValue = params?.searchParams?.search || '';
   const expandedFilters = getSearchParams(params?.searchParams, params?.handle);
 

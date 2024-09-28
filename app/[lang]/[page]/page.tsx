@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getPageByUrl } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
 import CartPage from '@/components/layout/cart/CartPage';
 import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
 import PaymentPage from '@/components/layout/payment/PaymentPage';
@@ -20,8 +19,7 @@ export async function generateMetadata({
 }: {
   params: { page: string; lang: string };
 }): Promise<Metadata> {
-  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
-  const { page, isError } = await getPageByUrl(params.page, langCode);
+  const { page, isError } = await getPageByUrl(params.page, params.lang);
 
   if (isError || !page) {
     return notFound();
@@ -43,9 +41,7 @@ export default async function Page({
 }: {
   params: { page: string; lang: string };
 }) {
-  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
-  const { page, isError } = await getPageByUrl(params.page, langCode);
-  // console.log(page);
+  const { page, isError } = await getPageByUrl(params.page, params.lang);
 
   if (isError || !page) {
     return notFound();

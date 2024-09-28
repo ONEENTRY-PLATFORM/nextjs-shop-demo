@@ -19,7 +19,7 @@ const ContactsPage: FC<{ page: IPagesEntity; lang: string }> = async ({
         {htmlContent && <div className="mb-6">{parse(htmlContent)}</div>}
         {forms?.map((form: string, i: Key) => {
           if (form === 'contact_us') {
-            return <ContactUsForm key={i} className="" />;
+            return <ContactUsForm key={i} className="" lang={lang} />;
           }
         })}
       </div>

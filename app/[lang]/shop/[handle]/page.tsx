@@ -73,11 +73,10 @@ export default async function CatalogPage({
   };
 }) {
   const pageLimit = 10;
-  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   const currentPage = Number(searchParams?.page) || 0;
 
   const { isError, products, total } = await getProducts({
-    langCode: langCode,
+    lang: params.lang,
     limit: pageLimit,
     offset: currentPage * pageLimit,
     params: { ...params, searchParams: searchParams },

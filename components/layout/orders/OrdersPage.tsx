@@ -7,7 +7,6 @@ import { useContext, useEffect, useState } from 'react';
 
 import { getAllOrdersByMarker, getBlockByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import { LanguageEnum } from '@/app/types/enum';
 import AuthError from '@/components/shared/AuthError';
 import { OrdersTableLoader } from '@/components/shared/Loader';
 
@@ -15,7 +14,6 @@ import Pagination from '../catalog/Pagination';
 import Order from './components/OrderRow';
 
 const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const searchParams = useSearchParams();
   const { isAuth, user } = useContext(AuthContext);
 
@@ -33,7 +31,7 @@ const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
     }
     (async () => {
       try {
-        const { block } = await getBlockByMarker('orders_settings', langCode);
+        const { block } = await getBlockByMarker('orders_settings', lang);
         if (block) {
           setSettings(block.attributeValues);
         }
@@ -47,7 +45,7 @@ const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
             marker: 'order',
             limit: pageLimit,
             offset: currentPage * pageLimit,
-            langCode,
+            lang,
           });
           if (orders) {
             setOrders(orders);
@@ -58,7 +56,7 @@ const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
         }
       }
     })();
-  }, [langCode, currentPage, isAuth, pageLimit, user]);
+  }, [lang, currentPage, isAuth, pageLimit, user]);
 
   if (!isAuth || !user) {
     return <AuthError />;

@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { getPageByUrl } from '@/app/api';
 
 const NotFound = async () => {
-  const langCode = 'en_US';
-  const { page, isError } = await getPageByUrl('404', langCode);
+  const lang = 'en';
+  const { page, isError } = await getPageByUrl('404', lang);
 
   if (isError || !page) {
     return (

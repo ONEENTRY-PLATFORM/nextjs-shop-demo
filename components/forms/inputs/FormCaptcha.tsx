@@ -32,11 +32,11 @@ export const FormCaptcha = ({ setToken, setIsCaptcha }: Props) => {
 
   return (
     <>
-      <ReCAPTCHA
+      {/* <ReCAPTCHA
         ref={recaptcha}
         sitekey="6Lc8mQwqAAAAAASbSC4ANjN7Rsq-xC63iMX8HWG9"
         onChange={onVerify}
-      />
+      /> */}
       {/* <Recaptcha
         ref={recaptcha}
         siteKey="6Lc8mQwqAAAAAASbSC4ANjN7Rsq-xC63iMX8HWG9"
@@ -51,24 +51,7 @@ export const FormCaptcha = ({ setToken, setIsCaptcha }: Props) => {
           },
         }}
         size="normal"
-      />
-      <Button
-        rounded
-        style={{
-          width: '100%',
-          borderWidth: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: 60,
-        }}
-        paragraphProps={{
-          weight: '600',
-          style: { fontSize: 20 },
-        }}
-        onPress={send}
-      >
-        {verify}
-      </Button> */}
+      />*/}
     </>
   );
 };

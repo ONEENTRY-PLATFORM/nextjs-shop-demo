@@ -4,6 +4,7 @@ import type React from 'react';
 import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 import Placeholder from '@/components/shared/Placeholder';
@@ -11,7 +12,6 @@ import Placeholder from '@/components/shared/Placeholder';
 interface BlocksGridCardProps {
   marker: string;
   bgColor: string;
-  lang: string;
   className: {
     width: string;
     height: string;
@@ -22,8 +22,8 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   marker,
   className,
   bgColor,
-  lang,
 }) => {
+  const [lang] = useServerProvider('lang');
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { block, isError } = await getBlockByMarker(marker, langCode);
 
@@ -75,7 +75,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
             className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover"
           />
         ) : (
-          <div className="invert opacity-15 absolute left-0 top-0 z-0 size-full rounded-3xl object-cover">
+          <div className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover opacity-15 invert">
             <Placeholder />
           </div>
         )}

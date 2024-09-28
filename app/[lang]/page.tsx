@@ -5,8 +5,6 @@ import { blocksColors, blocksData } from '@/components/data';
 import BlocksGrid from '@/components/layout/home/BlocksGrid';
 import Loader from '@/components/shared/Loader';
 
-import { LanguageEnum } from '../types/enum';
-
 // export const revalidate = 10;
 // export const dynamicParams = true;
 
@@ -15,8 +13,7 @@ const IndexPage = async ({
 }: {
   params: { lang: string };
 }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { page, isError } = await getPageByUrl('home_web', langCode);
+  const { page, isError } = await getPageByUrl('home_web', lang);
 
   if (isError || !page?.blocks) {
     return null;
@@ -32,7 +29,6 @@ const IndexPage = async ({
               blocksData={blocksData}
               blocksColors={blocksColors}
               blocks={blocks as Array<string>}
-              lang={lang}
             />
           </Suspense>
         </div>

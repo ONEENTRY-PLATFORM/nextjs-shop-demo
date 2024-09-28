@@ -6,14 +6,12 @@ interface BlocksGridProps {
   blocks: Array<string>;
   blocksData: object;
   blocksColors: object;
-  lang: string;
 }
 
 const BlocksGrid: FC<BlocksGridProps> = async ({
   blocks,
   blocksData,
   blocksColors,
-  lang,
 }) => {
   return (
     <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
@@ -28,7 +26,6 @@ const BlocksGrid: FC<BlocksGridProps> = async ({
               marker={block}
               className={className}
               bgColor={bgColor}
-              lang={lang}
             />
           );
         })}

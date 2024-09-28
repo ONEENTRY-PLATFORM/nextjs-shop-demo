@@ -4,7 +4,6 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import { getBlockByMarker, getPageByUrl, getProducts } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
@@ -13,8 +12,7 @@ export async function generateMetadata({
 }: {
   params: { page: string; lang: string };
 }): Promise<Metadata> {
-  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
-  const { isError, page } = await getPageByUrl('shop', langCode);
+  const { isError, page } = await getPageByUrl('shop', params.lang);
   if (isError || !page) {
     return notFound();
   }
@@ -69,9 +67,8 @@ const ShopPage = async ({
     filters?: IFilterParams[];
   };
 }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { page } = await getPageByUrl('shop', langCode);
-  const { block } = await getBlockByMarker('main_catalog', langCode);
+  const { page } = await getPageByUrl('shop', lang);
+  const { block } = await getBlockByMarker('main_catalog', lang);
 
   const currentPage = Number(searchParams?.page) || 0;
   const pageLimit = block?.quantity || 10;
@@ -79,7 +76,7 @@ const ShopPage = async ({
   const { isError, products, total } = await getProducts({
     limit: pageLimit,
     offset: currentPage * pageLimit,
-    langCode: langCode,
+    lang,
     params: { searchParams: searchParams },
   });
 

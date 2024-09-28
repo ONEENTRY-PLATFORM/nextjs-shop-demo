@@ -1,17 +1,18 @@
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 
 import { api } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 
 export const getAllOrdersByMarker = async ({
   marker,
   limit,
   offset,
-  langCode,
+  lang,
 }: {
   marker: string;
   limit: number;
   offset: number;
-  langCode: string;
+  lang: string;
 }): Promise<{
   orders?: IOrderByMarkerEntity[];
   total?: number;
@@ -19,6 +20,7 @@ export const getAllOrdersByMarker = async ({
   error?: unknown;
 }> => {
   try {
+    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
     const data = await api.Orders.getAllOrdersByMarker(
       marker,
       langCode,

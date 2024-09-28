@@ -1,10 +1,13 @@
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { FC } from 'react';
 
+import { LanguageEnum } from '@/app/types/enum';
+
 const ContactInfo: FC<{
   block: IBlockEntity | undefined;
-  langCode: string;
-}> = async ({ block, langCode }) => {
+  lang: string;
+}> = async ({ block, lang }) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   if (!block) {
     return;
   }

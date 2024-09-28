@@ -3,7 +3,6 @@ import Link from 'next/link';
 import type { FC } from 'react';
 
 import { getBlockByMarker, getMenuByMarker } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
 
 import ContactInfo from './ContactInfo';
 import FooterMenu from './Menu';
@@ -16,10 +15,9 @@ const logo = {
 };
 
 const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const quickLinks = await getMenuByMarker('quick_links', langCode);
-  const infoLinks = await getMenuByMarker('information', langCode);
-  const { block } = await getBlockByMarker('contact_info', langCode);
+  const quickLinks = await getMenuByMarker('quick_links', lang);
+  const infoLinks = await getMenuByMarker('information', lang);
+  const { block } = await getBlockByMarker('contact_info', lang);
 
   return (
     <div className="flex w-full items-center justify-center bg-gray-200 px-5 py-10 max-md:px-5">
@@ -34,7 +32,7 @@ const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
             className="aspect-[3.57] w-[250px] max-w-full shrink-0 max-lg:max-w-[180px] max-sm:mb-5"
           />
         </Link>
-        <ContactInfo block={block} langCode={langCode} />
+        <ContactInfo block={block} lang={lang} />
         {quickLinks.menu && <FooterMenu menu={quickLinks.menu} lang={lang} />}
         {infoLinks.menu && <FooterMenu menu={infoLinks.menu} lang={lang} />}
       </div>
