@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { getBlockByMarker, getSingleAttributeByMarkerSet } from '@/app/api';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

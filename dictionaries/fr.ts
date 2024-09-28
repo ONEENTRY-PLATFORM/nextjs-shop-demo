@@ -9,7 +9,7 @@ const dict = async (langCode: string): Promise<any> => {
     //   setMarker: 'cart_item_options',
     //   langCode,
     // });
-    return { ...block };
+    return { ...block?.attributeValues };
     // return { ...block, ...attribute };
   } catch (e) {
     // console.log(e);
