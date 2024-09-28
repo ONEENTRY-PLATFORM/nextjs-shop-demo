@@ -5,6 +5,7 @@ import type {
 import type { FC } from 'react';
 
 import { updateOrderByMarkerAndId } from '@/app/api';
+import Loader from '@/components/shared/Loader';
 
 const CancelOrderButton: FC<{
   data: IOrderByMarkerEntity;
@@ -12,7 +13,6 @@ const CancelOrderButton: FC<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   refetch: any;
   title: string;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 }> = ({ data, isLoading, refetch, title }) => {
   const cancelOrder = async () => {
     const formData = {
@@ -34,7 +34,7 @@ const CancelOrderButton: FC<{
       onClick={() => cancelOrder()}
       className="btn btn-sm btn-o btn-o-primary"
     >
-      {title}
+      {title} {isLoading && <Loader />}
     </button>
   );
 };

@@ -1,29 +1,27 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { api } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
 type UseGetProductProps = {
   id: number;
-  lang: string;
 };
 
-export const useGetProduct = ({ id, lang }: UseGetProductProps) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-
+export const useGetProduct = ({ id }: UseGetProductProps) => {
   const [product, setProduct] = useState<IProductsEntity>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | undefined>();
   const [refetch, setRefetch] = useState(false);
+  const { activeLanguage } = useContext(LanguageContext);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       try {
-        const result = await api.Products.getProductById(id, langCode);
+        const result = await api.Products.getProductById(id, activeLanguage);
         setProduct(result);
         setLoading(false);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,7 +30,7 @@ export const useGetProduct = ({ id, lang }: UseGetProductProps) => {
         setLoading(false);
       }
     })();
-  }, [id, langCode, refetch]);
+  }, [id, activeLanguage, refetch]);
 
   return {
     error,

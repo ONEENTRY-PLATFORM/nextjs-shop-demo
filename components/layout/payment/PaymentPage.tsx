@@ -21,16 +21,13 @@ import PaymentMethod from './PaymentMethod';
 const PaymentPage: FC<{ page: IPagesEntity; lang: string }> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   page,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   lang,
 }) => {
+  const dispatch = useAppDispatch();
   const { isAuth } = useContext(AuthContext);
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,
   );
-  // const router = useRouter();
-  const dispatch = useAppDispatch();
-
   const [isLoading, setIsLoading] = useState(true);
 
   const { data, error } = useGetAccountsQuery({});
@@ -96,7 +93,7 @@ const PaymentPage: FC<{ page: IPagesEntity; lang: string }> = ({
     <div className="flex max-w-[730px] flex-col gap-5 pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>
         {whitelistMethods.map((item, index) => {
-          return <PaymentMethod key={index} account={item} />;
+          return <PaymentMethod key={index} account={item} lang={lang} />;
         })}
       </Suspense>
     </div>

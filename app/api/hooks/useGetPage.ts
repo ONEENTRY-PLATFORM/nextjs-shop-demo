@@ -1,33 +1,28 @@
 'use client';
 
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { api } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { LanguageContext } from '@/app/store/providers/LanguageContext';
 
-// langCode,
-// langCode: string;
-
-export const useGetPage = (pageUrl: string, lang: string) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-
+export const useGetPage = (pageUrl: string) => {
   const [page, setPage] = useState<IPagesEntity>();
   const [loading, setLoading] = useState<boolean>(false);
   const [refresh, setRefresh] = useState(false);
+  const { activeLanguage } = useContext(LanguageContext);
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     pageUrl &&
       (async () => {
-        // !!! refresh??
         setLoading(true);
-        const result = await api.Pages.getPageByUrl(pageUrl, langCode);
+        const result = await api.Pages.getPageByUrl(pageUrl, activeLanguage);
         setPage(result);
         setLoading(false);
         setRefresh(false);
       })();
-  }, [pageUrl, refresh, langCode]);
+  }, [pageUrl, refresh, activeLanguage]);
 
   return {
     pageInfo: page,
