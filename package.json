@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@formatjs/intl-localematcher": "^0.5.4",
     "@headlessui/react": "^2.1.8",
     "@next/env": "^14.2.13",
     "@reduxjs/toolkit": "^2.2.7",

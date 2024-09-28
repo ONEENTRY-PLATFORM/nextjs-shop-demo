@@ -36,11 +36,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
-  params,
-}: {
-  params: { page: string; lang: string };
-}) {
+const Page = async ({ params }: { params: { page: string; lang: string } }) => {
   const { page, isError } = await getPageByUrl(params.page, params.lang);
 
   if (isError || !page) {
@@ -114,4 +110,6 @@ export default async function Page({
       })}
     </div>
   );
-}
+};
+
+export default Page;
