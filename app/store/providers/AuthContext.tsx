@@ -34,7 +34,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
   const [trigger, { isError }] = useLazyGetMeQuery({
-    pollingInterval: isAuth ? 5000 : 0,
+    pollingInterval: isAuth ? 10000 : 0,
   });
 
   const onInit = async () => {

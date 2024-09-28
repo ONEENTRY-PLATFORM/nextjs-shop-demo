@@ -5,6 +5,7 @@ import type { FC, Key } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
 import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
+import { LanguageEnum } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 
 import CancelOrderButton from './components/CancelOrderButton';
@@ -16,14 +17,15 @@ const OrderPage: FC<{
   id: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   settings: Record<string, any> | undefined;
-}> = ({ id, settings }) => {
-  const langCode = 'en_US';
+  lang: string;
+}> = ({ id, settings, lang }) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { data, isLoading, refetch } = useGetSingleOrderQuery({
     marker: 'order',
     id: id,
     activeLang: langCode,
   });
-  const { onConfirmOrder } = useCreateOrder();
+  const { onConfirmOrder } = useCreateOrder({ langCode });
 
   if (!data || !settings) {
     return <Loader />;

@@ -9,8 +9,8 @@ import { LanguageContext } from '@/app/store/providers/LanguageContext';
 export const useSearchProducts = ({ name }: { name: string }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [products, setProducts] = useState<IProductsEntity[]>([]);
-  const { activeLanguage } = useContext(LanguageContext);
   const [refetch, setRefetch] = useState(false);
+  const { activeLanguage } = useContext(LanguageContext);
 
   useEffect(() => {
     if (!name) {

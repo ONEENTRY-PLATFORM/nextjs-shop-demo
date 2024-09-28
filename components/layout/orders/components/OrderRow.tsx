@@ -8,10 +8,12 @@ import OrderPage from '../OrderPage';
 const Order = ({
   order,
   settings,
+  lang,
 }: {
   order: IOrderByMarkerEntity;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   settings: Record<string, any> | undefined;
+  lang: string;
 }) => {
   const { id, createdDate, currency, statusIdentifier, totalSum } = order;
 
@@ -42,7 +44,7 @@ const Order = ({
       </button>
       {state && (
         <div className="p-4">
-          <OrderPage id={Number(id)} settings={settings} />
+          <OrderPage id={Number(id)} settings={settings} lang={lang} />
         </div>
       )}
     </>

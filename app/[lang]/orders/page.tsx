@@ -10,7 +10,7 @@ const Page: FC<{ lang: string }> = async ({ lang }) => {
       <div className="flex w-full flex-col items-center gap-5 bg-white">
         <WithSidebar lang={lang}>
           <Suspense>
-            <OrdersPage />
+            <OrdersPage lang={lang} />
           </Suspense>
         </WithSidebar>
       </div>

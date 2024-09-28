@@ -1,14 +1,15 @@
+import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { FC } from 'react';
 
-import { contactInfo } from '@/components/data';
-import { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
-
-const ContactInfo: FC<{ block: IBlockEntity | undefined; langCode: string }> = async ({ block, langCode }) => {
+const ContactInfo: FC<{
+  block: IBlockEntity | undefined;
+  langCode: string;
+}> = async ({ block, langCode }) => {
   if (!block) {
     return;
   }
 
-  const { 
+  const {
     info_title,
     address,
     info_emails_title,

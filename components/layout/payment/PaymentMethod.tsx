@@ -5,8 +5,6 @@ import type { FC } from 'react';
 import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Loader from '@/components/shared/Loader';
 
 import TotalAmount from '../cart/components/TotalAmount';
 import ConfirmOrderButton from './components/ConfirmOrderButton';
@@ -19,8 +17,9 @@ type PaymentMethodProps = {
 };
 
 const PaymentMethod: FC<PaymentMethodProps> = ({ account }) => {
+  const langCode = 'en_US';
   const dispatch = useAppDispatch();
-  const { isLoading, onConfirmOrder } = useCreateOrder();
+  const { isLoading, onConfirmOrder } = useCreateOrder({ langCode });
 
   const orderData = useAppSelector((state) => state.orderReducer.order);
   const isActive = orderData?.paymentAccountIdentifier === account.identifier;

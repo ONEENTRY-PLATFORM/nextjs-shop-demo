@@ -12,6 +12,7 @@ export {
   useLazyGetMeQuery,
   useLazyGetPaymentSessionByIdQuery,
 } from './api/RTKApi';
+export { useCreateOrder } from './hooks/useCreateOrder';
 export { useGetLocales } from './hooks/useGetLocales';
 export { useGetProduct } from './hooks/useGetProduct';
 export { useGetSingleAttributeByMarkerSet } from './hooks/useGetSingleAttributeByMarkerSet';

@@ -2,21 +2,22 @@
 
 import { useSearchParams } from 'next/navigation';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
-import { type Key, useContext, useEffect, useState } from 'react';
+import type { FC, Key } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { getAllOrdersByMarker, getBlockByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import { LanguageContext } from '@/app/store/providers/LanguageContext';
+import { LanguageEnum } from '@/app/types/enum';
 import AuthError from '@/components/shared/AuthError';
 import { OrdersTableLoader } from '@/components/shared/Loader';
 
 import Pagination from '../catalog/Pagination';
 import Order from './components/OrderRow';
 
-const OrdersPage = () => {
+const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const searchParams = useSearchParams();
   const { isAuth, user } = useContext(AuthContext);
-  const { activeLanguage } = useContext(LanguageContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [settings, setSettings] = useState<Record<string, any>>();
@@ -32,10 +33,7 @@ const OrdersPage = () => {
     }
     (async () => {
       try {
-        const { block } = await getBlockByMarker(
-          'orders_settings',
-          activeLanguage,
-        );
+        const { block } = await getBlockByMarker('orders_settings', langCode);
         if (block) {
           setSettings(block.attributeValues);
         }
@@ -49,7 +47,7 @@ const OrdersPage = () => {
             marker: 'order',
             limit: pageLimit,
             offset: currentPage * pageLimit,
-            langCode: activeLanguage,
+            langCode,
           });
           if (orders) {
             setOrders(orders);
@@ -60,7 +58,7 @@ const OrdersPage = () => {
         }
       }
     })();
-  }, [activeLanguage, currentPage, isAuth, pageLimit, user]);
+  }, [langCode, currentPage, isAuth, pageLimit, user]);
 
   if (!isAuth || !user) {
     return <AuthError />;
@@ -77,16 +75,18 @@ const OrdersPage = () => {
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
       <div className="w-full">
         <div className="-mb-px flex w-full border-collapse gap-4 border-y p-4 text-slate-700">
-          <div className="w-1/2">{date_title.value}</div>
-          <div className="w-1/4">{total_title.value}</div>
-          <div className="w-1/4">{status_title.value}</div>
+          <div className="w-1/2">{date_title?.value}</div>
+          <div className="w-1/4">{total_title?.value}</div>
+          <div className="w-1/4">{status_title?.value}</div>
         </div>
         <div className="mb-4 flex flex-col">
           {!orders ? (
             <OrdersTableLoader />
           ) : (
             orders?.map((order: IOrderByMarkerEntity, i: Key) => {
-              return <Order key={i} order={order} settings={settings} />;
+              return (
+                <Order key={i} order={order} settings={settings} lang={lang} />
+              );
             })
           )}
         </div>

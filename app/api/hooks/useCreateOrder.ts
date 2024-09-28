@@ -8,8 +8,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { removeAllProducts } from '@/app/store/reducers/CartSlice';
 import { removeOrder } from '@/app/store/reducers/OrderSlice';
 
-export const useCreateOrder = () => {
-  const langCode = 'en_US';
+export const useCreateOrder = ({ langCode }: { langCode: string }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const order = useAppSelector((state) => state.orderReducer.order);
