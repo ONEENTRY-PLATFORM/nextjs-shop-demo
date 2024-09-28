@@ -1,6 +1,6 @@
 import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
 
-import { api } from '../api/api';
+import { api } from '@/app/api';
 
 export const getLocales = async (): Promise<{
   locales?: ILocalEntity[];

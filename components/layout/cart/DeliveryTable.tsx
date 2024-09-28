@@ -111,7 +111,9 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
                 className="table-row h-[50px] gap-5 border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
               >
                 <td className="self-stretch align-middle text-sm">
-                  <label htmlFor={'address'}>Address</label>
+                  <label htmlFor={'address'}>
+                    {order_info_address_placeholder}
+                  </label>
                 </td>
                 <td className="px-5 align-middle text-base">
                   <input

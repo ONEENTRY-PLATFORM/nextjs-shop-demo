@@ -1,9 +1,23 @@
 import 'server-only';
-import '../../dictionaries/fr.ts';
-
-import dict from '@/app/api/server/dict';
 
 import type { Locale } from '../../i18n-config.ts';
+import { getBlockByMarker } from '../api/index.ts';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const dict = async (langCode: string): Promise<any> => {
+  try {
+    const { block } = await getBlockByMarker('system_content', langCode);
+    // const { attribute } = await getSingleAttributeByMarkerSet({
+    //   attributeMarker: 'system_content',
+    //   setMarker: 'cart_item_options',
+    //   langCode,
+    // });
+    return { ...block?.attributeValues };
+    // return { ...block, ...attribute };
+  } catch (e) {
+    // console.log(e);
+  }
+};
 
 const dictionaries = {
   en: () => dict('en_US'),
