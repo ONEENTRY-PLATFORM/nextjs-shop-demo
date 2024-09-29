@@ -1,5 +1,6 @@
+import type { ReactNode } from 'react';
+
 import Breadcrumbs from '@/components/layout/breadcrumbs';
-import { ReactNode } from 'react';
 
 async function Layout({
   children,

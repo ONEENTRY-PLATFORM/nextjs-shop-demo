@@ -1,7 +1,5 @@
 import type { FC } from 'react';
 
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
-
 import BackButton from './BackButton';
 import BreadcrumbsTrail from './BreadcrumbsTrail';
 import FilterButton from './FilterButton';

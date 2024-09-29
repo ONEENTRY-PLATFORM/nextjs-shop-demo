@@ -1,11 +1,28 @@
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 
 const EmptyFavorites = () => {
+  const [emptyText, setEmptyText] = useState('');
+  const [goToShop, setGoToShop] = useState('');
   const { empty_favorites_plug, go_to_shop } = useAppSelector(
     (state) => state.systemContentReducer.content,
   );
+
+  useEffect(() => {
+    if (!empty_favorites_plug) {
+      return;
+    }
+    setEmptyText(empty_favorites_plug.value);
+  }, [empty_favorites_plug]);
+
+  useEffect(() => {
+    if (!go_to_shop) {
+      return;
+    }
+    setGoToShop(go_to_shop.value);
+  }, [go_to_shop]);
 
   return (
     <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
@@ -25,10 +42,10 @@ const EmptyFavorites = () => {
         />
       </svg>
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
-        {empty_favorites_plug.value}
+        {emptyText}
       </h1>
       <Link href="/shop" className="btn btn-sm btn-o btn-o-primary">
-        {go_to_shop.value}
+        {goToShop}
       </Link>
     </div>
   );

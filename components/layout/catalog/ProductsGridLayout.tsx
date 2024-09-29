@@ -12,7 +12,7 @@ interface GridLayoutProps {
   lang: string;
 }
 
-const ProductsGridLayout: FC<GridLayoutProps> = ({
+const ProductsGridLayout: FC<GridLayoutProps> = async ({
   gridItems,
   totalPages,
   lang,
