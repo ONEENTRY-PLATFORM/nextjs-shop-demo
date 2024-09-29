@@ -20,7 +20,7 @@ const BlocksGrid: FC<BlocksGridProps> = async ({
       {blocks?.length > 1 &&
         blocks.map((block, index) => {
           const className = blocksData[index as keyof typeof blocksData];
-          const bgColor = blocksColors[block as keyof typeof blocksData];
+          const bgColor = blocksColors[block as keyof typeof blocksColors];
 
           return (
             <BlocksGridCard

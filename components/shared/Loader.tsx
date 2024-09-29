@@ -2,8 +2,10 @@
 import type { FC } from 'react';
 import React from 'react';
 
+import { blocksColors, blocksData } from '@/components/data';
 import SearchIcon from '@/components/icons/search';
 
+import Placeholder from './Placeholder';
 import Spinner from './Spinner';
 
 interface LoaderProps {
@@ -107,6 +109,52 @@ export const SidebarMenuLoader: FC<LoaderProps> = ({
           </li>
         ))}
       </ul>
+    </>
+  );
+};
+
+export const BlocksGridLoader: FC<LoaderProps> = ({ data = {}, limit = 6 }) => {
+  const blocks = [
+    'home_banner',
+    'offer_best_seller',
+    'offer_promotion',
+    'offer_offer_day',
+    'offer_new_arrivals',
+    'offer_youtube',
+  ];
+
+  return (
+    <>
+      <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
+        {blocks.map((block, index) => {
+          const className = blocksData[index as keyof typeof blocksData] as {
+            width: string;
+            height: string;
+          };
+          const bgColor = blocksColors[block as keyof typeof blocksColors];
+          return (
+            <div
+              key={index}
+              className={`relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
+            >
+              <div
+                className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}
+              >
+                <div className="absolute left-3 top-3 z-10">
+                  <div className="size-[30px]" />
+                </div>
+
+                <h2 className="z-10 mt-auto uppercase">xxx</h2>
+                <p className="z-10 ml-auto mt-auto w-60 max-sm:ml-0">xxx</p>
+
+                <div className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover opacity-15 invert">
+                  <Placeholder />
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </>
   );
 };
