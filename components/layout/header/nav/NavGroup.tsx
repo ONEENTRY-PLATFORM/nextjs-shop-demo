@@ -3,7 +3,6 @@ import { type Key } from 'react';
 
 import { getLocales, getMenuByMarker } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
-import { LanguageEnum } from '@/app/types/enum';
 import { NavMenuLoader } from '@/components/shared/Loader';
 
 import LangSelector from './LangSelector';

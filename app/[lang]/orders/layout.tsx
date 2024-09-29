@@ -1,7 +1,4 @@
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import Breadcrumbs from '@/components/layout/breadcrumbs';
-import { getDictionary } from '../dictionaries';
-import { Locale } from '@/i18n-config';
 import { ReactNode } from 'react';
 
 async function Layout({

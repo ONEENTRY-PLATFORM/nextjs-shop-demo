@@ -6,7 +6,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 const AuthError = () => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
-
+  // !!! log_in_text
   return (
     <div className="flex max-w-64 flex-col">
       <h1 className="mb-6 text-2xl text-slate-700">Auth error</h1>
