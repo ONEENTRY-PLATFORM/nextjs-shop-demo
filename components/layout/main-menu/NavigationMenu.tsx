@@ -4,14 +4,16 @@ import type { FC, Key } from 'react';
 import { Suspense } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { flatMenuToNested } from '@/components/utils';
 
 import OffscreenModal from '../mobile-menu/OffscreenModal';
 import NavigationMenuItem from './NavigationMenuItem';
 
-const NavigationMenu: FC<{ lang: string }> = async ({ lang }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+const NavigationMenu: FC = async () => {
+  const [lang] = useServerProvider('lang');
+  const [langCode] = useServerProvider('langCode');
+
   const { isError, menu } = await getMenuByMarker('main_web', langCode);
   if (!menu || !menu.pages || isError) {
     return;

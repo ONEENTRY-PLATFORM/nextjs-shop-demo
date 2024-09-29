@@ -3,11 +3,14 @@ import Link from 'next/link';
 import type { FC } from 'react';
 
 import { getBlockByMarker, getMenuByMarker } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 
 import ContactInfo from './ContactInfo';
 import FooterMenu from './Menu';
 
-const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
+const FooterMenuSection: FC = async () => {
+  const [lang] = useServerProvider('lang');
+
   const quickLinks = await getMenuByMarker('quick_links', lang);
   const infoLinks = await getMenuByMarker('information', lang);
   const { block } = await getBlockByMarker('contact_info', lang);
@@ -20,7 +23,7 @@ const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
             src={'/images/logo-250x70.svg'}
             width={250}
             height={70}
-            alt={'OneEntry'}
+            alt="..."
             loading="lazy"
             className="aspect-[3.57] w-[250px] max-w-full shrink-0 max-lg:max-w-[180px] max-sm:mb-5"
           />
