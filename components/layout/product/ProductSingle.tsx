@@ -54,9 +54,9 @@ const ProductSingle: FC<{
       {Array.isArray(blocks) &&
         blocks.map((block: string) => {
           if (block === 'multiply_items_offer') {
-            return <ProductsGroup key={block} marker={block} lang={''} />;
+            return <ProductsGroup key={block} marker={block} lang={lang} />;
           } else if (block === 'similar') {
-            return <RelatedItems key={block} marker={block} lang={''} />;
+            return <RelatedItems key={block} marker={block} lang={lang} />;
           }
         })}
     </section>

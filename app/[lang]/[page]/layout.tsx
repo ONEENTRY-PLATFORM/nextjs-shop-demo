@@ -1,11 +1,18 @@
-import type { ReactNode } from 'react';
-
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import Breadcrumbs from '@/components/layout/breadcrumbs';
+import { getDictionary } from '../dictionaries';
+import { Locale } from '@/i18n-config';
 
-function Layout({ children }: { children: ReactNode }) {
+async function Layout({
+  children,
+  params: { lang },
+}: {
+  children: React.ReactNode;
+  params: { lang: string };
+}) {
   return (
     <>
-      <Breadcrumbs />
+      <Breadcrumbs lang={lang} />
       <main className="flex flex-col p-5">{children}</main>
     </>
   );

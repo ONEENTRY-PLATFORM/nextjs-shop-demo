@@ -1,13 +1,12 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import type { FC } from 'react';
 import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FilterIcon from '@/components/icons/filter';
 
-const FilterButton: FC = () => {
+const FilterButton: React.FC = () => {
   const path = usePathname();
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 

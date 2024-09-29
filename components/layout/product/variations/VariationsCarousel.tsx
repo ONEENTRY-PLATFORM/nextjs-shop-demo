@@ -25,12 +25,10 @@ const VariationsCarousel: FC<{
         infinite
         containerProps={{
           style: {
-            width: '100%',
-            justifyContent: 'center',
             userSelect: 'none',
           },
           className:
-            'flex mx-auto min-w-full flex-col w-full items-center justify-center gap-[3%] self-stretch overflow-hidden',
+            'flex mx-auto min-w-full w-full flex-col w-full items-center justify-center gap-[3%] self-stretch overflow-hidden',
         }}
         activeSlideProps={{
           style: {},

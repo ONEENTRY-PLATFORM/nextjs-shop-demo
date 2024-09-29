@@ -37,7 +37,8 @@ export async function generateMetadata({
 }
 
 const Page = async ({ params }: { params: { page: string; lang: string } }) => {
-  const { page, isError } = await getPageByUrl(params.page, params.lang);
+  const lang = params.lang;
+  const { page, isError } = await getPageByUrl(params.page, lang);
 
   if (isError || !page) {
     return notFound();
@@ -49,47 +50,47 @@ const Page = async ({ params }: { params: { page: string; lang: string } }) => {
     {
       templateType: templateIdentifier,
       name: 'profile',
-      component: <ProfilePage />,
+      component: <ProfilePage lang={lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'cart',
-      component: <CartPage page={page} lang={params.lang} />,
+      component: <CartPage page={page} lang={lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment',
-      component: <PaymentPage page={page} lang={params.lang} />,
+      component: <PaymentPage page={page} lang={lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'favorites',
-      component: <FavoritesPage page={page} lang={params.lang} />,
+      component: <FavoritesPage page={page} lang={lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'about_us',
-      component: <AboutPage page={page} lang={params.lang} />,
+      component: <AboutPage page={page} lang={lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'services',
-      component: <ServicesPage page={page} lang={params.lang} />,
+      component: <ServicesPage page={page} lang={lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'contact_us',
-      component: <ContactsPage page={page} lang={params.lang} />,
+      component: <ContactsPage page={page} lang={lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_success',
-      component: <PaymentSuccess page={page} lang={params.lang} />,
+      component: <PaymentSuccess page={page} lang={lang} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_canceled',
-      component: <PaymentCanceled page={page} lang={params.lang} />,
+      component: <PaymentCanceled page={page} lang={lang} />,
     },
   ];
 
@@ -101,7 +102,7 @@ const Page = async ({ params }: { params: { page: string; lang: string } }) => {
         }
 
         return p.templateType === 'withSidebar' ? (
-          <WithSidebar lang={params.lang} key={i}>
+          <WithSidebar lang={lang} key={i}>
             {p.component}
           </WithSidebar>
         ) : (

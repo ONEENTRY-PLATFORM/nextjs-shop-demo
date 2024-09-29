@@ -1,10 +1,14 @@
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import Breadcrumbs from '@/components/layout/breadcrumbs';
+import { getDictionary } from '../dictionaries';
+import { Locale } from '@/i18n-config';
+import { ReactNode } from 'react';
 
-function Layout({
+async function Layout({
   children,
   params: { lang },
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   params: { lang: string };
 }) {
   return (
