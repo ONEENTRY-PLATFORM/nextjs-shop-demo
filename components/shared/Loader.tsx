@@ -100,16 +100,32 @@ export const SidebarMenuLoader: FC<LoaderProps> = ({
   limit = 5,
 }) => {
   return (
-    <>
-      <ul className="flex w-full flex-row gap-2 overflow-hidden py-3 text-base md:max-w-[165px] md:flex-col md:gap-5 md:py-0">
+    <ul className="flex w-full flex-row gap-2 overflow-hidden py-3 text-base md:max-w-[165px] md:flex-col md:gap-5 md:py-0">
+      {Array.from(Array(limit).keys()).map((item) => (
+        <li key={item} className={`group flex h-5 justify-start gap-3 pr-5`}>
+          <div className="animate-loader my-auto aspect-square size-5 shrink-0" />
+          <div className={'animate-loader h-5 min-w-full'} />
+        </li>
+      ))}
+    </ul>
+  );
+};
+
+export const VerticalMenuLoader: FC<LoaderProps> = ({
+  data = {},
+  limit = 6,
+}) => {
+  return (
+    <div className="flex w-[21%] flex-col max-lg:w-[21%] max-md:w-1/2 max-sm:w-[45%] max-xs:w-full">
+      <div className="animate-loader mb-5 mr-5 h-5 w-full"></div>
+      <ul className="flex w-full flex-row gap-2 overflow-hidden py-3 text-base md:flex-col md:gap-5 md:py-0">
         {Array.from(Array(limit).keys()).map((item) => (
           <li key={item} className={`group flex h-5 justify-start gap-3 pr-5`}>
-            <div className="animate-loader my-auto aspect-square size-5 shrink-0" />
             <div className={'animate-loader h-5 min-w-full'} />
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 
@@ -168,6 +184,27 @@ export const NavMenuLoader: FC<LoaderProps> = ({ data = {}, limit = 3 }) => {
           className="animate-loader relative box-border flex size-6 shrink-0"
         ></div>
       ))}
+    </div>
+  );
+};
+
+export const MainMenuLoader: FC<LoaderProps> = ({ data = {}, limit = 4 }) => {
+  return (
+    <div className="relative z-20 items-center justify-center bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
+      <div className="flex w-full max-w-screen-xl items-center justify-center py-5 max-md:px-5">
+        <ul className="flex w-full justify-between gap-5 max-md:flex-wrap">
+          {Array.from(Array(limit).keys()).map((item) => (
+            <li
+              key={item}
+              className="group my-auto flex w-1/4 justify-between gap-5 whitespace-nowrap py-1"
+            >
+              <div className="animate-loader relative box-border flex w-full shrink-0 flex-row items-center gap-2.5 text-slate-800 hover:text-red-500">
+                <div className="h-5" />
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

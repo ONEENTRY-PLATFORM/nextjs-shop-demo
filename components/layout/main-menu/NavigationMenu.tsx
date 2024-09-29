@@ -5,6 +5,7 @@ import { Suspense } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { MainMenuLoader } from '@/components/shared/Loader';
 import { flatMenuToNested } from '@/components/utils';
 
 import OffscreenModal from '../mobile-menu/OffscreenModal';
@@ -15,8 +16,9 @@ const NavigationMenu: FC = async () => {
   const [langCode] = useServerProvider('langCode');
 
   const { isError, menu } = await getMenuByMarker('main_web', langCode);
-  if (!menu || !menu.pages || isError) {
-    return;
+
+  if (isError || !menu || !menu.pages) {
+    return <MainMenuLoader />;
   }
 
   const mainMenu = flatMenuToNested(
