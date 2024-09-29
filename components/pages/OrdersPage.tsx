@@ -10,8 +10,8 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
 import { OrdersTableLoader } from '@/components/shared/Loader';
 
-import Pagination from '../catalog/Pagination';
-import Order from './components/OrderRow';
+import Pagination from '../layout/catalog/Pagination';
+import Order from '../layout/orders/components/OrderRow';
 
 const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
   const searchParams = useSearchParams();

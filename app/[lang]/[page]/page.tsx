@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getPageByUrl } from '@/app/api';
-import CartPage from '@/components/layout/cart/CartPage';
-import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
-import PaymentPage from '@/components/layout/payment/PaymentPage';
-import ProfilePage from '@/components/layout/profile/ProfilePage';
 import AboutPage from '@/components/pages/AboutPage';
+import CartPage from '@/components/pages/CartPage';
 import ContactsPage from '@/components/pages/ContactsPage';
+import FavoritesPage from '@/components/pages/FavoritesPage';
 import PaymentCanceled from '@/components/pages/PaymentCanceled';
+import PaymentPage from '@/components/pages/PaymentPage';
 import PaymentSuccess from '@/components/pages/PaymentSuccess';
+import ProfilePage from '@/components/pages/ProfilePage';
 import ServicesPage from '@/components/pages/ServicesPage';
 
 import WithSidebar from './WithSidebar';

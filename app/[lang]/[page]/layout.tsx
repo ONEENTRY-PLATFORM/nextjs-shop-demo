@@ -1,10 +1,12 @@
+import type { ReactNode } from 'react';
+
 import Breadcrumbs from '@/components/layout/breadcrumbs';
 
 async function Layout({
   children,
   params: { lang },
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   params: { lang: string };
 }) {
   return (

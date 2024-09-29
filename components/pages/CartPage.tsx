@@ -16,10 +16,9 @@ import {
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import TotalAmount from '@/components/layout/cart/components/TotalAmount';
 import DeliveryTable from '@/components/layout/cart/DeliveryTable';
+import EmptyCart from '@/components/layout/cart/EmptyCart';
 import PaymentButton from '@/components/layout/cart/PaymentButton';
 import ProductCard from '@/components/layout/cart/ProductCard';
-
-import EmptyCart from './EmptyCart';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CartPage: FC<{ page: IPagesEntity; lang: string }> = ({ page, lang }) => {

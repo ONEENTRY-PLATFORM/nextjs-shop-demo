@@ -8,9 +8,8 @@ import { Suspense } from 'react';
 import { useAppSelector } from '@/app/store/hooks';
 import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
+import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
 import { ProductsGridLoader } from '@/components/shared/Loader';
-
-import EmptyFavorites from './EmptyFavorites';
 
 const FavoritesPage: FC<{ page: IPagesEntity; lang: string }> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

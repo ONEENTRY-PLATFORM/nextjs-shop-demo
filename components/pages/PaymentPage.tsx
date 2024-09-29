@@ -1,6 +1,5 @@
 'use client';
 
-// import { useRouter } from 'next/navigation';
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
@@ -12,11 +11,10 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { selectCartItems } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
+import EmptyCart from '@/components/layout/cart/EmptyCart';
+import PaymentMethod from '@/components/layout/payment/PaymentMethod';
 import AuthError from '@/components/shared/AuthError';
 import Loader from '@/components/shared/Loader';
-
-import EmptyCart from '../cart/EmptyCart';
-import PaymentMethod from './PaymentMethod';
 
 const PaymentPage: FC<{ page: IPagesEntity; lang: string }> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
