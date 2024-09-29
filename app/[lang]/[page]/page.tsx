@@ -49,7 +49,7 @@ const Page = async ({ params }: { params: { page: string; lang: string } }) => {
     {
       templateType: templateIdentifier,
       name: 'profile',
-      component: <ProfilePage page={page} lang={params.lang} />,
+      component: <ProfilePage />,
     },
     {
       templateType: templateIdentifier,
