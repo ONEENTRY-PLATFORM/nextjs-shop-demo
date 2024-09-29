@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getPageByUrl } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import AboutPage from '@/components/pages/AboutPage';
 import CartPage from '@/components/pages/CartPage';
 import ContactsPage from '@/components/pages/ContactsPage';
@@ -39,6 +40,7 @@ export async function generateMetadata({
 const Page = async ({ params }: { params: { page: string; lang: string } }) => {
   const lang = params.lang;
   const { page, isError } = await getPageByUrl(params.page, lang);
+  const [dict] = useServerProvider('dict');
 
   if (isError || !page) {
     return notFound();
@@ -65,7 +67,7 @@ const Page = async ({ params }: { params: { page: string; lang: string } }) => {
     {
       templateType: templateIdentifier,
       name: 'favorites',
-      component: <FavoritesPage page={page} lang={lang} />,
+      component: <FavoritesPage page={page} lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,

@@ -4,6 +4,7 @@ import type { FC } from 'react';
 
 import { getBlockByMarker, getMenuByMarker } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { SidebarMenuLoader } from '@/components/shared/Loader';
 
 import ContactInfo from './ContactInfo';
 import FooterMenu from './Menu';
@@ -29,8 +30,24 @@ const FooterMenuSection: FC = async () => {
           />
         </Link>
         <ContactInfo block={block} lang={lang} />
-        {quickLinks.menu && <FooterMenu menu={quickLinks.menu} lang={lang} />}
-        {infoLinks.menu && <FooterMenu menu={infoLinks.menu} lang={lang} />}
+        {quickLinks.menu ? (
+          <FooterMenu menu={quickLinks.menu} lang={lang} />
+        ) : (
+          <div className="flex w-[21%] flex-col max-lg:w-[21%] max-md:w-1/2 max-sm:w-[45%] max-xs:w-full">
+            <h2 className="mb-5 text-xl font-bold">Title</h2>
+            <SidebarMenuLoader limit={6} />
+          </div>
+        )}
+        {infoLinks.menu ? (
+          <FooterMenu menu={infoLinks.menu} lang={lang} />
+        ) : (
+          <div className="flex w-[21%] flex-col max-lg:w-[21%] max-md:w-1/2 max-sm:w-[45%] max-xs:w-full">
+            <h2 className="mb-5 text-xl font-bold">Title</h2>
+            <SidebarMenuLoader limit={6} />
+          </div>
+        )}
+        {/* {quickLinks.menu && <FooterMenu menu={quickLinks.menu} lang={lang} />}
+        {infoLinks.menu && <FooterMenu menu={infoLinks.menu} lang={lang} />} */}
       </div>
     </div>
   );

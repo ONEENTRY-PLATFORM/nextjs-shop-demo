@@ -16,7 +16,11 @@ import FilterHeader from './components/header/FilterHeader';
 import FiltersForm from './FiltersForm';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-const FilterModal: FC<{ prices: any; lang: string }> = ({ prices, lang }) => {
+const FilterModal: FC<{ prices: any; lang: string; dict: any }> = ({
+  prices,
+  lang,
+  dict,
+}) => {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
   const closeFilters = () => setOpen(false);
 

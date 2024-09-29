@@ -5,6 +5,7 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import { getPageByUrl, getProducts } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
@@ -72,6 +73,7 @@ export default async function CatalogPage({
     filters?: IFilterParams[];
   };
 }) {
+  const [dict] = useServerProvider('dict');
   const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
 
@@ -94,6 +96,7 @@ export default async function CatalogPage({
             gridItems={products}
             totalPages={(total || 0) / pageLimit}
             lang={params.lang}
+            dict={dict}
           />
         </Suspense>
       </div>

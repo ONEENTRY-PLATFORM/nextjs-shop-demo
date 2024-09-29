@@ -10,12 +10,15 @@ interface GridLayoutProps {
   gridItems?: Array<IProductsEntity>;
   totalPages: number;
   lang: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
 }
 
 const ProductsGridLayout: FC<GridLayoutProps> = async ({
   gridItems,
   totalPages,
   lang,
+  dict,
 }) => {
   if (!gridItems) {
     return;
@@ -39,7 +42,11 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
           </div>
         </section>
       </div>
-      <FilterModal prices={gridItems?.[0]?.additional.prices} lang={lang} />
+      <FilterModal
+        prices={gridItems?.[0]?.additional.prices}
+        lang={lang}
+        dict={dict}
+      />
     </>
   );
 };

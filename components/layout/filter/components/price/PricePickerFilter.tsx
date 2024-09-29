@@ -17,6 +17,21 @@ const PriceFilter: FC<{ prices: any }> = ({ prices }) => {
   const { replace } = useRouter();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
+  const [priceTitle, setPriceTitle] = useState('');
+
+  const { filter_price_title } = useAppSelector(
+    (state) => state.systemContentReducer.content,
+  ) as {
+    filter_price_title: {
+      value: string;
+    };
+  };
+
+  useEffect(() => {
+    if (filter_price_title) {
+      setPriceTitle(filter_price_title.value);
+    }
+  }, [filter_price_title]);
 
   const STEP = 10;
   const MIN = prices?.min || 0;
@@ -73,7 +88,7 @@ const PriceFilter: FC<{ prices: any }> = ({ prices }) => {
   return (
     <div className="relative box-border flex shrink-0 flex-col">
       <div className="mb-5 self-start text-lg font-medium leading-8 text-[#4C4D56]">
-        Price, $
+        {priceTitle}
       </div>
 
       <div className="mb-6 flex w-full gap-5 self-center">

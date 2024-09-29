@@ -4,6 +4,7 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { Suspense } from 'react';
 
 import { getBlockByMarker, getPageByUrl, getProducts } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
@@ -69,6 +70,7 @@ const ShopPage = async ({
 }) => {
   const { page } = await getPageByUrl('shop', lang);
   const { block } = await getBlockByMarker('main_catalog', lang);
+  const [dict] = useServerProvider('dict');
 
   const currentPage = Number(searchParams?.page) || 0;
   const pageLimit = block?.quantity || 10;
@@ -92,6 +94,7 @@ const ShopPage = async ({
             gridItems={products}
             totalPages={(total || 0) / pageLimit}
             lang={lang}
+            dict={dict}
           />
         </Suspense>
       </div>

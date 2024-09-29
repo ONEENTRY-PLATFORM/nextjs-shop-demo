@@ -21,7 +21,6 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
   lang,
 }) => {
   const dispatch = useAppDispatch();
-
   const { data } = useGetFormByMarkerQuery({
     marker: 'order',
     lang,
