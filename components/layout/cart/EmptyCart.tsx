@@ -13,17 +13,15 @@ const EmptyCart = () => {
   );
 
   useEffect(() => {
-    if (!empty_cart_plug) {
-      return;
+    if (empty_cart_plug) {
+      setEmptyText(empty_cart_plug.value);
     }
-    setEmptyText(empty_cart_plug.value);
   }, [empty_cart_plug]);
 
   useEffect(() => {
-    if (!go_to_shop) {
-      return;
+    if (go_to_shop) {
+      setGoShopText(go_to_shop.value);
     }
-    setGoShopText(go_to_shop.value);
   }, [go_to_shop]);
 
   return (

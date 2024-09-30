@@ -5,6 +5,7 @@ import { UsePrice } from '@/components/utils';
 
 const TotalAmount = ({ className }: { className: string }) => {
   const [cartTotal, setCartTotal] = useState(0);
+  const [totalAmount, setTotalAmount] = useState('');
   const total = useAppSelector((state) => {
     return state.cartReducer.products.reduce((total, item) => {
       if (item.selected) {
@@ -14,6 +15,13 @@ const TotalAmount = ({ className }: { className: string }) => {
       return total;
     }, 0);
   });
+  const { order_info_total } = useAppSelector(
+    (state) => state.systemContentReducer.content,
+  );
+  const formattedPrice = UsePrice({
+    amount: cartTotal,
+    currency: 'USD',
+  });
 
   useEffect(() => {
     if (!total) {
@@ -22,12 +30,18 @@ const TotalAmount = ({ className }: { className: string }) => {
     setCartTotal(total);
   }, [total]);
 
-  const formattedPrice = UsePrice({
-    amount: cartTotal,
-    currency: 'USD',
-  });
+  useEffect(() => {
+    if (order_info_total) {
+      setTotalAmount(order_info_total.value);
+    }
+  }, [order_info_total]);
+
   // order_info_total
-  return <div className={className}>Total amount: {formattedPrice}</div>;
+  return (
+    <div className={className}>
+      {totalAmount}: {formattedPrice}
+    </div>
+  );
 };
 
 export default TotalAmount;

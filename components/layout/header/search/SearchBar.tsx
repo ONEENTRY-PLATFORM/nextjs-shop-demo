@@ -5,7 +5,6 @@ import type { FC } from 'react';
 import React, { useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
-import { useAppSelector } from '@/app/store/hooks';
 import SearchIcon from '@/components/icons/search';
 
 import SearchResults from './SearchResults';
@@ -19,11 +18,6 @@ const SearchBar: FC<{ dict: any }> = ({ dict }) => {
   const router = useRouter();
 
   const { search_placeholder } = dict;
-  // const searcheholder = useAppSelector(
-  //   (state) => state.systemContentReducer.content,
-  // );
-  // console.log(dict);
-  // console.log(searcheholder);
 
   const [state, setState] = useState(false);
   const [placeholder, setPlaceholder] = useState<string>(

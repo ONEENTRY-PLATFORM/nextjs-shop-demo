@@ -122,6 +122,10 @@ input:focus-visible {
       uppercase;
   }
 
+  html[lang=fr_FR] .btn-md {
+    @apply text-sm;
+  }
+
   .btn-sm {
     @apply 
       px-5

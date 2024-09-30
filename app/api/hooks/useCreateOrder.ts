@@ -30,7 +30,6 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
       router.push('/orders');
       return 'payment_success';
     }
-
     if (paymentUrl) {
       router.push(paymentUrl);
       return 'payment_method';
