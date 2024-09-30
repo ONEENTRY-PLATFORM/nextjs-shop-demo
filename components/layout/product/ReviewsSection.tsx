@@ -1,5 +1,6 @@
 'use client';
 
+import type { FC } from 'react';
 import React, { useState } from 'react';
 
 import { productRating } from '@/components/data';
@@ -9,7 +10,7 @@ import RatingButton from './rating-block/RatingButton';
 import ReviewsList from './reviews-group/ReviewsList';
 import ViewAllButton from './reviews-group/ViewAllButton';
 
-const ReviewsSection: React.FC = () => {
+const ReviewsSection: FC = () => {
   const [state, setState] = useState(false);
   return (
     <div className="flex justify-between max-md:flex-wrap">

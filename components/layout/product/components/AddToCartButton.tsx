@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
@@ -25,12 +24,26 @@ const AddToCartButton: FC<AddToCartProps> = ({
   height,
 }) => {
   const [productInCart, setInCart] = useState(false);
+  const [outStockText, setOutStockText] = useState();
+  const [addToCartText, setAddToCartText] = useState();
   const dispatch = useAppDispatch();
   const inCart = useAppSelector((state) => selectIsInCart(state, product.id));
+  const { out_of_stock_button, add_to_cart_button } = useAppSelector(
+    (state) => state.systemContentReducer.content,
+  );
 
   useEffect(() => {
     setInCart(inCart);
   }, [inCart]);
+
+  useEffect(() => {
+    if (out_of_stock_button) {
+      setOutStockText(out_of_stock_button.value);
+    }
+    if (add_to_cart_button) {
+      setAddToCartText(add_to_cart_button.value);
+    }
+  }, [add_to_cart_button, out_of_stock_button]);
 
   const inStock =
     typeof product.statusIdentifier === 'string' &&
@@ -38,14 +51,7 @@ const AddToCartButton: FC<AddToCartProps> = ({
 
   if (inStock) {
     return (
-      <Link
-        href={`/shop/product/` + product.id}
-        onClick={() => {}}
-        type="button"
-        className={'btn btn-o btn-o-gray ' + className}
-      >
-        Out of stock
-      </Link>
+      <div className={'btn btn-o btn-o-gray ' + className}>{outStockText}</div>
     );
   }
 
@@ -57,7 +63,7 @@ const AddToCartButton: FC<AddToCartProps> = ({
       type="button"
       className={className}
     >
-      Add to cart
+      {addToCartText}
     </button>
   ) : (
     <QuantitySelector product={product} height={height} />

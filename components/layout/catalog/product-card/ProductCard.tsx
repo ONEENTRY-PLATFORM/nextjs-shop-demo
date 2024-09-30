@@ -8,10 +8,10 @@ import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 import Sticker from './Sticker';
 
-const ProductCard: FC<{ product: IProductsEntity; lang: string }> = ({
-  product,
-  lang,
-}) => {
+const ProductCard: FC<{
+  product: IProductsEntity;
+  lang: string;
+}> = ({ product, lang }) => {
   const { id, attributeValues, localizeInfos } = product;
   const productImage = attributeValues.pic?.value;
 

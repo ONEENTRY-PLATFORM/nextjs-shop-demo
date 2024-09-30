@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { getProductById } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
-import Product from '@/components/layout/product/ProductSingle';
+import ProductSingle from '@/components/layout/product/ProductSingle';
 
 // generateMetadata
 export async function generateMetadata({
@@ -11,10 +10,9 @@ export async function generateMetadata({
 }: {
   params: { handle: string; lang: string };
 }): Promise<Metadata> {
-  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
   const { isError, product } = await getProductById(
     Number(params.handle),
-    langCode,
+    params.lang,
   );
 
   if (isError || !product) {
@@ -57,8 +55,7 @@ export default async function ProductPage({
 }: {
   params: { handle: string; lang: string };
 }) {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { isError, product } = await getProductById(Number(handle), langCode);
+  const { isError, product } = await getProductById(Number(handle), lang);
 
   if (isError || !product) {
     return notFound();
@@ -92,7 +89,7 @@ export default async function ProductPage({
         }}
       />
       <div className="mx-auto flex w-full max-w-screen-xl flex-col bg-white">
-        <Product lang={lang} product={product} />
+        <ProductSingle lang={lang} product={product} />
       </div>
     </>
   );

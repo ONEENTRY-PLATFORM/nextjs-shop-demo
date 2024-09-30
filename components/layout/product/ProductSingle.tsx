@@ -46,7 +46,7 @@ const ProductSingle: FC<{
           {description && <ProductDescription description={description} />}
         </div>
 
-        <ProductDetails {...product} />
+        <ProductDetails product={product} />
       </div>
 
       <ReviewsSection />

@@ -6,9 +6,9 @@ import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';
 import ProductUnits from './ProductUnits';
 
-const ProductDetails: FC<IProductsEntity & { productPages?: [] }> = async (
-  product,
-) => {
+const ProductDetails: FC<{
+  product: IProductsEntity & { productPages?: [] };
+}> = async ({ product }) => {
   const { attributeValues, localizeInfos } = product;
   const units = attributeValues?.units_product?.value;
 

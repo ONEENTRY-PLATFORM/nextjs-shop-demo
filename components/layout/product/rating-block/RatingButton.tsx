@@ -3,6 +3,8 @@
 import type { Dispatch } from 'react';
 import React from 'react';
 
+import { useAppSelector } from '@/app/store/hooks';
+
 import StarRating from './StarRating';
 
 interface ReviewSectionProps {
@@ -18,6 +20,10 @@ const RatingButton: React.FC<ReviewSectionProps> = ({
   rating,
   reviewCount,
 }) => {
+  const { reviews_title } = useAppSelector(
+    (state) => state.systemContentReducer.content,
+  );
+
   return (
     <button
       onClick={() => setState(!state)}
@@ -36,7 +42,9 @@ const RatingButton: React.FC<ReviewSectionProps> = ({
           'my-auto flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600 group-hover:text-orange-500 '
         }
       >
-        <div className={state ? 'text-orange-500' : ''}>Reviews</div>
+        <div className={state ? 'text-orange-500' : ''}>
+          {reviews_title?.value}
+        </div>
         <svg
           width="26"
           height="14"

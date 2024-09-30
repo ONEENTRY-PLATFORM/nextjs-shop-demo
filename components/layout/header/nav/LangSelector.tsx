@@ -9,7 +9,7 @@ const LangSelector: FC<{ locales: any; lang: string }> = ({
   locales,
   lang,
 }) => {
-  // const pathname = usePathname();
+  const pathname = usePathname();
   const { replace } = useRouter();
 
   if (!lang) {
@@ -17,7 +17,7 @@ const LangSelector: FC<{ locales: any; lang: string }> = ({
   }
 
   const onChange = (e: any) => {
-    replace('/' + e.target.value);
+    replace('/' + e.target.value + pathname.slice(3));
   };
 
   return (

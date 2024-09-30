@@ -18,7 +18,7 @@ const NavigationMenu: FC = async () => {
   const { isError, menu } = await getMenuByMarker('main_web', langCode);
 
   if (isError || !menu || !menu.pages) {
-    return <MainMenuLoader />;
+    return <MainMenuLoader limit={4} />;
   }
 
   const mainMenu = flatMenuToNested(
