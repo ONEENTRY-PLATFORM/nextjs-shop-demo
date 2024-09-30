@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
 
 import ProductCard from '../catalog/product-card/ProductCard';
 
@@ -9,8 +8,7 @@ const RelatedItems: FC<{
   marker: string;
   lang: string;
 }> = async ({ marker, lang }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { isError, block } = await getBlockByMarker(marker, langCode);
+  const { isError, block } = await getBlockByMarker(marker, lang);
 
   if (isError || !block || !block.similarProducts) {
     return null;

@@ -2,9 +2,10 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FC } from 'react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
+import { useAppSelector } from '@/app/store/hooks';
 import SearchIcon from '@/components/icons/search';
 
 import SearchResults from './SearchResults';
@@ -16,13 +17,27 @@ const SearchBar: FC<{ dict: any }> = ({ dict }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const router = useRouter();
-  const [state, setState] = useState(false);
 
   const { search_placeholder } = dict;
-  const placeholder = search_placeholder.value;
+  // const searcheholder = useAppSelector(
+  //   (state) => state.systemContentReducer.content,
+  // );
+  // console.log(dict);
+  // console.log(searcheholder);
+
+  const [state, setState] = useState(false);
+  const [placeholder, setPlaceholder] = useState<string>(
+    search_placeholder?.value,
+  );
 
   const searchValue = searchParams.get('search')?.toString();
   const [value] = useDebounce(searchValue, 1000);
+
+  useEffect(() => {
+    if (search_placeholder) {
+      setPlaceholder(search_placeholder.value);
+    }
+  }, [search_placeholder]);
 
   const handleSearch = (term: string) => {
     if (term) {

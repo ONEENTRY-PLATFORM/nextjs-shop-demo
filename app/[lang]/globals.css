@@ -85,6 +85,8 @@ input:focus-visible {
       disabled:text-slate-400
       disabled:bg-transparent
       max-w-full
+      text-center
+      whitespace-nowrap
       rounded-[30px];
   }
 
