@@ -1,7 +1,7 @@
 'use client';
 
 import type { Dispatch } from 'react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 
@@ -20,9 +20,16 @@ const RatingButton: React.FC<ReviewSectionProps> = ({
   rating,
   reviewCount,
 }) => {
+  const [reviewsTitle, setReviewsTitle] = useState('');
   const { reviews_title } = useAppSelector(
     (state) => state.systemContentReducer.content,
   );
+
+  useEffect(() => {
+    if (reviews_title) {
+      setReviewsTitle(reviews_title.value);
+    }
+  }, [reviews_title]);
 
   return (
     <button
@@ -42,9 +49,7 @@ const RatingButton: React.FC<ReviewSectionProps> = ({
           'my-auto flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600 group-hover:text-orange-500 '
         }
       >
-        <div className={state ? 'text-orange-500' : ''}>
-          {reviews_title?.value}
-        </div>
+        <div className={state ? 'text-orange-500' : ''}>{reviewsTitle}</div>
         <svg
           width="26"
           height="14"

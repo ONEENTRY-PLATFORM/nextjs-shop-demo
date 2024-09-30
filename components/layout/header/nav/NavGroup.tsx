@@ -17,6 +17,7 @@ const NavGroup: FC = async () => {
 
   const { menu, isError } = await getMenuByMarker('user_web', langCode);
   const { locales } = await getLocales();
+  console.log(menu);
 
   return (
     <div className="my-auto flex items-center gap-10 max-md:max-w-full max-md:gap-4">

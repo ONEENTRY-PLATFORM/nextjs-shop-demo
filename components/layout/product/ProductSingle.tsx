@@ -21,7 +21,6 @@ const ProductSingle: FC<{
   const { attributeValues, localizeInfos, blocks, id } = product;
 
   const { products, total } = await getRelatedProductsById(id, lang);
-  const description = attributeValues.description?.value[0].htmlValue;
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -43,7 +42,7 @@ const ProductSingle: FC<{
             </div>
           )}
 
-          {description && <ProductDescription description={description} />}
+          <ProductDescription description={attributeValues.description} />
         </div>
 
         <ProductDetails product={product} />
