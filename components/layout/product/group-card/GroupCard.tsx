@@ -10,31 +10,44 @@ import ProductImage from './ProductImage';
 
 const GroupCard: FC<{
   product: IProductsEntity;
-}> = ({ product }) => {
-  const images = product.attributeValues?.more_pic.value;
-  const pic1 = images[0]?.downloadLink;
-  const pic2 = images[1]?.downloadLink;
+  langCode: string;
+}> = ({ product, langCode }) => {
+  const attributeValues =
+    product.attributeValues[langCode] || product.attributeValues;
+  const title =
+    product.localizeInfos[langCode]?.title || product.localizeInfos?.title;
+  const images =
+    attributeValues.more_pic?.value || attributeValues.more_pic?.value;
+  const pic1 = images && images[0]?.downloadLink;
+  const pic2 = images && images[1]?.downloadLink;
+  const saleValue = attributeValues?.sale?.value;
 
   return (
-    <div className="flex flex-row justify-between rounded-xl bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg max-md:flex-col">
+    <div className="flex min-h-[170px] flex-row justify-between rounded-xl bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg max-md:flex-col">
       <div className="flex min-w-full gap-2.5">
         <div className="flex w-[37%] flex-col">
-          <h2 className="mb-5 text-sm leading-4 text-neutral-600">
-            {product.localizeInfos.title}
-          </h2>
+          <h3 className="mb-5 text-sm leading-4 text-neutral-600">{title}</h3>
           <PriceDisplay
-            currentPrice={product.attributeValues?.sale.value}
+            currentPrice={saleValue}
             originalPrice={product.price}
           />
           <ApplyButton />
         </div>
 
         <div className="flex w-[63%] flex-row justify-between">
-          {pic1 ? <ProductImage imageSrc={pic1} /> : <Placeholder />}
+          {pic1 ? (
+            <ProductImage imageSrc={pic1} />
+          ) : (
+            <Placeholder className="min-h-[110px]" />
+          )}
           <div className="my-auto aspect-square w-4 shrink-0 fill-neutral-600 text-center">
             +
           </div>
-          {pic2 ? <ProductImage imageSrc={pic2} /> : <Placeholder />}
+          {pic2 ? (
+            <ProductImage imageSrc={pic2} />
+          ) : (
+            <Placeholder className="min-h-[110px]" />
+          )}
         </div>
       </div>
     </div>

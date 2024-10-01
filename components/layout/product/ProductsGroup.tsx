@@ -10,25 +10,27 @@ const ProductsGroup: FC<{
   lang: string;
 }> = async ({ marker, lang }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { isError, block } = await getBlockByMarker(marker, langCode);
+  const { isError, block } = await getBlockByMarker(marker, lang);
 
   if (isError || !block) {
     return null;
   }
+  const title =
+    block.attributeValues[langCode]?.together_title?.value ||
+    block.attributeValues?.together_title?.value;
 
   return (
     <section className="mb-8 flex flex-col max-md:max-w-full">
-      <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
-        These items are cheaper together
-      </h3>
-
-      <div className="flex w-full flex-row justify-between gap-2.5">
+      <h2 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
+        {title}
+      </h2>
+      <div className="flex w-full flex-row flex-wrap items-stretch justify-start gap-2.5">
         {block.products?.map((product) => (
           <div
             key={product.id}
             className="relative box-border flex w-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%]"
           >
-            <GroupCard product={product} />
+            <GroupCard product={product} langCode={langCode} />
           </div>
         ))}
       </div>
