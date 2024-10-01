@@ -51,10 +51,10 @@ export default async function RootLayout({
             <AuthProvider langCode={langCode}>
               <ContentContextProvider dict={dict}>
                 <OpenDrawerProvider>
-                  <Header />
-                  <NavigationMenu />
+                  <Header lang={lang} />
+                  <NavigationMenu lang={lang} />
                   <div className="grow">{children}</div>
-                  <Footer />
+                  <Footer lang={lang} />
                   <Modal lang={lang} />
                 </OpenDrawerProvider>
               </ContentContextProvider>

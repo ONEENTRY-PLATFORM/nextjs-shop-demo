@@ -8,7 +8,8 @@ import Logo from './Logo';
 import NavGroup from './nav/NavGroup';
 import SearchBar from './search/SearchBar';
 
-const Header: FC = async () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const Header: FC<{ lang: string }> = async ({ lang }) => {
   const [dict] = useServerProvider('dict');
   return (
     <header className="flex items-center justify-center bg-white px-5">

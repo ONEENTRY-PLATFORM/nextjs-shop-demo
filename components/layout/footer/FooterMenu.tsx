@@ -3,15 +3,12 @@ import Link from 'next/link';
 import type { FC } from 'react';
 
 import { getBlockByMarker, getMenuByMarker } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { VerticalMenuLoader } from '@/components/shared/Loader';
 
 import ContactInfo from './ContactInfo';
 import FooterMenu from './Menu';
 
-const FooterMenuSection: FC = async () => {
-  const [lang] = useServerProvider('lang');
-
+const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
   const quickLinks = await getMenuByMarker('quick_links', lang);
   const infoLinks = await getMenuByMarker('information', lang);
   const { block } = await getBlockByMarker('contact_info', lang);
