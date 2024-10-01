@@ -145,7 +145,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
             return (
               <FormSubmitButton
                 key={index}
-                title="Submit"
+                title={field.localizeInfos.title}
                 isLoading={loading}
               />
             );

@@ -1,15 +1,13 @@
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
 import { getMenuByMarker } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
 import { SidebarMenuLoader } from '@/components/shared/Loader';
 
 import LogoutMenuItem from './LogoutMenuItem';
 import SidebarMenuItem from './SidebarMenuItem';
 
 export default async function SidebarMenu({ lang }: { lang: string }) {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { isError, menu } = await getMenuByMarker('side_web', langCode);
+  const { isError, menu } = await getMenuByMarker('side_web', lang);
 
   if (isError || !menu) {
     return <SidebarMenuLoader />;

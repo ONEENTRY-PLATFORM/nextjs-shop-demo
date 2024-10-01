@@ -13,9 +13,8 @@ import NavigationMenuItem from './NavigationMenuItem';
 
 const NavigationMenu: FC = async () => {
   const [lang] = useServerProvider('lang');
-  const [langCode] = useServerProvider('langCode');
 
-  const { isError, menu } = await getMenuByMarker('main_web', langCode);
+  const { isError, menu } = await getMenuByMarker('main_web', lang);
 
   if (isError || !menu || !menu.pages) {
     return <MainMenuLoader limit={4} />;

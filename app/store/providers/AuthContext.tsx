@@ -1,9 +1,7 @@
 'use client';
 
-import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
-import type { Key, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
 import { api, reDefine, useLazyGetMeQuery } from '@/app/api';
@@ -68,6 +66,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     await checkToken();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const updateUser = async () => {
     if (user) {
       try {
