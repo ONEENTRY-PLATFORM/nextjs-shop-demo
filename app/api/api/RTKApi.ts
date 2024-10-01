@@ -16,7 +16,10 @@ import type {
   IAccountsEntity,
   ISessionEntity,
 } from 'oneentry/dist/payments/paymentsInterfaces';
-import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
+import type {
+  IUserBody,
+  IUserEntity,
+} from 'oneentry/dist/users/usersInterfaces';
 
 import { LanguageEnum } from '@/app/types/enum';
 
@@ -86,10 +89,8 @@ export const RTKApi = createApi({
         }
       },
     }),
-    getFormByMarker: build.query<
-      IFormsEntity,
-      { marker: string; lang: string }
-    >({
+    // eslint-disable-next-line prettier/prettier
+    getFormByMarker: build.query<IFormsEntity, { marker: string; lang: string }>({
       queryFn: async ({ marker, lang }) => {
         try {
           const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];

@@ -25,7 +25,7 @@ const SearchBar: FC<{ dict: any }> = ({ dict }) => {
   );
 
   const searchValue = searchParams.get('search')?.toString();
-  const [value] = useDebounce(searchValue, 1000);
+  const [value] = useDebounce(searchValue, 300);
 
   useEffect(() => {
     if (search_placeholder) {

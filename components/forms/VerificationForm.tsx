@@ -23,6 +23,18 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
 
+  const { verification, enter_otp_code, resend_text, receive_otp_text } =
+    useAppSelector((state) => state.systemContentReducer.content);
+
+  const [verificationText, setVerificationText] = useState<string>(
+    verification.value,
+  );
+  const [otpText, setOtpText] = useState<string>(enter_otp_code.value);
+  const [resendText, setResendText] = useState<string>(resend_text.value);
+  const [receiveText, setReceiveText] = useState<string>(
+    receive_otp_text.value,
+  );
+
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
   ) as object as {
@@ -45,17 +57,31 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
   };
 
   useEffect(() => {
-    if (!otp) {
-      return;
+    if (enter_otp_code) {
+      setOtpText(enter_otp_code.value);
     }
-    dispatch(
-      addField({
-        otp_code: {
-          valid: true,
-          value: otp,
-        },
-      }),
-    );
+    if (verification) {
+      setVerificationText(verification.value);
+    }
+    if (verification) {
+      setResendText(resend_text.value);
+    }
+    if (verification) {
+      setReceiveText(receive_otp_text.value);
+    }
+  }, [enter_otp_code, receive_otp_text.value, resend_text.value, verification]);
+
+  useEffect(() => {
+    if (otp) {
+      dispatch(
+        addField({
+          otp_code: {
+            valid: true,
+            value: otp,
+          },
+        }),
+      );
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [otp]);
 
@@ -72,7 +98,7 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
         // checkCode
         const result = await api.AuthProvider.checkCode(
           'email',
-          fields['email_reg'].value,
+          fields.email_reg.value,
           otp,
         );
         if (result) {
@@ -83,7 +109,7 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
         // activateUser
         const result = await api.AuthProvider.activateUser(
           'email',
-          fields['email_reg'].value,
+          fields.email_reg.value,
           otp,
         );
         // if activate User logInUser and authenticate
@@ -91,8 +117,8 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
           try {
             await logInUser({
               method: 'email',
-              login: fields['email_reg'].value,
-              password: fields['password_reg'].value,
+              login: fields.email_reg.value,
+              password: fields.password_reg.value,
             });
             authenticate();
             router.push('/profile');
@@ -142,13 +168,9 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
     >
       <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
         <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
-          Verification
-          {/* verification */}
+          {verificationText}
         </h2>
-        <p className="text-xs text-gray-400 max-md:max-w-full">
-          Enter your OTP code here
-          {/* enter_otp_code */}
-        </p>
+        <p className="text-xs text-gray-400 max-md:max-w-full">{otpText}</p>
       </div>
 
       <div className="relative mb-8 box-border flex shrink-0 flex-col gap-6">
@@ -165,13 +187,13 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
           }
         />
         <div className="self-end text-xs text-orange-500 max-md:mr-2.5">
-          <span className="text-gray-400">Did not receive the OTP? </span>
+          <span className="text-gray-400">{receiveText} </span>
           <button
             className="font-bold text-orange-500"
             type="button"
             onClick={onResend}
           >
-            RESEND
+            {resendText}
           </button>
         </div>
       </div>

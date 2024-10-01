@@ -28,10 +28,10 @@ const TestPage: FC<{ params: { lang: string } }> = ({ params: { lang } }) => {
           {/* <CalendarForm lang={lang} />
           <ResetPasswordForm lang={lang} />
           <VerificationForm lang={lang} /> */}
-          <SignUpForm lang={lang} />
-          {/* <ForgotPasswordForm lang={lang} />
           <SignInForm lang={lang} />
-          <UserForm lang={lang} />
+          {/* <UserForm lang={lang} /> */}
+          {/* <SignUpForm lang={lang} /> */}
+          {/* <ForgotPasswordForm lang={lang} />
           <PaymentForm lang={lang} /> */}
         </div>
       </section>
