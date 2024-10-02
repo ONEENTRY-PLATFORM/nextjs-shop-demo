@@ -1,4 +1,5 @@
 import '@/app/globals.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';

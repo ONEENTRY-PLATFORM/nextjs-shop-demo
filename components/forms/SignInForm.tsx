@@ -2,6 +2,7 @@
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, Key } from 'react';
 import React, { useContext, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { logInUser, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -20,6 +21,7 @@ import SocialSignInButton from './inputs/SocialSignInButton';
 const SignInForm: FC<{ lang: string }> = ({ lang }) => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
+  const notify = () => toast('You sign in!');
 
   const { data, isLoading } = useGetFormByMarkerQuery({
     marker: 'reg',
@@ -68,6 +70,7 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
         setOpen(false);
         authenticate();
         setError('');
+        notify();
       }
       setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -87,6 +90,7 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
       onSubmit={(e) => onSignIn(e)}
     >
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">
+        {/* !!! */}
         <h2 className="max-w-full text-xl font-bold text-neutral-600">
           Sign in
         </h2>
@@ -98,6 +102,7 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
             }}
             className={tab === 'email' ? 'font-bold' : ''}
           >
+            {/* !!! */}
             E-mail
           </button>
           /
@@ -107,6 +112,7 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
             }}
             className={tab === 'phone' ? 'font-bold' : ''}
           >
+            {/* !!! */}
             Phone
           </button>
         </div>
@@ -128,11 +134,12 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
 
       <FormSubmitButton title="Sign in" isLoading={loading} />
 
+      {/* !!! */}
       <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm">
         <div className="font-bold text-gray-800">Forgot Password?</div>
         <ResetPasswordButton title="Reset password" />
       </div>
-
+      {/* !!! */}
       <p className="mx-auto mb-3 text-base font-bold leading-8 text-neutral-600">
         Sign in with
       </p>
@@ -148,6 +155,7 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
 
       <CreateAccountButton title="Create account" />
       {error && <ErrorMessage error={error} />}
+      <ToastContainer />
     </form>
   );
 };

@@ -118,9 +118,11 @@ const UserForm: FC<{ lang: string }> = ({ lang }) => {
     >
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
         {data?.attributes.map((field: IAttributes, index: Key) => {
-          const fieldData = user.formData.find(
-            (item) => item.marker === field.marker,
-          ) as FormDataType[];
+          const fieldData =
+            Array.isArray(user.formData) &&
+            (user.formData.find(
+              (item) => item.marker === field.marker,
+            ) as FormDataType[]);
           if (field.marker !== 'email_notifications') {
             return <FormInput key={index} {...field} {...fieldData} />;
           }
