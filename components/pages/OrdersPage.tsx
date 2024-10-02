@@ -8,7 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 import { getAllOrdersByMarker, getBlockByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
-import { OrdersTableLoader } from '@/components/shared/Loader';
+import Loader, { OrdersTableLoader } from '@/components/shared/Loader';
 
 import Pagination from '../layout/catalog/Pagination';
 import Order from '../layout/orders/components/OrderRow';
@@ -38,7 +38,6 @@ const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
       } catch (e) {
         console.log(e);
       }
-
       if (pageLimit) {
         try {
           const { orders, total = 0 } = await getAllOrdersByMarker({
@@ -63,7 +62,7 @@ const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
   }
 
   if (!settings) {
-    return 'Settings error';
+    return <Loader />;
   }
 
   const totalPages = Math.floor(total / pageLimit);

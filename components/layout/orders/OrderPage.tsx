@@ -75,7 +75,7 @@ const OrderPage: FC<{
             <PayOrderButton
               lang={lang}
               title={go_to_pay_title.value}
-              isLoading={false}
+              isLoading={isLoading}
             />
           )}
       </div>

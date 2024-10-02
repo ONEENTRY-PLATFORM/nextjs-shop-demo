@@ -107,7 +107,7 @@ const UserForm: FC<{ lang: string }> = ({ lang }) => {
     return <Loader />;
   }
 
-  if (!isAuth || error) {
+  if (!isAuth || error || !user?.formData) {
     return <AuthError />;
   }
 
@@ -118,7 +118,7 @@ const UserForm: FC<{ lang: string }> = ({ lang }) => {
     >
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
         {data?.attributes.map((field: IAttributes, index: Key) => {
-          const fieldData = user?.formData.find(
+          const fieldData = user.formData.find(
             (item) => item.marker === field.marker,
           ) as FormDataType[];
           if (field.marker !== 'email_notifications') {

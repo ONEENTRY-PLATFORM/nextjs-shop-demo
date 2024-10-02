@@ -19,7 +19,7 @@ const AuthError = () => {
   }, [log_in_text]);
 
   return (
-    <div className="flex max-w-64 flex-col">
+    <div className="flex max-w-64 flex-col max-sm:text-center">
       <h1 className="mb-6 text-2xl text-slate-700">Auth error</h1>
       <button
         onClick={() => {
