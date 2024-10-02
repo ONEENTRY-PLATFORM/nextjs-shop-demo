@@ -23,17 +23,19 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
   const [otp, setOtp] = useState('');
   const [error, setError] = useState('');
 
-  const { verification, enter_otp_code, resend_text, receive_otp_text } =
-    useAppSelector((state) => state.systemContentReducer.content);
+  const {
+    verification,
+    enter_otp_code,
+    resend_text,
+    receive_otp_text,
+    verify_now_text,
+  } = useAppSelector((state) => state.systemContentReducer.content);
 
-  const [verificationText, setVerificationText] = useState<string>(
-    verification.value,
-  );
-  const [otpText, setOtpText] = useState<string>(enter_otp_code.value);
-  const [resendText, setResendText] = useState<string>(resend_text.value);
-  const [receiveText, setReceiveText] = useState<string>(
-    receive_otp_text.value,
-  );
+  const [verificationText, setVerificationText] = useState<string>();
+  const [otpText, setOtpText] = useState<string>('');
+  const [resendText, setResendText] = useState<string>('');
+  const [receiveText, setReceiveText] = useState<string>('');
+  const [verifyText, setVerifyText] = useState<string>('');
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -63,13 +65,22 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
     if (verification) {
       setVerificationText(verification.value);
     }
-    if (verification) {
+    if (resend_text) {
       setResendText(resend_text.value);
     }
-    if (verification) {
+    if (receive_otp_text) {
       setReceiveText(receive_otp_text.value);
     }
-  }, [enter_otp_code, receive_otp_text.value, resend_text.value, verification]);
+    if (verify_now_text) {
+      setVerifyText(verify_now_text.value);
+    }
+  }, [
+    enter_otp_code,
+    receive_otp_text,
+    resend_text,
+    verification,
+    verify_now_text,
+  ]);
 
   useEffect(() => {
     if (otp) {
@@ -198,7 +209,7 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
         </div>
       </div>
 
-      <FormSubmitButton title="Verify now" isLoading={isLoading} />
+      <FormSubmitButton title={verifyText} isLoading={isLoading} />
       {error && <ErrorMessage error={error} />}
     </form>
   );

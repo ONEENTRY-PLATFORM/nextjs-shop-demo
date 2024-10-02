@@ -27,8 +27,8 @@ const TestPage: FC<{ params: { lang: string } }> = ({ params: { lang } }) => {
         <div className="flex w-full flex-col items-center gap-5 bg-white">
           {/* <CalendarForm lang={lang} /> */}
           {/* <ResetPasswordForm lang={lang} /> */}
-          {/* <VerificationForm lang={lang} /> */}
-          <SignInForm lang={lang} />
+          <VerificationForm lang={lang} />
+          {/* <SignInForm lang={lang} /> */}
           {/* <UserForm lang={lang} /> */}
           {/* <SignUpForm lang={lang} /> */}
           {/* <ForgotPasswordForm lang={lang} /> */}
