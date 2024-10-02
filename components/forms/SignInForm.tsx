@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, Key } from 'react';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { logInUser, useGetFormByMarkerQuery } from '@/app/api';
@@ -31,6 +31,22 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
   const [tab, setTab] = useState<string>('email');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+
+  const {
+    reset_password_text,
+    forgot_password_text,
+    create_account_text,
+    sign_in_text,
+  } = useAppSelector((state) => state.systemContentReducer.content);
+
+  const [resetText, setResetText] = useState<string>(reset_password_text.value);
+  const [forgotText, setForgotText] = useState<string>(
+    forgot_password_text.value,
+  );
+  const [createAccountText, setAccountText] = useState<string>(
+    create_account_text.value,
+  );
+  const [signInText, setSignInText] = useState<string>(sign_in_text.value);
 
   const { email_reg, password_reg } = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -80,6 +96,26 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
     }
   };
 
+  useEffect(() => {
+    if (reset_password_text) {
+      setResetText(reset_password_text.value);
+    }
+    if (forgot_password_text) {
+      setForgotText(forgot_password_text.value);
+    }
+    if (create_account_text) {
+      setAccountText(create_account_text.value);
+    }
+    if (sign_in_text) {
+      setSignInText(sign_in_text.value);
+    }
+  }, [
+    reset_password_text,
+    forgot_password_text,
+    create_account_text,
+    sign_in_text,
+  ]);
+
   if (isLoading) {
     return <Loader />;
   }
@@ -90,9 +126,8 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
       onSubmit={(e) => onSignIn(e)}
     >
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">
-        {/* !!! */}
         <h2 className="max-w-full text-xl font-bold text-neutral-600">
-          Sign in
+          {signInText}
         </h2>
 
         <div className="max-w-full text-xs text-gray-400">
@@ -132,14 +167,13 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
         })}
       </div>
 
-      <FormSubmitButton title="Sign in" isLoading={loading} />
+      <FormSubmitButton title={signInText} isLoading={loading} />
 
-      {/* !!! */}
       <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm">
-        <div className="font-bold text-gray-800">Forgot Password?</div>
-        <ResetPasswordButton title="Reset password" />
+        <div className="font-bold text-gray-800">{forgotText}</div>
+        <ResetPasswordButton title={resetText} />
       </div>
-      {/* !!! */}
+      {/* !!!  */}
       <p className="mx-auto mb-3 text-base font-bold leading-8 text-neutral-600">
         Sign in with
       </p>
@@ -152,8 +186,7 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
           />
         ))}
       </div>
-
-      <CreateAccountButton title="Create account" />
+      <CreateAccountButton title={createAccountText} />
       {error && <ErrorMessage error={error} />}
     </form>
   );

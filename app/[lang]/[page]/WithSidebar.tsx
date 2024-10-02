@@ -1,6 +1,6 @@
 import SidebarMenu from '@/components/layout/sidebar/SidebarMenu';
 
-const WithSidebar = ({
+const WithSidebar = async ({
   lang,
   children,
 }: {
