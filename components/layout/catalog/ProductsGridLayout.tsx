@@ -14,7 +14,7 @@ interface GridLayoutProps {
   dict: any;
 }
 
-const ProductsGridLayout: FC<GridLayoutProps> = async ({
+const ProductsGridLayout: FC<GridLayoutProps> = ({
   gridItems,
   totalPages,
   lang,

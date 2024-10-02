@@ -4,12 +4,12 @@ import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC, Key } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
-import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 import { LanguageEnum } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 
 import CancelOrderButton from './components/CancelOrderButton';
 import OrderDataTable from './components/OrderDataTable';
+import PayOrderButton from './components/PayOrderButton';
 import ProductCard from './components/ProductCard';
 import RepeatOrderButton from './components/RepeatOrderButton';
 
@@ -25,7 +25,6 @@ const OrderPage: FC<{
     id: id,
     activeLang: langCode,
   });
-  const { onConfirmOrder } = useCreateOrder({ langCode });
 
   if (!data || !settings) {
     return <Loader />;
@@ -73,12 +72,11 @@ const OrderPage: FC<{
         )}
         {paymentAccountIdentifier === 'stripe' &&
           statusIdentifier === 'created' && (
-            <button
-              className="btn btn-sm btn-o btn-o-primary"
-              onClick={onConfirmOrder}
-            >
-              {go_to_pay_title.value}
-            </button>
+            <PayOrderButton
+              lang={lang}
+              title={go_to_pay_title.value}
+              isLoading={false}
+            />
           )}
       </div>
     </div>

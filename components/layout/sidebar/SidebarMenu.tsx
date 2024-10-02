@@ -17,7 +17,7 @@ export default async function SidebarMenu({ lang }: { lang: string }) {
 
   return (
     <nav className="flex w-full pr-5">
-      <ul className="flex w-full flex-wrap gap-2 overflow-x-auto overflow-y-hidden  py-3 text-base text-neutral-600 max-md:items-center max-md:justify-center max-md:gap-6 max-md:px-2 md:max-w-[165px] md:flex-col md:justify-start md:gap-5 md:overflow-hidden md:py-0">
+      <ul className="flex w-full flex-wrap justify-between gap-2 overflow-x-auto overflow-y-hidden py-3 text-base text-neutral-600 max-md:items-center max-md:justify-center max-md:gap-6 max-md:px-2 max-sm:gap-3 md:max-w-[165px] md:flex-col md:justify-start md:gap-5 md:overflow-hidden md:py-0">
         {pages.map((item) => {
           return <SidebarMenuItem key={item.id} menuItem={item} lang={lang} />;
         })}
