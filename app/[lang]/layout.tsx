@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
+import { ToastContainer } from 'react-toastify';
 
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
@@ -62,6 +63,7 @@ export default async function RootLayout({
             </AuthProvider>
           </LanguageProvider>
         </StoreProvider>
+        <ToastContainer position="bottom-right" autoClose={2000} />
       </body>
     </html>
   );

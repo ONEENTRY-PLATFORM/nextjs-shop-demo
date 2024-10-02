@@ -6,6 +6,7 @@ import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FormDataType } from 'oneentry/dist/formsData/formsDataInterfaces';
 import type { FC, FormEvent, Key } from 'react';
 import React, { useContext, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -25,6 +26,7 @@ export type InputValue = {
 };
 
 const UserForm: FC<{ lang: string }> = ({ lang }) => {
+  const notify = () => toast('Data saved!');
   const { isAuth, refreshUser, user } = useContext(AuthContext);
   const { data, isLoading, error } = useGetFormByMarkerQuery({
     marker: 'reg',
@@ -95,6 +97,7 @@ const UserForm: FC<{ lang: string }> = ({ lang }) => {
       refreshUser();
       setError('');
       setLoading(false);
+      notify();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       refreshUser();

@@ -2,7 +2,7 @@
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, Key } from 'react';
 import React, { useContext, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 import { logInUser, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -155,7 +155,6 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
 
       <CreateAccountButton title="Create account" />
       {error && <ErrorMessage error={error} />}
-      <ToastContainer />
     </form>
   );
 };
