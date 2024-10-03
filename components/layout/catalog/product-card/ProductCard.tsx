@@ -59,7 +59,10 @@ const ProductCard: FC<{
           {title}
         </h2>
 
-        <PriceDisplay currentPrice={sale.value} originalPrice={price.value} />
+        <PriceDisplay
+          currentPrice={attributeValues.sale?.value}
+          originalPrice={attributeValues.price?.value}
+        />
 
         <AddToCartButton
           product={product}
