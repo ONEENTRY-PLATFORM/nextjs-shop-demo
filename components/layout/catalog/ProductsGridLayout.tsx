@@ -42,11 +42,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
           </div>
         </section>
       </div>
-      <FilterModal
-        prices={gridItems?.[0]?.additional.prices}
-        lang={lang}
-        dict={dict}
-      />
+      <FilterModal prices={gridItems?.[0]?.additional.prices} />
     </>
   );
 };

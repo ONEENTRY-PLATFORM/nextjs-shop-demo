@@ -34,7 +34,7 @@ export const CategoriesLoader: FC<LoaderProps> = ({ data = {}, limit = 4 }) => {
             className={`relative flex size-full h-64 overflow-hidden rounded-3xl p-6`}
           >
             <h2 className="animate-loader z-10 mt-auto uppercase text-transparent">
-              xxx
+              {' '}
             </h2>
             <div className="animate-loader size-full rounded-3xl" />
           </div>

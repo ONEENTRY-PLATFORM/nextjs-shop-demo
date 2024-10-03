@@ -1,4 +1,7 @@
-import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import type {
+  ISignUpData,
+  ISignUpEntity,
+} from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
 import { useContext, useEffect, useState } from 'react';
@@ -65,6 +68,15 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
 
   const onSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formFields = [
+      'email_reg',
+      'password_reg',
+      'name_reg',
+      'phone_reg',
+      'address_reg',
+      'email_notifications',
+    ];
+
     const canSubmit = Object.keys(fields).reduce((isValid, field) => {
       if (!isValid || !field) {
         return false;
@@ -87,7 +99,7 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
             type: 'string',
             value: fields[field as keyof typeof fields].value,
           };
-          if (field !== 'otp_code') {
+          if (formFields.includes(field)) {
             arr.push(candidate);
           }
           return arr;
@@ -116,8 +128,12 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
 
       try {
         const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-        const res = await api.AuthProvider.signUp('email', data, langCode);
-
+        const res = await api.AuthProvider.signUp(
+          'email',
+          data,
+          langCode,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        );
         // if user active try login else Verification and activateUser
         if (res && res.isActive) {
           try {
@@ -138,8 +154,8 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
           setAction('activateUser');
         }
         setError('');
-        if (res.status === 400) {
-          setError('Error 400');
+        if (!res.ok) {
+          setError('Error ' + res.status);
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {

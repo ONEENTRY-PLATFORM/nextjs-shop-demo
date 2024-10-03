@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
@@ -16,12 +17,9 @@ import Loader from '@/components/shared/Loader';
 import FilterHeader from './components/header/FilterHeader';
 import FiltersForm from './FiltersForm';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-const FilterModal: FC<{ prices: any; lang: string; dict: any }> = ({
-  prices,
-  lang,
-  dict,
-}) => {
+const FilterModal: FC<{
+  prices: any;
+}> = ({ prices }) => {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
   const closeFilters = () => setOpen(false);
 
