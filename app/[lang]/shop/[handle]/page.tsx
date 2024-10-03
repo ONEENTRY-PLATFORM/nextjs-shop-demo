@@ -30,15 +30,15 @@ export async function generateMetadata({
     height,
     altText: alt,
   } = {
-    url: attributeValues.icon?.downloadLink,
+    url: attributeValues?.icon?.downloadLink,
     width: 300,
     height: 300,
-    altText: localizeInfos.title,
+    altText: localizeInfos?.title,
   };
 
   return {
-    title: localizeInfos.title,
-    description: localizeInfos.plainContent,
+    title: localizeInfos?.title,
+    description: localizeInfos?.plainContent,
     robots: {
       index: isVisible,
       follow: isVisible,

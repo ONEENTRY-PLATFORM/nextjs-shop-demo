@@ -15,7 +15,7 @@ const Menu: FC<{
   const pages = menu.pages as Array<IMenusPages>;
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  if (pages.length < 1) {
+  if (!pages || (Array.isArray(pages) && pages.length < 1)) {
     return;
   }
   const title = menu.localizeInfos[langCode]?.title || menu.localizeInfos.title;
