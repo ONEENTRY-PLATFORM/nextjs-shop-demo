@@ -12,6 +12,7 @@ import Loader, { OrdersTableLoader } from '@/components/shared/Loader';
 
 import Pagination from '../layout/catalog/Pagination';
 import Order from '../layout/orders/components/OrderRow';
+import EmptyOrders from '../layout/orders/EmptyOrders';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
@@ -68,6 +69,10 @@ const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
 
   const totalPages = Math.floor(total / pageLimit);
   const { date_title, total_title, status_title } = settings;
+
+  if (orders && orders.length < 1) {
+    return <EmptyOrders />;
+  }
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">

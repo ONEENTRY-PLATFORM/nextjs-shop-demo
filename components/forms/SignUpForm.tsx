@@ -117,6 +117,7 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
       try {
         const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
         const res = await api.AuthProvider.signUp('email', data, langCode);
+
         // if user active try login else Verification and activateUser
         if (res && res.isActive) {
           try {
@@ -131,12 +132,15 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
             console.log(e);
             setError(e.message);
           }
-        } else {
+        } else if (!res.status) {
           setOpen(true);
           setComponent('VerificationForm');
           setAction('activateUser');
         }
         setError('');
+        if (res.status === 400) {
+          setError('Error 400');
+        }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setError(e.message);
