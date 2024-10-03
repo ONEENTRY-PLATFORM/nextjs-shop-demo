@@ -2,8 +2,6 @@ import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
 
-import { LanguageEnum } from '@/app/types/enum';
-
 import FavoritesButton from '../../../shared/FavoritesButton';
 import AddToCartButton from '../../product/components/AddToCartButton';
 import PriceDisplay from './PriceDisplay';
@@ -14,13 +12,11 @@ const ProductCard: FC<{
   product: IProductsEntity;
   lang: string;
 }> = ({ product, lang }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, attributeValues, localizeInfos } = product;
-  const title = localizeInfos[langCode]?.title || localizeInfos?.title;
-  const productImage =
-    attributeValues[langCode]?.pic?.value || attributeValues.pic?.value;
-  const sale = attributeValues[langCode]?.sale || attributeValues?.sale;
-  const price = attributeValues[langCode]?.price || attributeValues?.price;
+  const title = localizeInfos?.title;
+  const productImage = attributeValues.pic?.value;
+  const sale = attributeValues?.sale;
+  const price = attributeValues?.price;
 
   return (
     <div className="product-card">

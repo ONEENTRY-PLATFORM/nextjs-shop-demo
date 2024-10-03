@@ -105,7 +105,7 @@ export const RTKApi = createApi({
       queryFn: async ({ langCode }) => {
         try {
           const result = await api.Users.getUser(langCode);
-          if (!result) {
+          if (!result || result.status !== 200) {
             return { error: 'getUser error' };
           }
           return { data: result };
