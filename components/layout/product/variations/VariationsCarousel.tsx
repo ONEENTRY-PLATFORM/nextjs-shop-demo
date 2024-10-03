@@ -20,7 +20,7 @@ const VariationsCarousel: FC<{
   }
 
   return (
-    <div className="flex h-[130px] w-full items-center justify-center self-stretch">
+    <div className="flex h-[130px] w-full items-start justify-start self-stretch">
       <Carousel
         infinite
         containerProps={{
@@ -28,7 +28,7 @@ const VariationsCarousel: FC<{
             userSelect: 'none',
           },
           className:
-            'flex mx-auto min-w-full w-full flex-col w-full items-center justify-center gap-[3%] self-stretch overflow-hidden',
+            'flex min-w-full wrap w-full flex-row w-full justify-start justify-start gap-[3%] self-stretch overflow-hidden',
         }}
         activeSlideProps={{
           style: {},
@@ -57,7 +57,7 @@ const VariationsCarousel: FC<{
         onRequestChange={setCurrentIndex}
         itemsToShow={3}
         speed={400}
-        centerMode={true}
+        centerMode={false}
       >
         {items.map((item: IProductsEntity, idx: number) => (
           <CarouselItem

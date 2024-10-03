@@ -30,8 +30,8 @@ export async function generateMetadata({
   const { localizeInfos } = page;
 
   return {
-    title: localizeInfos.title,
-    description: localizeInfos.title,
+    title: localizeInfos?.title,
+    description: localizeInfos?.title,
     openGraph: {
       type: 'article',
     },
