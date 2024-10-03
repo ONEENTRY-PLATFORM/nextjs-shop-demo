@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import { getBlockByMarker, getPageByUrl, getProducts } from '@/app/api';
@@ -57,17 +58,14 @@ export async function generateMetadata({
   };
 }
 
-const ShopPage = async ({
-  params: { lang },
-  searchParams,
-}: {
+const ShopPage: FC<{
   params: { lang: string };
   searchParams?: {
     search?: string;
     page?: string;
     filters?: IFilterParams[];
   };
-}) => {
+}> = async ({ params: { lang }, searchParams }) => {
   const { page } = await getPageByUrl('shop', lang);
   const { block } = await getBlockByMarker('main_catalog', lang);
   const [dict] = useServerProvider('dict');

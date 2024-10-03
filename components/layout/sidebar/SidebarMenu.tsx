@@ -6,7 +6,7 @@ import { SidebarMenuLoader } from '@/components/shared/Loader';
 import LogoutMenuItem from './LogoutMenuItem';
 import SidebarMenuItem from './SidebarMenuItem';
 
-export default async function SidebarMenu({ lang }: { lang: string }) {
+const SidebarMenu = async ({ lang }: { lang: string }) => {
   const { isError, menu } = await getMenuByMarker('side_web', lang);
 
   if (isError || !menu) {
@@ -25,4 +25,6 @@ export default async function SidebarMenu({ lang }: { lang: string }) {
       </ul>
     </nav>
   );
-}
+};
+
+export default SidebarMenu;

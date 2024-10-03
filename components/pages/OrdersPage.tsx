@@ -13,7 +13,8 @@ import Loader, { OrdersTableLoader } from '@/components/shared/Loader';
 import Pagination from '../layout/catalog/Pagination';
 import Order from '../layout/orders/components/OrderRow';
 
-const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
   const searchParams = useSearchParams();
   const { isAuth, user } = useContext(AuthContext);
 

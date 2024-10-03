@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import type { FC } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
@@ -37,10 +38,12 @@ export async function generateMetadata({
   };
 }
 
-const Page = async ({ params }: { params: { page: string; lang: string } }) => {
+const Page: FC<{ params: { page: string; lang: string } }> = async ({
+  params,
+}) => {
   const lang = params.lang;
-  const { page, isError } = await getPageByUrl(params.page, lang);
   const [dict] = useServerProvider('dict');
+  const { page, isError } = await getPageByUrl(params.page, lang);
 
   if (isError || !page) {
     return notFound();
@@ -102,7 +105,6 @@ const Page = async ({ params }: { params: { page: string; lang: string } }) => {
         if (pageUrl !== p.name) {
           return;
         }
-
         return p.templateType === 'withSidebar' ? (
           <WithSidebar lang={lang} key={i}>
             {p.component}

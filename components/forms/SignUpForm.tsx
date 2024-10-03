@@ -132,7 +132,6 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
             setError(e.message);
           }
         } else {
-          console.log(res);
           setOpen(true);
           setComponent('VerificationForm');
           setAction('activateUser');

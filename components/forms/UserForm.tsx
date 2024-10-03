@@ -14,7 +14,6 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 
 import AuthError from '../shared/AuthError';
 import Loader from '../shared/Loader';
-import Spinner from '../shared/Spinner';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
@@ -26,7 +25,6 @@ export type InputValue = {
 };
 
 const UserForm: FC<{ lang: string }> = ({ lang }) => {
-  const notify = () => toast('Data saved!');
   const { isAuth, refreshUser, user } = useContext(AuthContext);
   const { data, isLoading, error } = useGetFormByMarkerQuery({
     marker: 'reg',
@@ -97,7 +95,7 @@ const UserForm: FC<{ lang: string }> = ({ lang }) => {
       refreshUser();
       setError('');
       setLoading(false);
-      notify();
+      toast('Data saved!');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       refreshUser();
