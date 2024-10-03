@@ -20,7 +20,7 @@ const VariationsCarousel: FC<{
   }
 
   return (
-    <div className="flex h-[110px] w-full items-center justify-center self-stretch">
+    <div className="flex h-[130px] w-full items-center justify-center self-stretch">
       <Carousel
         infinite
         containerProps={{

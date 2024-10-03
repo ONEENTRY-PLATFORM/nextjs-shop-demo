@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
 
+import BottomMenu from '@/components/layout/bottom-menu/BottomMenu';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import NavigationMenu from '@/components/layout/main-menu/NavigationMenu';
@@ -19,7 +20,6 @@ import { useServerProvider } from '../store/providers/ServerProvider';
 import StoreProvider from '../store/providers/StoreProvider';
 import { LanguageEnum } from '../types/enum';
 import { getDictionary } from './dictionaries';
-import BottomMenu from '@/components/layout/bottom-menu/BottomMenu';
 
 const lato = Lato({
   subsets: ['latin'],

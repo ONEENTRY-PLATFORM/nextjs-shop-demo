@@ -1,6 +1,6 @@
 const CatalogIcon = (props?: { active?: boolean }) => {
   return (
-    <svg 
+    <svg
       className={
         'size-full group-hover:fill-orange-500 ' +
         (props?.active ? 'fill-orange-500' : 'fill-slate-700')

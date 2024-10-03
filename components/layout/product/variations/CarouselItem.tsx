@@ -31,12 +31,13 @@ const CarouselItem: React.FC<VariationProps> = ({
   const imageSrc = Array.isArray(picVal)
     ? picVal[0]?.downloadLink
     : picVal.downloadLink;
+  const colors = item.attributeValues?.color?.value;
 
   return (
     <button
       onClick={onSelect}
       className={
-        'relative rounded-lg box-border flex w-[100px] shrink-0 flex-col ' +
+        'relative rounded-lg box-border flex w-[100px] min-h-[130px] shrink-0 flex-col ' +
         clsx(
           isActive
             ? 'border border-solid border-slate-50 text-slate-700'
@@ -44,23 +45,27 @@ const CarouselItem: React.FC<VariationProps> = ({
         )
       }
     >
-      <div className="flex w-full flex-col gap-1 overflow-hidden whitespace-nowrap pb-1 text-center text-sm">
+      <div className="flex w-full flex-col gap-1 overflow-hidden pb-1 text-center text-sm">
         <div className="flex h-[80px] w-full items-center">
-          {imageSrc ? (
-            <Image
-              width={80}
-              height={80}
-              src={imageSrc}
-              alt={title}
-              className="aspect-auto size-full h-auto min-w-full shrink-0 rounded-lg object-cover"
-            />
-          ) : (
-            <Placeholder />
-          )}
+          <Link href={'/' + lang + '/shop/product/' + item.id} title={title}>
+            {imageSrc ? (
+              <Image
+                width={80}
+                height={80}
+                src={imageSrc}
+                alt={title}
+                className="aspect-auto size-full h-auto min-w-full shrink-0 rounded-lg object-cover"
+              />
+            ) : (
+              <Placeholder />
+            )}
+          </Link>
         </div>
         <h3 className="w-full text-center text-xs leading-4">
           <Link href={'/' + lang + '/shop/product/' + item.id} title={title}>
-            {title}
+            {colors.map((color: { title: string }, i: number) => {
+              return color.title + (i < colors.length - 1 ? ' + ' : '');
+            })}
           </Link>
         </h3>
       </div>
