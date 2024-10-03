@@ -21,7 +21,6 @@ import SocialSignInButton from './inputs/SocialSignInButton';
 const SignInForm: FC<{ lang: string }> = ({ lang }) => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
-  const notify = () => toast('You sign in!');
 
   const { data, isLoading } = useGetFormByMarkerQuery({
     marker: 'reg',
@@ -37,16 +36,14 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
     forgot_password_text,
     create_account_text,
     sign_in_text,
+    sign_in_with_text,
   } = useAppSelector((state) => state.systemContentReducer.content);
 
-  const [resetText, setResetText] = useState<string>(reset_password_text.value);
-  const [forgotText, setForgotText] = useState<string>(
-    forgot_password_text.value,
-  );
-  const [createAccountText, setAccountText] = useState<string>(
-    create_account_text.value,
-  );
-  const [signInText, setSignInText] = useState<string>(sign_in_text.value);
+  const [resetText, setResetText] = useState<string>('');
+  const [forgotText, setForgotText] = useState<string>('');
+  const [createAccountText, setAccountText] = useState<string>('');
+  const [signInText, setSignInText] = useState<string>('');
+  const [signInWithText, setSignInWithText] = useState<string>('');
 
   const { email_reg, password_reg } = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -82,11 +79,13 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
         } else {
           throw new Error(result.error);
         }
-      } else {
+      } else if (result) {
         setOpen(false);
         authenticate();
         setError('');
-        notify();
+        toast('You sign in!');
+      } else {
+        setError('Login or password incorrect');
       }
       setLoading(false);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -109,11 +108,15 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
     if (sign_in_text) {
       setSignInText(sign_in_text.value);
     }
+    if (sign_in_with_text) {
+      setSignInWithText(sign_in_with_text.value);
+    }
   }, [
     reset_password_text,
     forgot_password_text,
     create_account_text,
     sign_in_text,
+    sign_in_with_text,
   ]);
 
   if (isLoading) {
@@ -137,7 +140,7 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
             }}
             className={tab === 'email' ? 'font-bold' : ''}
           >
-            {/* !!! */}
+            {/* !!! email_text */}
             E-mail
           </button>
           /
@@ -147,7 +150,7 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
             }}
             className={tab === 'phone' ? 'font-bold' : ''}
           >
-            {/* !!! */}
+            {/* !!! phone_text */}
             Phone
           </button>
         </div>
@@ -173,9 +176,8 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
         <div className="font-bold text-gray-800">{forgotText}</div>
         <ResetPasswordButton title={resetText} />
       </div>
-      {/* !!!  */}
       <p className="mx-auto mb-3 text-base font-bold leading-8 text-neutral-600">
-        Sign in with
+        {signInWithText}
       </p>
       <div className="mx-auto flex justify-between gap-5">
         {socialProvidersButtons.map((button, index) => (

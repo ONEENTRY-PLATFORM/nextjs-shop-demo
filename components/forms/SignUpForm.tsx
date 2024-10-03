@@ -1,7 +1,7 @@
 import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { logInUser } from '@/app/api';
@@ -43,6 +43,25 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
       valid: boolean;
     };
   };
+
+  const { sign_up_text, sign_in_text, create_account_desc } = useAppSelector(
+    (state) => state.systemContentReducer.content,
+  );
+  const [signUpText, setSignUpText] = useState<string>('');
+  const [signInText, setSignInText] = useState<string>('');
+  const [accountText, setAccountText] = useState<string>('');
+
+  useEffect(() => {
+    if (sign_up_text) {
+      setSignUpText(sign_up_text.value);
+    }
+    if (sign_in_text) {
+      setSignInText(sign_in_text.value);
+    }
+    if (create_account_desc) {
+      setAccountText(create_account_desc.value);
+    }
+  }, [sign_up_text, sign_in_text, create_account_desc]);
 
   const onSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -109,9 +128,11 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
             authenticate();
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (e: any) {
+            console.log(e);
             setError(e.message);
           }
         } else {
+          console.log(res);
           setOpen(true);
           setComponent('VerificationForm');
           setAction('activateUser');
@@ -132,7 +153,7 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
     >
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">
         <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
-          Sign up
+          {signUpText}
         </h2>
         <p className="text-xs text-gray-400 max-md:max-w-full">
           <button
@@ -141,9 +162,9 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
             }}
             className="underline"
           >
-            Sign in
+            {signInText}
           </button>{' '}
-          or create account to quickly manage order
+          {accountText}
         </p>
       </div>
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
@@ -153,7 +174,7 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
           }
         })}
       </div>
-      <SubmitButton title="SIGN UP" isLoading={loading || isLoading} />
+      <SubmitButton title={signUpText} isLoading={loading || isLoading} />
       {error && <ErrorMessage error={error} />}
     </form>
   );

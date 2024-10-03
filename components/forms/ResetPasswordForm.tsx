@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -35,6 +35,25 @@ const ResetPasswordForm: FC<{ lang: string }> = ({ lang }) => {
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState('');
 
+  const { reset_password_text, new_password_desc, change_password_text } =
+    useAppSelector((state) => state.systemContentReducer.content);
+
+  const [resetText, setResetText] = useState<string>('');
+  const [newPassText, setNewPassText] = useState<string>('');
+  const [changeText, setChangeText] = useState<string>('');
+
+  useEffect(() => {
+    if (reset_password_text) {
+      setResetText(reset_password_text.value);
+    }
+    if (new_password_desc) {
+      setNewPassText(new_password_desc.value);
+    }
+    if (change_password_text) {
+      setChangeText(change_password_text.value);
+    }
+  }, [reset_password_text, new_password_desc, change_password_text]);
+
   const onResetSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -68,10 +87,12 @@ const ResetPasswordForm: FC<{ lang: string }> = ({ lang }) => {
     >
       <div className="relative box-border flex shrink-0 flex-col gap-2.5">
         <h2 className="max-w-full text-xl font-bold text-neutral-600">
-          Reset password
+          {/* Reset password */}
+          {resetText}
         </h2>
         <p className="max-w-full text-xs text-gray-400">
-          Enter new password and confirm.
+          {/* Enter new password and confirm. */}
+          {newPassText}
         </p>
       </div>
 
@@ -90,7 +111,7 @@ const ResetPasswordForm: FC<{ lang: string }> = ({ lang }) => {
         })}
       </div>
 
-      <FormSubmitButton title="CHANGE PASSWORD" isLoading={isLoading} />
+      <FormSubmitButton title={changeText} isLoading={isLoading} />
       {isError && <ErrorMessage error={isError} />}
     </form>
   );

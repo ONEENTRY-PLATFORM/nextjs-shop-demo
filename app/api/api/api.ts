@@ -21,7 +21,6 @@ socket.on('notification', async (res: string) => {
 
 // Initial api definition
 export let api = defineOneEntry(PROJECT_URL, {
-  langCode: 'en_US',
   token: APP_TOKEN,
   auth: {
     saveFunction,

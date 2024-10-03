@@ -28,12 +28,13 @@ const storage =
   typeof window !== 'undefined'
     ? createWebStorage('local')
     : createNoopStorage();
+const version = 1;
 
 const cartReducer = persistReducer(
   {
     key: 'cart-slice',
     storage: storage,
-    version: 1,
+    version: version,
     whitelist: ['currency', 'products', 'deliveryData'],
   },
   cartSlice,
@@ -42,7 +43,7 @@ const favoritesReducer = persistReducer(
   {
     key: 'favorites-slice',
     storage: storage,
-    version: 1,
+    version: version,
     whitelist: ['products'],
   },
   favoritesSlice,
@@ -51,7 +52,7 @@ const formFieldsReducer = persistReducer(
   {
     key: 'form-fields',
     storage: storage,
-    version: 1,
+    version: version,
     whitelist: ['fields'],
   },
   formFieldsSlice,
@@ -60,7 +61,7 @@ const orderReducer = persistReducer(
   {
     key: 'order-slice',
     storage: storage,
-    version: 1,
+    version: version,
     whitelist: ['products'],
   },
   orderSlice,
@@ -69,7 +70,7 @@ const systemContentReducer = persistReducer(
   {
     key: 'system-slice',
     storage: storage,
-    version: 1,
+    version: version,
     whitelist: ['content'],
   },
   systemContentSlice,
