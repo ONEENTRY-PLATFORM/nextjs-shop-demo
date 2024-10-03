@@ -139,9 +139,9 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       langCode,
     })
       .then(async (res) => {
-        if (res.error && !res.isLoading) {
+        if ((res.error && !res.isLoading) || !res.data?.id) {
           localStorage.setItem('refresh-token', '');
-          return setIsAuth(false);
+          setIsAuth(false);
         } else {
           setUser(res.data);
           setIsAuth(true);

@@ -22,7 +22,7 @@ const NavGroup: FC = async () => {
       {!isError && menu && Array.isArray(menu.pages) ? (
         menu.pages.map((item: { pageUrl: string }, i: Key) => {
           return (
-            <div className="flex size-6" key={i}>
+            <div className="flex size-6 max-xs:hidden" key={i}>
               {item.pageUrl === 'profile' && (
                 <NavItemProfile item={item} lang={lang} />
               )}

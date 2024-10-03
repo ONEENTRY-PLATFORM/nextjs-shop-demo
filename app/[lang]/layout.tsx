@@ -19,6 +19,7 @@ import { useServerProvider } from '../store/providers/ServerProvider';
 import StoreProvider from '../store/providers/StoreProvider';
 import { LanguageEnum } from '../types/enum';
 import { getDictionary } from './dictionaries';
+import BottomMenu from '@/components/layout/bottom-menu/BottomMenu';
 
 const lato = Lato({
   subsets: ['latin'],
@@ -57,6 +58,7 @@ export default async function RootLayout({
                   <NavigationMenu lang={lang} />
                   <div className="grow">{children}</div>
                   <Footer lang={lang} />
+                  <BottomMenu lang={lang} />
                   <Modal lang={lang} />
                 </OpenDrawerProvider>
               </ContentContextProvider>

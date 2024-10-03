@@ -10,7 +10,7 @@ const Footer: FC<{ lang: string }> = async ({ lang }) => {
   const [dict] = useServerProvider('dict');
 
   return (
-    <footer className="w-full">
+    <footer className="w-full max-xs:mb-[60px]">
       <FooterMenuSection lang={lang} />
       <div className="w-full bg-black px-5 py-11 text-center text-white max-md:max-w-full max-md:p-5">
         <div className="">
