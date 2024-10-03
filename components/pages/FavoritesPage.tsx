@@ -25,12 +25,7 @@ const FavoritesPage: FC<{ page: IPagesEntity; lang: string; dict: any }> = ({
   return favorites.length ? (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <Suspense fallback={<ProductsGridLoader />}>
-        <ProductsGridLayout
-          gridItems={favorites}
-          totalPages={0}
-          lang={lang}
-          dict={dict}
-        />
+        <ProductsGridLayout gridItems={favorites} totalPages={0} lang={lang} />
       </Suspense>
     </div>
   ) : (

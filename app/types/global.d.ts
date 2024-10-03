@@ -4,3 +4,12 @@ declare type LocalizeInfo = {
   menuTitle: string;
   title: string;
 };
+
+declare type PageProps = {
+  params: { handle: string; lang: string };
+  searchParams?: {
+    search?: string;
+    page?: string;
+    filters?: IFilterParams[];
+  };
+};

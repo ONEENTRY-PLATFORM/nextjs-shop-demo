@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import { getPageByUrl, getProducts } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
@@ -62,18 +61,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function CatalogPage({
-  params,
-  searchParams,
-}: {
-  params: { handle: string; lang: string };
-  searchParams?: {
-    search?: string;
-    page?: string;
-    filters?: IFilterParams[];
-  };
-}) {
-  const [dict] = useServerProvider('dict');
+const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
   const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
 
@@ -96,10 +84,11 @@ export default async function CatalogPage({
             gridItems={products}
             totalPages={(total || 0) / pageLimit}
             lang={params.lang}
-            dict={dict}
           />
         </Suspense>
       </div>
     </section>
   );
-}
+};
+
+export default CatalogPage;

@@ -10,16 +10,12 @@ interface GridLayoutProps {
   gridItems?: Array<IProductsEntity>;
   totalPages: number;
   lang: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
 }
 
 const ProductsGridLayout: FC<GridLayoutProps> = ({
   gridItems,
   totalPages,
   lang,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  dict,
 }) => {
   if (!gridItems) {
     return;

@@ -8,8 +8,8 @@ const NotFound = async () => {
   const lang = 'en';
   const { page, isError } = await getPageByUrl('404', lang);
   // !!! dictionary
-  // const dictionary = await getDictionary(lang);
-  // const { return_home } = dictionary();
+  // const lang = await getDictionary(lang);
+  // const dict = await getDictionary(dict);
 
   if (isError || !page) {
     return (
