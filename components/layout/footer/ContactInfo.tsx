@@ -53,7 +53,7 @@ const ContactInfo: FC<{
             href={'mailto:' + email_1?.value}
             className="relative box-border transition-colors hover:text-orange-500"
           >
-            {email_1.value}
+            {email_1?.value}
           </a>
           <a
             href={'mailto:' + email_2?.value}

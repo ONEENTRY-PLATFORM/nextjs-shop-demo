@@ -20,7 +20,7 @@ const FilterHeader: FC = () => {
         <div>
           <HistoryBack />
         </div>
-        <div className="my-auto">{open_filters_button.value}</div>
+        <div className="my-auto">{open_filters_button?.value}</div>
         <CloseModal />
       </div>
     </header>

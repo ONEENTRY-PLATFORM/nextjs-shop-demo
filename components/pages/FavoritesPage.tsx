@@ -1,3 +1,5 @@
+'use client';
+
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { Suspense } from 'react';

@@ -22,7 +22,7 @@ const FilterButton: React.FC = () => {
 
   useEffect(() => {
     if (open_filters_button) {
-      setFilterText(open_filters_button.value);
+      setFilterText(open_filters_button?.value);
     }
   }, [open_filters_button]);
 

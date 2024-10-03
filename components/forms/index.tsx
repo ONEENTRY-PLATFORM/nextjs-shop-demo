@@ -1,4 +1,5 @@
 import CalendarForm from '@/components/forms/CalendarForm';
+import ContactUsForm from '@/components/forms/ContactUsForm';
 import ForgotPasswordForm from '@/components/forms/ForgotPasswordForm';
 import PaymentForm from '@/components/forms/PaymentForm';
 import ResetPasswordForm from '@/components/forms/ResetPasswordForm';
@@ -9,6 +10,7 @@ import VerificationForm from '@/components/forms/VerificationForm';
 
 export {
   CalendarForm,
+  ContactUsForm,
   ForgotPasswordForm,
   PaymentForm,
   ResetPasswordForm,

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC, Key } from 'react';
+import { type FC, type Key, Suspense } from 'react';
 
 import FavoritesButton from '../../../shared/FavoritesButton';
 import AddToCartButton from '../../product/components/AddToCartButton';
@@ -62,11 +62,13 @@ const ProductCard: FC<{
           originalPrice={attributeValues.price?.value}
         />
 
-        <AddToCartButton
-          product={product}
-          height={42}
-          className="btn btn-md btn-primary"
-        />
+        <Suspense>
+          <AddToCartButton
+            product={product}
+            height={42}
+            className="btn btn-md btn-primary"
+          />
+        </Suspense>
       </div>
 
       <Link

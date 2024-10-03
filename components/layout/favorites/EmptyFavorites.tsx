@@ -13,18 +13,13 @@ const EmptyFavorites = () => {
   );
 
   useEffect(() => {
-    if (!empty_favorites_plug) {
-      return;
+    if (empty_favorites_plug) {
+      setEmptyText(empty_favorites_plug.value);
     }
-    setEmptyText(empty_favorites_plug.value);
-  }, [empty_favorites_plug]);
-
-  useEffect(() => {
-    if (!go_to_shop) {
-      return;
+    if (go_to_shop) {
+      setGoToShop(go_to_shop.value);
     }
-    setGoToShop(go_to_shop.value);
-  }, [go_to_shop]);
+  }, [empty_favorites_plug, go_to_shop]);
 
   return (
     <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">

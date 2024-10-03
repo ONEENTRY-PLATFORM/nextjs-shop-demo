@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 import type { FC } from 'react';
 
 import { getPageByUrl } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import AboutPage from '@/components/pages/AboutPage';
 import CartPage from '@/components/pages/CartPage';
 import ContactsPage from '@/components/pages/ContactsPage';
@@ -38,11 +37,11 @@ export async function generateMetadata({
   };
 }
 
-const Page: FC<{ params: { page: string; lang: string } }> = async ({
-  params,
-}) => {
+const Page: FC<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params: { page: any; handle: string; lang: string };
+}> = async ({ params }) => {
   const lang = params.lang;
-  const [dict] = useServerProvider('dict');
   const { page, isError } = await getPageByUrl(params.page, lang);
 
   if (isError || !page) {
@@ -70,7 +69,7 @@ const Page: FC<{ params: { page: string; lang: string } }> = async ({
     {
       templateType: templateIdentifier,
       name: 'favorites',
-      component: <FavoritesPage page={page} lang={lang} dict={dict} />,
+      component: <FavoritesPage lang={lang} />,
     },
     {
       templateType: templateIdentifier,

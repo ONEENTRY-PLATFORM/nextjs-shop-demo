@@ -6,7 +6,7 @@ declare type LocalizeInfo = {
 };
 
 declare type PageProps = {
-  params: { handle: string; lang: string };
+  params: { page: any; handle: string; lang: string };
   searchParams?: {
     search?: string;
     page?: string;

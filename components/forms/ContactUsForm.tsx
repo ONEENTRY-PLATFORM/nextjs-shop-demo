@@ -23,6 +23,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
     marker: 'contact_us',
     lang,
   });
+  console.log(data);
 
   const [token, setToken] = useState<string>('');
   const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
