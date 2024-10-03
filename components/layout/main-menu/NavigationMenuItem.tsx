@@ -22,7 +22,7 @@ const NavigationMenuItem: React.FC<NavigationItemProps> = ({
   return (
     <Link
       href={href}
-      className="relative box-border flex shrink-0 flex-row items-center gap-2.5 text-slate-800 hover:text-red-500"
+      className="relative box-border flex shrink-0 flex-row items-center gap-2.5 text-slate-800 transition-colors hover:text-red-500"
     >
       <div className={clsx(isActive && 'fill-red-500 text-red-500')}>
         {label}

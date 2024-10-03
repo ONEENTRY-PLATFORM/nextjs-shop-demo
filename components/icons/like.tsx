@@ -1,7 +1,7 @@
 const LikeIcon = () => {
   return (
     <svg
-      className="size-full fill-slate-700 group-hover:fill-orange-500"
+      className="size-full fill-slate-700 transition-colors group-hover:fill-orange-500"
       width="20"
       height="20"
       viewBox="0 0 20 20"
