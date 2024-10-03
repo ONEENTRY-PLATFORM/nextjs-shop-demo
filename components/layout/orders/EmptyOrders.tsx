@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
@@ -27,7 +26,8 @@ const EmptyOrders = () => {
   return (
     <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
-        Empty orders
+        {/* Empty orders */}
+        {emptyText}
       </h1>
       <Link href="/shop" className="btn btn-sm btn-o btn-o-primary">
         {goShopText}

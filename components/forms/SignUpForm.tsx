@@ -1,7 +1,4 @@
-import type {
-  ISignUpData,
-  ISignUpEntity,
-} from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
 import { useContext, useEffect, useState } from 'react';

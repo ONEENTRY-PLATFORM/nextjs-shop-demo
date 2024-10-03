@@ -18,6 +18,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
   gridItems,
   totalPages,
   lang,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   dict,
 }) => {
   if (!gridItems) {

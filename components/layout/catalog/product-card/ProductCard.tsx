@@ -15,8 +15,6 @@ const ProductCard: FC<{
   const { id, attributeValues, localizeInfos } = product;
   const title = localizeInfos?.title;
   const productImage = attributeValues.pic?.value;
-  const sale = attributeValues?.sale;
-  const price = attributeValues?.price;
 
   return (
     <div className="product-card">
