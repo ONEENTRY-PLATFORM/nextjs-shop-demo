@@ -2,8 +2,6 @@ import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces'
 import type { FC, Key } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Loader from '@/components/shared/Loader';
 import { UseDate } from '@/components/utils';
 
 type OrderDataTableProps = {
@@ -12,6 +10,21 @@ type OrderDataTableProps = {
 
 const OrderDataTable: FC<OrderDataTableProps> = () => {
   const orderData = useAppSelector((state) => state.orderReducer.order);
+  const {
+    order_info_address_placeholder,
+    delivery_date_text,
+    delivery_time_text,
+  } = useAppSelector((state) => state.systemContentReducer.content) as {
+    order_info_address_placeholder: {
+      value: string;
+    };
+    delivery_date_text: {
+      value: string;
+    };
+    delivery_time_text: {
+      value: string;
+    };
+  };
 
   return orderData?.formData.map(
     (
@@ -25,14 +38,14 @@ const OrderDataTable: FC<OrderDataTableProps> = () => {
       if (field.marker === 'order_address') {
         return (
           <div key={i} className="flex flex-col max-md:flex-row max-md:gap-2">
-            <b>Address:</b> {field.value}
+            <b>{order_info_address_placeholder.value}:</b> {field.value}
           </div>
         );
       }
       if (field.marker === 'date') {
         return (
           <div key={i} className="flex flex-col max-md:flex-row max-md:gap-2">
-            <b>Delivery date: </b>{' '}
+            <b>{delivery_date_text.value}: </b>{' '}
             {UseDate({
               fullDate: field.value.fullDate,
               format: 'en',
@@ -43,7 +56,7 @@ const OrderDataTable: FC<OrderDataTableProps> = () => {
       if (field.marker === 'time') {
         return (
           <div key={i} className="flex flex-col max-md:flex-row max-md:gap-2">
-            <b>Delivery time: </b> {field.value}
+            <b>{delivery_time_text.value}: </b> {field.value}
           </div>
         );
       }

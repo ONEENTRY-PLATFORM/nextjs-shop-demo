@@ -274,7 +274,7 @@ const PaymentForm: FC<{ lang: string }> = ({ lang }) => {
           </div>
         </div>
       </div>
-
+      {/* !!! */}
       <FormSubmitButton title="Apply" isLoading={false} />
     </form>
   );

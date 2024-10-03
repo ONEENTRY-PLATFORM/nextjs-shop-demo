@@ -1,6 +1,3 @@
-'use client';
-
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { Suspense } from 'react';
@@ -11,13 +8,7 @@ import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FavoritesPage: FC<{ page: IPagesEntity; lang: string; dict: any }> = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  page,
-  lang,
-  dict,
-}) => {
+const FavoritesPage: FC<{ lang: string }> = ({ lang }) => {
   const favorites = useAppSelector((state) =>
     selectFavoritesItems(state),
   ) as Array<IProductsEntity>;
