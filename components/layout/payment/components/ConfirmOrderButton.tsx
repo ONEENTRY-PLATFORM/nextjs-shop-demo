@@ -7,7 +7,7 @@ import Loader from '@/components/shared/Loader';
 type ConfirmOrderButtonProps = {
   account: IAccountsEntity;
   isLoading: boolean;
-  onConfirmOrder: () => Promise<void> | undefined;
+  onConfirmOrder: () => Promise<void>;
 };
 
 const ConfirmOrderButton: FC<ConfirmOrderButtonProps> = ({

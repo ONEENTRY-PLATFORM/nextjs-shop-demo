@@ -20,40 +20,53 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
     if (!id) {
       return;
     }
+    setIsLoading(true);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { paymentUrl, id: orderId } = await api.Payments.createSession(
-      id,
-      'session',
-    );
-    if (order?.paymentAccountIdentifier === 'cash') {
-      router.push('/orders');
-      return 'payment_success';
-    }
-    if (paymentUrl) {
-      router.push(paymentUrl);
-      return 'payment_method';
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { paymentUrl, id: orderId } = await api.Payments.createSession(
+        id,
+        'session',
+      );
+      if (order?.paymentAccountIdentifier === 'cash') {
+        router.push('/orders');
+        return 'payment_success';
+      }
+      if (paymentUrl) {
+        router.push(paymentUrl);
+        return 'payment_method';
+      }
+      setIsLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      setError(e.message);
+      setIsLoading(false);
     }
   };
 
-  const onConfirmOrder = async () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onConfirmOrder = async (orderData?: any) => {
     try {
       setIsLoading(true);
-      if (order?.formIdentifier && order?.paymentAccountIdentifier) {
-        const orderFormData = order.formData.slice().map((data) => {
-          return {
-            marker: data.marker,
-            type: data.type,
-            value: data.value,
-          };
-        });
+      const orderComp = order || orderData;
+      if (orderComp?.formIdentifier && orderComp?.paymentAccountIdentifier) {
+        const orderFormData = orderComp.formData
+          .slice()
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          .map((data: { marker: string; type: string; value: any }) => {
+            return {
+              marker: data.marker,
+              type: data.type,
+              value: data.value,
+            };
+          });
         const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
           'order',
           {
-            ...order,
+            ...orderComp,
             formData: orderFormData,
-            formIdentifier: order.formIdentifier,
-            paymentAccountIdentifier: order.paymentAccountIdentifier,
+            formIdentifier: orderComp.formIdentifier,
+            paymentAccountIdentifier: orderComp.paymentAccountIdentifier,
           },
           langCode,
         );
@@ -77,6 +90,7 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
 
   return {
     onConfirmOrder,
+    createSession,
     isLoading,
     error,
   };

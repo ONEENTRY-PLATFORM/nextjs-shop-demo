@@ -6,7 +6,7 @@ import Loader from '@/components/shared/Loader';
 
 const ProfilePage: FC<{ lang: string }> = async ({ lang }) => {
   return (
-    <div className="flex max-w-[430px] flex-col pb-5 max-md:max-w-full">
+    <div className="flex flex-col pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>
         <UserForm lang={lang} />
       </Suspense>

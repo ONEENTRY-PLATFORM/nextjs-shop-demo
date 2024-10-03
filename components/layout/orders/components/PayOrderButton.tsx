@@ -5,16 +5,20 @@ import { LanguageEnum } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 
 const PayOrderButton: FC<{
+  id: number;
   lang: string;
-  isLoading: boolean;
+  loading: boolean;
   title: string;
-}> = ({ lang, isLoading, title }) => {
+}> = ({ id, lang, loading, title }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { onConfirmOrder } = useCreateOrder({ langCode });
+  const { createSession, isLoading } = useCreateOrder({ langCode });
 
   return (
-    <button className="btn btn-sm btn-o btn-o-primary" onClick={onConfirmOrder}>
-      {title} {isLoading && <Loader />}
+    <button
+      className="btn btn-sm btn-o btn-o-primary"
+      onClick={() => createSession(id)}
+    >
+      {title} {(isLoading || loading) && <Loader />}
     </button>
   );
 };

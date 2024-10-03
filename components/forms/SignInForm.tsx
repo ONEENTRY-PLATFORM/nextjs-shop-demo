@@ -172,7 +172,7 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
 
       <FormSubmitButton title={signInText} isLoading={loading} />
 
-      <div className="mx-auto mb-5 flex w-[280px] max-w-full justify-between gap-5 text-sm">
+      <div className="mx-auto mb-5 flex w-[380px] max-w-full justify-center gap-5 text-sm">
         <div className="font-bold text-gray-800">{forgotText}</div>
         <ResetPasswordButton title={resetText} />
       </div>

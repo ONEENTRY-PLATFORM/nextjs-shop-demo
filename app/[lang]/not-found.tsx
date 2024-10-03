@@ -14,8 +14,8 @@ const NotFound = async () => {
   if (isError || !page) {
     return (
       <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col items-center justify-center py-8">
-        <h2 className="mb-10 text-6xl">404</h2>
-        <Link href="/">return_home</Link>
+        <h1 className="mb-10 text-6xl">404</h1>
+        <Link href="/">Return home</Link>
       </div>
     );
   }
@@ -29,7 +29,7 @@ const NotFound = async () => {
         {attributeValues.error_description?.value[0]?.plainValue}
       </p>
       <Link href="/" className="btn btn-o btn-sm btn-o-primary">
-        return_home
+        Return home
       </Link>
     </div>
   );

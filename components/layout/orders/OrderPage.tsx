@@ -73,9 +73,10 @@ const OrderPage: FC<{
         {paymentAccountIdentifier === 'stripe' &&
           statusIdentifier === 'created' && (
             <PayOrderButton
+              id={data.id}
               lang={lang}
               title={go_to_pay_title.value}
-              isLoading={isLoading}
+              loading={isLoading}
             />
           )}
       </div>
