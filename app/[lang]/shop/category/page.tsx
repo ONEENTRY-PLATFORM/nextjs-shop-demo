@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
+import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
@@ -60,15 +60,15 @@ export async function generateMetadata({
   };
 }
 
-// CategoryPage
-const CategoryPage = async ({
-  params: { lang },
-}: {
+interface CategoryPageProps {
   params: { lang: string };
-}) => {
+}
+
+// CategoryPage
+const CategoryPage: FC<CategoryPageProps> = async ({ params: { lang } }) => {
   const { pages, isError } = await getChildPagesByParentUrl('category', lang);
 
-  if (isError || !pages) {
+  if (isError || !pages || !Array.isArray(pages)) {
     return notFound();
   }
 

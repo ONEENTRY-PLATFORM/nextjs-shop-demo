@@ -6,7 +6,7 @@ import type { IFormsPost } from 'oneentry/dist/formsData/formsDataInterfaces';
 import type { FC, FormEvent, Key } from 'react';
 import React, { useState } from 'react';
 
-import { useGetFormByMarkerQuery } from '@/app/api';
+import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 
 import Loader from '../shared/Loader';
@@ -23,7 +23,6 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
     marker: 'contact_us',
     lang,
   });
-  console.log(data);
 
   const [token, setToken] = useState<string>('');
   const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
@@ -71,7 +70,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
       const transformedFormData = propertiesArray?.reduce((formData, i) => {
         const type = formFields[i].type;
         const marker = formFields[i].marker;
-        const value = fieldsData[marker as keyof typeof fieldsData].value;
+        const value = fieldsData[marker as keyof typeof fieldsData]?.value;
         let newData = {
           marker: marker,
           type: 'string',
@@ -81,15 +80,31 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
           type: string;
           value: string | object;
         };
+        if (marker === 'spam') {
+          newData = {
+            marker: marker,
+            type: 'string',
+            value: 'test',
+          };
+        }
+        if (marker === 'send') {
+          newData = {
+            marker: marker,
+            type: 'string',
+            value: 'test',
+          };
+        }
 
         if (type === 'list') {
           newData = {
             marker: marker,
             type: 'list',
-            value: {
-              title: value,
-              value: value,
-            },
+            value: [
+              {
+                title: value,
+                value: value,
+              },
+            ],
           };
         }
         if (type === 'text') {
@@ -98,7 +113,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
             type: 'text',
             value: [
               {
-                htmlValue: '',
+                htmlValue: value,
                 plainValue: value,
               },
             ],
@@ -117,7 +132,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
 
       try {
         setLoading(true);
-        // await api.FormData.postFormsData(formData);
+        await api.FormData.postFormsData(formData);
         setLoading(false);
         // dispatch(clearAllFieldsContactUs());
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

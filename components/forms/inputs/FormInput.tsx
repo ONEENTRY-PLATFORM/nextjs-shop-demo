@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, Key } from 'react';
 import React, { useEffect, useState } from 'react';
@@ -13,26 +14,37 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
   const [value, setValue] = useState<string>(field.value || '');
   const [type, setType] = useState<string>('');
   const dispatch = useAppDispatch();
-  const validate = true;
+  const valid = true;
 
   const fieldType = (FormFieldsEnum as unknown as FormFieldsEnum)[
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    field.marker.indexOf('password') !== -1 ? 'password' : (field.type as any)
+    field.marker.indexOf('password') !== -1
+      ? 'password'
+      : field.marker.indexOf('email') !== -1
+        ? 'email'
+        : (field.type as any)
   ];
-  const minLength = field.marker === 'card_cvc' ? 3 : 0;
-  const maxLength = field.marker === 'card_cvc' ? 3 : 50;
+
+  const required = field.validators['requiredValidator']?.strict || false;
+  const minLength =
+    field.marker === 'card_cvc'
+      ? 3
+      : field.validators['stringInspectionValidator']?.stringMin;
+  const maxLength =
+    field.marker === 'card_cvc'
+      ? 3
+      : field.validators['stringInspectionValidator']?.stringMax;
 
   useEffect(() => {
     dispatch(
       addField({
         [field.marker]: {
-          valid: validate,
+          valid: valid,
           value: value,
         },
       }),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, validate]);
+  }, [value, valid]);
 
   useEffect(() => {
     setType(fieldType || 'text');
@@ -49,16 +61,17 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
   // simple input
 
   return (
-    <div className="relative box-border flex shrink-0 flex-col">
-      <label htmlFor={field.marker} className="text-base text-gray-400">
-        {localizeInfos?.title}
+    <div className="relative box-border flex shrink-0 flex-col text-base">
+      <label htmlFor={field.marker} className="text-gray-400">
+        {localizeInfos?.title}{' '}
+        {required && <span className="text-red-500">*</span>}
       </label>
       {/* inputType select */}
       {type === 'list' && (
         <select
           id={field.marker}
           className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
-          required={true}
+          required={required}
           value={value}
           onChange={(val) => setValue(val.currentTarget.value)}
         >
@@ -77,7 +90,7 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
           id={field.marker}
           placeholder={localizeInfos?.title}
           className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
-          required={true}
+          required={required}
           onChange={(val) => setValue(val.currentTarget.value)}
           value={value}
         />
@@ -89,7 +102,7 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
           id={field.marker}
           placeholder={localizeInfos?.title}
           className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
-          required={true}
+          required={required}
           onChange={(val) => setValue(val.currentTarget.value)}
           autoComplete={fieldType === 'password' ? 'password' : ''}
           minLength={minLength}

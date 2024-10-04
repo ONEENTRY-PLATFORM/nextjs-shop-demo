@@ -1,20 +1,19 @@
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
+import type { FC } from 'react';
 import { useState } from 'react';
 
 import { UsePrice } from '@/components/utils';
 
 import OrderPage from '../OrderPage';
 
-const Order = ({
-  order,
-  settings,
-  lang,
-}: {
+interface OrderProps {
   order: IOrderByMarkerEntity;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   settings: Record<string, any> | undefined;
   lang: string;
-}) => {
+}
+
+const Order: FC<OrderProps> = ({ order, settings, lang }) => {
   const { id, createdDate, currency, statusIdentifier, totalSum } = order;
 
   const formattedPrice = UsePrice({
@@ -24,7 +23,7 @@ const Order = ({
   const date = new Date(createdDate).toUTCString();
   const [state, setState] = useState(false);
   const rowClass = !state
-    ? ' text-slate-700 hover:text-orange-500'
+    ? 'text-slate-700 hover:text-orange-500'
     : 'text-orange-500';
 
   return (
