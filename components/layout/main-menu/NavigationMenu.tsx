@@ -4,13 +4,15 @@ import type { FC, Key } from 'react';
 import { Suspense } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { MainMenuLoader } from '@/components/shared/Loader';
 import { flatMenuToNested } from '@/components/utils';
 
 import OffscreenModal from '../mobile-menu/OffscreenModal';
 import NavigationMenuItem from './NavigationMenuItem';
 
-const NavigationMenu: FC<{ lang: string }> = async ({ lang }) => {
+const NavigationMenu: FC = async () => {
+  const [lang] = useServerProvider('lang');
   const { isError, menu } = await getMenuByMarker('main_web', lang);
 
   if (isError || !menu || !menu.pages) {

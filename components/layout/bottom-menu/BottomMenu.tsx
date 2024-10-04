@@ -3,6 +3,7 @@ import type { FC } from 'react';
 import { type Key } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { NavMenuLoader } from '@/components/shared/Loader';
 
 import NavItemCart from '../header/nav/NavItemCart';
@@ -11,7 +12,8 @@ import NavItemProfile from '../header/nav/NavItemProfile';
 import NavItemCatalog from './components/NavItemCatalog';
 import NavItemHome from './components/NavItemHome';
 
-const BottomMenu: FC<{ lang: string }> = async ({ lang }) => {
+const BottomMenu: FC = async () => {
+  const [lang] = useServerProvider('lang');
   const { menu, isError } = await getMenuByMarker('bottom_web', lang);
   return (
     <div className="fixed bottom-0 z-50 my-auto hidden h-[60px] w-full items-center justify-between gap-10 bg-white p-4 max-xs:flex">

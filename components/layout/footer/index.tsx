@@ -4,7 +4,8 @@ import { useServerProvider } from '@/app/store/providers/ServerProvider';
 
 import FooterMenuSection from './FooterMenu';
 
-const Footer: FC<{ lang: string }> = async ({ lang }) => {
+const Footer: FC = async () => {
+  const [lang] = useServerProvider('lang');
   const currentYear = new Date().getFullYear();
   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
   const [dict] = useServerProvider('dict');
