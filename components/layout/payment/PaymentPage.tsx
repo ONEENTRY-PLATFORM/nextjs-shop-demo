@@ -84,7 +84,7 @@ const PaymentPage: FC<{ page: IPagesEntity; lang: string }> = ({
   }
 
   if (productsInCart.length < 2 || isLoading) {
-    return <EmptyCart />;
+    return <EmptyCart lang={lang} />;
   }
 
   return (

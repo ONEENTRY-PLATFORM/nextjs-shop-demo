@@ -1,4 +1,4 @@
-import Breadcrumbs from '@/components/layout/breadcrumbs';
+import Breadcrumbs from '@/components/layout/breadcrumbs/Breadcrumbs';
 
 function Layout({
   children,

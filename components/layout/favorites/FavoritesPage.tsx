@@ -22,7 +22,7 @@ const FavoritesPage: FC<{ lang: string }> = ({ lang }) => {
       </Suspense>
     </div>
   ) : (
-    <EmptyFavorites />
+    <EmptyFavorites lang={lang} />
   );
 };
 

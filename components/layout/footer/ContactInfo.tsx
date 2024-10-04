@@ -1,15 +1,23 @@
-import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { FC } from 'react';
 
+import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 
 const ContactInfo: FC<{
-  block: IBlockEntity | undefined;
   lang: string;
-}> = async ({ block, lang }) => {
+}> = async ({ lang }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const { block } = await getBlockByMarker('contact_info', lang);
+
   if (!block) {
-    return;
+    return 'Block not found';
+  }
+
+  const attributeValues =
+    block.attributeValues[langCode] || block.attributeValues;
+
+  if (!attributeValues) {
+    return 'Attributes not found';
   }
 
   const {
@@ -22,7 +30,7 @@ const ContactInfo: FC<{
     phone_1,
     phone_2,
     info_address_title,
-  } = block.attributeValues[langCode] || block.attributeValues;
+  } = attributeValues;
 
   return (
     <nav className="flex w-full max-w-[240px] grow flex-col font-bold text-neutral-600 max-lg:max-w-[160px] max-md:max-w-[30%] max-sm:mb-5 max-sm:max-w-full">

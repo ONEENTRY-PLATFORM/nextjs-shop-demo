@@ -224,4 +224,7 @@ input:focus-visible {
   .text-balance {
     text-wrap: balance;
   }
+  .text-orange {
+    @apply text-orange-500;
+  }
 }

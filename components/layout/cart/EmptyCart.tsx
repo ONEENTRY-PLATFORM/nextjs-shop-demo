@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 
-const EmptyCart = () => {
+const EmptyCart = ({ lang }: { lang: string }) => {
   const [emptyText, setEmptyText] = useState('');
   const [goShopText, setGoShopText] = useState('');
 
@@ -16,13 +16,10 @@ const EmptyCart = () => {
     if (empty_cart_plug) {
       setEmptyText(empty_cart_plug.value);
     }
-  }, [empty_cart_plug]);
-
-  useEffect(() => {
     if (go_to_shop) {
       setGoShopText(go_to_shop.value);
     }
-  }, [go_to_shop]);
+  }, [go_to_shop, empty_cart_plug]);
 
   return (
     <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
@@ -30,13 +27,13 @@ const EmptyCart = () => {
         width={100}
         height={100}
         src={'/icons/cart.svg'}
-        alt={''}
+        alt={emptyText}
         className="mb-5 size-20"
       />
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
         {emptyText}
       </h1>
-      <Link href="/shop" className="btn btn-sm btn-o btn-o-primary">
+      <Link href={'/shop/' + lang} className="btn btn-sm btn-o btn-o-primary">
         {goShopText}
       </Link>
     </div>

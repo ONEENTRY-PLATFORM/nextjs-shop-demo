@@ -14,11 +14,11 @@ import {
   selectCartItems,
 } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
+import DeliveryTable from '@/components/layout/cart/components/DeliveryTable';
+import PaymentButton from '@/components/layout/cart/components/PaymentButton';
+import ProductCard from '@/components/layout/cart/components/ProductCard';
 import TotalAmount from '@/components/layout/cart/components/TotalAmount';
-import DeliveryTable from '@/components/layout/cart/DeliveryTable';
 import EmptyCart from '@/components/layout/cart/EmptyCart';
-import PaymentButton from '@/components/layout/cart/PaymentButton';
-import ProductCard from '@/components/layout/cart/ProductCard';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CartPage: FC<{ page: IPagesEntity; lang: string }> = ({ page, lang }) => {
@@ -84,7 +84,7 @@ const CartPage: FC<{ page: IPagesEntity; lang: string }> = ({ page, lang }) => {
   }, [delivery]);
 
   if (productsInCart.length < 2 || isLoading) {
-    return <EmptyCart />;
+    return <EmptyCart lang={lang} />;
   }
 
   return (

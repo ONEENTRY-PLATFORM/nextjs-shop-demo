@@ -11,7 +11,6 @@ import FooterMenu from './Menu';
 const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
   const quickLinks = await getMenuByMarker('quick_links', lang);
   const infoLinks = await getMenuByMarker('information', lang);
-  const { block } = await getBlockByMarker('contact_info', lang);
 
   return (
     <div className="flex w-full items-center justify-center bg-gray-200 px-5 py-10 max-md:px-5">
@@ -26,7 +25,7 @@ const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
             className="aspect-[3.57] w-[250px] max-w-full shrink-0 max-lg:max-w-[180px] max-sm:mb-5"
           />
         </Link>
-        <ContactInfo block={block} lang={lang} />
+        <ContactInfo lang={lang} />
         {quickLinks.menu ? (
           <FooterMenu menu={quickLinks.menu} lang={lang} />
         ) : (

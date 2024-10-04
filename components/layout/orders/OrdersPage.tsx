@@ -10,9 +10,9 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
 import Loader, { OrdersTableLoader } from '@/components/shared/Loader';
 
-import Pagination from '../layout/catalog/Pagination';
-import Order from '../layout/orders/components/OrderRow';
-import EmptyOrders from '../layout/orders/EmptyOrders';
+import Pagination from '../catalog/Pagination';
+import Order from './components/OrderRow';
+import EmptyOrders from './EmptyOrders';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
@@ -59,12 +59,12 @@ const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
     })();
   }, [lang, currentPage, isAuth, pageLimit, user]);
 
-  if (!isAuth || !user) {
-    return <AuthError />;
-  }
-
   if (!settings) {
     return <Loader />;
+  }
+
+  if (!isAuth || !user) {
+    return <AuthError />;
   }
 
   const totalPages = Math.floor(total / pageLimit);
@@ -73,6 +73,7 @@ const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
   if (orders && orders.length < 1) {
     return <EmptyOrders />;
   }
+  console.log(page);
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">

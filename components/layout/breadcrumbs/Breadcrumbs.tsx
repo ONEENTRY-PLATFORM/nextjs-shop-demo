@@ -1,8 +1,8 @@
 import type { FC } from 'react';
 
-import BackButton from './BackButton';
 import BreadcrumbsTrail from './BreadcrumbsTrail';
-import FilterButton from './FilterButton';
+import BackButton from './components/BackButton';
+import FilterButton from './components/FilterButton';
 
 const Breadcrumbs: FC<{ lang: string }> = async ({ lang }) => {
   return (

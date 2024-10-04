@@ -7,8 +7,8 @@ import { deselectProduct } from '@/app/store/reducers/CartSlice';
 import Placeholder from '@/components/shared/Placeholder';
 
 // import { UsePrice } from '@/components/utils';
-import QuantitySelector from '../product/components/QuantitySelector';
-import DeleteButton from './components/DeleteButton';
+import QuantitySelector from '../../product/components/QuantitySelector';
+import DeleteButton from './DeleteButton';
 import PriceDisplay from './PriceDisplay';
 
 const ProductCard: React.FC<{

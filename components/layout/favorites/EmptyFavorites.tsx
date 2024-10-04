@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 
-const EmptyFavorites = () => {
-  const [emptyText, setEmptyText] = useState('');
-  const [goToShop, setGoToShop] = useState('');
+const EmptyFavorites = ({ lang }: { lang: string }) => {
+  const [emptyText, setEmptyText] = useState<string>('');
+  const [goToShop, setGoToShop] = useState<string>('');
   const { empty_favorites_plug, go_to_shop } = useAppSelector(
     (state) => state.systemContentReducer.content,
   );
@@ -41,7 +41,7 @@ const EmptyFavorites = () => {
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
         {emptyText}
       </h1>
-      <Link href="/shop" className="btn btn-sm btn-o btn-o-primary">
+      <Link href={'/shop/' + lang} className="btn btn-sm btn-o btn-o-primary">
         {goToShop}
       </Link>
     </div>
