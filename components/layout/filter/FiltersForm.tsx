@@ -29,7 +29,7 @@ const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
   return (
     <div
       id="filter"
-      className="flex size-full h-auto flex-col overflow-x-hidden overscroll-y-auto px-10 pb-16 pt-5 max-md:max-h-full"
+      className="flex size-full h-auto flex-col overflow-x-hidden overscroll-y-auto px-10 pb-16 pt-5 max-md:max-h-full max-md:px-6"
     >
       {Object.keys(sortedAttributes).map((attribute, index) => {
         if (attribute === 'price_filter') {

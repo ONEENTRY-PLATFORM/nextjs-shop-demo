@@ -25,7 +25,7 @@ const ProductSingle: FC<{
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:gap-4 max-sm:flex-wrap">
-        <div className="relative mb-10 flex h-[280px] w-[30%] grow flex-col max-md:mb-4 max-md:w-full max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
+        <div className="relative mb-10 flex h-[280px] w-[30%] grow flex-col max-md:mb-4 max-md:w-4/12 max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
           {attributeValues.pic && (
             <ProductImage
               imageSrc={attributeValues.pic.value.downloadLink}
@@ -35,17 +35,17 @@ const ProductSingle: FC<{
           )}
         </div>
 
-        <div className="flex w-4/12 grow flex-col max-md:w-full">
-          {total && total > 0 && (
-            <div className="relative mb-6 box-border flex shrink-0 flex-col">
-              <VariationsCarousel items={products} total={total} lang={lang} />
-            </div>
-          )}
+        <div className="flex w-4/12 grow flex-col max-md:w-4/12 max-sm:w-full">
+          <div className="relative mb-6 box-border flex shrink-0 flex-col">
+            <VariationsCarousel items={products} total={total} lang={lang} />
+          </div>
 
           <ProductDescription description={attributeValues.description} />
         </div>
 
-        <ProductDetails product={product} />
+        <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-4/12 max-sm:w-full">
+          <ProductDetails product={product} />
+        </div>
       </div>
 
       <ReviewsSection />
