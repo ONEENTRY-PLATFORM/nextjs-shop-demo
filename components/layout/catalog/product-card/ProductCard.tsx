@@ -2,6 +2,8 @@ import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC, type Key, Suspense } from 'react';
 
+import { LanguageEnum } from '@/app/types/enum';
+
 import FavoritesButton from '../../../shared/FavoritesButton';
 import AddToCartButton from '../../product/components/AddToCartButton';
 import PriceDisplay from './PriceDisplay';
@@ -12,15 +14,18 @@ const ProductCard: FC<{
   product: IProductsEntity;
   lang: string;
 }> = ({ product, lang }) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, attributeValues, localizeInfos } = product;
-  const title = localizeInfos?.title;
-  const productImage = attributeValues.pic?.value;
+
+  const attributes = attributeValues[langCode] || attributeValues;
+  const title = localizeInfos[langCode]?.title || localizeInfos?.title;
+  const productImage = attributes.pic?.value;
 
   return (
     <div className="product-card">
       {/* stickers */}
       <div className="z-10 flex justify-between gap-5 self-stretch">
-        {[attributeValues.stickers].map(
+        {[attributes.stickers].map(
           (
             sticker: {
               value: {
@@ -58,8 +63,8 @@ const ProductCard: FC<{
         </h2>
 
         <PriceDisplay
-          currentPrice={attributeValues.sale?.value}
-          originalPrice={attributeValues.price?.value}
+          currentPrice={attributes.sale?.value}
+          originalPrice={attributes.price?.value}
         />
 
         <Suspense>

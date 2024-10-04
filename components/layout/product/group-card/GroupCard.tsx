@@ -20,7 +20,6 @@ const GroupCard: FC<{
     attributeValues.more_pic?.value || attributeValues.more_pic?.value;
   const pic1 = images && images[0]?.downloadLink;
   const pic2 = images && images[1]?.downloadLink;
-  const saleValue = attributeValues?.sale?.value;
 
   return (
     <div className="flex min-h-[170px] flex-row justify-between rounded-xl bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg max-md:flex-col">
@@ -28,10 +27,10 @@ const GroupCard: FC<{
         <div className="flex w-[37%] flex-col">
           <h3 className="mb-5 text-sm leading-4 text-neutral-600">{title}</h3>
           <PriceDisplay
-            currentPrice={saleValue}
+            currentPrice={attributeValues?.sale?.value}
             originalPrice={product.price}
           />
-          <ApplyButton />
+          <ApplyButton product={product} />
         </div>
 
         <div className="flex w-[63%] flex-row justify-between">

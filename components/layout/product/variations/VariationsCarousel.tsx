@@ -20,15 +20,16 @@ const VariationsCarousel: FC<{
   }
 
   return (
-    <div className="flex h-[130px] w-full items-start justify-start self-stretch">
+    <div className="flex h-[130px] w-full items-start max-md:justify-center justify-start self-stretch px-16 max-md:px-8">
       <Carousel
         infinite
         containerProps={{
           style: {
             userSelect: 'none',
+            justifyContent: 'flexStart',
           },
           className:
-            'flex min-w-full wrap w-full flex-row w-full justify-start justify-start gap-[3%] self-stretch overflow-hidden',
+            'flex min-w-full wrap w-full flex-row w-full items-start max-md:justify-center max-md:items-center justify-start gap-[4%] self-stretch overflow-hidden',
         }}
         activeSlideProps={{
           style: {},
