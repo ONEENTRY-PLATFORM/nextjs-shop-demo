@@ -11,7 +11,7 @@ async function Layout({
 }) {
   return (
     <>
-      <Breadcrumbs lang={lang} />
+      <Breadcrumbs lang={lang} withFilter={false} />
       <main className="flex flex-col p-5">{children}</main>
     </>
   );

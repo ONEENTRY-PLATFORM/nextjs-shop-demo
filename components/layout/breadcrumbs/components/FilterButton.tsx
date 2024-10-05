@@ -26,9 +26,9 @@ const FilterButton: React.FC = () => {
     }
   }, [open_filters_button]);
 
-  if (path.indexOf('shop') === -1 || path.indexOf('product') !== -1) {
-    return;
-  }
+  // if (path.indexOf('shop') === -1 || path.indexOf('product') !== -1) {
+  //   return;
+  // }
   // open_filters_button
 
   return (

@@ -1,4 +1,3 @@
-import { defineOneEntry } from 'oneentry';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
@@ -30,29 +29,6 @@ export const getProducts = async (props: {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   // const searchValue = params?.searchParams?.search || '';
   const expandedFilters = getSearchParams(params?.searchParams, params?.handle);
-
-  // const api = defineOneEntry('https://react-native-course.oneentry.cloud', {
-  //   token:
-  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmVhY3RfYXBwIiwic2VyaWFsTnVtYmVyIjoxLCJpYXQiOjE3MDA0ODAwMDYsImV4cCI6MTc0Nzk5OTk2MX0.gz3KTCITg6FhM_SwtuOZl3GsMr4MlVEPg9sw3d8Q0Po',
-  //   langCode: 'en_US',
-  // });
-  // try {
-  //   const response = await fetch(
-  //     'https://react-native-course.oneentry.cloud/api/content/products/all',
-  //     {
-  //       method: 'POST',
-  //       body: JSON.stringify([]),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'x-app-token':
-  //           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmVhY3RfYXBwIiwic2VyaWFsTnVtYmVyIjoxLCJpYXQiOjE3MDA0ODAwMDYsImV4cCI6MTc0Nzk5OTk2MX0.gz3KTCITg6FhM_SwtuOZl3GsMr4MlVEPg9sw3d8Q0Po',
-  //       },
-  //     },
-  //   );
-  //   console.log(response);
-  // } catch (err) {
-  //   console.log(err);
-  // }
 
   try {
     const data = await api.Products.getProducts(expandedFilters, langCode, {
