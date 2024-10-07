@@ -30,20 +30,17 @@ export const getProductsByPageUrl = async (props: {
   const { searchParams } = params;
   const expandedFilters = getSearchParams(searchParams);
 
-  try {
-    const data = await api.Products.getProductsByPageUrl(
-      params.handle,
-      expandedFilters,
-      langCode,
-      {
-        sortOrder: 'DESC',
-        sortKey: 'id',
-        offset: offset,
-        limit: limit,
-      },
-    );
-    return { isError: false, products: data.items, total: data.total };
-  } catch (err) {
-    return { isError: true, err: err };
-  }
+  const data = await api.Products.getProductsByPageUrl(
+    params.handle,
+    expandedFilters,
+    langCode,
+    {
+      sortOrder: 'DESC',
+      sortKey: 'id',
+      offset: offset,
+      limit: limit,
+    },
+  );
+
+  return { isError: false, products: data.items, total: data.total };
 };

@@ -11,11 +11,7 @@ export const getRelatedProductsById = async (
   total?: number;
   error?: unknown;
 }> => {
-  try {
-    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-    const data = await api.Products.getRelatedProductsById(id, langCode);
-    return { products: data.items, total: data.total };
-  } catch (error) {
-    return { error };
-  }
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const data = await api.Products.getRelatedProductsById(id, langCode);
+  return { products: data.items, total: data.total };
 };

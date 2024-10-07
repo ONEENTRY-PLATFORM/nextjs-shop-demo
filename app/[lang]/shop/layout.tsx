@@ -9,7 +9,7 @@ function Layout({
 }) {
   return (
     <>
-      <Breadcrumbs lang={lang} withFilter={false} />
+      <Breadcrumbs lang={lang} withFilter={true} />
       <main className="flex w-full flex-col gap-16 p-5 pb-10">{children}</main>
     </>
   );

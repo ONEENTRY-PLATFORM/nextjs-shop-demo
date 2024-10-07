@@ -1,3 +1,4 @@
+import type { IError } from 'oneentry/dist/base/utils';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 
 import { api } from '@/app/api';
@@ -7,15 +8,10 @@ export const getPageById = async (
   id: number,
   lang: string,
 ): Promise<{
-  page?: IPagesEntity;
+  page: IPagesEntity | IError;
   isError: boolean;
-  err?: unknown;
 }> => {
-  try {
-    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-    const page = await api.Pages.getPageById(id, langCode);
-    return { isError: false, page: page };
-  } catch (err) {
-    return { isError: true, err: err };
-  }
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const page = await api.Pages.getPageById(id, langCode);
+  return { isError: false, page: page };
 };

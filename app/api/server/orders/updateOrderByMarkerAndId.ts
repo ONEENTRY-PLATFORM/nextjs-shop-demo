@@ -1,3 +1,4 @@
+import type { IError } from 'oneentry/dist/base/utils';
 import type {
   IBaseOrdersEntity,
   IOrderData,
@@ -12,20 +13,15 @@ export const updateOrderByMarkerAndId = async (
   data: IOrderData,
   lang?: string,
 ): Promise<{
-  order?: IBaseOrdersEntity;
+  order?: IBaseOrdersEntity | IError;
   isError: boolean;
-  err?: unknown;
 }> => {
-  try {
-    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-    const order = await api.Orders.updateOrderByMarkerAndId(
-      marker,
-      id,
-      data,
-      langCode,
-    );
-    return { isError: false, order: order };
-  } catch (e) {
-    return { isError: true, err: e };
-  }
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const order = await api.Orders.updateOrderByMarkerAndId(
+    marker,
+    id,
+    data,
+    langCode,
+  );
+  return { isError: false, order: order };
 };

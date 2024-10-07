@@ -29,19 +29,15 @@ export const getProducts = async (props: {
   // const searchValue = params?.searchParams?.search || '';
   const expandedFilters = getSearchParams(params?.searchParams, params?.handle);
 
-  try {
-    const data = await api.Products.getProducts(expandedFilters, langCode, {
-      sortOrder: 'DESC',
-      sortKey: 'id',
-      offset: offset,
-      limit: limit,
-    });
-    return {
-      isError: false,
-      products: data.items,
-      total: data.total,
-    };
-  } catch (err) {
-    return { isError: true, err: err };
-  }
+  const data = await api.Products.getProducts(expandedFilters, langCode, {
+    sortOrder: 'DESC',
+    sortKey: 'id',
+    offset: offset,
+    limit: limit,
+  });
+  return {
+    isError: false,
+    products: data.items,
+    total: data.total,
+  };
 };

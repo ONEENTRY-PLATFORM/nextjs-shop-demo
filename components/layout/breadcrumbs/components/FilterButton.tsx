@@ -1,13 +1,14 @@
 'use client';
 
 // import { usePathname } from 'next/navigation';
+import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FilterIcon from '@/components/icons/filter';
 
-const FilterButton: React.FC = () => {
+const FilterButton: FC = () => {
   // const path = usePathname();
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
   const [filterText, setFilterText] = useState('');

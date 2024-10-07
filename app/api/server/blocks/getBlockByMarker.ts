@@ -1,3 +1,4 @@
+import type { IError } from 'oneentry/dist/base/utils';
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 
 import { api } from '@/app/api';
@@ -7,15 +8,11 @@ export const getBlockByMarker = async (
   marker: string,
   lang: string,
 ): Promise<{
-  block?: IBlockEntity;
+  block?: IBlockEntity | IError;
   isError: boolean;
   error?: unknown;
 }> => {
-  try {
-    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-    const block = await api.Blocks.getBlockByMarker(marker, langCode);
-    return { isError: false, block: block };
-  } catch (e) {
-    return { isError: true, error: e };
-  }
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const block = await api.Blocks.getBlockByMarker(marker, langCode);
+  return { isError: false, block: block };
 };

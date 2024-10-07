@@ -10,11 +10,7 @@ export const getBlocks = async ({
   type: BlockType;
   lang: string;
 }) => {
-  try {
-    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-    const blocks = await api.Blocks.getBlocks(type, langCode);
-    return { isError: false, blocks: blocks };
-  } catch (e) {
-    return { isError: true, err: e };
-  }
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const blocks = await api.Blocks.getBlocks(type, langCode);
+  return { isError: false, blocks: blocks };
 };

@@ -1,4 +1,5 @@
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
+import type { IError } from 'oneentry/dist/base/utils';
 
 import { api } from '@/app/api';
 
@@ -11,18 +12,13 @@ export const getSingleAttributeByMarkerSet = async ({
   setMarker: string;
   langCode: string;
 }): Promise<{
-  attribute?: IAttributesSetsEntity;
+  attribute: IAttributesSetsEntity | IError;
   isError: boolean;
-  err?: unknown;
 }> => {
-  try {
-    const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
-      attributeMarker,
-      setMarker,
-      langCode,
-    );
-    return { isError: false, attribute: attribute };
-  } catch (e) {
-    return { isError: true, err: e };
-  }
+  const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
+    attributeMarker,
+    setMarker,
+    langCode,
+  );
+  return { isError: false, attribute: attribute };
 };

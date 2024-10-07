@@ -19,16 +19,12 @@ export const getAllOrdersByMarker = async ({
   isError?: boolean;
   error?: unknown;
 }> => {
-  try {
-    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-    const data = await api.Orders.getAllOrdersByMarker(
-      marker,
-      langCode,
-      limit,
-      offset,
-    );
-    return { orders: data.items, total: data.total };
-  } catch (e) {
-    return { isError: true, error: e };
-  }
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const data = await api.Orders.getAllOrdersByMarker(
+    marker,
+    langCode,
+    limit,
+    offset,
+  );
+  return { orders: data.items, total: data.total };
 };
