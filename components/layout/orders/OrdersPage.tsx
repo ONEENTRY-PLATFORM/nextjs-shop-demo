@@ -71,9 +71,8 @@ const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
   const { date_title, total_title, status_title } = settings;
 
   if (orders && orders.length < 1) {
-    return <EmptyOrders />;
+    return <EmptyOrders lang={lang} />;
   }
-  console.log(page);
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">

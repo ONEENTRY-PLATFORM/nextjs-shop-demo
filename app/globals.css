@@ -228,3 +228,13 @@ input:focus-visible {
     @apply text-orange-500;
   }
 }
+
+
+:root {
+  --toastify-color-progress-light: linear-gradient(
+    to right,
+    #ff9500,
+    #fb923c
+  ) !important;
+  --toastify-color-progress-dark: #fb923c;
+}

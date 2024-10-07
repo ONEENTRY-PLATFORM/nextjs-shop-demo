@@ -1,9 +1,8 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
+import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
-
-import getSearchParams from '../../utils/getSearchParams';
 
 export const getProducts = async (props: {
   limit: number;
