@@ -5,7 +5,10 @@ import { useState } from 'react';
 
 import { api } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { removeAllProducts } from '@/app/store/reducers/CartSlice';
+import {
+  removeAllProducts,
+  removeProduct,
+} from '@/app/store/reducers/CartSlice';
 import { removeOrder } from '@/app/store/reducers/OrderSlice';
 
 export const useCreateOrder = ({ langCode }: { langCode: string }) => {
@@ -71,7 +74,10 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
           langCode,
         );
 
-        dispatch(removeAllProducts());
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        orderComp.products.forEach((product: any) => {
+          dispatch(removeProduct(product.productId));
+        });
         dispatch(removeOrder());
 
         if (paymentAccountIdentifier !== 'cash') {

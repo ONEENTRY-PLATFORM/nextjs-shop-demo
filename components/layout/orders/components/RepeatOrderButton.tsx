@@ -48,6 +48,7 @@ const RepeatOrderButton: FC<{
   return (
     <button
       onClick={() => repeatOrder()}
+      type="button"
       className="btn btn-sm btn-o btn-o-primary"
     >
       {title} {isLoading && <Loader />}

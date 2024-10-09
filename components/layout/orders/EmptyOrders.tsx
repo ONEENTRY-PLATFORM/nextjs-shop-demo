@@ -25,7 +25,10 @@ const EmptyOrders = ({ lang }: { lang: string }) => {
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
         {emptyText}
       </h1>
-      <Link href={'/shop/' + lang} className="btn btn-sm btn-o btn-o-primary">
+      <Link
+        href={'/' + lang + '/shop/'}
+        className="btn btn-sm btn-o btn-o-primary"
+      >
         {goShopText}
       </Link>
     </div>

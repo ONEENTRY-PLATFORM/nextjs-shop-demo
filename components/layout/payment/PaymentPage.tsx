@@ -50,10 +50,12 @@ const PaymentPage: FC<{ page: IPagesEntity; lang: string }> = ({
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce((results: Array<IOrderProductData>, item) => {
-      results.push({
-        productId: item.id,
-        quantity: item.quantity,
-      });
+      if (item.selected) {
+        results.push({
+          productId: item.id,
+          quantity: item.quantity,
+        });
+      }
       return results;
     }, []);
   }, [productsInCart]);

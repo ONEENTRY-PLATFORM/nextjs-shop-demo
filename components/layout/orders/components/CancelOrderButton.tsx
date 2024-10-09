@@ -32,6 +32,7 @@ const CancelOrderButton: FC<{
   return (
     <button
       onClick={() => cancelOrder()}
+      type="button"
       className="btn btn-sm btn-o btn-o-primary"
     >
       {title} {isLoading && <Loader />}

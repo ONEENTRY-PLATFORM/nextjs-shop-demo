@@ -34,10 +34,12 @@ const CartPage: FC<{ page: IPagesEntity; lang: string }> = ({ page, lang }) => {
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce((results: Array<IOrderProductData>, item) => {
-      results.push({
-        productId: item.id,
-        quantity: item.quantity,
-      });
+      if (item.selected) {
+        results.push({
+          productId: item.id,
+          quantity: item.quantity,
+        });
+      }
       return results;
     }, []);
   }, [productsInCart]);

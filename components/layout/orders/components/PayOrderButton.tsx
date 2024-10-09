@@ -15,8 +15,9 @@ const PayOrderButton: FC<{
 
   return (
     <button
-      className="btn btn-sm btn-o btn-o-primary"
       onClick={() => createSession(id)}
+      type="button"
+      className="btn btn-sm btn-o btn-o-primary"
     >
       {title} {(isLoading || loading) && <Loader />}
     </button>
