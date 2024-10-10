@@ -18,7 +18,7 @@ const FavoritesPage: FC<{ lang: string }> = ({ lang }) => {
   return favorites.length ? (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <Suspense fallback={<ProductsGridLoader />}>
-        <ProductsGridLayout gridItems={favorites} totalPages={0} lang={lang} />
+        <ProductsGridLayout gridItems={favorites} totalPages={0} lang={lang} total={favorites.length} />
       </Suspense>
     </div>
   ) : (

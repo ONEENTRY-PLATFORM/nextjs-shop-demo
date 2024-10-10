@@ -90,7 +90,8 @@ const ShopPage: FC<{
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
             gridItems={products}
-            totalPages={(total || 0) / pageLimit}
+            total={total}
+            totalPages={total / pageLimit}
             lang={lang}
           />
         </Suspense>

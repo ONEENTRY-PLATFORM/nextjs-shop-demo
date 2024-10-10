@@ -1,6 +1,7 @@
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
 import { CurrencyEnum, IntlEnum } from '@/app/types/enum';
+import { IError } from 'oneentry/dist/base/utils';
 
 export const UsePrice = ({
   amount,
@@ -72,3 +73,10 @@ export const flatMenuToNested = (
     return r;
   }, []);
 };
+
+export function typeError(res: any | IError): res is IError {
+  if((res as IError).type){
+    return false
+  }
+  return true
+}

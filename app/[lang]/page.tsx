@@ -15,10 +15,13 @@ const IndexPage = async ({
 }) => {
   const { page, isError } = await getPageByUrl('home_web', lang);
 
-  if (isError || !page?.blocks) {
-    return null;
+  console.log(isError);
+
+  if (isError || !page || !page.blocks) {
+    return 'isError';
   }
   const { blocks } = page;
+
   return (
     <main className="flex flex-col items-center justify-between gap-16 p-5 pb-16">
       <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">

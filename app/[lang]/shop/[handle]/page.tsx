@@ -82,7 +82,8 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
             gridItems={products}
-            totalPages={(total || 0) / pageLimit}
+            total={total}
+            totalPages={total / pageLimit}
             lang={params.lang}
           />
         </Suspense>

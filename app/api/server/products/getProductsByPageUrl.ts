@@ -20,7 +20,7 @@ export const getProductsByPageUrl = async (props: {
   };
 }): Promise<{
   products?: IProductsEntity[];
-  total?: number;
+  total: number;
   isError: boolean;
   err?: unknown;
 }> => {

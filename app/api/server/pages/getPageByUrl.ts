@@ -3,6 +3,7 @@ import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
+import { typeError } from '@/components/utils';
 
 export const getPageByUrl = async (
   url: string,
@@ -13,5 +14,6 @@ export const getPageByUrl = async (
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const page = await api.Pages.getPageByUrl(url, langCode);
-  return { isError: false, page: page };
+
+  return { isError: typeError(page), page: page };
 };

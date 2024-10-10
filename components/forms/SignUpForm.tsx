@@ -14,6 +14,7 @@ import { LanguageEnum } from '@/app/types/enum';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
+import { typeError } from '../utils';
 
 const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
   const { authenticate } = useContext(AuthContext);
@@ -129,10 +130,8 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
           'email',
           data,
           langCode,
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         );
-        console.log(res);
-
+        
         // if user active try login else Verification and activateUser
         if (res && res.isActive) {
           await logInUser({
@@ -141,14 +140,14 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
             password: fields.password_reg.value,
           });
           authenticate();
-        } else if (res as IError) {
+        } else if (res && !res.isActive && !typeError(res)) {
           setOpen(true);
           setComponent('VerificationForm');
           setAction('activateUser');
         }
 
         setError('');
-        if (res as IError) {
+        if (typeError(res)) {
           setError('Error ' + res.status);
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
