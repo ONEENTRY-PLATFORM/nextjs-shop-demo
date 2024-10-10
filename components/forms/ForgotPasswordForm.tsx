@@ -15,7 +15,6 @@ export const ForgotPasswordForm: FC<{ lang: string }> = ({ lang }) => {
   const { setComponent, setAction } = useContext(OpenDrawerContext);
   const [isError, setError] = useState<string>('');
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data, isLoading } = useGetFormByMarkerQuery({
     marker: 'reg',
     lang,

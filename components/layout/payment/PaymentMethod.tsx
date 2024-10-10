@@ -59,7 +59,7 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ account, lang }) => {
         <>
           <div className="flex flex-wrap justify-between text-[#4C4D56]">
             <div className="flex w-2/3 flex-col border border-solid max-md:w-full max-md:max-w-full">
-              <OrderProductsTable account={account} />
+              <OrderProductsTable account={account} lang={lang} />
             </div>
             <div className="flex w-1/3 flex-col border border-solid px-6 py-2 max-md:w-full max-md:max-w-full max-md:border-t-0 max-md:px-2">
               <OrderDataTable account={account} />
@@ -69,6 +69,7 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ account, lang }) => {
                 className={
                   'text-base font-bold leading-8 text-neutral-600 lg:self-end'
                 }
+                lang={lang}
               />
             </div>
           </div>

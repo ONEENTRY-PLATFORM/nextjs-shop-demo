@@ -5,10 +5,7 @@ import { useState } from 'react';
 
 import { api } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import {
-  removeAllProducts,
-  removeProduct,
-} from '@/app/store/reducers/CartSlice';
+import { removeProduct } from '@/app/store/reducers/CartSlice';
 import { removeOrder } from '@/app/store/reducers/OrderSlice';
 
 export const useCreateOrder = ({ langCode }: { langCode: string }) => {

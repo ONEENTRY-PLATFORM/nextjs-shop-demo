@@ -159,7 +159,7 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
                 <div className="mb-2 text-xl font-bold leading-8">
                   {UsePrice({
                     amount: delivery?.price,
-                    currency: 'USD',
+                    lang,
                   })}
                 </div>
               </div>

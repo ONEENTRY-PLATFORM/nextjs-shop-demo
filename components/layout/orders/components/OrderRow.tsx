@@ -14,11 +14,11 @@ interface OrderProps {
 }
 
 const Order: FC<OrderProps> = ({ order, settings, lang }) => {
-  const { id, createdDate, currency, statusIdentifier, totalSum } = order;
+  const { id, createdDate, statusIdentifier, totalSum } = order;
 
   const formattedPrice = UsePrice({
     amount: totalSum,
-    currency: currency,
+    lang,
   });
   const date = new Date(createdDate).toUTCString();
   const [state, setState] = useState(false);

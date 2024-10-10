@@ -101,6 +101,7 @@ const CartPage: FC<{ page: IPagesEntity; lang: string }> = ({ page, lang }) => {
               <ProductCard
                 key={i}
                 product={product as IProductsEntity & { selected: boolean }}
+                lang={lang}
               />
             );
           })}
@@ -119,6 +120,7 @@ const CartPage: FC<{ page: IPagesEntity; lang: string }> = ({ page, lang }) => {
         />
         <div className="mt-4 flex w-full flex-col">
           <TotalAmount
+            lang={lang}
             className={
               'flex self-center text-lg font-bold leading-6 text-slate-700 lg:self-end'
             }

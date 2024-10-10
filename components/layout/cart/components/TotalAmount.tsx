@@ -3,7 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useAppSelector } from '@/app/store/hooks';
 import { UsePrice } from '@/components/utils';
 
-const TotalAmount = ({ className }: { className: string }) => {
+const TotalAmount = ({
+  className,
+  lang,
+}: {
+  className: string;
+  lang: string;
+}) => {
   const [cartTotal, setCartTotal] = useState(0);
   const [totalAmount, setTotalAmount] = useState('');
   const total = useAppSelector((state) => {
@@ -20,7 +26,7 @@ const TotalAmount = ({ className }: { className: string }) => {
   );
   const formattedPrice = UsePrice({
     amount: cartTotal,
-    currency: 'USD',
+    lang,
   });
 
   useEffect(() => {

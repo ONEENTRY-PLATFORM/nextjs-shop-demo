@@ -30,8 +30,7 @@ const OrderPage: FC<{
     return <Loader />;
   }
 
-  const { currency, products, statusIdentifier, paymentAccountIdentifier } =
-    data;
+  const { products, statusIdentifier, paymentAccountIdentifier } = data;
 
   const { go_to_pay_title, repeat_order_title, cancel_order_title } = settings;
 
@@ -47,12 +46,12 @@ const OrderPage: FC<{
               settings={settings}
               key={i}
               product={product}
-              currency={currency}
+              lang={lang}
             />
           );
         })}
       </div>
-      <OrderDataTable settings={settings} data={data} />
+      <OrderDataTable settings={settings} data={data} lang={lang} />
       <div className="flex gap-4">
         {statusIdentifier !== 'created' && (
           <RepeatOrderButton

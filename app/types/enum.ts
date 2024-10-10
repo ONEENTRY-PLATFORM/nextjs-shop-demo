@@ -2,6 +2,15 @@ export enum LanguageEnum {
   en = 'en_US',
   fr = 'fr_FR',
 }
+export enum IntlEnum {
+  en = 'en-US',
+  fr = 'fr-FR',
+}
+
+export enum CurrencyEnum {
+  en = 'USD',
+  fr = 'EUR',
+}
 
 export enum Sizes {
   sm = 'sm',

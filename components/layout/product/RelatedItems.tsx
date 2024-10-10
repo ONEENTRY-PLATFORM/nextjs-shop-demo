@@ -1,4 +1,5 @@
-import type { FC } from 'react';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC, Key } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
@@ -24,7 +25,7 @@ const RelatedItems: FC<{
         {title}
       </h3>
       <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-        {block.similarProducts.map((product, i) => {
+        {block.similarProducts.map((product: IProductsEntity, i: Key) => {
           return <ProductCard key={i} lang={lang} product={product} />;
         })}
       </div>

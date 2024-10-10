@@ -1,3 +1,4 @@
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
@@ -25,12 +26,12 @@ const ProductsGroup: FC<{
         {title}
       </h2>
       <div className="flex w-full flex-row flex-wrap items-stretch justify-start gap-2.5">
-        {block.products?.map((product) => (
+        {block.products?.map((product: IProductsEntity) => (
           <div
             key={product.id}
             className="relative box-border flex w-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%]"
           >
-            <GroupCard product={product} langCode={langCode} />
+            <GroupCard product={product} lang={lang} />
           </div>
         ))}
       </div>

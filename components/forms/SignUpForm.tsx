@@ -1,5 +1,5 @@
 import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { IAttributes, IError } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
@@ -131,27 +131,24 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
           langCode,
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         );
+        console.log(res);
+
         // if user active try login else Verification and activateUser
         if (res && res.isActive) {
-          try {
-            await logInUser({
-              method: 'email',
-              login: res.identifier,
-              password: fields.password_reg.value,
-            });
-            authenticate();
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } catch (e: any) {
-            console.log(e);
-            setError(e.message);
-          }
-        } else if (!res.status) {
+          await logInUser({
+            method: 'email',
+            login: res.identifier,
+            password: fields.password_reg.value,
+          });
+          authenticate();
+        } else if (res as IError) {
           setOpen(true);
           setComponent('VerificationForm');
           setAction('activateUser');
         }
+
         setError('');
-        if (!res.ok) {
+        if (res as IError) {
           setError('Error ' + res.status);
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

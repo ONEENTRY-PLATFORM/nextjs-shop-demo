@@ -1,16 +1,20 @@
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
-import type { FC } from 'react';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import { type FC } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Loader from '@/components/shared/Loader';
+import { selectCartItems } from '@/app/store/reducers/CartSlice';
+import { UsePrice } from '@/components/utils';
 
 type PaymentMethodProps = {
   account: IAccountsEntity;
+  lang: string;
 };
 
-const OrderProductsTable: FC<PaymentMethodProps> = () => {
-  const productsInCart = useAppSelector((state) => state.cartReducer.products);
+const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
+  const productsInCart = useAppSelector(selectCartItems) as Array<
+    IProductsEntity & { quantity: number; selected: boolean }
+  >;
 
   return (
     <>
@@ -28,7 +32,7 @@ const OrderProductsTable: FC<PaymentMethodProps> = () => {
         return (
           <div key={i} className="-mt-px flex border-b border-solid p-2">
             <div className="w-1/2">{title}</div>
-            <div className="w-1/4">{price}</div>
+            <div className="w-1/4">{UsePrice({ amount: price, lang })}</div>
             <div className="w-1/4">{quantity}</div>
           </div>
         );

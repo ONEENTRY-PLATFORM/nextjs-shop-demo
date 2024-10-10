@@ -1,16 +1,17 @@
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
+import { CurrencyEnum, IntlEnum } from '@/app/types/enum';
+
 export const UsePrice = ({
   amount,
-  currency,
+  lang,
 }: {
   amount: number | string;
-  currency: string;
+  lang: string;
 }) => {
-  if (currency === 'USDT') {
-    return amount + ' USDT';
-  }
-  const formattedPrice = new Intl.NumberFormat('en-US', {
+  const currency = CurrencyEnum[lang as keyof typeof CurrencyEnum];
+  const intlEnum = IntlEnum[lang as keyof typeof IntlEnum];
+  const formattedPrice = new Intl.NumberFormat(intlEnum, {
     style: 'currency',
     currency: currency,
   }).format(Number(amount));

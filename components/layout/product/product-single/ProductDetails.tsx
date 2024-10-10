@@ -8,7 +8,8 @@ import ProductUnits from './ProductUnits';
 
 const ProductDetails: FC<{
   product: IProductsEntity & { productPages?: [] };
-}> = async ({ product }) => {
+  lang: string;
+}> = async ({ product, lang }) => {
   const { attributeValues, localizeInfos } = product;
   const units = attributeValues?.units_product?.value;
 
@@ -34,6 +35,7 @@ const ProductDetails: FC<{
         <PriceDisplay
           currentPrice={attributeValues.sale?.value}
           originalPrice={attributeValues.price?.value}
+          lang={lang}
         />
       </div>
 

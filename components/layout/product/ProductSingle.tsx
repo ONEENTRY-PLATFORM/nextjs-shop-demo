@@ -42,7 +42,7 @@ const ProductSingle: FC<{
         </div>
 
         <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-4/12 max-sm:w-full">
-          <ProductDetails product={product} />
+          <ProductDetails product={product} lang={lang} />
         </div>
       </div>
 

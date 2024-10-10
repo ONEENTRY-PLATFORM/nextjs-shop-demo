@@ -54,12 +54,6 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
     return;
   }
 
-  // possible types
-  // list as select
-  // textarea
-  // password
-  // simple input
-
   return (
     <div className="relative box-border flex shrink-0 flex-col text-base">
       <label htmlFor={field.marker} className="text-gray-400">

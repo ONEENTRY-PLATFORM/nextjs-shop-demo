@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, Key } from 'react';
 import React, { useContext, useEffect, useState } from 'react';
@@ -37,6 +36,8 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
     create_account_text,
     sign_in_text,
     sign_in_with_text,
+    email_text,
+    phone_text,
   } = useAppSelector((state) => state.systemContentReducer.content);
 
   const [resetText, setResetText] = useState<string>('');
@@ -44,6 +45,8 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
   const [createAccountText, setAccountText] = useState<string>('');
   const [signInText, setSignInText] = useState<string>('');
   const [signInWithText, setSignInWithText] = useState<string>('');
+  const [emailText, setEmailText] = useState<string>('');
+  const [phoneText, setPhoneText] = useState<string>('');
 
   const { email_reg, password_reg } = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -111,12 +114,20 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
     if (sign_in_with_text) {
       setSignInWithText(sign_in_with_text.value);
     }
+    if (email_text) {
+      setEmailText(email_text.value);
+    }
+    if (phone_text) {
+      setPhoneText(phone_text.value);
+    }
   }, [
     reset_password_text,
     forgot_password_text,
     create_account_text,
     sign_in_text,
     sign_in_with_text,
+    email_text,
+    phone_text,
   ]);
 
   if (isLoading) {
@@ -140,8 +151,7 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
             }}
             className={tab === 'email' ? 'font-bold' : ''}
           >
-            {/* !!! email_text */}
-            E-mail
+            {emailText}
           </button>
           /
           <button
@@ -150,8 +160,7 @@ const SignInForm: FC<{ lang: string }> = ({ lang }) => {
             }}
             className={tab === 'phone' ? 'font-bold' : ''}
           >
-            {/* !!! phone_text */}
-            Phone
+            {phoneText}
           </button>
         </div>
       </div>

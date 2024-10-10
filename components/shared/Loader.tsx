@@ -160,8 +160,8 @@ export const BlocksGridLoader: FC<LoaderProps> = ({ data = {}, limit = 6 }) => {
                   <div className="size-[30px]" />
                 </div>
 
-                <h2 className="z-10 mt-auto uppercase">xxx</h2>
-                <p className="z-10 ml-auto mt-auto w-60 max-sm:ml-0">xxx</p>
+                <h2 className="z-10 mt-auto uppercase"></h2>
+                <p className="z-10 ml-auto mt-auto w-60 max-sm:ml-0"></p>
 
                 <div className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover opacity-15 invert">
                   <Placeholder />

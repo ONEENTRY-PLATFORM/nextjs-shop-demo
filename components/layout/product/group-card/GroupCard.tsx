@@ -7,11 +7,13 @@ import Placeholder from '@/components/shared/Placeholder';
 import ApplyButton from './ApplyButton';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
+import { LanguageEnum } from '@/app/types/enum';
 
 const GroupCard: FC<{
   product: IProductsEntity;
-  langCode: string;
-}> = ({ product, langCode }) => {
+  lang: string;
+}> = ({ product, lang }) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const attributeValues =
     product.attributeValues[langCode] || product.attributeValues;
   const title =
@@ -29,6 +31,7 @@ const GroupCard: FC<{
           <PriceDisplay
             currentPrice={attributeValues?.sale?.value}
             originalPrice={product.price}
+            lang={lang}
           />
           <ApplyButton product={product} />
         </div>

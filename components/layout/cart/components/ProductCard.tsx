@@ -6,14 +6,14 @@ import { useAppDispatch } from '@/app/store/hooks';
 import { deselectProduct } from '@/app/store/reducers/CartSlice';
 import Placeholder from '@/components/shared/Placeholder';
 
-// import { UsePrice } from '@/components/utils';
 import QuantitySelector from '../../product/components/QuantitySelector';
 import DeleteButton from './DeleteButton';
 import PriceDisplay from './PriceDisplay';
 
 const ProductCard: React.FC<{
   product: IProductsEntity & { selected: boolean };
-}> = ({ product }) => {
+  lang: string;
+}> = ({ product, lang }) => {
   const dispatch = useAppDispatch();
 
   if (!product) {
@@ -60,6 +60,7 @@ const ProductCard: React.FC<{
           <PriceDisplay
             currentPrice={attributeValues.sale?.value}
             originalPrice={attributeValues.price?.value}
+            lang={lang}
           />
         </div>
 

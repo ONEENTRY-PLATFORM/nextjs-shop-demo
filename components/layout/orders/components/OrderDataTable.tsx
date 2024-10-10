@@ -9,22 +9,18 @@ import { UseDate, UsePrice } from '@/components/utils';
 const OrderDataTable: FC<{
   settings: Record<string, any> | undefined;
   data: Record<string, any> | undefined;
-}> = ({ settings, data }) => {
+  lang: string;
+}> = ({ settings, data, lang }) => {
   if (!data || !settings) {
     return <Loader />;
   }
 
-  const {
-    currency,
-    formData,
-    statusIdentifier,
-    totalSum,
-    paymentAccountLocalizeInfos,
-  } = data;
+  const { formData, statusIdentifier, totalSum, paymentAccountLocalizeInfos } =
+    data;
 
   const formattedTotal = UsePrice({
     amount: totalSum,
-    currency: currency,
+    lang,
   });
 
   const {
@@ -43,7 +39,6 @@ const OrderDataTable: FC<{
         (
           field: {
             marker: string;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             value: any;
           },
           i: Key,

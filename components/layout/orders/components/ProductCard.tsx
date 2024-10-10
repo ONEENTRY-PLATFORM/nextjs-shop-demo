@@ -8,19 +8,19 @@ import { UsePrice } from '@/components/utils';
 
 const ProductCard: FC<{
   product: IOrderProducts;
-  currency: string;
+  lang: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   settings: Record<string, any>;
-}> = ({ product, currency, settings }) => {
+}> = ({ product, lang, settings }) => {
   const { id, title, price, quantity, previewImage } = product;
   const productImage = previewImage?.[0]?.downloadLink || '';
   const formattedPrice = UsePrice({
     amount: price,
-    currency: currency,
+    lang,
   });
   const formattedSubtotal = UsePrice({
     amount: price * Number(quantity),
-    currency: currency,
+    lang,
   });
 
   const { product_qty_title, product_card_title } = settings;

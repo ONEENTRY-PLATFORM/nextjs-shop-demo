@@ -5,21 +5,21 @@ import { UsePrice } from '@/components/utils';
 interface PriceDisplayProps {
   currentPrice: number;
   originalPrice: number;
-  currency?: string;
+  lang: string;
 }
 
 const PriceDisplay: React.FC<PriceDisplayProps> = ({
   currentPrice,
   originalPrice,
-  currency,
+  lang,
 }) => {
   if (!currentPrice && !originalPrice) {
     return;
   }
-  const price = UsePrice({ amount: currentPrice, currency: currency || 'USD' });
+  const price = UsePrice({ amount: currentPrice, lang });
   const oldPrice = UsePrice({
     amount: originalPrice,
-    currency: currency || 'USD',
+    lang,
   });
 
   return (

@@ -134,7 +134,6 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
         setLoading(true);
         await api.FormData.postFormsData(formData);
         setLoading(false);
-        // dispatch(clearAllFieldsContactUs());
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setLoading(false);

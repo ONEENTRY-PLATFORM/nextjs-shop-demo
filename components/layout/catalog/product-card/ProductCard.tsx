@@ -65,6 +65,7 @@ const ProductCard: FC<{
         <PriceDisplay
           currentPrice={attributes.sale?.value}
           originalPrice={attributes.price?.value}
+          lang={lang}
         />
 
         <Suspense>
