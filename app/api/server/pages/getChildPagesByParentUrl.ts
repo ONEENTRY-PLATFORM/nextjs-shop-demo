@@ -8,9 +8,8 @@ export const getChildPagesByParentUrl = async (
   url: string,
   lang: string,
 ): Promise<{
-  pages?: IPagesEntity[] | IError;
   isError: boolean;
-  err?: unknown;
+  pages?: IPagesEntity[] | IError;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const pages = await api.Pages.getChildPagesByParentUrl(url, langCode);

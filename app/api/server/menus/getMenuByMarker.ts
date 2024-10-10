@@ -8,8 +8,8 @@ export const getMenuByMarker = async (
   marker: string,
   lang: string,
 ): Promise<{
-  menu: IMenusEntity | IError;
   isError: boolean;
+  menu: IMenusEntity | IError;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const menu = await api.Menus.getMenusByMarker(marker, langCode);

@@ -5,9 +5,8 @@ import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 
 export async function getPages(lang: string): Promise<{
-  pages?: IPagesEntity[] | IError;
   isError: boolean;
-  err?: unknown;
+  pages?: IPagesEntity[] | IError;
 }> {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const pages = await api.Pages.getPages(langCode);

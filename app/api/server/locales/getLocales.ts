@@ -4,9 +4,8 @@ import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
 import { api } from '@/app/api';
 
 export const getLocales = async (): Promise<{
-  locales?: ILocalEntity[] | IError;
   isError: boolean;
-  err?: unknown;
+  locales?: ILocalEntity[] | IError;
 }> => {
   const locales = await api.Locales.getLocales();
   return { isError: false, locales: locales };

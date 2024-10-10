@@ -6,6 +6,7 @@ import React, { useContext, useEffect } from 'react';
 
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   selectDeliveryData,
   setDeliveryData,
@@ -14,7 +15,6 @@ import { addData } from '@/app/store/reducers/OrderSlice';
 import { UsePrice } from '@/components/utils';
 
 import TableRow from './DeliveryTableRow';
-import { AuthContext } from '@/app/store/providers/AuthContext';
 
 const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
   delivery,
@@ -31,7 +31,8 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
     (attr: IAttributes) => attr.marker !== 'time2',
   );
   const deliveryData = useAppSelector(selectDeliveryData);
-  const addressReg = user?.formData.find((el) => el.marker === 'address_reg')?.value || '';
+  const addressReg =
+    user?.formData.find((el) => el.marker === 'address_reg')?.value || '';
 
   const {
     order_info_date_placeholder,

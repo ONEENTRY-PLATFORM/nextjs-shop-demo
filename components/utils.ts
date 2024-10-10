@@ -1,8 +1,9 @@
+import type { IError } from 'oneentry/dist/base/utils';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
 import { CurrencyEnum, IntlEnum } from '@/app/types/enum';
-import { IError } from 'oneentry/dist/base/utils';
 
+// UsePrice
 export const UsePrice = ({
   amount,
   lang,
@@ -20,6 +21,7 @@ export const UsePrice = ({
   return formattedPrice;
 };
 
+// UseDate
 export const UseDate = ({
   fullDate,
   format = 'en',
@@ -74,9 +76,9 @@ export const flatMenuToNested = (
   }, []);
 };
 
-export function typeError(res: any | IError): res is IError {
-  if((res as IError).type){
-    return false
+export function typeError(res: IError | unknown): res is IError {
+  if ((res as IError).type) {
+    return true;
   }
-  return true
+  return false;
 }

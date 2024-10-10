@@ -13,8 +13,8 @@ export const updateOrderByMarkerAndId = async (
   data: IOrderData,
   lang?: string,
 ): Promise<{
-  order?: IBaseOrdersEntity | IError;
   isError: boolean;
+  order?: IBaseOrdersEntity | IError;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const order = await api.Orders.updateOrderByMarkerAndId(

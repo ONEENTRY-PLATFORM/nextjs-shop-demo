@@ -7,11 +7,11 @@ export const getRelatedProductsById = async (
   id: number,
   lang: string,
 ): Promise<{
+  isError: boolean;
   products?: IProductsEntity[];
-  total?: number;
-  error?: unknown;
+  total: number;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const data = await api.Products.getRelatedProductsById(id, langCode);
-  return { products: data.items, total: data.total };
+  return { isError: false, products: data.items, total: data.total };
 };

@@ -19,10 +19,9 @@ export const getProducts = async (props: {
     };
   };
 }): Promise<{
+  isError: boolean;
   products?: IProductsEntity[];
   total: number;
-  isError: boolean;
-  err?: unknown;
 }> => {
   const { limit, offset, params, lang } = props;
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];

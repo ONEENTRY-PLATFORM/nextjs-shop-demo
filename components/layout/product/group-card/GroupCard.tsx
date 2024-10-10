@@ -2,12 +2,12 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 import React from 'react';
 
+import { LanguageEnum } from '@/app/types/enum';
 import Placeholder from '@/components/shared/Placeholder';
 
 import ApplyButton from './ApplyButton';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
-import { LanguageEnum } from '@/app/types/enum';
 
 const GroupCard: FC<{
   product: IProductsEntity;

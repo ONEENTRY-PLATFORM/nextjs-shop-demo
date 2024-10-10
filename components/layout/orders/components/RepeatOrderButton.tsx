@@ -28,8 +28,8 @@ const RepeatOrderButton: FC<{
       if (p.id === 83) {
         return;
       }
-      const { product } = await getProductById(Number(p.id), langCode);
-      if (!product) {
+      const { isError, product } = await getProductById(Number(p.id), langCode);
+      if (isError || !product) {
         return;
       }
       dispatch(

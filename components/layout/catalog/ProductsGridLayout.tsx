@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
-import Image from 'next/image';
 
 import FilterModal from '@/components/layout/filter/FilterModal';
 
@@ -21,7 +21,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
   lang,
 }) => {
   if (!gridItems || total < 1) {
-    return(
+    return (
       <>
         <Image
           width={100}
@@ -30,9 +30,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
           alt="..."
           className="mb-5 size-20"
         />
-        <div className='not-found'>
-          Products not found
-        </div>
+        <div className="text-lg">Products not found</div>
         <FilterModal prices={gridItems?.[0]?.additional.prices} />
       </>
     );

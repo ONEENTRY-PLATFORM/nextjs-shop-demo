@@ -8,9 +8,8 @@ export const getBlockByMarker = async (
   marker: string,
   lang: string,
 ): Promise<{
-  block?: IBlockEntity | IError;
   isError: boolean;
-  error?: unknown;
+  block?: IBlockEntity | IError;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const block = await api.Blocks.getBlockByMarker(marker, langCode);

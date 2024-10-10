@@ -11,10 +11,10 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { LanguageEnum } from '@/app/types/enum';
 
+import { typeError } from '../utils';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
-import { typeError } from '../utils';
 
 const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
   const { authenticate } = useContext(AuthContext);
@@ -126,12 +126,8 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
 
       try {
         const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-        const res = await api.AuthProvider.signUp(
-          'email',
-          data,
-          langCode,
-        );
-        
+        const res = await api.AuthProvider.signUp('email', data, langCode);
+
         // if user active try login else Verification and activateUser
         if (res && res.isActive) {
           await logInUser({

@@ -12,8 +12,8 @@ export const getSingleAttributeByMarkerSet = async ({
   setMarker: string;
   langCode: string;
 }): Promise<{
-  attribute: IAttributesSetsEntity | IError;
   isError: boolean;
+  attribute: IAttributesSetsEntity | IError;
 }> => {
   const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
     attributeMarker,

@@ -14,10 +14,9 @@ export const getAllOrdersByMarker = async ({
   offset: number;
   lang: string;
 }): Promise<{
+  isError: boolean;
   orders?: IOrderByMarkerEntity[];
   total?: number;
-  isError?: boolean;
-  error?: unknown;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const data = await api.Orders.getAllOrdersByMarker(
@@ -26,5 +25,5 @@ export const getAllOrdersByMarker = async ({
     limit,
     offset,
   );
-  return { orders: data.items, total: data.total };
+  return { isError: false, orders: data.items, total: data.total };
 };

@@ -8,8 +8,8 @@ export const getPageById = async (
   id: number,
   lang: string,
 ): Promise<{
-  page: IPagesEntity | IError;
   isError: boolean;
+  page: IPagesEntity | IError;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const page = await api.Pages.getPageById(id, langCode);
