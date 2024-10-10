@@ -1,6 +1,6 @@
 'use client';
 
-// import { usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
@@ -9,7 +9,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FilterIcon from '@/components/icons/filter';
 
 const FilterButton: FC = () => {
-  // const path = usePathname();
+  const path = usePathname();
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
   const [filterText, setFilterText] = useState('');
 
@@ -27,10 +27,9 @@ const FilterButton: FC = () => {
     }
   }, [open_filters_button]);
 
-  // if (path.indexOf('shop') === -1 || path.indexOf('product') !== -1) {
-  //   return;
-  // }
-  // open_filters_button
+  if (path.indexOf('product') !== -1) {
+    return;
+  }
 
   return (
     <button

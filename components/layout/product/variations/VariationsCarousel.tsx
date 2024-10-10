@@ -42,6 +42,7 @@ const VariationsCarousel: FC<{
       ) : (
         <Carousel
           infinite
+          showSlidesBeforeInit={false}
           containerProps={{
             style: {
               userSelect: 'none',

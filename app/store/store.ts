@@ -30,6 +30,15 @@ const storage =
     : createNoopStorage();
 const version = 1;
 
+const systemContentReducer = persistReducer(
+  {
+    key: 'system-slice',
+    storage: storage,
+    version: version,
+    whitelist: ['content'],
+  },
+  systemContentSlice,
+);
 const cartReducer = persistReducer(
   {
     key: 'cart-slice',
@@ -66,21 +75,12 @@ const orderReducer = persistReducer(
   },
   orderSlice,
 );
-const systemContentReducer = persistReducer(
-  {
-    key: 'system-slice',
-    storage: storage,
-    version: version,
-    whitelist: ['content'],
-  },
-  systemContentSlice,
-);
 
 const rootReducer = combineReducers({
+  systemContentReducer,
   cartReducer,
   favoritesReducer,
   orderReducer,
-  systemContentReducer,
   formFieldsReducer,
   [RTKApi.reducerPath]: RTKApi.reducer,
 });
