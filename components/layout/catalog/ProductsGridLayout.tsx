@@ -12,6 +12,7 @@ interface GridLayoutProps {
   totalPages: number;
   total: number;
   lang: string;
+  dict: unknown;
 }
 
 const ProductsGridLayout: FC<GridLayoutProps> = ({
@@ -19,6 +20,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
   totalPages,
   total,
   lang,
+  dict,
 }) => {
   if (!gridItems || total < 1) {
     return (
@@ -31,7 +33,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
           className="mb-5 size-20"
         />
         <div className="text-lg">Products not found</div>
-        <FilterModal prices={gridItems?.[0]?.additional.prices} />
+        <FilterModal prices={gridItems?.[0]?.additional.prices} dict={dict} />
       </>
     );
   }
@@ -46,7 +48,12 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
                 return;
               }
               return (
-                <ProductCard key={product.id} product={product} lang={lang} />
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  lang={lang}
+                  dict={dict}
+                />
               );
             })}
           </div>
@@ -55,7 +62,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
           </div>
         </section>
       </div>
-      <FilterModal prices={gridItems?.[0]?.additional.prices} />
+      <FilterModal prices={gridItems?.[0]?.additional.prices} dict={dict} />
     </>
   );
 };

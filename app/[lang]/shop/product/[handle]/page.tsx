@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import ProductSingle from '@/components/layout/product/ProductSingle';
+import type { Locale } from '@/i18n-config';
 
 // generateMetadata
 export async function generateMetadata({
@@ -55,6 +58,7 @@ export default async function ProductPage({
 }: {
   params: { handle: string; lang: string };
 }) {
+  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
   const { isError, product } = await getProductById(Number(handle), lang);
 
   if (isError || !product) {
@@ -89,7 +93,7 @@ export default async function ProductPage({
         }}
       />
       <div className="mx-auto flex w-full max-w-screen-xl flex-col bg-white">
-        <ProductSingle lang={lang} product={product} />
+        <ProductSingle lang={lang} product={product} dict={dict} />
       </div>
     </>
   );

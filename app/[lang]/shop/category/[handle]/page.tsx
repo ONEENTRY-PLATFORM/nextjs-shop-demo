@@ -3,9 +3,12 @@ import { notFound } from 'next/navigation';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 
+import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getPageByUrl, getProductsByPageUrl } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
+import type { Locale } from '@/i18n-config';
 
 // generateMetadata
 export async function generateMetadata({
@@ -60,6 +63,10 @@ export async function generateMetadata({
 
 // CatalogPage
 const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
+  const [dict] = useServerProvider(
+    'dict',
+    await getDictionary(params.lang as Locale),
+  );
   const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
 
@@ -83,6 +90,7 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
             total={total}
             totalPages={total / pageLimit}
             lang={params.lang}
+            dict={dict}
           />
         </Suspense>
       </div>

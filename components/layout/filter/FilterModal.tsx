@@ -19,7 +19,8 @@ import FiltersForm from './FiltersForm';
 
 const FilterModal: FC<{
   prices: any;
-}> = ({ prices }) => {
+  dict: any;
+}> = ({ prices, dict }) => {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
   const closeFilters = () => setOpen(false);
 
@@ -47,9 +48,9 @@ const FilterModal: FC<{
           leaveTo="translate-x-[200%]"
         >
           <DialogPanel className="fixed right-0 top-0 z-20 flex size-full min-h-[90vh] flex-col overflow-auto bg-white shadow-xl md:top-10 md:overflow-hidden md:rounded-l-3xl lg:h-auto lg:w-[380px]">
-            <FilterHeader />
+            <FilterHeader dict={dict} />
             <Suspense fallback={<Loader />}>
-              <FiltersForm prices={prices} />
+              <FiltersForm prices={prices} dict={dict} />
             </Suspense>
           </DialogPanel>
         </TransitionChild>

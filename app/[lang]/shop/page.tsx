@@ -5,8 +5,12 @@ import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import { getBlockByMarker, getPageByUrl, getProducts } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
+import type { Locale } from '@/i18n-config';
+
+import { getDictionary } from '../dictionaries';
 
 export async function generateMetadata({
   params,
@@ -69,6 +73,7 @@ const ShopPage: FC<{
 }> = async ({ params: { lang }, searchParams }) => {
   const { page } = await getPageByUrl('shop', lang);
   const { block } = await getBlockByMarker('main_catalog', lang);
+  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
 
   const currentPage = Number(searchParams?.page) || 0;
   const pageLimit = block?.quantity || 10;
@@ -93,6 +98,7 @@ const ShopPage: FC<{
             total={total}
             totalPages={total / pageLimit}
             lang={lang}
+            dict={dict}
           />
         </Suspense>
       </div>

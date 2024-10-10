@@ -13,6 +13,7 @@ export const getPageByUrl = async (
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const page = await api.Pages.getPageByUrl(url, langCode);
+  // console.log(typeError(page));
 
   // if (typeError(page)) {
   //   return { isError: true };

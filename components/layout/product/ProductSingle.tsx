@@ -17,7 +17,9 @@ const ProductSingle: FC<{
     productPages?: [];
   };
   lang: string;
-}> = async ({ product, lang }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
+}> = async ({ product, lang, dict }) => {
   const { attributeValues, localizeInfos, blocks, id } = product;
 
   const { products, total } = await getRelatedProductsById(id, lang);
@@ -42,7 +44,7 @@ const ProductSingle: FC<{
         </div>
 
         <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-4/12 max-sm:w-full">
-          <ProductDetails product={product} lang={lang} />
+          <ProductDetails product={product} lang={lang} dict={dict} />
         </div>
       </div>
 

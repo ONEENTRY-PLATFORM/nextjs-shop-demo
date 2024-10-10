@@ -9,7 +9,9 @@ import ProductUnits from './ProductUnits';
 const ProductDetails: FC<{
   product: IProductsEntity & { productPages?: [] };
   lang: string;
-}> = async ({ product, lang }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
+}> = async ({ product, lang, dict }) => {
   const { attributeValues, localizeInfos } = product;
   const units = attributeValues?.units_product?.value;
 
@@ -43,6 +45,7 @@ const ProductDetails: FC<{
 
       <AddToCartButton
         product={product}
+        dict={dict}
         height={50}
         className="btn btn-lg btn-primary"
       />

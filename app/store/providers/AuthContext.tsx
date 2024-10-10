@@ -121,7 +121,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
           },
           langCode,
         );
-        console.log(isUpdate);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         console.log(e);

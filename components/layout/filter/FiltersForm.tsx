@@ -12,7 +12,7 @@ import ResetButton from './components/buttons/ResetButton';
 import ColorFilter from './components/color/ColorFilter';
 import PricePickerFilter from './components/price/PricePickerFilter';
 
-const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
+const FiltersForm: FC<{ prices: any; dict: any }> = ({ prices, dict }) => {
   const { pageInfo } = useGetPage('catalog_filters');
 
   const sortedAttributes: Record<any, any> = useMemo(() => {
@@ -53,8 +53,8 @@ const FiltersForm: FC<{ prices: any }> = ({ prices }) => {
         }
       })}
       <div className="relative mt-auto box-border flex shrink-0 flex-col gap-4">
-        <ResetButton />
-        <ApplyButton />
+        <ResetButton dict={dict} />
+        <ApplyButton dict={dict} />
       </div>
     </div>
   );

@@ -5,9 +5,13 @@ import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import { getPageByUrl, getProducts } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
+import type { Locale } from '@/i18n-config';
+
+import { getDictionary } from '../../dictionaries';
 
 export async function generateMetadata({
   params,
@@ -62,6 +66,10 @@ export async function generateMetadata({
 }
 
 const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
+  const [dict] = useServerProvider(
+    'dict',
+    await getDictionary(params.lang as Locale),
+  );
   const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
 
@@ -76,6 +84,10 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
     return notFound();
   }
 
+  if (total < 1) {
+    return 'Not found';
+  }
+
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
@@ -85,6 +97,7 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
             total={total}
             totalPages={total / pageLimit}
             lang={params.lang}
+            dict={dict}
           />
         </Suspense>
       </div>

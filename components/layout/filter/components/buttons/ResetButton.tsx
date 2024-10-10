@@ -2,21 +2,14 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FC } from 'react';
 import React from 'react';
 
-import { useAppSelector } from '@/app/store/hooks';
-
-const ResetButton: FC = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ResetButton: FC<{ dict: any }> = ({ dict }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
   const params = new URLSearchParams(searchParams);
 
-  const { reset_button_placeholder } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  ) as {
-    reset_button_placeholder: {
-      value: string;
-    };
-  };
+  const { reset_button_placeholder } = dict;
 
   const onReset = () => {
     params.delete('search');

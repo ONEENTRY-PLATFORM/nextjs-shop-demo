@@ -3,6 +3,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import { api } from '@/app/api';
 import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
+import { typeError } from '@/components/utils';
 
 export const getProductsByPageUrl = async (props: {
   lang: string;
@@ -41,5 +42,9 @@ export const getProductsByPageUrl = async (props: {
     },
   );
 
-  return { isError: false, products: data.items, total: data.total };
+  if (typeError(data)) {
+    return { isError: true, total: 0 };
+  } else {
+    return { isError: false, products: data.items, total: data.total };
+  }
 };

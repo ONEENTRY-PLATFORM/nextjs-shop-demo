@@ -13,7 +13,9 @@ import Sticker from './Sticker';
 const ProductCard: FC<{
   product: IProductsEntity;
   lang: string;
-}> = ({ product, lang }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
+}> = ({ product, lang, dict }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, attributeValues, localizeInfos } = product;
 
@@ -71,6 +73,7 @@ const ProductCard: FC<{
         <Suspense>
           <AddToCartButton
             product={product}
+            dict={dict}
             height={42}
             className="btn btn-md btn-primary"
           />
