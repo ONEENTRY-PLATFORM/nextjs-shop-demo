@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import Image from 'next/image';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -15,6 +14,7 @@ import { addData } from '@/app/store/reducers/OrderSlice';
 import { UsePrice } from '@/components/utils';
 
 import TableRow from './DeliveryTableRow';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 
 const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
   delivery,
@@ -25,10 +25,13 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
     marker: 'order',
     lang,
   });
+  const { user } = useContext(AuthContext);
+
   const attrs = data?.attributes.filter(
     (attr: IAttributes) => attr.marker !== 'time2',
   );
   const deliveryData = useAppSelector(selectDeliveryData);
+  const addressReg = user?.formData.find((el) => el.marker === 'address_reg')?.value || '';
 
   const {
     order_info_date_placeholder,
@@ -40,7 +43,7 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
   useEffect(() => {
     const date = deliveryData.date;
     const time = deliveryData.time;
-    const address = deliveryData.address;
+    const address = deliveryData.address || addressReg || '';
 
     dispatch(
       addData({
@@ -118,7 +121,7 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
                   <input
                     size={40}
                     type="text"
-                    value={deliveryData.address}
+                    value={deliveryData.address || addressReg || ''}
                     id="address"
                     name="address"
                     placeholder={order_info_address_placeholder?.value}

@@ -114,7 +114,7 @@ const UserForm: FC<{ lang: string }> = ({ lang }) => {
 
   return (
     <form
-      className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+      className="flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
       onSubmit={(e) => onUpdateUserData(e)}
     >
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">

@@ -15,8 +15,6 @@ const IndexPage = async ({
 }) => {
   const { page, isError } = await getPageByUrl('home_web', lang);
 
-  console.log(isError);
-
   if (isError || !page || !page.blocks) {
     return 'isError';
   }
