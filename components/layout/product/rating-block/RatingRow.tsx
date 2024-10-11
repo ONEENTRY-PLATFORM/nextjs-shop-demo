@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 
 import RatingBar from './RatingBar';
 import StarRating from './StarRating';
@@ -9,11 +9,7 @@ interface RatingRowProps {
   starCount: number;
 }
 
-const RatingRow: React.FC<RatingRowProps> = ({
-  value,
-  barValue,
-  starCount,
-}) => (
+const RatingRow: FC<RatingRowProps> = ({ value, barValue, starCount }) => (
   <div className="flex w-full justify-start gap-2.5">
     <div className="w-[30px] text-lg leading-5 text-neutral-600">{value}</div>
     <RatingBar value={barValue} maxWidth="200px" />

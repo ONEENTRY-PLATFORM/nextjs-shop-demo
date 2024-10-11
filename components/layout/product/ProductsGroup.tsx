@@ -6,10 +6,18 @@ import { LanguageEnum } from '@/app/types/enum';
 
 import GroupCard from './group-card/GroupCard';
 
-const ProductsGroup: FC<{
+interface ProductsGroupProps {
   marker: string;
   lang: string;
-}> = async ({ marker, lang }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
+}
+
+const ProductsGroup: FC<ProductsGroupProps> = async ({
+  marker,
+  lang,
+  dict,
+}) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { isError, block } = await getBlockByMarker(marker, lang);
 
@@ -31,7 +39,7 @@ const ProductsGroup: FC<{
             key={product.id}
             className="relative box-border flex w-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%]"
           >
-            <GroupCard product={product} lang={lang} />
+            <GroupCard product={product} lang={lang} dict={dict} />
           </div>
         ))}
       </div>

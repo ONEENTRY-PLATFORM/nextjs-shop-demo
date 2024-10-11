@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 
 import Placeholder from '@/components/shared/Placeholder';
 
@@ -11,7 +12,7 @@ interface ProductImageProps {
   product: IProductsEntity;
 }
 
-const ProductImage: React.FC<ProductImageProps> = async ({
+const ProductImage: FC<ProductImageProps> = async ({
   imageSrc,
   alt,
   product,

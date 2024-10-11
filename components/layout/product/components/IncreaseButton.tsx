@@ -3,10 +3,12 @@ import type { FC } from 'react';
 import { useAppDispatch } from '@/app/store/hooks';
 import { increaseProductQty } from '@/app/store/reducers/CartSlice';
 
-const IncreaseButton: FC<{
+interface ButtonProps {
   id: number;
   qty: number;
-}> = ({ id, qty }) => {
+}
+
+const IncreaseButton: FC<ButtonProps> = ({ id, qty }) => {
   const dispatch = useAppDispatch();
   if (qty < 1) {
     return;

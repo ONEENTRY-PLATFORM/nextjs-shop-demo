@@ -1,10 +1,10 @@
-import React from 'react';
+import type { FC } from 'react';
 
 interface StarRatingProps {
   rating: number;
 }
 
-const StarRating: React.FC<StarRatingProps> = ({ rating }) => {
+const StarRating: FC<StarRatingProps> = ({ rating }) => {
   return (
     <div className="flex shrink-0 flex-row items-center gap-1.5">
       {[...Array(5)].map((_, index) => (

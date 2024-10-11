@@ -10,7 +10,8 @@ import RatingButton from './rating-block/RatingButton';
 import ReviewsList from './reviews-group/ReviewsList';
 import ViewAllButton from './reviews-group/ViewAllButton';
 
-const ReviewsSection: FC = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+const ReviewsSection: FC<{ dict: any }> = ({ dict }) => {
   const [state, setState] = useState(false);
   return (
     <div className="flex justify-between max-md:flex-wrap">

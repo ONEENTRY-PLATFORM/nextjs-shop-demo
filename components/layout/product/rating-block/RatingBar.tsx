@@ -1,11 +1,11 @@
-import React from 'react';
+import type { FC } from 'react';
 
 interface RatingBarProps {
   value: number;
   maxWidth: string;
 }
 
-const RatingBar: React.FC<RatingBarProps> = ({ value, maxWidth }) => (
+const RatingBar: FC<RatingBarProps> = ({ value, maxWidth }) => (
   <div
     className="my-auto flex flex-col justify-center"
     style={{ width: maxWidth }}

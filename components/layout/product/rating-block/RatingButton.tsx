@@ -1,7 +1,6 @@
 'use client';
-
-import type { Dispatch } from 'react';
-import React, { useEffect, useState } from 'react';
+import type { Dispatch, FC } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 
@@ -14,7 +13,7 @@ interface ReviewSectionProps {
   setState: Dispatch<React.SetStateAction<boolean>>;
 }
 
-const RatingButton: React.FC<ReviewSectionProps> = ({
+const RatingButton: FC<ReviewSectionProps> = ({
   state,
   setState,
   rating,

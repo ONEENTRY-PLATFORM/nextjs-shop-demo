@@ -1,5 +1,3 @@
-// ProductUnits
-
 const ProductUnits = ({ units }: { units: number }) => {
   const maxUnits = 50;
   const width = (units / maxUnits) * 100;

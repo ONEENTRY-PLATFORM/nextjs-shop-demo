@@ -1,4 +1,4 @@
-import React from 'react';
+import type { FC } from 'react';
 
 import { UsePrice } from '../../../utils';
 
@@ -8,7 +8,7 @@ interface PriceDisplayProps {
   lang: string;
 }
 
-const PriceDisplay: React.FC<PriceDisplayProps> = ({
+const PriceDisplay: FC<PriceDisplayProps> = ({
   currentPrice,
   originalPrice,
   lang,

@@ -9,7 +9,9 @@ import ProductCard from '../catalog/product-card/ProductCard';
 const RelatedItems: FC<{
   marker: string;
   lang: string;
-}> = async ({ marker, lang }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
+}> = async ({ marker, lang, dict }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { isError, block } = await getBlockByMarker(marker, lang);
   if (isError || !block || !block.similarProducts) {
@@ -26,7 +28,9 @@ const RelatedItems: FC<{
       </h3>
       <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
         {block.similarProducts.map((product: IProductsEntity, i: Key) => {
-          return <ProductCard key={i} lang={lang} product={product} />;
+          return (
+            <ProductCard key={i} lang={lang} product={product} dict={dict} />
+          );
         })}
       </div>
     </section>

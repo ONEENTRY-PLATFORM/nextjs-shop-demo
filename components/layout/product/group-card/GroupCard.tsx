@@ -12,7 +12,10 @@ import ProductImage from './ProductImage';
 const GroupCard: FC<{
   product: IProductsEntity;
   lang: string;
-}> = ({ product, lang }) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+}> = ({ product, lang, dict }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const attributeValues =
     product.attributeValues[langCode] || product.attributeValues;

@@ -12,11 +12,17 @@ import {
 import DecreaseButton from './DecreaseButton';
 import IncreaseButton from './IncreaseButton';
 
-const QuantitySelector: React.FC<{
+interface QuantitySelectorProps {
   product: IProductsEntity;
   className?: string;
   height: number;
-}> = ({ product, height, className }) => {
+}
+
+const QuantitySelector: React.FC<QuantitySelectorProps> = ({
+  product,
+  height,
+  className,
+}) => {
   const { id } = product;
   const [qty, setQty] = useState(0);
   const dispatch = useAppDispatch();

@@ -6,10 +6,12 @@ import {
   removeProduct,
 } from '@/app/store/reducers/CartSlice';
 
-const DecreaseButton: FC<{
+interface ButtonProps {
   id: number;
   qty: number;
-}> = ({ id, qty }) => {
+}
+
+const DecreaseButton: FC<ButtonProps> = ({ id, qty }) => {
   const dispatch = useAppDispatch();
   if (qty < 1) {
     return;

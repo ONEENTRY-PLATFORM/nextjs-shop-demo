@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import React from 'react';
+import type { FC } from 'react';
 
 interface ProductImageProps {
   imageSrc: string;
 }
 
-const ProductImage: React.FC<ProductImageProps> = ({ imageSrc }) => {
+const ProductImage: FC<ProductImageProps> = ({ imageSrc }) => {
   return (
     <div
       className="relative h-[130px] w-[110px] shrink-0"

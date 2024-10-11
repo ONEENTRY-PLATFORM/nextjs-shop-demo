@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { FC } from 'react';
-import React from 'react';
 
 import { blocksColors, blocksData } from '@/components/data';
 import SearchIcon from '@/components/icons/search';
@@ -14,7 +12,7 @@ interface LoaderProps {
   offset?: number;
 }
 
-const Loader: FC<LoaderProps> = ({ data = {} }) => {
+const Loader: FC<LoaderProps> = () => {
   return (
     <div className="relative aspect-square size-full max-h-[250px] overflow-hidden">
       <Spinner />
@@ -22,7 +20,7 @@ const Loader: FC<LoaderProps> = ({ data = {} }) => {
   );
 };
 
-export const CategoriesLoader: FC<LoaderProps> = ({ data = {}, limit = 4 }) => {
+export const CategoriesLoader: FC<LoaderProps> = ({ limit = 4 }) => {
   return (
     <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
       {Array.from(Array(limit).keys()).map((item) => (
@@ -44,10 +42,7 @@ export const CategoriesLoader: FC<LoaderProps> = ({ data = {}, limit = 4 }) => {
   );
 };
 
-export const ProductsGridLoader: FC<LoaderProps> = ({
-  data = {},
-  limit = 10,
-}) => {
+export const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   const cls =
     'relative flex size-full flex-col min-h-[360px] items-center rounded-3xl animate-loader p-4';
 
@@ -67,10 +62,7 @@ export const ProductsGridLoader: FC<LoaderProps> = ({
   );
 };
 
-export const OrdersListLoader: FC<LoaderProps> = ({
-  data = {},
-  limit = 10,
-}) => {
+export const OrdersListLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   const cls =
     'relative flex size-full flex-col min-h-[60px] items-center rounded-3xl animate-loader p-4';
 
@@ -83,7 +75,7 @@ export const OrdersListLoader: FC<LoaderProps> = ({
   );
 };
 
-export const SearchBarLoader: FC<LoaderProps> = ({ data = {}, limit = 10 }) => {
+export const SearchBarLoader: FC<LoaderProps> = () => {
   return (
     <div className="relative my-auto ml-24 flex h-[60px] w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-gray-400 bg-white px-7 max-md:ml-0 max-md:h-[50px] max-md:max-w-full max-md:px-5 max-sm:h-[40px] max-sm:gap-0 max-sm:px-4 max-sm:pr-1">
       <div className="flex w-full">
@@ -95,10 +87,7 @@ export const SearchBarLoader: FC<LoaderProps> = ({ data = {}, limit = 10 }) => {
   );
 };
 
-export const SidebarMenuLoader: FC<LoaderProps> = ({
-  data = {},
-  limit = 5,
-}) => {
+export const SidebarMenuLoader: FC<LoaderProps> = ({ limit = 5 }) => {
   return (
     <ul className="flex w-full flex-row gap-2 overflow-hidden py-3 text-base md:max-w-[165px] md:flex-col md:gap-5 md:py-0">
       {Array.from(Array(limit).keys()).map((item) => (
@@ -111,10 +100,7 @@ export const SidebarMenuLoader: FC<LoaderProps> = ({
   );
 };
 
-export const VerticalMenuLoader: FC<LoaderProps> = ({
-  data = {},
-  limit = 6,
-}) => {
+export const VerticalMenuLoader: FC<LoaderProps> = ({ limit = 6 }) => {
   return (
     <div className="flex w-[21%] flex-col max-lg:w-[21%] max-md:w-1/2 max-sm:w-[45%] max-xs:w-full">
       <div className="animate-loader mb-5 mr-5 h-5 w-full"></div>
@@ -129,7 +115,7 @@ export const VerticalMenuLoader: FC<LoaderProps> = ({
   );
 };
 
-export const BlocksGridLoader: FC<LoaderProps> = ({ data = {}, limit = 6 }) => {
+export const BlocksGridLoader: FC<LoaderProps> = () => {
   const blocks = [
     'home_banner',
     'offer_best_seller',
@@ -175,7 +161,7 @@ export const BlocksGridLoader: FC<LoaderProps> = ({ data = {}, limit = 6 }) => {
   );
 };
 
-export const NavMenuLoader: FC<LoaderProps> = ({ data = {}, limit = 3 }) => {
+export const NavMenuLoader: FC<LoaderProps> = ({ limit = 3 }) => {
   return (
     <div className="my-auto flex gap-5 max-md:max-w-full">
       {Array.from(Array(limit).keys()).map((item) => (
@@ -188,7 +174,7 @@ export const NavMenuLoader: FC<LoaderProps> = ({ data = {}, limit = 3 }) => {
   );
 };
 
-export const MainMenuLoader: FC<LoaderProps> = ({ data = {}, limit = 4 }) => {
+export const MainMenuLoader: FC<LoaderProps> = ({ limit = 4 }) => {
   return (
     <div className="relative z-20 items-center justify-center bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
       <div className="flex w-full max-w-screen-xl items-center justify-center py-5 max-md:px-5">
@@ -209,10 +195,7 @@ export const MainMenuLoader: FC<LoaderProps> = ({ data = {}, limit = 4 }) => {
   );
 };
 
-export const OrdersTableLoader: FC<LoaderProps> = ({
-  data = {},
-  limit = 10,
-}) => {
+export const OrdersTableLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   return (
     <div className="my-auto flex w-full flex-col max-md:max-w-full">
       {Array.from(Array(limit).keys()).map((item) => (

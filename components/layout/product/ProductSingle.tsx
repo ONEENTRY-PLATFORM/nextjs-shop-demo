@@ -54,14 +54,28 @@ const ProductSingle: FC<ProductSingleProps> = async ({
         </div>
       </div>
 
-      <ReviewsSection />
+      <ReviewsSection dict={dict} />
 
       {Array.isArray(blocks) &&
         blocks.map((block: string) => {
           if (block === 'multiply_items_offer') {
-            return <ProductsGroup key={block} marker={block} lang={lang} />;
+            return (
+              <ProductsGroup
+                key={block}
+                marker={block}
+                lang={lang}
+                dict={dict}
+              />
+            );
           } else if (block === 'similar') {
-            return <RelatedItems key={block} marker={block} lang={lang} />;
+            return (
+              <RelatedItems
+                key={block}
+                marker={block}
+                lang={lang}
+                dict={dict}
+              />
+            );
           }
         })}
     </section>

@@ -1,4 +1,5 @@
 import parse from 'html-react-parser';
+import type { FC } from 'react';
 
 interface ProductDescriptionProps {
   description: {
@@ -9,9 +10,7 @@ interface ProductDescriptionProps {
   };
 }
 
-const ProductDescription: React.FC<ProductDescriptionProps> = ({
-  description,
-}) => {
+const ProductDescription: FC<ProductDescriptionProps> = ({ description }) => {
   if (!description) {
     return;
   }
