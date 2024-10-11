@@ -1,14 +1,10 @@
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 
+import type { SimplePageProps } from '@/app/types/global';
 import Loader from '@/components/shared/Loader';
 
-const PaymentSuccess: FC<{ page: IPagesEntity; lang: string }> = async ({
-  page,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  lang,
-}) => {
+const PaymentSuccess: FC<SimplePageProps> = async ({ page }) => {
   const { localizeInfos } = page;
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">

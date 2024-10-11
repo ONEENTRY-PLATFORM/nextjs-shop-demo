@@ -7,6 +7,7 @@ import { Suspense } from 'react';
 import { getPageByUrl, getProducts } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
+import type { PageProps } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import { ProductsGridLoader } from '@/components/shared/Loader';
 import type { Locale } from '@/i18n-config';

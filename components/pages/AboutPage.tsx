@@ -1,9 +1,10 @@
 import parse from 'html-react-parser';
 import Image from 'next/image';
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { FC } from 'react';
 
-const AboutPage: FC<{ page: IPagesEntity; lang: string }> = ({ page }) => {
+import type { SimplePageProps } from '@/app/types/global';
+
+const AboutPage: FC<SimplePageProps> = ({ page }) => {
   const { attributeValues } = page;
   const content = attributeValues?.content?.value[0] || '';
   const list = attributeValues.list?.value[0] || '';

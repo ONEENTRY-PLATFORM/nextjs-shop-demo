@@ -12,7 +12,9 @@ import ContactsPage from '@/components/pages/ContactsPage';
 import PaymentCanceled from '@/components/pages/PaymentCanceled';
 import PaymentSuccess from '@/components/pages/PaymentSuccess';
 import ServicesPage from '@/components/pages/ServicesPage';
+import type { Locale } from '@/i18n-config';
 
+import { getDictionary } from '../dictionaries';
 import WithSidebar from './WithSidebar';
 
 export async function generateMetadata({
@@ -43,6 +45,7 @@ const Page: FC<{
 }> = async ({ params }) => {
   const lang = params.lang;
   const { page, isError } = await getPageByUrl(params.page, lang);
+  const dict = await getDictionary(lang as Locale);
 
   if (isError || !page) {
     return notFound();
@@ -54,47 +57,47 @@ const Page: FC<{
     {
       templateType: templateIdentifier,
       name: 'profile',
-      component: <ProfilePage lang={lang} />,
+      component: <ProfilePage page={page} lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'cart',
-      component: <CartPage page={page} lang={lang} />,
+      component: <CartPage page={page} lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment',
-      component: <PaymentPage page={page} lang={lang} />,
+      component: <PaymentPage page={page} lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'favorites',
-      component: <FavoritesPage lang={lang} />,
+      component: <FavoritesPage page={page} lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'about_us',
-      component: <AboutPage page={page} lang={lang} />,
+      component: <AboutPage page={page} lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'services',
-      component: <ServicesPage page={page} lang={lang} />,
+      component: <ServicesPage page={page} lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'contact_us',
-      component: <ContactsPage page={page} lang={lang} />,
+      component: <ContactsPage page={page} lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_success',
-      component: <PaymentSuccess page={page} lang={lang} />,
+      component: <PaymentSuccess page={page} lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_canceled',
-      component: <PaymentCanceled page={page} lang={lang} />,
+      component: <PaymentCanceled page={page} lang={lang} dict={dict} />,
     },
   ];
 

@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { Suspense, useContext, useEffect, useMemo, useState } from 'react';
@@ -11,16 +11,13 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { selectCartItems } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
+import type { SimplePageProps } from '@/app/types/global';
 import EmptyCart from '@/components/layout/cart/EmptyCart';
 import PaymentMethod from '@/components/layout/payment/PaymentMethod';
 import AuthError from '@/components/shared/AuthError';
 import Loader from '@/components/shared/Loader';
 
-const PaymentPage: FC<{ page: IPagesEntity; lang: string }> = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  page,
-  lang,
-}) => {
+const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
   const dispatch = useAppDispatch();
   const { isAuth } = useContext(AuthContext);
   const paymentMethods = useAppSelector(

@@ -11,7 +11,7 @@ import RelatedItems from './RelatedItems';
 import ReviewsSection from './ReviewsSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 
-const ProductSingle: FC<{
+interface ProductSingleProps {
   product: IProductsEntity & {
     blocks?: Array<string>;
     productPages?: [];
@@ -19,7 +19,13 @@ const ProductSingle: FC<{
   lang: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dict: any;
-}> = async ({ product, lang, dict }) => {
+}
+
+const ProductSingle: FC<ProductSingleProps> = async ({
+  product,
+  lang,
+  dict,
+}) => {
   const { attributeValues, localizeInfos, blocks, id } = product;
 
   const { products, total } = await getRelatedProductsById(id, lang);

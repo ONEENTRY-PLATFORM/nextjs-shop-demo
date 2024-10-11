@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import ProductSingle from '@/components/layout/product/ProductSingle';
 import type { Locale } from '@/i18n-config';
 
@@ -58,7 +57,7 @@ export default async function ProductPage({
 }: {
   params: { handle: string; lang: string };
 }) {
-  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
+  const dict = await getDictionary(lang as Locale);
   const { isError, product } = await getProductById(Number(handle), lang);
 
   if (isError || !product) {

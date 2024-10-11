@@ -6,12 +6,18 @@ import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';
 import ProductUnits from './ProductUnits';
 
-const ProductDetails: FC<{
+interface ProductDetailsProps {
   product: IProductsEntity & { productPages?: [] };
   lang: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dict: any;
-}> = async ({ product, lang, dict }) => {
+}
+
+const ProductDetails: FC<ProductDetailsProps> = async ({
+  product,
+  lang,
+  dict,
+}) => {
   const { attributeValues, localizeInfos } = product;
   const units = attributeValues?.units_product?.value;
 

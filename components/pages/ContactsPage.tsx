@@ -1,13 +1,10 @@
 import parse from 'html-react-parser';
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { FC, Key } from 'react';
 
+import type { SimplePageProps } from '@/app/types/global';
 import ContactUsForm from '@/components/forms/ContactUsForm';
 
-const ContactsPage: FC<{ page: IPagesEntity; lang: string }> = async ({
-  page,
-  lang,
-}) => {
+const ContactsPage: FC<SimplePageProps> = async ({ page, lang }) => {
   const { localizeInfos, forms } = page;
   const { title, htmlContent } = localizeInfos;
 
