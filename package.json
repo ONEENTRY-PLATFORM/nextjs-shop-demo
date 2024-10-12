@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.5.4",
+    "@gsap/react": "^2.1.1",
     "@headlessui/react": "^2.1.9",
     "@next/env": "^14.2.13",
     "@reduxjs/toolkit": "^2.2.8",

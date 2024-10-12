@@ -49,7 +49,8 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
     <Link
       target={linkTarget}
       href={href}
-      className={`relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
+      // eslint-disable-next-line tailwindcss/no-custom-classname
+      className={`box relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
     >
       <div
         className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}

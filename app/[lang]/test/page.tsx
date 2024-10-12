@@ -14,6 +14,7 @@ import {
   UserForm,
   VerificationForm,
 } from '@/components/forms';
+import { BlocksGridLoader } from '@/components/shared/Loader';
 
 import { useGetOrderStorageByMarkerQuery } from '../../api';
 
@@ -29,7 +30,8 @@ const TestPage: FC<{ params: { lang: string } }> = ({ params: { lang } }) => {
           {/* <CalendarForm lang={lang} /> */}
           {/* <SignInForm lang={lang} /> */}
           {/* <SignUpForm lang={lang} /> */}
-          <ContactUsForm lang={lang} className={''} />
+          <BlocksGridLoader />
+          {/* <ContactUsForm lang={lang} className={''} /> */}
           {/* <VerificationForm lang={lang} /> */}
           {/* <UserForm lang={lang} /> */}
           {/* <ForgotPasswordForm lang={lang} /> */}

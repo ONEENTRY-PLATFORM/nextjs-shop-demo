@@ -1,6 +1,8 @@
 import '@/app/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
 import { ToastContainer } from 'react-toastify';
@@ -12,7 +14,7 @@ import NavigationMenu from '@/components/layout/main-menu/NavigationMenu';
 import Modal from '@/components/layout/modal/ModalLayout';
 import type { Locale } from '@/i18n-config';
 
-import TransitionComponent from '../animations/Transition';
+import TransitionComponent from '../animations/PageTransition';
 import { TransitionProvider } from '../animations/TransitionContext';
 import { AuthProvider } from '../store/providers/AuthContext';
 import { ContentContextProvider } from '../store/providers/ContentContext';
@@ -22,6 +24,8 @@ import { useServerProvider } from '../store/providers/ServerProvider';
 import StoreProvider from '../store/providers/StoreProvider';
 import { LanguageEnum } from '../types/enum';
 import { getDictionary } from './dictionaries';
+
+gsap.registerPlugin(useGSAP);
 
 const lato = Lato({
   subsets: ['latin'],

@@ -35,7 +35,7 @@ const ApplyButton: FC<{ product: any }> = ({ product }) => {
       onClick={() => {
         dispatch(addProductToCart({ ...product, selected: true, quantity: 1 }));
       }}
-      className="btn btn-md btn-o btn-o-primary text-sm font-bold"
+      className="btn btn-md btn-o btn-o-primary mt-auto text-sm font-bold"
     >
       {applyText}
     </button>
@@ -44,7 +44,7 @@ const ApplyButton: FC<{ product: any }> = ({ product }) => {
       onClick={() => {
         dispatch(removeProduct(product.id));
       }}
-      className="btn btn-md btn-o btn-o-primary text-sm font-bold"
+      className="btn btn-md btn-o btn-o-primary mt-auto text-sm font-bold"
     >
       Cancel
     </button>
