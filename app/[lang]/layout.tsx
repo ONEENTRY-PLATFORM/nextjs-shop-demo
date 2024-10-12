@@ -12,6 +12,8 @@ import NavigationMenu from '@/components/layout/main-menu/NavigationMenu';
 import Modal from '@/components/layout/modal/ModalLayout';
 import type { Locale } from '@/i18n-config';
 
+import TransitionComponent from '../animations/Transition';
+import { TransitionProvider } from '../animations/TransitionContext';
 import { AuthProvider } from '../store/providers/AuthContext';
 import { ContentContextProvider } from '../store/providers/ContentContext';
 import { LanguageProvider } from '../store/providers/LanguageContext';
@@ -56,7 +58,11 @@ export default async function RootLayout({
                 <OpenDrawerProvider>
                   <Header />
                   <NavigationMenu />
-                  <div className="grow">{children}</div>
+                  <TransitionProvider>
+                    <div className="grow">
+                      <TransitionComponent>{children}</TransitionComponent>
+                    </div>
+                  </TransitionProvider>
                   <Footer />
                   <BottomMenu />
                   <Modal lang={lang} />

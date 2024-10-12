@@ -116,7 +116,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
               phoneSMS: fields.phone_reg.value,
             },
             state: {
-              test: 'tset',
+              test: 'test',
             },
           },
           langCode,

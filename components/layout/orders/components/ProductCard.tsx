@@ -51,7 +51,7 @@ const ProductCard: FC<{
         </div>
       </div>
       <Link
-        href={`/shop/product/` + id}
+        href={'/' + lang + '/shop/product/' + id}
         className="absolute left-0 top-0 z-0 flex size-full rounded-lg hover:border hover:border-solid"
       ></Link>
     </div>

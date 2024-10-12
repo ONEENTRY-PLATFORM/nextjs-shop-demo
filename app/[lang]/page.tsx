@@ -5,6 +5,9 @@ import { blocksColors, blocksData } from '@/components/data';
 import BlocksGrid from '@/components/layout/home/BlocksGrid';
 import { BlocksGridLoader } from '@/components/shared/Loader';
 
+import TransitionComponent from '../animations/Transition';
+import { TransitionProvider } from '../animations/TransitionContext';
+
 // export const revalidate = 10;
 // export const dynamicParams = true;
 
