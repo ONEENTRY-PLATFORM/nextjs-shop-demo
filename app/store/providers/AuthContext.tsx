@@ -96,6 +96,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
           type: 'string',
           value: fields.email_reg.value,
         });
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const isUpdate = await api.Users.updateUser(
           {
             formIdentifier: 'reg',

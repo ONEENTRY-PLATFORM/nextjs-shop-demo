@@ -31,10 +31,10 @@ export const CategoriesLoader: FC<LoaderProps> = ({ limit = 4 }) => {
           <div
             className={`relative flex size-full h-64 overflow-hidden rounded-3xl p-6`}
           >
-            <h2 className="animate-loader z-10 mt-auto uppercase text-transparent">
-              {' '}
-            </h2>
-            <div className="animate-loader size-full rounded-3xl" />
+            <div className="animate-loader z-10 mt-auto h-6 w-full bg-slate-500 uppercase text-transparent">
+              {''}
+            </div>
+            <div className="animate-loader absolute left-0 top-0 size-full rounded-3xl bg-slate-500" />
           </div>
         </div>
       ))}
@@ -137,7 +137,7 @@ export const BlocksGridLoader: FC<LoaderProps> = () => {
           return (
             <div
               key={index}
-              className={`relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
+              className={`box relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
             >
               <div
                 className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}

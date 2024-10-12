@@ -14,7 +14,6 @@ const GroupCard: FC<{
   lang: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dict: any;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 }> = ({ product, lang, dict }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const attributeValues =
@@ -36,7 +35,7 @@ const GroupCard: FC<{
             originalPrice={product.price}
             lang={lang}
           />
-          <ApplyButton product={product} />
+          <ApplyButton product={product} dict={dict} />
         </div>
 
         <div className="flex w-[63%] flex-row justify-between">

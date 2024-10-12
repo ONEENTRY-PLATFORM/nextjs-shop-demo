@@ -16,17 +16,12 @@ const PriceDisplay: FC<PriceDisplayProps> = ({
   if (!currentPrice && !originalPrice) {
     return;
   }
-  const price = UsePrice({ amount: currentPrice, lang });
-  const oldPrice = UsePrice({
-    amount: originalPrice,
-    lang,
-  });
 
   return (
     <div className="mb-5 mr-auto flex gap-2 py-1">
       {currentPrice && (
         <div className="grow text-lg font-bold leading-4 text-orange-500">
-          {price}
+          {UsePrice({ amount: currentPrice, lang })}
         </div>
       )}
       <div
@@ -35,7 +30,10 @@ const PriceDisplay: FC<PriceDisplayProps> = ({
           (currentPrice ? 'text-gray-400 text-sm' : 'text-orange-500 text-lg')
         }
       >
-        {oldPrice}
+        {UsePrice({
+          amount: originalPrice,
+          lang,
+        })}
       </div>
     </div>
   );

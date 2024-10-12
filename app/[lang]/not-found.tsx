@@ -7,9 +7,6 @@ import { getPageByUrl } from '@/app/api';
 const NotFound = async () => {
   const lang = 'en';
   const { page, isError } = await getPageByUrl('404', lang);
-  // !!! dictionary
-  // const lang = await getDictionary(lang);
-  // const dict = await getDictionary(dict);
 
   if (isError || !page) {
     return (

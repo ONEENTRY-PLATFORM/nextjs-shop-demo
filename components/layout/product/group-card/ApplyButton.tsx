@@ -11,24 +11,15 @@ import {
 } from '@/app/store/reducers/CartSlice';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ApplyButton: FC<{ product: any }> = ({ product }) => {
+const ApplyButton: FC<{ product: any; dict: any }> = ({ product, dict }) => {
   const dispatch = useAppDispatch();
   const [productInCart, setInCart] = useState(false);
-  const [applyText, setApplyText] = useState();
-  const { apply_button_placeholder } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  );
+  const { apply_button_placeholder, cancel_text } = dict;
   const inCart = useAppSelector((state) => selectIsInCart(state, product.id));
 
   useEffect(() => {
     setInCart(inCart);
   }, [inCart]);
-
-  useEffect(() => {
-    if (apply_button_placeholder) {
-      setApplyText(apply_button_placeholder.value);
-    }
-  }, [apply_button_placeholder]);
 
   return !productInCart || !inCart ? (
     <button
@@ -37,7 +28,7 @@ const ApplyButton: FC<{ product: any }> = ({ product }) => {
       }}
       className="btn btn-md btn-o btn-o-primary mt-auto text-sm font-bold"
     >
-      {applyText}
+      {apply_button_placeholder?.value}
     </button>
   ) : (
     <button
@@ -46,7 +37,7 @@ const ApplyButton: FC<{ product: any }> = ({ product }) => {
       }}
       className="btn btn-md btn-o btn-o-primary mt-auto text-sm font-bold"
     >
-      Cancel
+      {cancel_text?.value}
     </button>
   );
 };
