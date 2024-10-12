@@ -1,3 +1,5 @@
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 import type { FC } from 'react';
 
 import { blocksColors, blocksData } from '@/components/data';
@@ -21,17 +23,25 @@ const Loader: FC<LoaderProps> = () => {
 };
 
 export const CategoriesLoader: FC<LoaderProps> = ({ limit = 4 }) => {
+  useGSAP(() => {
+    gsap
+      .timeline()
+      .set('.box', { scale: 0 })
+      .to('.box', { stagger: 0.05, scale: 1 });
+  });
+
   return (
     <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
       {Array.from(Array(limit).keys()).map((item) => (
         <div
           key={item}
-          className="relative flex w-1/4 grow flex-col justify-center text-2xl font-bold text-white max-md:w-full"
+          // eslint-disable-next-line tailwindcss/no-custom-classname
+          className="box relative flex w-1/4 grow flex-col justify-center max-md:w-full"
         >
           <div
             className={`relative flex size-full h-64 overflow-hidden rounded-3xl p-6`}
           >
-            <div className="animate-loader z-10 mt-auto h-6 w-full bg-slate-500 uppercase text-transparent">
+            <div className="animate-loader z-10 mt-auto h-6 w-full bg-slate-500 text-2xl font-bold uppercase text-white">
               {''}
             </div>
             <div className="animate-loader absolute left-0 top-0 size-full rounded-3xl bg-slate-500" />
@@ -44,7 +54,7 @@ export const CategoriesLoader: FC<LoaderProps> = ({ limit = 4 }) => {
 
 export const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   const cls =
-    'relative flex size-full flex-col min-h-[360px] items-center rounded-3xl animate-loader p-4';
+    'grid-box relative flex size-full flex-col min-h-[360px] items-center rounded-3xl animate-loader p-4';
 
   return (
     <div className="relative box-border flex w-full shrink-0 flex-col">

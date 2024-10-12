@@ -1,10 +1,9 @@
 import '@/app/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
+import type { ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import BottomMenu from '@/components/layout/bottom-menu/BottomMenu';
@@ -25,8 +24,6 @@ import StoreProvider from '../store/providers/StoreProvider';
 import { LanguageEnum } from '../types/enum';
 import { getDictionary } from './dictionaries';
 
-gsap.registerPlugin(useGSAP);
-
 const lato = Lato({
   subsets: ['latin'],
   weight: ['300', '400', '700', '900'],
@@ -43,7 +40,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params: { lang },
-}: Readonly<{ children: React.ReactNode; params: { lang: string } }>) {
+}: Readonly<{ children: ReactNode; params: { lang: string } }>) {
   const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
 
   useServerProvider('lang', lang);

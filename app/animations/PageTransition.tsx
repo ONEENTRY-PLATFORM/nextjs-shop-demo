@@ -1,5 +1,6 @@
 'use client';
 
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { usePathname } from 'next/navigation';
 import type { FC } from 'react';
@@ -7,6 +8,8 @@ import { useContext } from 'react';
 import { SwitchTransition, Transition } from 'react-transition-group';
 
 import TransitionContext from './TransitionContext';
+
+gsap.registerPlugin(useGSAP);
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TransitionComponent: FC<{ children: any }> = ({ children }) => {
