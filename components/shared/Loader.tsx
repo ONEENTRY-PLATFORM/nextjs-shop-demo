@@ -1,5 +1,3 @@
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
 import type { FC } from 'react';
 
 import { blocksColors, blocksData } from '@/components/data';
@@ -23,13 +21,6 @@ const Loader: FC<LoaderProps> = () => {
 };
 
 export const CategoriesLoader: FC<LoaderProps> = ({ limit = 4 }) => {
-  useGSAP(() => {
-    gsap
-      .timeline()
-      .set('.box', { scale: 0 })
-      .to('.box', { stagger: 0.05, scale: 1 });
-  });
-
   return (
     <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
       {Array.from(Array(limit).keys()).map((item) => (
