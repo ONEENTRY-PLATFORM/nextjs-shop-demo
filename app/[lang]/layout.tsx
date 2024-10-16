@@ -13,7 +13,7 @@ import NavigationMenu from '@/components/layout/main-menu/NavigationMenu';
 import Modal from '@/components/layout/modal/ModalLayout';
 import type { Locale } from '@/i18n-config';
 
-import TransitionComponent from '../animations/TransitionProvider';
+import RegisterGSAP from '../animations/RegisterGSAP';
 import TransitionProvider from '../animations/TransitionProvider';
 import { AuthProvider } from '../store/providers/AuthContext';
 import { ContentContextProvider } from '../store/providers/ContentContext';
@@ -52,6 +52,7 @@ export default async function RootLayout({
   return (
     <html lang={langCode}>
       <body className={lato.className + ' flex flex-col min-h-screen'}>
+        <RegisterGSAP />
         <StoreProvider>
           <LanguageProvider lang={lang}>
             <AuthProvider langCode={langCode}>
@@ -59,9 +60,9 @@ export default async function RootLayout({
                 <OpenDrawerProvider>
                   <Header />
                   <NavigationMenu />
-                  <TransitionProvider>
-                    <div className="grow">{children}</div>
-                  </TransitionProvider>
+                  <div className="grow">
+                    <TransitionProvider>{children}</TransitionProvider>
+                  </div>
                   <Footer />
                   <BottomMenu />
                   <Modal lang={lang} />

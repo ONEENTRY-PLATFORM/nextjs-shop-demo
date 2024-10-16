@@ -1,86 +1,56 @@
 'use client';
 
-import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { TransitionRouter } from 'next-transition-router';
-import type { FC, ReactNode } from 'react';
+import type { ReactNode } from 'react';
+import { useRef } from 'react';
 
-gsap.registerPlugin(useGSAP);
+export default function TransitionProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
+  const ref = useRef(null);
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const TransitionProvider: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <TransitionRouter
       auto={true}
-      leave={(next, from, to) => {
-        const tl = gsap.timeline({
-          paused: true,
-        });
-        if (from?.indexOf('shop') !== -1) {
-          tl.fromTo(
-            '.product-card',
-            {
-              autoAlpha: 1,
-            },
-            {
-              autoAlpha: 0,
-              stagger: 0.1,
-            },
-          );
-        }
-        tl.fromTo(
-          'main',
-          {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      leave={async (next, from, to) => {
+        // console.log({ from, to });
+        const tl = gsap
+          .timeline()
+          .set(ref.current, {
             autoAlpha: 1,
-          },
-          {
+          })
+          .to(ref.current, {
             autoAlpha: 0,
-            stagger: 0.3,
-          },
-        );
-        tl.call(next, undefined, '<50%');
-        tl.play();
+            duration: 0.5,
+          })
+          .call(next, undefined, 0.35);
 
         return () => {
           tl.kill();
         };
       }}
-      enter={(next, from, to) => {
-        console.log({ from, to });
-        const tl = gsap.timeline({
-          paused: true,
-        });
-        tl.fromTo(
-          'main',
-          {
+      enter={async (next) => {
+        const tl = gsap
+          .timeline()
+          .set(ref.current, {
             autoAlpha: 0,
-          },
-          {
+          })
+          .to(ref.current, {
             autoAlpha: 1,
-          },
-        );
-        if (from?.indexOf('shop') !== -1) {
-          tl.fromTo(
-            '.product-card',
-            {
-              autoAlpha: 0,
-            },
-            {
-              autoAlpha: 1,
-              stagger: 0.1,
-            },
-          );
-        }
-        tl.call(next, undefined, '<50%');
-        tl.play();
+            duration: 0.5,
+          })
+          .call(next, undefined, 0.35);
+
         return () => {
           tl.kill();
         };
       }}
     >
-      {children}
+      <div ref={ref}>{children}</div>
     </TransitionRouter>
   );
-};
-
-export default TransitionProvider;
+}

@@ -45,7 +45,7 @@ export const CategoriesLoader: FC<LoaderProps> = ({ limit = 4 }) => {
 
 export const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   const cls =
-    'grid-box relative flex size-full flex-col min-h-[360px] items-center rounded-3xl animate-loader p-4';
+    'product-card relative flex size-full flex-col min-h-[360px] items-center rounded-3xl animate-loader p-4';
 
   return (
     <div className="relative box-border flex w-full shrink-0 flex-col">
