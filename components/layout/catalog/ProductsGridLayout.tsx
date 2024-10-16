@@ -2,6 +2,7 @@ import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
+import CardsGridAnimations from '@/app/animations/CardsGridAnimations';
 import FilterModal from '@/components/layout/filter/FilterModal';
 
 import Pagination from './Pagination';
@@ -40,7 +41,9 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
 
   return (
     <>
-      <div className="relative box-border flex w-full shrink-0 flex-col">
+      <CardsGridAnimations
+        className={'relative box-border flex w-full shrink-0 flex-col'}
+      >
         <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
           <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
             {gridItems?.map((product) => {
@@ -61,7 +64,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
             {totalPages > 1 && <Pagination totalPages={totalPages} />}
           </div>
         </section>
-      </div>
+      </CardsGridAnimations>
       <FilterModal prices={gridItems?.[0]?.additional.prices} dict={dict} />
     </>
   );

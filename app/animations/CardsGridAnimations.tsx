@@ -3,14 +3,14 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
+import type { ReactNode } from 'react';
 import { useRef } from 'react';
 
 const CardsGridAnimations = ({
   children,
   className,
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  children: any;
+  children: ReactNode;
   className: string;
 }) => {
   const { stage } = useTransitionState();
@@ -42,11 +42,11 @@ const CardsGridAnimations = ({
       paused: true,
     });
 
-    tl.set('.card', {
+    tl.set('.product-card', {
       autoAlpha: 0,
       scale: 0,
       yPercent: 0,
-    }).to('.card', {
+    }).to('.product-card', {
       autoAlpha: 1,
       scale: 1,
       yPercent: 0,
