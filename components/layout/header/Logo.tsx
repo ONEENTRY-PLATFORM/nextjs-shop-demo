@@ -19,7 +19,7 @@ const Logo: FC = async () => {
         height={83}
         alt={''}
         src={'/images/logo-300x80.svg'}
-        priority={true}
+        fetchPriority="high"
       />
     </Link>
   );

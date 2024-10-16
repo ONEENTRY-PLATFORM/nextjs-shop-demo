@@ -68,8 +68,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
         {imageSrc ? (
           <Image
             fill
-            loading="eager"
-            decoding="auto"
+            fetchPriority="high"
             sizes="(min-width: 1024px) 66vw, 100vw"
             src={imageSrc}
             alt={title?.value || ''}
