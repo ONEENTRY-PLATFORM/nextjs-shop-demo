@@ -6,6 +6,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
+import CartAnimations from '@/app/animations/CartAnimations';
 import { useGetProduct } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
@@ -90,22 +91,20 @@ const CartPage: FC<SimplePageProps> = ({ lang }) => {
 
   return (
     <div className="flex w-full flex-col pb-5 lg:max-w-[730px]">
-      {productsInCart.length > 0 && (
-        <div className="mb-4 flex w-full flex-col gap-4">
-          {productsInCart.map((product: IProductsEntity, i: number) => {
-            if (product.id === 83) {
-              return;
-            }
-            return (
-              <ProductCard
-                key={i}
-                product={product as IProductsEntity & { selected: boolean }}
-                lang={lang}
-              />
-            );
-          })}
-        </div>
-      )}
+      <CartAnimations className={'mb-4 flex w-full flex-col gap-4'}>
+        {productsInCart.map((product: IProductsEntity, i: number) => {
+          if (product.id === 83) {
+            return;
+          }
+          return (
+            <ProductCard
+              key={i}
+              product={product as IProductsEntity & { selected: boolean }}
+              lang={lang}
+            />
+          );
+        })}
+      </CartAnimations>
       <form
         className="flex w-[730px] max-w-full flex-col pb-5"
         onSubmit={(e) => {

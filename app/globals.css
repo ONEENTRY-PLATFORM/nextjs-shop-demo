@@ -231,6 +231,10 @@ input:focus-visible {
       text-white;
   }
 
+  .product-in-cart {
+    @apply flex w-full justify-between gap-5 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row;
+  }
+
   .input-group {
     @apply 
       relative 

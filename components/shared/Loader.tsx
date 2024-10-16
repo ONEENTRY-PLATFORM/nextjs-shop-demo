@@ -54,6 +54,7 @@ export const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,
+      id: 'ProductsGridTL',
     });
 
     tl.set('.product-card', {
@@ -156,17 +157,16 @@ export const BlocksGridLoader: FC<LoaderProps> = () => {
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,
+      id: 'BlocksGridTL',
     });
 
     tl.set('.block-card', {
       autoAlpha: 0,
       scale: 0,
-      yPercent: 0,
     }).to('.block-card', {
       autoAlpha: 1,
       scale: 1,
-      yPercent: 0,
-      stagger: 0.05,
+      stagger: 0.1,
     });
 
     tl.play();

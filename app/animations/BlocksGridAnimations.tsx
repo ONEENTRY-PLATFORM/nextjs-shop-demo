@@ -47,22 +47,15 @@ const BlocksGridAnimations = ({
       paused: true,
     });
 
-    // tl.to('.block-card', {
-    //   autoAlpha: 1,
-    //   scale: 1,
-    //   yPercent: 0,
-    //   delay: 0.5,
-    //   stagger: 0.05,
-    // });
-
     if (stage === 'leaving') {
       tl.set('.block-card', {
         autoAlpha: 1,
         scale: 1,
       }).to('.block-card', {
         autoAlpha: 0,
-        scale: 0.5,
-        stagger: 0.05,
+        scale: 0,
+        stagger: 0.02,
+        ease: 'power3.inOut',
       });
       tl.play();
     }
@@ -70,12 +63,11 @@ const BlocksGridAnimations = ({
       tl.set('.block-card', {
         autoAlpha: 0,
         scale: 0,
-        yPercent: 0,
       }).to('.block-card', {
         autoAlpha: 1,
         scale: 1,
-        yPercent: 0,
-        stagger: 0.05,
+        stagger: 0.1,
+        ease: 'power3.inOut',
       });
       tl.play();
     }
