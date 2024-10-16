@@ -85,10 +85,6 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
     return notFound();
   }
 
-  if (total < 1) {
-    return 'Not found';
-  }
-
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">

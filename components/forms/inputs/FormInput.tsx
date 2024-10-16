@@ -55,7 +55,7 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
   }
 
   return (
-    <div className="relative box-border flex shrink-0 flex-col text-base">
+    <div className="input-group">
       <label htmlFor={field.marker} className="text-gray-400">
         {localizeInfos?.title}{' '}
         {required && <span className="text-red-500">*</span>}

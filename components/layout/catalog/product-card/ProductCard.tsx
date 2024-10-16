@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { type FC, type Key, Suspense } from 'react';
+import type { FC, Key } from 'react';
 
 import { LanguageEnum } from '@/app/types/enum';
 
@@ -70,14 +70,20 @@ const ProductCard: FC<{
           lang={lang}
         />
 
-        <Suspense>
+        <AddToCartButton
+          product={product}
+          dict={dict}
+          height={42}
+          className="btn btn-md btn-primary"
+        />
+        {/* <Suspense>
           <AddToCartButton
             product={product}
             dict={dict}
             height={42}
             className="btn btn-md btn-primary"
           />
-        </Suspense>
+        </Suspense> */}
       </div>
 
       <Link

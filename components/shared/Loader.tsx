@@ -1,3 +1,7 @@
+'use client';
+
+import { useGSAP } from '@gsap/react';
+import { gsap } from 'gsap';
 import type { FC } from 'react';
 
 import { blocksColors, blocksData } from '@/components/data';
@@ -46,6 +50,29 @@ export const CategoriesLoader: FC<LoaderProps> = ({ limit = 4 }) => {
 export const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   const cls =
     'product-card relative flex size-full flex-col min-h-[360px] items-center rounded-3xl animate-loader p-4';
+
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      paused: true,
+    });
+
+    tl.set('.product-card', {
+      autoAlpha: 0,
+      scale: 0,
+      yPercent: 0,
+    }).to('.product-card', {
+      autoAlpha: 1,
+      scale: 1,
+      yPercent: 0,
+      stagger: 0.05,
+    });
+
+    tl.play();
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
 
   return (
     <div className="relative box-border flex w-full shrink-0 flex-col">

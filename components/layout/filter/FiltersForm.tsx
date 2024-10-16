@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FC } from 'react';
-import { memo, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import { useGetPage } from '@/app/api/hooks/useGetPage';
 import Loader from '@/components/shared/Loader';
@@ -60,4 +60,4 @@ const FiltersForm: FC<{ prices: any; dict: any }> = ({ prices, dict }) => {
   );
 };
 
-export default memo(FiltersForm);
+export default FiltersForm;

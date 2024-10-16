@@ -218,6 +218,15 @@ input:focus-visible {
       duration-500 
       hover:shadow-xl;
   }
+
+  .input-group {
+    @apply 
+      relative 
+      box-border 
+      flex shrink-0 
+      flex-col 
+      text-base;
+  }
 }
 
 @layer utilities {
