@@ -17,36 +17,37 @@ const BlocksGridAnimations = ({
   const ref = useRef(null);
 
   // first load animations
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      repeat: 0,
-    });
+  // useGSAP(() => {
+  //   if (!ref.current) {
+  //     return;
+  //   }
+  //   const tl = gsap.timeline({
+  //     repeat: 0,
+  //   });
 
-    if (stage !== 'entering') {
-      tl.set(ref.current, {
-        opacity: 0,
-      }).to(ref.current, {
-        opacity: 1,
-        duration: 0.5,
-        delay: 0.5,
-      });
-    }
+  //   if (stage !== 'entering') {
+  //     tl.set(ref.current, {
+  //       opacity: 0,
+  //       scale: 0,
+  //     }).to(ref.current, {
+  //       opacity: 1,
+  //       scale: 1,
+  //       duration: 0.5,
+  //       delay: 0.5,
+  //     });
+  //   }
 
-    return () => {
-      tl.kill();
-    };
-  }, [ref]);
+  //   return () => {
+  //     tl.kill();
+  //   };
+  // }, [ref]);
 
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // tl.set('.block-card', {
-    //   autoAlpha: 0,
-    //   scale: 0,
-    //   yPercent: 0,
-    // }).to('.block-card', {
+    // tl.to('.block-card', {
     //   autoAlpha: 1,
     //   scale: 1,
     //   yPercent: 0,
@@ -54,18 +55,23 @@ const BlocksGridAnimations = ({
     //   stagger: 0.05,
     // });
 
-    console.log(stage);
-
     if (stage === 'leaving') {
-      tl.to('.block-card', {
+      tl.set('.block-card', {
+        autoAlpha: 1,
+        scale: 1,
+      }).to('.block-card', {
         autoAlpha: 0,
         scale: 0.5,
-        yPercent: 0,
         stagger: 0.05,
       });
       tl.play();
-    } else if (stage === 'entering') {
-      tl.to('.block-card', {
+    }
+    if (stage === 'entering') {
+      tl.set('.block-card', {
+        autoAlpha: 0,
+        scale: 0,
+        yPercent: 0,
+      }).to('.block-card', {
         autoAlpha: 1,
         scale: 1,
         yPercent: 0,

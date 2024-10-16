@@ -153,6 +153,29 @@ export const BlocksGridLoader: FC<LoaderProps> = () => {
     'offer_youtube',
   ];
 
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      paused: true,
+    });
+
+    tl.set('.block-card', {
+      autoAlpha: 0,
+      scale: 0,
+      yPercent: 0,
+    }).to('.block-card', {
+      autoAlpha: 1,
+      scale: 1,
+      yPercent: 0,
+      stagger: 0.05,
+    });
+
+    tl.play();
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
   return (
     <>
       <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
@@ -165,7 +188,7 @@ export const BlocksGridLoader: FC<LoaderProps> = () => {
           return (
             <div
               key={index}
-              className={`box relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
+              className={`block-card ${className.width} ${className.height}`}
             >
               <div
                 className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}

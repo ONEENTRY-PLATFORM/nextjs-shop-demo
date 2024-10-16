@@ -33,7 +33,7 @@ export default function TransitionProvider({
           tl.kill();
         };
       }}
-      enter={(next) => {
+      enter={async (next) => {
         const tl = gsap
           .timeline()
           .set(ref.current, {

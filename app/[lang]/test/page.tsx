@@ -38,8 +38,8 @@ const TestPage: FC<{ params: { lang: string } }> = ({ params: { lang } }) => {
     <main className="flex flex-col items-center justify-between gap-16 p-5">
       <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
         <div className="flex w-full flex-col items-center gap-5 bg-white">
-          <ProductsGridLoader />
-          <CategoriesLoader />
+          {/* <ProductsGridLoader /> */}
+          {/* <CategoriesLoader /> */}
           <BlocksGridLoader />
           {/* <CalendarForm lang={lang} /> */}
           {/* <SignInForm lang={lang} /> */}

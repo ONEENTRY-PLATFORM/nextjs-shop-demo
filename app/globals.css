@@ -219,6 +219,18 @@ input:focus-visible {
       hover:shadow-xl;
   }
 
+  .block-card {
+    @apply 
+      relative 
+      flex 
+      flex-col 
+      grow 
+      justify-center 
+      text-2xl 
+      font-bold 
+      text-white;
+  }
+
   .input-group {
     @apply 
       relative 

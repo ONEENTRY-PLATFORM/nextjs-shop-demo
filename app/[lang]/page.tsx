@@ -15,7 +15,7 @@ const IndexPage = async ({
   const { page, isError } = await getPageByUrl('home_web', lang);
 
   if (isError || !page || !page.blocks) {
-    return 'isError';
+    return <BlocksGridLoader />;
   }
   const { blocks } = page;
 

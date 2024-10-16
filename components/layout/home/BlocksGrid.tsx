@@ -17,7 +17,7 @@ const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, lang }) => {
 
   return (
     <BlocksGridAnimations
-      className={'relative box-border flex w-full shrink-0 flex-col'}
+      className={'block-card relative box-border w-full shrink-0'}
     >
       <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
         {blocks.map((block, index) => {
