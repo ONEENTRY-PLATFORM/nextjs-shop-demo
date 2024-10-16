@@ -232,7 +232,44 @@ input:focus-visible {
   }
 
   .product-in-cart {
-    @apply flex w-full justify-between gap-5 bg-white max-md:flex-wrap max-sm:flex max-sm:flex-row;
+    @apply 
+      flex 
+      w-full 
+      justify-between 
+      gap-5 
+      bg-white 
+      max-md:flex-wrap 
+      max-sm:flex 
+      max-sm:flex-row;
+  }
+
+  .sidebar-menu {
+    @apply 
+      flex 
+      w-full 
+      flex-wrap 
+      justify-between 
+      gap-2 
+      overflow-x-auto 
+      overflow-y-hidden 
+      py-3 
+      text-base 
+      text-neutral-600 
+      max-md:items-center 
+      max-md:justify-center 
+      max-md:gap-6 
+      max-md:px-2 
+      max-sm:gap-3 
+      md:max-w-[165px] 
+      md:flex-col 
+      md:justify-start 
+      md:gap-5 
+      md:overflow-hidden 
+      md:py-0;
+  }
+
+  .sidebar-menu-item {
+    @apply mr-auto flex justify-start gap-3 whitespace-nowrap hover:text-orange-500;
   }
 
   .input-group {

@@ -25,8 +25,7 @@ const SidebarMenuItem: FC<{
   return (
     <li>
       <Link
-        className={`mr-auto flex justify-start gap-3 whitespace-nowrap hover:text-orange-500 
-          ${clsx(isActive && 'text-orange-500')} group`}
+        className={`sidebar-menu-item ${clsx(isActive && 'text-orange-500')} group`}
         href={'/' + lang + '/' + pageUrl}
         aria-checked={isActive}
       >
