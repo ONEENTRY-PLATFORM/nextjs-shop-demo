@@ -5,9 +5,10 @@ import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInt
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FormDataType } from 'oneentry/dist/formsData/formsDataInterfaces';
 import type { FC, FormEvent, Key } from 'react';
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import FormAnimations from '@/app/animations/FormAnimations';
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
@@ -24,7 +25,8 @@ export type InputValue = {
   [key: string]: unknown;
 };
 
-const UserForm: FC<{ lang: string }> = ({ lang }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const UserForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   const { isAuth, refreshUser, user } = useContext(AuthContext);
   const { data, isLoading, error } = useGetFormByMarkerQuery({
     marker: 'reg',
@@ -113,26 +115,28 @@ const UserForm: FC<{ lang: string }> = ({ lang }) => {
   }
 
   return (
-    <form
-      className="flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
-      onSubmit={(e) => onUpdateUserData(e)}
-    >
-      <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-        {data?.attributes.map((field: IAttributes, index: Key) => {
-          const fieldData =
-            Array.isArray(user.formData) &&
-            (user.formData.find(
-              (item) => item.marker === field.marker,
-            ) as FormDataType[]);
-          if (field.marker !== 'email_notifications') {
-            return <FormInput key={index} {...field} {...fieldData} />;
-          }
-        })}
-      </div>
+    <FormAnimations isLoading={isLoading}>
+      <form
+        className="flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+        onSubmit={(e) => onUpdateUserData(e)}
+      >
+        <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
+          {data?.attributes.map((field: IAttributes, index: Key) => {
+            const fieldData =
+              Array.isArray(user.formData) &&
+              (user.formData.find(
+                (item) => item.marker === field.marker,
+              ) as FormDataType[]);
+            if (field.marker !== 'email_notifications') {
+              return <FormInput key={index} {...field} {...fieldData} />;
+            }
+          })}
+        </div>
 
-      <SubmitButton title="Save" isLoading={loading} />
-      {isError && <ErrorMessage error={isError} />}
-    </form>
+        <SubmitButton title="Save" isLoading={loading} />
+        {isError && <ErrorMessage error={isError} />}
+      </form>
+    </FormAnimations>
   );
 };
 

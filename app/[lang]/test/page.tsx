@@ -1,38 +1,33 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-'use client';
+import { type FC } from 'react';
 
-import gsap from 'gsap';
-import { type FC, useEffect } from 'react';
-
-import GSDevTools from '@/app/animations/utils/GSDevTools';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import {
-  CalendarForm,
-  ContactUsForm,
-  ForgotPasswordForm,
+  // CalendarForm,
+  // ContactUsForm,
+  // ForgotPasswordForm,
   // PaymentForm,
-  ResetPasswordForm,
+  // ResetPasswordForm,
   SignInForm,
-  SignUpForm,
-  UserForm,
-  VerificationForm,
+  // SignUpForm,
+  // UserForm,
+  // VerificationForm,
 } from '@/components/forms';
-import {
-  BlocksGridLoader,
-  CategoriesLoader,
-  ProductsGridLoader,
-} from '@/components/shared/Loader';
+// import {
+//   BlocksGridLoader,
+//   CategoriesLoader,
+//   ProductsGridLoader,
+// } from '@/components/shared/Loader';
+import type { Locale } from '@/i18n-config';
 
-import { useGetOrderStorageByMarkerQuery } from '../../api';
+import { getDictionary } from '../dictionaries';
 
-const TestPage: FC<{ params: { lang: string } }> = ({ params: { lang } }) => {
+const TestPage: FC<{ params: { lang: string } }> = async ({
+  params: { lang },
+}) => {
+  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
   // const { data, error } = useGetOrderStorageByMarkerQuery({
   //   marker: 'order',
   // });
-
-  useEffect(() => {
-    gsap.registerPlugin(GSDevTools);
-    GSDevTools.create();
-  }, []);
 
   return (
     <main className="flex flex-col items-center justify-between gap-16 p-5">
@@ -40,9 +35,9 @@ const TestPage: FC<{ params: { lang: string } }> = ({ params: { lang } }) => {
         <div className="flex w-full flex-col items-center gap-5 bg-white">
           {/* <ProductsGridLoader /> */}
           {/* <CategoriesLoader /> */}
-          <BlocksGridLoader />
+          {/* <BlocksGridLoader /> */}
           {/* <CalendarForm lang={lang} /> */}
-          {/* <SignInForm lang={lang} /> */}
+          <SignInForm lang={lang} dict={dict} />
           {/* <SignUpForm lang={lang} /> */}
           {/* <ContactUsForm lang={lang} className={''} /> */}
           {/* <VerificationForm lang={lang} /> */}

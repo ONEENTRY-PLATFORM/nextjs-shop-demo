@@ -14,11 +14,13 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import * as forms from '../../forms/';
 import CloseModal from './CloseModal';
 
-const Modal: FC<{ lang: string }> = ({ lang }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const Modal: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   const { open, setOpen, component } = useContext(OpenDrawerContext);
   const closeModal = () => setOpen(false);
 
-  const Form: FC<{ className: string; lang: string }> =
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const Form: FC<{ className: string; lang: string; dict: any }> =
     forms[component as keyof typeof forms] || null;
 
   if (!open || !component || !Form) {
@@ -56,7 +58,7 @@ const Modal: FC<{ lang: string }> = ({ lang }) => {
         >
           <DialogPanel className="fixed left-1/2 top-1/2 z-20 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-6 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-[550px] lg:p-10">
             <CloseModal />
-            <Form lang={lang} className={''} />
+            <Form className={''} lang={lang} dict={dict} />
           </DialogPanel>
         </TransitionChild>
       </Dialog>

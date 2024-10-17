@@ -1,15 +1,17 @@
 /* eslint-disable tailwindcss/no-custom-classname */
+'use client';
+
 import '@/app/styles/payment.css';
 
 import Image from 'next/image';
-import type { FC } from 'react';
-import React, { useRef, useState } from 'react';
+import type { FC, FormEvent } from 'react';
+import { useRef, useState } from 'react';
 import { IMask, IMaskInput } from 'react-imask';
 
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const PaymentForm: FC<{ lang: string }> = ({ lang }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
+const PaymentForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   const inputRef = useRef(null);
 
   const [cardNumber, setCardNumber] = useState('');
@@ -17,7 +19,7 @@ const PaymentForm: FC<{ lang: string }> = ({ lang }) => {
   const [cardExp, setCardExp] = useState('01/25');
   const [cardCode, setCardCode] = useState('000');
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // !!!
   };

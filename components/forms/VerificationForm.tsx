@@ -1,8 +1,11 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
 import type { FC, FormEvent } from 'react';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 
+import FormAnimations from '@/app/animations/FormAnimations';
 import { api, logInUser } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
@@ -12,8 +15,8 @@ import { addField } from '@/app/store/reducers/FormFieldsSlice';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+const VerificationForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);
@@ -29,13 +32,7 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
     resend_text,
     receive_otp_text,
     verify_now_text,
-  } = useAppSelector((state) => state.systemContentReducer.content);
-
-  const [verificationText, setVerificationText] = useState<string>();
-  const [otpText, setOtpText] = useState<string>('');
-  const [resendText, setResendText] = useState<string>('');
-  const [receiveText, setReceiveText] = useState<string>('');
-  const [verifyText, setVerifyText] = useState<string>('');
+  } = dict;
 
   const fields = useAppSelector(
     (state) => state.formFieldsReducer.fields,
@@ -57,30 +54,6 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
       value: number;
     };
   };
-
-  useEffect(() => {
-    if (enter_otp_code) {
-      setOtpText(enter_otp_code.value);
-    }
-    if (verification) {
-      setVerificationText(verification.value);
-    }
-    if (resend_text) {
-      setResendText(resend_text.value);
-    }
-    if (receive_otp_text) {
-      setReceiveText(receive_otp_text.value);
-    }
-    if (verify_now_text) {
-      setVerifyText(verify_now_text.value);
-    }
-  }, [
-    enter_otp_code,
-    receive_otp_text,
-    resend_text,
-    verification,
-    verify_now_text,
-  ]);
 
   useEffect(() => {
     if (otp) {
@@ -173,45 +146,49 @@ const VerificationForm: FC<{ lang: string }> = ({ lang }) => {
   };
 
   return (
-    <form
-      className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
-      onSubmit={(e) => onSubmit(e)}
-    >
-      <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
-        <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
-          {verificationText}
-        </h2>
-        <p className="text-xs text-gray-400 max-md:max-w-full">{otpText}</p>
-      </div>
-
-      <div className="relative mb-8 box-border flex shrink-0 flex-col gap-6">
-        <OtpInput
-          value={otp}
-          onChange={setOtp}
-          numInputs={6}
-          renderInput={(props) => <input {...props} />}
-          containerStyle={
-            'grid max-w-full grid-cols-6 justify-between gap-2 max-md:gap-2'
-          }
-          inputStyle={
-            'relative box-border flex h-[70px] min-w-[14%] flex-col rounded border border-solid border-neutral-100 bg-neutral-100 p-2.5 text-center text-2xl font-medium text-neutral-600'
-          }
-        />
-        <div className="self-end text-xs text-orange-500 max-md:mr-2.5">
-          <span className="text-gray-400">{receiveText} </span>
-          <button
-            className="font-bold text-orange-500"
-            type="button"
-            onClick={onResend}
-          >
-            {resendText}
-          </button>
+    <FormAnimations isLoading={isLoading}>
+      <form
+        className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+        onSubmit={(e) => onSubmit(e)}
+      >
+        <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
+          <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
+            {verification.value}
+          </h2>
+          <p className="text-xs text-gray-400 max-md:max-w-full">
+            {enter_otp_code.value}
+          </p>
         </div>
-      </div>
 
-      <FormSubmitButton title={verifyText} isLoading={isLoading} />
-      {error && <ErrorMessage error={error} />}
-    </form>
+        <div className="relative mb-8 box-border flex shrink-0 flex-col gap-6">
+          <OtpInput
+            value={otp}
+            onChange={setOtp}
+            numInputs={6}
+            renderInput={(props) => <input {...props} />}
+            containerStyle={
+              'grid max-w-full grid-cols-6 justify-between gap-2 max-md:gap-2'
+            }
+            inputStyle={
+              'relative box-border flex h-[70px] min-w-[14%] flex-col rounded border border-solid border-neutral-100 bg-neutral-100 p-2.5 text-center text-2xl font-medium text-neutral-600'
+            }
+          />
+          <div className="self-end text-xs text-orange-500 max-md:mr-2.5">
+            <span className="text-gray-400">{receive_otp_text.value} </span>
+            <button
+              className="font-bold text-orange-500"
+              type="button"
+              onClick={onResend}
+            >
+              {resend_text.value}
+            </button>
+          </div>
+        </div>
+
+        <FormSubmitButton title={verify_now_text.value} isLoading={isLoading} />
+        {error && <ErrorMessage error={error} />}
+      </form>
+    </FormAnimations>
   );
 };
 

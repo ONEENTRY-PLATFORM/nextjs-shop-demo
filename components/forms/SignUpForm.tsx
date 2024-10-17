@@ -1,8 +1,11 @@
+'use client';
+
 import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
-import type { FC, FormEvent } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import type { FC, FormEvent, Key } from 'react';
+import { useContext, useState } from 'react';
 
+import FormAnimations from '@/app/animations/FormAnimations';
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { logInUser } from '@/app/api';
 import { api } from '@/app/api';
@@ -16,9 +19,12 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
-const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const SignUpForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen, setComponent, setAction } = useContext(OpenDrawerContext);
+
+  const { sign_up_text, sign_in_text, create_account_desc } = dict;
 
   const { data, isLoading } = useGetFormByMarkerQuery({
     marker: 'reg',
@@ -44,25 +50,6 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
       valid: boolean;
     };
   };
-
-  const { sign_up_text, sign_in_text, create_account_desc } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  );
-  const [signUpText, setSignUpText] = useState<string>('');
-  const [signInText, setSignInText] = useState<string>('');
-  const [accountText, setAccountText] = useState<string>('');
-
-  useEffect(() => {
-    if (sign_up_text) {
-      setSignUpText(sign_up_text.value);
-    }
-    if (sign_in_text) {
-      setSignInText(sign_in_text.value);
-    }
-    if (create_account_desc) {
-      setAccountText(create_account_desc.value);
-    }
-  }, [sign_up_text, sign_in_text, create_account_desc]);
 
   const onSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -155,36 +142,41 @@ const SignUpForm: FC<{ lang: string }> = ({ lang }) => {
   };
 
   return (
-    <form
-      onSubmit={(e) => onSignUp(e)}
-      className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
-    >
-      <div className="relative box-border flex shrink-0 flex-col gap-2.5">
-        <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
-          {signUpText}
-        </h2>
-        <p className="text-xs text-gray-400 max-md:max-w-full">
-          <button
-            onClick={() => {
-              setComponent('SignInForm');
-            }}
-            className="underline"
-          >
-            {signInText}
-          </button>{' '}
-          {accountText}
-        </p>
-      </div>
-      <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-        {data?.attributes.map((field: IAttributes, index: React.Key) => {
-          if (field.marker !== 'email_notifications') {
-            return <FormInput key={index} {...field} />;
-          }
-        })}
-      </div>
-      <SubmitButton title={signUpText} isLoading={loading || isLoading} />
-      {error && <ErrorMessage error={error} />}
-    </form>
+    <FormAnimations isLoading={isLoading}>
+      <form
+        onSubmit={(e) => onSignUp(e)}
+        className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+      >
+        <div className="relative box-border flex shrink-0 flex-col gap-2.5">
+          <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
+            {sign_up_text.value}
+          </h2>
+          <p className="text-xs text-gray-400 max-md:max-w-full">
+            <button
+              onClick={() => {
+                setComponent('SignInForm');
+              }}
+              className="underline"
+            >
+              {sign_in_text.value}
+            </button>{' '}
+            {create_account_desc.value}
+          </p>
+        </div>
+        <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
+          {data?.attributes.map((field: IAttributes, index: Key) => {
+            if (field.marker !== 'email_notifications') {
+              return <FormInput key={index} {...field} />;
+            }
+          })}
+        </div>
+        <SubmitButton
+          title={sign_up_text.value}
+          isLoading={loading || isLoading}
+        />
+        {error && <ErrorMessage error={error} />}
+      </form>
+    </FormAnimations>
   );
 };
 

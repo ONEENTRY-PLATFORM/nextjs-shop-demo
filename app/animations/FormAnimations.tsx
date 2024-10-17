@@ -4,8 +4,14 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FormAnimations = ({ children }: { children: any }) => {
+const FormAnimations = ({
+  children,
+  isLoading,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  children: any;
+  isLoading: boolean;
+}) => {
   const { stage } = useTransitionState();
 
   useGSAP(() => {
@@ -13,27 +19,27 @@ const FormAnimations = ({ children }: { children: any }) => {
       paused: true,
     });
 
-    tl.set('.form-input', {
+    tl.set('.input-group', {
       autoAlpha: 0,
       scale: 0,
-      xPercent: -100,
-    }).to('.form-input', {
+      yPercent: -100,
+    }).to('.input-group', {
       autoAlpha: 1,
       scale: 1,
-      xPercent: 0,
+      yPercent: 0,
       stagger: 0.05,
     });
 
     if (stage === 'leaving') {
       tl.reverse(1);
-    } else if (stage === 'entering') {
+    } else {
       tl.play();
     }
 
     return () => {
       tl.kill();
     };
-  }, [stage]);
+  }, [stage, isLoading]);
 
   return children;
 };

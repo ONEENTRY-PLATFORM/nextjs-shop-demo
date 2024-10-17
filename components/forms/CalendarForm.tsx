@@ -1,3 +1,5 @@
+'use client';
+
 import '@/app/styles/calendar.css';
 
 import type { FC } from 'react';

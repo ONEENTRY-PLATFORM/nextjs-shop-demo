@@ -1,6 +1,9 @@
-import type { FC } from 'react';
-import React, { useContext, useEffect, useState } from 'react';
+'use client';
 
+import type { FC, FormEvent } from 'react';
+import React, { useContext, useState } from 'react';
+
+import FormAnimations from '@/app/animations/FormAnimations';
 import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -10,8 +13,8 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const ResetPasswordForm: FC<{ lang: string }> = ({ lang }) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
+const ResetPasswordForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   const { email_reg, password_reg, password_confirm, otp_code } =
     useAppSelector((state) => state.formFieldsReducer.fields) as object as {
       email_reg: {
@@ -35,26 +38,9 @@ const ResetPasswordForm: FC<{ lang: string }> = ({ lang }) => {
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState('');
 
-  const { reset_password_text, new_password_desc, change_password_text } =
-    useAppSelector((state) => state.systemContentReducer.content);
+  const { reset_password_text, new_password_desc, change_password_text } = dict;
 
-  const [resetText, setResetText] = useState<string>('');
-  const [newPassText, setNewPassText] = useState<string>('');
-  const [changeText, setChangeText] = useState<string>('');
-
-  useEffect(() => {
-    if (reset_password_text) {
-      setResetText(reset_password_text.value);
-    }
-    if (new_password_desc) {
-      setNewPassText(new_password_desc.value);
-    }
-    if (change_password_text) {
-      setChangeText(change_password_text.value);
-    }
-  }, [reset_password_text, new_password_desc, change_password_text]);
-
-  const onResetSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onResetSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -80,36 +66,43 @@ const ResetPasswordForm: FC<{ lang: string }> = ({ lang }) => {
   };
 
   return (
-    <form
-      name="resetPasswordForm"
-      className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
-      onSubmit={onResetSubmit}
-    >
-      <div className="relative box-border flex shrink-0 flex-col gap-2.5">
-        <h2 className="max-w-full text-xl font-bold text-neutral-600">
-          {resetText}
-        </h2>
-        <p className="max-w-full text-xs text-gray-400">{newPassText}</p>
-      </div>
+    <FormAnimations isLoading={isLoading}>
+      <form
+        name="resetPasswordForm"
+        className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+        onSubmit={onResetSubmit}
+      >
+        <div className="relative box-border flex shrink-0 flex-col gap-2.5">
+          <h2 className="max-w-full text-xl font-bold text-neutral-600">
+            {reset_password_text.value}
+          </h2>
+          <p className="max-w-full text-xs text-gray-400">
+            {new_password_desc.value}
+          </p>
+        </div>
 
-      <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
-        {resetPasswordFormFields.map((field, index) => {
-          return (
-            <FormInput
-              listTitles={[]}
-              position={0}
-              type={''}
-              validators={{}}
-              key={index}
-              {...field}
-            />
-          );
-        })}
-      </div>
+        <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
+          {resetPasswordFormFields.map((field, index) => {
+            return (
+              <FormInput
+                listTitles={[]}
+                position={0}
+                type={''}
+                validators={{}}
+                key={index}
+                {...field}
+              />
+            );
+          })}
+        </div>
 
-      <FormSubmitButton title={changeText} isLoading={isLoading} />
-      {isError && <ErrorMessage error={isError} />}
-    </form>
+        <FormSubmitButton
+          title={change_password_text.value}
+          isLoading={isLoading}
+        />
+        {isError && <ErrorMessage error={isError} />}
+      </form>
+    </FormAnimations>
   );
 };
 

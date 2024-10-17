@@ -65,7 +65,7 @@ export default async function RootLayout({
                   </div>
                   <Footer />
                   <BottomMenu />
-                  <Modal lang={lang} />
+                  <Modal lang={lang} dict={dict} />
                 </OpenDrawerProvider>
               </ContentContextProvider>
             </AuthProvider>

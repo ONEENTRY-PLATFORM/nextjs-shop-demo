@@ -4,7 +4,7 @@
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IFormsPost } from 'oneentry/dist/formsData/formsDataInterfaces';
 import type { FC, FormEvent, Key } from 'react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
