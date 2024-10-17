@@ -2,7 +2,11 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type { IListTitle } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
+import type {
+  IAttributesSetsEntity,
+  IListTitle,
+} from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
+import type { IError } from 'oneentry/dist/base/utils';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { useGetSingleAttributeByMarkerSet } from '@/app/api';
@@ -10,7 +14,9 @@ import { useGetSingleAttributeByMarkerSet } from '@/app/api';
 import ColorPicker from './ColorPicker';
 
 interface Props {
-  color_filter_title?: string;
+  title?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  attributes: IAttributesSetsEntity | IError;
 }
 
 type Color = {
@@ -19,7 +25,7 @@ type Color = {
   selected?: boolean;
 };
 
-const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
+const ColorFilter: React.FC<Props> = ({ title, attributes }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
@@ -29,11 +35,6 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
   const [activeColor, setActiveColor] = useState<string>(
     params.get('color') || '',
   );
-
-  const { attributes, loading, error } = useGetSingleAttributeByMarkerSet({
-    setMarker: 'product',
-    attributeMarker: 'color',
-  });
 
   const colorFilters = useMemo(() => {
     let colors: Color[] = [];
@@ -64,10 +65,10 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeColor]);
 
-  if ((!loading && !attributes) || error || loading) {
+  if (!attributes) {
     return (
       <div>
-        <div className="mb-5 h-5 bg-slate-100">{color_filter_title}</div>
+        <div className="mb-5 h-5 bg-slate-100">{title}</div>
         <div className="mb-9 flex h-5 flex-wrap gap-5 whitespace-nowrap bg-slate-100 text-sm leading-8"></div>
       </div>
     );
@@ -75,7 +76,7 @@ const ColorFilter: React.FC<Props> = ({ color_filter_title }) => {
 
   return (
     <div>
-      <div className="mb-5 text-lg text-[#4C4D56]">{color_filter_title}</div>
+      <div className="mb-5 text-lg text-[#4C4D56]">{title}</div>
       <div className="mb-9 flex flex-wrap gap-1 whitespace-nowrap text-sm leading-8 text-slate-400">
         {colorFilters.map((color, index) => {
           return (

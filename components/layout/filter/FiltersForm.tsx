@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { FC } from 'react';
-import { useMemo } from 'react';
 
-import { useGetPage } from '@/app/api/hooks/useGetPage';
+import { getSingleAttributeByMarkerSet } from '@/app/api';
+import { getPageByUrl } from '@/app/api/server/pages/getPageByUrl';
 import Loader from '@/components/shared/Loader';
 import { sortObjectFieldsByPosition } from '@/components/utils';
 
@@ -12,15 +14,23 @@ import ResetButton from './components/buttons/ResetButton';
 import ColorFilter from './components/color/ColorFilter';
 import PricePickerFilter from './components/price/PricePickerFilter';
 
-const FiltersForm: FC<{ prices: any; dict: any }> = ({ prices, dict }) => {
-  const { pageInfo } = useGetPage('catalog_filters');
+interface FiltersFormProps {
+  prices: any;
+  lang: any;
+  dict: any;
+}
 
-  const sortedAttributes: Record<any, any> = useMemo(() => {
-    if (!pageInfo) {
-      return [];
-    }
-    return sortObjectFieldsByPosition(pageInfo?.attributeValues);
-  }, [pageInfo]);
+const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
+  const pageInfo = await getPageByUrl('catalog_filters', lang);
+  const colorsData = await getSingleAttributeByMarkerSet({
+    setMarker: 'product',
+    attributeMarker: 'color',
+    lang: lang,
+  });
+
+  const sortedAttributes: Record<any, any> = sortObjectFieldsByPosition(
+    (pageInfo.page as IPagesEntity).attributeValues,
+  );
 
   if (!sortedAttributes) {
     return <Loader />;
@@ -33,13 +43,14 @@ const FiltersForm: FC<{ prices: any; dict: any }> = ({ prices, dict }) => {
     >
       {Object.keys(sortedAttributes).map((attribute, index) => {
         if (attribute === 'price_filter') {
-          return <PricePickerFilter key={index} prices={prices} />;
+          return <PricePickerFilter key={index} prices={prices} dict={dict} />;
         }
         if (attribute === 'color_filter') {
           return (
             <ColorFilter
               key={index}
-              color_filter_title={sortedAttributes[attribute]?.value}
+              title={sortedAttributes[attribute]?.value}
+              attributes={colorsData.attribute}
             />
           );
         }

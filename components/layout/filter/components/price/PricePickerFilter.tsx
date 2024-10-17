@@ -6,32 +6,17 @@ import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';
 
-import { useAppSelector } from '@/app/store/hooks';
-
 import PriceFromInput from './PriceFromInput';
 import PriceToInput from './PriceToInput';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PriceFilter: FC<{ prices: any }> = ({ prices }) => {
+const PriceFilter: FC<{ prices: any; dict: any }> = ({ prices, dict }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
-  const [priceTitle, setPriceTitle] = useState('');
 
-  const { filter_price_title } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  ) as {
-    filter_price_title: {
-      value: string;
-    };
-  };
-
-  useEffect(() => {
-    if (filter_price_title) {
-      setPriceTitle(filter_price_title.value);
-    }
-  }, [filter_price_title]);
+  const { filter_price_title } = dict;
 
   const STEP = 10;
   const MIN = prices?.min || 0;
@@ -44,12 +29,7 @@ const PriceFilter: FC<{ prices: any }> = ({ prices }) => {
     params.get('maxPrice') ? Number(params.get('maxPrice')) : MAX,
   );
 
-  const priceFromLabel = useAppSelector(
-    (state) => state.systemContentReducer.content.price_from,
-  );
-  const priceToLabel = useAppSelector(
-    (state) => state.systemContentReducer.content.price_to,
-  );
+  const { price_from, price_to } = dict;
 
   // params minPrice
   useEffect(() => {
@@ -88,13 +68,13 @@ const PriceFilter: FC<{ prices: any }> = ({ prices }) => {
   return (
     <div className="relative box-border flex shrink-0 flex-col">
       <div className="mb-5 self-start text-lg font-medium leading-8 text-[#4C4D56]">
-        {priceTitle}
+        {filter_price_title?.value}
       </div>
 
       <div className="mb-6 flex w-full gap-5 self-center">
         <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-1.5">
           <span className="text-base leading-8 text-slate-300">
-            {priceFromLabel.value}
+            {price_from?.value}
           </span>
           <span className="text-lg leading-8 text-neutral-600">
             <PriceFromInput price={priceFrom} setPrice={setPriceFrom} />
@@ -102,7 +82,7 @@ const PriceFilter: FC<{ prices: any }> = ({ prices }) => {
         </div>
         <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-1.5">
           <span className="self-start text-base leading-8 text-slate-300">
-            {priceToLabel.value}
+            {price_to?.value}
           </span>
           <span className="text-lg leading-8 text-neutral-600">
             <PriceToInput price={priceTo} setPrice={setPriceTo} />

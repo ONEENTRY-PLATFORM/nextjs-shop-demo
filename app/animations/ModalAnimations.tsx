@@ -26,11 +26,12 @@ const ModalAnimations = ({ children }: { children: any }) => {
         setTransition('');
       },
     });
-
-    tl.set('#modalBg, #modalBody', {
+    gsap.set('#modalBg, #modalBody', {
       scale: 0,
       autoAlpha: 0,
-    }).to('#modalBg, #modalBody', {
+    });
+
+    tl.to('#modalBg, #modalBody', {
       scale: 1,
       autoAlpha: 1,
     });
@@ -45,6 +46,10 @@ const ModalAnimations = ({ children }: { children: any }) => {
       tl.kill();
     };
   }, [open, transition]);
+
+  if (!open) {
+    return;
+  }
 
   return (
     <div ref={ref} className="fixed z-50 flex h-screen w-full">

@@ -34,7 +34,11 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
           className="mb-5 size-20"
         />
         <div className="text-lg">Products not found</div>
-        <FilterModal prices={gridItems?.[0]?.additional.prices} dict={dict} />
+        <FilterModal
+          prices={gridItems?.[0]?.additional.prices}
+          lang={lang}
+          dict={dict}
+        />
       </>
     );
   }
@@ -65,7 +69,11 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
           </div>
         </section>
       </CardsGridAnimations>
-      <FilterModal prices={gridItems?.[0]?.additional.prices} dict={dict} />
+      <FilterModal
+        prices={gridItems?.[0]?.additional.prices}
+        lang={lang}
+        dict={dict}
+      />
     </>
   );
 };

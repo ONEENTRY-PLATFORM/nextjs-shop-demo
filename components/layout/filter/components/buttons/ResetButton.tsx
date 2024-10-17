@@ -1,3 +1,5 @@
+'use client';
+
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FC } from 'react';
 import React from 'react';
