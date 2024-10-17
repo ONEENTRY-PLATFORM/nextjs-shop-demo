@@ -7,29 +7,23 @@ import ModalAnimations from '@/app/animations/ModalAnimations';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 import * as forms from '../../forms';
+import ModalBackdrop from '../filter/ModalBackdrop';
 import CloseModal from './CloseModal';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Modal: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
-  const { open, component, setTransition } = useContext(OpenDrawerContext);
+  const { component } = useContext(OpenDrawerContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const Form: FC<{ className: string; lang: string; dict: any }> =
     forms[component as keyof typeof forms] || null;
 
-  if (!open || !Form) {
+  if (!Form) {
     return null;
   }
 
   return (
     <ModalAnimations>
-      <div
-        id="modalBg"
-        className="fixed inset-0 bg-black/30 backdrop-blur-[5px]"
-        onClick={() => {
-          setTransition('close');
-        }}
-      />
       <div
         id="modalBody"
         className="fixed left-1/2 top-1/2 z-20 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-6 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-[550px] lg:p-10"
@@ -37,6 +31,7 @@ const Modal: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
         <CloseModal />
         <Form className={''} lang={lang} dict={dict} />
       </div>
+      <ModalBackdrop />
     </ModalAnimations>
   );
 };

@@ -3,9 +3,9 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
+import type { ReactNode } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SidebarAnimations = ({ children }: { children: any }) => {
+const SidebarAnimations = ({ children }: { children: ReactNode }) => {
   const { stage } = useTransitionState();
 
   useGSAP(() => {

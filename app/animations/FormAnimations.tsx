@@ -2,6 +2,7 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
+import type { ReactNode } from 'react';
 import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '../store/providers/OpenDrawerContext';
@@ -10,8 +11,7 @@ const FormAnimations = ({
   children,
   isLoading,
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  children: any;
+  children: ReactNode;
   isLoading: boolean;
 }) => {
   const { open, transition } = useContext(OpenDrawerContext);

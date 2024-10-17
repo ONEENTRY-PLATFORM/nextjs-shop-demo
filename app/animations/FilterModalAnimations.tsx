@@ -2,12 +2,12 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
+import type { ReactNode } from 'react';
 import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '../store/providers/OpenDrawerContext';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FilterModalAnimations = ({ children }: { children: any }) => {
+const FilterModalAnimations = ({ children }: { children: ReactNode }) => {
   const { open, component, transition, setOpen, setTransition } =
     useContext(OpenDrawerContext);
   const ref = useRef(null);
@@ -27,14 +27,19 @@ const FilterModalAnimations = ({ children }: { children: any }) => {
       },
     });
 
-    gsap.set('#modalBg, #modalBody', {
+    gsap.set('#modalBg', {
       autoAlpha: 0,
+    });
+
+    gsap.set('#modalBody', {
       xPercent: 100,
     });
 
     tl.to('#modalBg, #modalBody', {
       autoAlpha: 1,
       xPercent: 0,
+      duration: 0.35,
+      stagger: 0.1,
     });
 
     if (transition === 'close') {

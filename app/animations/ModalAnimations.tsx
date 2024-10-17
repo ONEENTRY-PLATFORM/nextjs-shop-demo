@@ -2,12 +2,12 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
+import type { ReactNode } from 'react';
 import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '../store/providers/OpenDrawerContext';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ModalAnimations = ({ children }: { children: any }) => {
+const ModalAnimations = ({ children }: { children: ReactNode }) => {
   const { open, transition, setOpen, setTransition } =
     useContext(OpenDrawerContext);
   const ref = useRef(null);
