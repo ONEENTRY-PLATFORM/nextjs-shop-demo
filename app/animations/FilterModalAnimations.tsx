@@ -7,7 +7,7 @@ import { useContext, useRef } from 'react';
 import { OpenDrawerContext } from '../store/providers/OpenDrawerContext';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ModalAnimations = ({ children }: { children: any }) => {
+const FilterModalAnimations = ({ children }: { children: any }) => {
   const { open, transition, setOpen, setTransition } =
     useContext(OpenDrawerContext);
   const ref = useRef(null);
@@ -28,15 +28,15 @@ const ModalAnimations = ({ children }: { children: any }) => {
     });
 
     tl.set('#modalBg, #modalBody', {
-      scale: 0,
       autoAlpha: 0,
+      xPercent: 100,
     }).to('#modalBg, #modalBody', {
-      scale: 1,
       autoAlpha: 1,
+      xPercent: 0,
     });
 
     if (transition === 'close') {
-      tl.reverse(0.5);
+      tl.reverse(4);
     } else {
       tl.play();
     }
@@ -53,4 +53,4 @@ const ModalAnimations = ({ children }: { children: any }) => {
   );
 };
 
-export default ModalAnimations;
+export default FilterModalAnimations;

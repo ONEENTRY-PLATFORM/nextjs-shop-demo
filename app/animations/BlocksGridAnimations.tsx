@@ -16,58 +16,31 @@ const BlocksGridAnimations = ({
   const { stage } = useTransitionState();
   const ref = useRef(null);
 
-  // first load animations
-  // useGSAP(() => {
-  //   if (!ref.current) {
-  //     return;
-  //   }
-  //   const tl = gsap.timeline({
-  //     repeat: 0,
-  //   });
-
-  //   if (stage !== 'entering') {
-  //     tl.set(ref.current, {
-  //       opacity: 0,
-  //       scale: 0,
-  //     }).to(ref.current, {
-  //       opacity: 1,
-  //       scale: 1,
-  //       duration: 0.5,
-  //       delay: 0.5,
-  //     });
-  //   }
-
-  //   return () => {
-  //     tl.kill();
-  //   };
-  // }, [ref]);
-
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,
     });
 
+    const elements =
+      ref.current &&
+      (ref.current as HTMLDivElement).querySelectorAll('.block-card');
+
     if (stage === 'leaving') {
-      tl.set('.block-card', {
-        autoAlpha: 1,
-        scale: 1,
-      }).to('.block-card', {
+      tl.to(elements, {
         autoAlpha: 0,
         scale: 0,
-        stagger: 0.02,
-        ease: 'power3.inOut',
+        stagger: 0.1,
       });
       tl.play();
     }
     if (stage === 'entering') {
-      tl.set('.block-card', {
+      tl.set(elements, {
         autoAlpha: 0,
         scale: 0,
-      }).to('.block-card', {
+      }).to(elements, {
         autoAlpha: 1,
         scale: 1,
         stagger: 0.1,
-        ease: 'power3.inOut',
       });
       tl.play();
     }
