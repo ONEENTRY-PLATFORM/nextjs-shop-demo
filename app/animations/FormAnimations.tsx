@@ -2,7 +2,9 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import { useTransitionState } from 'next-transition-router';
+import { useContext, useRef } from 'react';
+
+import { OpenDrawerContext } from '../store/providers/OpenDrawerContext';
 
 const FormAnimations = ({
   children,
@@ -12,25 +14,29 @@ const FormAnimations = ({
   children: any;
   isLoading: boolean;
 }) => {
-  const { stage } = useTransitionState();
+  const { open, transition } = useContext(OpenDrawerContext);
+  const ref = useRef(null);
 
   useGSAP(() => {
+    if (!open || !ref.current) {
+      return;
+    }
     const tl = gsap.timeline({
       paused: true,
     });
+    const elements = (ref.current as HTMLElement).querySelectorAll('form>*');
 
-    tl.set('.input-group', {
+    tl.set(elements, {
       autoAlpha: 0,
-      scale: 0,
-      yPercent: -100,
-    }).to('.input-group', {
+      xPercent: -100,
+    }).to(elements, {
       autoAlpha: 1,
-      scale: 1,
-      yPercent: 0,
-      stagger: 0.05,
+      xPercent: 0,
+      delay: 0.5,
+      stagger: 0.1,
     });
 
-    if (stage === 'leaving') {
+    if (transition === 'close') {
       tl.reverse(1);
     } else {
       tl.play();
@@ -39,9 +45,9 @@ const FormAnimations = ({
     return () => {
       tl.kill();
     };
-  }, [stage, isLoading]);
+  }, [transition, open, isLoading]);
 
-  return children;
+  return <div ref={ref}>{children}</div>;
 };
 
 export default FormAnimations;

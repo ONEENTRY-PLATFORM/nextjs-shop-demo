@@ -5,10 +5,10 @@ import React, { useContext } from 'react';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 const CloseModal = () => {
-  const { setOpen } = useContext(OpenDrawerContext);
+  const { setTransition } = useContext(OpenDrawerContext);
 
   const onButtonClick = () => {
-    setOpen(false);
+    setTransition('close');
   };
 
   return (

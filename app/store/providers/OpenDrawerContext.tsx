@@ -6,30 +6,44 @@ import React, { createContext, useState } from 'react';
 
 type OpenDrawerContextType = {
   component: string;
-  setComponent: Dispatch<string>;
   open: boolean;
-  setOpen: Dispatch<boolean>;
   action: string;
+  transition: string;
+  setComponent: Dispatch<string>;
+  setOpen: Dispatch<boolean>;
   setAction: Dispatch<string>;
+  setTransition: Dispatch<string>;
 };
 
 export const OpenDrawerContext = createContext<OpenDrawerContextType>({
   open: false,
-  setOpen(value: boolean): void {},
   component: '',
-  setComponent(value: string): void {},
   action: '',
+  transition: '',
+  setOpen(value: boolean): void {},
+  setComponent(value: string): void {},
   setAction(value: string): void {},
+  setTransition(value: string): void {},
 });
 
 export const OpenDrawerProvider = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [component, setComponent] = useState<string>('');
   const [action, setAction] = useState<string>('');
+  const [transition, setTransition] = useState<string>('');
 
   return (
     <OpenDrawerContext.Provider
-      value={{ open, setOpen, component, setComponent, action, setAction }}
+      value={{
+        open,
+        setOpen,
+        component,
+        setComponent,
+        action,
+        setAction,
+        transition,
+        setTransition,
+      }}
     >
       {children}
     </OpenDrawerContext.Provider>
