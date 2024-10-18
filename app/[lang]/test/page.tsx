@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { type FC } from 'react';
 
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
@@ -12,10 +13,10 @@ import {
   // UserForm,
   // VerificationForm,
 } from '@/components/forms';
+import ProductsGridLoader from '@/components/layout/products-grid/ProductsGridLoader';
 import {} from //   BlocksGridLoader,
 //   CategoriesLoader,
 '@/components/shared/Loader';
-import ProductsGridLoader from '@/components/shared/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';

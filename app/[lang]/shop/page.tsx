@@ -6,8 +6,8 @@ import { Suspense } from 'react';
 
 import { getBlockByMarker, getPageByUrl, getProducts } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
-import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
-import ProductsGridLoader from '@/components/shared/ProductsGridLoader';
+import ProductsGridLayout from '@/components/layout/products-grid/ProductsGridLayout';
+import ProductsGridLoader from '@/components/layout/products-grid/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';

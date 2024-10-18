@@ -10,7 +10,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
 import Loader, { OrdersTableLoader } from '@/components/shared/Loader';
 
-import Pagination from '../catalog/Pagination';
+import Pagination from '../products-grid/Pagination';
 import Order from './components/OrderRow';
 import EmptyOrders from './EmptyOrders';
 

@@ -8,8 +8,8 @@ import { getPageByUrl, getProducts } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 import type { PageProps } from '@/app/types/global';
-import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
-import ProductsGridLoader from '@/components/shared/ProductsGridLoader';
+import ProductsGridLayout from '@/components/layout/products-grid/ProductsGridLayout';
+import ProductsGridLoader from '@/components/layout/products-grid/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
 
 import { getDictionary } from '../../dictionaries';

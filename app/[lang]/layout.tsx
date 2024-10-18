@@ -6,10 +6,10 @@ import { Lato } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 
-import BottomMenu from '@/components/layout/bottom-menu/BottomMenu';
+import BottomMenu from '@/components/layout/bottom-menu';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
-import NavigationMenu from '@/components/layout/main-menu/NavigationMenu';
+import NavigationMenu from '@/components/layout/main-menu';
 import Modal from '@/components/layout/modal/ModalLayout';
 import type { Locale } from '@/i18n-config';
 

@@ -4,7 +4,7 @@ import type { FC, Key } from 'react';
 import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 
-import ProductCard from '../catalog/product-card/ProductCard';
+import ProductCard from '../products-grid/product-card/ProductCard';
 
 const RelatedItems: FC<{
   marker: string;

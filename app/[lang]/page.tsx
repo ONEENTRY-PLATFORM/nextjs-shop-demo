@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
-import BlocksGrid from '@/components/layout/home/BlocksGrid';
+import BlocksGrid from '@/components/layout/blocks-grid';
 import { BlocksGridLoader } from '@/components/shared/Loader';
 
 // export const revalidate = 10;
