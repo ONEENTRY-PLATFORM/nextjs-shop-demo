@@ -24,20 +24,28 @@ const CardsGridAnimations = ({
       ref.current &&
       (ref.current as HTMLDivElement).querySelectorAll('.product-card');
 
-    tl.set(elements, {
-      autoAlpha: 0,
-      scale: 0,
-    }).to(elements, {
-      autoAlpha: 1,
-      scale: 1,
-      stagger: 0.05,
-    });
 
-    if (stage === 'leaving') {
-      // tl.reverse(1);
-    } else if (stage === 'entering') {
+    if (stage === 'entering') {
+      tl.set(elements, {
+        autoAlpha: 0,
+        scale: 0,
+      }).to(elements, {
+        autoAlpha: 1,
+        scale: 1,
+        duration: 0.5,
+        stagger: 0.05,
+      });
       tl.play();
     }
+    if (stage === 'leaving') {
+      tl.to(elements, {
+        autoAlpha: 0,
+        scale: 0,
+        duration: 0.3,
+        stagger: 0.05,
+      });
+      tl.play();
+    } 
 
     return () => {
       tl.kill();

@@ -21,10 +21,10 @@ export default function TransitionProvider({
         const tl = gsap
           .timeline()
           .set(ref.current, {
-            // autoAlpha: 1,
+            autoAlpha: 1,
           })
           .to(ref.current, {
-            // autoAlpha: 0,
+            autoAlpha: 0,
             duration: 0.5,
           })
           .call(next, undefined, 0.35);
@@ -37,10 +37,10 @@ export default function TransitionProvider({
         const tl = gsap
           .timeline()
           .set(ref.current, {
-            // autoAlpha: 0,
+            autoAlpha: 0,
           })
           .to(ref.current, {
-            // autoAlpha: 1,
+            autoAlpha: 1,
             duration: 0.5,
           })
           .call(next, undefined, 0.35);
