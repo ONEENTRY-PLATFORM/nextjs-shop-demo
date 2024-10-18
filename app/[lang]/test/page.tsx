@@ -14,9 +14,6 @@ import {
   // VerificationForm,
 } from '@/components/forms';
 import ProductsGridLoader from '@/components/layout/products-grid/ProductsGridLoader';
-import {} from //   BlocksGridLoader,
-//   CategoriesLoader,
-'@/components/shared/Loader';
 import type { Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';

@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById } from '@/app/api';
-import ProductSingle from '@/components/layout/product/ProductSingle';
+import ProductSingle from '@/components/layout/product';
 import type { Locale } from '@/i18n-config';
 
 // generateMetadata

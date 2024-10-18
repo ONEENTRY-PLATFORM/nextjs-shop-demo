@@ -7,11 +7,11 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
 import { LanguageEnum } from '@/app/types/enum';
 
-import TotalAmount from '../cart/components/TotalAmount';
-import ConfirmOrderButton from './components/ConfirmOrderButton';
-import EditOrderButton from './components/EditOrderButton';
-import OrderDataTable from './components/OrderDataTable';
-import OrderProductsTable from './components/OrderProductsTable';
+import TotalAmount from '../../cart/components/TotalAmount';
+import ConfirmOrderButton from './ConfirmOrderButton';
+import EditOrderButton from './EditOrderButton';
+import OrderDataTable from './OrderDataTable';
+import OrderProductsTable from './OrderProductsTable';
 
 type PaymentMethodProps = {
   account: IAccountsEntity;

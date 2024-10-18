@@ -7,7 +7,6 @@ import type { FC } from 'react';
 import { blocksColors, blocksData } from '@/components/data';
 import SearchIcon from '@/components/icons/search';
 
-import Placeholder from './Placeholder';
 import Spinner from './Spinner';
 
 interface LoaderProps {
@@ -97,74 +96,6 @@ export const VerticalMenuLoader: FC<LoaderProps> = ({ limit = 6 }) => {
         ))}
       </ul>
     </div>
-  );
-};
-
-export const BlocksGridLoader: FC<LoaderProps> = () => {
-  const blocks = [
-    'home_banner',
-    'offer_best_seller',
-    'offer_promotion',
-    'offer_offer_day',
-    'offer_new_arrivals',
-    'offer_youtube',
-  ];
-
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      paused: true,
-      id: 'BlocksGridTL',
-    });
-
-    tl.set('.block-card', {
-      autoAlpha: 0,
-      scale: 0,
-    }).to('.block-card', {
-      autoAlpha: 1,
-      scale: 1,
-      stagger: 0.1,
-    });
-
-    tl.play();
-
-    return () => {
-      tl.kill();
-    };
-  }, []);
-
-  return (
-    <>
-      <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
-        {blocks.map((block, index) => {
-          const className = blocksData[index as keyof typeof blocksData] as {
-            width: string;
-            height: string;
-          };
-          const bgColor = blocksColors[block as keyof typeof blocksColors];
-          return (
-            <div
-              key={index}
-              className={`block-card ${className.width} ${className.height}`}
-            >
-              <div
-                className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}
-              >
-                <div className="absolute left-3 top-3 z-10">
-                  <div className="size-[30px]" />
-                </div>
-
-                <h2 className="z-10 mt-auto uppercase"></h2>
-                <p className="z-10 ml-auto mt-auto w-60 max-sm:ml-0"></p>
-
-                <div className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover opacity-15 invert">
-                  <Placeholder />
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </>
   );
 };
 

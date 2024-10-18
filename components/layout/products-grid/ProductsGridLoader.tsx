@@ -24,26 +24,20 @@ const CardsGridAnimations = ({
     const tl = gsap.timeline({
       paused: true,
     });
-    const elements =
-      ref.current &&
-      (ref.current as HTMLDivElement).querySelectorAll('.product-card');
-    const elements2 =
-      ref.current &&
-      (ref.current as HTMLDivElement).querySelectorAll('.opacity-30');
 
-    tl.set(elements, {
+    tl.set('.product-card', {
       autoAlpha: 0,
     })
-      .set(elements2, {
+      .set('.opacity-30', {
         width: 0,
         transformOrigin: '100% 100%',
       })
-      .to(elements, {
+      .to('.product-card', {
         autoAlpha: 1,
         duration: 0.2,
         stagger: 0.05,
       })
-      .to(elements2, {
+      .to('.opacity-30', {
         width: '100%',
         duration: 0.5,
         stagger: 0.05,

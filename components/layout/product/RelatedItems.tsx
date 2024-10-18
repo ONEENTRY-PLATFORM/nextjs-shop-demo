@@ -27,11 +27,19 @@ const RelatedItems: FC<{
         {title}
       </h3>
       <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-        {block.similarProducts.map((product: IProductsEntity, i: Key) => {
-          return (
-            <ProductCard key={i} lang={lang} product={product} dict={dict} />
-          );
-        })}
+        {block.similarProducts.map(
+          (product: IProductsEntity, i: Key | number) => {
+            return (
+              <ProductCard
+                key={i}
+                lang={lang}
+                product={product}
+                dict={dict}
+                index={i as number}
+              />
+            );
+          },
+        )}
       </div>
     </section>
   );

@@ -8,11 +8,12 @@ import { useContext, useEffect, useState } from 'react';
 import { getAllOrdersByMarker, getBlockByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
-import Loader, { OrdersTableLoader } from '@/components/shared/Loader';
+import Loader from '@/components/shared/Loader';
 
 import Pagination from '../products-grid/Pagination';
+import EmptyOrders from './components/EmptyOrders';
 import Order from './components/OrderRow';
-import EmptyOrders from './EmptyOrders';
+import OrdersTableLoader from './components/OrdersTableLoader';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
 const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {

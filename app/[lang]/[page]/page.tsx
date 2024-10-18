@@ -5,7 +5,7 @@ import type { FC } from 'react';
 import { getPageByUrl } from '@/app/api';
 import CartPage from '@/components/layout/cart/CartPage';
 import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
-import PaymentPage from '@/components/layout/payment/PaymentPage';
+import PaymentPage from '@/components/layout/payment';
 import ProfilePage from '@/components/layout/profile/ProfilePage';
 import AboutPage from '@/components/pages/AboutPage';
 import ContactsPage from '@/components/pages/ContactsPage';

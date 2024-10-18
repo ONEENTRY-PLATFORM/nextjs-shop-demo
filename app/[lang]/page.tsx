@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import BlocksGrid from '@/components/layout/blocks-grid';
-import { BlocksGridLoader } from '@/components/shared/Loader';
+import BlocksGridLoader from '@/components/layout/blocks-grid/BlocksGridLoader';
 
 // export const revalidate = 10;
 // export const dynamicParams = true;

@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
-import OrdersPage from '@/components/layout/orders/OrdersPage';
+import OrdersPage from '@/components/layout/orders';
 import Loader from '@/components/shared/Loader';
 
 const Page: FC<{

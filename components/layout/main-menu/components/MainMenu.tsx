@@ -4,11 +4,12 @@ import type { FC, Key } from 'react';
 
 import NavigationMenuItem from './MenuItem';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const MainMenu: FC<{ lang: string; menu: IMenusPages[] }> = async ({
-  lang,
-  menu,
-}) => {
+interface MainMenuProps {
+  lang: string;
+  menu: IMenusPages[];
+}
+
+const MainMenu: FC<MainMenuProps> = async ({ lang, menu }) => {
   return (
     <nav className="relative z-20 items-center justify-center bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
       <div className="flex w-full max-w-screen-xl items-center justify-center py-5 max-md:px-5">
@@ -26,7 +27,7 @@ const MainMenu: FC<{ lang: string; menu: IMenusPages[] }> = async ({
 
               {Array.isArray(item.children) && (
                 <ul className="absolute z-10 mt-8 hidden flex-col gap-3 rounded-b-2xl bg-white p-6 leading-8 shadow-lg group-hover:flex">
-                  {item.children.map((it: IMenusPages, i: React.Key) => {
+                  {item.children.map((it: IMenusPages, i: Key) => {
                     return (
                       <li key={i}>
                         <Link
