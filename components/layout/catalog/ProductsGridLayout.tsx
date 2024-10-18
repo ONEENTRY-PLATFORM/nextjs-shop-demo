@@ -5,6 +5,7 @@ import { type FC } from 'react';
 import CardsGridAnimations from '@/app/animations/CardsGridAnimations';
 import FilterModal from '@/components/layout/filter/FilterModal';
 
+import LoadMore from './LoadMore';
 import Pagination from './Pagination';
 import ProductCard from './product-card/ProductCard';
 
@@ -16,7 +17,7 @@ interface GridLayoutProps {
   dict: unknown;
 }
 
-const ProductsGridLayout: FC<GridLayoutProps> = ({
+const ProductsGridLayout: FC<GridLayoutProps> = async ({
   gridItems,
   totalPages,
   total,
@@ -65,7 +66,8 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
             })}
           </div>
           <div className="mt-5 flex w-full justify-center">
-            {totalPages > 1 && <Pagination totalPages={totalPages} />}
+            {totalPages > 1 && <LoadMore totalPages={totalPages} />}
+            {/* {totalPages > 1 && <Pagination totalPages={totalPages} />} */}
           </div>
         </section>
       </CardsGridAnimations>

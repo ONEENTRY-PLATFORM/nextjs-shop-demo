@@ -8,7 +8,7 @@ const Pagination: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const currentPage = Number(searchParams.get('page')) || 0;
+  const currentPage = Number(searchParams.get('page')) || 1;
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
@@ -37,7 +37,7 @@ const Pagination: FC<{ totalPages: number }> = ({ totalPages }) => {
             );
           }}
         >
-          {item + 1}
+          {item}
         </button>
       ))}
     </div>

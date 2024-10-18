@@ -75,9 +75,9 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
   const currentPage = Number(searchParams?.page) || 0;
 
   const { isError, products, total } = await getProducts({
+    limit: currentPage * pageLimit || pageLimit,
+    offset: 0,
     lang: params.lang,
-    limit: pageLimit,
-    offset: currentPage * pageLimit,
     params: { ...params, searchParams: searchParams },
   });
 

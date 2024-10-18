@@ -75,12 +75,12 @@ const ShopPage: FC<{
   const { block } = await getBlockByMarker('main_catalog', lang);
   const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
 
-  const currentPage = Number(searchParams?.page) || 0;
+  const currentPage = Number(searchParams?.page) || 1;
   const pageLimit = block?.quantity || 10;
 
   const { isError, products, total } = await getProducts({
-    limit: pageLimit,
-    offset: currentPage * pageLimit,
+    limit: currentPage * pageLimit > 0 ? currentPage * pageLimit : pageLimit,
+    offset: 0,
     lang,
     params: { searchParams: searchParams },
   });

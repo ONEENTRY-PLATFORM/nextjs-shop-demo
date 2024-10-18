@@ -21,7 +21,7 @@ export const getProducts = async (props: {
   };
 }): Promise<{
   isError: boolean;
-  products?: IProductsEntity[];
+  products: IProductsEntity[];
   total: number;
 }> => {
   const { limit, offset, params, lang } = props;
@@ -37,7 +37,7 @@ export const getProducts = async (props: {
   });
 
   if (typeError(data)) {
-    return { isError: true, total: 0 };
+    return { isError: true, products: [], total: 0 };
   } else {
     return {
       isError: false,
