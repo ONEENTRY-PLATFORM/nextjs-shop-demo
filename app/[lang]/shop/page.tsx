@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 import { getBlockByMarker, getPageByUrl, getProducts } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
-import { ProductsGridLoader } from '@/components/shared/Loader';
+import ProductsGridLoader from '@/components/shared/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
@@ -85,8 +85,12 @@ const ShopPage: FC<{
     params: { searchParams: searchParams },
   });
 
-  if (isError || !products || !page) {
-    return <div>isError</div>;
+  if (isError) {
+    return notFound();
+  }
+
+  if (!products || !page) {
+    return <ProductsGridLoader />;
   }
 
   return (

@@ -20,28 +20,25 @@ const CardsGridAnimations = ({
     const tl = gsap.timeline({
       paused: true,
     });
-    const elements =
-      ref.current &&
-      (ref.current as HTMLDivElement).querySelectorAll('.product-card');
 
     if (stage === 'entering') {
-      tl.set(elements, {
+      tl.set('.product-card', {
         autoAlpha: 0,
-        scale: 0,
-      }).to(elements, {
+        // scale: 0,
+      }).to('.product-card', {
         autoAlpha: 1,
-        scale: 1,
+        // scale: 1,
         duration: 0.5,
-        stagger: 0.05,
+        stagger: 0.1,
       });
       tl.play();
     }
     if (stage === 'leaving') {
-      tl.to(elements, {
+      tl.to('.product-card', {
         autoAlpha: 0,
-        scale: 0,
-        duration: 0.3,
-        stagger: 0.05,
+        // scale: 0,
+        duration: 0.5,
+        stagger: 0.1,
       });
       tl.play();
     }

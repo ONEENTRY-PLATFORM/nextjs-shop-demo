@@ -9,7 +9,7 @@ import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import type { SimplePageProps } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
-import { ProductsGridLoader } from '@/components/shared/Loader';
+import ProductsGridLoader from '@/components/shared/ProductsGridLoader';
 
 const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const favorites = useAppSelector(

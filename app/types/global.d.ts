@@ -23,3 +23,9 @@ declare type SimplePageProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dict: any;
 };
+
+declare type LoaderProps = {
+  data?: Record<string, unknown>;
+  limit?: number;
+  offset?: number;
+};

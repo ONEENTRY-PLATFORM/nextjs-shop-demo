@@ -198,9 +198,9 @@ input:focus-visible {
     @apply 
       animate-gradient 
       bg-gradient-to-r 
-      from-slate-100 
-      via-slate-200 
-      to-slate-100 
+      from-slate-50 
+      via-slate-100 
+      to-slate-50 
       bg-[length:300%_100%];
   }
 

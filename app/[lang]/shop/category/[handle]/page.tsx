@@ -8,7 +8,7 @@ import { getPageByUrl, getProductsByPageUrl } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/catalog/ProductsGridLayout';
-import { ProductsGridLoader } from '@/components/shared/Loader';
+import ProductsGridLoader from '@/components/shared/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
 
 // generateMetadata
@@ -78,8 +78,12 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
     params: { ...params, searchParams: searchParams },
   });
 
-  if (isError || !products) {
+  if (isError) {
     return notFound();
+  }
+
+  if (!products) {
+    return <ProductsGridLoader />;
   }
 
   return (

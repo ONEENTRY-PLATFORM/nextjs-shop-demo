@@ -27,7 +27,7 @@ export default function TransitionProvider({
             autoAlpha: 0,
             duration: 0.5,
           })
-          .call(next, undefined, 0.35);
+          .call(next, undefined, 0.5);
 
         return () => {
           tl.kill();
@@ -43,7 +43,7 @@ export default function TransitionProvider({
             autoAlpha: 1,
             duration: 0.5,
           })
-          .call(next, undefined, 0.35);
+          .call(next, undefined, 0.5);
 
         return () => {
           tl.kill();
