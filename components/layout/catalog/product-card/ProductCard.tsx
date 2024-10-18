@@ -26,7 +26,7 @@ const ProductCard: FC<{
   const productImage = attributes.pic?.value;
 
   return (
-    <CardAnimations className="product-card" index={index}>
+    <CardAnimations className="product-card group" index={index}>
       {/* stickers */}
       <div className="z-10 flex justify-between gap-5 self-stretch">
         {[attributes.stickers].map(

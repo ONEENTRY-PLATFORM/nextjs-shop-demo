@@ -35,12 +35,19 @@ const FilterModalAnimations = ({ children }: { children: ReactNode }) => {
       xPercent: 100,
     });
 
-    tl.to('#modalBg, #modalBody', {
+    tl.to('#modalBg', {
       autoAlpha: 1,
       xPercent: 0,
       duration: 0.35,
-      stagger: 0.1,
-    });
+    }).to(
+      '#modalBody',
+      {
+        autoAlpha: 1,
+        xPercent: 0,
+        duration: 0.35,
+      },
+      '-0.25',
+    );
 
     if (transition === 'close') {
       tl.reverse(4);
