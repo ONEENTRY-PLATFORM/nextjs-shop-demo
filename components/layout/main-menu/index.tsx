@@ -5,9 +5,9 @@ import { getMenuByMarker } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { flatMenuToNested } from '@/components/utils';
 
-import OffscreenModal from '../mobile-menu/OffscreenModal';
-import MainMenu from './MainMenu';
-import MainMenuLoader from './MenuLoader';
+import OffscreenModal from '../mobile-menu';
+import MainMenu from './components/MainMenu';
+import MainMenuLoader from './components/MenuLoader';
 
 const NavigationMenu: FC = async () => {
   const [lang] = useServerProvider('lang');

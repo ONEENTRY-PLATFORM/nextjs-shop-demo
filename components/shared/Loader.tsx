@@ -47,34 +47,6 @@ export const CategoriesLoader: FC<LoaderProps> = ({ limit = 4 }) => {
   );
 };
 
-// export const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
-//   const cls =
-//     'product-card relative flex size-full flex-col min-h-[360px] items-center rounded-3xl animate-loader p-4';
-
-//   return (
-//     <div className="relative box-border flex w-full shrink-0 flex-col">
-//       <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
-//         <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-//           {Array.from(Array(limit).keys()).map((item) => (
-//             <div key={item} className={cls}>
-//               <div className="relative mb-3 size-40 w-full">
-//                 <Placeholder />
-//               </div>
-//               <div className="z-10 mb-4 mt-auto flex h-6 w-full flex-col rounded-full bg-white"></div>
-//               <div className="z-10 mb-2 mt-auto flex h-4 w-full flex-col gap-2.5 rounded-full bg-white"></div>
-//               <div className="z-10 mb-2 mt-auto flex h-4 w-full flex-col gap-2.5 rounded-full bg-white"></div>
-//               <div className="z-10 mb-4 mt-auto flex h-8 w-full flex-col gap-2.5 rounded-full bg-white"></div>
-//             </div>
-//           ))}
-//         </div>
-//         <div className="mt-5 flex w-full justify-center">
-//           {/* <Pagination totalPages={totalPages} /> */}
-//         </div>
-//       </section>
-//     </div>
-//   );
-// };
-
 export const OrdersListLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   const cls =
     'relative flex size-full flex-col min-h-[60px] items-center rounded-3xl animate-loader p-4';
