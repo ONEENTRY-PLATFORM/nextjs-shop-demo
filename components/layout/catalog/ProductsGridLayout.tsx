@@ -6,6 +6,7 @@ import CardsGridAnimations from '@/app/animations/CardsGridAnimations';
 import FilterModal from '@/components/layout/filter/FilterModal';
 
 import LoadMore from './LoadMore';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Pagination from './Pagination';
 import ProductCard from './product-card/ProductCard';
 

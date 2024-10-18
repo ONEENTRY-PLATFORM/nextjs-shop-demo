@@ -4,12 +4,13 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import type { FC } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import CardAnimations from '@/app/animations/CardAnimations';
 import { blocksColors, blocksData } from '@/components/data';
 import SearchIcon from '@/components/icons/search';
 
 import Placeholder from './Placeholder';
 import Spinner from './Spinner';
-import CardAnimations from '@/app/animations/CardAnimations';
 
 interface LoaderProps {
   data?: Record<string, unknown>;
@@ -56,7 +57,7 @@ export const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
     <div className="relative box-border flex w-full shrink-0 flex-col">
       <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
         <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-          {Array.from(Array(limit).keys()).map((item, index) => (
+          {Array.from(Array(limit).keys()).map((item) => (
             <div key={item} className={cls}></div>
           ))}
         </div>

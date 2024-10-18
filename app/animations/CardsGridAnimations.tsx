@@ -24,7 +24,6 @@ const CardsGridAnimations = ({
       ref.current &&
       (ref.current as HTMLDivElement).querySelectorAll('.product-card');
 
-
     if (stage === 'entering') {
       tl.set(elements, {
         autoAlpha: 0,
@@ -45,7 +44,7 @@ const CardsGridAnimations = ({
         stagger: 0.05,
       });
       tl.play();
-    } 
+    }
 
     return () => {
       tl.kill();
