@@ -7,11 +7,11 @@ import { useGetSingleOrderQuery } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 
-import CancelOrderButton from './components/CancelOrderButton';
-import OrderDataTable from './components/OrderDataTable';
-import PayOrderButton from './components/PayOrderButton';
-import ProductCard from './components/ProductCard';
-import RepeatOrderButton from './components/RepeatOrderButton';
+import CancelOrderButton from './CancelOrderButton';
+import OrderDataTable from './OrderDataTable';
+import PayOrderButton from './PayOrderButton';
+import ProductCard from './ProductCard';
+import RepeatOrderButton from './RepeatOrderButton';
 
 const OrderPage: FC<{
   id: number;

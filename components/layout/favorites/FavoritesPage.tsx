@@ -7,8 +7,8 @@ import { Suspense } from 'react';
 import { useAppSelector } from '@/app/store/hooks';
 import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import type { SimplePageProps } from '@/app/types/global';
-import ProductsGridLayout from '@/components/layout/products-grid/ProductsGridLayout';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
+import ProductsGridLayout from '@/components/layout/products-grid/ProductsGridLayout';
 import ProductsGridLoader from '@/components/layout/products-grid/ProductsGridLoader';
 
 const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {

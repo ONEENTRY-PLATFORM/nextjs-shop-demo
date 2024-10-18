@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
-import OrderPage from '@/components/layout/orders/OrderPage';
+import OrderPage from '@/components/layout/orders/components/OrderPage';
 
 const CatalogPage: FC<{ params: { handle: string; lang: string } }> = ({
   params: { handle, lang },
