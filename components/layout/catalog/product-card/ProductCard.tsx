@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
 
+import CardAnimations from '@/app/animations/CardAnimations';
 import { LanguageEnum } from '@/app/types/enum';
 
 import FavoritesButton from '../../../shared/FavoritesButton';
@@ -13,9 +14,10 @@ import Sticker from './Sticker';
 const ProductCard: FC<{
   product: IProductsEntity;
   lang: string;
+  index: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   dict: any;
-}> = ({ product, lang, dict }) => {
+}> = ({ product, lang, dict, index }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, attributeValues, localizeInfos } = product;
 
@@ -24,7 +26,7 @@ const ProductCard: FC<{
   const productImage = attributes.pic?.value;
 
   return (
-    <div className="product-card">
+    <CardAnimations className="product-card" index={index}>
       {/* stickers */}
       <div className="z-10 flex justify-between gap-5 self-stretch">
         {[attributes.stickers].map(
@@ -90,7 +92,7 @@ const ProductCard: FC<{
         href={'/' + lang + '/shop/product/' + id}
         className="absolute left-0 top-0 z-0 flex size-full"
       ></Link>
-    </div>
+    </CardAnimations>
   );
 };
 

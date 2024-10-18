@@ -9,6 +9,7 @@ import SearchIcon from '@/components/icons/search';
 
 import Placeholder from './Placeholder';
 import Spinner from './Spinner';
+import CardAnimations from '@/app/animations/CardAnimations';
 
 interface LoaderProps {
   data?: Record<string, unknown>;
@@ -51,36 +52,14 @@ export const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   const cls =
     'product-card relative flex size-full flex-col min-h-[360px] items-center rounded-3xl animate-loader p-4';
 
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      paused: true,
-      id: 'ProductsGridTL',
-    });
-
-    tl.set('.product-card', {
-      autoAlpha: 0,
-      scale: 0,
-      yPercent: 0,
-    }).to('.product-card', {
-      autoAlpha: 1,
-      scale: 1,
-      yPercent: 0,
-      stagger: 0.05,
-    });
-
-    tl.play();
-
-    return () => {
-      tl.kill();
-    };
-  }, []);
-
   return (
     <div className="relative box-border flex w-full shrink-0 flex-col">
       <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
         <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-          {Array.from(Array(limit).keys()).map((item) => (
-            <div key={item} className={cls} />
+          {Array.from(Array(limit).keys()).map((item, index) => (
+            <CardAnimations key={item} className={cls} index={index}>
+              <div />
+            </CardAnimations>
           ))}
         </div>
         <div className="mt-5 flex w-full justify-center">

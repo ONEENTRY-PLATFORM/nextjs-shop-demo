@@ -6,12 +6,14 @@ import { useTransitionState } from 'next-transition-router';
 import type { ReactNode } from 'react';
 import { useRef } from 'react';
 
-const CardsGridAnimations = ({
+const CardAnimations = ({
   children,
   className,
+  index,
 }: {
   children: ReactNode;
   className: string;
+  index: number;
 }) => {
   const { stage } = useTransitionState();
   const ref = useRef(null);
@@ -20,35 +22,32 @@ const CardsGridAnimations = ({
     const tl = gsap.timeline({
       paused: true,
     });
-    const elements =
-      ref.current &&
-      (ref.current as HTMLDivElement).querySelectorAll('.product-card');
 
-    tl.set(elements, {
+    tl.set(ref.current, {
       autoAlpha: 0,
-      scale: 0,
-    }).to(elements, {
+    }).to(ref.current, {
       autoAlpha: 1,
-      scale: 1,
-      stagger: 0.05,
+      delay: index / 20,
     });
 
     if (stage === 'leaving') {
-      // tl.reverse(1);
-    } else if (stage === 'entering') {
+      tl.reverse(1);
+    }
+    if (stage === 'entering') {
       tl.play();
     }
+    tl.play();
 
     return () => {
       tl.kill();
     };
-  }, [stage]);
+  }, []);
 
   return (
-    <div ref={ref} className={className}>
+    <div className={className} ref={ref}>
       {children}
     </div>
   );
 };
 
-export default CardsGridAnimations;
+export default CardAnimations;

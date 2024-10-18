@@ -29,9 +29,13 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
     [searchParams],
   );
 
+  useLayoutEffect(() => {
+    gsap.registerPlugin(useGSAP, ScrollTrigger);
+  }, []);
+
   const goToNextPage = () => {
     const nextPage = (currentPage || 1) + 1;
-    if (nextPage >= totalPages) {
+    if (currentPage >= totalPages) {
       return;
     }
     router.push(
@@ -42,12 +46,8 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
           (nextPage <= totalPages ? nextPage : currentPage).toString(),
         ),
     );
-    ScrollTrigger.refresh();
+    // ScrollTrigger.refresh();
   };
-
-  useLayoutEffect(() => {
-    gsap.registerPlugin(useGSAP, ScrollTrigger);
-  }, []);
 
   useGSAP(() => {
     if (stage !== 'none' || !isReady) {
@@ -59,14 +59,14 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
         goToNextPage();
       },
       onLeave: () => {
-        ScrollTrigger.refresh();
+        // ScrollTrigger.refresh();
       },
-      markers: {
-        startColor: 'black',
-        endColor: 'black',
-        fontSize: '14px',
-        indent: 20,
-      },
+      // markers: {
+      //   startColor: 'black',
+      //   endColor: 'black',
+      //   fontSize: '14px',
+      //   indent: 20,
+      // },
     });
 
     return () => {
@@ -82,7 +82,7 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
         }}
         ref={ref}
       >
-        Load more
+        {/* Load more */}
       </button>
     </div>
   );

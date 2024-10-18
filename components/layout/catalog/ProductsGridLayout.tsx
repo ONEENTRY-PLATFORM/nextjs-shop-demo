@@ -51,7 +51,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
       >
         <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
           <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-            {gridItems?.map((product) => {
+            {gridItems?.map((product, index) => {
               if (!product.isVisible) {
                 return;
               }
@@ -59,6 +59,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
                 <ProductCard
                   key={product.id}
                   product={product}
+                  index={index}
                   lang={lang}
                   dict={dict}
                 />
