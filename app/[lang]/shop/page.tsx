@@ -71,39 +71,40 @@ const ShopPage: FC<{
     filters?: IFilterParams[];
   };
 }> = async ({ params: { lang }, searchParams }) => {
-  const dict = await getDictionary(lang as Locale);
+  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
   const { page } = await getPageByUrl('shop', lang);
   const { block } = await getBlockByMarker('main_catalog', lang);
 
   const currentPage = Number(searchParams?.page) || 1;
-  const pageLimit = block?.quantity || 10;
-  // const pageLimit = 4;
+  const pageLimit = 5;
+  // const pageLimit = block?.quantity || 10;
+
+  const limit =
+    currentPage * pageLimit > 0 ? currentPage * pageLimit : pageLimit;
 
   const { isError, products, total } = await getProducts({
-    limit: currentPage * pageLimit > 0 ? currentPage * pageLimit : pageLimit,
+    limit: limit,
     offset: 0,
     lang,
     params: { searchParams: searchParams },
   });
 
-  if (isError) {
+  if (isError || !page) {
     return notFound();
-  }
-
-  if (!products || !page) {
-    return <ProductsGridLoader />;
   }
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <ProductsGridLayout
-          gridItems={products}
-          total={total}
-          limit={pageLimit}
-          lang={lang}
-          dict={dict}
-        />
+        <Suspense fallback={<ProductsGridLoader />}>
+          <ProductsGridLayout
+            gridItems={products}
+            total={total}
+            limit={pageLimit}
+            lang={lang}
+            dict={dict}
+          />
+        </Suspense>
       </div>
     </section>
   );

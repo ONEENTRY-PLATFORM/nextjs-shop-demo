@@ -14,7 +14,7 @@ const ContactInfo: FC<{
   }
 
   const attributeValues =
-    block.attributeValues[langCode] || block.attributeValues;
+    block.attributeValues?.[langCode] || block?.attributeValues;
 
   if (!attributeValues) {
     return 'Attributes not found';

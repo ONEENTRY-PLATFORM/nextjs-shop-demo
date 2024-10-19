@@ -6,8 +6,6 @@ import CardsGridAnimations from '@/app/animations/CardsGridAnimations';
 import FilterModal from '@/components/layout/filter/FilterModal';
 
 import LoadMore from './LoadMore';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Pagination from './Pagination';
 import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {
@@ -29,7 +27,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
 
   if (!gridItems || total < 1) {
     return (
-      <>
+      <div className="text-center">
         <Image
           width={100}
           height={100}
@@ -37,13 +35,13 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
           alt="..."
           className="mb-5 size-20"
         />
-        <div className="text-lg">Products not found</div>
+        <div className="text-center text-lg">Products not found</div>
         <FilterModal
           prices={gridItems?.[0]?.additional.prices}
           lang={lang}
           dict={dict}
         />
-      </>
+      </div>
     );
   }
 
@@ -71,7 +69,6 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
           </div>
           <div className="mt-5 flex w-full justify-center">
             {totalPages > 1 && <LoadMore totalPages={totalPages} />}
-            {/* {totalPages > 1 && <Pagination totalPages={totalPages} />} */}
           </div>
         </section>
       </CardsGridAnimations>
