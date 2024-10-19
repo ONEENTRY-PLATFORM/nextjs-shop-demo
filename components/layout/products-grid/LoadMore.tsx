@@ -12,7 +12,8 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const currentPage = Number(searchParams.get('page')) || 0;
+  const currentPage = Number(searchParams.get('page')) || 1;
+  const nextPage = (currentPage < 1 ? 1 : currentPage) + 1;
 
   const ref = useRef(null);
 
@@ -31,10 +32,6 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   }, []);
 
   const goToNextPage = () => {
-    const nextPage = (currentPage < 1 ? 1 : currentPage) + 1;
-    if (nextPage > totalPages) {
-      return;
-    }
     router.push(
       pathname +
         '?' +
@@ -44,11 +41,10 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
         ),
       { scroll: false },
     );
-    ScrollTrigger.refresh();
   };
 
   useGSAP(() => {
-    if (currentPage >= totalPages) {
+    if (nextPage >= totalPages) {
       return;
     }
     const trigger = ScrollTrigger.create({
@@ -75,11 +71,11 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
     <div>
       <button
         onClick={() => {
-          goToNextPage();
+          // goToNextPage();
         }}
         ref={ref}
       >
-        {currentPage === totalPages ? '' : 'Load more'}
+        {/* {currentPage === totalPages ? '' : 'Load more'} */}
       </button>
     </div>
   );
