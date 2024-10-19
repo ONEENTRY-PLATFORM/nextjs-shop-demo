@@ -24,8 +24,10 @@ const CardsGridAnimations = ({
     if (stage === 'entering') {
       tl.set('.product-card', {
         autoAlpha: 0,
+        scale: 0,
       }).to('.product-card', {
         autoAlpha: 1,
+        scale: 1,
         duration: 0.5,
         stagger: 0.1,
       });
@@ -34,6 +36,7 @@ const CardsGridAnimations = ({
     if (stage === 'leaving') {
       tl.to('.product-card', {
         autoAlpha: 0,
+        scale: 0,
         duration: 0.5,
         stagger: 0.1,
       });

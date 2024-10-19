@@ -28,7 +28,7 @@ export default function TransitionProvider({
             delay: 0.5,
             duration: 0.5,
           })
-          .call(next, undefined, 1);
+          .call(next, undefined, 0.9);
 
         return () => {
           tl.kill();

@@ -17,6 +17,7 @@ const SidebarAnimations = ({ children }: { children: ReactNode }) => {
       xPercent: -100,
     }).to('.sidebar-menu', {
       xPercent: 0,
+      duration: 1,
       stagger: 0.1,
     });
 
