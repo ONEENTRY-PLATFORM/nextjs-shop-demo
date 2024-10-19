@@ -113,7 +113,7 @@ const DeliveryTable: FC<{
             return (
               <div
                 key={i}
-                className="tr h-[50px] gap-5 border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
+                className="tr h-[50px] border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
               >
                 <div className="td w-3/12 self-stretch align-middle text-sm">
                   <label htmlFor={'address'}>
@@ -146,7 +146,7 @@ const DeliveryTable: FC<{
           return;
         })}
 
-        <div className="tr h-[100px] gap-5 border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
+        <div className="tr h-[100px] border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
           <div className="td w-3/12 align-middle">
             <Image
               loading="lazy"

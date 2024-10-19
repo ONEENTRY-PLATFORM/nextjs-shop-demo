@@ -42,7 +42,7 @@ const CartAnimations = ({
       paused: true,
     });
 
-    tl.set('.product-in-cart, .tr', {
+    tl.set('.product-in-cart, .tr, #total', {
       autoAlpha: 0,
       yPercent: 100,
     })
@@ -51,10 +51,10 @@ const CartAnimations = ({
         yPercent: 0,
         stagger: 0.05,
       })
-      .to('.tr', {
+      .to('.tr, #total', {
         autoAlpha: 1,
         yPercent: 0,
-        stagger: 0.05,
+        stagger: 0.1,
       });
 
     if (stage === 'leaving') {

@@ -117,7 +117,7 @@ const CartPage: FC<SimplePageProps> = ({ lang, dict }) => {
           dict={dict}
           delivery={delivery.product as IProductsEntity}
         />
-        <div className="mt-4 flex w-full flex-col">
+        <div id="total" className="mt-4 flex w-full flex-col">
           <TotalAmount
             lang={lang}
             className={

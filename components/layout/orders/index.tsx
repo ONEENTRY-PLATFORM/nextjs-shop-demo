@@ -10,7 +10,8 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
 import Loader from '@/components/shared/Loader';
 
-import Pagination from '../products-grid/Pagination';
+import LoadMore from '../products-grid/LoadMore';
+// import Pagination from '../products-grid/Pagination';
 import EmptyOrders from './components/EmptyOrders';
 import Order from './components/OrderRow';
 import OrdersTableLoader from './components/OrdersTableLoader';
@@ -61,7 +62,8 @@ const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
   }, [lang, currentPage, isAuth, pageLimit, user]);
 
   if (!settings) {
-    return <Loader />;
+    return <AuthError />;
+    // return <Loader />;
   }
 
   if (!isAuth || !user) {
@@ -95,7 +97,8 @@ const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
           )}
         </div>
         <div className="mx-auto flex flex-row justify-center">
-          {totalPages > 1 && <Pagination totalPages={totalPages} />}
+          {/* {totalPages > 1 && <Pagination totalPages={totalPages} />} */}
+          {totalPages > 1 && <LoadMore totalPages={totalPages} />}
         </div>
       </div>
     </div>
