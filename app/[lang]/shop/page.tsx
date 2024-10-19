@@ -76,8 +76,8 @@ const ShopPage: FC<{
   const { block } = await getBlockByMarker('main_catalog', lang);
 
   const currentPage = Number(searchParams?.page) || 1;
-  // const pageLimit = block?.quantity || 10;
-  const pageLimit = 2;
+  const pageLimit = block?.quantity || 10;
+  // const pageLimit = 2;
 
   const { isError, products, total } = await getProducts({
     limit: currentPage * pageLimit > 0 ? currentPage * pageLimit : pageLimit,

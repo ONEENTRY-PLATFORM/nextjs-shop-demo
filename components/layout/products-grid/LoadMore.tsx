@@ -8,7 +8,6 @@ import type { FC } from 'react';
 import { useLayoutEffect, useRef } from 'react';
 import { useCallback } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -51,8 +50,8 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   useGSAP(() => {
     const trigger = ScrollTrigger.create({
       trigger: ref.current,
-      start: 'bottom bottom',
-      end: 'bottom top',
+      start: 'top bottom',
+      end: 'bottom bottom',
       onEnter: () => {
         goToNextPage();
       },
@@ -67,7 +66,7 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
     return () => {
       trigger.kill();
     };
-  }, []);
+  }, [currentPage]);
 
   return (
     <div>
@@ -77,7 +76,7 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
         }}
         ref={ref}
       >
-        Load more
+        {currentPage === totalPages ? '' : 'Load more'}
       </button>
     </div>
   );

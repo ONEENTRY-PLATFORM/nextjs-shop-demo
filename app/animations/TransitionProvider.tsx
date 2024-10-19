@@ -17,7 +17,6 @@ export default function TransitionProvider({
       auto={true}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       leave={async (next, from, to) => {
-        // console.log({ from, to });
         const tl = gsap
           .timeline()
           .set(ref.current, {
@@ -26,9 +25,9 @@ export default function TransitionProvider({
           .to(ref.current, {
             autoAlpha: 0,
             delay: 0.35,
-            duration: 0.5,
+            duration: 0.35,
           })
-          .call(next, undefined, 0.85);
+          .call(next, undefined, 0.7);
 
         return () => {
           tl.kill();
