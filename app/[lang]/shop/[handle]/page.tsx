@@ -67,10 +67,7 @@ export async function generateMetadata({
 }
 
 const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
-  const [dict] = useServerProvider(
-    'dict',
-    await getDictionary(params.lang as Locale),
-  );
+  const dict = await getDictionary(params.lang as Locale);
   const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
 
@@ -92,15 +89,13 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense fallback={<ProductsGridLoader />}>
-          <ProductsGridLayout
-            gridItems={products}
-            total={total}
-            totalPages={total / pageLimit}
-            lang={params.lang}
-            dict={dict}
-          />
-        </Suspense>
+        <ProductsGridLayout
+          gridItems={products}
+          total={total}
+          totalPages={total / pageLimit}
+          lang={params.lang}
+          dict={dict}
+        />
       </div>
     </section>
   );

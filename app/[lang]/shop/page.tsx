@@ -71,9 +71,9 @@ const ShopPage: FC<{
     filters?: IFilterParams[];
   };
 }> = async ({ params: { lang }, searchParams }) => {
+  const dict = await getDictionary(lang as Locale);
   const { page } = await getPageByUrl('shop', lang);
   const { block } = await getBlockByMarker('main_catalog', lang);
-  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
 
   const currentPage = Number(searchParams?.page) || 1;
   const pageLimit = block?.quantity || 10;
@@ -96,15 +96,13 @@ const ShopPage: FC<{
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense fallback={<ProductsGridLoader />}>
-          <ProductsGridLayout
-            gridItems={products}
-            total={total}
-            totalPages={total / pageLimit}
-            lang={lang}
-            dict={dict}
-          />
-        </Suspense>
+        <ProductsGridLayout
+          gridItems={products}
+          total={total}
+          totalPages={total / pageLimit}
+          lang={lang}
+          dict={dict}
+        />
       </div>
     </section>
   );
