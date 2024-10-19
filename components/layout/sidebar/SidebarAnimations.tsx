@@ -17,13 +17,13 @@ const SidebarAnimations = ({ children }: { children: ReactNode }) => {
       xPercent: -100,
     }).to('.sidebar-menu', {
       xPercent: 0,
-      duration: 0.5,
+      duration: 0.7,
     });
 
     if (stage === 'entering') {
       tl.play();
     } else if (stage === 'leaving') {
-      tl.reverse(1);
+      tl.reverse(0.7);
     }
 
     return () => {

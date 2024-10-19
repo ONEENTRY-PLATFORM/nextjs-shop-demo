@@ -1,4 +1,4 @@
-import SidebarMenu from '@/components/layout/sidebar/SidebarMenu';
+import SidebarMenu from '@/components/layout/sidebar';
 
 const WithSidebar = async ({
   lang,
