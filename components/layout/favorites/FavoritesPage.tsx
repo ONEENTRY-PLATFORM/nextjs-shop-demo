@@ -22,9 +22,9 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
       <Suspense fallback={<ProductsGridLoader />}>
         <ProductsGridLayout
           gridItems={favorites}
-          totalPages={0}
-          lang={lang}
           total={favorites.length}
+          limit={100}
+          lang={lang}
           dict={dict}
         />
       </Suspense>

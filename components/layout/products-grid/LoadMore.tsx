@@ -32,7 +32,7 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
 
   const goToNextPage = () => {
     const nextPage = (currentPage < 1 ? 1 : currentPage) + 1;
-    if (nextPage >= totalPages) {
+    if (nextPage > totalPages) {
       return;
     }
     router.push(
@@ -48,6 +48,9 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   };
 
   useGSAP(() => {
+    if (currentPage >= totalPages) {
+      return;
+    }
     const trigger = ScrollTrigger.create({
       trigger: ref.current,
       start: 'top bottom',

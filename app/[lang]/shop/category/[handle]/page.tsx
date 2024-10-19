@@ -87,7 +87,7 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
         <ProductsGridLayout
           gridItems={products}
           total={total}
-          totalPages={total / pageLimit}
+          limit={pageLimit}
           lang={params.lang}
           dict={dict}
         />

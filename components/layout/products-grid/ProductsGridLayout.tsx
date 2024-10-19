@@ -12,19 +12,21 @@ import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {
   gridItems?: Array<IProductsEntity>;
-  totalPages: number;
   total: number;
+  limit: number;
   lang: string;
   dict: unknown;
 }
 
 const ProductsGridLayout: FC<GridLayoutProps> = async ({
   gridItems,
-  totalPages,
   total,
+  limit,
   lang,
   dict,
 }) => {
+  const totalPages = Math.ceil(total / limit);
+
   if (!gridItems || total < 1) {
     return (
       <>

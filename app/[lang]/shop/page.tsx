@@ -100,7 +100,7 @@ const ShopPage: FC<{
         <ProductsGridLayout
           gridItems={products}
           total={total}
-          totalPages={total / pageLimit}
+          limit={pageLimit}
           lang={lang}
           dict={dict}
         />
