@@ -29,7 +29,7 @@ export async function generateMetadata({
     height,
     altText: alt,
   } = {
-    url: attributeValues.icon?.downloadLink,
+    url: attributeValues?.icon?.downloadLink,
     width: 300,
     height: 300,
     altText: localizeInfos.title,
@@ -76,7 +76,8 @@ const ShopPage: FC<{
   const { block } = await getBlockByMarker('main_catalog', lang);
 
   const currentPage = Number(searchParams?.page) || 1;
-  const pageLimit = block?.quantity || 10;
+  // const pageLimit = block?.quantity || 10;
+  const pageLimit = 2;
 
   const { isError, products, total } = await getProducts({
     limit: currentPage * pageLimit > 0 ? currentPage * pageLimit : pageLimit,

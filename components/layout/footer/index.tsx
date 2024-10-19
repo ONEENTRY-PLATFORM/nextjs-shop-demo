@@ -15,8 +15,8 @@ const Footer: FC = async () => {
       <FooterMenuSection lang={lang} />
       <div className="w-full bg-black px-5 py-11 text-center text-white max-md:max-w-full max-md:p-5">
         <div className="">
-          &copy; {copyrightDate} {dict.site_name?.value}{' '}
-          <span className="text-orange-500">{dict.company_name?.value}</span>
+          &copy; {copyrightDate} {dict?.site_name?.value}{' '}
+          <span className="text-orange-500">{dict?.company_name?.value}</span>
         </div>
       </div>
     </footer>

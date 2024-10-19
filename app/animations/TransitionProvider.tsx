@@ -25,10 +25,10 @@ export default function TransitionProvider({
           })
           .to(ref.current, {
             autoAlpha: 0,
-            delay: 0.5,
+            delay: 0.35,
             duration: 0.5,
           })
-          .call(next, undefined, 0.9);
+          .call(next, undefined, 0.85);
 
         return () => {
           tl.kill();

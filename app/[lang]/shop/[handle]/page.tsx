@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 
-import { getPageByUrl, getProducts } from '@/app/api';
+import { getBlockByMarker, getPageByUrl, getProducts } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 import type { PageProps } from '@/app/types/global';
@@ -68,6 +68,7 @@ export async function generateMetadata({
 
 const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
   const dict = await getDictionary(params.lang as Locale);
+  const { block } = await getBlockByMarker('main_catalog', params.lang);
   const pageLimit = 10;
   const currentPage = Number(searchParams?.page) || 0;
 
