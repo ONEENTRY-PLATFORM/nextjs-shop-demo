@@ -12,7 +12,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import { selectCartItems } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { SimplePageProps } from '@/app/types/global';
-import EmptyCart from '@/components/layout/cart/EmptyCart';
+import EmptyCart from '@/components/layout/cart/components/EmptyCart';
 import PaymentMethod from '@/components/layout/payment/components/PaymentMethod';
 import AuthError from '@/components/shared/AuthError';
 import Loader from '@/components/shared/Loader';

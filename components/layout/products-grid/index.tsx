@@ -1,31 +1,51 @@
 import Image from 'next/image';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IFilterParams,
+  IProductsEntity,
+} from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
 import CardsGridAnimations from '@/app/animations/CardsGridAnimations';
+import { getProducts } from '@/app/api';
 import FilterModal from '@/components/layout/filter/FilterModal';
 
 import LoadMore from './LoadMore';
 import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {
-  gridItems?: Array<IProductsEntity>;
-  total: number;
-  limit: number;
-  lang: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params: any;
+  searchParams?: {
+    search?: string;
+    page?: string;
+    filters?: IFilterParams[];
+  };
   dict: unknown;
+  pagesLimit: number;
 }
 
 const ProductsGridLayout: FC<GridLayoutProps> = async ({
-  gridItems,
-  total,
-  limit,
-  lang,
+  params,
+  searchParams,
   dict,
+  pagesLimit,
 }) => {
+  const currentPage = Number(searchParams?.page) || 1;
+
+  const limit =
+    currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { isError, products, total } = await getProducts({
+    limit: limit,
+    offset: 0,
+    lang: params.lang,
+    params: { ...params, searchParams: searchParams },
+  });
+
   const totalPages = Math.ceil(total / limit);
 
-  if (!gridItems || total < 1) {
+  if (!products || total < 1) {
     return (
       <div className="text-center">
         <Image
@@ -33,12 +53,12 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
           height={100}
           src={'/icons/cart.svg'}
           alt="..."
-          className="mb-5 size-20"
+          className="mx-auto mb-5 size-20"
         />
         <div className="text-center text-lg">Products not found</div>
         <FilterModal
-          prices={gridItems?.[0]?.additional.prices}
-          lang={lang}
+          prices={products?.[0]?.additional.prices}
+          lang={params.lang}
           dict={dict}
         />
       </div>
@@ -52,7 +72,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
       >
         <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
           <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-            {gridItems?.map((product, index) => {
+            {products?.map((product: IProductsEntity, index: number) => {
               if (!product.isVisible) {
                 return;
               }
@@ -61,7 +81,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
                   key={product.id}
                   product={product}
                   index={index}
-                  lang={lang}
+                  lang={params.lang}
                   dict={dict}
                 />
               );
@@ -73,8 +93,8 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
         </section>
       </CardsGridAnimations>
       <FilterModal
-        prices={gridItems?.[0]?.additional.prices}
-        lang={lang}
+        prices={products?.[0]?.additional.prices}
+        lang={params.lang}
         dict={dict}
       />
     </>

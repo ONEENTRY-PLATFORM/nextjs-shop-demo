@@ -15,13 +15,13 @@ import {
 } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { SimplePageProps } from '@/app/types/global';
-import DeliveryTable from '@/components/layout/cart/components/DeliveryTable';
+import EmptyCart from '@/components/layout/cart/components/EmptyCart';
 import PaymentButton from '@/components/layout/cart/components/PaymentButton';
 import ProductCard from '@/components/layout/cart/components/ProductCard';
 import TotalAmount from '@/components/layout/cart/components/TotalAmount';
-import EmptyCart from '@/components/layout/cart/EmptyCart';
+import DeliveryTable from '@/components/layout/cart/delivery-table/DeliveryTable';
 
-const CartPage: FC<SimplePageProps> = ({ lang }) => {
+const CartPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
@@ -114,6 +114,7 @@ const CartPage: FC<SimplePageProps> = ({ lang }) => {
       >
         <DeliveryTable
           lang={lang}
+          dict={dict}
           delivery={delivery.product as IProductsEntity}
         />
         <div className="mt-4 flex w-full flex-col">

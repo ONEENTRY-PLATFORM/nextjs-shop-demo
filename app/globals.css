@@ -280,6 +280,13 @@ input:focus-visible {
       flex-col 
       text-base;
   }
+
+  .tr {
+    @apply flex w-full;
+  }
+  .td {
+    @apply flex;
+  }
 }
 
 @layer utilities {

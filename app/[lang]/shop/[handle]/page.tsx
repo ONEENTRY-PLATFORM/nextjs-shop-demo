@@ -1,27 +1,21 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 
-import { getBlockByMarker, getPageByUrl, getProducts } from '@/app/api';
+import { getBlockByMarker, getPageByUrl } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
-import { LanguageEnum } from '@/app/types/enum';
-import type { PageProps } from '@/app/types/global';
-import ProductsGridLayout from '@/components/layout/products-grid/ProductsGridLayout';
+import type { MetadataParams, PageProps } from '@/app/types/global';
+import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
 
 import { getDictionary } from '../../dictionaries';
 
 export async function generateMetadata({
-  params,
-}: {
-  params: { handle: string; lang: string };
-}): Promise<Metadata> {
-  const langCode = LanguageEnum[params.lang as keyof typeof LanguageEnum];
-  const data = await getPageByUrl(params.handle, langCode);
-  const { isError, page } = data;
+  params: { handle, lang },
+}: MetadataParams): Promise<Metadata> {
+  const { isError, page } = await getPageByUrl(handle, lang);
 
   if (isError || !page) {
     return notFound();
@@ -66,37 +60,31 @@ export async function generateMetadata({
   };
 }
 
-const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
-  const dict = await getDictionary(params.lang as Locale);
-  const { block } = await getBlockByMarker('main_catalog', params.lang);
-  const pageLimit = 10;
-  const currentPage = Number(searchParams?.page) || 0;
+const CatalogPage: FC<PageProps> = async ({
+  params: { handle, lang },
+  searchParams,
+}) => {
+  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
 
-  const { isError, products, total } = await getProducts({
-    limit: currentPage * pageLimit || pageLimit,
-    offset: 0,
-    lang: params.lang,
-    params: { ...params, searchParams: searchParams },
-  });
+  const { page } = await getPageByUrl(handle, lang);
+  const { block } = await getBlockByMarker('main_catalog', lang);
+  const pagesLimit = block?.quantity || 10;
 
-  if (isError) {
+  if (!page) {
     return notFound();
-  }
-
-  if (!products) {
-    return <ProductsGridLoader />;
   }
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <ProductsGridLayout
-          gridItems={products}
-          total={total}
-          limit={pageLimit}
-          lang={params.lang}
-          dict={dict}
-        />
+        <Suspense fallback={<ProductsGridLoader />}>
+          <ProductsGridLayout
+            params={{ handle, lang }}
+            searchParams={searchParams}
+            pagesLimit={pagesLimit}
+            dict={dict}
+          />
+        </Suspense>
       </div>
     </section>
   );

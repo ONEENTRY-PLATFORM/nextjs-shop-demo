@@ -16,10 +16,12 @@ import { UsePrice } from '@/components/utils';
 
 import TableRow from './DeliveryTableRow';
 
-const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
-  delivery,
-  lang,
-}) => {
+const DeliveryTable: FC<{
+  delivery: IProductsEntity;
+  lang: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
+}> = ({ delivery, lang, dict }) => {
   const dispatch = useAppDispatch();
   const { data } = useGetFormByMarkerQuery({
     marker: 'order',
@@ -38,7 +40,7 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
     order_info_date_placeholder,
     order_info_time_placeholder,
     order_info_address_placeholder,
-  } = useAppSelector((state) => state.systemContentReducer.content);
+  } = dict;
 
   // set delivery data onChange
   useEffect(() => {
@@ -78,8 +80,8 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
   }, [deliveryData]);
 
   return (
-    <table className="table w-full border-collapse text-neutral-600">
-      <tbody>
+    <div className="table w-full border-collapse text-neutral-600">
+      <div>
         {attrs?.map((attr: IAttributes, i: Key) => {
           const marker = attr.marker;
 
@@ -109,16 +111,16 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
           }
           if (marker === 'order_address') {
             return (
-              <tr
+              <div
                 key={i}
-                className="table-row h-[50px] gap-5 border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
+                className="tr h-[50px] gap-5 border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
               >
-                <td className="self-stretch align-middle text-sm">
+                <div className="td w-3/12 self-stretch align-middle text-sm">
                   <label htmlFor={'address'}>
                     {order_info_address_placeholder?.value}
                   </label>
-                </td>
-                <td className="px-5 align-middle text-base">
+                </div>
+                <div className="td w-8/12 px-5 align-middle text-base">
                   <input
                     size={40}
                     type="text"
@@ -136,43 +138,42 @@ const DeliveryTable: FC<{ delivery: IProductsEntity; lang: string }> = ({
                     }}
                     required
                   />
-                </td>
-              </tr>
+                </div>
+                <div className="td w-1/12 pl-5 align-middle"></div>
+              </div>
             );
           }
           return;
         })}
 
-        {delivery && (
-          <tr className="table-row h-[50px] gap-5 border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
-            <td className="table-cell align-middle">
-              <Image
-                loading="lazy"
-                src="/icons/delivery.svg"
-                alt="delivery"
-                width={125}
-                height={107}
-                className="aspect-[1.16] w-[125px] max-w-full shrink-0 p-4 max-sm:p-2"
-              />
-            </td>
-            <td className="table-cell px-5 align-middle">
-              <div className="mt-2 flex flex-col self-start">
-                <div className="mb-4 text-base max-sm:mb-2">
-                  {delivery?.localizeInfos?.title}
-                </div>
-                <div className="mb-2 text-xl font-bold leading-8">
-                  {UsePrice({
-                    amount: delivery?.price,
-                    lang,
-                  })}
-                </div>
+        <div className="tr h-[100px] gap-5 border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
+          <div className="td w-3/12 align-middle">
+            <Image
+              loading="lazy"
+              src="/icons/delivery.svg"
+              alt="delivery"
+              width={125}
+              height={107}
+              className="aspect-[1.16] w-[125px] max-w-full shrink-0 p-4 max-sm:p-2"
+            />
+          </div>
+          <div className="td w-8/12 px-5 align-middle">
+            <div className="mt-2 flex flex-col self-start">
+              <div className="mb-4 text-base max-sm:mb-2">
+                {delivery?.localizeInfos?.title}
               </div>
-            </td>
-            <td className="table-cell pl-5 align-middle" />
-          </tr>
-        )}
-      </tbody>
-    </table>
+              <div className="mb-2 text-xl font-bold leading-8">
+                {UsePrice({
+                  amount: delivery?.price,
+                  lang,
+                })}
+              </div>
+            </div>
+          </div>
+          <div className="td w-1/12 pl-5 align-middle" />
+        </div>
+      </div>
+    </div>
   );
 };
 

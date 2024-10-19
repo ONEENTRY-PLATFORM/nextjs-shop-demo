@@ -42,7 +42,7 @@ const CartAnimations = ({
       paused: true,
     });
 
-    tl.set('.product-in-cart, .table-row', {
+    tl.set('.product-in-cart, .tr', {
       autoAlpha: 0,
       yPercent: 100,
     })
@@ -51,7 +51,7 @@ const CartAnimations = ({
         yPercent: 0,
         stagger: 0.05,
       })
-      .to('.table-row', {
+      .to('.tr', {
         autoAlpha: 1,
         yPercent: 0,
         stagger: 0.05,

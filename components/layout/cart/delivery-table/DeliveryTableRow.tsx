@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import Image from 'next/image';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
@@ -15,7 +14,7 @@ interface TableRowProps {
 }
 
 const DeliveryTableRow: FC<TableRowProps> = ({
-  field,
+  // field,
   label,
   value,
   icon,
@@ -24,11 +23,13 @@ const DeliveryTableRow: FC<TableRowProps> = ({
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   return (
-    <tr className="table-row h-[50px] gap-5 border-t border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
-      <td className="self-stretch align-middle text-sm">
-        <label htmlFor={'label-' + placeholder}>{label}</label>
-      </td>
-      <td className="px-5 align-middle text-base">
+    <div className="tr h-[50px] gap-5 border-t border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
+      <div className="td w-3/12 align-middle text-sm">
+        <label className="my-auto h-5" htmlFor={'label-' + placeholder}>
+          {label}
+        </label>
+      </div>
+      <div className="td w-8/12 px-5 align-middle text-base">
         <input
           type="text"
           value={value}
@@ -42,8 +43,8 @@ const DeliveryTableRow: FC<TableRowProps> = ({
           }}
           className="w-full"
         />
-      </td>
-      <td className="table-cell pl-5 align-middle">
+      </div>
+      <div className="td w-1/12 pl-5 align-middle">
         {icon && (
           <Image
             width={20}
@@ -58,8 +59,8 @@ const DeliveryTableRow: FC<TableRowProps> = ({
             }}
           />
         )}
-      </td>
-    </tr>
+      </div>
+    </div>
   );
 };
 

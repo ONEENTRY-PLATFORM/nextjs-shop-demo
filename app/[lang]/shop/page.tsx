@@ -4,23 +4,24 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 
-import { getBlockByMarker, getPageByUrl, getProducts } from '@/app/api';
+import { getBlockByMarker, getPageByUrl } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
-import ProductsGridLayout from '@/components/layout/products-grid/ProductsGridLayout';
+import type { MetadataParams } from '@/app/types/global';
+import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 
 export async function generateMetadata({
-  params,
-}: {
-  params: { page: string; lang: string };
-}): Promise<Metadata> {
-  const { isError, page } = await getPageByUrl('shop', params.lang);
+  params: { lang },
+}: MetadataParams): Promise<Metadata> {
+  const { isError, page } = await getPageByUrl('shop', lang);
+
   if (isError || !page) {
     return notFound();
   }
+
   const { localizeInfos, isVisible, attributeValues } = page;
 
   const {
@@ -70,39 +71,29 @@ const ShopPage: FC<{
     page?: string;
     filters?: IFilterParams[];
   };
-}> = async ({ params: { lang }, searchParams }) => {
-  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
-  const { page } = await getPageByUrl('shop', lang);
-  const { block } = await getBlockByMarker('main_catalog', lang);
+}> = async ({ params, searchParams }) => {
+  const [dict] = useServerProvider(
+    'dict',
+    await getDictionary(params.lang as Locale),
+  );
 
-  const currentPage = Number(searchParams?.page) || 1;
-  const pageLimit = 5;
-  // const pageLimit = block?.quantity || 10;
+  const { page } = await getPageByUrl('shop', params.lang);
+  const { block } = await getBlockByMarker('main_catalog', params.lang);
+  const pagesLimit = block?.quantity || 10;
 
-  const limit =
-    currentPage * pageLimit > 0 ? currentPage * pageLimit : pageLimit;
-
-  const { isError, products, total } = await getProducts({
-    limit: limit,
-    offset: 0,
-    lang,
-    params: { searchParams: searchParams },
-  });
-
-  if (isError || !page) {
+  if (!page) {
     return notFound();
   }
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
-      <div className="flex w-full flex-col items-center gap-5 bg-white">
+      <div className="flex w-full flex-col items-center gap-5">
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
-            gridItems={products}
-            total={total}
-            limit={pageLimit}
-            lang={lang}
+            searchParams={searchParams}
+            pagesLimit={pagesLimit}
             dict={dict}
+            params={params}
           />
         </Suspense>
       </div>

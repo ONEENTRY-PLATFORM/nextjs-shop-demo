@@ -9,7 +9,7 @@ const ProfilePage: FC<SimplePageProps> = async ({ lang }) => {
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>
-        <UserForm lang={lang} />
+        <UserForm lang={lang} dict={undefined} />
       </Suspense>
     </div>
   );

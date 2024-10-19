@@ -1,20 +1,19 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { FC } from 'react';
+import { type FC, Suspense } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
-import { getPageByUrl, getProductsByPageUrl } from '@/app/api';
-import type { PageProps } from '@/app/types/global';
-import ProductsGridLayout from '@/components/layout/products-grid/ProductsGridLayout';
+import { getBlockByMarker, getPageByUrl } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import type { MetadataParams, PageProps } from '@/app/types/global';
+import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
 
 // generateMetadata
 export async function generateMetadata({
   params: { handle, lang },
-}: {
-  params: { handle: string; lang: string };
-}): Promise<Metadata> {
+}: MetadataParams): Promise<Metadata> {
   const { isError, page } = await getPageByUrl(handle, lang);
 
   if (isError || !page) {
@@ -62,35 +61,30 @@ export async function generateMetadata({
 
 // CatalogPage
 const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
-  const dict = await getDictionary(params.lang as Locale);
-  const pageLimit = 10;
-  const currentPage = Number(searchParams?.page) || 0;
+  const [dict] = useServerProvider(
+    'dict',
+    await getDictionary(params.lang as Locale),
+  );
 
-  const { isError, products, total } = await getProductsByPageUrl({
-    lang: params.lang,
-    limit: pageLimit,
-    offset: currentPage * pageLimit,
-    params: { ...params, searchParams: searchParams },
-  });
+  const { page } = await getPageByUrl(params.handle, params.lang);
+  const { block } = await getBlockByMarker('main_catalog', params.lang);
+  const pagesLimit = block?.quantity || 10;
 
-  if (isError) {
+  if (!page) {
     return notFound();
-  }
-
-  if (!products) {
-    return <ProductsGridLoader />;
   }
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <ProductsGridLayout
-          gridItems={products}
-          total={total}
-          limit={pageLimit}
-          lang={params.lang}
-          dict={dict}
-        />
+        <Suspense fallback={<ProductsGridLoader />}>
+          <ProductsGridLayout
+            searchParams={searchParams}
+            pagesLimit={pagesLimit}
+            params={params}
+            dict={dict}
+          />
+        </Suspense>
       </div>
     </section>
   );

@@ -3,10 +3,10 @@ import { notFound } from 'next/navigation';
 import type { FC } from 'react';
 
 import { getPageByUrl } from '@/app/api';
-import CartPage from '@/components/layout/cart/CartPage';
-import FavoritesPage from '@/components/layout/favorites/FavoritesPage';
+import CartPage from '@/components/layout/cart';
+import FavoritesPage from '@/components/layout/favorites';
 import PaymentPage from '@/components/layout/payment';
-import ProfilePage from '@/components/layout/profile/ProfilePage';
+import ProfilePage from '@/components/layout/profile';
 import AboutPage from '@/components/pages/AboutPage';
 import ContactsPage from '@/components/pages/ContactsPage';
 import PaymentCanceled from '@/components/pages/PaymentCanceled';

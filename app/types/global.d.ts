@@ -29,3 +29,7 @@ declare type LoaderProps = {
   limit?: number;
   offset?: number;
 };
+
+declare type MetadataParams = {
+  params: { handle: string; lang: string };
+};
