@@ -19,7 +19,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
 
   return favorites.length ? (
     <div className="flex flex-col pb-5 max-md:max-w-full">
-      <Suspense fallback={<ProductsGridLoader />}>
+      <Suspense>
         <ProductsGridLayout
           gridItems={favorites}
           total={favorites.length}

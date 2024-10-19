@@ -8,6 +8,8 @@ import type { FC } from 'react';
 import { useLayoutEffect, useRef } from 'react';
 import { useCallback } from 'react';
 
+import Spinner from '@/components/shared/Spinner';
+
 const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -44,7 +46,7 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   };
 
   useGSAP(() => {
-    if (nextPage >= totalPages) {
+    if (nextPage > totalPages) {
       return;
     }
     const trigger = ScrollTrigger.create({
@@ -54,12 +56,12 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
       onEnter: () => {
         goToNextPage();
       },
-      markers: {
-        startColor: 'black',
-        endColor: 'black',
-        fontSize: '14px',
-        indent: 20,
-      },
+      // markers: {
+      //   startColor: 'black',
+      //   endColor: 'black',
+      //   fontSize: '14px',
+      //   indent: 20,
+      // },
     });
 
     return () => {
@@ -68,16 +70,16 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   }, [currentPage]);
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          // goToNextPage();
-        }}
-        ref={ref}
-      >
-        {/* {currentPage === totalPages ? '' : 'Load more'} */}
-      </button>
-    </div>
+    <button
+      onClick={() => {
+        goToNextPage();
+      }}
+      ref={ref}
+      className="relative mx-auto flex h-6 w-20"
+    >
+      {/* {currentPage === totalPages ? '' : 'Load more'} */}
+      {currentPage !== totalPages && <Spinner />}
+    </button>
   );
 };
 
