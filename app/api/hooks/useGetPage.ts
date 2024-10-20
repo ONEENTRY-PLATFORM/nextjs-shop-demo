@@ -19,7 +19,7 @@ export const useGetPage = (pageUrl: string) => {
       (async () => {
         setLoading(true);
         const result = await api.Pages.getPageByUrl(pageUrl, activeLanguage);
-        setPage(result);
+        setPage(result as IPagesEntity);
         setLoading(false);
         setRefresh(false);
       })();

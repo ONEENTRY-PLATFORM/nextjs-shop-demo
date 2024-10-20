@@ -8,6 +8,7 @@ import { useContext, useEffect, useState } from 'react';
 import { getAllOrdersByMarker, getBlockByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Loader from '@/components/shared/Loader';
 
 import LoadMore from '../products-grid/LoadMore';
@@ -34,28 +35,21 @@ const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
       return;
     }
     (async () => {
-      try {
-        const { block } = await getBlockByMarker('orders_settings', lang);
-        if (block) {
-          setSettings(block.attributeValues);
-        }
-      } catch (e) {
-        console.log(e);
+      const { block } = await getBlockByMarker('orders_settings', lang);
+      if (block) {
+        setSettings(block.attributeValues);
       }
       if (pageLimit) {
-        try {
-          const { orders, total = 0 } = await getAllOrdersByMarker({
-            marker: 'order',
-            limit: pageLimit,
-            offset: currentPage * pageLimit,
-            lang,
-          });
-          if (orders) {
-            setOrders(orders);
-            setTotal(total);
-          }
-        } catch (e) {
-          console.log(e);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { isError, orders, total } = await getAllOrdersByMarker({
+          marker: 'order',
+          limit: pageLimit,
+          offset: currentPage * pageLimit,
+          lang,
+        });
+        if (orders) {
+          setOrders(orders);
+          setTotal(total);
         }
       }
     })();

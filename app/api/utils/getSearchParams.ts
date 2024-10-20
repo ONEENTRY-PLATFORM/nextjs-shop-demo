@@ -35,18 +35,6 @@ const getSearchParams = (
     expandedFilters.push(stickersFilter);
   }
 
-  // if (searchParams?.search) {
-  //   console.log(searchParams.search);
-  //   expandedFilters.push({
-  //     attributeMarker: 'price',
-  //     conditionMarker: 'in',
-  //     conditionValue: searchParams.search,
-  //     pageUrl: ['shop'],
-  //     title: searchParams.search,
-  //     isNested: false,
-  //   });
-  // }
-
   if (searchParams?.in_stock) {
     expandedFilters.push({
       statusMarker: 'in_stock',

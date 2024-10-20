@@ -8,7 +8,6 @@ import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
 import type {
   IOrderByMarkerEntity,
-  // IOrdersByMarkerEntity,
   IOrdersEntity,
 } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
@@ -16,10 +15,7 @@ import type {
   IAccountsEntity,
   ISessionEntity,
 } from 'oneentry/dist/payments/paymentsInterfaces';
-import type {
-  IUserBody,
-  IUserEntity,
-} from 'oneentry/dist/users/usersInterfaces';
+import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 
 import { LanguageEnum } from '@/app/types/enum';
 
@@ -63,7 +59,7 @@ export const RTKApi = createApi({
             pageUrl,
             activeLang,
           );
-          return { data: result };
+          return { error: '', data: result };
         } catch (e: any) {
           return { error: e.message };
         }

@@ -31,7 +31,7 @@ export const useGetSingleAttributeByMarkerSet = ({
           setMarker,
           activeLanguage,
         );
-        setAttributes(result);
+        setAttributes(result as IAttributesSetsEntity);
         setLoading(false);
       } catch (e: unknown) {
         setError((e as Error).message);

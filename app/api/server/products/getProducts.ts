@@ -26,7 +26,6 @@ export const getProducts = async (props: {
 }> => {
   const { limit, offset, params, lang } = props;
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  // const searchValue = params?.searchParams?.search || '';
   const expandedFilters = getSearchParams(params?.searchParams, params?.handle);
 
   const data = await api.Products.getProducts(expandedFilters, langCode, {

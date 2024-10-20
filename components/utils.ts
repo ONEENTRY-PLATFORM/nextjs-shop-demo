@@ -77,7 +77,7 @@ export const flatMenuToNested = (
 };
 
 export function typeError(res: IError | unknown): res is IError {
-  if ((res as IError).type) {
+  if ((res as IError)?.statusCode) {
     return true;
   }
   return false;

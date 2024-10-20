@@ -1,6 +1,9 @@
 'use client';
 
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IProductEntity,
+  IProductsEntity,
+} from 'oneentry/dist/products/productsInterfaces';
 import { useContext, useEffect, useState } from 'react';
 
 import { api } from '@/app/api';
@@ -22,7 +25,7 @@ export const useGetProduct = ({ id }: UseGetProductProps) => {
       setLoading(true);
       try {
         const result = await api.Products.getProductById(id, activeLanguage);
-        setProduct(result);
+        setProduct(result as IProductEntity);
         setLoading(false);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
