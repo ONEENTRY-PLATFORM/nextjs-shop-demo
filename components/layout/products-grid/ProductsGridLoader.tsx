@@ -8,7 +8,6 @@ import type { ReactNode } from 'react';
 import { useRef } from 'react';
 
 import type { LoaderProps } from '@/app/types/global';
-import Placeholder from '@/components/shared/Placeholder';
 
 const CardsGridAnimations = ({
   children,
@@ -23,27 +22,42 @@ const CardsGridAnimations = ({
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,
+      yoyo: true,
+      repeat: -1,
     });
+    const cards =
+      ref.current &&
+      (ref.current as HTMLDivElement).querySelectorAll('.product-card');
+    const lines =
+      ref.current &&
+      (ref.current as HTMLDivElement).querySelectorAll('.opacity-30');
 
-    tl.set('.product-card', {
+    tl.set(cards, {
       autoAlpha: 0,
     })
-      .set('.opacity-30', {
+      .set(lines, {
         width: 0,
         transformOrigin: '100% 100%',
       })
-      .to('.product-card', {
+      .to(cards, {
         autoAlpha: 1,
-        duration: 0.2,
+        duration: 0.5,
+        delay: 0.2,
         stagger: 0.05,
       })
-      .to('.opacity-30', {
+      .to(lines, {
         width: '100%',
-        duration: 0.5,
+        duration: 0.25,
         stagger: 0.05,
-        transformOrigin: '100% 100%',
       });
-    tl.play();
+
+    if (stage === 'leaving') {
+      tl.reverse(1);
+    } else if (stage === 'entering') {
+      tl.play();
+    } else {
+      tl.play();
+    }
 
     return () => {
       tl.kill();
@@ -71,9 +85,7 @@ const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
                 'product-card animate-loader relative flex size-full min-h-[360px] flex-col items-center rounded-3xl p-4 opacity-40'
               }
             >
-              <div className="relative mb-3 size-40 w-full opacity-40">
-                <Placeholder />
-              </div>
+              <div className="relative mb-3 size-36 w-full rounded-md bg-white opacity-40"></div>
               <div className="z-10 mb-4 mt-auto flex h-6 w-full flex-col rounded-full bg-white opacity-30"></div>
               <div className="z-10 mb-2 mt-auto flex h-4 w-full flex-col gap-2.5 rounded-full bg-white opacity-30"></div>
               <div className="z-10 mb-2 mt-auto flex h-4 w-full flex-col gap-2.5 rounded-full bg-white opacity-30"></div>

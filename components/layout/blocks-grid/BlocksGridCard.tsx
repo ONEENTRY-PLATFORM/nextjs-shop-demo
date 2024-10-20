@@ -3,6 +3,7 @@ import Link from 'next/link';
 import type React from 'react';
 import type { FC } from 'react';
 
+import BlockCardAnimations from '@/app/animations/BlockCardAnimations';
 import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
@@ -46,41 +47,40 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   const linkTarget = link.value?.indexOf('http') === -1 ? '' : '_blank';
 
   return (
-    <Link
-      target={linkTarget}
-      href={href}
-      // eslint-disable-next-line tailwindcss/no-custom-classname
-      className={`block-card relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
+    <BlockCardAnimations
+      className={`block-card group relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
     >
-      <div
-        className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}
-      >
-        {stickerImage && (
-          <div className="absolute left-3 top-3 z-10">
-            <Image width={30} height={30} src={stickerImage} alt={''} />
-          </div>
-        )}
+      <Link target={linkTarget} href={href} className={'size-full'}>
+        <div
+          className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}
+        >
+          {stickerImage && (
+            <div className="absolute left-3 top-3 z-10">
+              <Image width={30} height={30} src={stickerImage} alt={''} />
+            </div>
+          )}
 
-        <h2 className="z-10 mt-auto uppercase">{title?.value || ''}</h2>
-        {quote && (
-          <p className="z-10 ml-auto mt-auto w-60 max-sm:ml-0">{quote}</p>
-        )}
-        {imageSrc ? (
-          <Image
-            fill
-            fetchPriority="high"
-            sizes="(min-width: 1024px) 66vw, 100vw"
-            src={imageSrc}
-            alt={title?.value || ''}
-            className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover"
-          />
-        ) : (
-          <div className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover opacity-15 invert">
-            <Placeholder />
-          </div>
-        )}
-      </div>
-    </Link>
+          <h2 className="z-10 mt-auto uppercase">{title?.value || ''}</h2>
+          {quote && (
+            <p className="z-10 ml-auto mt-auto w-60 max-sm:ml-0">{quote}</p>
+          )}
+          {imageSrc ? (
+            <Image
+              fill
+              fetchPriority="high"
+              sizes="(min-width: 1024px) 66vw, 100vw"
+              src={imageSrc}
+              alt={title?.value || ''}
+              className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-transform duration-500 group-hover:scale-125"
+            />
+          ) : (
+            <div className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover opacity-15 invert">
+              <Placeholder />
+            </div>
+          )}
+        </div>
+      </Link>
+    </BlockCardAnimations>
   );
 };
 

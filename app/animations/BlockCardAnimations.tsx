@@ -6,16 +6,17 @@ import { useTransitionState } from 'next-transition-router';
 import type { ReactNode } from 'react';
 import { useRef } from 'react';
 
-const CardAnimations = ({
+const BlockCardAnimations = ({
   children,
   className,
-  index,
+  // index,
 }: {
   children: ReactNode;
   className: string;
-  index: number;
+  // index: number;
 }) => {
-  const { stage } = useTransitionState();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { stage, isReady } = useTransitionState();
   const ref = useRef(null);
 
   useGSAP(() => {
@@ -27,16 +28,10 @@ const CardAnimations = ({
       autoAlpha: 0,
     }).to(ref.current, {
       autoAlpha: 1,
-      delay: index / 20,
+      // delay: index / 20,
     });
 
-    if (stage === 'leaving') {
-      tl.reverse(1);
-    } else if (stage === 'entering') {
-      tl.play();
-    } else {
-      tl.play();
-    }
+    tl.play();
 
     return () => {
       tl.kill();
@@ -50,4 +45,4 @@ const CardAnimations = ({
   );
 };
 
-export default CardAnimations;
+export default BlockCardAnimations;

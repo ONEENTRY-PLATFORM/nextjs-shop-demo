@@ -25,10 +25,8 @@ const BlocksGridLoader: FC<LoaderProps> = () => {
 
     tl.set('.block-card', {
       autoAlpha: 0,
-      scale: 0,
     }).to('.block-card', {
       autoAlpha: 1,
-      scale: 1,
       stagger: 0.1,
     });
 
