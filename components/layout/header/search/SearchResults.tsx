@@ -23,7 +23,7 @@ const SearchResults: FC<SearchResultsProps> = ({
     name: searchValue || '',
   });
 
-  if (loading || !products) {
+  if (loading) {
     return <Spinner />;
   }
 

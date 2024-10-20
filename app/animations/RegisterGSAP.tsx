@@ -5,13 +5,13 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useLayoutEffect } from 'react';
 
-import GSDevTools from '@/app/animations/utils/GSDevTools';
+// import GSDevTools from '@/app/animations/utils/GSDevTools';
 
 const RegisterGSAP = () => {
   useLayoutEffect(() => {
     gsap.registerPlugin(useGSAP, ScrollTrigger);
-    gsap.registerPlugin(GSDevTools);
-    GSDevTools.create();
+    // gsap.registerPlugin(GSDevTools);
+    // GSDevTools.create();
   }, []);
 
   return null;

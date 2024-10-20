@@ -18,12 +18,8 @@ export const useSearchProducts = ({ name }: { name: string }) => {
     }
     (async () => {
       setLoading(true);
-      try {
-        const result = await api.Products.searchProduct(name, activeLanguage);
-        setProducts(result);
-      } catch (e) {
-        console.log(e);
-      }
+      const result = await api.Products.searchProduct(name, activeLanguage);
+      setProducts(result as IProductsEntity[]);
       setLoading(false);
     })();
   }, [refetch, activeLanguage, name]);

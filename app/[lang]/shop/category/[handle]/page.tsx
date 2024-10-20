@@ -73,7 +73,6 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
   if (!page) {
     return notFound();
   }
-  console.log({ params, searchParams, page });
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">

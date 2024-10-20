@@ -19,6 +19,8 @@ const getSearchParams = (
     attributeMarker: 'sku',
     conditionMarker: 'nin',
     conditionValue: null,
+    title: searchParams?.search || '',
+    isNested: false,
   };
   expandedFilters.push(servicesFilter);
 
@@ -27,15 +29,31 @@ const getSearchParams = (
       attributeMarker: 'stickers',
       conditionMarker: 'in',
       conditionValue: handle,
+      title: searchParams?.search || '',
+      isNested: false,
     };
     expandedFilters.push(stickersFilter);
   }
 
-  if (searchParams?.['in_stock']) {
+  // if (searchParams?.search) {
+  //   console.log(searchParams.search);
+  //   expandedFilters.push({
+  //     attributeMarker: 'price',
+  //     conditionMarker: 'in',
+  //     conditionValue: searchParams.search,
+  //     pageUrl: ['shop'],
+  //     title: searchParams.search,
+  //     isNested: false,
+  //   });
+  // }
+
+  if (searchParams?.in_stock) {
     expandedFilters.push({
       statusMarker: 'in_stock',
       attributeMarker: 'price',
       conditionValue: null,
+      title: searchParams.search || '',
+      isNested: false,
     });
   }
 
@@ -44,6 +62,8 @@ const getSearchParams = (
       attributeMarker: 'color',
       conditionMarker: 'in',
       conditionValue: searchParams.color,
+      title: searchParams.search || '',
+      isNested: false,
     };
     expandedFilters.push(newFilter);
   }
@@ -54,6 +74,8 @@ const getSearchParams = (
       conditionMarker: 'mth',
       conditionValue: searchParams.minPrice,
       pageUrl: ['shop'],
+      title: searchParams.search || '',
+      isNested: false,
     };
     expandedFilters.push(filter);
   }
@@ -64,6 +86,8 @@ const getSearchParams = (
       conditionMarker: 'lth',
       conditionValue: searchParams.maxPrice,
       pageUrl: ['shop'],
+      title: searchParams.search || '',
+      isNested: false,
     };
     expandedFilters.push(filter);
   }

@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type { FC } from 'react';
+import type { FC, FormEvent } from 'react';
 import React, { useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
@@ -35,7 +35,7 @@ const SearchBar: FC<{ dict: any }> = ({ dict }) => {
     replace(`${pathname}?${params.toString()}`);
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     router.push(`/shop?${params.toString()}`);
     setState(false);
