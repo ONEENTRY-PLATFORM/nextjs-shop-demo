@@ -7,7 +7,7 @@ import { getBlockByMarker, getPageByUrl } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
-import ProductsGridLoader from '@/components/layout/products-grid/ProductsGridLoader';
+import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
 
 // generateMetadata

@@ -2,30 +2,18 @@
 
 import { usePathname } from 'next/navigation';
 import type { FC } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 
-import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FilterIcon from '@/components/icons/filter';
 
-const FilterButton: FC = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const FilterButton: FC<{ dict: any }> = ({ dict }) => {
   const path = usePathname();
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
-  const [filterText, setFilterText] = useState('');
 
-  const { open_filters_button } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  ) as {
-    open_filters_button: {
-      value: string;
-    };
-  };
-
-  useEffect(() => {
-    if (open_filters_button) {
-      setFilterText(open_filters_button?.value);
-    }
-  }, [open_filters_button]);
+  const { open_filters_button } = dict;
+  console.log(path);
 
   if (path.indexOf('product') !== -1) {
     return;
@@ -41,7 +29,7 @@ const FilterButton: FC = () => {
         setOpen(true);
       }}
     >
-      <FilterIcon /> {filterText}
+      <FilterIcon /> {open_filters_button?.value}
     </button>
   );
 };

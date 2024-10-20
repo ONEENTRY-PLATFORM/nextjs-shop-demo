@@ -11,7 +11,7 @@ import AuthError from '@/components/shared/AuthError';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Loader from '@/components/shared/Loader';
 
-import LoadMore from '../products-grid/LoadMore';
+import LoadMore from '../products-grid/components/LoadMore';
 // import Pagination from '../products-grid/Pagination';
 import EmptyOrders from './components/EmptyOrders';
 import Order from './components/OrderRow';

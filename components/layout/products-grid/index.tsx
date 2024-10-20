@@ -9,7 +9,7 @@ import CardsGridAnimations from '@/app/animations/CardsGridAnimations';
 import { getProducts, getProductsByPageUrl } from '@/app/api';
 import FilterModal from '@/components/layout/filter/FilterModal';
 
-import LoadMore from './LoadMore';
+import LoadMore from './components/LoadMore';
 import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {

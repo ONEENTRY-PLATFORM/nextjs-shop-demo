@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import BottomMenu from '@/components/layout/bottom-menu';
+import Breadcrumbs from '@/components/layout/breadcrumbs/Breadcrumbs';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import NavigationMenu from '@/components/layout/main-menu';
@@ -60,6 +61,7 @@ export default async function RootLayout({
                 <OpenDrawerProvider>
                   <Header />
                   <NavigationMenu />
+                  <Breadcrumbs lang={lang} dict={dict} />
                   <div className="grow">
                     <TransitionProvider>{children}</TransitionProvider>
                   </div>
