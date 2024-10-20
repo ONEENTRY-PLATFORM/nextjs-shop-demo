@@ -3,6 +3,7 @@ import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
+import { typeError } from '@/components/utils';
 
 export const getChildPagesByParentUrl = async (
   url: string,
@@ -13,5 +14,10 @@ export const getChildPagesByParentUrl = async (
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const pages = await api.Pages.getChildPagesByParentUrl(url, langCode);
-  return { isError: false, pages: pages };
+  // return { isError: false, pages: pages };
+  if (typeError(pages)) {
+    return { isError: true, pages: [] };
+  } else {
+    return { isError: false, pages: pages };
+  }
 };

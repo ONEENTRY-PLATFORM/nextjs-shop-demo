@@ -62,7 +62,7 @@ export default async function RootLayout({
                   <Header />
                   <NavigationMenu />
                   <Breadcrumbs lang={lang} dict={dict} />
-                  <div className="grow">
+                  <div className="grow py-5 pb-8">
                     <TransitionProvider>{children}</TransitionProvider>
                   </div>
                   <Footer />

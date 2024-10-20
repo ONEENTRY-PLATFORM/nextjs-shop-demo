@@ -13,7 +13,6 @@ const FilterButton: FC<{ dict: any }> = ({ dict }) => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   const { open_filters_button } = dict;
-  console.log(path);
 
   if (path.indexOf('product') !== -1) {
     return;

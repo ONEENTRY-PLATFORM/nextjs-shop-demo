@@ -2,12 +2,13 @@ import type { FC } from 'react';
 
 import BreadcrumbsTrail from './BreadcrumbsTrail';
 import BackButton from './components/BackButton';
+import BreadcrumbsAnimations from './components/BreadcrumbsAnimations';
 import FilterButton from './components/FilterButton';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Breadcrumbs: FC<{ lang: string; dict: any }> = async ({ lang, dict }) => {
+const Breadcrumbs: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   return (
-    <section className="mx-auto mb-5 box-border flex w-full grow flex-col justify-center self-stretch bg-white px-4 py-2">
+    <BreadcrumbsAnimations className="mx-auto box-border flex w-full grow flex-col justify-center self-stretch bg-white px-4 py-2">
       <div className="mx-auto flex w-full max-w-screen-xl flex-row justify-between gap-5">
         <div className="mr-auto flex gap-5">
           <BackButton />
@@ -15,7 +16,7 @@ const Breadcrumbs: FC<{ lang: string; dict: any }> = async ({ lang, dict }) => {
         </div>
         <FilterButton dict={dict} />
       </div>
-    </section>
+    </BreadcrumbsAnimations>
   );
 };
 
