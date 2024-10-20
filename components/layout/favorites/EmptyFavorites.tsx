@@ -1,25 +1,8 @@
-'use client';
-
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
-import { useAppSelector } from '@/app/store/hooks';
-
-const EmptyFavorites = ({ lang }: { lang: string }) => {
-  const [emptyText, setEmptyText] = useState<string>('');
-  const [goToShop, setGoToShop] = useState<string>('');
-  const { empty_favorites_plug, go_to_shop } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  );
-
-  useEffect(() => {
-    if (empty_favorites_plug) {
-      setEmptyText(empty_favorites_plug.value);
-    }
-    if (go_to_shop) {
-      setGoToShop(go_to_shop.value);
-    }
-  }, [empty_favorites_plug, go_to_shop]);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const EmptyFavorites = ({ lang, dict }: { lang: string; dict: any }) => {
+  const { empty_favorites_plug, go_to_shop } = dict;
 
   return (
     <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
@@ -39,13 +22,13 @@ const EmptyFavorites = ({ lang }: { lang: string }) => {
         />
       </svg>
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
-        {emptyText}
+        {empty_favorites_plug?.value}
       </h1>
       <Link
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"
       >
-        {goToShop}
+        {go_to_shop?.value}
       </Link>
     </div>
   );

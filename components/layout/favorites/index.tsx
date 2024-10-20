@@ -42,7 +42,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
       </CardsGridAnimations>
     </div>
   ) : (
-    <EmptyFavorites lang={lang} />
+    <EmptyFavorites lang={lang} dict={dict} />
   );
 };
 

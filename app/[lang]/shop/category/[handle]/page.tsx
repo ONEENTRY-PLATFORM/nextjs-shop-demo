@@ -65,14 +65,15 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
     'dict',
     await getDictionary(params.lang as Locale),
   );
-
-  const { page } = await getPageByUrl(params.handle, params.lang);
-  const { block } = await getBlockByMarker('main_catalog', params.lang);
+  const { lang, handle } = params;
+  const { page } = await getPageByUrl(handle, lang);
+  const { block } = await getBlockByMarker('main_catalog', lang);
   const pagesLimit = block?.quantity || 10;
 
   if (!page) {
     return notFound();
   }
+  console.log({ params, searchParams, page });
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -83,6 +84,7 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
             pagesLimit={pagesLimit}
             params={params}
             dict={dict}
+            isCategory={true}
           />
         </Suspense>
       </div>

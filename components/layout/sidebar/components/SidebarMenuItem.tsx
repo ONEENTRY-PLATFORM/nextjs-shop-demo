@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { FC } from 'react';
 
-import * as icons from '../../icons';
+import * as icons from '../../../icons';
 
 const SidebarMenuItem: FC<{
   menuItem: IMenusPages & { isActive: boolean };

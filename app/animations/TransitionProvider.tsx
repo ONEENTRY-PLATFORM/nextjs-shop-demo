@@ -17,7 +17,7 @@ export default function TransitionProvider({
       auto={true}
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       leave={async (next, from, to) => {
-        const tl = gsap
+        const tl = await gsap
           .timeline()
           .set(ref.current, {
             autoAlpha: 1,
@@ -34,13 +34,14 @@ export default function TransitionProvider({
         };
       }}
       enter={async (next) => {
-        const tl = gsap
+        const tl = await gsap
           .timeline()
           .set(ref.current, {
             autoAlpha: 0,
           })
           .to(ref.current, {
             autoAlpha: 1,
+            height: 'auto',
             duration: 0.5,
           })
           .call(next, undefined, 0.5);

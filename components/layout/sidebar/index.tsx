@@ -1,11 +1,11 @@
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
 import { getMenuByMarker } from '@/app/api';
-import SidebarAnimations from '@/components/layout/sidebar/SidebarAnimations';
 
-import LogoutMenuItem from './LogoutMenuItem';
-import SidebarMenuItem from './SidebarMenuItem';
-import SidebarMenuLoader from './SidebarMenuLoader';
+import LogoutMenuItem from './components/LogoutMenuItem';
+import SidebarAnimations from './components/SidebarAnimations';
+import SidebarMenuItem from './components/SidebarMenuItem';
+import SidebarMenuLoader from './components/SidebarMenuLoader';
 
 const SidebarMenu = async ({ lang }: { lang: string }) => {
   const { isError, menu } = await getMenuByMarker('side_web', lang);

@@ -6,7 +6,7 @@ import type {
 import { type FC } from 'react';
 
 import CardsGridAnimations from '@/app/animations/CardsGridAnimations';
-import { getProducts } from '@/app/api';
+import { getProducts, getProductsByPageUrl } from '@/app/api';
 import FilterModal from '@/components/layout/filter/FilterModal';
 
 import LoadMore from './LoadMore';
@@ -22,6 +22,7 @@ interface GridLayoutProps {
   };
   dict: unknown;
   pagesLimit: number;
+  isCategory?: boolean;
 }
 
 const ProductsGridLayout: FC<GridLayoutProps> = async ({
@@ -29,6 +30,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   searchParams,
   dict,
   pagesLimit,
+  isCategory,
 }) => {
   const currentPage = Number(searchParams?.page) || 1;
 
@@ -36,12 +38,19 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
     currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { isError, products, total } = await getProducts({
-    limit: limit,
-    offset: 0,
-    lang: params.lang,
-    params: { ...params, searchParams: searchParams },
-  });
+  const { isError, products, total } = !isCategory
+    ? await getProducts({
+        limit: limit,
+        offset: 0,
+        lang: params.lang,
+        params: { ...params, searchParams: searchParams },
+      })
+    : await getProductsByPageUrl({
+        lang: params.lang,
+        limit: limit,
+        offset: 0,
+        params: { ...params, searchParams: searchParams },
+      });
 
   const totalPages = Math.ceil(total / limit);
 
