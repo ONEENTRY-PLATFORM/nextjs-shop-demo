@@ -96,7 +96,7 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   };
 
   return (
-    <FormAnimations isLoading={isLoading}>
+    <FormAnimations isLoading={isLoading || !formFields}>
       <form
         className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
         onSubmit={(e) => onSignIn(e)}
@@ -127,7 +127,7 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
           </div>
         </div>
 
-        <div className="slide-up relative mb-4 box-border flex shrink-0 flex-col gap-4">
+        <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {formFields?.map((field: IAttributes, index: Key) => {
             if (field.marker === 'email_reg' && tab === 'email') {
               return <FormInput key={index} {...field} />;

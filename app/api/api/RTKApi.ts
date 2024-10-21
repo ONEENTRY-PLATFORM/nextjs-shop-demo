@@ -54,104 +54,65 @@ export const RTKApi = createApi({
   endpoints: (build) => ({
     getBlocksByPageUrl: build.query<IPositionBlock[], BlocksByPageUrlProps>({
       queryFn: async ({ pageUrl, activeLang }) => {
-        try {
-          const result = await api.Pages.getBlocksByPageUrl(
-            pageUrl,
-            activeLang,
-          );
-          return { error: '', data: result };
-        } catch (e: any) {
-          return { error: e.message };
-        }
+        const result = await api.Pages.getBlocksByPageUrl(pageUrl, activeLang);
+        return { data: result as IPositionBlock[] };
       },
     }),
     getBlockByMarker: build.query<IBlockEntity, BlockByMarkerProps>({
       queryFn: async ({ marker, activeLang }) => {
-        try {
-          const result = await api.Blocks.getBlockByMarker(marker, activeLang);
-          return { data: result };
-        } catch (e: any) {
-          return { error: e.message };
-        }
+        const result = await api.Blocks.getBlockByMarker(marker, activeLang);
+        return { data: result as IBlockEntity };
       },
     }),
     getAuthProviders: build.query<IAuthProvidersEntity[], string>({
       queryFn: async (activeLang) => {
-        try {
-          const result = await api.AuthProvider.getAuthProviders(activeLang);
-          return { data: result };
-        } catch (e: any) {
-          return { error: e.message };
-        }
+        const result = await api.AuthProvider.getAuthProviders(activeLang);
+        return { data: result as IAuthProvidersEntity[] };
       },
     }),
     // eslint-disable-next-line prettier/prettier
     getFormByMarker: build.query<IFormsEntity, { marker: string; lang: string }>({
       queryFn: async ({ marker, lang }) => {
-        try {
-          const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-          const result = await api.Forms.getFormByMarker(marker, langCode);
-          return { data: result };
-        } catch (e: any) {
-          return { error: e.message };
-        }
+        const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+        const result = await api.Forms.getFormByMarker(marker, langCode);
+        return { data: result as IFormsEntity };
       },
     }),
     getMe: build.query<IUserEntity, { langCode: string }>({
       queryFn: async ({ langCode }) => {
-        try {
-          const result = await api.Users.getUser(langCode);
-          if (!result) {
-            return { error: 'getUser error' };
-          }
-          return { data: result };
-        } catch (e: any) {
-          return { error: e.message };
+        const result = await api.Users.getUser(langCode);
+        if (!result) {
+          return { error: 'getUser error' };
         }
+        return { data: result as IUserEntity };
       },
     }),
     getAccounts: build.query<IAccountsEntity[], object>({
       queryFn: async () => {
-        try {
-          const result = await api.Payments.getAccounts();
-          return { data: result };
-        } catch (e: any) {
-          return { error: e.message };
-        }
+        const result = await api.Payments.getAccounts();
+        return { data: result as IAccountsEntity[] };
       },
     }),
     getOrderStorageByMarker: build.query<IOrdersEntity, { marker: string }>({
       queryFn: async ({ marker }) => {
-        try {
-          const result = await api.Orders.getOrderByMarker(marker);
-          return { data: result };
-        } catch (e: any) {
-          return { error: e.message };
-        }
+        const result = await api.Orders.getOrderByMarker(marker);
+        return { data: result as IOrdersEntity };
       },
     }),
     getPaymentSessionById: build.query<ISessionEntity, { id: number }>({
       queryFn: async ({ id }) => {
-        try {
-          const result = await api.Payments.getSessionById(id);
-          return { data: result };
-        } catch (e: any) {
-          return { error: e.message };
-        }
+        const result = await api.Payments.getSessionById(id);
+        return { data: result as ISessionEntity };
       },
     }),
     getSingleOrder: build.query<IOrderByMarkerEntity, SingleOrderProps>({
       queryFn: async ({ id, marker, activeLang }) => {
-        try {
-          const result = await api.Orders.getOrderByMarkerAndId(
-            marker,
-            id,
-            activeLang,
-          );
-          return { data: result };
-        } catch (e: any) {
-          return { error: e.message };
-        }
+        const result = await api.Orders.getOrderByMarkerAndId(
+          marker,
+          id,
+          activeLang,
+        );
+        return { data: result as IOrderByMarkerEntity };
       },
     }),
   }),

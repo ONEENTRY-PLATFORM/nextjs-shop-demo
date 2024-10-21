@@ -14,30 +14,31 @@ const FormAnimations = ({
   children: ReactNode;
   isLoading: boolean;
 }) => {
-  const { open, transition } = useContext(OpenDrawerContext);
+  const { open, transition, setTransition } = useContext(OpenDrawerContext);
   const ref = useRef(null);
 
   useGSAP(() => {
-    if (!open || !ref.current) {
+    if (!open || !ref.current || isLoading) {
       return;
     }
     const tl = gsap.timeline({
       paused: true,
+      onComplete: () => {
+        setTransition('');
+      },
+      onReverseComplete: () => {
+        setTransition('');
+      },
     });
-    const elements = (ref.current as HTMLElement).querySelectorAll('.slide-up');
 
-    tl.set(elements, {
+    tl.from(ref.current, {
       autoAlpha: 0,
-      yPercent: -100,
-    }).to(elements, {
+    }).to(ref.current, {
       autoAlpha: 1,
-      yPercent: 0,
-      delay: 0.5,
-      stagger: 0.1,
     });
 
     if (transition === 'close') {
-      tl.reverse(1);
+      tl.reverse(0.5);
     } else {
       tl.play();
     }
