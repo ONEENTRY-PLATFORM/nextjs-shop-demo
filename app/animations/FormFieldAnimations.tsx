@@ -26,7 +26,7 @@ const FormFieldAnimations = ({
 
     gsap.set(ref.current, {
       transformOrigin: '0 0',
-      overflow: "hidden",
+      overflow: 'hidden',
     });
 
     const tl = gsap.timeline({
@@ -37,9 +37,11 @@ const FormFieldAnimations = ({
       ref.current,
       {
         width: 0,
+        opacity: 0,
       },
       {
-        width: "100%",
+        width: '100%',
+        opacity: 1,
         delay: index / 10,
       },
     );

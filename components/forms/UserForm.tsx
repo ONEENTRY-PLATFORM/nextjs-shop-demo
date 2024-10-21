@@ -128,7 +128,14 @@ const UserForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
                 (item) => item.marker === field.marker,
               ) as FormDataType[]);
             if (field.marker !== 'email_notifications') {
-              return <FormInput key={index} index={index as number} {...field} {...fieldData} />;
+              return (
+                <FormInput
+                  key={index}
+                  index={index as number}
+                  {...field}
+                  {...fieldData}
+                />
+              );
             }
           })}
         </div>

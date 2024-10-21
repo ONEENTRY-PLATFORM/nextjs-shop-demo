@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 
 import BottomMenu from '@/components/layout/bottom-menu';
-import Breadcrumbs from '@/components/layout/breadcrumbs/Breadcrumbs';
+import Breadcrumbs from '@/components/layout/breadcrumbs';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import NavigationMenu from '@/components/layout/main-menu';

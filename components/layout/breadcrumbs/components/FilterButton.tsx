@@ -14,7 +14,14 @@ const FilterButton: FC<{ dict: any }> = ({ dict }) => {
 
   const { open_filters_button } = dict;
 
-  if (path.indexOf('product') !== -1) {
+  if (
+    path.indexOf('product') !== -1 ||
+    path.indexOf('profile') !== -1 ||
+    path.indexOf('favorites') !== -1 ||
+    path.indexOf('cart') !== -1 ||
+    path.indexOf('payment') !== -1 ||
+    path.indexOf('orders') !== -1
+  ) {
     return;
   }
 

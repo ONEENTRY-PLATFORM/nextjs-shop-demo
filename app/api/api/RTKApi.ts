@@ -4,6 +4,7 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 // import { HYDRATE } from 'next-redux-wrapper';
 import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import type { IError } from 'oneentry/dist/base/utils';
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
 import type {
@@ -20,7 +21,6 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import { LanguageEnum } from '@/app/types/enum';
 
 import { api } from './api';
-import { IError } from 'oneentry/dist/base/utils';
 
 // type RootState = any; // normally inferred from state
 

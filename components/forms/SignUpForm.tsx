@@ -166,7 +166,9 @@ const SignUpForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {data?.attributes.map((field: IAttributes, index: Key | number) => {
             if (field.marker !== 'email_notifications') {
-              return <FormInput index={index as number} key={index} {...field} />;
+              return (
+                <FormInput index={index as number} key={index} {...field} />
+              );
             }
           })}
         </div>

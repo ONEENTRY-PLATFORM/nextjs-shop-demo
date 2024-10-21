@@ -10,7 +10,9 @@ import { FormFieldsEnum } from '@/app/types/enum';
 import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
 
-const FormInput: FC<IAttributes & { value?: string; index: number }> = (field) => {
+const FormInput: FC<IAttributes & { value?: string; index: number }> = (
+  field,
+) => {
   const { localizeInfos } = field;
   const [value, setValue] = useState<string>(field.value || '');
   const [type, setType] = useState<string>('');
@@ -56,7 +58,7 @@ const FormInput: FC<IAttributes & { value?: string; index: number }> = (field) =
   }
 
   return (
-    <FormFieldAnimations index={field.index} className="slide-up input-group">
+    <FormFieldAnimations index={field.index} className="input-group">
       <label htmlFor={field.marker} className="text-gray-400">
         {localizeInfos?.title}{' '}
         {required && <span className="text-red-500">*</span>}

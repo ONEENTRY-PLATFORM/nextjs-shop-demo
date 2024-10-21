@@ -2,12 +2,11 @@ import type { FC } from 'react';
 
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 
-import BreadcrumbsTrail from './BreadcrumbsTrail';
 import BackButton from './components/BackButton';
 import BreadcrumbsAnimations from './components/BreadcrumbsAnimations';
+import BreadcrumbsTrail from './components/BreadcrumbsTrail';
 import FilterButton from './components/FilterButton';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Breadcrumbs: FC = () => {
   const [lang] = useServerProvider('lang');
   const [dict] = useServerProvider('dict');

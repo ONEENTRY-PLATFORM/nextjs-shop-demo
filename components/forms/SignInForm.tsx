@@ -6,6 +6,7 @@ import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import FormAnimations from '@/app/animations/FormAnimations';
+import FormFieldAnimations from '@/app/animations/FormFieldAnimations';
 import { logInUser, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
@@ -102,11 +103,17 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
         onSubmit={(e) => onSignIn(e)}
       >
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
-          <h2 className="slide-up max-w-full text-xl font-bold text-neutral-600">
-            {sign_in_text.value}
-          </h2>
+          <FormFieldAnimations
+            index={0}
+            className="max-w-full text-xl font-bold text-neutral-600"
+          >
+            <h2>{sign_in_text.value}</h2>
+          </FormFieldAnimations>
 
-          <div className="slide-up max-w-full text-xs text-gray-400">
+          <FormFieldAnimations
+            index={1}
+            className="max-w-full text-xs text-gray-400"
+          >
             <button
               onClick={() => {
                 setTab('email');
@@ -124,35 +131,46 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
             >
               {phone_text.value}
             </button>
-          </div>
+          </FormFieldAnimations>
         </div>
 
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {formFields?.map((field: IAttributes, index: Key | number) => {
             if (field.marker === 'email_reg' && tab === 'email') {
-              return <FormInput key={index} index={index as number} {...field} />;
+              return <FormInput key={index} index={2} {...field} />;
             }
             if (field.marker === 'phone_reg' && tab === 'phone') {
-              return <FormInput key={index} index={index as number} {...field} />;
+              return <FormInput key={index} index={3} {...field} />;
             }
             if (field.marker === 'password_reg') {
-              return <FormInput key={index} index={index as number} {...field} />;
+              return <FormInput key={index} index={4} {...field} />;
             }
           })}
         </div>
 
-        <FormSubmitButton title={sign_in_text.value} isLoading={loading} />
+        <FormFieldAnimations index={5} className="w-full">
+          <FormSubmitButton title={sign_in_text.value} isLoading={loading} />
+        </FormFieldAnimations>
 
-        <div className="slide-up mx-auto mb-5 flex w-[380px] max-w-full justify-center gap-5 text-sm">
+        <FormFieldAnimations
+          index={6}
+          className="mx-auto mb-5 flex w-[380px] max-w-full justify-center gap-5 text-sm"
+        >
           <div className="font-bold text-gray-800">
             {forgot_password_text.value}
           </div>
           <ResetPasswordButton title={reset_password_text.value} />
-        </div>
-        <p className="slide-up mx-auto mb-3 text-base font-bold leading-8 text-neutral-600">
-          {sign_in_with_text.value}
-        </p>
-        <div className="slide-up mx-auto flex justify-between gap-5">
+        </FormFieldAnimations>
+
+        <FormFieldAnimations index={7} className="w-full">
+          <p className="mx-auto mb-3 text-center text-base font-bold leading-8 text-neutral-600">
+            {sign_in_with_text.value}
+          </p>
+        </FormFieldAnimations>
+        <FormFieldAnimations
+          index={8}
+          className="mx-auto flex max-w-32 justify-between gap-5"
+        >
           {socialProvidersButtons.map((button, index) => (
             <SocialSignInButton
               key={index}
@@ -160,8 +178,10 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
               alt={button.alt}
             />
           ))}
-        </div>
-        <CreateAccountButton title={create_account_text.value} />
+        </FormFieldAnimations>
+        <FormFieldAnimations index={9} className="w-full">
+          <CreateAccountButton title={create_account_text.value} />
+        </FormFieldAnimations>
         {error && <ErrorMessage error={error} />}
       </form>
     </FormAnimations>
