@@ -121,14 +121,14 @@ const UserForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
         onSubmit={(e) => onUpdateUserData(e)}
       >
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-          {data?.attributes.map((field: IAttributes, index: Key) => {
+          {data?.attributes.map((field: IAttributes, index: Key | number) => {
             const fieldData =
               Array.isArray(user.formData) &&
               (user.formData.find(
                 (item) => item.marker === field.marker,
               ) as FormDataType[]);
             if (field.marker !== 'email_notifications') {
-              return <FormInput key={index} {...field} {...fieldData} />;
+              return <FormInput key={index} index={index as number} {...field} {...fieldData} />;
             }
           })}
         </div>

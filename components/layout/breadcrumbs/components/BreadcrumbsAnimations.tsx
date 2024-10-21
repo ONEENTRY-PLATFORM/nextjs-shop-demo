@@ -44,6 +44,9 @@ const BreadcrumbsAnimations = ({
     };
   }, [hidden]);
 
+  if (hidden) {
+    return;
+  }
   return (
     <div ref={ref} className={className}>
       {children}

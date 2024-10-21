@@ -155,7 +155,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
       onSubmit={(e) => onSubmitForm(e)}
     >
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-        {formFields?.map((field: IAttributes, index: Key) => {
+        {formFields?.map((field: IAttributes, index: Key | number) => {
           if (field.type === 'button') {
             return (
               <FormSubmitButton
@@ -173,7 +173,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
               />
             );
           } else {
-            return <FormInput key={index} {...field} />;
+            return <FormInput key={index} index={index as number} {...field} />;
           }
         })}
       </div>

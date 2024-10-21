@@ -85,6 +85,7 @@ const ResetPasswordForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
           {resetPasswordFormFields.map((field, index) => {
             return (
               <FormInput
+                index={index}
                 listTitles={[]}
                 position={0}
                 type={''}

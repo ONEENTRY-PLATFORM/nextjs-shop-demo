@@ -3,13 +3,14 @@ import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, Key } from 'react';
 import React, { useEffect, useState } from 'react';
 
+import FormFieldAnimations from '@/app/animations/FormFieldAnimations';
 import { useAppDispatch } from '@/app/store/hooks';
 import { addField } from '@/app/store/reducers/FormFieldsSlice';
 import { FormFieldsEnum } from '@/app/types/enum';
 import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
 
-const FormInput: FC<IAttributes & { value?: string }> = (field) => {
+const FormInput: FC<IAttributes & { value?: string; index: number }> = (field) => {
   const { localizeInfos } = field;
   const [value, setValue] = useState<string>(field.value || '');
   const [type, setType] = useState<string>('');
@@ -55,7 +56,7 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
   }
 
   return (
-    <div className="slide-up input-group">
+    <FormFieldAnimations index={field.index} className="slide-up input-group">
       <label htmlFor={field.marker} className="text-gray-400">
         {localizeInfos?.title}{' '}
         {required && <span className="text-red-500">*</span>}
@@ -120,7 +121,7 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
           {type === 'password' ? <EyeIcon /> : <EyeOpenIcon />}
         </button>
       )}
-    </div>
+    </FormFieldAnimations>
   );
 };
 
