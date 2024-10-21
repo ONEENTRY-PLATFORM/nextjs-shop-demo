@@ -14,6 +14,7 @@ import NavItemProfile from './NavItemProfile';
 const NavGroup: FC = async () => {
   const [lang] = useServerProvider('lang');
   const { menu, isError } = await getMenuByMarker('user_web', lang);
+  const userMenu = await getMenuByMarker('side_web', lang);
   const { locales } = await getLocales();
 
   return (
@@ -23,7 +24,7 @@ const NavGroup: FC = async () => {
           return (
             <div className="flex size-6 max-xs:hidden" key={i}>
               {item.pageUrl === 'profile' && (
-                <NavItemProfile item={item} lang={lang} />
+                <NavItemProfile item={item} lang={lang} userMenu={userMenu} />
               )}
               {item.pageUrl === 'favorites' && (
                 <NavItemFavorites item={item} lang={lang} />
