@@ -5,9 +5,9 @@ import type {
 } from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
-import CardsGridAnimations from '@/app/animations/CardsGridAnimations';
 import { getProducts, getProductsByPageUrl } from '@/app/api';
 import FilterModal from '@/components/layout/filter/FilterModal';
+import CardsGridAnimations from '@/components/layout/products-grid/components/CardsGridAnimations';
 
 import LoadMore from './components/LoadMore';
 import ProductCard from './product-card/ProductCard';

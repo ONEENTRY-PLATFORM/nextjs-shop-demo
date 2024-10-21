@@ -148,9 +148,11 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
           })}
         </div>
 
-        <FormFieldAnimations index={5} className="w-full">
-          <FormSubmitButton title={sign_in_text.value} isLoading={loading} />
-        </FormFieldAnimations>
+        <FormSubmitButton
+          index={5}
+          title={sign_in_text.value}
+          isLoading={loading}
+        />
 
         <FormFieldAnimations
           index={6}

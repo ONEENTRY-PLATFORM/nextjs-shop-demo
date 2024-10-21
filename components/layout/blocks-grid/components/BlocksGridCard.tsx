@@ -3,9 +3,9 @@ import Link from 'next/link';
 import type React from 'react';
 import type { FC } from 'react';
 
-import BlockCardAnimations from '@/app/animations/BlockCardAnimations';
 import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
+import BlockCardAnimations from '@/components/layout/blocks-grid/components/BlockCardAnimations';
 import Loader from '@/components/shared/Loader';
 import Placeholder from '@/components/shared/Placeholder';
 

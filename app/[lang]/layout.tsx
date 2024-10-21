@@ -6,6 +6,12 @@ import { Lato } from 'next/font/google';
 import type { ReactNode } from 'react';
 import { ToastContainer } from 'react-toastify';
 
+import { AuthProvider } from '@/app/store/providers/AuthContext';
+import { ContentContextProvider } from '@/app/store/providers/ContentContext';
+import { LanguageProvider } from '@/app/store/providers/LanguageContext';
+import { OpenDrawerProvider } from '@/app/store/providers/OpenDrawerContext';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import StoreProvider from '@/app/store/providers/StoreProvider';
 import BottomMenu from '@/components/layout/bottom-menu';
 import Breadcrumbs from '@/components/layout/breadcrumbs';
 import Footer from '@/components/layout/footer';
@@ -16,12 +22,6 @@ import type { Locale } from '@/i18n-config';
 
 import RegisterGSAP from '../animations/RegisterGSAP';
 import TransitionProvider from '../animations/TransitionProvider';
-import { AuthProvider } from '../store/providers/AuthContext';
-import { ContentContextProvider } from '../store/providers/ContentContext';
-import { LanguageProvider } from '../store/providers/LanguageContext';
-import { OpenDrawerProvider } from '../store/providers/OpenDrawerContext';
-import { useServerProvider } from '../store/providers/ServerProvider';
-import StoreProvider from '../store/providers/StoreProvider';
 import { LanguageEnum } from '../types/enum';
 import { getDictionary } from './dictionaries';
 

@@ -2,8 +2,8 @@ import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
 
-import CardAnimations from '@/app/animations/CardAnimations';
 import { LanguageEnum } from '@/app/types/enum';
+import CardAnimations from '@/components/layout/products-grid/components/CardAnimations';
 
 import FavoritesButton from '../../../shared/FavoritesButton';
 import AddToCartButton from '../../product/components/AddToCartButton';

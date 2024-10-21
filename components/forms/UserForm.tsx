@@ -140,7 +140,7 @@ const UserForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
           })}
         </div>
 
-        <SubmitButton title="Save" isLoading={loading} />
+        <SubmitButton title="Save" isLoading={loading} index={10} />
         {isError && <ErrorMessage error={isError} />}
       </form>
     </FormAnimations>

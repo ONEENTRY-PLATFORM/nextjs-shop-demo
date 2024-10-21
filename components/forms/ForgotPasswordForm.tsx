@@ -88,7 +88,11 @@ export const ForgotPasswordForm: FC<{ lang: string; dict: any }> = ({
           })}
         </div>
 
-        <FormSubmitButton title={send_text.value} isLoading={isLoading} />
+        <FormSubmitButton
+          index={10}
+          title={send_text.value}
+          isLoading={isLoading}
+        />
         {isError && <ErrorMessage error={isError} />}
       </form>
     </FormAnimations>

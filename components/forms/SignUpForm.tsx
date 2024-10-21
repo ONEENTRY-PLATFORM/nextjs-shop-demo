@@ -151,6 +151,7 @@ const SignUpForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
           <h2 className="slide-up text-xl font-bold text-neutral-600 max-md:max-w-full">
             {sign_up_text.value}
           </h2>
+
           <p className="slide-up text-xs text-gray-400 max-md:max-w-full">
             <button
               onClick={() => {
@@ -175,6 +176,7 @@ const SignUpForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
         <SubmitButton
           title={sign_up_text.value}
           isLoading={loading || isLoading}
+          index={10}
         />
         {error && <ErrorMessage error={error} />}
       </form>

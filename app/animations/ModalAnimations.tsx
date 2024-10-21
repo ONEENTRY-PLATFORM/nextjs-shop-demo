@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import type { ReactNode } from 'react';
 import { useContext, useRef } from 'react';
 
-import { OpenDrawerContext } from '../store/providers/OpenDrawerContext';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 const ModalAnimations = ({ children }: { children: ReactNode }) => {
   const { open, transition, setOpen, setTransition } =

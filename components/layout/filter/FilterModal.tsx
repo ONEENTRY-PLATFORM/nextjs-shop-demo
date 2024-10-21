@@ -2,9 +2,9 @@
 import type { FC } from 'react';
 import { Suspense } from 'react';
 
-import FilterModalAnimations from '@/app/animations/FilterModalAnimations';
 import Loader from '@/components/shared/Loader';
 
+import FilterModalAnimations from './components/FilterModalAnimations';
 import FilterHeader from './components/header/FilterHeader';
 import FiltersForm from './FiltersForm';
 import ModalBackdrop from './ModalBackdrop';

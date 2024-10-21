@@ -1,9 +1,9 @@
 import { type FC } from 'react';
 
-import BlocksGridAnimations from '@/app/animations/BlocksGridAnimations';
 import { blocksColors, blocksData } from '@/components/data';
 
-import BlocksGridCard from './BlocksGridCard';
+import BlocksGridAnimations from './components/BlocksGridAnimations';
+import BlocksGridCard from './components/BlocksGridCard';
 
 interface BlocksGridProps {
   blocks: Array<string>;

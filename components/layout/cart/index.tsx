@@ -6,7 +6,6 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
-import CartAnimations from '@/app/animations/CartAnimations';
 import { useGetProduct } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
@@ -15,6 +14,7 @@ import {
 } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { SimplePageProps } from '@/app/types/global';
+import CartAnimations from '@/components/layout/cart/components/CartAnimations';
 import EmptyCart from '@/components/layout/cart/components/EmptyCart';
 import PaymentButton from '@/components/layout/cart/components/PaymentButton';
 import ProductCard from '@/components/layout/cart/components/ProductCard';

@@ -53,6 +53,12 @@ export const RTKApi = createApi({
   //   }
   // },
   endpoints: (build) => ({
+    /**
+     * Get all blocks by page url.
+     * @interface
+     * @property {string} pageUrl - Marker of Block.
+     * @property {string} activeLang - Language code. Default "en_US".
+     */
     getBlocksByPageUrl: build.query<IPositionBlock[], BlocksByPageUrlProps>({
       queryFn: async ({ pageUrl, activeLang }) => {
         const result = await api.Pages.getBlocksByPageUrl(pageUrl, activeLang);
@@ -62,6 +68,12 @@ export const RTKApi = createApi({
         return { data: result as IPositionBlock[] };
       },
     }),
+    /**
+     * Get all auth providers objects.
+     * @interface
+     * @property {string} marker - Marker of Block.
+     * @property {string} activeLang - Language code. Default "en_US".
+     */
     getBlockByMarker: build.query<IBlockEntity, BlockByMarkerProps>({
       queryFn: async ({ marker, activeLang }) => {
         const result = await api.Blocks.getBlockByMarker(marker, activeLang);
@@ -71,15 +83,26 @@ export const RTKApi = createApi({
         return { data: result as IBlockEntity };
       },
     }),
+    /**
+     * Get all auth providers objects.
+     * @interface
+     * @property {string} langCode - Language code. Default "en_US".
+     */
     getAuthProviders: build.query<IAuthProvidersEntity[], string>({
-      queryFn: async (activeLang) => {
-        const result = await api.AuthProvider.getAuthProviders(activeLang);
+      queryFn: async (langCode) => {
+        const result = await api.AuthProvider.getAuthProviders(langCode);
         if (!result || (result as IError)?.statusCode) {
           return { error: result };
         }
         return { data: result as IAuthProvidersEntity[] };
       },
     }),
+    /**
+     * Get one form by form marker.
+     * @interface
+     * @property {string} marker - Marker of form.
+     * @property {string} lang - Language code. Default "en_US"
+     */
     // eslint-disable-next-line prettier/prettier
     getFormByMarker: build.query<IFormsEntity, { marker: string; lang: string }>({
       queryFn: async ({ marker, lang }) => {
@@ -91,6 +114,11 @@ export const RTKApi = createApi({
         return { data: result as IFormsEntity };
       },
     }),
+    /**
+     * Getting the data of an authorized user.
+     * @interface
+     * @property {string} langCode - Required parameter lang code.
+     */
     getMe: build.query<IUserEntity, { langCode: string }>({
       queryFn: async ({ langCode }) => {
         const result = await api.Users.getUser(langCode);
@@ -100,6 +128,10 @@ export const RTKApi = createApi({
         return { data: result as IUserEntity };
       },
     }),
+    /**
+     * Get all payment accounts as an array.
+     * @interface
+     */
     getAccounts: build.query<IAccountsEntity[], object>({
       queryFn: async () => {
         const result = await api.Payments.getAccounts();
@@ -109,6 +141,11 @@ export const RTKApi = createApi({
         return { data: result as IAccountsEntity[] };
       },
     }),
+    /**
+     * Retrieve one order storage object by marker.
+     * @interface
+     * @property {string} marker - Marker of the order object.
+     */
     getOrderStorageByMarker: build.query<IOrdersEntity, { marker: string }>({
       queryFn: async ({ marker }) => {
         const result = await api.Orders.getOrderByMarker(marker);
@@ -118,6 +155,11 @@ export const RTKApi = createApi({
         return { data: result as IOrdersEntity };
       },
     }),
+    /**
+     * Get a single payment session object by its identifier.
+     * @interface
+     * @property {number} id - Identifier of the retrieved payment session object.
+     */
     getPaymentSessionById: build.query<ISessionEntity, { id: number }>({
       queryFn: async ({ id }) => {
         const result = await api.Payments.getSessionById(id);
@@ -127,6 +169,13 @@ export const RTKApi = createApi({
         return { data: result as ISessionEntity };
       },
     }),
+    /**
+     * Getting a single order from the order storage object created by the user
+     * @interface
+     * @property {number} id - ID of the order object.
+     * @property {string} marker - The text identifier of the order storage object.
+     * @property {string} activeLang - Optional language field.
+     */
     getSingleOrder: build.query<IOrderByMarkerEntity, SingleOrderProps>({
       queryFn: async ({ id, marker, activeLang }) => {
         const result = await api.Orders.getOrderByMarkerAndId(
