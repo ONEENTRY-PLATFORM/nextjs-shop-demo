@@ -9,11 +9,6 @@ const dict = async (lang: string): Promise<any> => {
   try {
     const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
     const { block } = await getBlockByMarker('system_content', lang);
-    // const { attribute } = await getSingleAttributeByMarkerSet({
-    //   attributeMarker: 'system_content',
-    //   setMarker: 'cart_item_options',
-    //   langCode,
-    // });
     const blockValues =
       block?.attributeValues[langCode] || block?.attributeValues;
     return { ...blockValues };

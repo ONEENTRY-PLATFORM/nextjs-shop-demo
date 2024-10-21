@@ -10,6 +10,7 @@ import SearchBar from './search/SearchBar';
 
 const Header: FC = async () => {
   const [dict] = useServerProvider('dict');
+
   return (
     <header className="flex items-center justify-center bg-white px-5">
       <section className="mx-auto box-border flex w-full max-w-screen-xl grow flex-col justify-center self-stretch bg-white md:py-6 lg:py-10">

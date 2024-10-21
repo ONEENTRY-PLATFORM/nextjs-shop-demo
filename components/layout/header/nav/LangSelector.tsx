@@ -26,13 +26,15 @@ const LangSelector: FC<{ locales: any; lang: string }> = ({
       onChange={onChange}
       className="uppercase text-neutral-600"
     >
-      {locales?.map((locale: any, i: Key) => {
-        return (
-          <option key={i} value={locale.shortCode}>
-            {locale.shortCode}
-          </option>
-        );
-      })}
+      {locales
+        ?.filter((locale: { isActive: any }) => locale.isActive && locale)
+        .map((locale: any, i: Key) => {
+          return (
+            <option key={i} value={locale.shortCode}>
+              {locale.shortCode}
+            </option>
+          );
+        })}
     </select>
   );
 };

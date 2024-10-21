@@ -1,14 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { FC } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { VerticalMenuLoader } from '@/components/shared/Loader';
 
 import ContactInfo from './ContactInfo';
 import FooterMenu from './Menu';
 
-const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
+const FooterMenuSection: FC = async () => {
+  const [lang] = useServerProvider('lang');
   const quickLinks = await getMenuByMarker('quick_links', lang);
   const infoLinks = await getMenuByMarker('information', lang);
 
@@ -25,14 +28,16 @@ const FooterMenuSection: FC<{ lang: string }> = async ({ lang }) => {
             className="aspect-[3.57] w-[250px] max-w-full shrink-0 max-lg:max-w-[180px] max-sm:mb-5"
           />
         </Link>
-        <ContactInfo lang={lang} />
-        {quickLinks.menu ? (
-          <FooterMenu menu={quickLinks.menu} lang={lang} />
+        <ContactInfo />
+        {/* quickLinks menu */}
+        {!quickLinks.isError && quickLinks.menu ? (
+          <FooterMenu menu={quickLinks.menu as IMenusEntity} />
         ) : (
           <VerticalMenuLoader limit={6} />
         )}
-        {infoLinks.menu ? (
-          <FooterMenu menu={infoLinks.menu} lang={lang} />
+        {/* infoLinks menu */}
+        {!infoLinks.isError && infoLinks.menu ? (
+          <FooterMenu menu={infoLinks.menu as IMenusEntity} />
         ) : (
           <VerticalMenuLoader limit={6} />
         )}

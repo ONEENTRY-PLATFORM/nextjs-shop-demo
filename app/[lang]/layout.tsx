@@ -61,8 +61,8 @@ export default async function RootLayout({
                 <OpenDrawerProvider>
                   <Header />
                   <NavigationMenu />
-                  <Breadcrumbs lang={lang} dict={dict} />
-                  <div className="grow py-5 pb-8">
+                  <Breadcrumbs />
+                  <div className="grow p-5 pb-8">
                     <TransitionProvider>{children}</TransitionProvider>
                   </div>
                   <Footer />

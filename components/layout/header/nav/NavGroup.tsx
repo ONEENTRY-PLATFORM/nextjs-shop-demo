@@ -13,7 +13,6 @@ import NavItemProfile from './NavItemProfile';
 
 const NavGroup: FC = async () => {
   const [lang] = useServerProvider('lang');
-
   const { menu, isError } = await getMenuByMarker('user_web', lang);
   const { locales } = await getLocales();
 

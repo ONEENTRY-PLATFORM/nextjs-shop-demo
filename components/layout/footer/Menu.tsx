@@ -4,14 +4,15 @@ import type {
 } from 'oneentry/dist/menus/menusInterfaces';
 import type { FC } from 'react';
 
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 
 import MenuItem from './MenuItem';
 
 const Menu: FC<{
   menu: IMenusEntity;
-  lang: string;
-}> = ({ menu, lang }) => {
+}> = ({ menu }) => {
+  const [lang] = useServerProvider('lang');
   const pages = menu.pages as Array<IMenusPages>;
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 

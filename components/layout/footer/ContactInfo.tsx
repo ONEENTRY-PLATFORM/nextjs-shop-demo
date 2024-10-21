@@ -1,11 +1,11 @@
 import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 
-const ContactInfo: FC<{
-  lang: string;
-}> = async ({ lang }) => {
+const ContactInfo: FC = async () => {
+  const [lang] = useServerProvider('lang');
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { block } = await getBlockByMarker('contact_info', lang);
 
