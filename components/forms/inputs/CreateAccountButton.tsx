@@ -18,7 +18,7 @@ const CreateAccountButton: React.FC<CreateAccountButtonProps> = ({ title }) => {
         setComponent('SignUpForm');
       }}
       type="button"
-      className="btn btn-lg btn-o btn-o-primary mx-auto w-[280px] border-2 leading-6"
+      className="slide-up btn btn-lg btn-o btn-o-primary mx-auto w-[280px] border-2 leading-6"
     >
       {title}
     </button>

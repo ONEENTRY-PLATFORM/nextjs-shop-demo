@@ -18,7 +18,7 @@ const SidebarMenu = async ({ lang }: { lang: string }) => {
 
   return (
     <nav className="flex w-full pr-5">
-      <SidebarAnimations>
+      <SidebarAnimations className={''}>
         <ul className="sidebar-menu">
           {pages.map((item) => {
             return (

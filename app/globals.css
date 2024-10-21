@@ -287,6 +287,10 @@ input:focus-visible {
   .td {
     @apply flex;
   }
+
+  .slide-up {
+    
+  }
 }
 
 @layer utilities {

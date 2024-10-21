@@ -24,14 +24,14 @@ const FormAnimations = ({
     const tl = gsap.timeline({
       paused: true,
     });
-    const elements = (ref.current as HTMLElement).querySelectorAll('form>*');
+    const elements = (ref.current as HTMLElement).querySelectorAll('.slide-up');
 
     tl.set(elements, {
       autoAlpha: 0,
-      xPercent: -100,
+      yPercent: -100,
     }).to(elements, {
       autoAlpha: 1,
-      xPercent: 0,
+      yPercent: 0,
       delay: 0.5,
       stagger: 0.1,
     });

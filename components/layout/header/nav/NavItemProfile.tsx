@@ -14,7 +14,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import ProfileIcon from '@/components/icons/profile';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-const NavItemProfile: FC<{ item: any; lang: string; userMenu: any }> = ({
+const NavItemProfile: FC<{ item: any; lang: string; userMenu?: any }> = ({
   item,
   lang,
   userMenu,
@@ -36,6 +36,9 @@ const NavItemProfile: FC<{ item: any; lang: string; userMenu: any }> = ({
   };
 
   useGSAP(() => {
+    if (!ref.current) {
+      return;
+    }
     const tl = gsap.timeline({
       paused: true,
     });
@@ -70,6 +73,14 @@ const NavItemProfile: FC<{ item: any; lang: string; userMenu: any }> = ({
     >
       <ProfileIcon />
     </button>
+  ) : !userMenu ? (
+    <Link
+      href={'/' + lang + '/profile'}
+      title={item.localizeInfos.menuTitle}
+      className="group relative box-border flex size-6 shrink-0"
+    >
+      <ProfileIcon />
+    </Link>
   ) : (
     <div className="relative z-50">
       <button

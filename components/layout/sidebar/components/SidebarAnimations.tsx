@@ -2,13 +2,34 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
+import { usePathname } from 'next/navigation';
 import { useTransitionState } from 'next-transition-router';
-import type { ReactNode } from 'react';
+import { type ReactNode, useRef } from 'react';
 
-const SidebarAnimations = ({ children }: { children: ReactNode }) => {
+const SidebarAnimations = ({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className: string;
+}) => {
   const { stage } = useTransitionState();
+  const ref = useRef(null);
+  const paths = usePathname();
+  const pathNames = paths.split('/').filter((path: unknown) => path);
 
   useGSAP(() => {
+    if (
+      !ref.current ||
+      pathNames[1] === 'profile' ||
+      pathNames[1] === 'favorites' ||
+      pathNames[1] === 'cart' ||
+      pathNames[1] === 'payment' ||
+      pathNames[1] === 'orders'
+    ) {
+      return;
+    }
+
     const tl = gsap.timeline({
       paused: true,
     });
@@ -31,7 +52,11 @@ const SidebarAnimations = ({ children }: { children: ReactNode }) => {
     };
   }, [stage]);
 
-  return children;
+  return (
+    <div className={className} ref={ref}>
+      {children}
+    </div>
+  );
 };
 
 export default SidebarAnimations;

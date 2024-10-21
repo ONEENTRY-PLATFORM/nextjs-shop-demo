@@ -55,7 +55,7 @@ const FormInput: FC<IAttributes & { value?: string }> = (field) => {
   }
 
   return (
-    <div className="input-group">
+    <div className="slide-up input-group">
       <label htmlFor={field.marker} className="text-gray-400">
         {localizeInfos?.title}{' '}
         {required && <span className="text-red-500">*</span>}

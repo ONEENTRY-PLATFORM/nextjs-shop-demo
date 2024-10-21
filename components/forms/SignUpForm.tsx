@@ -148,10 +148,10 @@ const SignUpForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
         className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
       >
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
-          <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
+          <h2 className="slide-up text-xl font-bold text-neutral-600 max-md:max-w-full">
             {sign_up_text.value}
           </h2>
-          <p className="text-xs text-gray-400 max-md:max-w-full">
+          <p className="slide-up text-xs text-gray-400 max-md:max-w-full">
             <button
               onClick={() => {
                 setComponent('SignInForm');

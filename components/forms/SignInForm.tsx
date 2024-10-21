@@ -102,11 +102,11 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
         onSubmit={(e) => onSignIn(e)}
       >
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
-          <h2 className="max-w-full text-xl font-bold text-neutral-600">
+          <h2 className="slide-up max-w-full text-xl font-bold text-neutral-600">
             {sign_in_text.value}
           </h2>
 
-          <div className="max-w-full text-xs text-gray-400">
+          <div className="slide-up max-w-full text-xs text-gray-400">
             <button
               onClick={() => {
                 setTab('email');
@@ -127,7 +127,7 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
           </div>
         </div>
 
-        <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
+        <div className="slide-up relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {formFields?.map((field: IAttributes, index: Key) => {
             if (field.marker === 'email_reg' && tab === 'email') {
               return <FormInput key={index} {...field} />;
@@ -143,16 +143,16 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
 
         <FormSubmitButton title={sign_in_text.value} isLoading={loading} />
 
-        <div className="mx-auto mb-5 flex w-[380px] max-w-full justify-center gap-5 text-sm">
+        <div className="slide-up mx-auto mb-5 flex w-[380px] max-w-full justify-center gap-5 text-sm">
           <div className="font-bold text-gray-800">
             {forgot_password_text.value}
           </div>
           <ResetPasswordButton title={reset_password_text.value} />
         </div>
-        <p className="mx-auto mb-3 text-base font-bold leading-8 text-neutral-600">
+        <p className="slide-up mx-auto mb-3 text-base font-bold leading-8 text-neutral-600">
           {sign_in_with_text.value}
         </p>
-        <div className="mx-auto flex justify-between gap-5">
+        <div className="slide-up mx-auto flex justify-between gap-5">
           {socialProvidersButtons.map((button, index) => (
             <SocialSignInButton
               key={index}

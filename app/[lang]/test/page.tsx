@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { type FC } from 'react';
 
-// import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import {
   // CalendarForm,
   // ContactUsForm,
@@ -13,16 +13,16 @@ import {
   // UserForm,
   // VerificationForm,
 } from '@/components/forms';
-import OrdersTableLoader from '@/components/layout/orders/components/OrdersTableLoader';
+// import OrdersTableLoader from '@/components/layout/orders/components/OrdersTableLoader';
 // import ProductsGridLoader from '@/components/layout/products-grid/ProductsGridLoader';
-// import type { Locale } from '@/i18n-config';
+import type { Locale } from '@/i18n-config';
 
-// import { getDictionary } from '../dictionaries';
+import { getDictionary } from '../dictionaries';
 
 const TestPage: FC<{ params: { lang: string } }> = async ({
   params: { lang },
 }) => {
-  // const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
+  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
   // const { data, error } = useGetOrderStorageByMarkerQuery({
   //   marker: 'order',
   // });
@@ -34,10 +34,10 @@ const TestPage: FC<{ params: { lang: string } }> = async ({
           {/* <ProductsGridLoader /> */}
           {/* <CategoriesLoader /> */}
           {/* <BlocksGridLoader /> */}
-          <OrdersTableLoader />
+          {/* <OrdersTableLoader /> */}
 
           {/* <CalendarForm lang={lang} /> */}
-          {/* <SignInForm lang={lang} dict={dict} /> */}
+          <SignInForm lang={lang} dict={dict} />
           {/* <SignUpForm lang={lang} /> */}
           {/* <ContactUsForm lang={lang} className={''} /> */}
           {/* <VerificationForm lang={lang} /> */}
