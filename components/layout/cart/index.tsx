@@ -86,7 +86,7 @@ const CartPage: FC<SimplePageProps> = ({ lang, dict }) => {
   }, [delivery]);
 
   if (productsInCart.length < 2 || isLoading) {
-    return <EmptyCart lang={lang} />;
+    return <EmptyCart lang={lang} dict={dict} />;
   }
 
   return (
@@ -124,7 +124,7 @@ const CartPage: FC<SimplePageProps> = ({ lang, dict }) => {
               'flex self-center text-lg font-bold leading-6 text-slate-700 lg:self-end'
             }
           />
-          <PaymentButton className="self-end max-lg:self-center" />
+          <PaymentButton dict={dict} className="self-end max-lg:self-center" />
         </div>
       </form>
     </div>

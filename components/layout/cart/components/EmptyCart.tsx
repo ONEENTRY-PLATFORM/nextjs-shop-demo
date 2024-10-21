@@ -1,25 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
 
-import { useAppSelector } from '@/app/store/hooks';
-
-const EmptyCart = ({ lang }: { lang: string }) => {
-  const [emptyText, setEmptyText] = useState('');
-  const [goShopText, setGoShopText] = useState('');
-
-  const { empty_cart_plug, go_to_shop } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  );
-
-  useEffect(() => {
-    if (empty_cart_plug) {
-      setEmptyText(empty_cart_plug.value);
-    }
-    if (go_to_shop) {
-      setGoShopText(go_to_shop.value);
-    }
-  }, [go_to_shop, empty_cart_plug]);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const EmptyCart = ({ lang, dict }: { lang: string; dict: any }) => {
+  const { empty_cart_plug, go_to_shop } = dict;
 
   return (
     <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
@@ -27,17 +11,17 @@ const EmptyCart = ({ lang }: { lang: string }) => {
         width={100}
         height={100}
         src={'/icons/cart.svg'}
-        alt={emptyText}
+        alt={empty_cart_plug?.value}
         className="mb-5 size-20"
       />
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
-        {emptyText}
+        {empty_cart_plug?.value}
       </h1>
       <Link
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"
       >
-        {goShopText}
+        {go_to_shop?.value}
       </Link>
     </div>
   );

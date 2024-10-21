@@ -17,7 +17,7 @@ import Breadcrumbs from '@/components/layout/breadcrumbs';
 import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import NavigationMenu from '@/components/layout/main-menu';
-import Modal from '@/components/layout/modal/ModalLayout';
+import Modal from '@/components/layout/modal';
 import type { Locale } from '@/i18n-config';
 
 import RegisterGSAP from '../animations/RegisterGSAP';

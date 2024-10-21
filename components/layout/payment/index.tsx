@@ -83,7 +83,7 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
   }
 
   if (productsInCart.length < 2 || isLoading) {
-    return <EmptyCart lang={lang} />;
+    return <EmptyCart lang={lang} dict={dict} />;
   }
 
   return (

@@ -15,7 +15,7 @@ const ApplyButton: FC<{ dict: any }> = ({ dict }) => {
       onClick={() => setTransition('close')}
       className="btn btn-xl btn-primary"
     >
-      {apply_button_placeholder.value}
+      {apply_button_placeholder?.value}
     </button>
   );
 };

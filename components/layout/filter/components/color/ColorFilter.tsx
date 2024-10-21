@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -9,13 +8,10 @@ import type {
 import type { IError } from 'oneentry/dist/base/utils';
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { useGetSingleAttributeByMarkerSet } from '@/app/api';
-
 import ColorPicker from './ColorPicker';
 
 interface Props {
   title?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   attributes: IAttributesSetsEntity | IError;
 }
 

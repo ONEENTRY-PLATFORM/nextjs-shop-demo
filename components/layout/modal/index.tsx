@@ -3,12 +3,12 @@
 import type { FC } from 'react';
 import { useContext } from 'react';
 
-import ModalAnimations from '@/app/animations/ModalAnimations';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import ModalAnimations from '@/components/layout/modal/components/ModalAnimations';
 
 import * as forms from '../../forms';
 import ModalBackdrop from '../filter/ModalBackdrop';
-import CloseModal from './CloseModal';
+import CloseModal from './components/CloseModal';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Modal: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {

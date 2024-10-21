@@ -24,7 +24,7 @@ const ResetButton: FC<{ dict: any }> = ({ dict }) => {
 
   return (
     <button onClick={onReset} className="btn btn-xl btn-o btn-o-primary">
-      {reset_button_placeholder.value}
+      {reset_button_placeholder?.value}
     </button>
   );
 };

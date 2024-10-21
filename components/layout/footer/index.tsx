@@ -2,7 +2,7 @@ import type { FC } from 'react';
 
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 
-import FooterMenuSection from './FooterMenu';
+import FooterMenuSection from './components/FooterMenu';
 
 const Footer: FC = () => {
   const [dict] = useServerProvider('dict');
