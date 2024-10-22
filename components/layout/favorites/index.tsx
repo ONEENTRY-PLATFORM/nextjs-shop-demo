@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';

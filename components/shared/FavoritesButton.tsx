@@ -4,6 +4,8 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 
+import { api } from '@/app/api';
+import { updateUserState } from '@/app/api/utils/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addFavorites,
@@ -11,12 +13,80 @@ import {
   selectIsFavorites,
 } from '@/app/store/reducers/FavoritesSlice';
 
+// import { favorites } from '../icons';
+
 const FavoritesButton: FC<IProductsEntity> = (product) => {
   const [isFav, setIsFav] = useState(false);
+  const favorites = useAppSelector((state) => state.favoritesReducer.products);
   const dispatch = useAppDispatch();
   const isFavorites = useAppSelector((state) =>
     selectIsFavorites(state, product.id),
   );
+
+  // !!!
+  const onAddFavorites = async () => {
+    try {
+      if (!isFav) {
+        await api.Events.subscribeByMarker(
+          'catalog_event',
+          product.id,
+          'en_US',
+        );
+        await api.Events.subscribeByMarker(
+          'status_out_of_stock',
+          product.id,
+          'en_US',
+        );
+        await api.Events.subscribeByMarker(
+          'notification_test',
+          product.id,
+          'en_US',
+        );
+        const updatedFavorites = [...favorites, product.id];
+
+        const res = await updateUserState({
+          // favorites: updatedFavorites,
+          // cart: products.map((product: { id: number; quantity: number }) => {
+          //   return {
+          //     id: product.id,
+          //     quantity: product.quantity,
+          //   };
+          // }),
+        });
+        if (res) {
+          dispatch(addFavorites(product));
+        }
+      } else {
+        await api.Events.unsubscribeByMarker(
+          'notification_test',
+          product.id,
+          'en_US',
+        );
+        await api.Events.unsubscribeByMarker(
+          'catalog_event',
+          product.id,
+          'en_US',
+        );
+        await api.Events.unsubscribeByMarker(
+          'status_out_of_stock',
+          product.id,
+          'en_US',
+        );
+        // const updatedFavorites = favorites.filter(
+        //   (favorite: number) => favorite !== product.id,
+        // );
+
+        // const res = await updateUserState({
+        //   favorites: updatedFavorites,
+        // });
+        // if (res) {
+        //   dispatch(removeFavorites(product.id));
+        // }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     setIsFav(isFavorites);

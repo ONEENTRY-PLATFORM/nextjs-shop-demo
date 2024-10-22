@@ -6,6 +6,7 @@ import { createContext, useEffect, useState } from 'react';
 
 import { api, reDefine, useLazyGetMeQuery } from '@/app/api';
 
+// import { useNotifications } from '@/app/api/hooks/useNotifications';
 import { useAppSelector } from '../hooks';
 
 type ContextProps = {
@@ -51,6 +52,9 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
   const [user, setUser] = useState<IUserEntity | undefined>();
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
+
+  // const [isTokenSet, setIsTokenSet] = useState<boolean>(false);
+  // const { token } = useNotifications();
 
   const [trigger, { isError }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 3000 : 0,
@@ -174,6 +178,19 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, refetchUser]);
+
+  // useEffect(() => {
+  //   if (token && !isTokenSet && isAuth && user) {
+  //     (async () => {
+  //       try {
+  //         const res = await api.Users.addFCMToken(token);
+  //         setIsTokenSet(true);
+  //       } catch (e) {
+  //         console.log('=>(AuthContext.tsx:95) e', e);
+  //       }
+  //     })();
+  //   }
+  // }, [user, token]);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {

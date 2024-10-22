@@ -8,6 +8,7 @@ import { useRef } from 'react';
 const PaymentMethodAnimations = ({
   children,
   className,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   index,
   isActive,
 }: {
