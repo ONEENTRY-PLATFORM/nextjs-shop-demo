@@ -10,6 +10,7 @@ import FilterModal from '@/components/layout/filter/FilterModal';
 import CardsGridAnimations from '@/components/layout/products-grid/components/CardsGridAnimations';
 
 import LoadMore from './components/LoadMore';
+import ProductsNotFound from './components/ProductsNotFound';
 import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {
@@ -33,20 +34,20 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   isCategory,
 }) => {
   const currentPage = Number(searchParams?.page) || 1;
-
+  const lang = params.lang;
   const limit =
     currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isError, products, total } = !isCategory
     ? await getProducts({
+        lang: lang,
         limit: limit,
         offset: 0,
-        lang: params.lang,
         params: { ...params, searchParams: searchParams },
       })
     : await getProductsByPageUrl({
-        lang: params.lang,
+        lang: lang,
         limit: limit,
         offset: 0,
         params: { ...params, searchParams: searchParams },
@@ -55,23 +56,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   const totalPages = Math.ceil(total / limit);
 
   if (!products || total < 1) {
-    return (
-      <div className="text-center">
-        <Image
-          width={100}
-          height={100}
-          src={'/icons/cart.svg'}
-          alt="..."
-          className="mx-auto mb-5 size-20"
-        />
-        <div className="text-center text-lg">Products not found</div>
-        <FilterModal
-          prices={products?.[0]?.additional.prices}
-          lang={params.lang}
-          dict={dict}
-        />
-      </div>
-    );
+    return <ProductsNotFound products={products} lang={lang} dict={dict} />;
   }
 
   return (

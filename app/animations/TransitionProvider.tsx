@@ -24,10 +24,10 @@ export default function TransitionProvider({
           })
           .to(ref.current, {
             autoAlpha: 0,
-            delay: 0.35,
-            duration: 0.35,
+            // delay: 0.35,
+            duration: 0.5,
           })
-          .call(next, undefined, 0.7);
+          .call(next, undefined, 0.5);
 
         return () => {
           tl.kill();
@@ -41,7 +41,7 @@ export default function TransitionProvider({
           })
           .to(ref.current, {
             autoAlpha: 1,
-            height: 'auto',
+            // height: 'auto',
             duration: 0.5,
           })
           .call(next, undefined, 0.5);

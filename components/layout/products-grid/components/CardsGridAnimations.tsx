@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
 import type { ReactNode } from 'react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 const CardsGridAnimations = ({
   children,
@@ -14,6 +14,7 @@ const CardsGridAnimations = ({
   className: string;
 }) => {
   const { stage } = useTransitionState();
+  const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
   useGSAP(() => {
@@ -21,24 +22,14 @@ const CardsGridAnimations = ({
       paused: true,
     });
 
-    if (stage === 'entering') {
-      tl.set('.product-card', {
-        scale: 0,
-      }).to('.product-card', {
-        scale: 1,
-        duration: 0.5,
-        stagger: 0.1,
-      });
-      tl.play();
-    }
-    if (stage === 'leaving') {
-      tl.to('.product-card', {
-        scale: 0,
-        duration: 0.5,
-        stagger: 0.1,
-      });
-      tl.play();
-    }
+    // if (stage === 'leaving' && prevStage === 'none') {
+    //   tl.to(ref.current, {
+    //     xPercent: 100,
+    //     duration: 0.35,
+    //   });
+    //   tl.play();
+    // }
+    setPrevStage(stage);
 
     return () => {
       tl.kill();

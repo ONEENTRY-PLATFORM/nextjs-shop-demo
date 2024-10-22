@@ -51,13 +51,7 @@ const CardsGridAnimations = ({
         stagger: 0.05,
       });
 
-    if (stage === 'leaving') {
-      tl.reverse(1);
-    } else if (stage === 'entering') {
-      tl.play();
-    } else {
-      tl.play();
-    }
+    tl.play();
 
     return () => {
       tl.kill();
