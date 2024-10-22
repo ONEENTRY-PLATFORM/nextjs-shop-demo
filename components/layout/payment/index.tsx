@@ -17,6 +17,8 @@ import PaymentMethod from '@/components/layout/payment/components/PaymentMethod'
 import AuthError from '@/components/shared/AuthError';
 import Loader from '@/components/shared/Loader';
 
+import PaymentMethodsAnimations from './components/PaymentMethodsAnimations';
+
 const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
   const dispatch = useAppDispatch();
   const { isAuth } = useContext(AuthContext);
@@ -87,13 +89,22 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
   }
 
   return (
-    <div className="flex max-w-[730px] flex-col gap-5 pb-5 max-md:max-w-full">
-      <Suspense fallback={<Loader />}>
+    <Suspense fallback={<Loader />}>
+      <PaymentMethodsAnimations
+        className={'flex max-w-[730px] flex-col gap-5 pb-5 max-md:max-w-full'}
+      >
         {whitelistMethods.map((item, index) => {
-          return <PaymentMethod key={index} account={item} lang={lang} />;
+          return (
+            <PaymentMethod
+              key={index}
+              index={index as number}
+              account={item}
+              lang={lang}
+            />
+          );
         })}
-      </Suspense>
-    </div>
+      </PaymentMethodsAnimations>
+    </Suspense>
   );
 };
 

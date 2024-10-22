@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useTransitionRouter } from 'next-transition-router';
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
@@ -22,7 +22,7 @@ import TotalAmount from '@/components/layout/cart/components/TotalAmount';
 import DeliveryTable from '@/components/layout/cart/delivery-table/DeliveryTable';
 
 const CartPage: FC<SimplePageProps> = ({ lang, dict }) => {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const dispatch = useAppDispatch();
 
   const [isLoading, setIsLoading] = useState(true);

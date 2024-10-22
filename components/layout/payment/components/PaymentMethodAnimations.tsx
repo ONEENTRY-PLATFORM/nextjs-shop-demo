@@ -7,7 +7,7 @@ import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-const FormFieldAnimations = ({
+const PaymentMethodAnimations = ({
   children,
   className,
   index,
@@ -20,7 +20,7 @@ const FormFieldAnimations = ({
   const ref = useRef(null);
 
   useGSAP(() => {
-    if (!open || !ref.current) {
+    if (!ref.current) {
       return;
     }
 
@@ -42,7 +42,7 @@ const FormFieldAnimations = ({
       {
         width: '100%',
         opacity: 1,
-        delay: index / 10 + 0.35,
+        delay: index / 25,
       },
     );
     tl.play();
@@ -63,4 +63,4 @@ const FormFieldAnimations = ({
   );
 };
 
-export default FormFieldAnimations;
+export default PaymentMethodAnimations;

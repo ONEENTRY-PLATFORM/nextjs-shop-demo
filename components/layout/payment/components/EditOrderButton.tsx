@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { useTransitionRouter } from 'next-transition-router';
 import type { FC } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
@@ -9,7 +9,7 @@ type EditOrderButtonProps = {
 };
 
 const EditOrderButton: FC<EditOrderButtonProps> = ({ isLoading }) => {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const { edit_order_text } = useAppSelector(
     (state) => state.systemContentReducer.content,
   ) as {
