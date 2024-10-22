@@ -26,27 +26,38 @@ const PaymentMethodAnimations = ({
 
     gsap.set(ref.current, {
       transformOrigin: '0 0',
-      overflow: 'hidden',
     });
 
     const tl = gsap.timeline({
       paused: true,
     });
 
-    tl.fromTo(
-      ref.current,
-      {
-        height: 110,
-      },
-      {
-        height: 'auto',
-      },
-    );
+    const cartData = (ref.current as HTMLDivElement).querySelector('#cartData');
 
     if (isActive) {
-      tl.play();
+      tl.fromTo(
+        ref.current,
+        {
+          height: 110,
+        },
+        {
+          height: 'auto',
+        },
+      )
+        .to(cartData, {
+          autoAlpha: 1,
+          delay: -0.5,
+        })
+        .play();
     } else {
-      tl.reverse(0.5);
+      tl.to(ref.current, {
+        height: 110,
+      })
+        .to(cartData, {
+          autoAlpha: 0,
+          delay: -0.5,
+        })
+        .play();
     }
 
     return () => {

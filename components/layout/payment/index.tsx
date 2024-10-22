@@ -17,7 +17,7 @@ import PaymentMethod from '@/components/layout/payment/components/PaymentMethod'
 import AuthError from '@/components/shared/AuthError';
 import Loader from '@/components/shared/Loader';
 
-import PaymentMethodsAnimations from './components/PaymentMethodsAnimations';
+import PaymentMethodsAnimations from './animations/PaymentMethodsAnimations';
 
 const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
   const dispatch = useAppDispatch();
