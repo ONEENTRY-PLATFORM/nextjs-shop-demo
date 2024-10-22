@@ -42,10 +42,10 @@ const PaymentMethodAnimations = ({
       },
     );
 
-    if (!isActive) {
-      tl.reverse(0.5);
-    } else {
+    if (isActive) {
       tl.play();
+    } else {
+      tl.reverse(0.5);
     }
 
     return () => {

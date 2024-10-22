@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useTransitionRouter } from 'next-transition-router';
 import type { FC, FormEvent } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
@@ -17,7 +17,7 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
 const VerificationForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);
   const { setOpen, setComponent, action } = useContext(OpenDrawerContext);
@@ -185,7 +185,11 @@ const VerificationForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
           </div>
         </div>
 
-        <FormSubmitButton title={verify_now_text.value} isLoading={isLoading} />
+        <FormSubmitButton
+          title={verify_now_text.value}
+          isLoading={isLoading}
+          index={0}
+        />
         {error && <ErrorMessage error={error} />}
       </form>
     </FormAnimations>

@@ -27,10 +27,7 @@ const Sticker: FC<IconButtonProps> = ({ sticker }) => {
       sticker.value[0]?.extended?.value.downloadLink);
 
   return (
-    <button
-      type="button"
-      className="relative box-border flex size-[26px] shrink-0 flex-col items-center justify-center"
-    >
+    <div className="relative box-border flex size-[26px] shrink-0 flex-col items-center justify-center">
       {imgSrc && (
         <Image
           width={24}
@@ -41,7 +38,7 @@ const Sticker: FC<IconButtonProps> = ({ sticker }) => {
           className="relative shrink-0"
         />
       )}
-    </button>
+    </div>
   );
 };
 

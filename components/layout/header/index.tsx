@@ -9,6 +9,7 @@ import NavGroup from './nav/NavGroup';
 import SearchBar from './search/SearchBar';
 
 const Header: FC = async () => {
+  const [lang] = useServerProvider('lang');
   const [dict] = useServerProvider('dict');
 
   return (
@@ -17,7 +18,7 @@ const Header: FC = async () => {
         <div className="flex w-full max-w-screen-xl justify-between gap-16 max-md:flex-wrap max-md:gap-6 max-sm:gap-4">
           <Logo />
           <Suspense fallback={<SearchBarLoader />}>
-            <SearchBar dict={dict} />
+            <SearchBar dict={dict} lang={lang} />
           </Suspense>
           <Suspense fallback={<NavMenuLoader />}>
             <NavGroup />

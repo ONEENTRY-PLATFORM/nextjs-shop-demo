@@ -1,13 +1,14 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useTransitionRouter } from 'next-transition-router';
 import type { FC } from 'react';
 import { useCallback } from 'react';
 
 const Pagination: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const router = useRouter();
+  const router = useTransitionRouter();
   const currentPage = Number(searchParams.get('page')) || 1;
 
   const createQueryString = useCallback(

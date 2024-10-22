@@ -115,12 +115,12 @@ const DeliveryTable: FC<{
                 key={i}
                 className="tr h-[50px] border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
               >
-                <div className="td w-3/12 self-stretch align-middle text-sm">
+                <div className="td w-3/12 items-center self-stretch text-sm">
                   <label htmlFor={'address'}>
                     {order_info_address_placeholder?.value}
                   </label>
                 </div>
-                <div className="td w-8/12 px-5 align-middle text-base">
+                <div className="td w-8/12 px-5 text-base">
                   <input
                     size={40}
                     type="text"

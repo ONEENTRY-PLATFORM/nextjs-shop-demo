@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useTransitionRouter } from 'next-transition-router';
 import type { FC } from 'react';
 import { useContext } from 'react';
 
@@ -9,7 +9,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import Profile from '@/components/icons/profile';
 
 const LogoutMenuItem: FC = () => {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const { authenticate, isAuth } = useContext(AuthContext);
 
   if (!isAuth) {

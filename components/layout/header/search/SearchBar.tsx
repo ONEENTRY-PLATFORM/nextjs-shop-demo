@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useTransitionRouter } from 'next-transition-router';
 import type { FC, FormEvent } from 'react';
 import React, { useState } from 'react';
 import { useDebounce } from 'use-debounce';
@@ -10,12 +11,12 @@ import SearchIcon from '@/components/icons/search';
 import SearchResults from './SearchResults';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SearchBar: FC<{ dict: any }> = ({ dict }) => {
+const SearchBar: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const pathname = usePathname();
   const { replace } = useRouter();
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   const { search_placeholder } = dict;
 
@@ -37,7 +38,9 @@ const SearchBar: FC<{ dict: any }> = ({ dict }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push(`/shop?${params.toString()}`);
+    console.log(`/${lang}/shop?${params.toString()}`);
+
+    router.push(`/${lang}/shop?${params.toString()}`);
     setState(false);
   };
 

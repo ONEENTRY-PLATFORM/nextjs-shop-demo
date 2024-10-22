@@ -3,7 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useTransitionRouter } from 'next-transition-router';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { FC } from 'react';
 import { useContext, useRef, useState } from 'react';
@@ -27,7 +27,7 @@ const NavItemProfile: FC<{ item: any; lang: string; userMenu?: any }> = ({
     IMenusPages & { isActive: boolean }
   >;
 
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   const onLogout = async () => {
     await logOutUser({ marker: 'email' });

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useTransitionRouter } from 'next-transition-router';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC } from 'react';
 
@@ -18,7 +18,7 @@ const RepeatOrderButton: FC<{
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 }> = ({ data, isLoading, title, lang }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const router = useRouter();
+  const router = useTransitionRouter();
   const dispatch = useAppDispatch();
 
   const { products } = data;

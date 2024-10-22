@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useTransitionRouter } from 'next-transition-router';
 import { useState } from 'react';
 
 import { api } from '@/app/api';
@@ -9,7 +9,7 @@ import { removeProduct } from '@/app/store/reducers/CartSlice';
 import { removeOrder } from '@/app/store/reducers/OrderSlice';
 
 export const useCreateOrder = ({ langCode }: { langCode: string }) => {
-  const router = useRouter();
+  const router = useTransitionRouter();
   const dispatch = useAppDispatch();
   const order = useAppSelector((state) => state.orderReducer.order);
 
