@@ -3,8 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useTransitionRouter } from 'next-transition-router';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FC } from 'react';
 import { useLayoutEffect, useRef } from 'react';
 import { useCallback } from 'react';
@@ -14,7 +13,7 @@ import Spinner from '@/components/shared/Spinner';
 const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const router = useTransitionRouter();
+  const router = useRouter();
   const currentPage = Number(searchParams.get('page')) || 1;
   const nextPage = (currentPage < 1 ? 1 : currentPage) + 1;
 

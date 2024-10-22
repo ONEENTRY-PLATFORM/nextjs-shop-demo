@@ -14,10 +14,10 @@ const CategoryCard: FC<CategoryCardProps> = ({
   return (
     <Link
       href={link}
-      className="relative flex w-1/4 grow flex-col justify-center text-2xl font-bold text-white max-md:w-full"
+      className="group relative flex w-1/4 grow flex-col justify-center overflow-hidden rounded-3xl text-2xl font-bold text-white transition-shadow duration-500 hover:shadow-xl max-md:w-full"
     >
       <CategoryAnimations
-        className={`relative flex size-full h-64 overflow-hidden rounded-3xl bg-slate-100 p-6`}
+        className={`relative flex size-full h-64 bg-slate-100 p-6`}
       >
         <h2 className="z-10 mt-auto uppercase">{title}</h2>
         <Image
@@ -25,7 +25,7 @@ const CategoryCard: FC<CategoryCardProps> = ({
           sizes="(min-width: 1024px) 66vw, 100vw"
           src={imgSrc ? imgSrc : '/images/card.svg'}
           alt={title}
-          className="size-full rounded-3xl object-cover"
+          className="size-full rounded-3xl object-cover transition-all duration-500 group-hover:scale-125"
         />
       </CategoryAnimations>
     </Link>
