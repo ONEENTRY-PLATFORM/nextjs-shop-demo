@@ -20,7 +20,7 @@ const FormFieldAnimations = ({
   const ref = useRef(null);
 
   useGSAP(() => {
-    if (!open || !ref.current) {
+    if (!ref.current) {
       return;
     }
 
@@ -48,7 +48,7 @@ const FormFieldAnimations = ({
     tl.play();
 
     if (transition === 'close') {
-      tl.reverse(0.5);
+      tl.reverse(index / 10 + 0.85);
     }
 
     return () => {

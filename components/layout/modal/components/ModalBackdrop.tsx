@@ -10,7 +10,7 @@ const ModalBackdrop = () => {
   return (
     <div
       id="modalBg"
-      className="fixed inset-0 bg-black/30"
+      className="fixed inset-0 bg-white/30"
       onClick={() => {
         setTransition('close');
       }}

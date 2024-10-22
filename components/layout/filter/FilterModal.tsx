@@ -7,7 +7,7 @@ import Loader from '@/components/shared/Loader';
 import FilterModalAnimations from './components/FilterModalAnimations';
 import FilterHeader from './components/header/FilterHeader';
 import FiltersForm from './FiltersForm';
-import ModalBackdrop from './ModalBackdrop';
+import ModalBackdrop from '../modal/components/ModalBackdrop';
 
 const FilterModal: FC<{
   prices: any;
@@ -18,7 +18,7 @@ const FilterModal: FC<{
     <FilterModalAnimations>
       <div
         id="modalBody"
-        className="fixed right-0 top-0 z-20 flex size-full min-h-[90vh] flex-col overflow-auto bg-white shadow-xl md:top-10 md:overflow-hidden md:rounded-l-3xl lg:h-auto lg:w-[380px]"
+        className="fixed right-0 top-0 z-20 flex size-full min-h-[90vh] max-h-[90vh] flex-col overflow-auto bg-white shadow-xl md:top-[5vh] md:overflow-hidden md:rounded-l-3xl lg:h-auto lg:w-[380px]"
       >
         <FilterHeader dict={dict} />
         <Suspense fallback={<Loader />}>

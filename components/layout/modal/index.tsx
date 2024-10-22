@@ -7,7 +7,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import ModalAnimations from '@/components/layout/modal/components/ModalAnimations';
 
 import * as forms from '../../forms';
-import ModalBackdrop from '../filter/ModalBackdrop';
+import ModalBackdrop from './components/ModalBackdrop';
 import CloseModal from './components/CloseModal';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

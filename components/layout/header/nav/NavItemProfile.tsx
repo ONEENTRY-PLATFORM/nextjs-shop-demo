@@ -26,7 +26,6 @@ const NavItemProfile: FC<{ item: any; lang: string; userMenu?: any }> = ({
   const pages = userMenu?.menu?.pages as Array<
     IMenusPages & { isActive: boolean }
   >;
-
   const router = useTransitionRouter();
 
   const onLogout = async () => {

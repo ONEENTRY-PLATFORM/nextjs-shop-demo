@@ -42,10 +42,52 @@ body {
 }
 
 /* forms */
+input {
+  overflow: hidden;
+  outline: none !important;
+}
 input:focus-visible {
   outline: none !important;
   border-color: #f97316;
   color: #1e293b;
+}
+input:placeholder-shown[placeholder]
+{
+    opacity: 1;
+    color: rgba(0, 0, 0, 1);
+    transition: all 350ms ease;
+    transform: translateX(0%);
+}
+input:placeholder-shown::-webkit-input-placeholder {
+    opacity: 1;
+    color: rgba(0, 0, 0, 1);
+    -webkit-transition: all 350ms ease;
+    transform: translateX(0%);
+}
+input:placeholder-shown::-moz-placeholder {
+    opacity: 1;
+    color: rgba(0, 0, 0, 1);
+    -moz-transition: all 350ms ease;
+    transform: translateX(0%);
+}
+input:placeholder-shown:focus[placeholder]
+{
+    opacity: 0;
+    transition: all 350ms ease;
+    transform: translateX(-50%);
+    font-size: 8px;
+}
+input:placeholder-shown:focus::-webkit-input-placeholder {
+    opacity: 0;
+    transition: all 350ms ease;
+    transform: translateX(-50%);
+    font-size: 8px;
+}
+input:placeholder-shown:focus::-moz-placeholder{
+    opacity: 0;
+    -moz-transition: all 350ms ease;
+    transform: translateX(-50%);
+    font-size: 8px;
 }
 
 .toggle-checkbox:checked {
@@ -215,8 +257,8 @@ input:focus-visible {
       bg-[#F6F7F9] 
       p-4 
       transition-shadow 
-      duration-500 
-      hover:shadow-xl;
+      duration-500
+      hover:drop-shadow-xl;
   }
 
   .block-card {

@@ -28,28 +28,15 @@ const CardsGridAnimations = ({
     const cards =
       ref.current &&
       (ref.current as HTMLDivElement).querySelectorAll('.product-card');
-    const lines =
-      ref.current &&
-      (ref.current as HTMLDivElement).querySelectorAll('.opacity-30');
 
     tl.set(cards, {
       autoAlpha: 0,
-    })
-      .set(lines, {
-        width: 0,
-        transformOrigin: '100% 100%',
-      })
-      .to(cards, {
-        autoAlpha: 1,
-        duration: 0.5,
-        delay: 0.2,
-        stagger: 0.05,
-      })
-      .to(lines, {
-        width: '100%',
-        duration: 0.25,
-        stagger: 0.05,
-      });
+    }).to(cards, {
+      autoAlpha: 1,
+      duration: 0.5,
+      delay: 0.2,
+      stagger: 0.05,
+    });
 
     tl.play();
 
@@ -76,7 +63,7 @@ const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
             <div
               key={item}
               className={
-                'product-card animate-loader relative flex size-full min-h-[360px] flex-col items-center rounded-3xl p-4 opacity-40'
+                'product-card relative flex size-full min-h-[360px] flex-col items-center rounded-3xl bg-slate-100 p-4 opacity-40'
               }
             >
               <div className="relative mb-3 size-36 w-full rounded-md bg-white opacity-40"></div>

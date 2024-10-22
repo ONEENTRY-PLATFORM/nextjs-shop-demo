@@ -37,6 +37,7 @@ const FilterModalAnimations = ({ children }: { children: ReactNode }) => {
 
     tl.to('#modalBg', {
       autoAlpha: 1,
+      backdropFilter: 'blur(10px)',
       xPercent: 0,
       duration: 0.35,
     }).to(
@@ -50,7 +51,7 @@ const FilterModalAnimations = ({ children }: { children: ReactNode }) => {
     );
 
     if (transition === 'close') {
-      tl.reverse(4);
+      tl.reverse(2);
     } else {
       tl.play();
     }
@@ -65,7 +66,7 @@ const FilterModalAnimations = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <div ref={ref} className="fixed z-50 flex h-screen w-full">
+    <div ref={ref} className="fixed z-50 top-0 left-0 flex h-screen w-full">
       {children}
     </div>
   );

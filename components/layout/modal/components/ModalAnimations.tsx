@@ -19,26 +19,40 @@ const ModalAnimations = ({ children }: { children: ReactNode }) => {
     const tl = gsap.timeline({
       paused: true,
       onComplete: () => {
+        if (transition === 'close') {
+          setOpen(false);
+        }
         setTransition('');
       },
-      onReverseComplete: () => {
-        setOpen(false);
-        setTransition('');
-      },
-    });
-    gsap.set('#modalBg, #modalBody', {
-      scale: 0,
-      autoAlpha: 0,
-    });
-
-    tl.to('#modalBg, #modalBody', {
-      scale: 1,
-      autoAlpha: 1,
     });
 
     if (transition === 'close') {
-      tl.reverse(0.5);
+      tl.to(
+        '#modalBg, #modalBody',
+        {
+          autoAlpha: 0,
+          scaleX: 0,
+          ease: 'Power2.easeOut',
+          transformOrigin: '50% 50%',
+          duration: 0.25,
+          delay: 0.25,
+        }
+      )
+      .play();
     } else {
+      gsap.set('#modalBg, #modalBody', {
+        scaleX: 0,
+        autoAlpha: 0,
+      });
+      tl.to('#modalBg, #modalBody', {
+        scaleX: 1,
+        autoAlpha: 1,
+        height: 'auto',
+      }).to('#modalBg', {
+        backdropFilter: 'blur(10px)',
+        autoAlpha: 1,
+        delay: -0.35
+      });
       tl.play();
     }
 
