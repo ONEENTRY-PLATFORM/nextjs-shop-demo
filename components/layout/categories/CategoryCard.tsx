@@ -2,6 +2,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { FC } from 'react';
 
+import CategoryAnimations from './CategoryAnimations';
+
 interface CategoryCardProps {
   category: { title: string; link: string; imgSrc: string };
 }
@@ -14,7 +16,7 @@ const CategoryCard: FC<CategoryCardProps> = ({
       href={link}
       className="relative flex w-1/4 grow flex-col justify-center text-2xl font-bold text-white max-md:w-full"
     >
-      <div
+      <CategoryAnimations
         className={`relative flex size-full h-64 overflow-hidden rounded-3xl bg-slate-100 p-6`}
       >
         <h2 className="z-10 mt-auto uppercase">{title}</h2>
@@ -25,7 +27,7 @@ const CategoryCard: FC<CategoryCardProps> = ({
           alt={title}
           className="size-full rounded-3xl object-cover"
         />
-      </div>
+      </CategoryAnimations>
     </Link>
   );
 };

@@ -1,5 +1,6 @@
 import type { FC, Key } from 'react';
 
+import CategoriesGridAnimations from './CategoriesGridAnimations';
 import CategoryCard from './CategoryCard';
 
 interface CategoryCardProps {
@@ -14,11 +15,11 @@ interface CategoriesGridProps {
 
 const CategoriesGrid: FC<CategoriesGridProps> = ({ categories }) => {
   return (
-    <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
+    <CategoriesGridAnimations className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
       {categories.map((category: CategoryCardProps, i: Key) => {
         return <CategoryCard key={i} category={category} />;
       })}
-    </div>
+    </CategoriesGridAnimations>
   );
 };
 

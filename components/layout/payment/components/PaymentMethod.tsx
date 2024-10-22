@@ -29,7 +29,7 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ account, lang, index }) => {
   const isActive = orderData?.paymentAccountIdentifier === account.identifier;
 
   return (
-    <PaymentMethodAnimations className={''} index={index}>
+    <PaymentMethodAnimations className={''} index={index} isActive={isActive}>
       <div
         onClick={() => {
           if (!isActive) {

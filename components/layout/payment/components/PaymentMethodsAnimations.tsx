@@ -34,12 +34,10 @@ const PaymentMethodsAnimations = ({
     tl.fromTo(
       ref.current,
       {
-        width: 0,
-        opacity: 0,
+        autoAlpha: 0,
       },
       {
-        width: '100%',
-        opacity: 1,
+        autoAlpha: 1,
       },
     );
     tl.play();

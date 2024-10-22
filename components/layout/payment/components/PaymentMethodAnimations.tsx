@@ -3,20 +3,19 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import type { ReactNode } from 'react';
-import { useContext, useRef } from 'react';
-
-import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { useRef } from 'react';
 
 const PaymentMethodAnimations = ({
   children,
   className,
   index,
+  isActive,
 }: {
   children: ReactNode;
   className: string;
   index: number;
+  isActive: boolean;
 }) => {
-  const { open, transition } = useContext(OpenDrawerContext);
   const ref = useRef(null);
 
   useGSAP(() => {
@@ -36,25 +35,23 @@ const PaymentMethodAnimations = ({
     tl.fromTo(
       ref.current,
       {
-        width: 0,
-        opacity: 0,
+        height: 110,
       },
       {
-        width: '100%',
-        opacity: 1,
-        delay: index / 25,
+        height: 'auto',
       },
     );
-    tl.play();
 
-    if (transition === 'close') {
+    if (!isActive) {
       tl.reverse(0.5);
+    } else {
+      tl.play();
     }
 
     return () => {
       tl.kill();
     };
-  }, [transition, open]);
+  }, [isActive]);
 
   return (
     <div ref={ref} className={className}>
