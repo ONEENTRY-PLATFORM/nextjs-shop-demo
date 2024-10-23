@@ -28,14 +28,14 @@ const BreadcrumbsAnimations = ({
         yPercent: -100,
         autoAlpha: 0,
         display: 'none',
-        duration: 0.2,
+        duration: 0.25,
       }).play();
     } else {
       tl.to(ref.current, {
         display: 'flex',
         yPercent: 0,
         autoAlpha: 1,
-        duration: 0.2,
+        duration: 0.25,
       }).play();
     }
 

@@ -6,6 +6,7 @@ import type {
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
+import { typeError } from '@/components/utils';
 
 export const updateOrderByMarkerAndId = async (
   marker: string,
@@ -23,5 +24,10 @@ export const updateOrderByMarkerAndId = async (
     data,
     langCode,
   );
-  return { isError: false, order: order };
+
+  if (typeError(order)) {
+    return { isError: true, order: order as IError };
+  } else {
+    return { isError: false, order: order };
+  }
 };

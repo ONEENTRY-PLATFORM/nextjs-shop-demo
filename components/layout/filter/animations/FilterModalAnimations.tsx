@@ -37,8 +37,8 @@ const FilterModalAnimations = ({ children }: { children: ReactNode }) => {
 
     tl.to('#modalBg', {
       autoAlpha: 1,
-      backdropFilter: 'blur(10px)',
       xPercent: 0,
+      backdropFilter: 'blur(10px)',
       duration: 0.35,
     }).to(
       '#modalBody',

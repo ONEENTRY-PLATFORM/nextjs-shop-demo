@@ -7,6 +7,7 @@ import { getPageByUrl } from '@/app/api/server/pages/getPageByUrl';
 import Loader from '@/components/shared/Loader';
 import { sortObjectFieldsByPosition } from '@/components/utils';
 
+import FilterAnimations from './animations/FilterAnimations';
 import AvailabilityFilter from './components/AvailabilityFilter';
 import ApplyButton from './components/buttons/ApplyButton';
 import ResetButton from './components/buttons/ResetButton';
@@ -42,29 +43,41 @@ const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
     >
       {Object.keys(sortedAttributes).map((attribute, index) => {
         if (attribute === 'price_filter') {
-          return <PricePickerFilter key={index} prices={prices} dict={dict} />;
+          return (
+            <FilterAnimations key={index} className="w-full" index={0}>
+              <PricePickerFilter prices={prices} dict={dict} />
+            </FilterAnimations>
+          );
         }
         if (attribute === 'color_filter') {
           return (
-            <ColorFilter
-              key={index}
-              title={sortedAttributes[attribute]?.value}
-              attributes={colorsData.attribute}
-            />
+            <FilterAnimations key={index} className="w-full" index={1}>
+              <ColorFilter
+                key={index}
+                title={sortedAttributes[attribute]?.value}
+                attributes={colorsData.attribute}
+              />
+            </FilterAnimations>
           );
         }
         if (attribute === 'availability_filter') {
           return (
-            <AvailabilityFilter
-              key={index}
-              title={sortedAttributes[attribute]?.value}
-            />
+            <FilterAnimations key={index} className="w-full" index={2}>
+              <AvailabilityFilter
+                key={index}
+                title={sortedAttributes[attribute]?.value}
+              />
+            </FilterAnimations>
           );
         }
       })}
       <div className="relative mt-auto box-border flex shrink-0 flex-col gap-4">
-        <ResetButton dict={dict} />
-        <ApplyButton dict={dict} />
+        <FilterAnimations className="w-full" index={3}>
+          <ResetButton dict={dict} />
+        </FilterAnimations>
+        <FilterAnimations className="w-full" index={4}>
+          <ApplyButton dict={dict} />
+        </FilterAnimations>
       </div>
     </div>
   );

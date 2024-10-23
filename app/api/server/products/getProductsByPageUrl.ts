@@ -1,3 +1,4 @@
+import type { IError } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
@@ -21,7 +22,7 @@ export const getProductsByPageUrl = async (props: {
   };
 }): Promise<{
   isError: boolean;
-  products?: IProductsEntity[];
+  products: IProductsEntity[] | IError;
   total: number;
 }> => {
   const { limit, offset, params, lang } = props;
@@ -41,7 +42,7 @@ export const getProductsByPageUrl = async (props: {
   );
 
   if (typeError(data)) {
-    return { isError: true, total: 0 };
+    return { isError: true, products: data as IError, total: 0 };
   } else {
     return { isError: false, products: data.items, total: data.total };
   }

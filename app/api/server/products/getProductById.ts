@@ -1,3 +1,4 @@
+import type { IError } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
@@ -8,14 +9,14 @@ export const getProductById = async (
   id: number,
   lang: string,
 ): Promise<{
-  product?: IProductsEntity;
+  product: IProductsEntity | IError;
   isError: boolean;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const product = await api.Products.getProductById(id, langCode);
 
   if (typeError(product)) {
-    return { isError: true };
+    return { isError: true, product: product };
   } else {
     return { isError: false, product: product };
   }

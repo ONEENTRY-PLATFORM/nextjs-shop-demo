@@ -3,6 +3,7 @@ import type { IError } from 'oneentry/dist/base/utils';
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
+import { typeError } from '@/components/utils';
 
 export const getSingleAttributeByMarkerSet = async ({
   attributeMarker,
@@ -22,5 +23,10 @@ export const getSingleAttributeByMarkerSet = async ({
     setMarker,
     langCode,
   );
-  return { isError: false, attribute: attribute };
+
+  if (typeError(attribute)) {
+    return { isError: true, attribute: attribute as IError };
+  } else {
+    return { isError: false, attribute: attribute };
+  }
 };

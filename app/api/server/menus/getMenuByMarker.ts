@@ -3,6 +3,7 @@ import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
+import { typeError } from '@/components/utils';
 
 export const getMenuByMarker = async (
   marker: string,
@@ -13,5 +14,10 @@ export const getMenuByMarker = async (
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const menu = await api.Menus.getMenusByMarker(marker, langCode);
-  return { isError: false, menu: menu };
+
+  if (typeError(menu)) {
+    return { isError: true, menu: menu as IError };
+  } else {
+    return { isError: false, menu: menu };
+  }
 };

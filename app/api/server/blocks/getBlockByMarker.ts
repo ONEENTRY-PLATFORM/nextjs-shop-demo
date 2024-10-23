@@ -3,6 +3,7 @@ import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
+import { typeError } from '@/components/utils';
 
 export const getBlockByMarker = async (
   marker: string,
@@ -13,5 +14,10 @@ export const getBlockByMarker = async (
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const block = await api.Blocks.getBlockByMarker(marker, langCode);
-  return { isError: false, block: block };
+
+  if (typeError(block)) {
+    return { isError: true, block: block as IError };
+  } else {
+    return { isError: false, block: block };
+  }
 };
