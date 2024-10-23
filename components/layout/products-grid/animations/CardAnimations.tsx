@@ -3,18 +3,14 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
-const CardAnimations = ({
-  children,
-  className,
-  index,
-}: {
+const CardAnimations: FC<{
   children: ReactNode;
   className: string;
   index: number;
-}) => {
+}> = ({ children, className, index }) => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);

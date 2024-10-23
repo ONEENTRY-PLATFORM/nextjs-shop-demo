@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 import Loader from '@/components/shared/Loader';
 
 import ModalBackdrop from '../modal/components/ModalBackdrop';
-import FilterModalAnimations from './components/FilterModalAnimations';
+import FilterModalAnimations from './animations/FilterModalAnimations';
 import FilterHeader from './components/header/FilterHeader';
 import FiltersForm from './FiltersForm';
 

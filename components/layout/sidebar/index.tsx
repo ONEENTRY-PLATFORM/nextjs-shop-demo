@@ -2,8 +2,8 @@ import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
 import { getMenuByMarker } from '@/app/api';
 
+import SidebarAnimations from './animations/SidebarAnimations';
 import LogoutMenuItem from './components/LogoutMenuItem';
-import SidebarAnimations from './components/SidebarAnimations';
 import SidebarMenuItem from './components/SidebarMenuItem';
 import SidebarMenuLoader from './components/SidebarMenuLoader';
 

@@ -31,7 +31,7 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ account, lang, index }) => {
   return (
     <PaymentMethodAnimations
       className={
-        'relative w-full flex-row text-slate-700 items-center justify-between rounded-md border border-solid border-neutral-300 bg-transparent p-4 ' +
+        'relative overflow-hidden w-full flex-row text-slate-700 items-center justify-between rounded-md border border-solid border-neutral-300 bg-transparent p-4 ' +
         clsx(isActive && 'min-h-36', ' min-h-10 cursor-pointer')
       }
       index={index}

@@ -2,21 +2,15 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import type { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { useRef } from 'react';
 
-const PaymentMethodAnimations = ({
-  children,
-  className,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  index,
-  isActive,
-}: {
+const PaymentMethodAnimations: FC<{
   children: ReactNode;
   className: string;
   index: number;
   isActive: boolean;
-}) => {
+}> = ({ children, className, isActive }) => {
   const ref = useRef(null);
 
   useGSAP(() => {
