@@ -34,6 +34,6 @@ export { getProductById } from './server/products/getProductById';
 export { getProducts } from './server/products/getProducts';
 export { getProductsByPageUrl } from './server/products/getProductsByPageUrl';
 export { getRelatedProductsById } from './server/products/getRelatedProductsById';
-export { logInUser } from './utils/logInUser';
-export { logOutUser } from './utils/logOutUser';
+export { logInUser } from './server/users/logInUser';
+export { logOutUser } from './server/users/logOutUser';
 export { socket } from './utils/socket';
