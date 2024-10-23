@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
-import ModalAnimations from '@/components/layout/modal/components/ModalAnimations';
+import ModalAnimations from '@/components/layout/modal/animations/ModalAnimations';
 
 import * as forms from '../../forms';
 import ModalBackdrop from './components/ModalBackdrop';

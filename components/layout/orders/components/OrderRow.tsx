@@ -5,15 +5,17 @@ import { useState } from 'react';
 import { UsePrice } from '@/components/utils';
 
 import OrderPage from './OrderPage';
+import OrderAnimations from '../animations/OrderAnimations';
 
 interface OrderProps {
   order: IOrderByMarkerEntity;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   settings: Record<string, any> | undefined;
   lang: string;
+  index: number;
 }
 
-const Order: FC<OrderProps> = ({ order, settings, lang }) => {
+const Order: FC<OrderProps> = ({ order, settings, lang, index }) => {
   const { id, createdDate, statusIdentifier, totalSum } = order;
 
   const formattedPrice = UsePrice({
@@ -27,7 +29,7 @@ const Order: FC<OrderProps> = ({ order, settings, lang }) => {
     : 'text-orange-500';
 
   return (
-    <>
+    <OrderAnimations className="w-full" index={index}>
       <button
         onClick={() => {
           setState(!state);
@@ -45,7 +47,7 @@ const Order: FC<OrderProps> = ({ order, settings, lang }) => {
           <OrderPage id={Number(id)} settings={settings} lang={lang} />
         </div>
       )}
-    </>
+    </OrderAnimations>
   );
 };
 

@@ -8,7 +8,6 @@ import { useContext, useEffect, useState } from 'react';
 import { getAllOrdersByMarker, getBlockByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Loader from '@/components/shared/Loader';
 
 import LoadMore from '../products-grid/components/LoadMore';
@@ -56,8 +55,7 @@ const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
   }, [lang, currentPage, isAuth, pageLimit, user]);
 
   if (!settings) {
-    return <AuthError />;
-    // return <Loader />;
+    return <Loader />;
   }
 
   if (!isAuth || !user) {
@@ -83,9 +81,9 @@ const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
           {!orders ? (
             <OrdersTableLoader />
           ) : (
-            orders?.map((order: IOrderByMarkerEntity, i: Key) => {
+            orders?.map((order: IOrderByMarkerEntity, i: Key | number) => {
               return (
-                <Order key={i} order={order} settings={settings} lang={lang} />
+                <Order key={i} order={order} settings={settings} lang={lang} index={i as number} />
               );
             })
           )}

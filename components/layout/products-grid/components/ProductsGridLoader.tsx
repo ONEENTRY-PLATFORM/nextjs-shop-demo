@@ -33,9 +33,8 @@ const CardsGridAnimations = ({
       autoAlpha: 0,
     }).to(cards, {
       autoAlpha: 1,
-      duration: 0.5,
-      delay: 0.2,
-      stagger: 0.05,
+      duration: 1,
+      stagger: 0.1,
     });
 
     tl.play();

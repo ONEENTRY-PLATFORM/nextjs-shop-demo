@@ -14,7 +14,7 @@ import {
 } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { SimplePageProps } from '@/app/types/global';
-import CartAnimations from '@/components/layout/cart/components/CartAnimations';
+import CartAnimations from '@/components/layout/cart/animations/CartAnimations';
 import EmptyCart from '@/components/layout/cart/components/EmptyCart';
 import PaymentButton from '@/components/layout/cart/components/PaymentButton';
 import ProductCard from '@/components/layout/cart/components/ProductCard';

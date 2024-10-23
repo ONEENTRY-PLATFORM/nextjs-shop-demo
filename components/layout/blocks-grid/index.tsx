@@ -2,7 +2,7 @@ import { type FC } from 'react';
 
 import { blocksColors, blocksData } from '@/components/data';
 
-import BlocksGridAnimations from './components/BlocksGridAnimations';
+import BlocksGridAnimations from './animations/BlocksGridAnimations';
 import BlocksGridCard from './components/BlocksGridCard';
 
 interface BlocksGridProps {

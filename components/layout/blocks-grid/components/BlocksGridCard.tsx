@@ -5,7 +5,7 @@ import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
-import BlockCardAnimations from '@/components/layout/blocks-grid/components/BlockCardAnimations';
+import BlockCardAnimations from '@/components/layout/blocks-grid/animations/BlockCardAnimations';
 import Loader from '@/components/shared/Loader';
 import Placeholder from '@/components/shared/Placeholder';
 

@@ -258,7 +258,7 @@ input:placeholder-shown:focus::-moz-placeholder{
       p-4 
       transition-shadow 
       duration-500
-      hover:drop-shadow-xl;
+      hover:shadow-xl;
   }
 
   .block-card {
