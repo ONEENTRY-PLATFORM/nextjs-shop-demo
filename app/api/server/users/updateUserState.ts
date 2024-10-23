@@ -1,7 +1,7 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { Key } from 'react';
 
-import { api } from '../api/api';
+import { api } from '@/app/api';
 
 export const updateUserState = async ({
   favorites,
@@ -34,45 +34,45 @@ export const updateUserState = async ({
     },
     [],
   );
+  const email = user.formData.find(
+    (
+      item: {
+        marker: string;
+      },
+      i: Key,
+    ) => {
+      if (item.marker === 'email_reg') {
+        return user.formData[i as keyof typeof user.formData].value;
+      }
+    },
+    [],
+  );
+  const phone = user.formData.find(
+    (
+      item: {
+        marker: string;
+      },
+      i: Key,
+    ) => {
+      if (item.marker === 'phone_reg') {
+        return user.formData[i as keyof typeof user.formData].value;
+      }
+    },
+    [],
+  );
 
   const res = await api.Users.updateUser({
     formIdentifier: 'reg',
-    formData: [
-      ...formData,
-      // {
-      //   marker: 'name_reg',
-      //   type: 'string',
-      //   value: 'pixel.comander@gmail.com',
-      // },
-      // {
-      //   marker: 'email_reg',
-      //   type: 'string',
-      //   value: 'pixel.comander@gmail.com',
-      // },
-      // {
-      //   marker: 'password_reg',
-      //   type: 'string',
-      //   value: '12345',
-      // },
-      // {
-      //   marker: 'phone_reg',
-      //   type: 'string',
-      //   value: '+380950749626',
-      // },
-      // {
-      //   marker: 'address_reg',
-      //   type: 'string',
-      //   value: 'test address',
-      // },
-    ],
+    formData: [...formData],
     state: {
       ...(favorites && { favorites }),
       ...(cart && { cart }),
+      version: Date.now(),
     },
     notificationData: {
-      email: 'pixel.comander@gmail.com',
+      email: email.value,
       phonePush: [],
-      phoneSMS: '+380950749626',
+      phoneSMS: phone.value,
     },
   });
 
