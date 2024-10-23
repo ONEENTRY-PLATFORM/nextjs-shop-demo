@@ -4,7 +4,8 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { ReactNode } from 'react';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
+import { toast } from 'react-toastify';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
@@ -43,7 +44,8 @@ const ProductAnimations = ({
     tl.to(ref.current, {
       autoAlpha: 0,
       height: 0,
-      duration: 0.5,
+      duration: 0.4,
+      ease: 'power2.inOut',
     }).set(ref.current, {
       autoAlpha: 1,
       height: 'auto',
@@ -54,6 +56,7 @@ const ProductAnimations = ({
             productId: 0,
           }),
         );
+        toast('Product ' + product.localizeInfos.title + ' removed from cart!');
       },
     });
     tl.play();

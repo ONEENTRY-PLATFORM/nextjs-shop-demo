@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { toast } from 'react-toastify';
 
 import { useAppDispatch } from '@/app/store/hooks';
 import {
@@ -9,9 +10,10 @@ import {
 interface ButtonProps {
   id: number;
   qty: number;
+  title: string;
 }
 
-const DecreaseButton: FC<ButtonProps> = ({ id, qty }) => {
+const DecreaseButton: FC<ButtonProps> = ({ id, qty, title }) => {
   const dispatch = useAppDispatch();
   if (qty < 1) {
     return;
@@ -22,6 +24,7 @@ const DecreaseButton: FC<ButtonProps> = ({ id, qty }) => {
       onClick={() => {
         if (qty <= 1) {
           dispatch(removeProduct(id));
+          toast('Product ' + title + ' removed from cart!');
         } else {
           dispatch(decreaseProductQty({ id: id, quantity: 1 }));
         }

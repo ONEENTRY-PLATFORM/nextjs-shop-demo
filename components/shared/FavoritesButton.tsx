@@ -3,6 +3,7 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { api } from '@/app/api';
 import { updateUserState } from '@/app/api/utils/updateUserState';
@@ -105,8 +106,16 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
       onClick={() => {
         if (isFav) {
           dispatch(removeFavorites(product.id));
+          toast(
+            'Product ' +
+              product.localizeInfos.title +
+              ' removed from Favorites!',
+          );
         } else {
           dispatch(addFavorites(product));
+          toast(
+            'Product ' + product.localizeInfos.title + ' add to Favorites!',
+          );
         }
       }}
     >

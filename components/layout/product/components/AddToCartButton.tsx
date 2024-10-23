@@ -3,6 +3,7 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
@@ -51,6 +52,7 @@ const AddToCartButton: FC<AddToCartProps> = ({
     <button
       onClick={() => {
         dispatch(addProductToCart({ ...product, selected: true, quantity: 1 }));
+        toast('Product ' + product.localizeInfos.title + ' added to cart!');
       }}
       type="button"
       className={className}
