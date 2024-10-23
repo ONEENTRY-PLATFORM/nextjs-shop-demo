@@ -10,11 +10,7 @@ const OrderAnimations: FC<{
   children: ReactNode;
   className: string;
   index: number;
-}> = ({
-  children,
-  className,
-  index,
-}) => {  
+}> = ({ children, className, index }) => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
@@ -38,12 +34,14 @@ const OrderAnimations: FC<{
         autoAlpha: 0,
         scaleY: 0,
         width: 0,
-      }).to(ref.current, {
-        autoAlpha: 1,
-        scaleY: 1,
-        width: "100%",
-        delay: index / 10,
-      }).play();
+      })
+        .to(ref.current, {
+          autoAlpha: 1,
+          scaleY: 1,
+          width: '100%',
+          delay: index / 10,
+        })
+        .play();
     }
     setPrevStage(stage);
 

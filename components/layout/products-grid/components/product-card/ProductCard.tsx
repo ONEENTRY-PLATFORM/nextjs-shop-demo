@@ -3,10 +3,10 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC, Key } from 'react';
 
 import { LanguageEnum } from '@/app/types/enum';
-import CardAnimations from '@/components/layout/products-grid/components/CardAnimations';
+import AddToCartButton from '@/components/layout/product/components/AddToCartButton';
+import FavoritesButton from '@/components/shared/FavoritesButton';
 
-import FavoritesButton from '../../../shared/FavoritesButton';
-import AddToCartButton from '../../product/components/AddToCartButton';
+import CardAnimations from '../../animations/CardAnimations';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 import Sticker from './Sticker';
@@ -78,14 +78,6 @@ const ProductCard: FC<{
           height={42}
           className="btn btn-md btn-primary"
         />
-        {/* <Suspense>
-          <AddToCartButton
-            product={product}
-            dict={dict}
-            height={42}
-            className="btn btn-md btn-primary"
-          />
-        </Suspense> */}
       </div>
 
       <Link

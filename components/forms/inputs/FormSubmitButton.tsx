@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import FormFieldAnimations from '@/app/animations/FormFieldAnimations';
+import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimations';
 import Spinner from '@/components/shared/Spinner';
 
 interface FormSubmitButtonProps {

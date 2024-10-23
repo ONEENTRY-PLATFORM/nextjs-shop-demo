@@ -4,8 +4,8 @@ import { useState } from 'react';
 
 import { UsePrice } from '@/components/utils';
 
-import OrderPage from './OrderPage';
 import OrderAnimations from '../animations/OrderAnimations';
+import OrderPage from './OrderPage';
 
 interface OrderProps {
   order: IOrderByMarkerEntity;

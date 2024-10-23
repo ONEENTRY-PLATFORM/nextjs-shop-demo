@@ -8,7 +8,7 @@ import { useAppSelector } from '@/app/store/hooks';
 import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import type { SimplePageProps } from '@/app/types/global';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
-import CardsGridAnimations from '@/components/layout/products-grid/components/CardsGridAnimations';
+import CardsGridAnimations from '@/components/layout/products-grid/animations/CardsGridAnimations';
 import ProductCard from '@/components/layout/products-grid/product-card/ProductCard';
 
 const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {

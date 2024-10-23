@@ -3,10 +3,10 @@ import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, Key } from 'react';
 import React, { useEffect, useState } from 'react';
 
-import FormFieldAnimations from '@/app/animations/FormFieldAnimations';
 import { useAppDispatch } from '@/app/store/hooks';
 import { addField } from '@/app/store/reducers/FormFieldsSlice';
 import { FormFieldsEnum } from '@/app/types/enum';
+import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimations';
 import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
 

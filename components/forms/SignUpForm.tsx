@@ -5,7 +5,6 @@ import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent, Key } from 'react';
 import { useContext, useState } from 'react';
 
-import FormAnimations from '@/app/animations/FormAnimations';
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { logInUser } from '@/app/api';
 import { api } from '@/app/api';
@@ -13,6 +12,7 @@ import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { LanguageEnum } from '@/app/types/enum';
+import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import { typeError } from '../utils';
 import ErrorMessage from './inputs/ErrorMessage';

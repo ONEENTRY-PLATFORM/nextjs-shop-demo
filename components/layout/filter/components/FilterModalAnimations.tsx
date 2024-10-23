@@ -66,7 +66,7 @@ const FilterModalAnimations = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <div ref={ref} className="fixed z-50 top-0 left-0 flex h-screen w-full">
+    <div ref={ref} className="fixed left-0 top-0 z-50 flex h-screen w-full">
       {children}
     </div>
   );

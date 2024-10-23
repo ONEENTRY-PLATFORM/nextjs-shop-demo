@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import type {
   IFilterParams,
   IProductsEntity,
@@ -7,11 +6,11 @@ import { type FC } from 'react';
 
 import { getProducts, getProductsByPageUrl } from '@/app/api';
 import FilterModal from '@/components/layout/filter/FilterModal';
-import CardsGridAnimations from '@/components/layout/products-grid/components/CardsGridAnimations';
+import CardsGridAnimations from '@/components/layout/products-grid/animations/CardsGridAnimations';
 
 import LoadMore from './components/LoadMore';
+import ProductCard from './components/product-card/ProductCard';
 import ProductsNotFound from './components/ProductsNotFound';
-import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

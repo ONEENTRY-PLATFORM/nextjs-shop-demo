@@ -46,48 +46,37 @@ input {
   overflow: hidden;
   outline: none !important;
 }
+input:placeholder-shown[placeholder] {
+  color: rgba(0, 0, 0, 0.5);
+  transition: all 350ms ease;
+}
+input:placeholder-shown::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+  -webkit-transition: all 350ms ease;
+}
+input:placeholder-shown::-moz-placeholder {
+  color: rgba(0, 0, 0, 0.5);
+  -moz-transition: all 350ms ease;
+}
+input:placeholder-shown:focus[placeholder] {
+  color: rgba(0, 0, 0, 0);
+  font-size: 0px;
+  transition: all 350ms ease;
+}
+input:placeholder-shown:focus::-webkit-input-placeholder {
+  color: rgba(0, 0, 0, 0);
+  font-size: 0px;
+  transition: all 350ms ease;
+}
+input:placeholder-shown:focus::-moz-placeholder {
+  color: rgba(0, 0, 0, 0);
+  font-size: 0px;
+  -moz-transition: all 350ms ease;
+}
 input:focus-visible {
   outline: none !important;
   border-color: #f97316;
   color: #1e293b;
-}
-input:placeholder-shown[placeholder]
-{
-    opacity: 1;
-    color: rgba(0, 0, 0, 1);
-    transition: all 350ms ease;
-    transform: translateX(0%);
-}
-input:placeholder-shown::-webkit-input-placeholder {
-    opacity: 1;
-    color: rgba(0, 0, 0, 1);
-    -webkit-transition: all 350ms ease;
-    transform: translateX(0%);
-}
-input:placeholder-shown::-moz-placeholder {
-    opacity: 1;
-    color: rgba(0, 0, 0, 1);
-    -moz-transition: all 350ms ease;
-    transform: translateX(0%);
-}
-input:placeholder-shown:focus[placeholder]
-{
-    opacity: 0;
-    transition: all 350ms ease;
-    transform: translateX(-50%);
-    font-size: 8px;
-}
-input:placeholder-shown:focus::-webkit-input-placeholder {
-    opacity: 0;
-    transition: all 350ms ease;
-    transform: translateX(-50%);
-    font-size: 8px;
-}
-input:placeholder-shown:focus::-moz-placeholder{
-    opacity: 0;
-    -moz-transition: all 350ms ease;
-    transform: translateX(-50%);
-    font-size: 8px;
 }
 
 .toggle-checkbox:checked {

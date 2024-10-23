@@ -5,12 +5,12 @@ import type { FC, FormEvent } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 
-import FormAnimations from '@/app/animations/FormAnimations';
 import { api, logInUser } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { addField } from '@/app/store/reducers/FormFieldsSlice';
+import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import ErrorMessage from './inputs/ErrorMessage';
 import FormSubmitButton from './inputs/FormSubmitButton';

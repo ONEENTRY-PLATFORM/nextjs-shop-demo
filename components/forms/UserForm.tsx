@@ -8,10 +8,10 @@ import type { FC, FormEvent, Key } from 'react';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import FormAnimations from '@/app/animations/FormAnimations';
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import AuthError from '../shared/AuthError';
 import Loader from '../shared/Loader';

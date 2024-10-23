@@ -6,16 +6,15 @@ import { useTransitionState } from 'next-transition-router';
 import type { ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
-const CardAnimations = ({
+const CardsGridAnimations = ({
   children,
   className,
-  index,
 }: {
   children: ReactNode;
   className: string;
-  index: number;
 }) => {
   const { stage } = useTransitionState();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
@@ -24,32 +23,13 @@ const CardAnimations = ({
       paused: true,
     });
 
-    tl.set(ref.current, {
-      autoAlpha: 0,
-      scale: 0,
-    }).to(ref.current, {
-      autoAlpha: 1,
-      scale: 1,
-      delay: index / 20,
-    });
-    tl.play();
-
-    return () => {
-      tl.kill();
-    };
-  }, []);
-
-  useGSAP(() => {
-    const tl = gsap.timeline();
-
-    if (stage === 'leaving' && prevStage === 'none') {
-      tl.to(ref.current, {
-        scale: 0,
-        duration: 0.5,
-        delay: index / 20,
-      });
-    }
-
+    // if (stage === 'leaving' && prevStage === 'none') {
+    //   tl.to(ref.current, {
+    //     xPercent: 100,
+    //     duration: 0.35,
+    //   });
+    //   tl.play();
+    // }
     setPrevStage(stage);
 
     return () => {
@@ -58,10 +38,10 @@ const CardAnimations = ({
   }, [stage]);
 
   return (
-    <div className={className} ref={ref}>
+    <div ref={ref} className={className}>
       {children}
     </div>
   );
 };
 
-export default CardAnimations;
+export default CardsGridAnimations;

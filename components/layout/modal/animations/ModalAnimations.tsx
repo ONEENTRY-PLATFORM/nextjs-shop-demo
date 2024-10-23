@@ -37,13 +37,15 @@ const ModalAnimations = ({ children }: { children: ReactNode }) => {
       tl.set('#modalBg, #modalBody', {
         scaleX: 0,
         autoAlpha: 0,
-      }).to('#modalBg, #modalBody', {
-        scaleX: 1,
-        autoAlpha: 1,
-      }).to('#modalBg', {
-        backdropFilter: 'blur(10px)',
-        delay: -0.35,
-      });
+      })
+        .to('#modalBg, #modalBody', {
+          scaleX: 1,
+          autoAlpha: 1,
+        })
+        .to('#modalBg', {
+          backdropFilter: 'blur(10px)',
+          delay: -0.35,
+        });
       tl.play();
     }
 

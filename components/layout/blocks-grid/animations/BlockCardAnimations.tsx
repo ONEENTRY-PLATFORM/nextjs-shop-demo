@@ -16,7 +16,7 @@ const BlockCardAnimations = ({
   // index: number;
 }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { stage, isReady } = useTransitionState();
+  const { stage } = useTransitionState();
   const ref = useRef(null);
 
   useGSAP(() => {

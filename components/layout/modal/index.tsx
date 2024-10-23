@@ -7,8 +7,8 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import ModalAnimations from '@/components/layout/modal/animations/ModalAnimations';
 
 import * as forms from '../../forms';
-import ModalBackdrop from './components/ModalBackdrop';
 import CloseModal from './components/CloseModal';
+import ModalBackdrop from './components/ModalBackdrop';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const Modal: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {

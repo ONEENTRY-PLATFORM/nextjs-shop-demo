@@ -6,12 +6,14 @@ import { useTransitionState } from 'next-transition-router';
 import type { ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
-const CardsGridAnimations = ({
+const CardAnimations = ({
   children,
   className,
+  index,
 }: {
   children: ReactNode;
   className: string;
+  index: number;
 }) => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
@@ -22,13 +24,32 @@ const CardsGridAnimations = ({
       paused: true,
     });
 
-    // if (stage === 'leaving' && prevStage === 'none') {
-    //   tl.to(ref.current, {
-    //     xPercent: 100,
-    //     duration: 0.35,
-    //   });
-    //   tl.play();
-    // }
+    tl.set(ref.current, {
+      autoAlpha: 0,
+      scale: 0,
+    }).to(ref.current, {
+      autoAlpha: 1,
+      scale: 1,
+      delay: index / 10,
+    });
+    tl.play();
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
+  useGSAP(() => {
+    const tl = gsap.timeline();
+
+    if (stage === 'leaving' && prevStage === 'none') {
+      tl.to(ref.current, {
+        scale: 0,
+        duration: 0.5,
+        delay: index / 20,
+      });
+    }
+
     setPrevStage(stage);
 
     return () => {
@@ -37,10 +58,10 @@ const CardsGridAnimations = ({
   }, [stage]);
 
   return (
-    <div ref={ref} className={className}>
+    <div className={className} ref={ref}>
       {children}
     </div>
   );
 };
 
-export default CardsGridAnimations;
+export default CardAnimations;

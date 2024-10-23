@@ -83,7 +83,13 @@ const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
           ) : (
             orders?.map((order: IOrderByMarkerEntity, i: Key | number) => {
               return (
-                <Order key={i} order={order} settings={settings} lang={lang} index={i as number} />
+                <Order
+                  key={i}
+                  order={order}
+                  settings={settings}
+                  lang={lang}
+                  index={i as number}
+                />
               );
             })
           )}

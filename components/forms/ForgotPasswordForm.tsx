@@ -4,10 +4,10 @@ import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent, Key } from 'react';
 import { useContext, useState } from 'react';
 
-import FormAnimations from '@/app/animations/FormAnimations';
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import Loader from '../shared/Loader';
 import ErrorMessage from './inputs/ErrorMessage';

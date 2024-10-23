@@ -24,6 +24,7 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
   );
 
   // !!!
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onAddFavorites = async () => {
     try {
       if (!isFav) {
@@ -42,6 +43,7 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
           product.id,
           'en_US',
         );
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const updatedFavorites = [...favorites, product.id];
 
         const res = await updateUserState({

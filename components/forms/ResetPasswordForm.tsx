@@ -3,10 +3,10 @@
 import type { FC, FormEvent } from 'react';
 import React, { useContext, useState } from 'react';
 
-import FormAnimations from '@/app/animations/FormAnimations';
 import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import { resetPasswordFormFields } from '../data';
 import ErrorMessage from './inputs/ErrorMessage';
@@ -100,6 +100,7 @@ const ResetPasswordForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
         <FormSubmitButton
           title={change_password_text.value}
           isLoading={isLoading}
+          index={10}
         />
         {isError && <ErrorMessage error={isError} />}
       </form>
