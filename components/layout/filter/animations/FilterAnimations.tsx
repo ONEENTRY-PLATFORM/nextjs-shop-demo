@@ -2,9 +2,8 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import { useTransitionState } from 'next-transition-router';
 import type { FC, ReactNode } from 'react';
-import { useContext, useRef, useState } from 'react';
+import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
@@ -13,7 +12,6 @@ const FilterAnimations: FC<{
   className: string;
   index: number;
 }> = ({ children, className, index }) => {
-  const { stage } = useTransitionState();
   const { transition } = useContext(OpenDrawerContext);
   const ref = useRef(null);
 

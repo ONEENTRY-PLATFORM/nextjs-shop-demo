@@ -7,6 +7,7 @@ import { deselectProduct } from '@/app/store/reducers/CartSlice';
 import Placeholder from '@/components/shared/Placeholder';
 
 import QuantitySelector from '../../product/components/QuantitySelector';
+import ProductAnimations from '../animations/ProductAnimations';
 import DeleteButton from './DeleteButton';
 import PriceDisplay from './PriceDisplay';
 
@@ -25,7 +26,7 @@ const ProductCard: React.FC<{
   const title = localizeInfos?.title;
 
   return (
-    <article className="product-in-cart">
+    <ProductAnimations className="product-in-cart" product={product}>
       <div className="relative flex justify-between gap-5">
         <div className="relative z-10 mb-auto box-border flex shrink-0 flex-row self-center overflow-hidden rounded-md">
           <input
@@ -69,12 +70,7 @@ const ProductCard: React.FC<{
           className="absolute left-0 top-0 z-0 flex size-full"
         ></Link>
       </div>
-
-      <div className="z-10 flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:ml-8 max-sm:flex">
-        <QuantitySelector product={product} height={42} />
-        <DeleteButton {...product} />
-      </div>
-    </article>
+    </ProductAnimations>
   );
 };
 

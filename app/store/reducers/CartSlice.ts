@@ -12,6 +12,7 @@ type InitialStateType = {
     time: string;
     address: string;
   };
+  transitionId: number;
 };
 
 const initialState: InitialStateType = {
@@ -21,6 +22,7 @@ const initialState: InitialStateType = {
     time: '',
     address: '',
   },
+  transitionId: 0,
 };
 
 export const cartSlice = createSlice({
@@ -129,6 +131,9 @@ export const cartSlice = createSlice({
         address: action.payload.address,
       };
     },
+    setCartTransition(state, action: PayloadAction<{ productId: number }>) {
+      state.transitionId = action.payload.productId;
+    },
   },
 });
 
@@ -140,6 +145,7 @@ export const {
   decreaseProductQty,
   setDeliveryData,
   setProductQty,
+  setCartTransition,
   removeAllProducts,
 } = cartSlice.actions;
 
@@ -159,6 +165,12 @@ export const selectIsInCart = (
 export const selectCartItems = (state: {
   cartReducer: { products: IProductsEntity[] };
 }) => state.cartReducer.products;
+
+export const getTransition = (state: {
+  cartReducer: {
+    transitionId: number;
+  };
+}) => state.cartReducer;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const selectDeliveryData = (state: {
