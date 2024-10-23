@@ -1,20 +1,20 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { api } from '@/app/api';
 import { updateUserState } from '@/app/api/utils/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   addFavorites,
   removeFavorites,
   selectIsFavorites,
 } from '@/app/store/reducers/FavoritesSlice';
-
-// import { favorites } from '../icons';
 
 const FavoritesButton: FC<IProductsEntity> = (product) => {
   const [isFav, setIsFav] = useState(false);
@@ -23,71 +23,95 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
   const isFavorites = useAppSelector((state) =>
     selectIsFavorites(state, product.id),
   );
+  const { user, isAuth } = useContext(AuthContext);
 
   // !!!
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onAddFavorites = async () => {
+  const onSubscribeFavorite = async () => {
     try {
       if (!isFav) {
-        await api.Events.subscribeByMarker(
-          'catalog_event',
-          product.id,
-          'en_US',
-        );
-        await api.Events.subscribeByMarker(
-          'status_out_of_stock',
-          product.id,
-          'en_US',
-        );
-        await api.Events.subscribeByMarker(
-          'notification_test',
-          product.id,
-          'en_US',
-        );
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const updatedFavorites = [...favorites, product.id];
-
-        const res = await updateUserState({
-          // favorites: updatedFavorites,
-          // cart: products.map((product: { id: number; quantity: number }) => {
-          //   return {
-          //     id: product.id,
-          //     quantity: product.quantity,
-          //   };
-          // }),
-        });
-        if (res) {
-          dispatch(addFavorites(product));
-        }
-      } else {
-        await api.Events.unsubscribeByMarker(
-          'notification_test',
-          product.id,
-          'en_US',
-        );
-        await api.Events.unsubscribeByMarker(
-          'catalog_event',
-          product.id,
-          'en_US',
-        );
-        await api.Events.unsubscribeByMarker(
-          'status_out_of_stock',
-          product.id,
-          'en_US',
-        );
-        // const updatedFavorites = favorites.filter(
-        //   (favorite: number) => favorite !== product.id,
+        // await api.Events.subscribeByMarker(
+        //   'catalog_event',
+        //   product.id,
+        //   'en_US',
         // );
-
-        // const res = await updateUserState({
-        //   favorites: updatedFavorites,
-        // });
-        // if (res) {
-        //   dispatch(removeFavorites(product.id));
-        // }
+        // await api.Events.subscribeByMarker(
+        //   'status_out_of_stock',
+        //   product.id,
+        //   'en_US',
+        // );
+        // await api.Events.subscribeByMarker(
+        //   'notification_test',
+        //   product.id,
+        //   'en_US',
+        // );
+      } else {
+        // await api.Events.unsubscribeByMarker(
+        //   'notification_test',
+        //   product.id,
+        //   'en_US',
+        // );
+        // await api.Events.unsubscribeByMarker(
+        //   'catalog_event',
+        //   product.id,
+        //   'en_US',
+        // );
+        // await api.Events.unsubscribeByMarker(
+        //   'status_out_of_stock',
+        //   product.id,
+        //   'en_US',
+        // );
       }
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  const onUpdateFavorites = async () => {
+    try {
+      if (!isFav) {
+        const updatedFavorites = [
+          ...favorites.map((fav: { id: number }) => fav.id),
+          product.id,
+        ];
+
+        const res = await updateUserState({
+          favorites: updatedFavorites,
+          user: user,
+        });
+
+        if (res) {
+          dispatch(addFavorites(product));
+          toast(
+            'Product ' + product.localizeInfos.title + ' add to Favorites!',
+          );
+        } else {
+          toast('User data error!');
+        }
+      } else {
+        const updatedFavorites = favorites
+          .filter((fav: { id: number }) => fav.id !== product.id)
+          .map((fav: { id: number }) => fav.id);
+
+        const res = await updateUserState({
+          favorites: updatedFavorites,
+          user: user,
+        });
+
+        if (res) {
+          dispatch(removeFavorites(product.id));
+          toast(
+            'Product ' +
+              product.localizeInfos.title +
+              ' removed from Favorites!',
+          );
+        } else {
+          toast('User data error!');
+        }
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      toast('Auth error! ' + e?.message);
     }
   };
 
@@ -104,18 +128,22 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
       type="button"
       className="group relative ml-auto box-border flex size-[26px] shrink-0 flex-col items-center justify-center"
       onClick={() => {
-        if (isFav) {
-          dispatch(removeFavorites(product.id));
-          toast(
-            'Product ' +
-              product.localizeInfos.title +
-              ' removed from Favorites!',
-          );
+        if ((user as IUserEntity).id && isAuth) {
+          onUpdateFavorites();
         } else {
-          dispatch(addFavorites(product));
-          toast(
-            'Product ' + product.localizeInfos.title + ' add to Favorites!',
-          );
+          if (isFav) {
+            dispatch(removeFavorites(product.id));
+            toast(
+              'Product ' +
+                product.localizeInfos.title +
+                ' removed from Favorites!',
+            );
+          } else {
+            dispatch(addFavorites(product));
+            toast(
+              'Product ' + product.localizeInfos.title + ' added to Favorites!',
+            );
+          }
         }
       }}
     >

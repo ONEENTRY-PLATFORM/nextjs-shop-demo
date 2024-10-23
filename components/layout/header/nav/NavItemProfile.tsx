@@ -86,7 +86,7 @@ const NavItemProfile: FC<{ item: any; lang: string; userMenu?: any }> = ({
         title={'Profile'}
         className="group relative box-border flex size-6 shrink-0"
         onClick={() => setState(!state)}
-        onPointerEnter={() => setState(true)}
+        // onPointerEnter={() => setState(true)}
       >
         <ProfileIcon />
       </button>

@@ -16,6 +16,9 @@ const OrderAnimations: FC<{
   const ref = useRef(null);
 
   useGSAP(() => {
+    if (!ref.current) {
+      return;
+    }
     const tl = gsap.timeline({
       paused: true,
     });
@@ -25,7 +28,7 @@ const OrderAnimations: FC<{
         autoAlpha: 0,
         scaleY: 0,
         width: 0,
-        delay: index / 10,
+        delay: index / 20,
       }).play();
     }
 
@@ -39,7 +42,7 @@ const OrderAnimations: FC<{
           autoAlpha: 1,
           scaleY: 1,
           width: '100%',
-          delay: index / 10,
+          delay: index / 20,
         })
         .play();
     }
