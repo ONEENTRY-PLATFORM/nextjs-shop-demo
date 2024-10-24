@@ -11,7 +11,7 @@ export const getRelatedProductsById = async (
 ): Promise<{
   isError: boolean;
   error?: IError;
-  products?: IProductsEntity[] | IError;
+  products?: IProductsEntity[];
   total: number;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];

@@ -10,14 +10,15 @@ export const getPageById = async (
   lang: string,
 ): Promise<{
   isError: boolean;
-  page: IPagesEntity | IError;
+  error?: IError;
+  page?: IPagesEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const page = await api.Pages.getPageById(id, langCode);
+  const data = await api.Pages.getPageById(id, langCode);
 
-  if (typeError(page)) {
-    return { isError: true, page: page as IError };
+  if (typeError(data)) {
+    return { isError: true, error: data };
   } else {
-    return { isError: false, page: page as IPagesEntity };
+    return { isError: false, page: data };
   }
 };

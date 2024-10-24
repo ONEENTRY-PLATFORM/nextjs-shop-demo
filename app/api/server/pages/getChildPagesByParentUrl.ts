@@ -10,14 +10,15 @@ export const getChildPagesByParentUrl = async (
   lang: string,
 ): Promise<{
   isError: boolean;
+  error?: IError;
   pages?: IPagesEntity[] | IError;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const pages = await api.Pages.getChildPagesByParentUrl(url, langCode);
-  // return { isError: false, pages: pages };
-  if (typeError(pages)) {
-    return { isError: true, pages: [] };
+  const data = await api.Pages.getChildPagesByParentUrl(url, langCode);
+
+  if (typeError(data)) {
+    return { isError: true, error: data };
   } else {
-    return { isError: false, pages: pages };
+    return { isError: false, pages: data };
   }
 };

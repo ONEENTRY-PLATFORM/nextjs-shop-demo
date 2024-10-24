@@ -38,7 +38,7 @@ export const getProducts = async (props: {
   });
 
   if (typeError(data)) {
-    return { isError: true, error: data as IError, total: 0 };
+    return { isError: true, error: data, total: 0 };
   } else {
     return {
       isError: false,

@@ -7,14 +7,15 @@ import { typeError } from '@/components/utils';
 
 export async function getPages(lang: string): Promise<{
   isError: boolean;
-  pages?: IPagesEntity[] | IError;
+  error?: IError;
+  pages?: IPagesEntity[];
 }> {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const pages = await api.Pages.getPages(langCode);
+  const data = await api.Pages.getPages(langCode);
 
-  if (typeError(pages)) {
-    return { isError: true, pages: pages as IError };
+  if (typeError(data)) {
+    return { isError: true, error: data };
   } else {
-    return { isError: false, pages: pages as IPagesEntity[] };
+    return { isError: false, pages: data };
   }
 }

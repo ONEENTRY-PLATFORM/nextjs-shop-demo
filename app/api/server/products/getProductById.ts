@@ -11,7 +11,7 @@ export const getProductById = async (
 ): Promise<{
   isError: boolean;
   error?: IError;
-  product?: IProductsEntity | IError;
+  product?: IProductsEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const data = await api.Products.getProductById(id, langCode);
