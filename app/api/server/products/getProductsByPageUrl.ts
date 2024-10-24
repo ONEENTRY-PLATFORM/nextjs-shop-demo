@@ -22,7 +22,8 @@ export const getProductsByPageUrl = async (props: {
   };
 }): Promise<{
   isError: boolean;
-  products: IProductsEntity[] | IError;
+  error?: IError;
+  products?: IProductsEntity[];
   total: number;
 }> => {
   const { limit, offset, params, lang } = props;
@@ -42,7 +43,7 @@ export const getProductsByPageUrl = async (props: {
   );
 
   if (typeError(data)) {
-    return { isError: true, products: data as IError, total: 0 };
+    return { isError: true, error: data as IError, total: 0 };
   } else {
     return { isError: false, products: data.items, total: data.total };
   }

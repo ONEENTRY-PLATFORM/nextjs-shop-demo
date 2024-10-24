@@ -42,7 +42,7 @@ const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
       className="flex size-full h-auto flex-col overflow-x-hidden overscroll-y-auto px-8 pb-16 pt-5 max-md:max-h-full max-md:px-6"
     >
       {Object.keys(sortedAttributes).map((attribute, index) => {
-        if (attribute === 'price_filter') {
+        if (attribute === 'price_filter' && prices) {
           return (
             <FilterAnimations key={index} className="w-full" index={0}>
               <PricePickerFilter prices={prices} dict={dict} />

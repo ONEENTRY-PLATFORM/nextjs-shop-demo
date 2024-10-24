@@ -164,12 +164,12 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
           <ResetPasswordButton title={reset_password_text.value} />
         </FormFieldAnimations>
 
-        <FormFieldAnimations index={7} className="w-full">
+        {/* <FormFieldAnimations index={7} className="w-full">
           <p className="mx-auto mb-3 text-center text-base font-bold leading-8 text-neutral-600">
             {sign_in_with_text.value}
           </p>
-        </FormFieldAnimations>
-        <FormFieldAnimations
+        </FormFieldAnimations> */}
+        {/* <FormFieldAnimations
           index={8}
           className="mx-auto flex max-w-32 justify-between gap-5"
         >
@@ -180,8 +180,8 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
               alt={button.alt}
             />
           ))}
-        </FormFieldAnimations>
-        <FormFieldAnimations index={9} className="w-full">
+        </FormFieldAnimations> */}
+        <FormFieldAnimations index={7} className="w-full">
           <CreateAccountButton title={create_account_text.value} />
         </FormFieldAnimations>
         {error && <ErrorMessage error={error} />}

@@ -9,15 +9,16 @@ export const getProductById = async (
   id: number,
   lang: string,
 ): Promise<{
-  product: IProductsEntity | IError;
   isError: boolean;
+  error?: IError;
+  product?: IProductsEntity | IError;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const product = await api.Products.getProductById(id, langCode);
+  const data = await api.Products.getProductById(id, langCode);
 
-  if (typeError(product)) {
-    return { isError: true, product: product };
+  if (typeError(data)) {
+    return { isError: true, error: data };
   } else {
-    return { isError: false, product: product };
+    return { isError: false, product: data };
   }
 };

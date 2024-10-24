@@ -77,7 +77,7 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
       ref={ref}
       className="relative mx-auto flex h-6 w-20"
     >
-      {/* {currentPage === totalPages ? '' : 'Load more'} */}
+      {currentPage !== totalPages && 'Load more'}
       {currentPage !== totalPages && <Spinner />}
     </button>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { useGSAP } from '@gsap/react';
@@ -11,27 +12,24 @@ const CardsGridAnimations: FC<{
   className: string;
 }> = ({ children, className }) => {
   const { stage } = useTransitionState();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
   useGSAP(() => {
-    const tl = gsap.timeline({
-      paused: true,
-    });
-
+    // const tl = gsap.timeline({
+    //   paused: true,
+    // });
+    // tl.to(ref.current, {
+    //   autoAlpha: 0,
+    //   duration: 0.35,
+    // });
     // if (stage === 'leaving' && prevStage === 'none') {
-    //   tl.to(ref.current, {
-    //     xPercent: 100,
-    //     duration: 0.35,
-    //   });
     //   tl.play();
     // }
-    setPrevStage(stage);
-
-    return () => {
-      tl.kill();
-    };
+    // setPrevStage(stage);
+    // return () => {
+    //   tl.kill();
+    // };
   }, [stage]);
 
   return (

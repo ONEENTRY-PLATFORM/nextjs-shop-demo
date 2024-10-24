@@ -1,7 +1,4 @@
-import type {
-  IFilterParams,
-  IProductsEntity,
-} from 'oneentry/dist/products/productsInterfaces';
+import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
 import { getProducts, getProductsByPageUrl } from '@/app/api';
@@ -9,7 +6,7 @@ import FilterModal from '@/components/layout/filter/FilterModal';
 import CardsGridAnimations from '@/components/layout/products-grid/animations/CardsGridAnimations';
 
 import LoadMore from './components/LoadMore';
-import ProductCard from './components/product-card/ProductCard';
+import ProductsGrid from './components/ProductsGrid';
 import ProductsNotFound from './components/ProductsNotFound';
 
 interface GridLayoutProps {
@@ -37,7 +34,6 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   const limit =
     currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isError, products, total } = !isCategory
     ? await getProducts({
         lang: lang,
@@ -54,8 +50,8 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
 
   const totalPages = Math.ceil(total / limit);
 
-  if (!products || total < 1) {
-    return <ProductsNotFound products={products} lang={lang} dict={dict} />;
+  if (!products || total < 1 || isError) {
+    return <ProductsNotFound lang={lang} dict={dict} />;
   }
 
   return (
@@ -64,22 +60,12 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
         className={'relative box-border flex w-full shrink-0 flex-col'}
       >
         <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
-          <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-            {products?.map((product: IProductsEntity, index: number) => {
-              if (!product.isVisible) {
-                return;
-              }
-              return (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  index={index}
-                  lang={params.lang}
-                  dict={dict}
-                />
-              );
-            })}
-          </div>
+          <ProductsGrid
+            params={params}
+            dict={dict}
+            pagesLimit={pagesLimit}
+            products={products}
+          />
           <div className="mt-5 flex w-full justify-center">
             {totalPages > 1 && <LoadMore totalPages={totalPages} />}
           </div>

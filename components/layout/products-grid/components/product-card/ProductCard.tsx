@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC, Key } from 'react';
+import type { FC } from 'react';
 
 import { LanguageEnum } from '@/app/types/enum';
 import AddToCartButton from '@/components/layout/product/components/AddToCartButton';
@@ -9,7 +9,7 @@ import FavoritesButton from '@/components/shared/FavoritesButton';
 import CardAnimations from '../../animations/CardAnimations';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
-import Sticker from './Sticker';
+import Stickers from './Stickers';
 
 const ProductCard: FC<{
   product: IProductsEntity;
@@ -29,24 +29,7 @@ const ProductCard: FC<{
     <CardAnimations className="product-card group" index={index}>
       {/* stickers */}
       <div className="z-10 flex justify-between gap-5 self-stretch">
-        {[attributes.stickers].map(
-          (
-            sticker: {
-              value: {
-                value: string;
-                title: string;
-                extended: {
-                  value: {
-                    downloadLink: string;
-                  };
-                };
-              };
-            },
-            i: Key,
-          ) => {
-            return <Sticker key={i} sticker={sticker} />;
-          },
-        )}
+        <Stickers product={product} lang={lang} />
         <FavoritesButton {...product} />
       </div>
 

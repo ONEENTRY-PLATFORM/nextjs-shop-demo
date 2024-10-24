@@ -10,7 +10,7 @@ import FilterHeader from './components/header/FilterHeader';
 import FiltersForm from './FiltersForm';
 
 const FilterModal: FC<{
-  prices: any;
+  prices: any | undefined;
   lang: string;
   dict: any;
 }> = ({ prices, lang, dict }) => {
