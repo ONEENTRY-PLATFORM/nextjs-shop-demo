@@ -4,19 +4,19 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
 import type { ReactNode } from 'react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 const BlockCardAnimations = ({
   children,
   className,
-  // index,
+  index,
 }: {
   children: ReactNode;
   className: string;
-  // index: number;
+  index: number;
 }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { stage } = useTransitionState();
+  const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
   useGSAP(() => {
@@ -25,10 +25,10 @@ const BlockCardAnimations = ({
     });
 
     tl.set(ref.current, {
-      autoAlpha: 0,
+      scale: 0,
     }).to(ref.current, {
-      autoAlpha: 1,
-      // delay: index / 20,
+      scale: 1,
+      delay: index / 10,
     });
 
     tl.play();
@@ -37,6 +37,24 @@ const BlockCardAnimations = ({
       tl.kill();
     };
   }, []);
+
+  useGSAP(() => {
+    const tl = gsap.timeline();
+
+    if (stage === 'leaving' && prevStage === 'none') {
+      tl.to(ref.current, {
+        scale: 0,
+        duration: 0.5,
+        delay: index / 20,
+      });
+    }
+
+    setPrevStage(stage);
+
+    return () => {
+      tl.kill();
+    };
+  }, [stage]);
 
   return (
     <div className={className} ref={ref}>

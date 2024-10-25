@@ -23,11 +23,11 @@ const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, lang }) => {
       <FadeTransition className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
         {blocks.map((block, index) => {
           const className = blocksData[index as keyof typeof blocksData];
-          const bgColor = blocksColors[block as keyof typeof blocksColors];
 
           return (
             <BlocksGridCard
               key={index}
+              index={index}
               marker={block}
               className={
                 className as {
@@ -35,7 +35,7 @@ const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, lang }) => {
                   height: string;
                 }
               }
-              bgColor={bgColor}
+              bgColor={blocksColors[block as keyof typeof blocksColors]}
               lang={lang}
             />
           );

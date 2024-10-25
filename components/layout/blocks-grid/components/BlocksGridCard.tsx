@@ -17,6 +17,7 @@ interface BlocksGridCardProps {
     width: string;
     height: string;
   };
+  index: number;
 }
 
 const BlocksGridCard: FC<BlocksGridCardProps> = async ({
@@ -24,6 +25,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   bgColor,
   lang,
   className,
+  index,
 }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { block, isError } = await getBlockByMarker(marker, lang);
@@ -49,6 +51,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   return (
     <BlockCardAnimations
       className={`block-card group relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
+      index={index}
     >
       <Link target={linkTarget} href={href} className={'size-full'}>
         <div

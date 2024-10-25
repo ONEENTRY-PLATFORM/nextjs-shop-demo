@@ -21,26 +21,17 @@ const BlocksGridAnimations = ({
       paused: true,
     });
 
-    const elements =
-      ref.current &&
-      (ref.current as HTMLDivElement).querySelectorAll('.block-card');
-
     if (stage === 'leaving') {
-      tl.to(elements, {
+      tl.to(ref.current, {
         autoAlpha: 0,
-        scale: 0,
-        stagger: 0.1,
       });
       tl.play();
     }
     if (stage === 'entering') {
-      tl.set(elements, {
+      tl.set(ref.current, {
         autoAlpha: 0,
-        scale: 0,
-      }).to(elements, {
+      }).to(ref.current, {
         autoAlpha: 1,
-        scale: 1,
-        stagger: 0.1,
       });
       tl.play();
     }
