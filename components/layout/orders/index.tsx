@@ -9,7 +9,6 @@ import { useContext, useEffect, useState } from 'react';
 import { getAllOrdersByMarker, getBlockByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
-import Loader from '@/components/shared/Loader';
 
 import LoadMore from '../products-grid/components/LoadMore';
 // import Pagination from '../products-grid/Pagination';

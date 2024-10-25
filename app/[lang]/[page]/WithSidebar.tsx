@@ -1,3 +1,4 @@
+import FadeTransition from '@/app/animations/FadeTransition';
 import SidebarMenu from '@/components/layout/sidebar';
 
 const WithSidebar = async ({
@@ -13,9 +14,9 @@ const WithSidebar = async ({
         <aside className="w-[210px] pb-8 max-md:w-full">
           <SidebarMenu lang={lang} />
         </aside>
-        <section className="flex w-[calc(_100%_-_210px_)] grow flex-col max-md:w-full">
+        <FadeTransition className="flex w-[calc(_100%_-_210px_)] grow flex-col max-md:w-full">
           <div className="flex w-full flex-col pb-5">{children}</div>
-        </section>
+        </FadeTransition>
       </div>
     </div>
   );

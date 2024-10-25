@@ -1,5 +1,6 @@
 import { type FC } from 'react';
 
+import FadeTransition from '@/app/animations/FadeTransition';
 import { blocksColors, blocksData } from '@/components/data';
 
 import BlocksGridAnimations from './animations/BlocksGridAnimations';
@@ -19,7 +20,7 @@ const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, lang }) => {
     <BlocksGridAnimations
       className={'block-card relative box-border w-full shrink-0'}
     >
-      <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
+      <FadeTransition className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
         {blocks.map((block, index) => {
           const className = blocksData[index as keyof typeof blocksData];
           const bgColor = blocksColors[block as keyof typeof blocksColors];
@@ -39,7 +40,7 @@ const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, lang }) => {
             />
           );
         })}
-      </div>
+      </FadeTransition>
     </BlocksGridAnimations>
   );
 };
