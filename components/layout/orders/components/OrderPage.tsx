@@ -7,6 +7,7 @@ import { useGetSingleOrderQuery } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 
+import OrderAnimations from '../animations/OrderAnimations';
 import CancelOrderButton from './CancelOrderButton';
 import OrderDataTable from './OrderDataTable';
 import PayOrderButton from './PayOrderButton';
@@ -18,7 +19,8 @@ const OrderPage: FC<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   settings: Record<string, any> | undefined;
   lang: string;
-}> = ({ id, settings, lang }) => {
+  isActive: boolean;
+}> = ({ id, settings, lang, isActive }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { data, isLoading, refetch } = useGetSingleOrderQuery({
     marker: 'order',
@@ -35,7 +37,10 @@ const OrderPage: FC<{
   const { go_to_pay_title, repeat_order_title, cancel_order_title } = settings;
 
   return (
-    <div className="flex flex-col text-[#4C4D56]">
+    <OrderAnimations
+      isActive={isActive}
+      className={'flex flex-col text-[#4C4D56] ' + (isActive ? 'p-4' : '')}
+    >
       <div className="flex max-w-[430px] flex-col gap-4 pb-5 max-md:max-w-full">
         {products.map((product: IOrderProducts, i: Key) => {
           if (product.id === 83) {
@@ -79,7 +84,7 @@ const OrderPage: FC<{
             />
           )}
       </div>
-    </div>
+    </OrderAnimations>
   );
 };
 

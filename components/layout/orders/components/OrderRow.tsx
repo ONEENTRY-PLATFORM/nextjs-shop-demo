@@ -12,10 +12,9 @@ interface OrderProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   settings: Record<string, any> | undefined;
   lang: string;
-  index: number;
 }
 
-const Order: FC<OrderProps> = ({ order, settings, lang, index }) => {
+const Order: FC<OrderProps> = ({ order, settings, lang }) => {
   const { id, createdDate, statusIdentifier, totalSum } = order;
 
   const formattedPrice = UsePrice({
@@ -29,7 +28,7 @@ const Order: FC<OrderProps> = ({ order, settings, lang, index }) => {
     : 'text-orange-500';
 
   return (
-    <OrderRowAnimations className="w-full" index={index}>
+    <OrderRowAnimations className="w-full">
       <button
         onClick={() => {
           setState(!state);
@@ -42,11 +41,12 @@ const Order: FC<OrderProps> = ({ order, settings, lang, index }) => {
         <div className="w-1/4">{formattedPrice}</div>
         <div className="w-1/4">{statusIdentifier}</div>
       </button>
-      {state && (
-        <div className="p-4">
-          <OrderPage id={Number(id)} settings={settings} lang={lang} />
-        </div>
-      )}
+      <OrderPage
+        id={Number(id)}
+        settings={settings}
+        isActive={state}
+        lang={lang}
+      />
     </OrderRowAnimations>
   );
 };

@@ -56,12 +56,12 @@ const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
     })();
   }, [lang, currentPage, isAuth, pageLimit, user]);
 
-  if (!settings || !orders) {
-    return <Loader />;
+  if (!isAuth) {
+    return <AuthError />;
   }
 
-  if (!isAuth || !user) {
-    return <AuthError />;
+  if (!settings) {
+    return 'Settings error!';
   }
 
   const totalPages = Math.floor(total / pageLimit);
@@ -81,17 +81,11 @@ const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
         </div>
         <div className="mb-4 flex flex-col">
           {!orders ? (
-            <OrdersTableLoader />
+            <OrdersTableLoader limit={10} />
           ) : (
             orders?.map((order: IOrderByMarkerEntity, i: Key | number) => {
               return (
-                <Order
-                  key={i}
-                  order={order}
-                  settings={settings}
-                  lang={lang}
-                  index={i as number}
-                />
+                <Order key={i} order={order} settings={settings} lang={lang} />
               );
             })
           )}

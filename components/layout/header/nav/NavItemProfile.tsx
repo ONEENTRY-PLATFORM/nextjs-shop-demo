@@ -86,7 +86,6 @@ const NavItemProfile: FC<{ item: any; lang: string; userMenu?: any }> = ({
         title={'Profile'}
         className="group relative box-border flex size-6 shrink-0"
         onClick={() => setState(!state)}
-        // onPointerEnter={() => setState(true)}
       >
         <ProfileIcon />
       </button>
@@ -96,14 +95,14 @@ const NavItemProfile: FC<{ item: any; lang: string; userMenu?: any }> = ({
         className="absolute left-0 top-8 h-0 w-48 overflow-hidden rounded-md bg-white px-4 shadow-lg"
       >
         {userMenu?.menu && (
-          <ul className="my-4">
+          <ul className="my-4 text-gray-800">
             {pages.map((page, i) => {
               return (
                 <li key={i}>
                   <Link
                     href={'/' + lang + '/' + page.pageUrl}
                     title={page.localizeInfos.menuTitle}
-                    className="group relative box-border flex hover:text-orange-500"
+                    className="group relative box-border flex p-2 hover:text-orange-500"
                     onClick={() => setState(false)}
                   >
                     {page.localizeInfos.menuTitle}
@@ -114,7 +113,7 @@ const NavItemProfile: FC<{ item: any; lang: string; userMenu?: any }> = ({
             {isAuth && (
               <li>
                 <button
-                  className={`group flex justify-start hover:text-orange-500`}
+                  className={`group flex justify-start p-2 hover:text-orange-500`}
                   onClick={onLogout}
                 >
                   <div>Logout</div>

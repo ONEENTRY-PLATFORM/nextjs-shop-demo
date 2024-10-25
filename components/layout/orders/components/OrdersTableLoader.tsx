@@ -55,7 +55,7 @@ const TableAnimations = ({
   );
 };
 
-const OrdersTableLoader: FC<LoaderProps> = ({ limit = 10 }) => {
+const OrdersTableLoader: FC<LoaderProps> = ({ limit }) => {
   return (
     <TableAnimations className="my-auto flex w-full flex-col max-md:max-w-full">
       {Array.from(Array(limit).keys()).map((item) => (
