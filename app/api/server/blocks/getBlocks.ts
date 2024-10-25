@@ -1,5 +1,8 @@
 import type { IError } from 'oneentry/dist/base/utils';
-import type { BlockType } from 'oneentry/dist/blocks/blocksInterfaces';
+import type {
+  BlockType,
+  IBlocksResponse,
+} from 'oneentry/dist/blocks/blocksInterfaces';
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
@@ -11,13 +14,17 @@ export const getBlocks = async ({
 }: {
   type: BlockType;
   lang: string;
-}) => {
+}): Promise<{
+  isError: boolean;
+  error?: IError;
+  blocks?: IBlocksResponse;
+}> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const blocks = await api.Blocks.getBlocks(type, langCode);
+  const data = await api.Blocks.getBlocks(type, langCode);
 
-  if (typeError(blocks)) {
-    return { isError: true, blocks: blocks as IError };
+  if (typeError(data)) {
+    return { isError: true, error: data };
   } else {
-    return { isError: false, blocks: blocks };
+    return { isError: false, blocks: data };
   }
 };

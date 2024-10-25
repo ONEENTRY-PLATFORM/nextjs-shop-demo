@@ -10,14 +10,15 @@ export const getMenuByMarker = async (
   lang: string,
 ): Promise<{
   isError: boolean;
-  menu: IMenusEntity | IError;
+  error?: IError;
+  menu?: IMenusEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const menu = await api.Menus.getMenusByMarker(marker, langCode);
+  const data = await api.Menus.getMenusByMarker(marker, langCode);
 
-  if (typeError(menu)) {
-    return { isError: true, menu: menu as IError };
+  if (typeError(data)) {
+    return { isError: true, error: data };
   } else {
-    return { isError: false, menu: menu };
+    return { isError: false, menu: data };
   }
 };

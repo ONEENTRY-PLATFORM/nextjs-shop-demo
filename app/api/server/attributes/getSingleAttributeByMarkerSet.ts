@@ -15,7 +15,8 @@ export const getSingleAttributeByMarkerSet = async ({
   lang: string;
 }): Promise<{
   isError: boolean;
-  attribute: IAttributesSetsEntity | IError;
+  error?: IError;
+  attribute?: IAttributesSetsEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
@@ -25,7 +26,7 @@ export const getSingleAttributeByMarkerSet = async ({
   );
 
   if (typeError(attribute)) {
-    return { isError: true, attribute: attribute as IError };
+    return { isError: true, error: attribute as IError };
   } else {
     return { isError: false, attribute: attribute };
   }

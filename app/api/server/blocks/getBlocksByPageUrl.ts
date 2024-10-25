@@ -1,4 +1,5 @@
 import type { IError } from 'oneentry/dist/base/utils';
+import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
@@ -10,13 +11,17 @@ export const getBlocksByPageUrl = async ({
 }: {
   pageUrl: string;
   lang: string;
-}) => {
+}): Promise<{
+  isError: boolean;
+  error?: IError;
+  blocks?: IPositionBlock[];
+}> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const blocks = await api.Pages.getBlocksByPageUrl(pageUrl, langCode);
+  const data = await api.Pages.getBlocksByPageUrl(pageUrl, langCode);
 
-  if (typeError(blocks)) {
-    return { isError: true, blocks: blocks as IError };
+  if (typeError(data)) {
+    return { isError: true, error: data };
   } else {
-    return { isError: false, blocks: blocks };
+    return { isError: false, blocks: data };
   }
 };

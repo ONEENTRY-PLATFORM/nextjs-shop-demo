@@ -4,9 +4,11 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { api, reDefine, useLazyGetMeQuery } from '@/app/api';
 
 // import { useNotifications } from '@/app/api/hooks/useNotifications';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useAppSelector } from '../hooks';
 
 type ContextProps = {

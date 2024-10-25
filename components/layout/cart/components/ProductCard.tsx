@@ -6,9 +6,7 @@ import { useAppDispatch } from '@/app/store/hooks';
 import { deselectProduct } from '@/app/store/reducers/CartSlice';
 import Placeholder from '@/components/shared/Placeholder';
 
-import QuantitySelector from '../../product/components/QuantitySelector';
 import ProductAnimations from '../animations/ProductAnimations';
-import DeleteButton from './DeleteButton';
 import PriceDisplay from './PriceDisplay';
 
 const ProductCard: React.FC<{

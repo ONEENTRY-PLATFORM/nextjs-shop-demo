@@ -12,12 +12,14 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimations';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { socialProvidersButtons } from '../data';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import SocialSignInButton from './inputs/SocialSignInButton';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,6 +41,7 @@ const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
     forgot_password_text,
     create_account_text,
     sign_in_text,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     sign_in_with_text,
     email_text,
     phone_text,

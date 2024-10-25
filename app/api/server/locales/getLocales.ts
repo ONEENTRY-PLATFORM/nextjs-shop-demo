@@ -6,13 +6,14 @@ import { typeError } from '@/components/utils';
 
 export const getLocales = async (): Promise<{
   isError: boolean;
-  locales?: ILocalEntity[] | IError;
+  error?: IError;
+  locales?: ILocalEntity[];
 }> => {
-  const locales = await api.Locales.getLocales();
+  const data = await api.Locales.getLocales();
 
-  if (typeError(locales)) {
-    return { isError: true, locales: locales as IError };
+  if (typeError(data)) {
+    return { isError: true, error: data };
   } else {
-    return { isError: false, locales: locales };
+    return { isError: false, locales: data };
   }
 };

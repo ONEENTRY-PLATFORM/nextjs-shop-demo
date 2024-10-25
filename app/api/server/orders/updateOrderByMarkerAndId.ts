@@ -15,19 +15,20 @@ export const updateOrderByMarkerAndId = async (
   lang?: string,
 ): Promise<{
   isError: boolean;
-  order?: IBaseOrdersEntity | IError;
+  error?: IError;
+  order?: IBaseOrdersEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const order = await api.Orders.updateOrderByMarkerAndId(
+  const orderData = await api.Orders.updateOrderByMarkerAndId(
     marker,
     id,
     data,
     langCode,
   );
 
-  if (typeError(order)) {
-    return { isError: true, order: order as IError };
+  if (typeError(orderData)) {
+    return { isError: true, error: orderData };
   } else {
-    return { isError: false, order: order };
+    return { isError: false, order: orderData };
   }
 };

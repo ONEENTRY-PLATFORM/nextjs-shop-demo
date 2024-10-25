@@ -10,14 +10,15 @@ export const getBlockByMarker = async (
   lang: string,
 ): Promise<{
   isError: boolean;
-  block?: IBlockEntity | IError;
+  error?: IError;
+  block?: IBlockEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const block = await api.Blocks.getBlockByMarker(marker, langCode);
+  const data = await api.Blocks.getBlockByMarker(marker, langCode);
 
-  if (typeError(block)) {
-    return { isError: true, block: block as IError };
+  if (typeError(data)) {
+    return { isError: true, error: data };
   } else {
-    return { isError: false, block: block };
+    return { isError: false, block: data };
   }
 };
