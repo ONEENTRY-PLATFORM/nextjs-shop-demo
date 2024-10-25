@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { FC } from 'react';
 
@@ -22,7 +23,7 @@ interface FiltersFormProps {
 
 const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
   const pageInfo = await getPageByUrl('catalog_filters', lang);
-  const colorsData = await getSingleAttributeByMarkerSet({
+  const { isError, error, attribute } = await getSingleAttributeByMarkerSet({
     setMarker: 'product',
     attributeMarker: 'color',
     lang: lang,
@@ -31,6 +32,10 @@ const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
   const sortedAttributes: Record<any, any> = sortObjectFieldsByPosition(
     (pageInfo.page as IPagesEntity).attributeValues,
   );
+
+  if (isError) {
+    return error?.message;
+  }
 
   if (!sortedAttributes) {
     return <Loader />;
@@ -41,31 +46,31 @@ const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
       id="filter"
       className="flex size-full h-auto flex-col overflow-x-hidden overscroll-y-auto px-8 pb-16 pt-5 max-md:max-h-full max-md:px-6"
     >
-      {Object.keys(sortedAttributes).map((attribute, index) => {
-        if (attribute === 'price_filter' && prices) {
+      {Object.keys(sortedAttributes).map((attr, index) => {
+        if (attr === 'price_filter' && prices) {
           return (
             <FilterAnimations key={index} className="w-full" index={0}>
               <PricePickerFilter prices={prices} dict={dict} />
             </FilterAnimations>
           );
         }
-        if (attribute === 'color_filter') {
+        if (attr === 'color_filter') {
           return (
             <FilterAnimations key={index} className="w-full" index={1}>
               <ColorFilter
                 key={index}
-                title={sortedAttributes[attribute]?.value}
-                attributes={colorsData.attribute}
+                title={sortedAttributes[attr]?.value}
+                attributes={attribute as IAttributesSetsEntity}
               />
             </FilterAnimations>
           );
         }
-        if (attribute === 'availability_filter') {
+        if (attr === 'availability_filter') {
           return (
             <FilterAnimations key={index} className="w-full" index={2}>
               <AvailabilityFilter
                 key={index}
-                title={sortedAttributes[attribute]?.value}
+                title={sortedAttributes[attr]?.value}
               />
             </FilterAnimations>
           );

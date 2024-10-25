@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
+import type { AttributeType } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC, Key } from 'react';
 import { useContext, useEffect, useState } from 'react';
@@ -16,13 +17,11 @@ import EmptyOrders from './components/EmptyOrders';
 import Order from './components/OrderRow';
 import OrdersTableLoader from './components/OrdersTableLoader';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
+const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
   const searchParams = useSearchParams();
   const { isAuth, user } = useContext(AuthContext);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [settings, setSettings] = useState<Record<string, any>>();
+  const [settings, setSettings] = useState<Record<string, AttributeType>>();
   const [orders, setOrders] = useState<Array<IOrderByMarkerEntity>>();
   const [total, setTotal] = useState<number>(0);
 
@@ -40,21 +39,24 @@ const OrdersPage: FC<{ lang: string; page: any }> = ({ lang, page }) => {
       }
       if (pageLimit) {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { isError, orders, total } = await getAllOrdersByMarker({
+        const { isError, error, orders, total } = await getAllOrdersByMarker({
           marker: 'order',
           limit: pageLimit,
           offset: currentPage * pageLimit,
           lang,
         });
-        if (orders) {
+        if (orders && !isError) {
           setOrders(orders);
           setTotal(total);
+        }
+        if (isError) {
+          console.log(error);
         }
       }
     })();
   }, [lang, currentPage, isAuth, pageLimit, user]);
 
-  if (!settings) {
+  if (!settings || !orders) {
     return <Loader />;
   }
 

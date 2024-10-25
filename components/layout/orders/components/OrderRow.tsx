@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { UsePrice } from '@/components/utils';
 
-import OrderAnimations from '../animations/OrderAnimations';
+import OrderRowAnimations from '../animations/OrderRowAnimations';
 import OrderPage from './OrderPage';
 
 interface OrderProps {
@@ -29,7 +29,7 @@ const Order: FC<OrderProps> = ({ order, settings, lang, index }) => {
     : 'text-orange-500';
 
   return (
-    <OrderAnimations className="w-full" index={index}>
+    <OrderRowAnimations className="w-full" index={index}>
       <button
         onClick={() => {
           setState(!state);
@@ -47,7 +47,7 @@ const Order: FC<OrderProps> = ({ order, settings, lang, index }) => {
           <OrderPage id={Number(id)} settings={settings} lang={lang} />
         </div>
       )}
-    </OrderAnimations>
+    </OrderRowAnimations>
   );
 };
 
