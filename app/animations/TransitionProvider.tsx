@@ -23,9 +23,9 @@ export default function TransitionProvider({
           .timeline()
           .to(ref.current, {
             height: 'auto',
-            duration: 0.5,
+            duration: 0.85,
           })
-          .call(next, undefined, 0.5);
+          .call(next, undefined, 0.85);
 
         return () => {
           tl.kill();

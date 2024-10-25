@@ -12,7 +12,7 @@ const EmptyCart = ({ lang, dict }: { lang: string; dict: any }) => {
         height={100}
         src={'/icons/cart.svg'}
         alt={empty_cart_plug?.value}
-        className="mb-5 size-20"
+        className="mb-5 size-20 opacity-20"
       />
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
         {empty_cart_plug?.value}

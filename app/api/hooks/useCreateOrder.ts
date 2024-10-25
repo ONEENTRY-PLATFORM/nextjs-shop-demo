@@ -44,51 +44,44 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onConfirmOrder = async (orderData?: any) => {
-    try {
-      setIsLoading(true);
-      const orderComp = order || orderData;
-      if (orderComp?.formIdentifier && orderComp?.paymentAccountIdentifier) {
-        const orderFormData = orderComp.formData
-          .slice()
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          .map((data: { marker: string; type: string; value: any }) => {
-            return {
-              marker: data.marker,
-              type: data.type,
-              value: data.value,
-            };
-          });
-        const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
-          'order',
-          {
-            ...orderComp,
-            formData: orderFormData,
-            formIdentifier: orderComp.formIdentifier,
-            paymentAccountIdentifier: orderComp.paymentAccountIdentifier,
-          },
-          langCode,
-        );
-
+  const onConfirmOrder = async () => {
+    setIsLoading(true);
+    if (order?.formIdentifier && order?.paymentAccountIdentifier) {
+      const orderFormData = order.formData
+        .slice()
+        .filter((element) => element.marker !== 'time')
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        orderComp.products.forEach((product: any) => {
-          dispatch(removeProduct(product.productId));
+        .map((data: { marker: string; type: string; value: any }) => {
+          return {
+            marker: data.marker,
+            type: data.type,
+            value: data.value,
+          };
         });
-        dispatch(removeOrder());
+      const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
+        'order',
+        {
+          ...order,
+          formData: orderFormData,
+          formIdentifier: order.formIdentifier,
+          paymentAccountIdentifier: order.paymentAccountIdentifier,
+        },
+        langCode,
+      );
 
-        if (paymentAccountIdentifier !== 'cash') {
-          await createSession(id);
-        } else {
-          router.push('/orders');
-        }
-        setIsLoading(false);
-      }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      setError(e.message);
-      setIsLoading(false);
+      order.products.forEach((product: any) => {
+        dispatch(removeProduct(product.productId));
+      });
+      dispatch(removeOrder());
+
+      if (paymentAccountIdentifier !== 'cash') {
+        await createSession(id);
+      } else {
+        router.push('/orders');
+      }
     }
+    setIsLoading(false);
   };
 
   return {
