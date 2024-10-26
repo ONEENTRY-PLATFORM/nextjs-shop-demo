@@ -3,7 +3,6 @@ import React from 'react';
 
 import LikeIcon from '@/components/icons/like';
 
-import ProductAnimations from '../animations/ProductAnimations';
 import StarRating from '../rating-block/StarRating';
 
 interface UserCommentProps {
@@ -14,15 +13,11 @@ interface UserCommentProps {
     commentCount: number;
     rating: number;
   };
-  index: number;
 }
 
-const UserComment: FC<UserCommentProps> = ({ review, index }) => {
+const UserComment: FC<UserCommentProps> = ({ review }) => {
   return (
-    <ProductAnimations
-      className="flex flex-col rounded-3xl border border-solid border-slate-300 bg-white px-6 py-4 max-md:px-5"
-      index={index}
-    >
+    <div className="flex flex-col rounded-3xl border border-solid border-slate-300 bg-white px-6 py-4 max-md:px-5">
       <header className="mb-4 flex justify-between gap-5 text-lg font-bold leading-8 text-neutral-600 max-md:max-w-full max-md:flex-wrap">
         <h2>{review.name}</h2>
         <StarRating rating={review.rating} />
@@ -44,7 +39,7 @@ const UserComment: FC<UserCommentProps> = ({ review, index }) => {
           </div>
         </div>
       </div>
-    </ProductAnimations>
+    </div>
   );
 };
 

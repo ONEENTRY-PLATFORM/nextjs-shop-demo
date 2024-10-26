@@ -2,6 +2,7 @@
 import type { FC } from 'react';
 import React from 'react';
 
+import ReviewAnimations from '../animations/ReviewAnimations';
 import UserComment from './UserComment';
 
 interface UserCommentProps {
@@ -15,13 +16,18 @@ interface UserCommentProps {
 interface ReviewCardProps {
   review: UserCommentProps;
   index: number;
+  state: boolean;
 }
 
-const ReviewCard: FC<ReviewCardProps> = ({ review, index }) => {
+const ReviewCard: FC<ReviewCardProps> = ({ review, index, state }) => {
   return (
-    <article className="relative box-border flex shrink-0 flex-col">
-      <UserComment review={review} index={index} />
-    </article>
+    <ReviewAnimations
+      className="relative box-border flex shrink-0 flex-col"
+      index={index}
+      state={state}
+    >
+      <UserComment review={review} />
+    </ReviewAnimations>
   );
 };
 

@@ -1,15 +1,22 @@
+import type { FC } from 'react';
 import React from 'react';
 
-const ViewAllButton: React.FC = () => {
+import ReviewAnimations from '../animations/ReviewAnimations';
+
+const ViewAllButton: FC<{ state: boolean }> = ({ state }) => {
   return (
-    <div className="flex flex-col gap-5 max-md:mb-10 max-md:max-w-full">
+    <ReviewAnimations
+      className="flex flex-col gap-5 max-md:mb-10 max-md:max-w-full"
+      index={3}
+      state={state}
+    >
       <button
         type="button"
         className="btn btn-o btn-md mt-5 self-end max-md:self-center"
       >
         View all reviews
       </button>
-    </div>
+    </ReviewAnimations>
   );
 };
 
