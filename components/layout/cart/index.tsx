@@ -120,11 +120,13 @@ const CartPage: FC<SimplePageProps> = ({ lang, dict }) => {
         <div id="total" className="mt-4 flex w-full flex-col">
           <TotalAmount
             lang={lang}
-            className={
-              'flex self-center text-lg font-bold leading-6 text-slate-700 lg:self-end'
-            }
+            dict={dict}
+            className="flex self-center text-lg font-bold leading-6 text-slate-700 lg:self-end"
           />
-          <PaymentButton dict={dict} className="self-end max-lg:self-center" />
+          <PaymentButton
+            text={dict.go_to_pay_placeholder?.value}
+            className="self-end max-lg:self-center"
+          />
         </div>
       </form>
     </div>

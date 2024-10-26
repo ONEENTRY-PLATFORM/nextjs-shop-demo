@@ -4,14 +4,16 @@ import { useAppSelector } from '@/app/store/hooks';
 import { UsePrice } from '@/components/utils';
 
 const TotalAmount = ({
-  className,
   lang,
+  dict,
+  className,
 }: {
-  className: string;
   lang: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
+  className: string;
 }) => {
   const [cartTotal, setCartTotal] = useState(0);
-  const [totalAmount, setTotalAmount] = useState('');
   const total = useAppSelector((state) => {
     return state.cartReducer.products.reduce((total, item) => {
       if (item.selected) {
@@ -21,13 +23,6 @@ const TotalAmount = ({
       return total;
     }, 0);
   });
-  const { order_info_total } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  );
-  const formattedPrice = UsePrice({
-    amount: cartTotal,
-    lang,
-  });
 
   useEffect(() => {
     if (!total) {
@@ -35,17 +30,15 @@ const TotalAmount = ({
     }
     setCartTotal(total);
   }, [total]);
+  console.log(dict);
 
-  useEffect(() => {
-    if (order_info_total) {
-      setTotalAmount(order_info_total.value);
-    }
-  }, [order_info_total]);
-
-  // order_info_total
   return (
     <div className={className}>
-      {totalAmount}: {formattedPrice}
+      {dict?.order_info_total.value}:{' '}
+      {UsePrice({
+        amount: cartTotal,
+        lang,
+      })}
     </div>
   );
 };

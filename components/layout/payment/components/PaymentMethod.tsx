@@ -17,10 +17,17 @@ import OrderProductsTable from './OrderProductsTable';
 type PaymentMethodProps = {
   account: IAccountsEntity;
   lang: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
   index: number;
 };
 
-const PaymentMethod: FC<PaymentMethodProps> = ({ account, lang, index }) => {
+const PaymentMethod: FC<PaymentMethodProps> = ({
+  account,
+  lang,
+  dict,
+  index,
+}) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const dispatch = useAppDispatch();
   const { isLoading, onConfirmOrder } = useCreateOrder({ langCode });
@@ -61,7 +68,7 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ account, lang, index }) => {
           </button>
         </div>
 
-        <div id="cartData" className="w-full">
+        <div id="cartData" className="w-full opacity-0">
           <div className="flex flex-wrap justify-between text-[#4C4D56]">
             <div className="flex w-2/3 flex-col border border-solid max-md:w-full max-md:max-w-full">
               <OrderProductsTable account={account} lang={lang} />
@@ -75,6 +82,7 @@ const PaymentMethod: FC<PaymentMethodProps> = ({ account, lang, index }) => {
                   'text-base font-bold leading-8 text-neutral-600 lg:self-end'
                 }
                 lang={lang}
+                dict={dict}
               />
             </div>
           </div>

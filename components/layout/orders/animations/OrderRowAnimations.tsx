@@ -22,24 +22,22 @@ const OrderRowAnimations: FC<{
       paused: true,
     });
 
-    if (stage === 'leaving' && prevStage === 'none') {
-      tl.to(ref.current, {
-        autoAlpha: 0,
-        scaleY: 0,
-      }).play();
-    }
-
     if (stage === 'none' && prevStage === 'entering') {
       tl.set(ref.current, {
         autoAlpha: 0,
-        scaleY: 0,
       })
         .to(ref.current, {
           autoAlpha: 1,
-          scaleY: 1,
         })
         .play();
     }
+
+    if (stage === 'leaving' && prevStage === 'none') {
+      tl.to(ref.current, {
+        autoAlpha: 0,
+      }).play();
+    }
+
     setPrevStage(stage);
 
     return () => {

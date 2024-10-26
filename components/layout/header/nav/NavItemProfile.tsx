@@ -92,7 +92,7 @@ const NavItemProfile: FC<{ item: any; lang: string; userMenu?: any }> = ({
       <div
         ref={ref}
         onMouseLeave={() => setState(false)}
-        className="absolute left-0 top-8 h-0 w-48 overflow-hidden rounded-md text-slate-800 bg-white px-4 shadow-lg"
+        className="absolute left-0 top-8 h-0 w-48 overflow-hidden rounded-md bg-white px-4 text-slate-800 shadow-lg"
       >
         {userMenu?.menu && (
           <ul className="my-4 text-gray-800">

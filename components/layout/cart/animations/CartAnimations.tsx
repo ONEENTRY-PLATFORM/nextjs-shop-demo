@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
 import type { ReactNode } from 'react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 const CartAnimations = ({
   children,
@@ -14,28 +14,30 @@ const CartAnimations = ({
   className: string;
 }) => {
   const { stage } = useTransitionState();
+  const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
   // first load animations
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      repeat: 0,
-    });
+  // useGSAP(() => {
+  //   const tl = gsap.timeline({
+  //     paused: true,
+  //   });
 
-    if (stage !== 'entering') {
-      tl.set(ref.current, {
-        opacity: 0,
-      }).to(ref.current, {
-        opacity: 1,
-        duration: 0.5,
-        delay: 0.5,
-      });
-    }
+  //   if (stage !== 'entering') {
+  //     tl.set(ref.current, {
+  //       opacity: 0,
+  //     }).to(ref.current, {
+  //       opacity: 1,
+  //       duration: 0.5,
+  //       delay: 0.5,
+  //     });
+  //     tl.play();
+  //   }
 
-    return () => {
-      tl.kill();
-    };
-  }, [ref]);
+  //   return () => {
+  //     tl.kill();
+  //   };
+  // }, [ref]);
 
   useGSAP(() => {
     const tl = gsap.timeline({
@@ -49,7 +51,7 @@ const CartAnimations = ({
       .to('.product-in-cart', {
         autoAlpha: 1,
         yPercent: 0,
-        stagger: 0.05,
+        stagger: 0.1,
       })
       .to('.tr, #total', {
         autoAlpha: 1,
@@ -57,11 +59,14 @@ const CartAnimations = ({
         stagger: 0.1,
       });
 
-    if (stage === 'leaving') {
-      tl.reverse(1);
-    } else if (stage === 'entering') {
+    if (stage === 'leaving' && prevStage === 'none') {
+      tl.reverse(1.2);
+    }
+    if (stage === 'entering') {
       tl.play();
     }
+
+    setPrevStage(stage);
 
     return () => {
       tl.kill();

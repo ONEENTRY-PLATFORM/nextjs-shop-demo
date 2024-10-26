@@ -100,6 +100,7 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
               index={index as number}
               account={item}
               lang={lang}
+              dict={dict}
             />
           );
         })}
