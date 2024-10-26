@@ -4,12 +4,8 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { api, reDefine, useLazyGetMeQuery } from '@/app/api';
-
-// import { useNotifications } from '@/app/api/hooks/useNotifications';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { useAppSelector } from '../hooks';
+import { useNotifications } from '@/app/api/hooks/useNotifications';
 
 type ContextProps = {
   isAuth: boolean;
@@ -39,8 +35,8 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
 
-  // const [isTokenSet, setIsTokenSet] = useState<boolean>(false);
-  // const { token } = useNotifications();
+  const [isTokenSet, setIsTokenSet] = useState<boolean>(false);
+  const { token } = useNotifications();
 
   const [trigger, { isError }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 3000 : 0,
@@ -102,18 +98,18 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, refetchUser]);
 
-  // useEffect(() => {
-  //   if (token && !isTokenSet && isAuth && user) {
-  //     (async () => {
-  //       try {
-  //         const res = await api.Users.addFCMToken(token);
-  //         setIsTokenSet(true);
-  //       } catch (e) {
-  //         console.log('=>(AuthContext.tsx:95) e', e);
-  //       }
-  //     })();
-  //   }
-  // }, [user, token]);
+  useEffect(() => {
+    if (token && !isTokenSet && isAuth && user) {
+      (async () => {
+        try {
+          const res = await api.Users.addFCMToken(token);
+          setIsTokenSet(true);
+        } catch (e) {
+          console.log('=>(AuthContext.tsx:95) e', e);
+        }
+      })();
+    }
+  }, [user, token]);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {

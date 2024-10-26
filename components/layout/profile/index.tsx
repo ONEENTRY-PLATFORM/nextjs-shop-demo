@@ -5,11 +5,11 @@ import type { SimplePageProps } from '@/app/types/global';
 import UserForm from '@/components/forms/UserForm';
 import Loader from '@/components/shared/Loader';
 
-const ProfilePage: FC<SimplePageProps> = async ({ lang }) => {
+const ProfilePage: FC<SimplePageProps> = async ({ lang, dict }) => {
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>
-        <UserForm lang={lang} dict={undefined} />
+        <UserForm lang={lang} dict={dict} />
       </Suspense>
     </div>
   );

@@ -6,6 +6,7 @@ import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { api } from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
@@ -24,43 +25,42 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
   );
   const { user, isAuth } = useContext(AuthContext);
 
-  // !!!
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubscribeFavorite = async () => {
     try {
-      if (!isFav) {
-        // await api.Events.subscribeByMarker(
-        //   'catalog_event',
-        //   product.id,
-        //   'en_US',
-        // );
-        // await api.Events.subscribeByMarker(
-        //   'status_out_of_stock',
-        //   product.id,
-        //   'en_US',
-        // );
-        // await api.Events.subscribeByMarker(
-        //   'notification_test',
-        //   product.id,
-        //   'en_US',
-        // );
-      } else {
-        // await api.Events.unsubscribeByMarker(
-        //   'notification_test',
-        //   product.id,
-        //   'en_US',
-        // );
-        // await api.Events.unsubscribeByMarker(
-        //   'catalog_event',
-        //   product.id,
-        //   'en_US',
-        // );
-        // await api.Events.unsubscribeByMarker(
-        //   'status_out_of_stock',
-        //   product.id,
-        //   'en_US',
-        // );
-      }
+      // await api.Events.subscribeByMarker('catalog_event', product.id, 'en_US');
+      await api.Events.subscribeByMarker(
+        'status_out_of_stock',
+        product.id,
+        'en_US',
+      );
+      // await api.Events.subscribeByMarker(
+      //   'notification_test',
+      //   product.id,
+      //   'en_US',
+      // );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onUnsubscribeFavorite = async () => {
+    try {
+      // await api.Events.unsubscribeByMarker(
+      //   'catalog_event',
+      //   product.id,
+      //   'en_US',
+      // );
+      await api.Events.unsubscribeByMarker(
+        'status_out_of_stock',
+        product.id,
+        'en_US',
+      );
+      // await api.Events.unsubscribeByMarker(
+      //   'notification_test',
+      //   product.id,
+      //   'en_US',
+      // );
     } catch (e) {
       console.log(e);
     }
@@ -80,6 +80,8 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
         });
 
         if (res) {
+          await onSubscribeFavorite();
+
           dispatch(addFavorites(product));
           toast(
             'Product ' + product.localizeInfos.title + ' add to Favorites!',
@@ -98,6 +100,8 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
         });
 
         if (res) {
+          await onUnsubscribeFavorite();
+
           dispatch(removeFavorites(product.id));
           toast(
             'Product ' +

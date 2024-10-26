@@ -30,7 +30,6 @@ const TotalAmount = ({
     }
     setCartTotal(total);
   }, [total]);
-  console.log(dict);
 
   return (
     <div className={className}>
