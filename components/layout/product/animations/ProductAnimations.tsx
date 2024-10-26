@@ -22,10 +22,8 @@ const ProductAnimations: FC<{
 
     tl.set(ref.current, {
       autoAlpha: 0,
-      scale: 0,
     }).to(ref.current, {
       autoAlpha: 1,
-      scale: 1,
       delay: index / 10,
     });
     tl.play();
@@ -40,7 +38,7 @@ const ProductAnimations: FC<{
 
     if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {
-        scale: 0,
+        autoAlpha: 0,
         duration: 0.5,
         delay: index / 10,
       });

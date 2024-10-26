@@ -18,7 +18,7 @@ const RatingRow: FC<RatingRowProps> = ({
   state,
 }) => (
   <ReviewAnimations
-    className="flex w-full justify-start gap-2.5"
+    className="flex h-0 w-full justify-start gap-2.5"
     index={4}
     state={state}
   >

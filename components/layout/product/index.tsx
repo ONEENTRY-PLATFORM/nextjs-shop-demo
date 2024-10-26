@@ -63,9 +63,9 @@ const ProductSingle: FC<ProductSingleProps> = async ({
           <ProductDetails product={product} lang={lang} dict={dict} />
         </ProductAnimations>
       </div>
-
-      <ReviewsSection dict={dict} />
-
+      <ProductAnimations className={''} index={3}>
+        <ReviewsSection dict={dict} />
+      </ProductAnimations>
       {Array.isArray(blocks) &&
         blocks.map((block: string) => {
           if (block === 'multiply_items_offer') {

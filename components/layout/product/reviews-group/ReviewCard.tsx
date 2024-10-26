@@ -22,7 +22,7 @@ interface ReviewCardProps {
 const ReviewCard: FC<ReviewCardProps> = ({ review, index, state }) => {
   return (
     <ReviewAnimations
-      className="relative box-border flex shrink-0 flex-col"
+      className="relative box-border flex h-0 shrink-0 flex-col"
       index={index}
       state={state}
     >

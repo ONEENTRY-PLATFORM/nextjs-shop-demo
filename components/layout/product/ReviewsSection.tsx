@@ -13,7 +13,7 @@ import ReviewsList from './reviews-group/ReviewsList';
 const ReviewsSection: FC<{ dict: any }> = ({ dict }) => {
   const [state, setState] = useState(false);
   return (
-    <div className="flex justify-between max-md:flex-wrap">
+    <div className="flex justify-between overflow-hidden max-md:flex-wrap">
       <div className="flex flex-col">
         <RatingButton state={state} setState={setState} {...productRating} />
         <ReviewsList state={state} />
