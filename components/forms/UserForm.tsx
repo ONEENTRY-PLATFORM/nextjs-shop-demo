@@ -111,7 +111,7 @@ const UserForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   }
 
   if (!isAuth || error || !user?.formData) {
-    return <AuthError />;
+    return <AuthError dict={dict} />;
   }
 
   return (

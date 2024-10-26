@@ -1,31 +1,21 @@
 'use client';
 
-import { useContext, useEffect, useState } from 'react';
+import type { FC } from 'react';
+import { useContext } from 'react';
 
-import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-const AuthError = () => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const AuthError: FC<{ dict: any }> = ({ dict }) => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
-  const [logInText, setLogInText] = useState('');
-  const [authRequiredText, setRequiredText] = useState('');
-  const { log_in_text, auth_required_text } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  );
-
-  useEffect(() => {
-    if (log_in_text) {
-      setLogInText(log_in_text.value);
-    }
-    if (auth_required_text) {
-      setRequiredText(auth_required_text.value);
-    }
-  }, [log_in_text, auth_required_text]);
+  const { log_in_text, auth_required_text } = dict;
 
   return (
     <div className="flex w-full flex-col items-center">
       <h1 className="mb-6 text-6xl text-slate-700">401</h1>
-      <p className="mb-6 text-2xl text-slate-700">{authRequiredText}</p>
+      <p className="mb-6 text-2xl text-slate-700">
+        {auth_required_text?.value}
+      </p>
       <button
         onClick={() => {
           setOpen(true);
@@ -34,7 +24,7 @@ const AuthError = () => {
         type="button"
         className="btn btn-sm btn-o btn-o-primary mx-auto w-auto"
       >
-        {logInText}
+        {log_in_text?.value}
       </button>
     </div>
   );

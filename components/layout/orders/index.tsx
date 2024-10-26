@@ -57,7 +57,7 @@ const OrdersPage: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   }, [lang, currentPage, isAuth, pageLimit, user]);
 
   if (!isAuth) {
-    return <AuthError />;
+    return <AuthError dict={dict} />;
   }
 
   if (!settings) {

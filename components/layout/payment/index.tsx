@@ -81,7 +81,7 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
   }, [productsInOrder]);
 
   if (!isAuth || error) {
-    return <AuthError />;
+    return <AuthError dict={dict} />;
   }
 
   if (productsInCart.length < 2 || isLoading) {
