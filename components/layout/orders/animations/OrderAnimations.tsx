@@ -16,24 +16,23 @@ const OrderAnimations: FC<{
     const tl = gsap.timeline({
       paused: true,
     });
-
+    gsap.set(ref.current, {
+      transformOrigin: '0 0',
+      autoAlpha: 0,
+      height: 0,
+    });
     if (isActive) {
-      tl.set(ref.current, {
-        transformOrigin: '0 0',
-        autoAlpha: 0,
-        height: 0,
-      }).to(ref.current, {
+      tl.to(ref.current, {
         autoAlpha: 1,
         height: 'auto',
       });
       tl.play();
+    } else {
+      tl.to(ref.current, {
+        autoAlpha: 0,
+        height: 0,
+      }).play();
     }
-    // else {
-    //   tl.to(ref.current, {
-    //     autoAlpha: 0,
-    //     height: 0,
-    //   }).play();
-    // }
 
     return () => {
       tl.kill();

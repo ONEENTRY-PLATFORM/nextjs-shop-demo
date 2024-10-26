@@ -8,7 +8,7 @@ const ReviewsList: React.FC = () => {
   return (
     <section className="flex flex-col gap-5 max-md:mb-10 max-md:max-w-full">
       {reviewsData.map((review, index) => (
-        <ReviewCard key={index} review={review} />
+        <ReviewCard key={index} review={review} index={index} />
       ))}
     </section>
   );

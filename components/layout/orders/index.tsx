@@ -16,7 +16,8 @@ import EmptyOrders from './components/EmptyOrders';
 import Order from './components/OrderRow';
 import OrdersTableLoader from './components/OrdersTableLoader';
 
-const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const OrdersPage: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
   const searchParams = useSearchParams();
   const { isAuth, user } = useContext(AuthContext);
 
@@ -67,7 +68,7 @@ const OrdersPage: FC<{ lang: string }> = ({ lang }) => {
   const { date_title, total_title, status_title } = settings;
 
   if (orders && orders.length < 1) {
-    return <EmptyOrders lang={lang} />;
+    return <EmptyOrders lang={lang} dict={dict} />;
   }
 
   return (

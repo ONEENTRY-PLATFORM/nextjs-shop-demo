@@ -3,6 +3,7 @@ import type { FC } from 'react';
 
 import { getRelatedProductsById } from '@/app/api';
 
+import ProductAnimations from './animations/ProductAnimations';
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
 import ProductImage from './product-single/ProductImage';
@@ -33,25 +34,34 @@ const ProductSingle: FC<ProductSingleProps> = async ({
   return (
     <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:gap-4 max-sm:flex-wrap">
-        <div className="relative mb-10 flex h-[280px] w-[30%] grow flex-col max-md:mb-4 max-md:w-4/12 max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full">
+        <ProductAnimations
+          className="relative mb-10 flex h-[280px] w-[30%] grow flex-col max-md:mb-4 max-md:w-4/12 max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full"
+          index={0}
+        >
           <ProductImage
             imageSrc={attributeValues.pic.value.downloadLink}
             alt={localizeInfos.title}
             product={product}
           />
-        </div>
+        </ProductAnimations>
 
-        <div className="flex w-4/12 grow flex-col max-md:w-4/12 max-sm:w-full">
+        <ProductAnimations
+          className="flex w-4/12 grow flex-col max-md:w-4/12 max-sm:w-full"
+          index={1}
+        >
           <div className="relative mb-6 box-border flex shrink-0 flex-col">
             <VariationsCarousel items={products} total={total} lang={lang} />
           </div>
 
           <ProductDescription description={attributeValues.description} />
-        </div>
+        </ProductAnimations>
 
-        <div className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-4/12 max-sm:w-full">
+        <ProductAnimations
+          className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-4/12 max-sm:w-full"
+          index={2}
+        >
           <ProductDetails product={product} lang={lang} dict={dict} />
-        </div>
+        </ProductAnimations>
       </div>
 
       <ReviewsSection dict={dict} />

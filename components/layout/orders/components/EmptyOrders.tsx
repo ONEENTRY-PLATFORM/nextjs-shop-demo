@@ -1,29 +1,12 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
 
-import { useAppSelector } from '@/app/store/hooks';
-
-const EmptyOrders = ({ lang }: { lang: string }) => {
-  const [emptyText, setEmptyText] = useState<string>('');
-  const [goShopText, setGoShopText] = useState<string>('');
-
-  const { empty_cart_plug, go_to_shop } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  );
-
-  useEffect(() => {
-    if (empty_cart_plug) {
-      setEmptyText(empty_cart_plug.value);
-    }
-    if (go_to_shop) {
-      setGoShopText(go_to_shop.value);
-    }
-  }, [go_to_shop, empty_cart_plug]);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const EmptyOrders = ({ lang, dict }: { lang: string; dict: any }) => {
+  const { empty_cart_plug, go_to_shop } = dict;
 
   return (
     <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
-        {/* {emptyText} */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="#f0f0f0"
@@ -44,13 +27,13 @@ const EmptyOrders = ({ lang }: { lang: string }) => {
             <path d="M135.006,48.311c0.001,0,0.001,0,0.002,0c4.141,0,7.499-3.357,7.5-7.498l0.008-33.311c0.001-4.142-3.356-7.501-7.498-7.502   c-0.001,0-0.001,0-0.001,0c-4.142,0-7.5,3.357-7.501,7.498l-0.008,33.311C127.507,44.951,130.864,48.31,135.006,48.311z" />
           </g>
         </svg>
-        Your orders empty
+        {empty_cart_plug.value}
       </h1>
       <Link
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"
       >
-        {goShopText}
+        {go_to_shop.value}
       </Link>
     </div>
   );

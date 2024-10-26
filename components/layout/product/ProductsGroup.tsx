@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 
+import ProductAnimations from './animations/ProductAnimations';
 import GroupCard from './group-card/GroupCard';
 
 interface ProductsGroupProps {
@@ -29,7 +30,10 @@ const ProductsGroup: FC<ProductsGroupProps> = async ({
     block.attributeValues?.together_title?.value;
 
   return (
-    <section className="mb-8 flex flex-col max-md:max-w-full">
+    <ProductAnimations
+      className="mb-8 flex flex-col max-md:max-w-full"
+      index={4}
+    >
       <h2 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
         {title}
       </h2>
@@ -43,7 +47,7 @@ const ProductsGroup: FC<ProductsGroupProps> = async ({
           </div>
         ))}
       </div>
-    </section>
+    </ProductAnimations>
   );
 };
 
