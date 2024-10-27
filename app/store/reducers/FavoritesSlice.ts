@@ -1,9 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 type InitialStateType = {
-  products: IProductsEntity[];
+  products: number[];
 };
 const initialState: InitialStateType = {
   products: [],
@@ -13,9 +12,9 @@ export const favoritesSlice = createSlice({
   name: 'favorites-slice',
   initialState,
   reducers: {
-    addFavorites(state, action: PayloadAction<IProductsEntity>) {
-      const isUnique = state.products.findIndex((product: IProductsEntity) => {
-        return product.id === action.payload.id;
+    addFavorites(state, action: PayloadAction<number>) {
+      const isUnique = state.products.findIndex((product: number) => {
+        return product === action.payload;
       });
       if (isUnique === -1) {
         state.products.push(action.payload);
@@ -23,7 +22,7 @@ export const favoritesSlice = createSlice({
     },
     removeFavorites(state, action: PayloadAction<number>) {
       state.products = state.products.filter(
-        (product: IProductsEntity) => product.id !== action.payload,
+        (product: number) => product !== action.payload,
       );
     },
     removeAllFavorites(state) {
@@ -35,15 +34,15 @@ export const favoritesSlice = createSlice({
 export const { addFavorites, removeFavorites } = favoritesSlice.actions;
 
 export const selectFavoritesItems = (state: {
-  favoritesReducer: { products: unknown[] };
+  favoritesReducer: { products: number[] };
 }) => state.favoritesReducer.products;
 
 export const selectIsFavorites = (
-  state: { favoritesReducer: { products: { id: number }[] } },
+  state: { favoritesReducer: { products: number[] } },
   id: number,
 ): boolean => {
   const added = state.favoritesReducer.products.findIndex(
-    (product: { id: number }) => product.id === id,
+    (product: number) => product === id,
   );
   if (added === -1) {
     return false;

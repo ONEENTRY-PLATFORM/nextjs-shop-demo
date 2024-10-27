@@ -69,11 +69,11 @@ const Page: FC<{
       name: 'payment',
       component: <PaymentPage page={page} lang={lang} dict={dict} />,
     },
-    {
-      templateType: templateIdentifier,
-      name: 'favorites',
-      component: <FavoritesPage page={page} lang={lang} dict={dict} />,
-    },
+    // {
+    //   templateType: templateIdentifier,
+    //   name: 'favorites',
+    //   component: <FavoritesPage page={page} lang={lang} dict={dict} />,
+    // },
     {
       templateType: templateIdentifier,
       name: 'about_us',

@@ -35,10 +35,10 @@ export const OpenDrawerProvider = ({ children }: { children: ReactNode }) => {
   return (
     <OpenDrawerContext.Provider
       value={{
-        open,
-        setOpen,
         component,
         setComponent,
+        open,
+        setOpen,
         action,
         setAction,
         transition,

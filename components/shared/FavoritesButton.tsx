@@ -68,10 +68,7 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
   const onUpdateFavorites = async () => {
     try {
       if (!isFav) {
-        const updatedFavorites = [
-          ...favorites.map((fav: { id: number }) => fav.id),
-          product.id,
-        ];
+        const updatedFavorites = [...favorites, product.id];
 
         const res = await updateUserState({
           favorites: updatedFavorites,
@@ -81,7 +78,7 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
         if (res) {
           await onSubscribeFavorite();
 
-          dispatch(addFavorites(product));
+          dispatch(addFavorites(product.id));
           toast(
             'Product ' + product.localizeInfos.title + ' add to Favorites!',
           );
@@ -90,8 +87,8 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
         }
       } else {
         const updatedFavorites = favorites
-          .filter((fav: { id: number }) => fav.id !== product.id)
-          .map((fav: { id: number }) => fav.id);
+          .filter((fav: number) => fav !== product.id)
+          .map((fav: number) => fav);
 
         const res = await updateUserState({
           favorites: updatedFavorites,
@@ -130,7 +127,7 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
       type="button"
       className="group relative ml-auto box-border flex size-[26px] shrink-0 flex-col items-center justify-center"
       onClick={() => {
-        if ((user as IUserEntity).id && isAuth) {
+        if (user && isAuth && (user as IUserEntity).id) {
           onUpdateFavorites();
         } else {
           if (isFav) {
@@ -141,7 +138,7 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
                 ' removed from Favorites!',
             );
           } else {
-            dispatch(addFavorites(product));
+            dispatch(addFavorites(product.id));
             toast(
               'Product ' + product.localizeInfos.title + ' added to Favorites!',
             );

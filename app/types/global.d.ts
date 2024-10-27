@@ -17,7 +17,7 @@ declare type PageProps = {
 };
 
 declare type SimplePageProps = {
-  page: IPagesEntity;
+  page?: IPagesEntity;
   lang: string;
   dict: IAttributeValues;
 };
