@@ -1,47 +1,69 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { Key } from 'react';
-import { type FC, useContext } from 'react';
+import { type FC, Suspense, useContext, useEffect } from 'react';
 
-import { useAppSelector } from '@/app/store/hooks';
+import { updateUserState } from '@/app/api/server/users/updateUserState';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
+import {
+  addFavorites,
+  selectFavoritesItems,
+  selectFavoritesVersion,
+} from '@/app/store/reducers/FavoritesSlice';
 import type { SimplePageProps } from '@/app/types/global';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
-import ProductCard from '@/components/layout/products-grid/components/product-card/ProductCard';
+import Loader from '@/components/shared/Loader';
+
+import FavoriteCard from './FavoriteCard';
 
 const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const { user, isAuth } = useContext(AuthContext);
-  const favorites = useAppSelector((state) =>
-    selectFavoritesItems(state),
+  const dispatch = useAppDispatch();
+  const favorites = useAppSelector(
+    (state: { favoritesReducer: { products: number[] } }) =>
+      selectFavoritesItems(state),
   ) as Array<number>;
-  // console.log({ user, isAuth });
-  const userFavorites = isAuth && user ? user.state.favorites : favorites;
-  // const version = user?.state.version;
+  // const favoritesVersion = useAppSelector((state) =>
+  //   selectFavoritesVersion(state),
+  // );
 
-  if (!userFavorites) {
-    return;
-  }
+  useEffect(() => {
+    if (!isAuth || !user) {
+      return;
+    }
+    async function updateUser(favorites: number[]) {
+      const res = await updateUserState({
+        favorites: favorites,
+        user: user,
+      });
+    }
 
-  return userFavorites.length ? (
+    user.state.favorites.forEach((element: number) => {
+      dispatch(addFavorites(element));
+    });
+    updateUser([...user.state.favorites, ...favorites]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
+
+  // const userFavorites = isAuth && user ? user.state.favorites : favorites;
+
+  return favorites.length ? (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <div className={'relative box-border flex w-full shrink-0 flex-col'}>
         <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
           <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-            {userFavorites.map((favoriteId: string | number, index: Key) => {
-              if (!favoriteId) {
-                return;
-              }
+            {favorites.map((favoriteId: number, index: Key | number) => {
               return (
-                // <ProductCard
-                //   key={index}
-                //   product={favorite}
-                //   lang={lang}
-                //   index={index}
-                //   dict={dict}
-                // />
-                favoriteId
+                <Suspense fallback={<Loader />} key={index}>
+                  <FavoriteCard
+                    favoriteId={favoriteId}
+                    index={index as number}
+                    lang={lang}
+                    dict={dict}
+                  />
+                </Suspense>
               );
             })}
           </div>

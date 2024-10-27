@@ -53,7 +53,7 @@ const favoritesReducer = persistReducer(
     key: 'favorites-slice',
     storage: storage,
     version: version,
-    whitelist: ['products'],
+    whitelist: ['products', 'version'],
   },
   favoritesSlice,
 );

@@ -3,9 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 type InitialStateType = {
   products: number[];
+  version: number;
 };
 const initialState: InitialStateType = {
   products: [],
+  version: Date.now(),
 };
 
 export const favoritesSlice = createSlice({
@@ -31,11 +33,16 @@ export const favoritesSlice = createSlice({
   },
 });
 
-export const { addFavorites, removeFavorites } = favoritesSlice.actions;
+export const { addFavorites, removeFavorites, removeAllFavorites } =
+  favoritesSlice.actions;
 
 export const selectFavoritesItems = (state: {
   favoritesReducer: { products: number[] };
 }) => state.favoritesReducer.products;
+
+export const selectFavoritesVersion = (state: {
+  favoritesReducer: { version: number };
+}) => state.favoritesReducer.version;
 
 export const selectIsFavorites = (
   state: { favoritesReducer: { products: number[] } },
