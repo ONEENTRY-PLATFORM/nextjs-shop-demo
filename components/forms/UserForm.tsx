@@ -2,7 +2,7 @@
 'use client';
 
 import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormDataType } from 'oneentry/dist/formsData/formsDataInterfaces';
 import type { FC, FormEvent, Key } from 'react';
 import { useContext, useState } from 'react';
@@ -25,8 +25,10 @@ export type InputValue = {
   [key: string]: unknown;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const UserForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
+const UserForm: FC<{ lang: string; dict: IAttributeValues }> = ({
+  lang,
+  dict,
+}) => {
   const { isAuth, refreshUser, user } = useContext(AuthContext);
   const { data, isLoading, error } = useGetFormByMarkerQuery({
     marker: 'reg',
@@ -140,7 +142,11 @@ const UserForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
           })}
         </div>
 
-        <SubmitButton title="Save" isLoading={loading} index={10} />
+        <SubmitButton
+          title={dict?.save_button_text.value}
+          isLoading={loading}
+          index={10}
+        />
         {isError && <ErrorMessage error={isError} />}
       </form>
     </FormAnimations>

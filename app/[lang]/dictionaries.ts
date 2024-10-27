@@ -1,5 +1,7 @@
 import 'server-only';
 
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
+
 import type { Locale } from '../../i18n-config.ts';
 import { getBlockByMarker } from '../api/index.ts';
 import { LanguageEnum } from '../types/enum.ts';
@@ -11,7 +13,8 @@ const dict = async (lang: string): Promise<any> => {
     const { block } = await getBlockByMarker('system_content', lang);
     const blockValues =
       block?.attributeValues[langCode] || block?.attributeValues;
-    return { ...blockValues };
+
+    return { ...(blockValues as IAttributeValues) };
   } catch (e) {
     console.log(e);
   }

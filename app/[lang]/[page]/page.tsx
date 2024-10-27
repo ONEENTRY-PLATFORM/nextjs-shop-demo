@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import type { FC } from 'react';
 
 import { getPageByUrl } from '@/app/api';
+import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import CartPage from '@/components/layout/cart';
 import FavoritesPage from '@/components/layout/favorites';
 import PaymentPage from '@/components/layout/payment';
@@ -40,12 +41,11 @@ export async function generateMetadata({
 }
 
 const Page: FC<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params: { page: any; handle: string; lang: string };
+  params: { page: string; handle: string; lang: string };
 }> = async ({ params }) => {
   const lang = params.lang;
   const { page, isError } = await getPageByUrl(params.page, lang);
-  const dict = await getDictionary(lang as Locale);
+  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
 
   if (isError || !page) {
     return notFound();

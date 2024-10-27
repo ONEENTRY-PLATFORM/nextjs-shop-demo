@@ -1,7 +1,6 @@
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 declare type LocalizeInfo = {
   content: string;
   menuTitle: string;
@@ -9,7 +8,7 @@ declare type LocalizeInfo = {
 };
 
 declare type PageProps = {
-  params: { page: any; handle: string; lang: string };
+  params: { page: string; handle: string; lang: string };
   searchParams?: {
     search?: string;
     page?: string;
@@ -20,8 +19,7 @@ declare type PageProps = {
 declare type SimplePageProps = {
   page: IPagesEntity;
   lang: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
 };
 
 declare type LoaderProps = {
