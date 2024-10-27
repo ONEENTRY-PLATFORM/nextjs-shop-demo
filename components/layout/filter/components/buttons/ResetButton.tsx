@@ -1,11 +1,11 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 import React from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ResetButton: FC<{ dict: any }> = ({ dict }) => {
+const ResetButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
@@ -9,8 +10,7 @@ import ProductUnits from './ProductUnits';
 interface ProductDetailsProps {
   product: IProductsEntity & { productPages?: [] };
   lang: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
 }
 
 const ProductDetails: FC<ProductDetailsProps> = async ({

@@ -1,5 +1,6 @@
 'use client';
 
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 import React, { useState } from 'react';
 
@@ -9,8 +10,8 @@ import RatingBlock from './rating-block/RatingBlock';
 import RatingButton from './rating-block/RatingButton';
 import ReviewsList from './reviews-group/ReviewsList';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-const ReviewsSection: FC<{ dict: any }> = ({ dict }) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const ReviewsSection: FC<{ dict: IAttributeValues }> = ({ dict }) => {
   const [state, setState] = useState(false);
   return (
     <div className="flex justify-between overflow-hidden max-md:flex-wrap">

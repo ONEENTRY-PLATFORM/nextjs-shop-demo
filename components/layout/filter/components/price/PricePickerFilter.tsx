@@ -2,6 +2,7 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';
@@ -10,7 +11,10 @@ import PriceFromInput from './PriceFromInput';
 import PriceToInput from './PriceToInput';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PriceFilter: FC<{ prices: any; dict: any }> = ({ prices, dict }) => {
+const PriceFilter: FC<{ prices: any; dict: IAttributeValues }> = ({
+  prices,
+  dict,
+}) => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();

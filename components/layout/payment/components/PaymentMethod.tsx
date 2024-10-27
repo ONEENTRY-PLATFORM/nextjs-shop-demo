@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { FC } from 'react';
 
@@ -17,8 +18,7 @@ import OrderProductsTable from './OrderProductsTable';
 type PaymentMethodProps = {
   account: IAccountsEntity;
   lang: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
   index: number;
 };
 

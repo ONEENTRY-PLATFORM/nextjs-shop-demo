@@ -1,5 +1,6 @@
 'use client';
 
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { ReactNode } from 'react';
 import { createContext, useEffect } from 'react';
 
@@ -10,8 +11,7 @@ const ContentContext = createContext({});
 
 type Props = {
   children: ReactNode;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
 };
 
 export const ContentContextProvider = ({ children, dict }: Props) => {

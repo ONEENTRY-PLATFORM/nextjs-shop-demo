@@ -1,3 +1,4 @@
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
@@ -10,8 +11,7 @@ import GroupCard from './group-card/GroupCard';
 interface ProductsGroupProps {
   marker: string;
   lang: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
 }
 
 const ProductsGroup: FC<ProductsGroupProps> = async ({

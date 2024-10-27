@@ -102,6 +102,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     if (token && !isTokenSet && isAuth && user) {
       (async () => {
         try {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const res = await api.Users.addFCMToken(token);
           setIsTokenSet(true);
         } catch (e) {
@@ -109,6 +110,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
         }
       })();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, token]);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values

@@ -1,6 +1,6 @@
 'use client';
 
-import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent, Key } from 'react';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -22,8 +22,10 @@ import ResetPasswordButton from './inputs/ResetPasswordButton';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import SocialSignInButton from './inputs/SocialSignInButton';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SignInForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
+const SignInForm: FC<{ lang: string; dict: IAttributeValues }> = ({
+  lang,
+  dict,
+}) => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
 

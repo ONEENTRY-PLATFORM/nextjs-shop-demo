@@ -1,5 +1,6 @@
 'use client';
 
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 
@@ -11,7 +12,10 @@ import {
 } from '@/app/store/reducers/CartSlice';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ApplyButton: FC<{ product: any; dict: any }> = ({ product, dict }) => {
+const ApplyButton: FC<{ product: any; dict: IAttributeValues }> = ({
+  product,
+  dict,
+}) => {
   const dispatch = useAppDispatch();
   const [productInCart, setInCart] = useState(false);
   const { apply_button_placeholder, cancel_text } = dict;

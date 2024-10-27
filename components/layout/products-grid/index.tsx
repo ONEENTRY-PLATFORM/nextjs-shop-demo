@@ -1,3 +1,4 @@
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
@@ -17,7 +18,7 @@ interface GridLayoutProps {
     page?: string;
     filters?: IFilterParams[];
   };
-  dict: unknown;
+  dict: IAttributeValues;
   pagesLimit: number;
   isCategory?: boolean;
 }

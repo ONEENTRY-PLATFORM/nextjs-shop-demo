@@ -1,3 +1,4 @@
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import React, { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
@@ -9,8 +10,7 @@ const TotalAmount = ({
   className,
 }: {
   lang: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
   className: string;
 }) => {
   const [cartTotal, setCartTotal] = useState(0);

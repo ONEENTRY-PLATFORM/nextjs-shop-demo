@@ -1,3 +1,4 @@
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
 
@@ -9,8 +10,7 @@ import ProductCard from '../products-grid/components/product-card/ProductCard';
 const RelatedItems: FC<{
   marker: string;
   lang: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
 }> = async ({ marker, lang, dict }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { isError, block } = await getBlockByMarker(marker, lang);

@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTransitionRouter } from 'next-transition-router';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
 import React, { useState } from 'react';
 import { useDebounce } from 'use-debounce';
@@ -10,8 +11,10 @@ import SearchIcon from '@/components/icons/search';
 
 import SearchResults from './SearchResults';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SearchBar: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
+const SearchBar: FC<{ lang: string; dict: IAttributeValues }> = ({
+  lang,
+  dict,
+}) => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
   const pathname = usePathname();

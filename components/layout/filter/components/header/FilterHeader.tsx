@@ -1,10 +1,11 @@
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 
 import CloseModal from './CloseModal';
 import HistoryBack from './HistoryBack';
 
 interface FilterHeaderProps {
-  dict: { open_filters_button: { value: string } };
+  dict: IAttributeValues;
 }
 
 const FilterHeader: FC<FilterHeaderProps> = ({ dict }) => {

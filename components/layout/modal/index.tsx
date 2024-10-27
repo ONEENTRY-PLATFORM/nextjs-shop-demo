@@ -1,5 +1,6 @@
 'use client';
 
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 import { useContext } from 'react';
 
@@ -10,12 +11,13 @@ import * as forms from '../../forms';
 import CloseModal from './components/CloseModal';
 import ModalBackdrop from './components/ModalBackdrop';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Modal: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
+const Modal: FC<{ lang: string; dict: IAttributeValues }> = ({
+  lang,
+  dict,
+}) => {
   const { component } = useContext(OpenDrawerContext);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const Form: FC<{ className: string; lang: string; dict: any }> =
+  const Form: FC<{ className: string; lang: string; dict: IAttributeValues }> =
     forms[component as keyof typeof forms] || null;
 
   if (!Form) {

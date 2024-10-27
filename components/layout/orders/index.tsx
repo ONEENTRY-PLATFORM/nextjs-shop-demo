@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import type { AttributeType } from 'oneentry/dist/base/utils';
+import type { AttributeType, IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC, Key } from 'react';
 import { useContext, useEffect, useState } from 'react';
@@ -16,8 +16,10 @@ import EmptyOrders from './components/EmptyOrders';
 import Order from './components/OrderRow';
 import OrdersTableLoader from './components/OrdersTableLoader';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const OrdersPage: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
+const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
+  lang,
+  dict,
+}) => {
   const searchParams = useSearchParams();
   const { isAuth, user } = useContext(AuthContext);
 
@@ -60,16 +62,12 @@ const OrdersPage: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
     return <AuthError dict={dict} />;
   }
 
-  if (!settings) {
-    return 'Settings error!';
+  if (!settings || (orders && orders.length < 1)) {
+    return <EmptyOrders lang={lang} dict={dict} />;
   }
 
   const totalPages = Math.floor(total / pageLimit);
   const { date_title, total_title, status_title } = settings;
-
-  if (orders && orders.length < 1) {
-    return <EmptyOrders lang={lang} dict={dict} />;
-  }
 
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">

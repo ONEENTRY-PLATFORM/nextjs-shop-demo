@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
@@ -15,8 +16,7 @@ const ProductCard: FC<{
   product: IProductsEntity;
   lang: string;
   index: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
 }> = ({ product, lang, dict, index }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, attributeValues, localizeInfos } = product;
@@ -27,7 +27,6 @@ const ProductCard: FC<{
 
   return (
     <CardAnimations className="product-card group" index={index}>
-      {/* stickers */}
       <div className="z-10 flex justify-between gap-5 self-stretch">
         <Stickers product={product} lang={lang} />
         <FavoritesButton {...product} />

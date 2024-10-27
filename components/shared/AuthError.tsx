@@ -1,12 +1,12 @@
 'use client';
 
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const AuthError: FC<{ dict: any }> = ({ dict }) => {
+const AuthError: FC<{ dict: IAttributeValues }> = ({ dict }) => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
   const { log_in_text, auth_required_text } = dict;
 

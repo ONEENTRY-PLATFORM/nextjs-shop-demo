@@ -1,7 +1,7 @@
 'use client';
 
 import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent, Key } from 'react';
 import { useContext, useState } from 'react';
 
@@ -19,8 +19,10 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const SignUpForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
+const SignUpForm: FC<{ lang: string; dict: IAttributeValues }> = ({
+  lang,
+  dict,
+}) => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen, setComponent, setAction } = useContext(OpenDrawerContext);
 

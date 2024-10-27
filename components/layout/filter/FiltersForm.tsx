@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { FC } from 'react';
 
@@ -18,7 +19,7 @@ import PricePickerFilter from './components/price/PricePickerFilter';
 interface FiltersFormProps {
   prices: any;
   lang: string;
-  dict: any;
+  dict: IAttributeValues;
 }
 
 const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {

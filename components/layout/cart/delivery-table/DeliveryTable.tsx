@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
 import React, { useContext, useEffect } from 'react';
@@ -19,8 +20,7 @@ import TableRow from './DeliveryTableRow';
 const DeliveryTable: FC<{
   delivery: IProductsEntity;
   lang: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
 }> = ({ delivery, lang, dict }) => {
   const dispatch = useAppDispatch();
   const { data } = useGetFormByMarkerQuery({

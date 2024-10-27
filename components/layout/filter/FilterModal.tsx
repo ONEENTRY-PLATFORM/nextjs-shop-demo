@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 
@@ -12,7 +13,7 @@ import FiltersForm from './FiltersForm';
 const FilterModal: FC<{
   prices: any | undefined;
   lang: string;
-  dict: any;
+  dict: IAttributeValues;
 }> = ({ prices, lang, dict }) => {
   return (
     <FilterModalAnimations>

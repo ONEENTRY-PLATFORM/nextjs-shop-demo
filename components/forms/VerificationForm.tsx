@@ -1,6 +1,7 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
@@ -15,8 +16,11 @@ import FormAnimations from '@/components/forms/animations/FormAnimations';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
-const VerificationForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
+const VerificationForm: FC<{ lang: string; dict: IAttributeValues }> = ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  lang,
+  dict,
+}) => {
   const router = useTransitionRouter();
   const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);

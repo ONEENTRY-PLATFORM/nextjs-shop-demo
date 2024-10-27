@@ -1,17 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable tailwindcss/no-custom-classname */
 'use client';
 
 import '@/app/styles/payment.css';
 
 import Image from 'next/image';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
 import { useRef, useState } from 'react';
 import { IMask, IMaskInput } from 'react-imask';
 
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
-const PaymentForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
+const PaymentForm: FC<{ lang: string; dict: IAttributeValues }> = ({
+  lang,
+  dict,
+}) => {
   const inputRef = useRef(null);
 
   const [cardNumber, setCardNumber] = useState('');
@@ -277,7 +281,7 @@ const PaymentForm: FC<{ lang: string; dict: any }> = ({ lang, dict }) => {
         </div>
       </div>
       {/* !!! */}
-      <FormSubmitButton title="Apply" isLoading={false} />
+      <FormSubmitButton title="Apply" isLoading={false} index={0} />
     </form>
   );
 };

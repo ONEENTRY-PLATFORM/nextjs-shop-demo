@@ -14,11 +14,12 @@ import {
 } from '@/app/store/reducers/CartSlice';
 
 import { timeSlotsData } from '../data';
+import CalendarAnimations from './animations/CalendarAnimations';
 import TimeSlots from './calendar/TimeSlots';
 
 const CalendarForm: FC<{ lang: string }> = ({ lang }) => {
   const dispatch = useAppDispatch();
-  const { setOpen } = useContext(OpenDrawerContext);
+  const { setTransition } = useContext(OpenDrawerContext);
   const deliveryData = useAppSelector(selectDeliveryData);
 
   const [date, setDate] = useState<Date>(new Date(deliveryData.date));
@@ -32,11 +33,11 @@ const CalendarForm: FC<{ lang: string }> = ({ lang }) => {
         address: deliveryData.address,
       }),
     );
-    setOpen(false);
+    setTransition('close');
   };
 
   return (
-    <div className="mx-auto max-w-[350px] max-sm:max-w-[300px] ">
+    <CalendarAnimations className="mx-auto max-w-[350px] max-sm:max-w-[300px]">
       <Calendar
         locale={lang}
         view="month"
@@ -60,7 +61,7 @@ const CalendarForm: FC<{ lang: string }> = ({ lang }) => {
           {/* !!! */}
         </button>
       </div>
-    </div>
+    </CalendarAnimations>
   );
 };
 

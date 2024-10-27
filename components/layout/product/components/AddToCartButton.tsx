@@ -1,5 +1,6 @@
 'use client';
 
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
@@ -17,8 +18,7 @@ interface AddToCartProps {
   product: IProductsEntity;
   className: string;
   height: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
 }
 
 const AddToCartButton: FC<AddToCartProps> = ({

@@ -1,7 +1,13 @@
 import Link from 'next/link';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const EmptyFavorites = ({ lang, dict }: { lang: string; dict: any }) => {
+const EmptyFavorites = ({
+  lang,
+  dict,
+}: {
+  lang: string;
+  dict: IAttributeValues;
+}) => {
   const { empty_favorites_plug, go_to_shop } = dict;
 
   return (

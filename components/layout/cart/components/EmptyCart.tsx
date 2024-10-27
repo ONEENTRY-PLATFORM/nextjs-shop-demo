@@ -1,8 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const EmptyCart = ({ lang, dict }: { lang: string; dict: any }) => {
+const EmptyCart = ({
+  lang,
+  dict,
+}: {
+  lang: string;
+  dict: IAttributeValues;
+}) => {
   const { empty_cart_plug, go_to_shop } = dict;
 
   return (
