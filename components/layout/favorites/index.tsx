@@ -9,7 +9,6 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   addFavorites,
   selectFavoritesItems,
-  selectFavoritesVersion,
 } from '@/app/store/reducers/FavoritesSlice';
 import type { SimplePageProps } from '@/app/types/global';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
@@ -24,16 +23,13 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   ) as Array<number>;
-  // const favoritesVersion = useAppSelector((state) =>
-  //   selectFavoritesVersion(state),
-  // );
 
   useEffect(() => {
     if (!isAuth || !user) {
       return;
     }
     async function updateUser(favorites: number[]) {
-      const res = await updateUserState({
+      await updateUserState({
         favorites: favorites,
         user: user,
       });
@@ -46,8 +42,6 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
-
-  // const userFavorites = isAuth && user ? user.state.favorites : favorites;
 
   return favorites.length ? (
     <div className="flex flex-col pb-5 max-md:max-w-full">

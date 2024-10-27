@@ -1,26 +1,21 @@
 'use client';
 
-import {
-  Dialog,
-  DialogPanel,
-  Transition,
-  TransitionChild,
-} from '@headlessui/react';
 import Image from 'next/image';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-import { Fragment, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
+import ModalBackdrop from '../modal/components/ModalBackdrop';
+import MobileMenuAnimations from './animations/MobileMenuAnimations';
 import CloseModal from './components/CloseModal';
 import MobileMenu from './components/MobileMenu';
 
 function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { open, setOpen, component } = useContext(OpenDrawerContext);
-  const closeMenu = () => setOpen(false);
+  const { open, setOpen } = useContext(OpenDrawerContext);
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,59 +29,39 @@ function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
   }, [open]);
 
   useEffect(() => {
-    if (component === 'MobileMenu') {
-      setOpen(false);
-    }
+    setOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, searchParams]);
 
+  if (!open) {
+    return;
+  }
+
   return (
-    <Transition show={open && component === 'MobileMenu'}>
-      <Dialog onClose={closeMenu} className="relative z-50">
-        <TransitionChild
-          as={Fragment}
-          enter="transition-all ease-in-out duration-300"
-          enterFrom="opacity-0 backdrop-blur-none"
-          enterTo="opacity-100 backdrop-blur-[5px]"
-          leave="transition-all ease-in-out duration-200"
-          leaveFrom="opacity-100 backdrop-blur-[5px]"
-          leaveTo="opacity-0 backdrop-blur-none"
-        >
-          <div
-            className="fixed inset-0 bg-black/30 backdrop-blur-[5px]"
-            aria-hidden="true"
-          />
-        </TransitionChild>
-        <TransitionChild
-          as={Fragment}
-          enter="transition-all ease-in-out duration-300"
-          enterFrom="translate-x-[-100%]"
-          enterTo="translate-x-0"
-          leave="transition-all ease-in-out duration-200"
-          leaveFrom="translate-x-0"
-          leaveTo="translate-x-[-100%]"
-        >
-          <DialogPanel className="fixed inset-0 flex size-full max-w-[420px] flex-col bg-white pb-6">
-            <div className="p-6">
-              <CloseModal closeMenu={closeMenu} />
+    <MobileMenuAnimations
+      id="modalBody"
+      className="fixed left-1/2 top-1/2 z-50 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-6 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-[550px] lg:p-10"
+    >
+      <div className="fixed inset-0 z-50 flex size-full max-w-[420px] flex-col bg-white pb-6">
+        <div className="p-6">
+          <CloseModal />
 
-              <div className="mb-4 w-full">
-                <Image
-                  src={'/images/logo-250x70.svg'}
-                  width={180}
-                  height={50}
-                  alt={'OneEntry'}
-                  loading="lazy"
-                  className="aspect-[3.57] max-w-full shrink-0 max-sm:mb-5"
-                />
-              </div>
+          <div className="mb-4 w-full">
+            <Image
+              src={'/images/logo-250x70.svg'}
+              width={180}
+              height={50}
+              alt={'OneEntry'}
+              loading="lazy"
+              className="aspect-[3.57] max-w-full shrink-0 max-sm:mb-5"
+            />
+          </div>
 
-              <MobileMenu menu={menu} lang={lang} />
-            </div>
-          </DialogPanel>
-        </TransitionChild>
-      </Dialog>
-    </Transition>
+          <MobileMenu menu={menu} lang={lang} />
+        </div>
+      </div>
+      <ModalBackdrop />
+    </MobileMenuAnimations>
   );
 }
 
