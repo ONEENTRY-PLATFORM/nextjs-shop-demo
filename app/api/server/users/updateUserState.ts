@@ -83,3 +83,8 @@ export const updateUserState = async ({
     return true;
   }
 };
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const clearUserState = async (user: any) => {
+  updateUserState({ favorites: [], cart: [], user: user });
+};

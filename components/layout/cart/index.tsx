@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
@@ -116,7 +117,17 @@ const CartPage: FC<{
     if (!isAuth || !user || !user.state?.cart) {
       return;
     }
+    user.state.cart?.forEach((product: IProducts) => {
+      dispatch(
+        addProductToCart({ id: product.id, selected: true, quantity: 1 }),
+      );
+    });
+  }, [isAuth]);
 
+  useEffect(() => {
+    if (!isAuth || !user || !user.state?.cart) {
+      return;
+    }
     async function updateUser(productsInCart: IProducts[], user: IUserEntity) {
       await updateUserState({
         favorites: favoritesIds,
@@ -124,17 +135,8 @@ const CartPage: FC<{
         user: user,
       });
     }
-
-    user.state.cart?.forEach((product: IProducts) => {
-      dispatch(
-        addProductToCart({ id: product.id, selected: true, quantity: 1 }),
-      );
-    });
-
-    updateUser(productsInCart, user);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth]);
+    updateUser(productsInCart, user as IUserEntity);
+  }, [productsInCart]);
 
   // if (isLoading) {
   //   return <Loader />;
