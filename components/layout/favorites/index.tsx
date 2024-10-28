@@ -19,6 +19,7 @@ import type { SimplePageProps } from '@/app/types/global';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
 
 import ProductCard from '../products-grid/components/product-card/ProductCard';
+import FavoriteCard from './FavoriteCard';
 
 const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const { user, isAuth } = useContext(AuthContext);
@@ -52,26 +53,24 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     updateUser(favoritesIds, user as IUserEntity);
   }, [favoritesIds]);
 
-  const { products } = useGetProductsByIds({ items: favoritesIds });
-
-  if (products.length < 1) {
+  if (favoritesIds.length < 1) {
     return <EmptyFavorites lang={lang} dict={dict} />;
   }
 
   return (
-    products.length && (
+    favoritesIds.length && (
       <div className="flex flex-col pb-5 max-md:max-w-full">
         <div className={'relative box-border flex w-full shrink-0 flex-col'}>
           <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
             <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-              {products.map((product: IProductsEntity, index: Key | number) => {
+              {favoritesIds.map((productId: number, index: Key | number) => {
                 return (
-                  <ProductCard
+                  <FavoriteCard
                     key={index}
-                    product={product}
-                    index={index as number}
                     lang={lang}
                     dict={dict}
+                    productId={productId}
+                    index={index as number}
                   />
                 );
               })}

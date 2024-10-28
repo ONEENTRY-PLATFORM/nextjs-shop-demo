@@ -36,3 +36,9 @@ export type CartState = {
   quantity: number;
   id: number;
 };
+
+export type IProducts = {
+  id: number;
+  selected: boolean;
+  quantity: number;
+};

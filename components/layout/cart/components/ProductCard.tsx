@@ -1,20 +1,39 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Image from 'next/image';
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import { type FC, useEffect, useState } from 'react';
 
+import { getProductById } from '@/app/api';
 import { useAppDispatch } from '@/app/store/hooks';
 import { deselectProduct } from '@/app/store/reducers/CartSlice';
+import type { IProducts } from '@/app/types/global';
 import Placeholder from '@/components/shared/Placeholder';
 
 import ProductAnimations from '../animations/ProductAnimations';
 import PriceDisplay from './PriceDisplay';
 
-const ProductCard: React.FC<{
-  product: IProductsEntity;
+const ProductCard: FC<{
+  productData: IProducts;
   selected: boolean;
   lang: string;
-}> = ({ product, selected, lang }) => {
+}> = ({ productData, selected, lang }) => {
   const dispatch = useAppDispatch();
+  const [product, setProduct] = useState<IProductsEntity>();
+
+  async function getProduct() {
+    const { product } = await getProductById(productData.id, lang);
+    return product;
+  }
+
+  useEffect(() => {
+    getProduct().then((res) => {
+      if (res !== undefined) {
+        setProduct(res as IProductsEntity);
+      }
+    });
+  }, []);
 
   if (!product) {
     return;
