@@ -5,6 +5,7 @@
 import { useTransitionRouter } from 'next-transition-router';
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { FC } from 'react';
 import { useContext, useEffect, useMemo, useState } from 'react';
 
@@ -16,6 +17,7 @@ import {
   addProductToCart,
   selectCartItems,
 } from '@/app/store/reducers/CartSlice';
+import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import CartAnimations from '@/components/layout/cart/animations/CartAnimations';
 import EmptyCart from '@/components/layout/cart/components/EmptyCart';
@@ -39,8 +41,13 @@ const CartPage: FC<{
   // const router = useTransitionRouter();
   const dispatch = useAppDispatch();
 
-  // const { user, isAuth } = useContext(AuthContext);
+  const { user, isAuth } = useContext(AuthContext);
   // const [isLoading, setIsLoading] = useState(true);
+
+  const favoritesIds = useAppSelector(
+    (state: { favoritesReducer: { products: number[] } }) =>
+      selectFavoritesItems(state),
+  ) as Array<number>;
 
   const productsInCart = useAppSelector(selectCartItems) as Array<IProducts>;
   const items = productsInCart.map((product) => product.id);
@@ -64,31 +71,18 @@ const CartPage: FC<{
       [],
     );
   }, [productsInCart]);
-  console.log(productsInOrder);
 
-  // create Order
-  // useEffect(() => {
-  //   dispatch(
-  //     createOrder({
-  //       formIdentifier: 'order',
-  //       formData: [],
-  //       products: productsInOrder,
-  //       paymentAccountIdentifier: '',
-  //     }),
-  //   );
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  // add products to order
-  // useEffect(() => {
-  //   if (productsInOrder) {
-  //     dispatch(addProducts(productsInOrder));
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [productsInOrder]);
-
-  // add delivery product to cart
   useEffect(() => {
+    // create Order
+    dispatch(
+      createOrder({
+        formIdentifier: 'order',
+        formData: [],
+        products: productsInOrder,
+        paymentAccountIdentifier: '',
+      }),
+    );
+    // add delivery Data
     if (!deliveryData) {
       return;
     }
@@ -107,28 +101,40 @@ const CartPage: FC<{
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // add products to order
+  useEffect(() => {
+    if (productsInOrder) {
+      dispatch(addProducts(productsInOrder));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [productsInOrder]);
+
+  // updateUserState({ favorites: [], cart: [], user: user });
+
   // update user data
-  // useEffect(() => {
-  //   if (!isAuth || !user?.state?.cart) {
-  //     return;
-  //   }
+  useEffect(() => {
+    if (!isAuth || !user || !user.state?.cart) {
+      return;
+    }
 
-  //   async function updateUser(productsInCart: IProducts[]) {
-  //     await updateUserState({
-  //       cart: productsInCart,
-  //       user: user,
-  //     });
-  //   }
+    async function updateUser(productsInCart: IProducts[], user: IUserEntity) {
+      await updateUserState({
+        favorites: favoritesIds,
+        cart: productsInCart,
+        user: user,
+      });
+    }
 
-  //   user.state.cart?.forEach((product: IProducts) => {
-  //     dispatch(
-  //       addProductToCart({ id: product.id, selected: true, quantity: 1 }),
-  //     );
-  //   });
-  //   updateUser([...user.state.cart, ...productsInCart]);
+    user.state.cart?.forEach((product: IProducts) => {
+      dispatch(
+        addProductToCart({ id: product.id, selected: true, quantity: 1 }),
+      );
+    });
 
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isAuth]);
+    updateUser(productsInCart, user);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
 
   // if (isLoading) {
   //   return <Loader />;
@@ -138,9 +144,9 @@ const CartPage: FC<{
     return <EmptyCart lang={lang} dict={dict} />;
   }
 
-  return (items.map((item) => {
-    return <div>{item}</div>
-  }));
+  return items.map((item) => {
+    return <div key={item}>{item}</div>;
+  });
   // return (
   //   <div className="flex w-full flex-col pb-5 lg:max-w-[730px]">
   //     <CartAnimations className={'mb-4 flex w-full flex-col gap-4'}>

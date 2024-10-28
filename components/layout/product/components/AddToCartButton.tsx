@@ -13,6 +13,7 @@ import {
   addProductToCart,
   selectIsInCart,
 } from '@/app/store/reducers/CartSlice';
+import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 
 import QuantitySelector from './QuantitySelector';
 
@@ -33,6 +34,10 @@ const AddToCartButton: FC<AddToCartProps> = ({
   const { id } = product;
   const inCart = useAppSelector((state) => selectIsInCart(state, product.id));
   const items = useAppSelector((state) => state.cartReducer.products);
+  const favoritesIds = useAppSelector(
+    (state: { favoritesReducer: { products: number[] } }) =>
+      selectFavoritesItems(state),
+  ) as Array<number>;
   const [productInCart, setInCart] = useState(false);
   const { user } = useContext(AuthContext);
 
@@ -54,30 +59,32 @@ const AddToCartButton: FC<AddToCartProps> = ({
     );
   }
 
+  const onAddToCart = async () => {
+    if (user) {
+      const updatedItems = items.some((product) => product.id === id)
+        ? items.map((product) => {
+            return {
+              id: product.id,
+              quantity:
+                product.id === id ? product.quantity + 1 : product.quantity,
+              selected: true,
+            };
+          })
+        : [...items, { id, quantity: 1, selected: true }];
+
+      await updateUserState({
+        favorites: favoritesIds,
+        cart: updatedItems,
+        user: user,
+      });
+    }
+    dispatch(addProductToCart({ id: product.id, selected: true, quantity: 1 }));
+    toast('Product ' + product.localizeInfos.title + ' added to cart!');
+  };
+
   return !productInCart || !inCart ? (
     <button
-      onClick={async () => {
-        if (user) {
-          const updatedItems = items.some((product) => product.id === id)
-            ? items.map((product) => {
-                return {
-                  id: product.id,
-                  quantity:
-                    product.id === id ? product.quantity + 1 : product.quantity,
-                };
-              })
-            : [...items, { id, quantity: 1 }];
-
-          await updateUserState({
-            cart: updatedItems,
-            user: user,
-          });
-        }
-        dispatch(
-          addProductToCart({ id: product.id, selected: true, quantity: 1 }),
-        );
-        toast('Product ' + product.localizeInfos.title + ' added to cart!');
-      }}
+      onClick={async () => onAddToCart()}
       type="button"
       className={className}
     >

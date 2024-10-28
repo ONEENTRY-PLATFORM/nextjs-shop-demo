@@ -8,8 +8,8 @@ export const updateUserState = async ({
   cart,
   user,
 }: {
-  favorites?: number[];
-  cart?: { id: number; quantity: number }[];
+  favorites: number[];
+  cart: { id: number; quantity: number; selected: boolean }[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   user: any;
 }) => {
@@ -65,8 +65,8 @@ export const updateUserState = async ({
     formIdentifier: 'reg',
     formData: [...formData],
     state: {
-      ...(favorites ? { favorites } : { favorites: user.state.favorites }),
-      ...(cart ? { cart } : { cart: user.state.cart }),
+      favorites,
+      cart,
     },
     notificationData: {
       email: email.value,

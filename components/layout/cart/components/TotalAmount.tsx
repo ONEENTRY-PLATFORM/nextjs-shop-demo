@@ -2,6 +2,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 import React, { useEffect, useState } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useAppSelector } from '@/app/store/hooks';
 import { UsePrice } from '@/components/utils';
 

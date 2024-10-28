@@ -1,6 +1,7 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { Key } from 'react';
 import { type FC, useContext, useEffect } from 'react';
 
@@ -8,6 +9,7 @@ import { useGetProductsByIds } from '@/app/api/hooks/useGetProductsByIds';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+import { selectCartItems } from '@/app/store/reducers/CartSlice';
 import {
   addFavorites,
   selectFavoritesItems,
@@ -24,13 +26,15 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   ) as Array<number>;
+  const productsInCart = useAppSelector(selectCartItems);
 
   useEffect(() => {
-    if (!isAuth || !user) {
+    if (!isAuth || !user || !user.state) {
       return;
     }
-    async function updateUser(favoritesIds: number[]) {
+    async function updateUser(favoritesIds: number[], user: IUserEntity) {
       await updateUserState({
+        cart: productsInCart,
         favorites: favoritesIds,
         user: user,
       });
@@ -40,7 +44,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
       dispatch(addFavorites(element));
     });
 
-    updateUser(favoritesIds);
+    updateUser(favoritesIds, user);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
