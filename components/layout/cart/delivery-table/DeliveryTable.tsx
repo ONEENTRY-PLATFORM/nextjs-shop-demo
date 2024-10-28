@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
@@ -13,8 +12,8 @@ import {
   setDeliveryData,
 } from '@/app/store/reducers/CartSlice';
 import { addData } from '@/app/store/reducers/OrderSlice';
-import { UsePrice } from '@/components/utils';
 
+import DeliveryRow from './DeliveryRow';
 import TableRow from './DeliveryTableRow';
 
 const DeliveryTable: FC<{
@@ -23,24 +22,25 @@ const DeliveryTable: FC<{
   dict: IAttributeValues;
 }> = ({ delivery, lang, dict }) => {
   const dispatch = useAppDispatch();
+  const { user } = useContext(AuthContext);
+  const deliveryData = useAppSelector(selectDeliveryData);
+
   const { data } = useGetFormByMarkerQuery({
     marker: 'order',
     lang,
   });
-  const { user } = useContext(AuthContext);
-
-  const attrs = data?.attributes.filter(
-    (attr: IAttributes) => attr.marker !== 'time2',
-  );
-  const deliveryData = useAppSelector(selectDeliveryData);
-  const addressReg =
-    user?.formData.find((el) => el.marker === 'address_reg')?.value || '';
 
   const {
     order_info_date_placeholder,
     order_info_time_placeholder,
     order_info_address_placeholder,
   } = dict;
+
+  const attrs = data?.attributes.filter(
+    (attr: IAttributes) => attr.marker !== 'time2',
+  );
+  const addressReg =
+    user?.formData.find((el) => el.marker === 'address_reg')?.value || '';
 
   // set delivery data onChange
   useEffect(() => {
@@ -84,7 +84,6 @@ const DeliveryTable: FC<{
       <div>
         {attrs?.map((attr: IAttributes, i: Key) => {
           const marker = attr.marker;
-
           if (marker === 'date') {
             return (
               <TableRow
@@ -145,33 +144,7 @@ const DeliveryTable: FC<{
           }
           return;
         })}
-
-        <div className="tr h-[100px] border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
-          <div className="td w-3/12 align-middle">
-            <Image
-              loading="lazy"
-              src="/icons/delivery.svg"
-              alt="delivery"
-              width={125}
-              height={107}
-              className="aspect-[1.16] w-[125px] max-w-full shrink-0 p-4 max-sm:p-2"
-            />
-          </div>
-          <div className="td w-8/12 px-5 align-middle">
-            <div className="mt-2 flex flex-col self-start">
-              <div className="mb-4 text-base max-sm:mb-2">
-                {delivery?.localizeInfos?.title}
-              </div>
-              <div className="mb-2 text-xl font-bold leading-8">
-                {UsePrice({
-                  amount: delivery?.price,
-                  lang,
-                })}
-              </div>
-            </div>
-          </div>
-          <div className="td w-1/12 pl-5 align-middle" />
-        </div>
+        <DeliveryRow lang={lang} delivery={delivery} />
       </div>
     </div>
   );

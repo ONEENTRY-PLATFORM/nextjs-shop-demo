@@ -4,8 +4,6 @@ import type { FC } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
-import CartPage from '@/components/layout/cart';
-// import FavoritesPage from '@/components/layout/favorites';
 import PaymentPage from '@/components/layout/payment';
 import ProfilePage from '@/components/layout/profile';
 import AboutPage from '@/components/pages/AboutPage';
@@ -61,19 +59,9 @@ const Page: FC<{
     },
     {
       templateType: templateIdentifier,
-      name: 'cart',
-      component: <CartPage page={page} lang={lang} dict={dict} />,
-    },
-    {
-      templateType: templateIdentifier,
       name: 'payment',
       component: <PaymentPage page={page} lang={lang} dict={dict} />,
     },
-    // {
-    //   templateType: templateIdentifier,
-    //   name: 'favorites',
-    //   component: <FavoritesPage page={page} lang={lang} dict={dict} />,
-    // },
     {
       templateType: templateIdentifier,
       name: 'about_us',

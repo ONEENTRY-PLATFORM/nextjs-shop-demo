@@ -15,7 +15,7 @@ import MobileMenu from './components/MobileMenu';
 function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { open, setOpen } = useContext(OpenDrawerContext);
+  const { open, setOpen, component } = useContext(OpenDrawerContext);
 
   useEffect(() => {
     const handleResize = () => {
@@ -33,7 +33,7 @@ function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, searchParams]);
 
-  if (!open) {
+  if (!open || component !== 'MobileMenu') {
     return;
   }
 

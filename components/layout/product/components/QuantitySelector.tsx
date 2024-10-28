@@ -23,22 +23,25 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   height,
   className,
 }) => {
-  const { id } = product;
+  const { id, attributeValues } = product;
   const [qty, setQty] = useState(0);
   const dispatch = useAppDispatch();
-  const { quantity } = useAppSelector((state) =>
+  const data = useAppSelector((state) =>
     selectCartItemWithIdLength(state, id),
-  ) as unknown as IProductsEntity & { selected: boolean } & {
-    quantity: number;
-  };
+  ) as { id: number; selected: boolean; quantity: number };
+  const quantity = data?.quantity || 0;
 
   useEffect(() => {
+    if (!quantity) {
+      return;
+    }
     setQty(quantity);
   }, [quantity]);
 
-  if (qty < 1) {
+  if (qty < 1 || !quantity) {
     return;
   }
+  const units = attributeValues?.units_product?.value || 0;
 
   return (
     <div
@@ -60,11 +63,12 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
             setProductQty({
               id: id,
               quantity: Number(e.target.value),
+              units: units,
             }),
           );
         }}
       />
-      <IncreaseButton id={id} qty={qty} />
+      <IncreaseButton id={id} qty={qty} units={units} />
     </div>
   );
 };

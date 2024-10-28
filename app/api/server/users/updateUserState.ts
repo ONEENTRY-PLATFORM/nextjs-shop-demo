@@ -65,9 +65,8 @@ export const updateUserState = async ({
     formIdentifier: 'reg',
     formData: [...formData],
     state: {
-      ...(favorites && { favorites }),
-      ...(cart && { cart }),
-      version: Date.now(),
+      ...(favorites ? { favorites } : { favorites: user.state.favorites }),
+      ...(cart ? { cart } : { cart: user.state.cart }),
     },
     notificationData: {
       email: email.value,

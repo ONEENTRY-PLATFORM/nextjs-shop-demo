@@ -28,7 +28,9 @@ const ApplyButton: FC<{ product: any; dict: IAttributeValues }> = ({
   return !productInCart || !inCart ? (
     <button
       onClick={() => {
-        dispatch(addProductToCart({ ...product, selected: true, quantity: 1 }));
+        dispatch(
+          addProductToCart({ id: product.id, selected: true, quantity: 1 }),
+        );
       }}
       className="btn btn-md btn-o btn-o-primary mt-auto text-sm font-bold"
     >

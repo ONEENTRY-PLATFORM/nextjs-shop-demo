@@ -24,9 +24,7 @@ const ProductAnimations = ({
 }: {
   children: ReactNode;
   className: string;
-  product: IProductsEntity & {
-    selected: boolean;
-  };
+  product: IProductsEntity;
 }) => {
   const dispatch = useAppDispatch();
   const ref = useRef(null);

@@ -39,7 +39,8 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     user.state.favorites.forEach((element: number) => {
       dispatch(addFavorites(element));
     });
-    updateUser([...user.state.favorites, ...favoritesIds]);
+
+    updateUser(favoritesIds);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);

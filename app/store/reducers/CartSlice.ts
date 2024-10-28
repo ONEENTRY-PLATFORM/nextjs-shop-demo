@@ -2,10 +2,15 @@
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+
+interface IProducts {
+  id: number;
+  selected: boolean;
+  quantity: number;
+}
 
 type InitialStateType = {
-  products: (IProductsEntity & { selected: boolean } & { quantity: number })[];
+  products: IProducts[];
   currency?: string;
   deliveryData: {
     date: number;
@@ -31,9 +36,11 @@ export const cartSlice = createSlice({
   reducers: {
     addProductToCart(
       state,
-      action: PayloadAction<
-        IProductsEntity & { selected: boolean } & { quantity: number }
-      >,
+      action: PayloadAction<{
+        id: number;
+        selected: boolean;
+        quantity: number;
+      }>,
     ) {
       const index = state.products.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
@@ -57,24 +64,24 @@ export const cartSlice = createSlice({
         state.products.push(action.payload);
       }
 
-      if (!state?.currency) {
-        state.currency = action.payload?.attributeValues?.currency?.value;
-      }
+      // if (!state?.currency) {
+      //   state.currency = action.payload?.attributeValues?.currency?.value;
+      // }
     },
     increaseProductQty(
       state,
-      action: PayloadAction<{ id: number; quantity: number }>,
+      action: PayloadAction<{ units: number; id: number; quantity: number }>,
     ) {
       const index = state.products.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
       const qty = state.products[index].quantity + action.payload.quantity;
-      const units = state.products[index].attributeValues?.units_product.value;
 
       state.products[index] = {
         ...state.products[index],
         selected: state.products[index].selected,
-        quantity: qty > units ? Number(units) : qty,
+        quantity:
+          qty > action.payload.units ? Number(action.payload.units) : qty,
       };
     },
     decreaseProductQty(
@@ -93,22 +100,28 @@ export const cartSlice = createSlice({
     },
     setProductQty(
       state,
-      action: PayloadAction<{ id: number; quantity: number }>,
+      action: PayloadAction<{ units: number; id: number; quantity: number }>,
     ) {
       const index = state.products.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
       const qty = action.payload.quantity;
-      const units = state.products[index].attributeValues?.units_product.value;
+
       state.products[index] = {
         ...state.products[index],
         selected: state.products[index].selected,
-        quantity: qty <= 0 ? 0 : qty > units ? units : qty,
+        quantity:
+          qty <= 0
+            ? 0
+            : qty > action.payload.units
+              ? action.payload.units
+              : qty,
       };
     },
     removeProduct(state, action: PayloadAction<number>) {
       state.products = state.products.filter(
-        (product: IProductsEntity) => product.id !== action.payload,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (product: any) => product.id !== action.payload,
       );
     },
     deselectProduct(state, action: PayloadAction<number>) {
@@ -163,7 +176,7 @@ export const selectIsInCart = (
 };
 
 export const selectCartItems = (state: {
-  cartReducer: { products: IProductsEntity[] };
+  cartReducer: { products: IProducts[] };
 }) => state.cartReducer.products;
 
 export const getTransition = (state: {
@@ -186,7 +199,7 @@ export const selectDeliveryData = (state: {
 export const selectCartItemWithIdLength = (
   state: {
     cartReducer: {
-      products: IProductsEntity[];
+      products: IProducts[];
     };
   },
   id: number,

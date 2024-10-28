@@ -34,7 +34,7 @@ const RepeatOrderButton: FC<{
       }
       dispatch(
         addProductToCart({
-          ...product,
+          id: product.id,
           selected: true,
           quantity: p.quantity || 0,
         }),

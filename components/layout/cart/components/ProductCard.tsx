@@ -10,16 +10,17 @@ import ProductAnimations from '../animations/ProductAnimations';
 import PriceDisplay from './PriceDisplay';
 
 const ProductCard: React.FC<{
-  product: IProductsEntity & { selected: boolean };
+  product: IProductsEntity;
+  selected: boolean;
   lang: string;
-}> = ({ product, lang }) => {
+}> = ({ product, selected, lang }) => {
   const dispatch = useAppDispatch();
 
   if (!product) {
     return;
   }
 
-  const { id, attributeValues, localizeInfos, selected } = product;
+  const { id, attributeValues, localizeInfos } = product;
   const imgSrc = attributeValues.pic?.value.downloadLink;
   const title = localizeInfos?.title;
 
