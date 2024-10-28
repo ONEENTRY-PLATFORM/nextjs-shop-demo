@@ -31,3 +31,8 @@ declare type LoaderProps = {
 declare type MetadataParams = {
   params: { handle: string; lang: string };
 };
+
+export type CartState = {
+  quantity: number;
+  id: number;
+};
