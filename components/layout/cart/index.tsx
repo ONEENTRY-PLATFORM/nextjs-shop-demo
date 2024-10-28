@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
@@ -35,32 +36,38 @@ const CartPage: FC<{
   dict: any;
   deliveryData: IProductsEntity;
 }> = ({ lang, dict, deliveryData }) => {
-  const router = useTransitionRouter();
+  // const router = useTransitionRouter();
   const dispatch = useAppDispatch();
 
-  const { user, isAuth } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(true);
+  // const { user, isAuth } = useContext(AuthContext);
+  // const [isLoading, setIsLoading] = useState(true);
 
   const productsInCart = useAppSelector(selectCartItems) as Array<IProducts>;
+  const items = productsInCart.map((product) => product.id);
 
-  console.log(productsInCart);
+  // const { products, isLoading } = useGetProductsByIds({
+  //   items: items,
+  // });
 
-  // const productsInOrder = useMemo(() => {
-  //   return productsInCart.reduce((results: Array<IOrderProductData>, item) => {
-  //     if (item.selected) {
-  //       results.push({
-  //         productId: item.id,
-  //         quantity: item.quantity,
-  //         selected: item.selected,
-  //       });
-  //     }
-  //     return results;
-  //   }, []);
-  // }, [productsInCart]);
+  const productsInOrder = useMemo(() => {
+    return productsInCart.reduce(
+      (results: Array<IOrderProductData & { selected: boolean }>, item) => {
+        if (item.selected) {
+          results.push({
+            productId: item.id,
+            quantity: item.quantity,
+            selected: item.selected,
+          });
+        }
+        return results;
+      },
+      [],
+    );
+  }, [productsInCart]);
+  console.log(productsInOrder);
 
   // create Order
   // useEffect(() => {
-  //   setIsLoading(false);
   //   dispatch(
   //     createOrder({
   //       formIdentifier: 'order',
@@ -81,24 +88,24 @@ const CartPage: FC<{
   // }, [productsInOrder]);
 
   // add delivery product to cart
-  // useEffect(() => {
-  //   if (!deliveryData) {
-  //     return;
-  //   }
-  //   const index = productsInCart.findIndex(
-  //     (p: { id: number }) => p.id === deliveryData?.id,
-  //   );
-  //   if (index === -1) {
-  //     dispatch(
-  //       addProductToCart({
-  //         id: deliveryData.id,
-  //         selected: true,
-  //         quantity: 1,
-  //       }),
-  //     );
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [deliveryData]);
+  useEffect(() => {
+    if (!deliveryData) {
+      return;
+    }
+    const index = productsInCart.findIndex(
+      (p: { id: number }) => p.id === deliveryData?.id,
+    );
+    if (index === -1) {
+      dispatch(
+        addProductToCart({
+          id: deliveryData.id,
+          selected: true,
+          quantity: 1,
+        }),
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // update user data
   // useEffect(() => {
@@ -123,12 +130,6 @@ const CartPage: FC<{
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [isAuth]);
 
-  // const items = productsInCart.map((product) => product.id);
-
-  // const { products } = useGetProductsByIds({
-  //   items: items,
-  // });
-
   // if (isLoading) {
   //   return <Loader />;
   // }
@@ -137,6 +138,9 @@ const CartPage: FC<{
     return <EmptyCart lang={lang} dict={dict} />;
   }
 
+  return (items.map((item) => {
+    return <div>{item}</div>
+  }));
   // return (
   //   <div className="flex w-full flex-col pb-5 lg:max-w-[730px]">
   //     <CartAnimations className={'mb-4 flex w-full flex-col gap-4'}>
@@ -180,8 +184,6 @@ const CartPage: FC<{
   //     </form>
   //   </div>
   // );
-
-  return null;
 };
 
 export default CartPage;

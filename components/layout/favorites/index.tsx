@@ -47,28 +47,32 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
 
   const { products } = useGetProductsByIds({ items: favoritesIds });
 
-  return products.length ? (
-    <div className="flex flex-col pb-5 max-md:max-w-full">
-      <div className={'relative box-border flex w-full shrink-0 flex-col'}>
-        <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
-          <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-            {products.map((product: IProductsEntity, index: Key | number) => {
-              return (
-                <ProductCard
-                  key={index}
-                  product={product}
-                  index={index as number}
-                  lang={lang}
-                  dict={dict}
-                />
-              );
-            })}
-          </div>
-        </section>
+  if (products.length < 1) {
+    return <EmptyFavorites lang={lang} dict={dict} />;
+  }
+
+  return (
+    products.length && (
+      <div className="flex flex-col pb-5 max-md:max-w-full">
+        <div className={'relative box-border flex w-full shrink-0 flex-col'}>
+          <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
+            <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
+              {products.map((product: IProductsEntity, index: Key | number) => {
+                return (
+                  <ProductCard
+                    key={index}
+                    product={product}
+                    index={index as number}
+                    lang={lang}
+                    dict={dict}
+                  />
+                );
+              })}
+            </div>
+          </section>
+        </div>
       </div>
-    </div>
-  ) : (
-    <EmptyFavorites lang={lang} dict={dict} />
+    )
   );
 };
 

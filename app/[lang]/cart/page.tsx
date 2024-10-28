@@ -11,7 +11,7 @@ import type { Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 
-const Page: FC<{
+const CartPageLayout: FC<{
   params: { page: string; lang: string };
 }> = async ({ params: { lang } }) => {
   const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
@@ -35,4 +35,4 @@ const Page: FC<{
   );
 };
 
-export default Page;
+export default CartPageLayout;

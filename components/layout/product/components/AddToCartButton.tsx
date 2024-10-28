@@ -35,7 +35,6 @@ const AddToCartButton: FC<AddToCartProps> = ({
   const items = useAppSelector((state) => state.cartReducer.products);
   const [productInCart, setInCart] = useState(false);
   const { user } = useContext(AuthContext);
-  console.log(user);
 
   const { out_of_stock_button, add_to_cart_button } = dict;
 

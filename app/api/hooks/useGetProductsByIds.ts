@@ -8,8 +8,10 @@ export const useGetProductsByIds = ({
   items,
 }: {
   items: number[];
-}): { products: IProductsEntity[] } => {
+}): { products: IProductsEntity[]; isLoading: boolean } => {
   const [products, setProducts] = useState<IProductsEntity[]>([]);
+  const [isLoading, setLoading] = useState<boolean>(true);
+
   const getProductsByIds = async (ids: number[]) => {
     return await Promise.all(
       ids.map(async (id: number) => {
@@ -26,15 +28,18 @@ export const useGetProductsByIds = ({
       ),
     );
   };
+
   useEffect(() => {
     if (items.length > 0) {
       getProductsByIds(items.map((item) => item)).then((res) => {
         setProducts(res);
+        setLoading(false);
       });
     }
   }, [items]);
 
   return {
     products,
+    isLoading,
   };
 };
