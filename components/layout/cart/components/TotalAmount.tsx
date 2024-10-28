@@ -1,18 +1,15 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { FC } from 'react';
 import React, { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { UsePrice } from '@/components/utils';
 
-const TotalAmount = ({
-  lang,
-  dict,
-  className,
-}: {
+const TotalAmount: FC<{
   lang: string;
   dict: IAttributeValues;
   className: string;
-}) => {
+}> = ({ lang, dict, className }) => {
   const [cartTotal, setCartTotal] = useState(0);
   const total = useAppSelector((state) => {
     return state.cartReducer.products.reduce((total, item) => {

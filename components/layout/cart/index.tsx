@@ -44,6 +44,7 @@ const CartPage: FC<SimplePageProps> = ({ lang, dict }) => {
     }, []);
   }, [productsInCart]);
 
+  // create Order
   useEffect(() => {
     setIsLoading(false);
     dispatch(

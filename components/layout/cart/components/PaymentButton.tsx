@@ -9,6 +9,7 @@ const PaymentButton: FC<{ className?: string; text: string }> = ({
       type="submit"
       onClick={() => {}}
       className={'btn btn-lg btn-primary mt-9 self-center px-16 ' + className}
+      title={text}
     >
       {text}
     </button>
