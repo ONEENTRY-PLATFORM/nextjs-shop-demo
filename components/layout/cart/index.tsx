@@ -38,6 +38,7 @@ const CartPage: FC<{
 
   const { user, isAuth } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
+  const [total, setTotal] = useState(0);
 
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
@@ -141,6 +142,8 @@ const CartPage: FC<{
               productData={product as IProducts}
               selected={productsInCart[i]?.selected}
               lang={lang}
+              total={total}
+              setTotal={setTotal}
             />
           );
         })}

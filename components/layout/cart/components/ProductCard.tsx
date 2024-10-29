@@ -7,7 +7,10 @@ import { type FC, useEffect, useState } from 'react';
 
 import { getProductById } from '@/app/api';
 import { useAppDispatch } from '@/app/store/hooks';
-import { deselectProduct } from '@/app/store/reducers/CartSlice';
+import {
+  deselectProduct,
+  setCartProducts,
+} from '@/app/store/reducers/CartSlice';
 import type { IProducts } from '@/app/types/global';
 import Placeholder from '@/components/shared/Placeholder';
 
@@ -19,6 +22,9 @@ const ProductCard: FC<{
   selected: boolean;
   lang: string;
   index: number;
+  total: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setTotal: any;
 }> = ({ productData, selected, lang, index }) => {
   const dispatch = useAppDispatch();
   const [product, setProduct] = useState<IProductsEntity>();
@@ -35,6 +41,12 @@ const ProductCard: FC<{
       }
     });
   }, []);
+
+  useEffect(() => {
+    if (product) {
+      dispatch(setCartProducts(product));
+    }
+  }, [product]);
 
   if (!product) {
     return;

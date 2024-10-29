@@ -2,15 +2,13 @@
 
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-interface IProducts {
-  id: number;
-  selected: boolean;
-  quantity: number;
-}
+import type { IProducts } from '@/app/types/global';
 
 type InitialStateType = {
-  products: IProducts[];
+  products: IProductsEntity[];
+  productsData: IProducts[];
   currency?: string;
   deliveryData: {
     date: number;
@@ -18,16 +16,19 @@ type InitialStateType = {
     address: string;
   };
   transitionId: number;
+  total: number;
 };
 
 const initialState: InitialStateType = {
   products: [],
+  productsData: [],
   deliveryData: {
     date: new Date().getTime(),
     time: '',
     address: '',
   },
   transitionId: 0,
+  total: 0,
 };
 
 export const cartSlice = createSlice({
@@ -42,13 +43,12 @@ export const cartSlice = createSlice({
         quantity: number;
       }>,
     ) {
-      const index = state.products.findIndex(
+      const index = state.productsData.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
       if (index === -1) {
-        state.products.push(action.payload);
+        state.productsData.push(action.payload);
       }
-
       // if (!state?.currency) {
       //   state.currency = action.payload?.attributeValues?.currency?.value;
       // }
@@ -57,14 +57,14 @@ export const cartSlice = createSlice({
       state,
       action: PayloadAction<{ units: number; id: number; quantity: number }>,
     ) {
-      const index = state.products.findIndex(
+      const index = state.productsData.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
-      const qty = state.products[index].quantity + action.payload.quantity;
+      const qty = state.productsData[index].quantity + action.payload.quantity;
 
-      state.products[index] = {
-        ...state.products[index],
-        selected: state.products[index].selected,
+      state.productsData[index] = {
+        ...state.productsData[index],
+        selected: state.productsData[index].selected,
         quantity:
           qty > action.payload.units ? Number(action.payload.units) : qty,
       };
@@ -73,13 +73,13 @@ export const cartSlice = createSlice({
       state,
       action: PayloadAction<{ id: number; quantity: number }>,
     ) {
-      const index = state.products.findIndex(
+      const index = state.productsData.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
-      const qty = state.products[index].quantity - action.payload.quantity;
-      state.products[index] = {
-        ...state.products[index],
-        selected: state.products[index].selected,
+      const qty = state.productsData[index].quantity - action.payload.quantity;
+      state.productsData[index] = {
+        ...state.productsData[index],
+        selected: state.productsData[index].selected,
         quantity: qty <= 0 ? 1 : qty,
       };
     },
@@ -87,14 +87,14 @@ export const cartSlice = createSlice({
       state,
       action: PayloadAction<{ units: number; id: number; quantity: number }>,
     ) {
-      const index = state.products.findIndex(
+      const index = state.productsData.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
       const qty = action.payload.quantity;
 
-      state.products[index] = {
-        ...state.products[index],
-        selected: state.products[index].selected,
+      state.productsData[index] = {
+        ...state.productsData[index],
+        selected: state.productsData[index].selected,
         quantity:
           qty <= 0
             ? 0
@@ -104,20 +104,20 @@ export const cartSlice = createSlice({
       };
     },
     removeProduct(state, action: PayloadAction<number>) {
-      state.products = state.products.filter(
+      state.productsData = state.productsData.filter(
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (product: any) => product.id !== action.payload,
       );
     },
     deselectProduct(state, action: PayloadAction<number>) {
-      state.products.map((product) => {
+      state.productsData.map((product) => {
         if (product.id === action.payload) {
           product.selected = !product.selected;
         }
       });
     },
     removeAllProducts(state) {
-      state.products = initialState.products;
+      state.productsData = initialState.productsData;
     },
     setDeliveryData(
       state,
@@ -132,6 +132,15 @@ export const cartSlice = createSlice({
     setCartTransition(state, action: PayloadAction<{ productId: number }>) {
       state.transitionId = action.payload.productId;
     },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setCartProducts(state, action: PayloadAction<IProductsEntity>) {
+      const index = state.products.findIndex(
+        (product: { id: number }) => product.id === action.payload.id,
+      );
+      if (index === -1) {
+        state.products.push(action.payload);
+      }
+    },
   },
 });
 
@@ -145,13 +154,14 @@ export const {
   setProductQty,
   setCartTransition,
   removeAllProducts,
+  setCartProducts,
 } = cartSlice.actions;
 
 export const selectIsInCart = (
-  state: { cartReducer: { products: { id: number }[] } },
+  state: { cartReducer: { productsData: { id: number }[] } },
   id: number,
 ): boolean => {
-  const added = state.cartReducer.products.findIndex(
+  const added = state.cartReducer.productsData.findIndex(
     (product: { id: number }) => product.id === id,
   );
   if (added === -1) {
@@ -161,8 +171,8 @@ export const selectIsInCart = (
 };
 
 export const selectCartItems = (state: {
-  cartReducer: { products: IProducts[] };
-}) => state.cartReducer.products;
+  cartReducer: { productsData: IProducts[] };
+}) => state.cartReducer.productsData;
 
 export const getTransition = (state: {
   cartReducer: {
@@ -184,10 +194,17 @@ export const selectDeliveryData = (state: {
 export const selectCartItemWithIdLength = (
   state: {
     cartReducer: {
-      products: IProducts[];
+      productsData: IProducts[];
     };
   },
   id: number,
-) => state.cartReducer.products.find((item: { id: number }) => item.id === id);
+) =>
+  state.cartReducer.productsData.find((item: { id: number }) => item.id === id);
+
+export const selectCartTotal = (state: {
+  cartReducer: {
+    total: number;
+  };
+}) => state.cartReducer.total;
 
 export default cartSlice.reducer;

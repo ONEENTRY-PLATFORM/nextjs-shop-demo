@@ -1,9 +1,9 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useAppSelector } from '@/app/store/hooks';
+import { selectCartTotal } from '@/app/store/reducers/CartSlice';
 import { UsePrice } from '@/components/utils';
 
 const TotalAmount: FC<{
@@ -12,16 +12,7 @@ const TotalAmount: FC<{
   className: string;
 }> = ({ lang, dict, className }) => {
   const [cartTotal, setCartTotal] = useState(0);
-  // const total = useAppSelector((state) => {
-  //   return state.cartReducer.products.reduce((total, item) => {
-  //     if (item.selected) {
-  //       total +=
-  //         (item.attributeValues.sale?.value || item.price) * item.quantity;
-  //     }
-  //     return total;
-  //   }, 0);
-  // });
-  const total = 0;
+  const total = useAppSelector((state) => selectCartTotal(state));
 
   useEffect(() => {
     if (!total) {

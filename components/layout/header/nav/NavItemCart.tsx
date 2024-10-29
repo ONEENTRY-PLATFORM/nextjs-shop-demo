@@ -12,17 +12,17 @@ const NavItemCart: FC<{ item: any; lang: string }> = ({ item, lang }) => {
   const [count, setCount] = useState(0);
 
   const cartCount = useAppSelector((state) => {
-    if (state.cartReducer.products.length < 1) {
+    if (state.cartReducer.productsData.length < 1) {
       return 0;
     }
-    return state.cartReducer.products
-      .map((item) => {
+    return state.cartReducer.productsData
+      .map((item: { id: number; quantity: number }) => {
         if (item.id === 83) {
           return 0;
         }
         return item.quantity;
       })
-      .reduce((total, num) => {
+      .reduce((total: number, num: number) => {
         return total + num;
       });
   });
