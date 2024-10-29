@@ -3,10 +3,15 @@ import type { FC } from 'react';
 
 import { UsePrice } from '@/components/utils';
 
+import TableRowAnimations from '../animations/TableRowAnimations';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const DeliveryRow: FC<{ lang: any; delivery: any }> = ({ lang, delivery }) => {
   return (
-    <div className="tr h-[100px] border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
+    <TableRowAnimations
+      className="tr h-[100px] border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
+      index={10}
+    >
       <div className="td w-3/12 align-middle">
         <Image
           loading="lazy"
@@ -31,7 +36,7 @@ const DeliveryRow: FC<{ lang: any; delivery: any }> = ({ lang, delivery }) => {
         </div>
       </div>
       <div className="td w-1/12 pl-5 align-middle" />
-    </div>
+    </TableRowAnimations>
   );
 };
 

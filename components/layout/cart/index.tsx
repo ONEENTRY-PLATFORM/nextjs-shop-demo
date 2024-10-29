@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
@@ -10,6 +9,7 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { FC } from 'react';
 import { useContext, useEffect, useMemo, useState } from 'react';
 
+import FadeTransition from '@/app/animations/FadeTransition';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
@@ -37,7 +37,7 @@ const CartPage: FC<{
   const dispatch = useAppDispatch();
 
   const { user, isAuth } = useContext(AuthContext);
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
@@ -45,11 +45,6 @@ const CartPage: FC<{
   ) as Array<number>;
 
   const productsInCart = useAppSelector(selectCartItems) as IProducts[];
-  const items = productsInCart.map((product) => product.id);
-
-  // const { products, isLoading } = useGetProductsByIds({
-  //   items: items,
-  // });
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce(
@@ -90,9 +85,18 @@ const CartPage: FC<{
         quantity: 1,
       }),
     );
+    setIsLoading(false);
   }, []);
 
-  // update cart from user data
+  // update cart from user data / update user data from cart
+  async function updateUser(productsInCart: IProducts[], user: IUserEntity) {
+    await updateUserState({
+      favorites: favoritesIds,
+      cart: productsInCart,
+      user: user,
+    });
+  }
+
   useEffect(() => {
     if (!isAuth || !user || !user.state?.cart) {
       return;
@@ -111,31 +115,20 @@ const CartPage: FC<{
     }
   }, [productsInOrder]);
 
-  // update user data from cart
-  // useEffect(() => {
-  //   if (!isAuth || !user || !user.state?.cart) {
-  //     return;
-  //   }
-  //   async function updateUser(productsInCart: IProducts[], user: IUserEntity) {
-  //     await updateUserState({
-  //       favorites: favoritesIds,
-  //       cart: productsInCart,
-  //       user: user,
-  //     });
-  //   }
-  //   updateUser(productsInCart, user as IUserEntity);
-  // }, [productsInCart]);
+  useEffect(() => {
+    updateUser(productsInCart, user as IUserEntity);
+  }, [productsInCart]);
 
-  // if (isLoading) {
-  //   return <Loader />;
-  // }
+  if (isLoading) {
+    return <Loader />;
+  }
 
   if (productsInCart.length < 2) {
     return <EmptyCart lang={lang} dict={dict} />;
   }
 
   return (
-    <div className="flex w-full flex-col pb-5 lg:max-w-[730px]">
+    <FadeTransition className="flex w-full flex-col pb-5 lg:max-w-[730px]">
       <CartAnimations className={'mb-4 flex w-full flex-col gap-4'}>
         {productsInCart.map((product: IProducts, i: number) => {
           if (product.id === 83) {
@@ -176,7 +169,7 @@ const CartPage: FC<{
           />
         </div>
       </form>
-    </div>
+    </FadeTransition>
   );
 };
 

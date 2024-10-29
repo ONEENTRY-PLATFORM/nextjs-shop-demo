@@ -17,7 +17,7 @@ const NavItemCart: FC<{ item: any; lang: string }> = ({ item, lang }) => {
     }
     return state.cartReducer.products
       .map((item) => {
-        if (item.attributeSetIdentifier === 'service_product') {
+        if (item.id === 83) {
           return 0;
         }
         return item.quantity;

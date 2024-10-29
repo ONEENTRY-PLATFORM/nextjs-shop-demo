@@ -5,7 +5,6 @@ import type { FC, Key } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
-import Loader from '@/components/shared/Loader';
 
 import OrderAnimations from '../animations/OrderAnimations';
 import CancelOrderButton from './CancelOrderButton';
@@ -29,11 +28,10 @@ const OrderPage: FC<{
   });
 
   if (!data || !settings) {
-    return <Loader />;
+    return;
   }
 
   const { products, statusIdentifier, paymentAccountIdentifier } = data;
-
   const { go_to_pay_title, repeat_order_title, cancel_order_title } = settings;
 
   return (

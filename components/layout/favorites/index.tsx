@@ -5,6 +5,7 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { Key } from 'react';
 import { type FC, useContext, useEffect } from 'react';
 
+import FadeTransition from '@/app/animations/FadeTransition';
 import { useGetProductsByIds } from '@/app/api/hooks/useGetProductsByIds';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -18,6 +19,7 @@ import type { SimplePageProps } from '@/app/types/global';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
 
 import ProductCard from '../products-grid/components/product-card/ProductCard';
+import ProductsGridLoader from '../products-grid/components/ProductsGridLoader';
 
 const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const { user, isAuth } = useContext(AuthContext);
@@ -27,29 +29,36 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
       selectFavoritesItems(state),
   ) as Array<number>;
   const productsInCart = useAppSelector(selectCartItems);
+  const { products, isLoading } = useGetProductsByIds({ items: favoritesIds });
+
+  // update user data from cart
+  async function updateUser(favoritesIds: number[], user: IUserEntity) {
+    await updateUserState({
+      cart: productsInCart,
+      favorites: favoritesIds,
+      user: user,
+    });
+  }
 
   useEffect(() => {
     if (!isAuth || !user || !user.state) {
       return;
     }
-    async function updateUser(favoritesIds: number[], user: IUserEntity) {
-      await updateUserState({
-        cart: productsInCart,
-        favorites: favoritesIds,
-        user: user,
-      });
-    }
-
     user.state.favorites.forEach((element: number) => {
       dispatch(addFavorites(element));
     });
-
     updateUser(favoritesIds, user);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
 
-  const { products } = useGetProductsByIds({ items: favoritesIds });
+  useEffect(() => {
+    updateUser(favoritesIds, user as IUserEntity);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [favoritesIds]);
+
+  if (isLoading) {
+    return <ProductsGridLoader />;
+  }
 
   if (products.length < 1) {
     return <EmptyFavorites lang={lang} dict={dict} />;
@@ -57,7 +66,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
 
   return (
     products.length && (
-      <div className="flex flex-col pb-5 max-md:max-w-full">
+      <FadeTransition className="flex flex-col pb-5 max-md:max-w-full">
         <div className={'relative box-border flex w-full shrink-0 flex-col'}>
           <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
             <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
@@ -75,7 +84,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
             </div>
           </section>
         </div>
-      </div>
+      </FadeTransition>
     )
   );
 };

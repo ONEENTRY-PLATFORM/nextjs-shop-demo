@@ -1,10 +1,6 @@
-import type { IAttributes } from 'oneentry/dist/base/utils';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import React, { useContext, useEffect } from 'react';
 
-import { useGetFormByMarkerQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
@@ -13,12 +9,12 @@ import {
 } from '@/app/store/reducers/CartSlice';
 import { addData } from '@/app/store/reducers/OrderSlice';
 
-const DeliveryTable: FC<{ dict: IAttributeValues }> = ({ dict }) => {
+import TableRowAnimations from '../animations/TableRowAnimations';
+
+const DeliveryTable: FC<{ placeholder: string }> = ({ placeholder }) => {
   const dispatch = useAppDispatch();
   const { user } = useContext(AuthContext);
   const deliveryData = useAppSelector(selectDeliveryData);
-
-  const { order_info_address_placeholder } = dict;
 
   const addressReg =
     user?.formData.find((el) => el.marker === 'address_reg')?.value || '';
@@ -38,11 +34,12 @@ const DeliveryTable: FC<{ dict: IAttributeValues }> = ({ dict }) => {
   }, [deliveryData]);
 
   return (
-    <div className="tr h-[50px] border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
+    <TableRowAnimations
+      className="tr h-[50px] border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
+      index={12}
+    >
       <div className="td w-3/12 items-center self-stretch text-sm">
-        <label htmlFor={'address'}>
-          {order_info_address_placeholder?.value}
-        </label>
+        <label htmlFor={'address'}>{placeholder}</label>
       </div>
       <div className="td w-8/12 px-5 text-base">
         <input
@@ -51,7 +48,7 @@ const DeliveryTable: FC<{ dict: IAttributeValues }> = ({ dict }) => {
           value={deliveryData.address || addressReg || ''}
           id="address"
           name="address"
-          placeholder={order_info_address_placeholder?.value}
+          placeholder={placeholder}
           onChange={(e) => {
             dispatch(
               setDeliveryData({
@@ -64,7 +61,7 @@ const DeliveryTable: FC<{ dict: IAttributeValues }> = ({ dict }) => {
         />
       </div>
       <div className="td w-1/12 pl-5 align-middle"></div>
-    </div>
+    </TableRowAnimations>
   );
 };
 

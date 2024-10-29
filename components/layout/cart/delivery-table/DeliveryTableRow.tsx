@@ -5,6 +5,8 @@ import React, { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
+import TableRowAnimations from '../animations/TableRowAnimations';
+
 interface TableRowProps {
   field: IAttributes;
   label: string;
@@ -23,7 +25,10 @@ const DeliveryTableRow: FC<TableRowProps> = ({
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   return (
-    <div className="tr h-[50px] border-t border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap">
+    <TableRowAnimations
+      className="tr h-[50px] border-t border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
+      index={14}
+    >
       <div className="td w-3/12 align-middle text-sm">
         <label className="my-auto h-5" htmlFor={'label-' + placeholder}>
           {label}
@@ -60,7 +65,7 @@ const DeliveryTableRow: FC<TableRowProps> = ({
           />
         )}
       </div>
-    </div>
+    </TableRowAnimations>
   );
 };
 

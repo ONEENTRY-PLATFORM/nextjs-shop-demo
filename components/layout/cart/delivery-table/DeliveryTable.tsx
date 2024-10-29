@@ -7,14 +7,13 @@ import React, { useContext, useEffect } from 'react';
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import {
-  selectDeliveryData,
-  setDeliveryData,
-} from '@/app/store/reducers/CartSlice';
+import { selectDeliveryData } from '@/app/store/reducers/CartSlice';
 import { addData } from '@/app/store/reducers/OrderSlice';
 
+import TableRowAnimations from '../animations/TableRowAnimations';
+import AddressRow from './AddressRow';
 import DeliveryRow from './DeliveryRow';
-import TableRow from './DeliveryTableRow';
+import DeliveryTableRow from './DeliveryTableRow';
 
 const DeliveryTable: FC<{
   delivery: IProductsEntity;
@@ -80,73 +79,50 @@ const DeliveryTable: FC<{
   }, [deliveryData]);
 
   return (
-    <div className="table w-full border-collapse text-neutral-600">
+    <TableRowAnimations
+      className="table w-full border-collapse text-neutral-600"
+      index={5}
+    >
       <div>
         {attrs?.map((attr: IAttributes, i: Key) => {
           const marker = attr.marker;
           if (marker === 'date') {
             return (
-              <TableRow
+              <DeliveryTableRow
                 key={i}
                 field={attr}
-                label={'Date'}
                 value={new Date(deliveryData.date).toLocaleDateString('en-US')}
                 icon={'/icons/calendar.svg'}
+                label={order_info_date_placeholder?.value}
                 placeholder={order_info_date_placeholder?.value}
               />
             );
           }
           if (marker === 'time') {
             return (
-              <TableRow
+              <DeliveryTableRow
                 key={i}
                 field={attr}
-                label={'Time'}
                 value={deliveryData.time}
                 icon={'/icons/time.svg'}
+                label={order_info_time_placeholder?.value}
                 placeholder={order_info_time_placeholder?.value}
               />
             );
           }
           if (marker === 'order_address') {
             return (
-              <div
+              <AddressRow
                 key={i}
-                className="tr h-[50px] border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
-              >
-                <div className="td w-3/12 items-center self-stretch text-sm">
-                  <label htmlFor={'address'}>
-                    {order_info_address_placeholder?.value}
-                  </label>
-                </div>
-                <div className="td w-8/12 px-5 text-base">
-                  <input
-                    size={40}
-                    type="text"
-                    value={deliveryData.address || addressReg || ''}
-                    id="address"
-                    name="address"
-                    placeholder={order_info_address_placeholder?.value}
-                    onChange={(e) => {
-                      dispatch(
-                        setDeliveryData({
-                          ...deliveryData,
-                          address: e.target.value,
-                        }),
-                      );
-                    }}
-                    required
-                  />
-                </div>
-                <div className="td w-1/12 pl-5 align-middle"></div>
-              </div>
+                placeholder={order_info_address_placeholder?.value}
+              />
             );
           }
           return;
         })}
         <DeliveryRow lang={lang} delivery={delivery} />
       </div>
-    </div>
+    </TableRowAnimations>
   );
 };
 
