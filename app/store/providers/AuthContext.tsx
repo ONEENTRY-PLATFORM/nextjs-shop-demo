@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
@@ -9,9 +10,19 @@ import { useNotifications } from '@/app/api/hooks/useNotifications';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import type { IProducts } from '@/app/types/global';
 
-import { useAppSelector } from '../hooks';
-import { selectCartData } from '../reducers/CartSlice';
-import { selectFavoritesItems } from '../reducers/FavoritesSlice';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import {
+  addProductToCart,
+  selectCartData,
+  selectCartVersion,
+  setCartVersion,
+} from '../reducers/CartSlice';
+import {
+  addFavorites,
+  selectFavoritesItems,
+  selectFavoritesVersion,
+  setFavoritesVersion,
+} from '../reducers/FavoritesSlice';
 
 type ContextProps = {
   isAuth: boolean;
@@ -43,6 +54,9 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
 
   const [isTokenSet, setIsTokenSet] = useState<boolean>(false);
   const { token } = useNotifications();
+  const dispatch = useAppDispatch();
+  const cartVersion = useAppSelector(selectCartVersion) as number;
+  const favoritesVersion = useAppSelector(selectFavoritesVersion) as number;
 
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
@@ -99,6 +113,28 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     updateUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, productsInCart, favoritesIds]);
+
+  useEffect(() => {
+    if (!user?.state.cart || cartVersion > 0) {
+      return;
+    }
+    user.state.cart?.forEach((product: IProducts) => {
+      dispatch(
+        addProductToCart({ id: product.id, selected: true, quantity: 1 }),
+      );
+    });
+    dispatch(setCartVersion(1));
+  }, [isAuth, user]);
+  // load Favorites from user state
+  useEffect(() => {
+    if (!user?.state.favorites || favoritesVersion > 0) {
+      return;
+    }
+    user.state.favorites.forEach((element: number) => {
+      dispatch(addFavorites(element));
+    });
+    dispatch(setFavoritesVersion(1));
+  }, [isAuth, user]);
 
   useEffect(() => {
     setIsLoading(true);

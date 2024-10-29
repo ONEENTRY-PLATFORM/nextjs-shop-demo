@@ -33,15 +33,15 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const { products, isLoading } = useGetProductsByIds({ items: favoritesIds });
 
   // load Favorites from user state
-  useEffect(() => {
-    if (!user?.state.favorites || favoritesVersion > 0) {
-      return;
-    }
-    user.state.favorites.forEach((element: number) => {
-      dispatch(addFavorites(element));
-    });
-    dispatch(setFavoritesVersion(1));
-  }, [isAuth, user]);
+  // useEffect(() => {
+  //   if (!user?.state.favorites || favoritesVersion > 0) {
+  //     return;
+  //   }
+  //   user.state.favorites.forEach((element: number) => {
+  //     dispatch(addFavorites(element));
+  //   });
+  //   dispatch(setFavoritesVersion(1));
+  // }, [isAuth, user]);
 
   if (products.length < 1) {
     if (isLoading) {

@@ -24,24 +24,17 @@ const TableAnimations = ({
 
     const lines =
       ref.current &&
-      (ref.current as HTMLDivElement).querySelectorAll('.animate-loader');
+      (ref.current as HTMLDivElement).querySelectorAll('.relative');
 
     tl.set(lines, {
-      width: 0,
-      transformOrigin: '100% 100%',
+      autoAlpha: 0,
     }).to(lines, {
-      width: '100%',
+      autoAlpha: 1,
       duration: 0.5,
-      stagger: 0.05,
+      stagger: 0.1,
     });
 
-    if (stage === 'leaving') {
-      tl.reverse(1);
-    } else if (stage === 'entering') {
-      tl.play();
-    } else {
-      tl.play();
-    }
+    tl.play();
 
     return () => {
       tl.kill();

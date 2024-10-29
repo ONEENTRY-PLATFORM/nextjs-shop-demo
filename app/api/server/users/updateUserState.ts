@@ -68,8 +68,8 @@ export const updateUserState = async ({
     formIdentifier: 'reg',
     formData: [...formData],
     state: {
-      favorites,
-      cart,
+      favorites: favorites.length > 0 ? favorites : user.state.favorites,
+      cart: cart.length > 0 ? cart : user.state.cart,
     },
     notificationData: {
       email: email.value,
@@ -77,6 +77,7 @@ export const updateUserState = async ({
       phoneSMS: phone.value,
     },
   });
+  console.log({ res, favorites, cart });
 
   if (!res || (res as IError)?.statusCode) {
     return false;

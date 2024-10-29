@@ -83,7 +83,13 @@ const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
           ) : (
             orders?.map((order: IOrderByMarkerEntity, i: Key | number) => {
               return (
-                <Order key={i} order={order} settings={settings} lang={lang} />
+                <Order
+                  key={i}
+                  index={i as number}
+                  order={order}
+                  settings={settings}
+                  lang={lang}
+                />
               );
             })
           )}

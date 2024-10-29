@@ -9,7 +9,8 @@ import { useRef, useState } from 'react';
 const OrderRowAnimations: FC<{
   children: ReactNode;
   className: string;
-}> = ({ children, className }) => {
+  index: number;
+}> = ({ children, className, index }) => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
@@ -18,24 +19,41 @@ const OrderRowAnimations: FC<{
     if (!ref.current) {
       return;
     }
+    const elements = (ref.current as HTMLDivElement).querySelectorAll(
+      'button>div',
+    );
     const tl = gsap.timeline({
       paused: true,
     });
+    tl.set(elements, {
+      transformOrigin: '0 center',
+    });
 
     if (stage === 'none' && prevStage === 'entering') {
-      tl.set(ref.current, {
+      tl.set([elements, ref.current], {
         autoAlpha: 0,
       })
         .to(ref.current, {
           autoAlpha: 1,
+          delay: index / 10,
+        })
+        .to(elements, {
+          autoAlpha: 1,
+          delay: index / 10,
         })
         .play();
     }
 
     if (stage === 'leaving' && prevStage === 'none') {
-      tl.to(ref.current, {
+      tl.to(elements, {
         autoAlpha: 0,
-      }).play();
+        delay: index / 10,
+      })
+        .to(ref.current, {
+          autoAlpha: 0,
+          delay: index / 10,
+        })
+        .play();
     }
 
     setPrevStage(stage);

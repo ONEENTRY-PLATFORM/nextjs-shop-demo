@@ -85,17 +85,17 @@ const CartPage: FC<{
   }, []);
 
   // load products from user state
-  useEffect(() => {
-    if (!user?.state.cart || cartVersion > 0) {
-      return;
-    }
-    user.state.cart?.forEach((product: IProducts) => {
-      dispatch(
-        addProductToCart({ id: product.id, selected: true, quantity: 1 }),
-      );
-    });
-    dispatch(setCartVersion(1));
-  }, [isAuth, user]);
+  // useEffect(() => {
+  //   if (!user?.state.cart || cartVersion > 0) {
+  //     return;
+  //   }
+  //   user.state.cart?.forEach((product: IProducts) => {
+  //     dispatch(
+  //       addProductToCart({ id: product.id, selected: true, quantity: 1 }),
+  //     );
+  //   });
+  //   dispatch(setCartVersion(1));
+  // }, [isAuth, user]);
 
   /** add products to order */
   useEffect(() => {
