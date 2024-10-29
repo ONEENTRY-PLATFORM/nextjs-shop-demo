@@ -10,12 +10,12 @@ import { useGetProductsByIds } from '@/app/api/hooks/useGetProductsByIds';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import { selectCartItems } from '@/app/store/reducers/CartSlice';
+import { selectCartData } from '@/app/store/reducers/CartSlice';
 import {
   addFavorites,
   selectFavoritesItems,
 } from '@/app/store/reducers/FavoritesSlice';
-import type { SimplePageProps } from '@/app/types/global';
+import type { IProducts, SimplePageProps } from '@/app/types/global';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
 
 import ProductCard from '../products-grid/components/product-card/ProductCard';
@@ -28,12 +28,14 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   ) as Array<number>;
+  const productsInCart = useAppSelector(selectCartData) as IProducts[];
+
   const { products, isLoading } = useGetProductsByIds({ items: favoritesIds });
 
   // update user data from cart
   async function updateUser(favoritesIds: number[], user: IUserEntity) {
     await updateUserState({
-      ...user.state,
+      cart: productsInCart,
       favorites: favoritesIds,
       user: user,
     });

@@ -44,8 +44,21 @@ const CartPage: FC<{
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   ) as Array<number>;
-
   const productsInCart = useAppSelector(selectCartData) as IProducts[];
+
+  // update cart from user data / update user data from cart
+  async function updateUser() {
+    await updateUserState({
+      cart: productsInCart,
+      favorites: favoritesIds,
+      user: user,
+    });
+  }
+  useEffect(() => {
+    if (user) {
+      updateUser();
+    }
+  }, [user]);
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce(
@@ -88,16 +101,8 @@ const CartPage: FC<{
     );
     dispatch(setCartProducts(deliveryData));
     setIsLoading(false);
+    updateUser();
   }, []);
-
-  // update cart from user data / update user data from cart
-  async function updateUser(productsInCart: IProducts[], user: IUserEntity) {
-    await updateUserState({
-      ...user.state,
-      cart: productsInCart,
-      user: user,
-    });
-  }
 
   useEffect(() => {
     if (!isAuth || !user || !user.state?.cart) {
@@ -114,7 +119,6 @@ const CartPage: FC<{
   useEffect(() => {
     if (productsInOrder) {
       dispatch(addProducts(productsInOrder));
-      updateUser(productsInCart, user as IUserEntity);
     }
   }, [productsInOrder]);
 

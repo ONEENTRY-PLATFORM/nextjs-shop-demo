@@ -30,20 +30,27 @@ export const getProducts = async (props: {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const expandedFilters = getSearchParams(params?.searchParams, params?.handle);
 
-  const data = await api.Products.getProducts(expandedFilters, langCode, {
-    sortOrder: 'DESC',
-    sortKey: 'id',
-    offset: offset,
-    limit: limit,
-  });
-
-  if (typeError(data)) {
-    return { isError: true, error: data, total: 0 };
-  } else {
+  try {
+    const data = await api.Products.getProducts(expandedFilters, langCode, {
+      sortOrder: 'DESC',
+      sortKey: 'id',
+      offset: offset,
+      limit: limit,
+    });
+    if (typeError(data)) {
+      return { isError: true, error: data, total: 0 };
+    } else {
+      return {
+        isError: false,
+        products: data.items,
+        total: data.total,
+      };
+    }
+  } catch (error) {
     return {
-      isError: false,
-      products: data.items,
-      total: data.total,
+      isError: true,
+      error: error as IError,
+      total: 0,
     };
   }
 };
