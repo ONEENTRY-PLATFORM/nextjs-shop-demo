@@ -21,14 +21,37 @@ const ProductAnimations = ({
   children,
   className,
   product,
+  index,
 }: {
   children: ReactNode;
   className: string;
   product: IProductsEntity;
+  index: number;
 }) => {
   const dispatch = useAppDispatch();
   const ref = useRef(null);
   const { transitionId } = useAppSelector(getTransition);
+
+  // first load animations
+  useGSAP(() => {
+    const tl = gsap.timeline({
+      paused: true,
+    });
+
+    tl.set(ref.current, {
+      opacity: 0,
+      yPercent: 100,
+    }).to(ref.current, {
+      opacity: 1,
+      yPercent: 0,
+      delay: index / 10,
+    });
+    tl.play();
+
+    return () => {
+      tl.kill();
+    };
+  }, [ref]);
 
   // removeProduct
   useGSAP(() => {

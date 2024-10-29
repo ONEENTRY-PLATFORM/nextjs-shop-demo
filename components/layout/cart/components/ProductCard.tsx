@@ -18,7 +18,8 @@ const ProductCard: FC<{
   productData: IProducts;
   selected: boolean;
   lang: string;
-}> = ({ productData, selected, lang }) => {
+  index: number;
+}> = ({ productData, selected, lang, index }) => {
   const dispatch = useAppDispatch();
   const [product, setProduct] = useState<IProductsEntity>();
 
@@ -44,7 +45,11 @@ const ProductCard: FC<{
   const title = localizeInfos?.title;
 
   return (
-    <ProductAnimations className="product-in-cart" product={product}>
+    <ProductAnimations
+      className="product-in-cart"
+      product={product}
+      index={index}
+    >
       <div className="relative flex justify-between gap-5">
         <div className="relative z-10 mb-auto box-border flex shrink-0 flex-row self-center overflow-hidden rounded-md">
           <input

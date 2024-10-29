@@ -1,10 +1,8 @@
 import type { FC } from 'react';
-import { Suspense } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import FavoritesPage from '@/components/layout/favorites';
-import Loader from '@/components/shared/Loader';
 import type { Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';

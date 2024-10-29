@@ -17,28 +17,6 @@ const CartAnimations = ({
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
-  // first load animations
-  // useGSAP(() => {
-  //   const tl = gsap.timeline({
-  //     paused: true,
-  //   });
-
-  //   if (stage !== 'entering') {
-  //     tl.set(ref.current, {
-  //       opacity: 0,
-  //     }).to(ref.current, {
-  //       opacity: 1,
-  //       duration: 0.5,
-  //       delay: 0.5,
-  //     });
-  //     tl.play();
-  //   }
-
-  //   return () => {
-  //     tl.kill();
-  //   };
-  // }, [ref]);
-
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,
@@ -52,6 +30,7 @@ const CartAnimations = ({
         autoAlpha: 1,
         yPercent: 0,
         stagger: 0.1,
+        delay: 0.35,
       })
       .to('.tr, #total', {
         autoAlpha: 1,

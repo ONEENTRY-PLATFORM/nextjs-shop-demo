@@ -83,26 +83,14 @@ const CartPage: FC<{
     if (!deliveryData) {
       return;
     }
-    const index = productsInCart.findIndex(
-      (p: { id: number }) => p.id === deliveryData?.id,
+    dispatch(
+      addProductToCart({
+        id: deliveryData.id,
+        selected: true,
+        quantity: 1,
+      }),
     );
-    if (index === -1) {
-      dispatch(
-        addProductToCart({
-          id: deliveryData.id,
-          selected: true,
-          quantity: 1,
-        }),
-      );
-    }
   }, []);
-
-  // add products to order
-  useEffect(() => {
-    if (productsInOrder) {
-      dispatch(addProducts(productsInOrder));
-    }
-  }, [productsInOrder]);
 
   // update cart from user data
   useEffect(() => {
@@ -115,6 +103,13 @@ const CartPage: FC<{
       );
     });
   }, [isAuth]);
+
+  // add products to order
+  useEffect(() => {
+    if (productsInOrder) {
+      dispatch(addProducts(productsInOrder));
+    }
+  }, [productsInOrder]);
 
   // update user data from cart
   // useEffect(() => {
@@ -149,6 +144,7 @@ const CartPage: FC<{
           return (
             <ProductCard
               key={i}
+              index={i}
               productData={product as IProducts}
               selected={productsInCart[i]?.selected}
               lang={lang}

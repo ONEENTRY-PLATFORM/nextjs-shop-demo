@@ -42,25 +42,10 @@ export const cartSlice = createSlice({
         quantity: number;
       }>,
     ) {
-      const isUnique = state.products.findIndex(
+      const index = state.products.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
-
-      if (isUnique !== -1) {
-        if (!state.products[isUnique].selected) {
-          state.products.push({
-            ...action.payload,
-            selected: false,
-            quantity: 1,
-          });
-        } else {
-          state.products.push({
-            ...action.payload,
-            selected: true,
-            quantity: 1,
-          });
-        }
-      } else {
+      if (index === -1) {
         state.products.push(action.payload);
       }
 
