@@ -13,6 +13,9 @@ export const updateUserState = async ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   user: any;
 }) => {
+  if (!user) {
+    return;
+  }
   const formData = user.formData.map(
     (
       item: {

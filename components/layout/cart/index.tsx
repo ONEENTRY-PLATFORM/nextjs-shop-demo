@@ -58,7 +58,7 @@ const CartPage: FC<{
     if (user) {
       updateUser();
     }
-  }, [user]);
+  }, [user, productsInCart]);
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce(
