@@ -15,8 +15,8 @@ export const favoritesSlice = createSlice({
   initialState,
   reducers: {
     addFavorites(state, action: PayloadAction<number>) {
-      const isUnique = state.products.findIndex((product: number) => {
-        return product === action.payload;
+      const isUnique = state.products.findIndex((productId: number) => {
+        return productId === action.payload;
       });
       if (isUnique === -1) {
         state.products.push(action.payload);

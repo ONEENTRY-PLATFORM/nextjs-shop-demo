@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
@@ -19,7 +18,6 @@ import type { SimplePageProps } from '@/app/types/global';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
 
 import ProductCard from '../products-grid/components/product-card/ProductCard';
-import FavoriteCard from './FavoriteCard';
 
 const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const { user, isAuth } = useContext(AuthContext);
@@ -34,15 +32,6 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     if (!isAuth || !user || !user.state) {
       return;
     }
-    user.state.favorites.forEach((element: number) => {
-      dispatch(addFavorites(element));
-    });
-  }, [isAuth]);
-
-  useEffect(() => {
-    if (!isAuth || !user || !user.state) {
-      return;
-    }
     async function updateUser(favoritesIds: number[], user: IUserEntity) {
       await updateUserState({
         cart: productsInCart,
@@ -50,27 +39,36 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
         user: user,
       });
     }
-    updateUser(favoritesIds, user as IUserEntity);
-  }, [favoritesIds]);
 
-  if (favoritesIds.length < 1) {
+    user.state.favorites.forEach((element: number) => {
+      dispatch(addFavorites(element));
+    });
+
+    updateUser(favoritesIds, user);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth]);
+
+  const { products } = useGetProductsByIds({ items: favoritesIds });
+
+  if (products.length < 1) {
     return <EmptyFavorites lang={lang} dict={dict} />;
   }
 
   return (
-    favoritesIds.length && (
+    products.length && (
       <div className="flex flex-col pb-5 max-md:max-w-full">
         <div className={'relative box-border flex w-full shrink-0 flex-col'}>
           <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
             <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-              {favoritesIds.map((productId: number, index: Key | number) => {
+              {products.map((product: IProductsEntity, index: Key | number) => {
                 return (
-                  <FavoriteCard
+                  <ProductCard
                     key={index}
+                    product={product}
+                    index={index as number}
                     lang={lang}
                     dict={dict}
-                    productId={productId}
-                    index={index as number}
                   />
                 );
               })}

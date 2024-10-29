@@ -105,16 +105,16 @@ const CartPage: FC<{
   }, [productsInOrder]);
 
   // update cart from user data
-  // useEffect(() => {
-  //   if (!isAuth || !user || !user.state?.cart) {
-  //     return;
-  //   }
-  //   user.state.cart?.forEach((product: IProducts) => {
-  //     dispatch(
-  //       addProductToCart({ id: product.id, selected: true, quantity: 1 }),
-  //     );
-  //   });
-  // }, [isAuth]);
+  useEffect(() => {
+    if (!isAuth || !user || !user.state?.cart) {
+      return;
+    }
+    user.state.cart?.forEach((product: IProducts) => {
+      dispatch(
+        addProductToCart({ id: product.id, selected: true, quantity: 1 }),
+      );
+    });
+  }, [isAuth]);
 
   // update user data from cart
   // useEffect(() => {
