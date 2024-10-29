@@ -320,7 +320,10 @@ input:focus-visible {
   }
 
   .slide-up {
-    
+    /* opacity: 0; */
+  }
+  .fade-in {
+    /* opacity: 0; */
   }
 }
 

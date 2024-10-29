@@ -16,7 +16,7 @@ const Header: FC = async () => {
     <header className="z-50 flex items-center justify-center bg-white px-5">
       <section className="mx-auto box-border flex w-full max-w-screen-xl grow flex-col justify-center self-stretch bg-white md:py-6 lg:py-10">
         <div className="flex w-full max-w-screen-xl justify-between gap-16 max-md:flex-wrap max-md:gap-6 max-sm:gap-4">
-          <Logo />
+          <Logo lang={lang} />
           <Suspense fallback={<SearchBarLoader />}>
             <SearchBar dict={dict} lang={lang} />
           </Suspense>

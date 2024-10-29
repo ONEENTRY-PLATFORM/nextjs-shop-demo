@@ -20,6 +20,12 @@ const CartAnimations = ({
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,
+      onReverseComplete: () => {
+        gsap.set('.product-in-cart, .tr, #total', {
+          autoAlpha: 0,
+          yPercent: 100,
+        });
+      },
     });
 
     tl.set('.product-in-cart, .tr, #total', {

@@ -18,7 +18,7 @@ const NavGroup: FC = async () => {
   const { locales } = await getLocales();
 
   return (
-    <div className="my-auto flex items-center gap-10 max-md:max-w-full max-md:gap-4 max-sm:gap-2">
+    <div className="fade-in my-auto flex items-center gap-10 max-md:max-w-full max-md:gap-4 max-sm:gap-2">
       {!isError && menu && Array.isArray(menu.pages) ? (
         menu.pages.map((item: { pageUrl: string }, i: Key) => {
           return (

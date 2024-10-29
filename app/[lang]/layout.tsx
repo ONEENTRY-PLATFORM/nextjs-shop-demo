@@ -20,6 +20,7 @@ import NavigationMenu from '@/components/layout/main-menu';
 import Modal from '@/components/layout/modal';
 import type { Locale } from '@/i18n-config';
 
+import IntroAnimations from '../animations/IntroAnimations';
 import RegisterGSAP from '../animations/RegisterGSAP';
 import TransitionProvider from '../animations/TransitionProvider';
 import { LanguageEnum } from '../types/enum';
@@ -54,6 +55,7 @@ export default async function RootLayout({
     <html lang={langCode}>
       <body className={lato.className + ' flex flex-col min-h-screen'}>
         <RegisterGSAP />
+        <IntroAnimations />
         <StoreProvider>
           <LanguageProvider lang={lang}>
             <AuthProvider langCode={langCode}>
