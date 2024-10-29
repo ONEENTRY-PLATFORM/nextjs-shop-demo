@@ -3,10 +3,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 type InitialStateType = {
   products: number[];
+  productsData: number[];
   version: number;
 };
 const initialState: InitialStateType = {
   products: [],
+  productsData: [],
   version: Date.now(),
 };
 

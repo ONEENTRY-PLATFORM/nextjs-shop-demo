@@ -38,7 +38,7 @@ const CartPage: FC<{
   const dispatch = useAppDispatch();
 
   const { user, isAuth } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
@@ -58,7 +58,7 @@ const CartPage: FC<{
     if (user) {
       updateUser();
     }
-  }, [user, productsInCart]);
+  }, [favoritesIds, productsInCart]);
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce(
@@ -76,7 +76,7 @@ const CartPage: FC<{
     );
   }, [productsInCart]);
 
-  // init cart
+  /** init cart */
   useEffect(() => {
     // create Order
     dispatch(
@@ -101,11 +101,11 @@ const CartPage: FC<{
     );
     dispatch(setCartProducts(deliveryData));
     setIsLoading(false);
-    updateUser();
   }, []);
 
+  /** */
   useEffect(() => {
-    if (!isAuth || !user || !user.state?.cart) {
+    if (!isAuth || !user || !user.state.cart) {
       return;
     }
     user.state.cart?.forEach((product: IProducts) => {
@@ -115,7 +115,7 @@ const CartPage: FC<{
     });
   }, [isAuth]);
 
-  // add products to order
+  /** add products to order */
   useEffect(() => {
     if (productsInOrder) {
       dispatch(addProducts(productsInOrder));

@@ -105,8 +105,7 @@ export const cartSlice = createSlice({
     },
     removeProduct(state, action: PayloadAction<number>) {
       state.productsData = state.productsData.filter(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (product: any) => product.id !== action.payload,
+        (item: IProducts) => item.id !== action.payload,
       );
     },
     deselectProduct(state, action: PayloadAction<number>) {

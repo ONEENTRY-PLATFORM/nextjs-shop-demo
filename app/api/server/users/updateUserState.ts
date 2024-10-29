@@ -77,6 +77,7 @@ export const updateUserState = async ({
       phoneSMS: phone.value,
     },
   });
+  console.log({ favorites, cart });
 
   if (!res || (res as IError)?.statusCode) {
     return false;
