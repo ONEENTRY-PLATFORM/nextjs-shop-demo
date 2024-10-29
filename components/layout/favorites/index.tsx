@@ -3,18 +3,11 @@
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
-import { useContext, useEffect } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
 import { useGetProductsByIds } from '@/app/api/hooks/useGetProductsByIds';
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { AuthContext } from '@/app/store/providers/AuthContext';
-import {
-  addFavorites,
-  selectFavoritesItems,
-  selectFavoritesVersion,
-  setFavoritesVersion,
-} from '@/app/store/reducers/FavoritesSlice';
+import { useAppSelector } from '@/app/store/hooks';
+import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import type { SimplePageProps } from '@/app/types/global';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
 
@@ -22,26 +15,12 @@ import ProductCard from '../products-grid/components/product-card/ProductCard';
 import ProductsGridLoader from '../products-grid/components/ProductsGridLoader';
 
 const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
-  const { user, isAuth } = useContext(AuthContext);
-  const dispatch = useAppDispatch();
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   ) as Array<number>;
-  const favoritesVersion = useAppSelector(selectFavoritesVersion) as number;
 
   const { products, isLoading } = useGetProductsByIds({ items: favoritesIds });
-
-  // load Favorites from user state
-  // useEffect(() => {
-  //   if (!user?.state.favorites || favoritesVersion > 0) {
-  //     return;
-  //   }
-  //   user.state.favorites.forEach((element: number) => {
-  //     dispatch(addFavorites(element));
-  //   });
-  //   dispatch(setFavoritesVersion(1));
-  // }, [isAuth, user]);
 
   if (products.length < 1) {
     if (isLoading) {

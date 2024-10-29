@@ -6,8 +6,6 @@ import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-// import { api } from '@/app/api';
-import { updateUserState } from '@/app/api/server/users/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
@@ -18,7 +16,6 @@ import {
 
 const FavoritesButton: FC<IProductsEntity> = (product) => {
   const [isFav, setIsFav] = useState(false);
-  const favorites = useAppSelector((state) => state.favoritesReducer.products);
   const dispatch = useAppDispatch();
   const isFavorites = useAppSelector((state) =>
     selectIsFavorites(state, product.id),
@@ -68,45 +65,17 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
   const onUpdateFavorites = async () => {
     try {
       if (!isFav) {
-        const updatedFavorites = [...favorites, product.id];
+        dispatch(addFavorites(product.id));
+        await onSubscribeFavorite();
 
-        const res = await updateUserState({
-          favorites: updatedFavorites,
-          user: user,
-        });
-
-        if (res) {
-          await onSubscribeFavorite();
-
-          dispatch(addFavorites(product.id));
-          toast(
-            'Product ' + product.localizeInfos.title + ' add to Favorites!',
-          );
-        } else {
-          toast('User data error!');
-        }
+        toast('Product ' + product.localizeInfos.title + ' add to Favorites!');
       } else {
-        const updatedFavorites = favorites
-          .filter((fav: number) => fav !== product.id)
-          .map((fav: number) => fav);
+        dispatch(removeFavorites(product.id));
+        await onUnsubscribeFavorite();
 
-        const res = await updateUserState({
-          favorites: updatedFavorites,
-          user: user,
-        });
-
-        if (res) {
-          await onUnsubscribeFavorite();
-
-          dispatch(removeFavorites(product.id));
-          toast(
-            'Product ' +
-              product.localizeInfos.title +
-              ' removed from Favorites!',
-          );
-        } else {
-          toast('User data error!');
-        }
+        toast(
+          'Product ' + product.localizeInfos.title + ' removed from Favorites!',
+        );
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {

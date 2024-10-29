@@ -58,11 +58,11 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
   const cartVersion = useAppSelector(selectCartVersion) as number;
   const favoritesVersion = useAppSelector(selectFavoritesVersion) as number;
 
+  const productsInCart = useAppSelector(selectCartData) as IProducts[];
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   ) as Array<number>;
-  const productsInCart = useAppSelector(selectCartData) as IProducts[];
 
   const [trigger, { isError }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 3000 : 0,
@@ -125,6 +125,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     });
     dispatch(setCartVersion(1));
   }, [isAuth, user]);
+
   // load Favorites from user state
   useEffect(() => {
     if (!user?.state.favorites || favoritesVersion > 0) {

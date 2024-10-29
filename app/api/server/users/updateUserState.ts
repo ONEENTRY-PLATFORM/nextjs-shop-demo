@@ -2,6 +2,7 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { Key } from 'react';
 
 import { api } from '@/app/api';
+import type { IProducts } from '@/app/types/global';
 
 export const updateUserState = async ({
   favorites,
@@ -9,7 +10,7 @@ export const updateUserState = async ({
   user,
 }: {
   favorites: number[];
-  cart: { id: number; quantity: number; selected: boolean }[];
+  cart: IProducts[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   user: any;
 }) => {
