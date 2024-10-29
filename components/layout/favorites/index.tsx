@@ -28,13 +28,12 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   ) as Array<number>;
-  const productsInCart = useAppSelector(selectCartItems);
   const { products, isLoading } = useGetProductsByIds({ items: favoritesIds });
 
   // update user data from cart
   async function updateUser(favoritesIds: number[], user: IUserEntity) {
     await updateUserState({
-      cart: productsInCart,
+      ...user.state,
       favorites: favoritesIds,
       user: user,
     });
@@ -50,11 +49,6 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     updateUser(favoritesIds, user);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
-
-  useEffect(() => {
-    updateUser(favoritesIds, user as IUserEntity);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [favoritesIds]);
 
   if (isLoading) {
     return <ProductsGridLoader />;

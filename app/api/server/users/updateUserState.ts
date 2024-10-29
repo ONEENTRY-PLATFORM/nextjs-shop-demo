@@ -8,8 +8,8 @@ export const updateUserState = async ({
   cart,
   user,
 }: {
-  favorites: number[];
-  cart: { id: number; quantity: number; selected: boolean }[];
+  favorites?: number[];
+  cart?: { id: number; quantity: number; selected: boolean }[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   user: any;
 }) => {

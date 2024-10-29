@@ -132,7 +132,6 @@ export const cartSlice = createSlice({
     setCartTransition(state, action: PayloadAction<{ productId: number }>) {
       state.transitionId = action.payload.productId;
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setCartProducts(state, action: PayloadAction<IProductsEntity>) {
       const index = state.products.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
@@ -170,9 +169,13 @@ export const selectIsInCart = (
   return true;
 };
 
-export const selectCartItems = (state: {
+export const selectCartData = (state: {
   cartReducer: { productsData: IProducts[] };
 }) => state.cartReducer.productsData;
+
+export const selectCartItems = (state: {
+  cartReducer: { products: IProductsEntity[] };
+}) => state.cartReducer.products;
 
 export const getTransition = (state: {
   cartReducer: {
@@ -200,11 +203,5 @@ export const selectCartItemWithIdLength = (
   id: number,
 ) =>
   state.cartReducer.productsData.find((item: { id: number }) => item.id === id);
-
-export const selectCartTotal = (state: {
-  cartReducer: {
-    total: number;
-  };
-}) => state.cartReducer.total;
 
 export default cartSlice.reducer;

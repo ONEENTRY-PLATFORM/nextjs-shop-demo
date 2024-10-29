@@ -3,7 +3,10 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import { type FC } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
-import { selectCartItems } from '@/app/store/reducers/CartSlice';
+import {
+  selectCartData,
+  selectCartItems,
+} from '@/app/store/reducers/CartSlice';
 import { UsePrice } from '@/components/utils';
 
 type PaymentMethodProps = {
@@ -12,9 +15,14 @@ type PaymentMethodProps = {
 };
 
 const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
-  const productsInCart = useAppSelector(selectCartItems) as Array<
-    IProductsEntity & { quantity: number; selected: boolean }
-  >;
+  const productsDataInCart = useAppSelector(selectCartData) as Array<{
+    id: number;
+    quantity: number;
+    selected: boolean;
+  }>;
+  const productsInCart = useAppSelector(
+    selectCartItems,
+  ) as Array<IProductsEntity>;
 
   return (
     <>
@@ -23,8 +31,12 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
         <div className="w-1/4 font-bold">Price</div>
         <div className="w-1/4 font-bold">Quantity</div>
       </div>
-      {productsInCart.map((product, i) => {
-        const { localizeInfos, selected, quantity, price } = product;
+      {productsDataInCart.map((product, i) => {
+        const { selected, quantity } = product;
+        if (!productsInCart[i]) {
+          return;
+        }
+        const { localizeInfos, price } = productsInCart[i];
         const title = localizeInfos?.title;
         if (!selected) {
           return;

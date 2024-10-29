@@ -22,9 +22,6 @@ const ProductCard: FC<{
   selected: boolean;
   lang: string;
   index: number;
-  total: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setTotal: any;
 }> = ({ productData, selected, lang, index }) => {
   const dispatch = useAppDispatch();
   const [product, setProduct] = useState<IProductsEntity>();

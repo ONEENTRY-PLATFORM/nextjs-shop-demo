@@ -15,7 +15,8 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   addProductToCart,
-  selectCartItems,
+  selectCartData,
+  setCartProducts,
 } from '@/app/store/reducers/CartSlice';
 import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
@@ -38,14 +39,13 @@ const CartPage: FC<{
 
   const { user, isAuth } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [total, setTotal] = useState(0);
 
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   ) as Array<number>;
 
-  const productsInCart = useAppSelector(selectCartItems) as IProducts[];
+  const productsInCart = useAppSelector(selectCartData) as IProducts[];
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce(
@@ -86,13 +86,14 @@ const CartPage: FC<{
         quantity: 1,
       }),
     );
+    dispatch(setCartProducts(deliveryData));
     setIsLoading(false);
   }, []);
 
   // update cart from user data / update user data from cart
   async function updateUser(productsInCart: IProducts[], user: IUserEntity) {
     await updateUserState({
-      favorites: favoritesIds,
+      ...user.state,
       cart: productsInCart,
       user: user,
     });
@@ -113,12 +114,9 @@ const CartPage: FC<{
   useEffect(() => {
     if (productsInOrder) {
       dispatch(addProducts(productsInOrder));
+      updateUser(productsInCart, user as IUserEntity);
     }
   }, [productsInOrder]);
-
-  useEffect(() => {
-    updateUser(productsInCart, user as IUserEntity);
-  }, [productsInCart]);
 
   if (isLoading) {
     return <Loader />;
@@ -131,22 +129,19 @@ const CartPage: FC<{
   return (
     <FadeTransition className="flex w-full flex-col pb-5 lg:max-w-[730px]">
       <CartAnimations className={'mb-4 flex w-full flex-col gap-4'}>
-        {productsInCart.map((product: IProducts, i: number) => {
-          if (product.id === 83) {
-            return;
-          }
-          return (
-            <ProductCard
-              key={i}
-              index={i}
-              productData={product as IProducts}
-              selected={productsInCart[i]?.selected}
-              lang={lang}
-              total={total}
-              setTotal={setTotal}
-            />
-          );
-        })}
+        {productsInCart
+          .filter((p) => p.id !== 83)
+          .map((product: IProducts, i: number) => {
+            return (
+              <ProductCard
+                key={i}
+                index={i}
+                productData={product as IProducts}
+                selected={productsInCart[i]?.selected}
+                lang={lang}
+              />
+            );
+          })}
       </CartAnimations>
       <form
         className="flex w-[730px] max-w-full flex-col pb-5"
