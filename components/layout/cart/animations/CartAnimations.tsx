@@ -14,7 +14,7 @@ const CartAnimations = ({
   className: string;
 }) => {
   const { stage } = useTransitionState();
-  const [prevStage, setPrevStage] = useState('');
+  const [prevStage, setPrevStage] = useState<string>('');
   const ref = useRef(null);
 
   useGSAP(() => {

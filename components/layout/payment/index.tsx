@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
@@ -47,6 +48,7 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
     IProductsEntity & { quantity: number; selected: boolean }
   >;
 
+  // createOrder
   useEffect(() => {
     dispatch(
       createOrder({
@@ -77,7 +79,6 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
     if (productsInOrder) {
       dispatch(addProducts(productsInOrder));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productsInOrder]);
 
   if (!isAuth || error) {

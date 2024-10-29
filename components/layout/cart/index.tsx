@@ -14,7 +14,9 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   addProductToCart,
   selectCartData,
+  selectCartVersion,
   setCartProducts,
+  setCartVersion,
 } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { IProducts } from '@/app/types/global';
@@ -37,6 +39,7 @@ const CartPage: FC<{
   const { user, isAuth } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const productsInCart = useAppSelector(selectCartData) as IProducts[];
+  const cartVersion = useAppSelector(selectCartVersion) as number;
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce(
@@ -81,9 +84,9 @@ const CartPage: FC<{
     setIsLoading(false);
   }, []);
 
-  /** */
+  // load products from user state
   useEffect(() => {
-    if (!isAuth || !user || !user.state.cart) {
+    if (!user?.state.cart || cartVersion > 0) {
       return;
     }
     user.state.cart?.forEach((product: IProducts) => {
@@ -91,7 +94,8 @@ const CartPage: FC<{
         addProductToCart({ id: product.id, selected: true, quantity: 1 }),
       );
     });
-  }, [isAuth]);
+    dispatch(setCartVersion(1));
+  }, [isAuth, user]);
 
   /** add products to order */
   useEffect(() => {

@@ -9,7 +9,7 @@ type InitialStateType = {
 const initialState: InitialStateType = {
   products: [],
   productsData: [],
-  version: Date.now(),
+  version: 0,
 };
 
 export const favoritesSlice = createSlice({
@@ -32,19 +32,22 @@ export const favoritesSlice = createSlice({
     removeAllFavorites(state) {
       state.products = initialState.products;
     },
+    setFavoritesVersion(state, action: PayloadAction<number>) {
+      state.version = action.payload;
+    },
   },
 });
 
-export const { addFavorites, removeFavorites, removeAllFavorites } =
-  favoritesSlice.actions;
+export const {
+  addFavorites,
+  removeFavorites,
+  removeAllFavorites,
+  setFavoritesVersion,
+} = favoritesSlice.actions;
 
 export const selectFavoritesItems = (state: {
   favoritesReducer: { products: number[] };
 }) => state.favoritesReducer.products;
-
-export const selectFavoritesVersion = (state: {
-  favoritesReducer: { version: number };
-}) => state.favoritesReducer.version;
 
 export const selectIsFavorites = (
   state: { favoritesReducer: { products: number[] } },
@@ -58,5 +61,9 @@ export const selectIsFavorites = (
   }
   return true;
 };
+
+export const selectFavoritesVersion = (state: {
+  favoritesReducer: { version: number };
+}) => state.favoritesReducer.version;
 
 export default favoritesSlice.reducer;

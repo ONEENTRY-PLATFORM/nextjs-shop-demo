@@ -2,21 +2,20 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
-import type { Key } from 'react';
-import { type FC, useContext, useEffect } from 'react';
+import type { FC, Key } from 'react';
+import { useContext, useEffect } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
 import { useGetProductsByIds } from '@/app/api/hooks/useGetProductsByIds';
-import { updateUserState } from '@/app/api/server/users/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import { selectCartData } from '@/app/store/reducers/CartSlice';
 import {
   addFavorites,
   selectFavoritesItems,
+  selectFavoritesVersion,
+  setFavoritesVersion,
 } from '@/app/store/reducers/FavoritesSlice';
-import type { IProducts, SimplePageProps } from '@/app/types/global';
+import type { SimplePageProps } from '@/app/types/global';
 import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
 
 import ProductCard from '../products-grid/components/product-card/ProductCard';
@@ -29,24 +28,27 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   ) as Array<number>;
+  const favoritesVersion = useAppSelector(selectFavoritesVersion) as number;
 
   const { products, isLoading } = useGetProductsByIds({ items: favoritesIds });
 
+  // load Favorites from user state
   useEffect(() => {
-    if (!user?.state.favorites) {
+    if (!user?.state.favorites || favoritesVersion > 0) {
       return;
     }
     user.state.favorites.forEach((element: number) => {
       dispatch(addFavorites(element));
     });
-  }, [isAuth]);
-
-  if (isLoading && products.length < 1) {
-    return <ProductsGridLoader />;
-  }
+    dispatch(setFavoritesVersion(1));
+  }, [isAuth, user]);
 
   if (products.length < 1) {
-    return <EmptyFavorites lang={lang} dict={dict} />;
+    if (isLoading) {
+      return <ProductsGridLoader />;
+    } else {
+      return <EmptyFavorites lang={lang} dict={dict} />;
+    }
   }
 
   return (

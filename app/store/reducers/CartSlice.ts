@@ -17,6 +17,7 @@ type InitialStateType = {
   };
   transitionId: number;
   total: number;
+  version: number;
 };
 
 const initialState: InitialStateType = {
@@ -29,6 +30,7 @@ const initialState: InitialStateType = {
   },
   transitionId: 0,
   total: 0,
+  version: 0,
 };
 
 export const cartSlice = createSlice({
@@ -142,6 +144,9 @@ export const cartSlice = createSlice({
         state.products.push(action.payload);
       }
     },
+    setCartVersion(state, action: PayloadAction<number>) {
+      state.version = action.payload;
+    },
   },
 });
 
@@ -156,8 +161,10 @@ export const {
   setCartTransition,
   removeAllProducts,
   setCartProducts,
+  setCartVersion,
 } = cartSlice.actions;
 
+// selectIsInCart
 export const selectIsInCart = (
   state: { cartReducer: { productsData: { id: number }[] } },
   id: number,
@@ -171,21 +178,17 @@ export const selectIsInCart = (
   return true;
 };
 
+// selectCartData
 export const selectCartData = (state: {
   cartReducer: { productsData: IProducts[] };
 }) => state.cartReducer.productsData;
 
+// selectCartItems
 export const selectCartItems = (state: {
   cartReducer: { products: IProductsEntity[] };
 }) => state.cartReducer.products;
 
-export const getTransition = (state: {
-  cartReducer: {
-    transitionId: number;
-  };
-}) => state.cartReducer;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// selectDeliveryData
 export const selectDeliveryData = (state: {
   cartReducer: {
     deliveryData: {
@@ -196,6 +199,7 @@ export const selectDeliveryData = (state: {
   };
 }) => state.cartReducer.deliveryData;
 
+// selectCartItemWithIdLength
 export const selectCartItemWithIdLength = (
   state: {
     cartReducer: {
@@ -205,5 +209,15 @@ export const selectCartItemWithIdLength = (
   id: number,
 ) =>
   state.cartReducer.productsData.find((item: { id: number }) => item.id === id);
+
+export const getTransition = (state: {
+  cartReducer: {
+    transitionId: number;
+  };
+}) => state.cartReducer;
+
+export const selectCartVersion = (state: {
+  favoritesReducer: { version: number };
+}) => state.favoritesReducer.version;
 
 export default cartSlice.reducer;
