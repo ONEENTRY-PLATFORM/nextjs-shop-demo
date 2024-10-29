@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
@@ -28,31 +29,19 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   ) as Array<number>;
-  const productsInCart = useAppSelector(selectCartData) as IProducts[];
 
   const { products, isLoading } = useGetProductsByIds({ items: favoritesIds });
 
-  // update user data from cart
-  async function updateUser(favoritesIds: number[], user: IUserEntity) {
-    await updateUserState({
-      cart: productsInCart,
-      favorites: favoritesIds,
-      user: user,
-    });
-  }
-
   useEffect(() => {
-    if (!isAuth || !user || !user.state) {
+    if (!user?.state.favorites) {
       return;
     }
     user.state.favorites.forEach((element: number) => {
       dispatch(addFavorites(element));
     });
-    updateUser(favoritesIds, user);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth]);
 
-  if (isLoading) {
+  if (isLoading && products.length < 1) {
     return <ProductsGridLoader />;
   }
 

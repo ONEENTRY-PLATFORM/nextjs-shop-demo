@@ -9,7 +9,7 @@ import { Suspense, useContext, useEffect, useMemo, useState } from 'react';
 import { useGetAccountsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import { selectCartItems } from '@/app/store/reducers/CartSlice';
+import { selectCartData } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { SimplePageProps } from '@/app/types/global';
 import EmptyCart from '@/components/layout/cart/components/EmptyCart';
@@ -43,9 +43,22 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
     return [];
   }, [data, paymentMethods]);
 
-  const productsInCart = useAppSelector(selectCartItems) as Array<
+  const productsInCart = useAppSelector(selectCartData) as Array<
     IProductsEntity & { quantity: number; selected: boolean }
   >;
+
+  useEffect(() => {
+    dispatch(
+      createOrder({
+        formIdentifier: 'order',
+        formData: [],
+        products: productsInOrder,
+        paymentAccountIdentifier: '',
+      }),
+    );
+    setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce((results: Array<IOrderProductData>, item) => {
@@ -59,19 +72,6 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
     }, []);
   }, [productsInCart]);
 
-  useEffect(() => {
-    setIsLoading(false);
-    dispatch(
-      createOrder({
-        formIdentifier: 'order',
-        formData: [],
-        products: productsInOrder,
-        paymentAccountIdentifier: '',
-      }),
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // add products to order
   useEffect(() => {
     if (productsInOrder) {
@@ -82,6 +82,10 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
 
   if (!isAuth || error) {
     return <AuthError dict={dict} />;
+  }
+
+  if (productsInCart.length < 2 && isLoading) {
+    return <Loader />;
   }
 
   if (productsInCart.length < 2 || isLoading) {

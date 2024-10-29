@@ -6,6 +6,12 @@ import { createContext, useEffect, useState } from 'react';
 
 import { api, reDefine, useLazyGetMeQuery } from '@/app/api';
 import { useNotifications } from '@/app/api/hooks/useNotifications';
+import { updateUserState } from '@/app/api/server/users/updateUserState';
+import type { IProducts } from '@/app/types/global';
+
+import { useAppSelector } from '../hooks';
+import { selectCartData } from '../reducers/CartSlice';
+import { selectFavoritesItems } from '../reducers/FavoritesSlice';
 
 type ContextProps = {
   isAuth: boolean;
@@ -38,6 +44,12 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
   const [isTokenSet, setIsTokenSet] = useState<boolean>(false);
   const { token } = useNotifications();
 
+  const favoritesIds = useAppSelector(
+    (state: { favoritesReducer: { products: number[] } }) =>
+      selectFavoritesItems(state),
+  ) as Array<number>;
+  const productsInCart = useAppSelector(selectCartData) as IProducts[];
+
   const [trigger, { isError }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 3000 : 0,
   });
@@ -51,11 +63,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     await reDefine(refresh, langCode);
     await checkToken();
   };
-
-  useEffect(() => {
-    // updateUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuth, user]);
 
   const checkToken = async () => {
     trigger({
@@ -75,6 +82,23 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
         setIsAuth(false);
       });
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async function updateUser() {
+    await updateUserState({
+      cart: productsInCart,
+      favorites: favoritesIds,
+      user: user,
+    });
+  }
+
+  useEffect(() => {
+    if (!isAuth) {
+      return;
+    }
+    updateUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuth, productsInCart, favoritesIds]);
 
   useEffect(() => {
     setIsLoading(true);

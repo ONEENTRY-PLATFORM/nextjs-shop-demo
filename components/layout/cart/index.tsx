@@ -5,12 +5,10 @@
 import { useTransitionRouter } from 'next-transition-router';
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { FC } from 'react';
 import { useContext, useEffect, useMemo, useState } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
-import { updateUserState } from '@/app/api/server/users/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
@@ -18,7 +16,6 @@ import {
   selectCartData,
   setCartProducts,
 } from '@/app/store/reducers/CartSlice';
-import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { IProducts } from '@/app/types/global';
 import CartAnimations from '@/components/layout/cart/animations/CartAnimations';
@@ -39,26 +36,7 @@ const CartPage: FC<{
 
   const { user, isAuth } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
-
-  const favoritesIds = useAppSelector(
-    (state: { favoritesReducer: { products: number[] } }) =>
-      selectFavoritesItems(state),
-  ) as Array<number>;
   const productsInCart = useAppSelector(selectCartData) as IProducts[];
-
-  // update cart from user data / update user data from cart
-  async function updateUser() {
-    await updateUserState({
-      cart: productsInCart,
-      favorites: favoritesIds,
-      user: user,
-    });
-  }
-  useEffect(() => {
-    if (user) {
-      updateUser();
-    }
-  }, [favoritesIds, productsInCart]);
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce(

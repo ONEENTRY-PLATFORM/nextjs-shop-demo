@@ -107,6 +107,9 @@ export const cartSlice = createSlice({
       state.productsData = state.productsData.filter(
         (item: IProducts) => item.id !== action.payload,
       );
+      state.products = state.products.filter(
+        (item: IProductsEntity) => item.id !== action.payload,
+      );
     },
     deselectProduct(state, action: PayloadAction<number>) {
       state.productsData.map((product) => {
