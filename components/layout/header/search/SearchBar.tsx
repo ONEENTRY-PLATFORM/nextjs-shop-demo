@@ -1,7 +1,6 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useTransitionRouter } from 'next-transition-router';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
 import React, { useState } from 'react';
@@ -19,8 +18,6 @@ const SearchBar: FC<{ lang: string; dict: IAttributeValues }> = ({
   const params = new URLSearchParams(searchParams);
   const pathname = usePathname();
   const { replace } = useRouter();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const router = useTransitionRouter();
 
   const { search_placeholder } = dict;
 

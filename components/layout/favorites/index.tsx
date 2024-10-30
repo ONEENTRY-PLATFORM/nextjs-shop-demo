@@ -23,10 +23,10 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const { products, isLoading } = useGetProductsByIds({ items: favoritesIds });
 
   if (products.length < 1) {
-    if (isLoading) {
-      return <ProductsGridLoader />;
-    } else {
+    if (!isLoading) {
       return <EmptyFavorites lang={lang} dict={dict} />;
+    } else {
+      return <ProductsGridLoader />;
     }
   }
 

@@ -42,7 +42,7 @@ const CalendarAnimations = ({
     tl.play();
 
     if (transition === 'close') {
-      tl.reverse(2);
+      tl.reverse(3);
     }
 
     return () => {

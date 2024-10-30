@@ -6,17 +6,14 @@ import { useTransitionRouter } from 'next-transition-router';
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   addProductToCart,
   selectCartData,
-  selectCartVersion,
   setCartProducts,
-  setCartVersion,
 } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { IProducts } from '@/app/types/global';
@@ -36,10 +33,8 @@ const CartPage: FC<{
   const router = useTransitionRouter();
   const dispatch = useAppDispatch();
 
-  const { user, isAuth } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const productsInCart = useAppSelector(selectCartData) as IProducts[];
-  const cartVersion = useAppSelector(selectCartVersion) as number;
 
   const productsInOrder = useMemo(() => {
     return productsInCart.reduce(
@@ -57,7 +52,7 @@ const CartPage: FC<{
     );
   }, [productsInCart]);
 
-  /** init cart */
+  // init cart
   useEffect(() => {
     // create Order
     dispatch(
@@ -84,20 +79,7 @@ const CartPage: FC<{
     setIsLoading(false);
   }, []);
 
-  // load products from user state
-  // useEffect(() => {
-  //   if (!user?.state.cart || cartVersion > 0) {
-  //     return;
-  //   }
-  //   user.state.cart?.forEach((product: IProducts) => {
-  //     dispatch(
-  //       addProductToCart({ id: product.id, selected: true, quantity: 1 }),
-  //     );
-  //   });
-  //   dispatch(setCartVersion(1));
-  // }, [isAuth, user]);
-
-  /** add products to order */
+  // add products to order
   useEffect(() => {
     if (productsInOrder) {
       dispatch(addProducts(productsInOrder));
