@@ -8,6 +8,7 @@ export {
   useGetFormByMarkerQuery,
   useGetOrderStorageByMarkerQuery,
   useGetPaymentSessionByIdQuery,
+  useGetProductsByIdsQuery,
   useGetSingleOrderQuery,
   useLazyGetMeQuery,
   useLazyGetPaymentSessionByIdQuery,

@@ -31,6 +31,7 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
         <div className="w-1/4 font-bold">Price</div>
         <div className="w-1/4 font-bold">Quantity</div>
       </div>
+
       {productsDataInCart.map((product, i) => {
         const { selected, quantity } = product;
         if (!productsInCart[i]) {

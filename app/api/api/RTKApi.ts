@@ -13,6 +13,7 @@ import type {
   IAccountsEntity,
   ISessionEntity,
 } from 'oneentry/dist/payments/paymentsInterfaces';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 
 import { LanguageEnum } from '@/app/types/enum';
@@ -52,6 +53,40 @@ export const RTKApi = createApi({
           return { error: result };
         }
         return { data: result as IPositionBlock[] };
+      },
+    }),
+    /**
+     * Get Products By Ids.
+     * @interface
+     * @property {string} items - Array of IProductsEntity.
+     */
+    getProductsByIds: build.query<IProductsEntity[], { items: number[] }>({
+      queryFn: async ({ items }) => {
+        const getProductsByIds = async (ids: number[]) => {
+          return await Promise.all(
+            ids.map(async (id: number) => {
+              const product = await api.Products.getProductById(id);
+              if (!product || (product as IError).statusCode >= 400) {
+                return undefined;
+              } else {
+                return product as IProductsEntity;
+              }
+            }),
+          ).then((results) => {
+            return results.filter(
+              (product): product is IProductsEntity => product !== undefined,
+            );
+          });
+        };
+
+        const result = await getProductsByIds(items.map((item) => item)).then(
+          (res) => res,
+        );
+
+        if (!result || (result as unknown as IError)?.statusCode) {
+          return { error: result };
+        }
+        return { data: result };
       },
     }),
     /**
@@ -189,4 +224,5 @@ export const {
   useLazyGetPaymentSessionByIdQuery,
   useGetOrderStorageByMarkerQuery,
   useGetSingleOrderQuery,
+  useGetProductsByIdsQuery,
 } = RTKApi;

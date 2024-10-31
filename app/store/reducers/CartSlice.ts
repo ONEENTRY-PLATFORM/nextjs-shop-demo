@@ -7,6 +7,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { IProducts } from '@/app/types/global';
 
 type InitialStateType = {
+  products: IProductsEntity[];
   productsData: IProducts[];
   currency?: string;
   deliveryData: {
@@ -20,6 +21,7 @@ type InitialStateType = {
 };
 
 const initialState: InitialStateType = {
+  products: [],
   productsData: [],
   deliveryData: {
     date: new Date().getTime(),
@@ -49,9 +51,6 @@ export const cartSlice = createSlice({
       if (index === -1) {
         state.productsData.push(action.payload);
       }
-      // if (!state?.currency) {
-      //   state.currency = action.payload?.attributeValues?.currency?.value;
-      // }
     },
     increaseProductQty(
       state,

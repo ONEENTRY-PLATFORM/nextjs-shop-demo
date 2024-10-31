@@ -5,7 +5,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC, Key } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
-import { useGetProductsByIds } from '@/app/api/hooks/useGetProductsByIds';
+import { useGetProductsByIdsQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import type { SimplePageProps } from '@/app/types/global';
@@ -20,9 +20,12 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
       selectFavoritesItems(state),
   ) as Array<number>;
 
-  const { products, isLoading } = useGetProductsByIds({ items: favoritesIds });
+  const { data } = useGetProductsByIdsQuery({
+    items: favoritesIds,
+  });
+  const isLoading = false;
 
-  if (products.length < 1) {
+  if (!data || data.length < 1) {
     if (!isLoading) {
       return <EmptyFavorites lang={lang} dict={dict} />;
     } else {
@@ -31,12 +34,15 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   }
 
   return (
-    products.length && (
-      <FadeTransition className="flex flex-col pb-5 max-md:max-w-full">
+    data.length && (
+      <FadeTransition
+        className="flex flex-col pb-5 max-md:max-w-full"
+        index={0}
+      >
         <div className={'relative box-border flex w-full shrink-0 flex-col'}>
           <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
             <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-              {products.map((product: IProductsEntity, index: Key | number) => {
+              {data.map((product: IProductsEntity, index: Key | number) => {
                 return (
                   <ProductCard
                     key={index}
