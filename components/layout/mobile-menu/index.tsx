@@ -29,7 +29,7 @@ function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
   }, [open]);
 
   useEffect(() => {
-    setOpen(false);
+    // setOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname, searchParams]);
 

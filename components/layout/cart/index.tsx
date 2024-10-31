@@ -104,7 +104,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
 
   return (
     <FadeTransition
-      className="flex w-full flex-col pb-5 lg:max-w-[730px]"
+      className="flex w-full flex-col overflow-hidden pb-5 lg:max-w-[730px]"
       index={0}
     >
       <CartAnimations className={'mb-4 flex w-full flex-col gap-4'} index={1}>
