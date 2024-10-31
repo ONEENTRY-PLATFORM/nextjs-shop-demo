@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
@@ -23,8 +24,7 @@ import DeliveryForm from './delivery-table/DeliveryForm';
 
 interface CartPageProps {
   lang: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
   deliveryData: IProductsEntity;
 }
 

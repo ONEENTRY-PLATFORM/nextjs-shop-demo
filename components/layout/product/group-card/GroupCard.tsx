@@ -10,11 +10,13 @@ import ApplyButton from './ApplyButton';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 
-const GroupCard: FC<{
+interface GroupCardProps {
   product: IProductsEntity;
   lang: string;
   dict: IAttributeValues;
-}> = ({ product, lang, dict }) => {
+}
+
+const GroupCard: FC<GroupCardProps> = ({ product, lang, dict }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const attributeValues =
     product.attributeValues[langCode] || product.attributeValues;

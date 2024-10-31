@@ -33,7 +33,7 @@ const AddToCartButton: FC<AddToCartProps> = ({
   const dispatch = useAppDispatch();
   const { id } = product;
   const inCart = useAppSelector((state) => selectIsInCart(state, product.id));
-  const items = useAppSelector((state) => state.cartReducer.products);
+  const items = useAppSelector((state) => state.cartReducer.productsData);
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
@@ -47,11 +47,11 @@ const AddToCartButton: FC<AddToCartProps> = ({
     setInCart(inCart);
   }, [inCart]);
 
-  const inStock =
+  const notInStock =
     typeof product.statusIdentifier === 'string' &&
     product.statusIdentifier !== 'in_stock';
 
-  if (inStock) {
+  if (notInStock) {
     return (
       <div className={'btn btn-o btn-o-gray ' + className}>
         {out_of_stock_button.value}
@@ -61,8 +61,10 @@ const AddToCartButton: FC<AddToCartProps> = ({
 
   const onAddToCart = async () => {
     if (user) {
-      const updatedItems = items.some((product) => product.id === id)
-        ? items.map((product) => {
+      const updatedItems = items.some(
+        (product: { id: number }) => product.id === id,
+      )
+        ? items.map((product: { id: number; quantity: number }) => {
             return {
               id: product.id,
               quantity:

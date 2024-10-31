@@ -1,6 +1,7 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 import React, { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -18,7 +19,7 @@ interface QuantitySelectorProps {
   height: number;
 }
 
-const QuantitySelector: React.FC<QuantitySelectorProps> = ({
+const QuantitySelector: FC<QuantitySelectorProps> = ({
   product,
   height,
   className,
@@ -31,6 +32,7 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   ) as { id: number; selected: boolean; quantity: number };
   const quantity = data?.quantity || 0;
 
+  // setQty
   useEffect(() => {
     if (!quantity) {
       return;
@@ -41,6 +43,7 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   if (qty < 1 || !quantity) {
     return;
   }
+
   const units = attributeValues?.units_product?.value || 0;
 
   return (

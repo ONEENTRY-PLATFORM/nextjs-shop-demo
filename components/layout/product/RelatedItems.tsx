@@ -7,11 +7,13 @@ import { LanguageEnum } from '@/app/types/enum';
 
 import ProductCard from '../products-grid/components/product-card/ProductCard';
 
-const RelatedItems: FC<{
+interface RelatedItemsProps {
   marker: string;
   lang: string;
   dict: IAttributeValues;
-}> = async ({ marker, lang, dict }) => {
+}
+
+const RelatedItems: FC<RelatedItemsProps> = async ({ marker, lang, dict }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { isError, block } = await getBlockByMarker(marker, lang);
   if (isError || !block || !block.similarProducts) {

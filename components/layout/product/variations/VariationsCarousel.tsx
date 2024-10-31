@@ -8,11 +8,17 @@ import Carousel from 'react-simply-carousel';
 import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 
-const VariationsCarousel: FC<{
+interface VariationsCarouselProps {
   items: Array<IProductsEntity> | undefined;
   total?: number;
   lang: string;
-}> = ({ items, total, lang }) => {
+}
+
+const VariationsCarousel: FC<VariationsCarouselProps> = ({
+  items,
+  total,
+  lang,
+}) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   if (!items || !total || total < 1) {
