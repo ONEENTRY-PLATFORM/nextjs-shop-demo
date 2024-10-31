@@ -1,59 +1,14 @@
 'use client';
 
-import { useGSAP } from '@gsap/react';
-import { gsap } from 'gsap';
-import { useTransitionState } from 'next-transition-router';
 import type { FC } from 'react';
-import type { ReactNode } from 'react';
-import { useRef } from 'react';
 
 import type { LoaderProps } from '@/app/types/global';
 
-const CardsGridAnimations = ({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className: string;
-}) => {
-  const { stage } = useTransitionState();
-  const ref = useRef(null);
-
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      paused: true,
-      yoyo: true,
-      repeat: -1,
-    });
-    const cards =
-      ref.current &&
-      (ref.current as HTMLDivElement).querySelectorAll('.product-card');
-
-    tl.set(cards, {
-      autoAlpha: 0,
-    }).to(cards, {
-      autoAlpha: 1,
-      duration: 1,
-      stagger: 0.1,
-    });
-
-    tl.play();
-
-    return () => {
-      tl.kill();
-    };
-  }, [stage]);
-
-  return (
-    <div ref={ref} className={className}>
-      {children}
-    </div>
-  );
-};
+import ProductsGridLoaderAnimations from '../animations/ProductsGridLoaderAnimations';
 
 const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   return (
-    <CardsGridAnimations
+    <ProductsGridLoaderAnimations
       className={'relative box-border flex w-full shrink-0 flex-col'}
     >
       <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
@@ -75,7 +30,7 @@ const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
         </div>
         <div className="mt-5 flex h-8 w-full"></div>
       </section>
-    </CardsGridAnimations>
+    </ProductsGridLoaderAnimations>
   );
 };
 

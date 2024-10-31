@@ -4,14 +4,17 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { usePathname } from 'next/navigation';
 import { useTransitionState } from 'next-transition-router';
+import type { FC } from 'react';
 import { type ReactNode, useRef } from 'react';
 
-const SidebarAnimations = ({
-  children,
-  className,
-}: {
+interface SidebarAnimationsProps {
   children: ReactNode;
   className: string;
+}
+
+const SidebarAnimations: FC<SidebarAnimationsProps> = ({
+  children,
+  className,
 }) => {
   const { stage } = useTransitionState();
   const ref = useRef(null);

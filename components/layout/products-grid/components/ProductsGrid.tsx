@@ -1,3 +1,4 @@
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
@@ -6,7 +7,7 @@ import ProductCard from './product-card/ProductCard';
 interface GridLayoutProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: any;
-  dict: unknown;
+  dict: IAttributeValues;
   pagesLimit: number;
   products: IProductsEntity[];
 }

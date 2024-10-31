@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import type { FC } from 'react';
 
-interface IconButtonProps {
+interface StickerProps {
   sticker: {
     value: {
       title: string;
@@ -15,7 +15,7 @@ interface IconButtonProps {
   };
 }
 
-const Sticker: FC<IconButtonProps> = ({ sticker }) => {
+const Sticker: FC<StickerProps> = ({ sticker }) => {
   if (!sticker?.value) {
     return;
   }

@@ -8,10 +8,12 @@ import type { FC } from 'react';
 
 import * as icons from '../../../icons';
 
-const SidebarMenuItem: FC<{
+interface SidebarMenuItemProps {
   menuItem: IMenusPages & { isActive: boolean };
   lang: string;
-}> = ({ menuItem, lang }) => {
+}
+
+const SidebarMenuItem: FC<SidebarMenuItemProps> = ({ menuItem, lang }) => {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);
 

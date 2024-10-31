@@ -1,11 +1,12 @@
 import Image from 'next/image';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import { type FC } from 'react';
 
 import FilterModal from '@/components/layout/filter/FilterModal';
 
 interface GridLayoutProps {
   lang: string;
-  dict: unknown;
+  dict: IAttributeValues;
 }
 
 const ProductsNotFound: FC<GridLayoutProps> = async ({ lang, dict }) => {

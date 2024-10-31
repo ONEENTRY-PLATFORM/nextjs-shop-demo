@@ -12,12 +12,14 @@ import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 import Stickers from './Stickers';
 
-const ProductCard: FC<{
+interface ProductCardProps {
   product: IProductsEntity;
   lang: string;
   index: number;
   dict: IAttributeValues;
-}> = ({ product, lang, dict, index }) => {
+}
+
+const ProductCard: FC<ProductCardProps> = ({ product, lang, dict, index }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, attributeValues, localizeInfos } = product;
 

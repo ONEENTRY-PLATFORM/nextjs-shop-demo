@@ -5,10 +5,12 @@ import { LanguageEnum } from '@/app/types/enum';
 
 import Sticker from './Sticker';
 
-const Stickers: FC<{
+interface StickersProps {
   product: IProductsEntity;
   lang: string;
-}> = ({ product, lang }) => {
+}
+
+const Stickers: FC<StickersProps> = ({ product, lang }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { attributeValues } = product;
 
