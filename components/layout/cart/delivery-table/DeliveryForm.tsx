@@ -10,11 +10,13 @@ import PaymentButton from '@/components/layout/cart/components/PaymentButton';
 import TotalAmount from '@/components/layout/cart/components/TotalAmount';
 import DeliveryTable from '@/components/layout/cart/delivery-table/DeliveryTable';
 
-const DeliveryForm: FC<{
+interface DeliveryFormProps {
   lang: string;
   dict: any;
   deliveryData: IProductsEntity;
-}> = ({ lang, dict, deliveryData }) => {
+}
+
+const DeliveryForm: FC<DeliveryFormProps> = ({ lang, dict, deliveryData }) => {
   const router = useTransitionRouter();
 
   return (

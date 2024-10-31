@@ -5,11 +5,13 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '@/app/store/hooks';
 import { UsePrice } from '@/components/utils';
 
-const TotalAmount: FC<{
+interface TotalAmountProps {
   lang: string;
   dict: IAttributeValues;
   className: string;
-}> = ({ lang, dict, className }) => {
+}
+
+const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
   const [cartTotal, setCartTotal] = useState(0);
   const total = useAppSelector((state) => {
     return state.cartReducer.productsData.reduce((total, product, index) => {
