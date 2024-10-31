@@ -52,6 +52,9 @@ export const cartSlice = createSlice({
         state.productsData.push(action.payload);
       }
     },
+    addProductsToCart(state, action: PayloadAction<IProductsEntity[]>) {
+      state.products = action.payload;
+    },
     increaseProductQty(
       state,
       action: PayloadAction<{ units: number; id: number; quantity: number }>,
@@ -116,6 +119,7 @@ export const cartSlice = createSlice({
     },
     removeAllProducts(state) {
       state.productsData = initialState.productsData;
+      state.products = initialState.products;
     },
     setDeliveryData(
       state,
@@ -138,6 +142,7 @@ export const cartSlice = createSlice({
 
 export const {
   addProductToCart,
+  addProductsToCart,
   deselectProduct,
   removeProduct,
   increaseProductQty,

@@ -22,7 +22,6 @@ const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
       }
       return total;
     }, 0);
-    // return 0;
   });
 
   useEffect(() => {

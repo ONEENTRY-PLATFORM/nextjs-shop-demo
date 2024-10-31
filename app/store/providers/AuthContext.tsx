@@ -97,7 +97,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       });
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async function updateUser() {
     await updateUserState({
       cart: productsInCart,
@@ -111,7 +110,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       return;
     }
     updateUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, productsInCart, favoritesIds]);
 
   useEffect(() => {
@@ -142,7 +140,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     onInit().then(() => {
       setIsLoading(false);
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, langCode]);
 
   useEffect(() => {
@@ -156,7 +153,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     if (isAuth) {
       checkToken();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, refetchUser]);
 
   useEffect(() => {
@@ -171,7 +167,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
         }
       })();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, token]);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values

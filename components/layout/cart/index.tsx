@@ -11,6 +11,7 @@ import FadeTransition from '@/app/animations/FadeTransition';
 import { useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
+  addProductsToCart,
   addProductToCart,
   selectCartData,
 } from '@/app/store/reducers/CartSlice';
@@ -80,6 +81,12 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   }, []);
 
   // add products to order
+  useEffect(() => {
+    if (data) {
+      dispatch(addProductsToCart(data));
+    }
+  }, [data]);
+
   useEffect(() => {
     if (productsInOrder) {
       dispatch(addProducts(productsInOrder));
