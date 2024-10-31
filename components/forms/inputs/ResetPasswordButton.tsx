@@ -1,10 +1,11 @@
 'use client';
 
+import type { FC } from 'react';
 import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-const ResetPasswordButton: React.FC<{
+const ResetPasswordButton: FC<{
   title: string;
 }> = ({ title }) => {
   const { setComponent } = useContext(OpenDrawerContext);

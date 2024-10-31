@@ -48,3 +48,5 @@ export type IProducts = {
   selected: boolean;
   quantity: number;
 };
+
+export type FormProps = { lang: string; dict: IAttributeValues };

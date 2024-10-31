@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type { FC } from 'react';
@@ -27,8 +26,7 @@ export const CategoriesLoader: FC<LoaderProps> = ({ limit = 4 }) => {
       {Array.from(Array(limit).keys()).map((item) => (
         <div
           key={item}
-          // eslint-disable-next-line tailwindcss/no-custom-classname
-          className="box relative flex w-1/4 grow flex-col justify-center max-md:w-full"
+          className="relative flex w-1/4 grow flex-col justify-center max-md:w-full"
         >
           <div
             className={`relative flex size-full h-64 overflow-hidden rounded-3xl p-6`}

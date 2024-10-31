@@ -2,17 +2,19 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import type { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-const CalendarAnimations = ({
-  children,
-  className,
-}: {
+interface CalendarAnimationsProps {
   children: ReactNode;
   className: string;
+}
+
+const CalendarAnimations: FC<CalendarAnimationsProps> = ({
+  children,
+  className,
 }) => {
   const { open, transition } = useContext(OpenDrawerContext);
   const ref = useRef(null);

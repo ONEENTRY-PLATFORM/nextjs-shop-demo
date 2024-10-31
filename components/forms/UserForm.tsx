@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+import type { FormProps } from '@/app/types/global';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import AuthError from '../shared/AuthError';
@@ -25,10 +26,7 @@ export type InputValue = {
   [key: string]: unknown;
 };
 
-const UserForm: FC<{ lang: string; dict: IAttributeValues }> = ({
-  lang,
-  dict,
-}) => {
+const UserForm: FC<FormProps> = ({ lang, dict }) => {
   const { isAuth, refreshUser, user } = useContext(AuthContext);
   const { data, isLoading, error } = useGetFormByMarkerQuery({
     marker: 'reg',

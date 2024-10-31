@@ -2,18 +2,17 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import type { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-const FormAnimations = ({
-  children,
-  isLoading,
-}: {
+interface FormAnimationsProps {
   children: ReactNode;
   isLoading: boolean;
-}) => {
+}
+
+const FormAnimations: FC<FormAnimationsProps> = ({ children, isLoading }) => {
   const { open, transition, setTransition } = useContext(OpenDrawerContext);
   const ref = useRef(null);
 

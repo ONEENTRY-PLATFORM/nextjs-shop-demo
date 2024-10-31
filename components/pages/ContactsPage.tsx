@@ -5,6 +5,9 @@ import type { SimplePageProps } from '@/app/types/global';
 import ContactUsForm from '@/components/forms/ContactUsForm';
 
 const ContactsPage: FC<SimplePageProps> = async ({ page, lang }) => {
+  if (!page) {
+    return;
+  }
   const { localizeInfos, forms } = page;
   const { title, htmlContent } = localizeInfos;
 

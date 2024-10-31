@@ -12,6 +12,7 @@ import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { LanguageEnum } from '@/app/types/enum';
+import type { FormProps } from '@/app/types/global';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import { typeError } from '../utils';
@@ -19,10 +20,7 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
-const SignUpForm: FC<{ lang: string; dict: IAttributeValues }> = ({
-  lang,
-  dict,
-}) => {
+const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen, setComponent, setAction } = useContext(OpenDrawerContext);
 

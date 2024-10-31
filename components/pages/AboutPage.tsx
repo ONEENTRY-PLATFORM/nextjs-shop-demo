@@ -6,7 +6,11 @@ import SlideUpTransition from '@/app/animations/SlideUpTransition';
 import type { SimplePageProps } from '@/app/types/global';
 
 const AboutPage: FC<SimplePageProps> = ({ page }) => {
-  const { attributeValues } = page;
+  if (!page) {
+    return;
+  }
+
+  const attributeValues = page.attributeValues;
   const content = attributeValues?.content?.value[0] || '';
   const list = attributeValues.list?.value[0] || '';
 

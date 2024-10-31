@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button } from '@headlessui/react';
 import type { Dispatch } from 'react';
 import { useEffect, useRef } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';

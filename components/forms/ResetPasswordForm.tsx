@@ -7,6 +7,7 @@ import React, { useContext, useState } from 'react';
 import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import type { FormProps } from '@/app/types/global';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import { resetPasswordFormFields } from '../data';
@@ -14,7 +15,7 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const ResetPasswordForm: FC<{ lang: string; dict: IAttributeValues }> = ({
+const ResetPasswordForm: FC<FormProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   lang,
   dict,

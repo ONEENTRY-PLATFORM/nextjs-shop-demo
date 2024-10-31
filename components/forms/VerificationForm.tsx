@@ -1,7 +1,7 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+// import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
@@ -11,12 +11,13 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { addField } from '@/app/store/reducers/FormFieldsSlice';
+import type { FormProps } from '@/app/types/global';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import ErrorMessage from './inputs/ErrorMessage';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const VerificationForm: FC<{ lang: string; dict: IAttributeValues }> = ({
+const VerificationForm: FC<FormProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   lang,
   dict,

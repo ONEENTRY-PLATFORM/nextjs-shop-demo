@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import type { FC } from 'react';
 import React from 'react';
 
 interface SocialSignInButtonProps {
@@ -6,10 +7,7 @@ interface SocialSignInButtonProps {
   alt: string;
 }
 
-const SocialSignInButton: React.FC<SocialSignInButtonProps> = ({
-  imageSrc,
-  alt,
-}) => {
+const SocialSignInButton: FC<SocialSignInButtonProps> = ({ imageSrc, alt }) => {
   return (
     <button
       type="button"
