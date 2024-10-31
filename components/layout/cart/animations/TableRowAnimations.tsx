@@ -2,17 +2,15 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import type { ReactNode } from 'react';
+import type { FC } from 'react';
 import { useRef } from 'react';
 
-const TableRowAnimations = ({
+import type { AnimationsProps } from '@/app/types/global';
+
+const TableRowAnimations: FC<AnimationsProps> = ({
   children,
   className,
   index,
-}: {
-  children: ReactNode;
-  className: string;
-  index: number;
 }) => {
   const ref = useRef(null);
 

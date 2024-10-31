@@ -37,6 +37,12 @@ export type CartState = {
   id: number;
 };
 
+export type AnimationsProps = {
+  children: ReactNode;
+  className: string;
+  index: number;
+};
+
 export type IProducts = {
   id: number;
   selected: boolean;

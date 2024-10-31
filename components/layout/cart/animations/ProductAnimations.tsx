@@ -3,7 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { useRef } from 'react';
 import { toast } from 'react-toastify';
 
@@ -17,16 +17,18 @@ import {
 import QuantitySelector from '../../product/components/QuantitySelector';
 import DeleteButton from '../components/DeleteButton';
 
-const ProductAnimations = ({
+interface ProductAnimationsProps {
+  children: ReactNode;
+  className: string;
+  index: number;
+  product: IProductsEntity;
+}
+
+const ProductAnimations: FC<ProductAnimationsProps> = ({
   children,
   className,
   product,
   index,
-}: {
-  children: ReactNode;
-  className: string;
-  product: IProductsEntity;
-  index: number;
 }) => {
   const dispatch = useAppDispatch();
   const ref = useRef(null);

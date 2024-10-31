@@ -3,15 +3,15 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { ReactNode } from 'react';
+import type { FC } from 'react';
 import { useRef, useState } from 'react';
 
-const FadeTransition = ({
+import type { AnimationsProps } from '../types/global';
+
+const FadeTransition: FC<AnimationsProps> = ({
   children,
   className,
-}: {
-  children: ReactNode;
-  className: string;
+  index,
 }) => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
@@ -29,6 +29,7 @@ const FadeTransition = ({
       .to(ref.current, {
         autoAlpha: 1,
         duration: 0.5,
+        delay: index / 10,
       });
 
     if (stage === 'leaving' && prevStage === 'none') {

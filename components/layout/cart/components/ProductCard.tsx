@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import Image from 'next/image';
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
@@ -7,22 +6,26 @@ import { type FC, useEffect, useState } from 'react';
 
 import { getProductById } from '@/app/api';
 import { useAppDispatch } from '@/app/store/hooks';
-import {
-  deselectProduct,
-  setCartProducts,
-} from '@/app/store/reducers/CartSlice';
+import { deselectProduct } from '@/app/store/reducers/CartSlice';
 import type { IProducts } from '@/app/types/global';
 import Placeholder from '@/components/shared/Placeholder';
 
 import ProductAnimations from '../animations/ProductAnimations';
 import PriceDisplay from './PriceDisplay';
 
-const ProductCard: FC<{
+interface ProductCardProps {
   productData: IProducts;
   selected: boolean;
   lang: string;
   index: number;
-}> = ({ productData, selected, lang, index }) => {
+}
+
+const ProductCard: FC<ProductCardProps> = ({
+  productData,
+  selected,
+  lang,
+  index,
+}) => {
   const dispatch = useAppDispatch();
   const [product, setProduct] = useState<IProductsEntity>();
 
@@ -31,6 +34,7 @@ const ProductCard: FC<{
     return product;
   }
 
+  // get/set Product
   useEffect(() => {
     getProduct().then((res) => {
       if (res !== undefined) {
@@ -38,12 +42,6 @@ const ProductCard: FC<{
       }
     });
   }, []);
-
-  useEffect(() => {
-    if (product) {
-      dispatch(setCartProducts(product));
-    }
-  }, [product]);
 
   if (!product) {
     return;

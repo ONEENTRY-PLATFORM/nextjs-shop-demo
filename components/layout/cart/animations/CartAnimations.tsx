@@ -3,16 +3,12 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { ReactNode } from 'react';
+import type { FC } from 'react';
 import { useRef, useState } from 'react';
 
-const CartAnimations = ({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className: string;
-}) => {
+import type { AnimationsProps } from '@/app/types/global';
+
+const CartAnimations: FC<AnimationsProps> = ({ children, className }) => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState<string>('');
   const ref = useRef(null);

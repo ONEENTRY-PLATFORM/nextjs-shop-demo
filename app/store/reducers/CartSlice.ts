@@ -7,7 +7,6 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { IProducts } from '@/app/types/global';
 
 type InitialStateType = {
-  products: IProductsEntity[];
   productsData: IProducts[];
   currency?: string;
   deliveryData: {
@@ -21,7 +20,6 @@ type InitialStateType = {
 };
 
 const initialState: InitialStateType = {
-  products: [],
   productsData: [],
   deliveryData: {
     date: new Date().getTime(),
@@ -109,9 +107,6 @@ export const cartSlice = createSlice({
       state.productsData = state.productsData.filter(
         (item: IProducts) => item.id !== action.payload,
       );
-      state.products = state.products.filter(
-        (item: IProductsEntity) => item.id !== action.payload,
-      );
     },
     deselectProduct(state, action: PayloadAction<number>) {
       state.productsData.map((product) => {
@@ -136,14 +131,6 @@ export const cartSlice = createSlice({
     setCartTransition(state, action: PayloadAction<{ productId: number }>) {
       state.transitionId = action.payload.productId;
     },
-    setCartProducts(state, action: PayloadAction<IProductsEntity>) {
-      const index = state.products.findIndex(
-        (product: { id: number }) => product.id === action.payload.id,
-      );
-      if (index === -1) {
-        state.products.push(action.payload);
-      }
-    },
     setCartVersion(state, action: PayloadAction<number>) {
       state.version = action.payload;
     },
@@ -160,7 +147,6 @@ export const {
   setProductQty,
   setCartTransition,
   removeAllProducts,
-  setCartProducts,
   setCartVersion,
 } = cartSlice.actions;
 
