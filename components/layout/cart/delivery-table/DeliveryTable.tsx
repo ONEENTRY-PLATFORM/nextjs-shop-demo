@@ -15,11 +15,13 @@ import AddressRow from './AddressRow';
 import DeliveryRow from './DeliveryRow';
 import DeliveryTableRow from './DeliveryTableRow';
 
-const DeliveryTable: FC<{
+interface DeliveryTableProps {
   delivery: IProductsEntity;
   lang: string;
   dict: IAttributeValues;
-}> = ({ delivery, lang, dict }) => {
+}
+
+const DeliveryTable: FC<DeliveryTableProps> = ({ delivery, lang, dict }) => {
   const dispatch = useAppDispatch();
   const { user } = useContext(AuthContext);
   const deliveryData = useAppSelector(selectDeliveryData);

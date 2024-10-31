@@ -6,7 +6,10 @@ import { UsePrice } from '@/components/utils';
 import TableRowAnimations from '../animations/TableRowAnimations';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const DeliveryRow: FC<{ lang: any; delivery: any }> = ({ lang, delivery }) => {
+const DeliveryRow: FC<{ lang: string; delivery: any }> = ({
+  lang,
+  delivery,
+}) => {
   return (
     <TableRowAnimations
       className="tr h-[100px] border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"

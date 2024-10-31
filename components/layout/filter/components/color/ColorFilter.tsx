@@ -6,11 +6,12 @@ import type {
   IListTitle,
 } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IError } from 'oneentry/dist/base/utils';
+import type { FC } from 'react';
 import React, { useEffect, useMemo, useState } from 'react';
 
 import ColorPicker from './ColorPicker';
 
-interface Props {
+interface ColorFilterProps {
   title?: string;
   attributes: IAttributesSetsEntity | IError;
 }
@@ -21,7 +22,7 @@ type Color = {
   selected?: boolean;
 };
 
-const ColorFilter: React.FC<Props> = ({ title, attributes }) => {
+const ColorFilter: FC<ColorFilterProps> = ({ title, attributes }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
 

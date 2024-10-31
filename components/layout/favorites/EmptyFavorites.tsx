@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { FC } from 'react';
 
-const EmptyFavorites = ({
-  lang,
-  dict,
-}: {
+interface EmptyFavoritesProps {
   lang: string;
   dict: IAttributeValues;
-}) => {
+}
+
+const EmptyFavorites: FC<EmptyFavoritesProps> = ({ lang, dict }) => {
   const { empty_favorites_plug, go_to_shop } = dict;
 
   return (

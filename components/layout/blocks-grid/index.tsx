@@ -20,7 +20,10 @@ const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, lang }) => {
     <BlocksGridAnimations
       className={'block-card relative box-border w-full shrink-0'}
     >
-      <FadeTransition className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
+      <FadeTransition
+        className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col"
+        index={0}
+      >
         {blocks.map((block, index) => {
           const className = blocksData[index as keyof typeof blocksData];
 

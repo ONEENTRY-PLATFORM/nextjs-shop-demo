@@ -3,15 +3,17 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { useRef } from 'react';
 
-const BlocksGridAnimations = ({
-  children,
-  className,
-}: {
+interface BlocksGridAnimationsProps {
   children: ReactNode;
   className: string;
+}
+
+const BlocksGridAnimations: FC<BlocksGridAnimationsProps> = ({
+  children,
+  className,
 }) => {
   const { stage } = useTransitionState();
   const ref = useRef(null);

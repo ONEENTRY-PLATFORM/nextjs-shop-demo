@@ -10,11 +10,13 @@ import { getTrackBackground, Range } from 'react-range';
 import PriceFromInput from './PriceFromInput';
 import PriceToInput from './PriceToInput';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PriceFilter: FC<{ prices: any; dict: IAttributeValues }> = ({
-  prices,
-  dict,
-}) => {
+interface PriceFilterProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  prices: any;
+  dict: IAttributeValues;
+}
+
+const PriceFilter: FC<PriceFilterProps> = ({ prices, dict }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();

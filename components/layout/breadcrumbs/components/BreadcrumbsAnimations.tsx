@@ -3,14 +3,17 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { usePathname } from 'next/navigation';
+import type { FC } from 'react';
 import { type ReactNode, useRef } from 'react';
 
-const BreadcrumbsAnimations = ({
-  children,
-  className,
-}: {
+interface BreadcrumbsAnimationsProps {
   children: ReactNode;
   className: string;
+}
+
+const BreadcrumbsAnimations: FC<BreadcrumbsAnimationsProps> = ({
+  children,
+  className,
 }) => {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);

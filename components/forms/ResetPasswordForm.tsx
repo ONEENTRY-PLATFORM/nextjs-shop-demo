@@ -1,6 +1,5 @@
 'use client';
 
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
 import React, { useContext, useState } from 'react';
 
@@ -15,11 +14,7 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const ResetPasswordForm: FC<FormProps> = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  lang,
-  dict,
-}) => {
+const ResetPasswordForm: FC<FormProps> = ({ dict }) => {
   const { email_reg, password_reg, password_confirm, otp_code } =
     useAppSelector((state) => state.formFieldsReducer.fields) as object as {
       email_reg: {

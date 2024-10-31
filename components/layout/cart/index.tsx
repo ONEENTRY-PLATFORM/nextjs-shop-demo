@@ -80,13 +80,14 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
     );
   }, []);
 
-  // add products to order
+  // add products to cart slice
   useEffect(() => {
     if (data) {
       dispatch(addProductsToCart(data));
     }
   }, [data]);
 
+  // add products to order
   useEffect(() => {
     if (productsInOrder) {
       dispatch(addProducts(productsInOrder));

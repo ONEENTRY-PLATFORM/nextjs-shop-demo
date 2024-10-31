@@ -7,11 +7,17 @@ import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-const FilterAnimations: FC<{
+interface FilterAnimationsProps {
   children: ReactNode;
   className: string;
   index: number;
-}> = ({ children, className, index }) => {
+}
+
+const FilterAnimations: FC<FilterAnimationsProps> = ({
+  children,
+  className,
+  index,
+}) => {
   const { transition } = useContext(OpenDrawerContext);
   const ref = useRef(null);
 

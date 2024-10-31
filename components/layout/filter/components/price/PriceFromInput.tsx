@@ -1,10 +1,12 @@
 import type { Dispatch, FC, SetStateAction } from 'react';
 import { memo } from 'react';
 
-const PriceFromInput: FC<{
+interface PriceFromInputProps {
   price: number;
   setPrice: Dispatch<SetStateAction<number>>;
-}> = ({ price, setPrice }) => {
+}
+
+const PriceFromInput: FC<PriceFromInputProps> = ({ price, setPrice }) => {
   return (
     <input
       type="number"

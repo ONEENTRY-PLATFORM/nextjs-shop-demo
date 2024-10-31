@@ -10,11 +10,13 @@ import FilterModalAnimations from './animations/FilterModalAnimations';
 import FilterHeader from './components/header/FilterHeader';
 import FiltersForm from './FiltersForm';
 
-const FilterModal: FC<{
+interface FilterModalProps {
   prices: any | undefined;
   lang: string;
   dict: IAttributeValues;
-}> = ({ prices, lang, dict }) => {
+}
+
+const FilterModal: FC<FilterModalProps> = ({ prices, lang, dict }) => {
   return (
     <FilterModalAnimations>
       <div

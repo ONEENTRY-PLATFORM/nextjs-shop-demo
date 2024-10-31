@@ -1,10 +1,13 @@
 import Link from 'next/link';
+import type { FC } from 'react';
 
-const BreadcrumbItem: React.FC<{
+interface BreadcrumbItemProps {
   link: string;
   lang: string;
   isLast: boolean;
-}> = ({ link, isLast, lang }) => {
+}
+
+const BreadcrumbItem: FC<BreadcrumbItemProps> = ({ link, isLast, lang }) => {
   return (
     <>
       {!isLast ? (
