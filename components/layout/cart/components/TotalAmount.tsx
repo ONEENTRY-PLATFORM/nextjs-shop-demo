@@ -27,8 +27,9 @@ const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
   useEffect(() => {
     if (!total) {
       setCartTotal(0);
+    } else {
+      setCartTotal(total);
     }
-    setCartTotal(total);
   }, [total]);
 
   return (

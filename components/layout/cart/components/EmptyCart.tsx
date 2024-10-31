@@ -1,14 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { FC } from 'react';
 
-const EmptyCart = ({
-  lang,
-  dict,
-}: {
+interface EmptyCartProps {
   lang: string;
   dict: IAttributeValues;
-}) => {
+}
+
+const EmptyCart: FC<EmptyCartProps> = ({ lang, dict }) => {
   const { empty_cart_plug, go_to_shop } = dict;
 
   return (

@@ -25,7 +25,7 @@ const ProductCard: FC<ProductCardProps> = ({
 }) => {
   const dispatch = useAppDispatch();
 
-  if (!product) {
+  if (!product || product.id === 83) {
     return;
   }
 

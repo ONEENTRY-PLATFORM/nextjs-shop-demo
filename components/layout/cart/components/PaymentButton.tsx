@@ -1,9 +1,11 @@
 import type { FC } from 'react';
 
-const PaymentButton: FC<{ className?: string; text: string }> = ({
-  className,
-  text,
-}) => {
+interface PaymentButtonProps {
+  className?: string;
+  text: string;
+}
+
+const PaymentButton: FC<PaymentButtonProps> = ({ className, text }) => {
   return (
     <button
       type="submit"

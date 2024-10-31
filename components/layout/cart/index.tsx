@@ -108,7 +108,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
     >
       <CartAnimations className={'mb-4 flex w-full flex-col gap-4'} index={1}>
         {data
-          .filter((p) => p.id !== 83)
+          // .filter((p) => p.id !== 83)
           .map((product: IProductsEntity, i: number) => {
             return (
               <ProductCard
