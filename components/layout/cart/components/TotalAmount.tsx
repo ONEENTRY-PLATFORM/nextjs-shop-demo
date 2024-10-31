@@ -12,20 +12,20 @@ const TotalAmount: FC<{
 }> = ({ lang, dict, className }) => {
   const [cartTotal, setCartTotal] = useState(0);
   const total = useAppSelector((state) => {
-    // return state.cartReducer.productsData.reduce((total, product, index) => {
-    //   if (product.selected) {
-    //     const p = state.cartReducer.products[index];
-    //     total +=
-    //       (p?.attributeValues?.sale?.value || p?.price) * product.quantity;
-    //   }
-    //   return total;
-    // }, 0);
-    return 0;
+    return state.cartReducer.productsData.reduce((total, product, index) => {
+      if (product.selected) {
+        const p = state.cartReducer.products[index];
+        total +=
+          (p?.attributeValues?.sale?.value || p?.price) * product.quantity;
+      }
+      return total;
+    }, 0);
+    // return 0;
   });
 
   useEffect(() => {
     if (!total) {
-      return;
+      setCartTotal(0);
     }
     setCartTotal(total);
   }, [total]);

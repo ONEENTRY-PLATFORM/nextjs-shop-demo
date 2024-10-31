@@ -84,7 +84,7 @@ export const RTKApi = createApi({
         );
 
         if (!result || (result as unknown as IError)?.statusCode) {
-          return { error: result };
+          return { error: 'Data error' };
         }
         return { data: result };
       },
@@ -119,7 +119,7 @@ export const RTKApi = createApi({
       },
     }),
     /**
-     * Get one form by form marker.
+     * Get form by form marker.
      * @interface
      * @property {string} marker - Marker of form.
      * @property {string} lang - Language code. Default "en_US"

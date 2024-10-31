@@ -8,6 +8,7 @@ import type { FC } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
+import { useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addProductToCart,
@@ -31,7 +32,6 @@ interface CartPageProps {
 const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   const dispatch = useAppDispatch();
 
-  const [isLoading, setIsLoading] = useState(false);
   const productsInCart = useAppSelector(selectCartData) as IProducts[];
 
   const productsInOrder = useMemo(() => {
@@ -49,6 +49,10 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
       [],
     );
   }, [productsInCart]);
+
+  const { data, isLoading } = useGetProductsByIdsQuery({
+    items: productsInCart.map((p) => p.id),
+  });
 
   // init cart
   useEffect(() => {
@@ -73,7 +77,6 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
         quantity: 1,
       }),
     );
-    setIsLoading(false);
   }, []);
 
   // add products to order
@@ -87,7 +90,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
     return <Loader />;
   }
 
-  if (productsInCart.length < 2) {
+  if (productsInCart.length < 2 || !data) {
     return <EmptyCart lang={lang} dict={dict} />;
   }
 
@@ -97,14 +100,14 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
       index={0}
     >
       <CartAnimations className={'mb-4 flex w-full flex-col gap-4'} index={1}>
-        {productsInCart
-          .filter((p) => p.id !== 83)
-          .map((product: IProducts, i: number) => {
+        {data
+          // .filter((p) => p.id !== 83)
+          .map((product: IProductsEntity, i: number) => {
             return (
               <ProductCard
                 key={i}
                 index={i}
-                productData={product as IProducts}
+                product={product}
                 selected={productsInCart[i]?.selected}
                 lang={lang}
               />

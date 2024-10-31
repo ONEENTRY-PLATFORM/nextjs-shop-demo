@@ -20,10 +20,9 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
       selectFavoritesItems(state),
   ) as Array<number>;
 
-  const { data } = useGetProductsByIdsQuery({
+  const { data, isLoading } = useGetProductsByIdsQuery({
     items: favoritesIds,
   });
-  const isLoading = false;
 
   if (!data || data.length < 1) {
     if (!isLoading) {
