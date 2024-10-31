@@ -1,6 +1,6 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { UsePrice } from '@/components/utils';

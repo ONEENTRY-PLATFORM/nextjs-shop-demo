@@ -22,16 +22,21 @@ export const getAllOrdersByMarker = async ({
   total: number;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const data = await api.Orders.getAllOrdersByMarker(
-    marker,
-    langCode,
-    limit,
-    offset,
-  );
+  try {
+    const data = await api.Orders.getAllOrdersByMarker(
+      marker,
+      langCode,
+      limit,
+      offset,
+    );
 
-  if (typeError(data)) {
-    return { isError: true, error: data, total: 0 };
-  } else {
-    return { isError: false, orders: data.items, total: data.total };
+    if (typeError(data)) {
+      return { isError: true, error: data, total: 0 };
+    } else {
+      return { isError: false, orders: data.items, total: data.total };
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { isError: true, error: e, total: 0 };
   }
 };

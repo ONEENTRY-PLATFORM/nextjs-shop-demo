@@ -14,11 +14,17 @@ export const getBlockByMarker = async (
   block?: IBlockEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const data = await api.Blocks.getBlockByMarker(marker, langCode);
 
-  if (typeError(data)) {
-    return { isError: true, error: data };
-  } else {
-    return { isError: false, block: data };
+  try {
+    const data = await api.Blocks.getBlockByMarker(marker, langCode);
+
+    if (typeError(data)) {
+      return { isError: true, error: data };
+    } else {
+      return { isError: false, block: data };
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { isError: true, error: e };
   }
 };

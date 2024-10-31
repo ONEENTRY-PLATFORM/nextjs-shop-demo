@@ -14,11 +14,16 @@ export const getChildPagesByParentUrl = async (
   pages?: IPagesEntity[] | IError;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const data = await api.Pages.getChildPagesByParentUrl(url, langCode);
+  try {
+    const data = await api.Pages.getChildPagesByParentUrl(url, langCode);
 
-  if (typeError(data)) {
-    return { isError: true, error: data };
-  } else {
-    return { isError: false, pages: data };
+    if (typeError(data)) {
+      return { isError: true, error: data };
+    } else {
+      return { isError: false, pages: data };
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { isError: true, error: e };
   }
 };

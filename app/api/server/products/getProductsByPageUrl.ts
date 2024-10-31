@@ -30,21 +30,26 @@ export const getProductsByPageUrl = async (props: {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const expandedFilters = getSearchParams(params.searchParams);
 
-  const data = await api.Products.getProductsByPageUrl(
-    params.handle,
-    expandedFilters,
-    langCode,
-    {
-      sortOrder: 'DESC',
-      sortKey: 'id',
-      offset: offset,
-      limit: limit,
-    },
-  );
+  try {
+    const data = await api.Products.getProductsByPageUrl(
+      params.handle,
+      expandedFilters,
+      langCode,
+      {
+        sortOrder: 'DESC',
+        sortKey: 'id',
+        offset: offset,
+        limit: limit,
+      },
+    );
 
-  if (typeError(data)) {
-    return { isError: true, error: data, total: 0 };
-  } else {
-    return { isError: false, products: data.items, total: data.total };
+    if (typeError(data)) {
+      return { isError: true, error: data, total: 0 };
+    } else {
+      return { isError: false, products: data.items, total: data.total };
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { isError: true, error: e, total: 0 };
   }
 };

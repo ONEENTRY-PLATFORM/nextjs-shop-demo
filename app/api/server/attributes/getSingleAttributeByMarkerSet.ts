@@ -19,15 +19,21 @@ export const getSingleAttributeByMarkerSet = async ({
   attribute?: IAttributesSetsEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
-    attributeMarker,
-    setMarker,
-    langCode,
-  );
 
-  if (typeError(attribute)) {
-    return { isError: true, error: attribute as IError };
-  } else {
-    return { isError: false, attribute: attribute };
+  try {
+    const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
+      attributeMarker,
+      setMarker,
+      langCode,
+    );
+
+    if (typeError(attribute)) {
+      return { isError: true, error: attribute as IError };
+    } else {
+      return { isError: false, attribute: attribute };
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { isError: true, error: e };
   }
 };

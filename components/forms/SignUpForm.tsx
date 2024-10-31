@@ -1,7 +1,7 @@
 'use client';
 
 import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent, Key } from 'react';
 import { useContext, useState } from 'react';
 

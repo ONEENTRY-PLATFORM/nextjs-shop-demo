@@ -19,16 +19,21 @@ export const updateOrderByMarkerAndId = async (
   order?: IBaseOrdersEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const orderData = await api.Orders.updateOrderByMarkerAndId(
-    marker,
-    id,
-    data,
-    langCode,
-  );
+  try {
+    const orderData = await api.Orders.updateOrderByMarkerAndId(
+      marker,
+      id,
+      data,
+      langCode,
+    );
 
-  if (typeError(orderData)) {
-    return { isError: true, error: orderData };
-  } else {
-    return { isError: false, order: orderData };
+    if (typeError(orderData)) {
+      return { isError: true, error: orderData };
+    } else {
+      return { isError: false, order: orderData };
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { isError: true, error: e };
   }
 };

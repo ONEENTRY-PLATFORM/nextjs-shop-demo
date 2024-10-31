@@ -4,7 +4,7 @@ const APP_TOKEN =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicmVhY3RfYXBwIiwic2VyaWFsTnVtYmVyIjoxLCJpYXQiOjE3MDA0ODAwMDYsImV4cCI6MTc0Nzk5OTk2MX0.gz3KTCITg6FhM_SwtuOZl3GsMr4MlVEPg9sw3d8Q0Po';
 
 export const socket = io(PROJECT_URL, {
-  autoConnect: false,
+  autoConnect: true,
   transports: ['websocket'],
   path: '/api/content/ws',
   reconnection: true,
@@ -19,7 +19,7 @@ socket.on('connect', () => {
   console.log('Connected to the server');
 });
 socket.on('disconnect', () => {
-  console.log('Connected to the server');
+  console.log('disconnect server');
 });
 socket.on('connect_error', (error) => {
   console.error(`Connection error: ${error}`);

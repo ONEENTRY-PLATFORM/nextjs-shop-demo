@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import type { Action, PayloadAction } from '@reduxjs/toolkit';
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
-// import { HYDRATE } from 'next-redux-wrapper';
 import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
@@ -21,8 +19,6 @@ import { LanguageEnum } from '@/app/types/enum';
 
 import { api } from './api';
 
-// type RootState = any; // normally inferred from state
-
 interface BlockByMarkerProps {
   marker: string;
   activeLang: string;
@@ -39,18 +35,9 @@ interface SingleOrderProps {
   activeLang: string;
 }
 
-// function isHydrateAction(action: Action): action is PayloadAction<RootState> {
-//   return action.type === HYDRATE;
-// }
-
 export const RTKApi = createApi({
   reducerPath: 'api',
   baseQuery: fakeBaseQuery(),
-  // extractRehydrationInfo(action, { reducerPath }): any {
-  //   if (isHydrateAction(action)) {
-  //     return action.payload[reducerPath];
-  //   }
-  // },
   endpoints: (build) => ({
     /**
      * Get all blocks by page url.

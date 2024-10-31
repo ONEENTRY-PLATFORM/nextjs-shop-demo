@@ -9,11 +9,16 @@ export const getLocales = async (): Promise<{
   error?: IError;
   locales?: ILocalEntity[];
 }> => {
-  const data = await api.Locales.getLocales();
+  try {
+    const data = await api.Locales.getLocales();
 
-  if (typeError(data)) {
-    return { isError: true, error: data };
-  } else {
-    return { isError: false, locales: data };
+    if (typeError(data)) {
+      return { isError: true, error: data };
+    } else {
+      return { isError: false, locales: data };
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { isError: true, error: e };
   }
 };

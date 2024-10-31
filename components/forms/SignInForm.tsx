@@ -1,6 +1,6 @@
 'use client';
 
-import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent, Key } from 'react';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -13,15 +13,11 @@ import type { FormProps } from '@/app/types/global';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimations';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { socialProvidersButtons } from '../data';
 import CreateAccountButton from './inputs/CreateAccountButton';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import SocialSignInButton from './inputs/SocialSignInButton';
 
 const SignInForm: FC<FormProps> = ({ lang, dict }) => {
   const { authenticate } = useContext(AuthContext);
@@ -41,8 +37,6 @@ const SignInForm: FC<FormProps> = ({ lang, dict }) => {
     forgot_password_text,
     create_account_text,
     sign_in_text,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    sign_in_with_text,
     email_text,
     phone_text,
   } = dict;
@@ -166,24 +160,6 @@ const SignInForm: FC<FormProps> = ({ lang, dict }) => {
           </div>
           <ResetPasswordButton title={reset_password_text.value} />
         </FormFieldAnimations>
-
-        {/* <FormFieldAnimations index={7} className="w-full">
-          <p className="mx-auto mb-3 text-center text-base font-bold leading-8 text-neutral-600">
-            {sign_in_with_text.value}
-          </p>
-        </FormFieldAnimations> */}
-        {/* <FormFieldAnimations
-          index={8}
-          className="mx-auto flex max-w-32 justify-between gap-5"
-        >
-          {socialProvidersButtons.map((button, index) => (
-            <SocialSignInButton
-              key={index}
-              imageSrc={button.src}
-              alt={button.alt}
-            />
-          ))}
-        </FormFieldAnimations> */}
         <FormFieldAnimations index={7} className="w-full">
           <CreateAccountButton title={create_account_text.value} />
         </FormFieldAnimations>

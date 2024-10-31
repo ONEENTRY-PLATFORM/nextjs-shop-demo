@@ -2,8 +2,6 @@ import Link from 'next/link';
 
 import { getPageByUrl } from '@/app/api';
 
-// import { getDictionary } from './dictionaries';
-
 const NotFound = async () => {
   const lang = 'en';
   const { page, isError } = await getPageByUrl('404', lang);

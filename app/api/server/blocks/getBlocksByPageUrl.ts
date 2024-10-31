@@ -17,11 +17,16 @@ export const getBlocksByPageUrl = async ({
   blocks?: IPositionBlock[];
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const data = await api.Pages.getBlocksByPageUrl(pageUrl, langCode);
+  try {
+    const data = await api.Pages.getBlocksByPageUrl(pageUrl, langCode);
 
-  if (typeError(data)) {
-    return { isError: true, error: data };
-  } else {
-    return { isError: false, blocks: data };
+    if (typeError(data)) {
+      return { isError: true, error: data };
+    } else {
+      return { isError: false, blocks: data };
+    }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { isError: true, error: e };
   }
 };
