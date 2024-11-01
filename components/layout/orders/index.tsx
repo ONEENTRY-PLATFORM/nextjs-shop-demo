@@ -39,21 +39,18 @@ const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
       if (block) {
         setSettings(block.attributeValues);
       }
-      if (pageLimit) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { isError, error, orders, total } = await getAllOrdersByMarker({
-          marker: 'order',
-          limit: pageLimit,
-          offset: currentPage * pageLimit,
-          lang,
-        });
-        if (orders && !isError) {
-          setOrders(orders);
-          setTotal(total);
-        }
-        if (isError) {
-          console.log(error);
-        }
+      const { isError, error, orders, total } = await getAllOrdersByMarker({
+        marker: 'order',
+        limit: pageLimit,
+        offset: currentPage * pageLimit,
+        lang,
+      });
+      if (orders && !isError) {
+        setOrders(orders);
+        setTotal(total);
+      }
+      if (isError) {
+        console.log(error);
       }
     })();
   }, [lang, currentPage, isAuth, pageLimit, user]);

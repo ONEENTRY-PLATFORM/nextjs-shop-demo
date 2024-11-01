@@ -59,34 +59,34 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
   }, []);
 
   // removeProduct
-  useGSAP(() => {
-    if (!ref.current || product.id !== transitionId) {
-      return;
-    }
-    const tl = gsap.timeline();
+  // useGSAP(() => {
+  //   if (!ref.current || product.id !== transitionId) {
+  //     return;
+  //   }
+  //   const tl = gsap.timeline();
 
-    tl.to(ref.current, {
-      autoAlpha: 0,
-      height: 0,
-      duration: 0.5,
-      onStart: () => {
-        // dispatch(
-        //   setCartTransition({
-        //     productId: 0,
-        //   }),
-        // );
-        dispatch(removeProduct(product.id));
-        toast('Product ' + product.localizeInfos.title + ' removed from cart!');
-      },
-    }).set(ref.current, {
-      autoAlpha: 1,
-      height: 'auto',
-    });
+  //   tl.to(ref.current, {
+  //     autoAlpha: 0,
+  //     height: 0,
+  //     duration: 0.5,
+  //     onStart: () => {
+  //       // dispatch(
+  //       //   setCartTransition({
+  //       //     productId: 0,
+  //       //   }),
+  //       // );
+  //       // dispatch(removeProduct(product.id));
+  //       toast('Product ' + product.localizeInfos.title + ' removed from cart!');
+  //     },
+  //   }).set(ref.current, {
+  //     autoAlpha: 1,
+  //     height: 'auto',
+  //   });
 
-    return () => {
-      tl.kill();
-    };
-  }, [transitionId]);
+  //   return () => {
+  //     tl.kill();
+  //   };
+  // }, [transitionId]);
 
   return (
     <div ref={ref} className={className}>

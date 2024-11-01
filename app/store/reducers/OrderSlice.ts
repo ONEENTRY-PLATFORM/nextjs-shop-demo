@@ -13,7 +13,7 @@ export type IAppOrder = {
 };
 
 type InitialStateType = {
-  order: IAppOrder | undefined;
+  order: IAppOrder;
   currency?: string;
   paymentMethods?: Array<{
     identifier: string;
@@ -21,7 +21,10 @@ type InitialStateType = {
 };
 
 const initialState: InitialStateType = {
-  order: undefined,
+  order: {
+    formData: [],
+    products: [],
+  },
 };
 
 const orderReducer = createSlice({
@@ -34,7 +37,10 @@ const orderReducer = createSlice({
       }
     },
     remove(state) {
-      state.order = undefined;
+      state.order = {
+        formData: [],
+        products: [],
+      };
     },
     addData(
       state,
@@ -58,6 +64,9 @@ const orderReducer = createSlice({
         return;
       }
       state.order.products = action.payload;
+    },
+    addDelivery(state, action: PayloadAction<IOrderProductData>) {
+      state.order.products = [...state.order.products, action.payload];
     },
     addPaymentMethods(
       state,
@@ -91,6 +100,7 @@ export const {
   create: createOrder,
   addData,
   addProducts,
+  addDelivery,
   addPaymentMethods,
   addPaymentMethod,
   addOrderCurrency,

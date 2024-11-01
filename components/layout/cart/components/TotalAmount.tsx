@@ -30,14 +30,15 @@ const TotalAmount: FC<TotalAmountProps> = ({
       return total;
     }, 0);
   });
+  const deliveryPrice = delivery?.price || 0;
 
   useEffect(() => {
     if (!total) {
       setCartTotal(0);
     } else {
-      setCartTotal(total);
+      setCartTotal(total + deliveryPrice);
     }
-  }, [total]);
+  }, [total, deliveryPrice]);
 
   return (
     <div className={className}>

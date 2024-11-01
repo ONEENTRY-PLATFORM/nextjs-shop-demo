@@ -15,7 +15,11 @@ import {
   addProductsToCart,
   selectCartData,
 } from '@/app/store/reducers/CartSlice';
-import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
+import {
+  addDelivery,
+  addProducts,
+  createOrder,
+} from '@/app/store/reducers/OrderSlice';
 import type { IProducts } from '@/app/types/global';
 import CartAnimations from '@/components/layout/cart/animations/CartAnimations';
 import EmptyCart from '@/components/layout/cart/components/EmptyCart';
@@ -37,19 +41,26 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   const productsInCart = useAppSelector(selectCartData) as IProducts[];
 
   const productsInOrder = useMemo(() => {
-    return productsInCart.reduce(
-      (results: Array<IOrderProductData & { selected: boolean }>, item) => {
-        if (item.selected) {
-          results.push({
-            productId: item.id,
-            quantity: item.quantity,
-            selected: item.selected,
-          });
-        }
-        return results;
+    return [
+      ...productsInCart.reduce(
+        (results: Array<IOrderProductData & { selected: boolean }>, item) => {
+          if (item.selected) {
+            results.push({
+              productId: item.id,
+              quantity: item.quantity,
+              selected: item.selected,
+            });
+          }
+          return results;
+        },
+        [],
+      ),
+      {
+        productId: deliveryData.id,
+        quantity: 1,
+        selected: true,
       },
-      [],
-    );
+    ];
   }, [productsInCart]);
 
   const { data, isLoading } = useGetProductsByIdsQuery({
@@ -67,7 +78,8 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
         paymentAccountIdentifier: '',
       }),
     );
-    // add delivery Data
+
+    // add delivery To Cart
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
     }
