@@ -61,12 +61,13 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       selectFavoritesItems(state),
   ) as Array<number>;
 
-  const [trigger, { isError }] = useLazyGetMeQuery({
+  const [trigger, { isError, error }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 3000 : 0,
   });
 
   const onInit = async () => {
     const refresh = localStorage.getItem('refresh-token');
+
     if (!refresh) {
       setIsAuth(false);
       return;
@@ -80,7 +81,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       langCode,
     })
       .then(async (res) => {
-        if ((res.error && !res.isLoading) || !res.data?.id) {
+        if ((res.isError && !res.isLoading) || !res.data?.id) {
           localStorage.setItem('refresh-token', '');
           setIsAuth(false);
         } else {
@@ -146,14 +147,16 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     const refresh = localStorage.getItem('refresh-token');
     if (isError && refresh) {
       setRefetch(true);
+      localStorage.setItem('refresh-token', '');
+      setIsAuth(false);
     }
   }, [isError]);
 
   // checkToken
   useEffect(() => {
-    // if (isAuth) {
-    checkToken();
-    // }
+    if (isAuth) {
+      checkToken();
+    }
   }, [refetch, refetchUser]);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values

@@ -1,6 +1,6 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { UsePrice } from '@/components/utils';
@@ -27,7 +27,7 @@ const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
     return state.cartReducer.delivery?.price || 0;
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!total) {
       setCartTotal(0);
     } else {

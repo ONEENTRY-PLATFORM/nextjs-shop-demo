@@ -27,43 +27,43 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     items: favoritesIds,
   });
 
+  // setProducts
   useEffect(() => {
     if (data) {
       setProducts(data);
-      if (!isAuth) {
-        return;
-      }
-      const ws = api.WS.connect();
-      if (ws) {
-        ws.on('notification', async (res) => {
-          if (res?.product) {
-            const product = {
-              ...res.product,
-              attributeValues: res.product?.attributes,
-            };
-
-            const index = data.findIndex(
-              (p: IProductsEntity) => p.id === product.id,
-            );
-            const newPrice = parseInt(
-              product?.attributeValues?.price?.value,
-              10,
-            );
-
-            setProducts((prevProducts) => {
-              const newProducts = [...prevProducts];
-              newProducts[index] = {
-                ...products[index],
-                price: newPrice,
-                statusIdentifier: res?.product?.status?.identifier,
+      if (isAuth) {
+        const ws = api.WS.connect();
+        if (ws) {
+          ws.on('notification', async (res) => {
+            if (res?.product) {
+              const product = {
+                ...res.product,
+                attributeValues: res.product?.attributes,
               };
-              return newProducts;
-            });
-          }
-        });
-        return () => {
-          ws.disconnect();
-        };
+
+              const index = data.findIndex(
+                (p: IProductsEntity) => p.id === product.id,
+              );
+              const newPrice = parseInt(
+                product?.attributeValues?.price?.value,
+                10,
+              );
+
+              setProducts((prevProducts) => {
+                const newProducts = [...prevProducts];
+                newProducts[index] = {
+                  ...products[index],
+                  price: newPrice,
+                  statusIdentifier: res?.product?.status?.identifier,
+                };
+                return newProducts;
+              });
+            }
+          });
+          return () => {
+            ws.disconnect();
+          };
+        }
       }
     }
   }, [isAuth, data]);

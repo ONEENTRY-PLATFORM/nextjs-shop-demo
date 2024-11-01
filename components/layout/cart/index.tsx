@@ -4,11 +4,12 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
 import { api, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   addDeliveryToCart,
   addProductsToCart,
@@ -30,6 +31,7 @@ interface CartPageProps {
 
 const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   const dispatch = useAppDispatch();
+  const { isAuth } = useContext(AuthContext);
   const [products, setProducts] = useState<IProductsEntity[]>([]);
 
   const productsCartData = useAppSelector(selectCartData) as IProducts[];
@@ -49,39 +51,40 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   useEffect(() => {
     if (data) {
       setProducts(data);
-
-      const ws = api.WS.connect();
-      if (ws) {
-        ws.on('notification', async (res) => {
-          if (res?.product) {
-            const product = {
-              ...res.product,
-              attributeValues: res.product?.attributes,
-            };
-
-            const index = data.findIndex(
-              (p: IProductsEntity) => p.id === product.id,
-            );
-            const newPrice = parseInt(
-              product?.attributeValues?.price?.value,
-              10,
-            );
-
-            setProducts((prevProducts) => {
-              const newProducts = [...prevProducts];
-              newProducts[index] = {
-                ...products[index],
-                price: newPrice,
-                statusIdentifier: res?.product?.status?.identifier,
+      if (isAuth) {
+        const ws = api.WS.connect();
+        if (ws) {
+          ws.on('notification', async (res) => {
+            if (res?.product) {
+              const product = {
+                ...res.product,
+                attributeValues: res.product?.attributes,
               };
-              return newProducts;
-            });
-          }
-        });
 
-        return () => {
-          ws.disconnect();
-        };
+              const index = data.findIndex(
+                (p: IProductsEntity) => p.id === product.id,
+              );
+              const newPrice = parseInt(
+                product?.attributeValues?.price?.value,
+                10,
+              );
+
+              setProducts((prevProducts) => {
+                const newProducts = [...prevProducts];
+                newProducts[index] = {
+                  ...products[index],
+                  price: newPrice,
+                  statusIdentifier: res?.product?.status?.identifier,
+                };
+                return newProducts;
+              });
+            }
+          });
+
+          return () => {
+            ws.disconnect();
+          };
+        }
       }
     }
   }, [data]);
