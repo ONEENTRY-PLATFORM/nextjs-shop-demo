@@ -10,6 +10,7 @@ type InitialStateType = {
   products: IProductsEntity[];
   productsData: IProducts[];
   currency?: string;
+  delivery?: IProductsEntity;
   deliveryData: {
     date: number;
     time: string;
@@ -23,6 +24,7 @@ type InitialStateType = {
 const initialState: InitialStateType = {
   products: [],
   productsData: [],
+  delivery: undefined,
   deliveryData: {
     date: new Date().getTime(),
     time: '',
@@ -121,6 +123,9 @@ export const cartSlice = createSlice({
       state.productsData = initialState.productsData;
       state.products = initialState.products;
     },
+    addDeliveryToCart(state, action: PayloadAction<IProductsEntity>) {
+      state.delivery = action.payload;
+    },
     setDeliveryData(
       state,
       action: PayloadAction<{ date: number; time: string; address: string }>,
@@ -148,6 +153,7 @@ export const {
   increaseProductQty,
   decreaseProductQty,
   setDeliveryData,
+  addDeliveryToCart,
   setProductQty,
   setCartTransition,
   removeAllProducts,

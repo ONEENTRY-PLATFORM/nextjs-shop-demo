@@ -11,8 +11,8 @@ import FadeTransition from '@/app/animations/FadeTransition';
 import { api, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
+  addDeliveryToCart,
   addProductsToCart,
-  addProductToCart,
   selectCartData,
 } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
@@ -67,18 +67,10 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
         paymentAccountIdentifier: '',
       }),
     );
-
     // add delivery Data
-    if (!deliveryData) {
-      return;
+    if (deliveryData) {
+      dispatch(addDeliveryToCart(deliveryData));
     }
-    dispatch(
-      addProductToCart({
-        id: deliveryData.id,
-        selected: true,
-        quantity: 1,
-      }),
-    );
   }, []);
 
   // add products to cart slice
@@ -134,7 +126,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
     return <Loader />;
   }
 
-  if (productsInCart.length < 2 || !data) {
+  if (!products || products.length < 1) {
     return <EmptyCart lang={lang} dict={dict} />;
   }
 

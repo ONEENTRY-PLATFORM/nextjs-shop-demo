@@ -30,7 +30,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { block, isError } = await getBlockByMarker(marker, lang);
 
-  if (!block || !block.attributeValues || !block.isVisible || isError) {
+  if (!block || isError) {
     return <Loader />;
   }
 

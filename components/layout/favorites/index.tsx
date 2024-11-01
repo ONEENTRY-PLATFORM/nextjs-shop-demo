@@ -33,9 +33,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
       if (!isAuth) {
         return;
       }
-
       const ws = api.WS.connect();
-      console.log(ws);
       if (ws) {
         ws.on('notification', async (res) => {
           if (res?.product) {
@@ -63,7 +61,6 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
             });
           }
         });
-
         return () => {
           ws.disconnect();
         };

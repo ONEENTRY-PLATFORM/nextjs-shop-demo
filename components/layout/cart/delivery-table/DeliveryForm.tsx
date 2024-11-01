@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
@@ -12,7 +12,7 @@ import DeliveryTable from '@/components/layout/cart/delivery-table/DeliveryTable
 
 interface DeliveryFormProps {
   lang: string;
-  dict: any;
+  dict: IAttributeValues;
   deliveryData: IProductsEntity;
 }
 
@@ -36,6 +36,7 @@ const DeliveryForm: FC<DeliveryFormProps> = ({ lang, dict, deliveryData }) => {
         <TotalAmount
           lang={lang}
           dict={dict}
+          delivery={deliveryData as IProductsEntity}
           className="flex self-center text-lg font-bold leading-6 text-slate-700 lg:self-end"
         />
         <PaymentButton

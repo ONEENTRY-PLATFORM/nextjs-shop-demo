@@ -26,11 +26,6 @@ const ProductCard: FC<ProductCardProps> = ({
   index,
 }) => {
   const dispatch = useAppDispatch();
-
-  if (!product || product.id === 83) {
-    return;
-  }
-
   const { id, attributeValues, localizeInfos } = product;
   const imgSrc = attributeValues.pic?.value.downloadLink;
   const title = localizeInfos?.title;

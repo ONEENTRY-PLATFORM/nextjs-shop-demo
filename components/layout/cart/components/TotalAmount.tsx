@@ -1,4 +1,5 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 
@@ -9,9 +10,15 @@ interface TotalAmountProps {
   lang: string;
   dict: IAttributeValues;
   className: string;
+  delivery: IProductsEntity;
 }
 
-const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
+const TotalAmount: FC<TotalAmountProps> = ({
+  lang,
+  dict,
+  className,
+  delivery,
+}) => {
   const [cartTotal, setCartTotal] = useState(0);
   const total = useAppSelector((state) => {
     return state.cartReducer.productsData.reduce((total, product, index) => {
