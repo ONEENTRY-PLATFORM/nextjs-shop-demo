@@ -6,6 +6,7 @@ import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { onSubscribeEvents } from '@/app/api/hooks/useEvents';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
@@ -60,6 +61,9 @@ const AddToCartButton: FC<AddToCartProps> = ({
   }
 
   const onAddToCart = async () => {
+    dispatch(addProductToCart({ id: product.id, selected: true, quantity: 1 }));
+    toast('Product ' + product.localizeInfos.title + ' added to cart!');
+
     if (user) {
       const updatedItems = items.some(
         (product: { id: number }) => product.id === id,
@@ -79,9 +83,9 @@ const AddToCartButton: FC<AddToCartProps> = ({
         cart: updatedItems,
         user: user,
       });
+
+      await onSubscribeEvents(product.id);
     }
-    dispatch(addProductToCart({ id: product.id, selected: true, quantity: 1 }));
-    toast('Product ' + product.localizeInfos.title + ' added to cart!');
   };
 
   return !productInCart || !inCart ? (

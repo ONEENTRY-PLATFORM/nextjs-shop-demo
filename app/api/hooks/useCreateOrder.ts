@@ -1,6 +1,7 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
+import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import { useState } from 'react';
 
 import { api } from '@/app/api';
@@ -69,8 +70,7 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
         langCode,
       );
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      order.products.forEach((product: any) => {
+      order.products.forEach((product: IOrderProductData) => {
         dispatch(removeProduct(product.productId));
       });
       dispatch(removeOrder());

@@ -7,7 +7,9 @@ import { useAppDispatch } from '@/app/store/hooks';
 import { deselectProduct } from '@/app/store/reducers/CartSlice';
 import Placeholder from '@/components/shared/Placeholder';
 
+import QuantitySelector from '../../product/components/QuantitySelector';
 import ProductAnimations from '../animations/ProductAnimations';
+import DeleteButton from './DeleteButton';
 import PriceDisplay from './PriceDisplay';
 
 interface ProductCardProps {
@@ -81,6 +83,10 @@ const ProductCard: FC<ProductCardProps> = ({
           href={`/shop/product/` + id}
           className="absolute left-0 top-0 z-0 flex size-full"
         ></Link>
+      </div>
+      <div className="z-10 flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:ml-8 max-sm:flex">
+        <QuantitySelector product={product} height={42} />
+        <DeleteButton productId={product.id} />
       </div>
     </ProductAnimations>
   );

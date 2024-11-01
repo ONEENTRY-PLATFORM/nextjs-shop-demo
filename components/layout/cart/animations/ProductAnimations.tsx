@@ -11,11 +11,11 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   getTransition,
   removeProduct,
-  setCartTransition,
+  // setCartTransition,
 } from '@/app/store/reducers/CartSlice';
 
-import QuantitySelector from '../../product/components/QuantitySelector';
-import DeleteButton from '../components/DeleteButton';
+// import QuantitySelector from '../../product/components/QuantitySelector';
+// import DeleteButton from '../components/DeleteButton';
 
 interface ProductAnimationsProps {
   children: ReactNode;
@@ -91,10 +91,6 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
   return (
     <div ref={ref} className={className}>
       {children}
-      <div className="z-10 flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:ml-8 max-sm:flex">
-        <QuantitySelector product={product} height={42} />
-        <DeleteButton productId={product.id} />
-      </div>
     </div>
   );
 };

@@ -5,10 +5,10 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
-import { useGetProductsByIdsQuery } from '@/app/api';
+import { api, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
   addProductsToCart,
@@ -32,6 +32,7 @@ interface CartPageProps {
 
 const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   const dispatch = useAppDispatch();
+  const [products, setProducts] = useState<IProductsEntity[]>([]);
 
   const productsInCart = useAppSelector(selectCartData) as IProducts[];
 
@@ -84,6 +85,41 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   useEffect(() => {
     if (data) {
       dispatch(addProductsToCart(data));
+      setProducts(data);
+
+      const ws = api.WS.connect();
+      if (ws) {
+        ws.on('notification', async (res) => {
+          if (res?.product) {
+            const product = {
+              ...res.product,
+              attributeValues: res.product?.attributes,
+            };
+
+            const index = data.findIndex(
+              (p: IProductsEntity) => p.id === product.id,
+            );
+            const newPrice = parseInt(
+              product?.attributeValues?.price?.value,
+              10,
+            );
+
+            setProducts((prevProducts) => {
+              const newProducts = [...prevProducts];
+              newProducts[index] = {
+                ...products[index],
+                price: newPrice,
+                statusIdentifier: res?.product?.status?.identifier,
+              };
+              return newProducts;
+            });
+          }
+        });
+
+        return () => {
+          ws.disconnect();
+        };
+      }
     }
   }, [data]);
 
@@ -108,7 +144,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
       index={0}
     >
       <CartAnimations className={'mb-4 flex w-full flex-col gap-4'} index={1}>
-        {data.map((product: IProductsEntity, i: number) => {
+        {products.map((product: IProductsEntity, i: number) => {
           return (
             <ProductCard
               key={i}

@@ -6,7 +6,10 @@ import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { api } from '@/app/api';
+import {
+  onSubscribeEvents,
+  onUnsubscribeEvents,
+} from '@/app/api/hooks/useEvents';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
@@ -18,58 +21,20 @@ import {
 const FavoritesButton: FC<IProductsEntity> = (product) => {
   const [isFav, setIsFav] = useState(false);
   const dispatch = useAppDispatch();
-  const isFavorites = useAppSelector((state) =>
-    selectIsFavorites(state, product.id),
-  );
   const { user, isAuth } = useContext(AuthContext);
-
-  const onSubscribeFavorite = async () => {
-    try {
-      const s = await api.Events.subscribeByMarker(
-        'catalog_event',
-        product.id,
-        'en_US',
-      );
-      console.log('onSubscribeFavorite ', s);
-      // await api.Events.subscribeByMarker(
-      //   'status_out_of_stock',
-      //   product.id,
-      //   'en_US',
-      // );
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const onUnsubscribeFavorite = async () => {
-    try {
-      const s = await api.Events.unsubscribeByMarker(
-        'catalog_event',
-        product.id,
-        'en_US',
-      );
-      console.log('onUnsubscribeFavorite ', s);
-
-      // await api.Events.unsubscribeByMarker(
-      //   'status_out_of_stock',
-      //   product.id,
-      //   'en_US',
-      // );
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const { id } = product;
+  const isFavorites = useAppSelector((state) => selectIsFavorites(state, id));
 
   const onUpdateFavorites = async () => {
     try {
       if (!isFav) {
         dispatch(addFavorites(product.id));
-        await onSubscribeFavorite();
+        await onSubscribeEvents(product.id);
 
         toast('Product ' + product.localizeInfos.title + ' add to Favorites!');
       } else {
         dispatch(removeFavorites(product.id));
-        await onUnsubscribeFavorite();
+        await onUnsubscribeEvents(product.id);
 
         toast(
           'Product ' + product.localizeInfos.title + ' removed from Favorites!',

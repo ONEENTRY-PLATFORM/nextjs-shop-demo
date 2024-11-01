@@ -4,22 +4,12 @@ const APP_TOKEN =
 
 import { defineOneEntry } from 'oneentry';
 
-import { socket } from '../utils/socket';
-
 // This function used to update user JWT token
 const saveFunction = async (refreshToken: string) => {
   localStorage.setItem('refresh-token', refreshToken);
 };
 
-socket.on('connect', () => {
-  console.log(`Connected to the server`);
-});
-
-socket.on('notification', async (res: string) => {
-  console.log('=> res', res);
-});
-
-// !!! Initial api definition
+// Initial api definition
 export let api = defineOneEntry(PROJECT_URL, {
   token: APP_TOKEN,
   auth: {
@@ -27,7 +17,7 @@ export let api = defineOneEntry(PROJECT_URL, {
   },
 });
 
-// !!! This function used to update api config
+// This function used to update api config
 export async function reDefine(refreshToken: string, langCode?: string) {
   api = defineOneEntry(PROJECT_URL, {
     langCode: langCode || 'en_US',

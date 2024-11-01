@@ -1,7 +1,9 @@
-import type { FC } from 'react';
+import { type FC, useContext } from 'react';
 import { toast } from 'react-toastify';
 
+import { onUnsubscribeEvents } from '@/app/api/hooks/useEvents';
 import { useAppDispatch } from '@/app/store/hooks';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   decreaseProductQty,
   removeProduct,
@@ -15,16 +17,25 @@ interface ButtonProps {
 
 const DecreaseButton: FC<ButtonProps> = ({ id, qty, title }) => {
   const dispatch = useAppDispatch();
+  const { user } = useContext(AuthContext);
   if (qty < 1) {
     return;
   }
 
+  const onRemoveFromCart = async () => {
+    dispatch(removeProduct(id));
+    toast('Product ' + title + ' removed from cart!');
+
+    if (user) {
+      await onUnsubscribeEvents(id);
+    }
+  };
+
   return (
     <button
-      onClick={() => {
+      onClick={async () => {
         if (qty <= 1) {
-          dispatch(removeProduct(id));
-          toast('Product ' + title + ' removed from cart!');
+          onRemoveFromCart();
         } else {
           dispatch(decreaseProductQty({ id: id, quantity: 1 }));
         }
