@@ -65,9 +65,6 @@ const orderReducer = createSlice({
       }
       state.order.products = action.payload;
     },
-    addDelivery(state, action: PayloadAction<IOrderProductData>) {
-      state.order.products = [...state.order.products, action.payload];
-    },
     addPaymentMethods(
       state,
       action: PayloadAction<
@@ -100,7 +97,6 @@ export const {
   create: createOrder,
   addData,
   addProducts,
-  addDelivery,
   addPaymentMethods,
   addPaymentMethod,
   addOrderCurrency,

@@ -1,11 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
-import { Suspense, useContext, useEffect, useMemo, useState } from 'react';
+import { Suspense, useContext, useEffect, useMemo } from 'react';
 
 import { useGetAccountsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -13,22 +11,29 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import { selectCartData } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { SimplePageProps } from '@/app/types/global';
-import EmptyCart from '@/components/layout/cart/components/EmptyCart';
+// import EmptyCart from '@/components/layout/cart/components/EmptyCart';
 import PaymentMethod from '@/components/layout/payment/components/PaymentMethod';
 import AuthError from '@/components/shared/AuthError';
 import Loader from '@/components/shared/Loader';
 
 import PaymentMethodsAnimations from './animations/PaymentMethodsAnimations';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
   const dispatch = useAppDispatch();
   const { isAuth } = useContext(AuthContext);
+
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,
   );
-  const [isLoading, setIsLoading] = useState(true);
+  const productsCartData = useAppSelector(selectCartData) as Array<{
+    id: number;
+    quantity: number;
+    selected: boolean;
+  }>;
+  const deliveryData = useAppSelector((state) => state.cartReducer.delivery);
 
-  const { data, error } = useGetAccountsQuery({});
+  const { data, error, isLoading } = useGetAccountsQuery({});
 
   const whitelistMethods = useMemo(() => {
     if (data) {
@@ -44,21 +49,28 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
     return [];
   }, [data, paymentMethods]);
 
-  const productsInCart = useAppSelector(selectCartData) as Array<
-    IProductsEntity & { quantity: number; selected: boolean }
-  >;
-
   const productsInOrder = useMemo(() => {
-    return productsInCart.reduce((results: Array<IOrderProductData>, item) => {
-      if (item.selected) {
-        results.push({
-          productId: item.id,
-          quantity: item.quantity,
-        });
-      }
-      return results;
-    }, []);
-  }, [productsInCart]);
+    return [
+      ...productsCartData.reduce(
+        (results: Array<IOrderProductData & { selected: boolean }>, item) => {
+          if (item.selected) {
+            results.push({
+              productId: item.id,
+              quantity: item.quantity,
+              selected: item.selected,
+            });
+          }
+          return results;
+        },
+        [],
+      ),
+      {
+        productId: deliveryData.id,
+        quantity: 1,
+        selected: true,
+      },
+    ];
+  }, [productsCartData]);
 
   // createOrder
   useEffect(() => {
@@ -70,7 +82,6 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
         paymentAccountIdentifier: '',
       }),
     );
-    setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -85,12 +96,13 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
     return <AuthError dict={dict} />;
   }
 
-  if (productsInCart.length < 2 && isLoading) {
+  if (productsCartData.length < 1 && isLoading) {
     return <Loader />;
   }
 
-  if (productsInCart.length < 2 || isLoading) {
-    return <EmptyCart lang={lang} dict={dict} />;
+  if (productsCartData.length < 1 || isLoading) {
+    // return <EmptyCart lang={lang} dict={dict} />;
+    return <Loader />;
   }
 
   return (

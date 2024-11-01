@@ -50,6 +50,12 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
           </div>
         );
       })}
+
+      <div className="-mt-px flex border-b border-solid p-2">
+        <div className="w-1/2">title</div>
+        <div className="w-1/4">{UsePrice({ amount: 1, lang })}</div>
+        <div className="w-1/4">{1}</div>
+      </div>
     </>
   );
 };

@@ -2,10 +2,9 @@
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
 import { api, useGetProductsByIdsQuery } from '@/app/api';
@@ -15,11 +14,6 @@ import {
   addProductsToCart,
   selectCartData,
 } from '@/app/store/reducers/CartSlice';
-import {
-  addDelivery,
-  addProducts,
-  createOrder,
-} from '@/app/store/reducers/OrderSlice';
 import type { IProducts } from '@/app/types/global';
 import CartAnimations from '@/components/layout/cart/animations/CartAnimations';
 import EmptyCart from '@/components/layout/cart/components/EmptyCart';
@@ -38,59 +32,22 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   const dispatch = useAppDispatch();
   const [products, setProducts] = useState<IProductsEntity[]>([]);
 
-  const productsInCart = useAppSelector(selectCartData) as IProducts[];
-
-  const productsInOrder = useMemo(() => {
-    return productsInCart.reduce(
-      (results: Array<IOrderProductData & { selected: boolean }>, item) => {
-        if (item.selected) {
-          results.push({
-            productId: item.id,
-            quantity: item.quantity,
-            selected: item.selected,
-          });
-        }
-        return results;
-      },
-      [],
-    );
-  }, [productsInCart]);
+  const productsCartData = useAppSelector(selectCartData) as IProducts[];
 
   const { data, isLoading } = useGetProductsByIdsQuery({
-    items: productsInCart.map((p) => p.id),
+    items: productsCartData.map((p) => p.id),
   });
 
-  // init cart
+  // add delivery Data
   useEffect(() => {
-    // create Order
-    dispatch(
-      createOrder({
-        formIdentifier: 'order',
-        formData: [],
-        products: productsInOrder,
-        paymentAccountIdentifier: '',
-      }),
-    );
-    // addDelivery to order
-    dispatch(
-      addDelivery({
-        productId: deliveryData.id,
-        quantity: 1,
-        selected: true,
-      } as IOrderProductData & {
-        selected: boolean;
-      }),
-    );
-    // add delivery Data
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
     }
-  }, []);
+  }, [deliveryData]);
 
   // add products to cart slice
   useEffect(() => {
     if (data) {
-      dispatch(addProductsToCart(data));
       setProducts(data);
 
       const ws = api.WS.connect();
@@ -129,12 +86,12 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
     }
   }, [data]);
 
-  // add products to order
+  // update products in cart
   useEffect(() => {
-    if (productsInOrder) {
-      dispatch(addProducts(productsInOrder));
+    if (products) {
+      dispatch(addProductsToCart(products));
     }
-  }, [productsInOrder]);
+  }, [products]);
 
   if (isLoading) {
     return <Loader />;
@@ -156,7 +113,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
               key={i}
               index={i}
               product={product}
-              selected={productsInCart[i]?.selected}
+              selected={productsCartData[i]?.selected}
               lang={lang}
             />
           );
