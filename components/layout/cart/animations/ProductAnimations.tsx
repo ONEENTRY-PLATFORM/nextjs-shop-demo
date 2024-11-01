@@ -36,6 +36,9 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
 
   // first load animations
   useGSAP(() => {
+    if (!ref.current) {
+      return;
+    }
     const tl = gsap.timeline({
       paused: true,
     });
@@ -53,36 +56,32 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
     return () => {
       tl.kill();
     };
-  }, [ref]);
+  }, []);
 
   // removeProduct
   useGSAP(() => {
     if (!ref.current || product.id !== transitionId) {
       return;
     }
-    const tl = gsap.timeline({
-      paused: true,
-    });
+    const tl = gsap.timeline();
 
     tl.to(ref.current, {
       autoAlpha: 0,
       height: 0,
-      duration: 0.4,
-      ease: 'power2.inOut',
+      duration: 0.5,
+      onStart: () => {
+        // dispatch(
+        //   setCartTransition({
+        //     productId: 0,
+        //   }),
+        // );
+        dispatch(removeProduct(product.id));
+        toast('Product ' + product.localizeInfos.title + ' removed from cart!');
+      },
     }).set(ref.current, {
       autoAlpha: 1,
       height: 'auto',
-      onComplete: () => {
-        dispatch(removeProduct(product.id));
-        dispatch(
-          setCartTransition({
-            productId: 0,
-          }),
-        );
-        toast('Product ' + product.localizeInfos.title + ' removed from cart!');
-      },
     });
-    tl.play();
 
     return () => {
       tl.kill();

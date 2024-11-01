@@ -5,8 +5,7 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
-import { api, reDefine, useLazyGetMeQuery } from '@/app/api';
-import { useNotifications } from '@/app/api/hooks/useNotifications';
+import { reDefine, useLazyGetMeQuery } from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import type { IProducts } from '@/app/types/global';
 
@@ -52,8 +51,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
 
-  const [isTokenSet, setIsTokenSet] = useState<boolean>(false);
-  const { token } = useNotifications();
   const dispatch = useAppDispatch();
   const cartVersion = useAppSelector(selectCartVersion) as number;
   const favoritesVersion = useAppSelector(selectFavoritesVersion) as number;
@@ -112,6 +109,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     updateUser();
   }, [isAuth, productsInCart, favoritesIds]);
 
+  // load cart from user state
   useEffect(() => {
     if (!user?.state.cart || cartVersion > 0) {
       return;
@@ -135,6 +133,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     dispatch(setFavoritesVersion(1));
   }, [isAuth, user]);
 
+  // refetch
   useEffect(() => {
     setIsLoading(true);
     onInit().then(() => {
@@ -142,6 +141,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     });
   }, [refetch, langCode]);
 
+  // isError
   useEffect(() => {
     const refresh = localStorage.getItem('refresh-token');
     if (isError && refresh) {
@@ -149,25 +149,12 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     }
   }, [isError]);
 
+  // checkToken
   useEffect(() => {
-    if (isAuth) {
-      checkToken();
-    }
+    // if (isAuth) {
+    checkToken();
+    // }
   }, [refetch, refetchUser]);
-
-  useEffect(() => {
-    if (token && !isTokenSet && isAuth && user) {
-      (async () => {
-        try {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const res = await api.Users.addFCMToken(token);
-          setIsTokenSet(true);
-        } catch (e) {
-          console.log('=>(AuthContext.tsx:95) e', e);
-        }
-      })();
-    }
-  }, [user, token]);
 
   // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {

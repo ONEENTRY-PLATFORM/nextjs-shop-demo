@@ -6,6 +6,7 @@ import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import { api } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
@@ -24,14 +25,14 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
 
   const onSubscribeFavorite = async () => {
     try {
-      // await api.Events.subscribeByMarker('catalog_event', product.id, 'en_US');
+      const s = await api.Events.subscribeByMarker(
+        'catalog_event',
+        product.id,
+        'en_US',
+      );
+      console.log('onSubscribeFavorite ', s);
       // await api.Events.subscribeByMarker(
       //   'status_out_of_stock',
-      //   product.id,
-      //   'en_US',
-      // );
-      // await api.Events.subscribeByMarker(
-      //   'notification_test',
       //   product.id,
       //   'en_US',
       // );
@@ -42,18 +43,15 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
 
   const onUnsubscribeFavorite = async () => {
     try {
-      // await api.Events.unsubscribeByMarker(
-      //   'catalog_event',
-      //   product.id,
-      //   'en_US',
-      // );
+      const s = await api.Events.unsubscribeByMarker(
+        'catalog_event',
+        product.id,
+        'en_US',
+      );
+      console.log('onUnsubscribeFavorite ', s);
+
       // await api.Events.unsubscribeByMarker(
       //   'status_out_of_stock',
-      //   product.id,
-      //   'en_US',
-      // );
-      // await api.Events.unsubscribeByMarker(
-      //   'notification_test',
       //   product.id,
       //   'en_US',
       // );

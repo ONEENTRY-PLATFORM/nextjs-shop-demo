@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import { useContext, useEffect } from 'react';
 
@@ -14,7 +14,6 @@ import MobileMenu from './components/MobileMenu';
 
 function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { open, setOpen, component } = useContext(OpenDrawerContext);
 
   useEffect(() => {
@@ -29,9 +28,9 @@ function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
   }, [open]);
 
   useEffect(() => {
-    // setOpen(false);
+    setOpen(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname, searchParams]);
+  }, [pathname]);
 
   if (!open || component !== 'MobileMenu') {
     return;

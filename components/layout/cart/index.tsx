@@ -108,19 +108,17 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
       index={0}
     >
       <CartAnimations className={'mb-4 flex w-full flex-col gap-4'} index={1}>
-        {data
-          // .filter((p) => p.id !== 83)
-          .map((product: IProductsEntity, i: number) => {
-            return (
-              <ProductCard
-                key={i}
-                index={i}
-                product={product}
-                selected={productsInCart[i]?.selected}
-                lang={lang}
-              />
-            );
-          })}
+        {data.map((product: IProductsEntity, i: number) => {
+          return (
+            <ProductCard
+              key={i}
+              index={i}
+              product={product}
+              selected={productsInCart[i]?.selected}
+              lang={lang}
+            />
+          );
+        })}
       </CartAnimations>
       <DeliveryForm lang={lang} dict={dict} deliveryData={deliveryData} />
     </FadeTransition>
