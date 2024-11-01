@@ -10,14 +10,12 @@ interface TotalAmountProps {
   lang: string;
   dict: IAttributeValues;
   className: string;
-  delivery: IProductsEntity;
 }
 
 const TotalAmount: FC<TotalAmountProps> = ({
   lang,
   dict,
   className,
-  delivery,
 }) => {
   const [cartTotal, setCartTotal] = useState(0);
   const total = useAppSelector((state) => {
@@ -30,7 +28,9 @@ const TotalAmount: FC<TotalAmountProps> = ({
       return total;
     }, 0);
   });
-  const deliveryPrice = delivery?.price || 0;
+  const deliveryPrice = useAppSelector((state) => {
+    return state.cartReducer.delivery?.price || 0;
+  });
 
   useEffect(() => {
     if (!total) {

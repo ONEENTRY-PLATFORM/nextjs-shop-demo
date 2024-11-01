@@ -41,26 +41,19 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   const productsInCart = useAppSelector(selectCartData) as IProducts[];
 
   const productsInOrder = useMemo(() => {
-    return [
-      ...productsInCart.reduce(
-        (results: Array<IOrderProductData & { selected: boolean }>, item) => {
-          if (item.selected) {
-            results.push({
-              productId: item.id,
-              quantity: item.quantity,
-              selected: item.selected,
-            });
-          }
-          return results;
-        },
-        [],
-      ),
-      {
-        productId: deliveryData.id,
-        quantity: 1,
-        selected: true,
+    return productsInCart.reduce(
+      (results: Array<IOrderProductData & { selected: boolean }>, item) => {
+        if (item.selected) {
+          results.push({
+            productId: item.id,
+            quantity: item.quantity,
+            selected: item.selected,
+          });
+        }
+        return results;
       },
-    ];
+      [],
+    );
   }, [productsInCart]);
 
   const { data, isLoading } = useGetProductsByIdsQuery({
@@ -78,8 +71,17 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
         paymentAccountIdentifier: '',
       }),
     );
-
-    // add delivery To Cart
+    // addDelivery to order
+    dispatch(
+      addDelivery({
+        productId: deliveryData.id,
+        quantity: 1,
+        selected: true,
+      } as IOrderProductData & {
+        selected: boolean;
+      }),
+    );
+    // add delivery Data
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
     }

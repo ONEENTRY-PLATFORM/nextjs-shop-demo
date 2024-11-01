@@ -48,6 +48,18 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
     IProductsEntity & { quantity: number; selected: boolean }
   >;
 
+  const productsInOrder = useMemo(() => {
+    return productsInCart.reduce((results: Array<IOrderProductData>, item) => {
+      if (item.selected) {
+        results.push({
+          productId: item.id,
+          quantity: item.quantity,
+        });
+      }
+      return results;
+    }, []);
+  }, [productsInCart]);
+
   // createOrder
   useEffect(() => {
     dispatch(
@@ -61,18 +73,6 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
     setIsLoading(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const productsInOrder = useMemo(() => {
-    return productsInCart.reduce((results: Array<IOrderProductData>, item) => {
-      if (item.selected) {
-        results.push({
-          productId: item.id,
-          quantity: item.quantity,
-        });
-      }
-      return results;
-    }, []);
-  }, [productsInCart]);
 
   // add products to order
   useEffect(() => {

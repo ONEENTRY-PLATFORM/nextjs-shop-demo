@@ -10,7 +10,7 @@ type InitialStateType = {
   products: IProductsEntity[];
   productsData: IProducts[];
   currency?: string;
-  delivery?: IProductsEntity;
+  delivery: IProductsEntity;
   deliveryData: {
     date: number;
     time: string;
@@ -24,7 +24,7 @@ type InitialStateType = {
 const initialState: InitialStateType = {
   products: [],
   productsData: [],
-  delivery: undefined,
+  delivery: {} as IProductsEntity,
   deliveryData: {
     date: new Date().getTime(),
     time: '',

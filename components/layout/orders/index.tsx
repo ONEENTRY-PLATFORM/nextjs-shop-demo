@@ -63,6 +63,10 @@ const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
     return <EmptyOrders lang={lang} dict={dict} />;
   }
 
+  if (!orders) {
+    return <OrdersTableLoader limit={10} />;
+  }
+
   const totalPages = Math.floor(total / pageLimit);
   const { date_title, total_title, status_title } = settings;
 
@@ -75,21 +79,17 @@ const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
           <div className="w-1/4">{status_title?.value}</div>
         </div>
         <div className="mb-4 flex flex-col">
-          {!orders ? (
-            <OrdersTableLoader limit={10} />
-          ) : (
-            orders?.map((order: IOrderByMarkerEntity, i: Key | number) => {
-              return (
-                <Order
-                  key={i}
-                  index={i as number}
-                  order={order}
-                  settings={settings}
-                  lang={lang}
-                />
-              );
-            })
-          )}
+          {orders?.map((order: IOrderByMarkerEntity, i: Key | number) => {
+            return (
+              <Order
+                key={i}
+                index={i as number}
+                order={order}
+                settings={settings}
+                lang={lang}
+              />
+            );
+          })}
         </div>
         <div className="mx-auto flex flex-row justify-center">
           {/* {totalPages > 1 && <Pagination totalPages={totalPages} />} */}
