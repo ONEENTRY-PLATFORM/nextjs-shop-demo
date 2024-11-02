@@ -1,13 +1,13 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import type { AttributeType, IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC, Key } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
-import { getAllOrdersByMarker, getBlockByMarker } from '@/app/api';
+import { getAllOrdersByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
 
@@ -17,14 +17,15 @@ import EmptyOrders from './components/EmptyOrders';
 import Order from './components/OrderRow';
 import OrdersTableLoader from './components/OrdersTableLoader';
 
-const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
-  lang,
-  dict,
-}) => {
+const OrdersPage: FC<{
+  lang: string;
+  dict: IAttributeValues;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  settings: any;
+}> = ({ lang, dict, settings }) => {
   const searchParams = useSearchParams();
   const { isAuth, user } = useContext(AuthContext);
 
-  const [settings, setSettings] = useState<Record<string, AttributeType>>();
   const [orders, setOrders] = useState<Array<IOrderByMarkerEntity>>();
   const [total, setTotal] = useState<number>(0);
 
@@ -36,10 +37,6 @@ const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
       return;
     }
     (async () => {
-      const { block } = await getBlockByMarker('orders_settings', lang);
-      if (block) {
-        setSettings(block.attributeValues);
-      }
       const { isError, error, orders, total } = await getAllOrdersByMarker({
         marker: 'order',
         limit: pageLimit,
@@ -60,12 +57,12 @@ const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
     return <AuthError dict={dict} />;
   }
 
-  if (!settings || (orders && orders.length < 1)) {
-    return <EmptyOrders lang={lang} dict={dict} />;
-  }
-
   if (!orders) {
     return <OrdersTableLoader limit={10} />;
+  }
+
+  if (orders && orders.length < 1) {
+    return <EmptyOrders lang={lang} dict={dict} />;
   }
 
   const totalPages = Math.floor(total / pageLimit);

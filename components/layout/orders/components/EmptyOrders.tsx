@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 
+import FadeTransition from '@/app/animations/FadeTransition';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const EmptyOrders = ({
   lang,
@@ -12,7 +14,10 @@ const EmptyOrders = ({
   const { empty_cart_plug, go_to_shop } = dict;
 
   return (
-    <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
+    <FadeTransition
+      className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800"
+      index={0}
+    >
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -43,7 +48,7 @@ const EmptyOrders = ({
       >
         {go_to_shop.value}
       </Link>
-    </div>
+    </FadeTransition>
   );
 };
 
