@@ -106,9 +106,8 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
 
   return (
     <Suspense fallback={<Loader />}>
-      <FadeTransition
+      <div
         className={'flex max-w-[730px] flex-col gap-5 pb-5 max-md:max-w-full'}
-        index={0}
       >
         {whitelistMethods.map((item, index) => {
           return (
@@ -121,7 +120,7 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
             />
           );
         })}
-      </FadeTransition>
+      </div>
     </Suspense>
   );
 };

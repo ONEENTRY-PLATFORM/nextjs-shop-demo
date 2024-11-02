@@ -24,7 +24,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
     lang,
   });
 
-  const [token, setToken] = useState<string>('');
+  const [token, setToken] = useState<string | null>();
   const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -162,6 +162,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
                 key={index}
                 title={field.localizeInfos.title}
                 isLoading={loading}
+                index={10}
               />
             );
           } else if (field.type === 'spam') {

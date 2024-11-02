@@ -2,8 +2,6 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
-import FadeTransition from '@/app/animations/FadeTransition';
-
 import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {
@@ -16,10 +14,7 @@ interface GridLayoutProps {
 
 const ProductsGrid: FC<GridLayoutProps> = ({ params, products, dict }) => {
   return (
-    <FadeTransition
-      className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full"
-      index={0}
-    >
+    <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
       {products?.map((product: IProductsEntity, index: number) => {
         if (!product.isVisible) {
           return;
@@ -34,7 +29,7 @@ const ProductsGrid: FC<GridLayoutProps> = ({ params, products, dict }) => {
           />
         );
       })}
-    </FadeTransition>
+    </div>
   );
 };
 

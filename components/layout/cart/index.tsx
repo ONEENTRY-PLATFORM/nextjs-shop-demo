@@ -105,10 +105,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   }
 
   return (
-    <FadeTransition
-      className="flex w-full flex-col overflow-hidden pb-5 lg:max-w-[730px]"
-      index={0}
-    >
+    <div className="flex w-full flex-col overflow-hidden pb-5 lg:max-w-[730px]">
       <CartAnimations className={'mb-4 flex w-full flex-col gap-4'} index={1}>
         {products.map((product: IProductsEntity, i: number) => {
           return (
@@ -123,7 +120,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
         })}
       </CartAnimations>
       <DeliveryForm lang={lang} dict={dict} deliveryData={deliveryData} />
-    </FadeTransition>
+    </div>
   );
 };
 

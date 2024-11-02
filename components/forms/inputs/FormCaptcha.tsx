@@ -25,31 +25,20 @@ export const FormCaptcha = ({ setToken, setIsCaptcha }: Props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onVerify = (token: string) => {
-    setToken(token);
+  const onVerify = () => {
+    // setToken(token);
   };
 
   return (
     <>
-      {/* <ReCAPTCHA
-        ref={recaptcha}
+      <ReCAPTCHA
         sitekey="6Lc8mQwqAAAAAASbSC4ANjN7Rsq-xC63iMX8HWG9"
-        onChange={onVerify}
-      /> */}
+        onChange={(token: string | null) => setToken(token || '')}
+        className={'mx-auto'}
+      />
       {/* <Recaptcha
-        ref={recaptcha}
         siteKey="6Lc8mQwqAAAAAASbSC4ANjN7Rsq-xC63iMX8HWG9"
         baseUrl="https://react-native-course.oneentry.cloud"
-        onVerify={onVerify}
-        onExpire={onExpire}
-        onError={onError}
-        onLoad={onLoad}
-        webViewProps={{
-          containerStyle: {
-            paddingTop: top,
-          },
-        }}
-        size="normal"
       />*/}
     </>
   );

@@ -5,8 +5,6 @@ import { useLayoutEffect, useState } from 'react';
 import { useAppSelector } from '@/app/store/hooks';
 import { UsePrice } from '@/components/utils';
 
-import TableRowAnimations from '../animations/TableRowAnimations';
-
 interface TotalAmountProps {
   lang: string;
   dict: IAttributeValues;
@@ -38,13 +36,13 @@ const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
   }, [total, deliveryPrice]);
 
   return (
-    <TableRowAnimations className={className} index={12}>
+    <div className={className}>
       {dict?.order_info_total.value}:{' '}
       {UsePrice({
         amount: cartTotal,
         lang,
       })}
-    </TableRowAnimations>
+    </div>
   );
 };
 
