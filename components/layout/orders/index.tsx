@@ -73,11 +73,14 @@ const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
   return (
     <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
       <div className="w-full">
+        {/* head */}
         <div className="-mb-px flex w-full border-collapse gap-4 border-y p-4 text-slate-700">
           <div className="w-1/2">{date_title?.value}</div>
           <div className="w-1/4">{total_title?.value}</div>
           <div className="w-1/4">{status_title?.value}</div>
         </div>
+
+        {/* orders */}
         <div className="mb-4 flex flex-col">
           {orders?.map((order: IOrderByMarkerEntity, i: Key | number) => {
             return (
@@ -91,6 +94,8 @@ const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
             );
           })}
         </div>
+
+        {/* LoadMore */}
         <div className="mx-auto flex flex-row justify-center">
           {/* {totalPages > 1 && <Pagination totalPages={totalPages} />} */}
           {totalPages > 1 && <LoadMore totalPages={totalPages} />}

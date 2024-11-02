@@ -23,39 +23,52 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
   const productsInCart = useAppSelector(
     selectCartItems,
   ) as Array<IProductsEntity>;
+  const delivery = useAppSelector((state) => state.cartReducer.delivery);
 
   return (
     <>
+      {/* head row */}
       <div className="flex border-b border-solid p-2">
         <div className="w-1/2 font-bold">Product</div>
         <div className="w-1/4 font-bold">Price</div>
         <div className="w-1/4 font-bold">Quantity</div>
       </div>
 
+      {/* products row */}
       {productsDataInCart.map((product, i) => {
-        const { selected, quantity } = product;
         if (!productsInCart[i]) {
           return;
         }
-        const { localizeInfos, price } = productsInCart[i];
-        const title = localizeInfos?.title;
+        const { selected, quantity } = product;
+        const { localizeInfos, price, attributeValues } = productsInCart[i];
+
         if (!selected) {
           return;
         }
         return (
           <div key={i} className="-mt-px flex border-b border-solid p-2">
-            <div className="w-1/2">{title}</div>
-            <div className="w-1/4">{UsePrice({ amount: price, lang })}</div>
+            <div className="w-1/2">{localizeInfos?.title}</div>
+            <div className="w-1/4">
+              {UsePrice({
+                amount: attributeValues.sale?.value || price,
+                lang,
+              })}
+            </div>
             <div className="w-1/4">{quantity}</div>
           </div>
         );
       })}
 
-      <div className="-mt-px flex border-b border-solid p-2">
-        <div className="w-1/2">title</div>
-        <div className="w-1/4">{UsePrice({ amount: 1, lang })}</div>
-        <div className="w-1/4">{1}</div>
-      </div>
+      {/* delivery row */}
+      {delivery && (
+        <div className="-mt-px flex border-b border-solid p-2">
+          <div className="w-1/2">{delivery.localizeInfos?.title}</div>
+          <div className="w-1/4">
+            {UsePrice({ amount: delivery.price, lang })}
+          </div>
+          <div className="w-1/4"></div>
+        </div>
+      )}
     </>
   );
 };

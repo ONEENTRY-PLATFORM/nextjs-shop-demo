@@ -61,7 +61,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       selectFavoritesItems(state),
   ) as Array<number>;
 
-  const [trigger, { isError, error }] = useLazyGetMeQuery({
+  const [trigger, { isError }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 3000 : 0,
   });
 
@@ -95,13 +95,13 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       });
   };
 
-  async function updateUser() {
+  const updateUser = async () => {
     await updateUserState({
       cart: productsInCart,
       favorites: favoritesIds,
       user: user,
     });
-  }
+  };
 
   useEffect(() => {
     if (!isAuth) {
