@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import { useGSAP } from '@gsap/react';
@@ -56,7 +55,7 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
     };
   }, []);
 
-  // removeProduct
+  // remove Product
   useGSAP(() => {
     if (product.id !== transitionId) {
       return;
@@ -65,7 +64,7 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
 
     tl.to(ref.current, {
       autoAlpha: 0,
-      // height: 0,
+      height: 0,
       duration: 0.5,
       yPercent: -100,
       onStart: () => {
@@ -77,13 +76,11 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
         dispatch(removeProduct(product.id));
         toast('Product ' + product.localizeInfos.title + ' removed from cart!');
       },
-    });
-    // !!!
-    tl.set(ref.current, {
+    }).to(ref.current, {
       autoAlpha: 1,
-      duration: 0.15,
+      duration: 0.35,
       yPercent: 0,
-      // height: 'auto',
+      height: 'auto',
     });
 
     return () => {

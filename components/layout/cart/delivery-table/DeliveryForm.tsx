@@ -9,6 +9,8 @@ import PaymentButton from '@/components/layout/cart/components/PaymentButton';
 import TotalAmount from '@/components/layout/cart/components/TotalAmount';
 import DeliveryTable from '@/components/layout/cart/delivery-table/DeliveryTable';
 
+import CartAnimations from '../animations/CartAnimations';
+
 interface DeliveryFormProps {
   lang: string;
   dict: IAttributeValues;
@@ -32,11 +34,13 @@ const DeliveryForm: FC<DeliveryFormProps> = ({ lang, dict, deliveryData }) => {
         delivery={deliveryData as IProductsEntity}
       />
       <div id="total" className="mt-4 flex w-full flex-col">
-        <TotalAmount
-          lang={lang}
-          dict={dict}
-          className="flex self-center text-lg font-bold leading-6 text-slate-700 lg:self-end"
-        />
+        <CartAnimations className={'flex self-center lg:self-end'} index={10}>
+          <TotalAmount
+            lang={lang}
+            dict={dict}
+            className="text-lg font-bold leading-6 text-slate-700"
+          />
+        </CartAnimations>
         <PaymentButton
           text={dict.go_to_pay_placeholder?.value}
           className="self-end max-lg:self-center"
