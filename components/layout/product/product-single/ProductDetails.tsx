@@ -30,6 +30,7 @@ const ProductDetails: FC<ProductDetailsProps> = async ({
       {/* !!! category */}
       <p className="mt-3 text-sm leading-4 text-neutral-600">
         <Link
+          prefetch={true}
           href={
             '/shop/category/' + product.attributeValues.category?.value.value
           }

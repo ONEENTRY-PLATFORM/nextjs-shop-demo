@@ -31,6 +31,7 @@ const MainMenu: FC<MainMenuProps> = async ({ lang, menu }) => {
                     return (
                       <li key={i}>
                         <Link
+                          prefetch={true}
                           href={'/' + lang + '/shop/category/' + it.pageUrl}
                           className="transition-colors duration-300 ease-in-out hover:text-red-500 focus:outline-none"
                         >

@@ -27,6 +27,7 @@ const SidebarMenuItem: FC<SidebarMenuItemProps> = ({ menuItem, lang }) => {
   return (
     <li>
       <Link
+        prefetch={true}
         className={`sidebar-menu-item ${clsx(isActive && 'text-orange-500')} group`}
         href={'/' + lang + '/' + pageUrl}
         aria-checked={isActive}

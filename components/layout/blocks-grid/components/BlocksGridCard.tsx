@@ -53,7 +53,12 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
       className={`block-card group relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
       index={index}
     >
-      <Link target={linkTarget} href={href} className={'size-full'}>
+      <Link
+        prefetch={true}
+        target={linkTarget}
+        href={href}
+        className={'size-full'}
+      >
         <div
           className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}
         >

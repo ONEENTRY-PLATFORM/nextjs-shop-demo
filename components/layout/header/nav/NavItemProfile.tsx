@@ -74,6 +74,7 @@ const NavItemProfile: FC<{ item: any; lang: string; userMenu?: any }> = ({
     </button>
   ) : !userMenu ? (
     <Link
+      prefetch={true}
       href={'/' + lang + '/profile'}
       title={item.localizeInfos.menuTitle}
       className="group relative box-border flex size-6 shrink-0"
@@ -100,6 +101,7 @@ const NavItemProfile: FC<{ item: any; lang: string; userMenu?: any }> = ({
               return (
                 <li key={i}>
                   <Link
+                    prefetch={true}
                     href={'/' + lang + '/' + page.pageUrl}
                     title={page.localizeInfos.menuTitle}
                     className="group relative box-border flex p-2 text-slate-800 hover:text-orange-500"

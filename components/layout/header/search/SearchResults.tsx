@@ -45,6 +45,7 @@ const SearchResults: FC<SearchResultsProps> = ({
             return (
               <div key={i} className="flex w-full">
                 <Link
+                  prefetch={true}
                   href={'/shop/product/' + id}
                   onClick={() => setState(false)}
                   className="flex w-full py-2 hover:text-red-500"

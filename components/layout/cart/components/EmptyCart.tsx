@@ -29,6 +29,7 @@ const EmptyCart: FC<EmptyCartProps> = ({ lang, dict }) => {
         {empty_cart_plug?.value}
       </h1>
       <Link
+        prefetch={true}
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"
       >
