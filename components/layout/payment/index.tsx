@@ -5,6 +5,7 @@ import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC } from 'react';
 import { Suspense, useContext, useEffect, useMemo } from 'react';
 
+import FadeTransition from '@/app/animations/FadeTransition';
 import { useGetAccountsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
@@ -15,8 +16,6 @@ import type { SimplePageProps } from '@/app/types/global';
 import PaymentMethod from '@/components/layout/payment/components/PaymentMethod';
 import AuthError from '@/components/shared/AuthError';
 import Loader from '@/components/shared/Loader';
-
-import PaymentMethodsAnimations from './animations/PaymentMethodsAnimations';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
@@ -107,8 +106,9 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
 
   return (
     <Suspense fallback={<Loader />}>
-      <PaymentMethodsAnimations
+      <FadeTransition
         className={'flex max-w-[730px] flex-col gap-5 pb-5 max-md:max-w-full'}
+        index={0}
       >
         {whitelistMethods.map((item, index) => {
           return (
@@ -121,7 +121,7 @@ const PaymentPage: FC<SimplePageProps> = ({ page, lang, dict }) => {
             />
           );
         })}
-      </PaymentMethodsAnimations>
+      </FadeTransition>
     </Suspense>
   );
 };

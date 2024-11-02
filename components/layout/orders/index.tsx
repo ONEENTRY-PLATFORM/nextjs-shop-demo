@@ -6,6 +6,7 @@ import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces
 import type { FC, Key } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
+import FadeTransition from '@/app/animations/FadeTransition';
 import { getAllOrdersByMarker, getBlockByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/shared/AuthError';
@@ -71,7 +72,10 @@ const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
   const { date_title, total_title, status_title } = settings;
 
   return (
-    <div className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full">
+    <FadeTransition
+      className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full"
+      index={0}
+    >
       <div className="w-full">
         {/* head */}
         <div className="-mb-px flex w-full border-collapse gap-4 border-y p-4 text-slate-700">
@@ -101,7 +105,7 @@ const OrdersPage: FC<{ lang: string; dict: IAttributeValues }> = ({
           {totalPages > 1 && <LoadMore totalPages={totalPages} />}
         </div>
       </div>
-    </div>
+    </FadeTransition>
   );
 };
 

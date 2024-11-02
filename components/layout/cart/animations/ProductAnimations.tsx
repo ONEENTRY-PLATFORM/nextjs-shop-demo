@@ -13,11 +13,7 @@ import {
   getTransition,
   removeProduct,
   setCartTransition,
-  // setCartTransition,
 } from '@/app/store/reducers/CartSlice';
-
-// import QuantitySelector from '../../product/components/QuantitySelector';
-// import DeleteButton from '../components/DeleteButton';
 
 interface ProductAnimationsProps {
   children: ReactNode;
@@ -82,6 +78,7 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
         toast('Product ' + product.localizeInfos.title + ' removed from cart!');
       },
     });
+    // !!!
     tl.set(ref.current, {
       autoAlpha: 1,
       duration: 0.15,

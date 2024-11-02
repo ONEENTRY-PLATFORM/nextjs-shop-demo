@@ -4,7 +4,7 @@ import { onUnsubscribeEvents } from '@/app/api/hooks/useEvents';
 import { useAppDispatch } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
-  removeProduct,
+  // removeProduct,
   setCartTransition,
 } from '@/app/store/reducers/CartSlice';
 import DeleteIcon from '@/components/icons/delete';

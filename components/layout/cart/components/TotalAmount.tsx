@@ -38,7 +38,7 @@ const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
   }, [total, deliveryPrice]);
 
   return (
-    <TableRowAnimations className={className} index={8}>
+    <TableRowAnimations className={className} index={12}>
       {dict?.order_info_total.value}:{' '}
       {UsePrice({
         amount: cartTotal,

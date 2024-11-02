@@ -44,9 +44,6 @@ const CartAnimations: FC<AnimationsProps> = ({ children, className }) => {
     if (stage === 'leaving' && prevStage === 'none') {
       tl.reverse(1.2);
     }
-    // if (stage === 'entering') {
-    //   tl.play();
-    // }
 
     setPrevStage(stage);
 
