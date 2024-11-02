@@ -18,9 +18,9 @@ const FadeTransition: FC<AnimationsProps> = ({
   const ref = useRef(null);
 
   useGSAP(() => {
-    if (!ref.current) {
-      return;
-    }
+    // if (!ref.current) {
+    //   return;
+    // }
     const tl = gsap
       .timeline()
       .set(ref.current, {
@@ -28,23 +28,39 @@ const FadeTransition: FC<AnimationsProps> = ({
       })
       .to(ref.current, {
         autoAlpha: 1,
-        duration: 0.5,
+        duration: 0.8,
         delay: index / 10,
       });
-
-    if (stage === 'leaving' && prevStage === 'none') {
-      tl.play();
-    }
-    if (stage === 'none' && prevStage === 'leaving') {
-      tl.reverse(0.5);
-    }
-
-    setPrevStage(stage);
-
+    // if (stage === 'leaving' && prevStage === 'none') {
+    //   tl.reverse(1);
+    // }
+    // setPrevStage(stage);
     return () => {
       tl.kill();
     };
   }, []);
+
+  // useGSAP(() => {
+  //   if (!ref.current) {
+  //     return;
+  //   }
+  //   const tl = gsap
+  //     .timeline({ paused: true })
+  //     .set(ref.current, {
+  //       autoAlpha: 0,
+  //     })
+  //     .to(ref.current, {
+  //       autoAlpha: 1,
+  //       duration: 0.5,
+  //       delay: index / 10,
+  //     });
+
+  //   tl.play();
+
+  //   return () => {
+  //     tl.kill();
+  //   };
+  // }, []);
 
   return (
     <div ref={ref} className={className}>

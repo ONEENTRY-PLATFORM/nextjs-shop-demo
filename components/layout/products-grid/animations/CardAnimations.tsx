@@ -27,6 +27,7 @@ const CardAnimations: FC<{
       autoAlpha: 1,
       scale: 1,
       delay: index / 10,
+      duration: 0.6,
     });
     tl.play();
 

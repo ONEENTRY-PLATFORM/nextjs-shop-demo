@@ -2,6 +2,8 @@ import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 
+import FadeTransition from '@/app/animations/FadeTransition';
+
 interface EmptyFavoritesProps {
   lang: string;
   dict: IAttributeValues;
@@ -11,7 +13,10 @@ const EmptyFavorites: FC<EmptyFavoritesProps> = ({ lang, dict }) => {
   const { empty_favorites_plug, go_to_shop } = dict;
 
   return (
-    <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
+    <FadeTransition
+      className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800"
+      index={2}
+    >
       <svg
         width="100"
         height="80"
@@ -36,7 +41,7 @@ const EmptyFavorites: FC<EmptyFavoritesProps> = ({ lang, dict }) => {
       >
         {go_to_shop?.value}
       </Link>
-    </div>
+    </FadeTransition>
   );
 };
 

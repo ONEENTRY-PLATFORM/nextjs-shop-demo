@@ -30,8 +30,8 @@ const TableAnimations = ({
       autoAlpha: 0,
     }).to(lines, {
       autoAlpha: 1,
-      duration: 0.5,
-      stagger: 0.1,
+      duration: 0.15,
+      stagger: 0.05,
     });
 
     tl.play();

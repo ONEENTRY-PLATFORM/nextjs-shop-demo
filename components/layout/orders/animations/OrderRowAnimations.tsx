@@ -19,41 +19,48 @@ const OrderRowAnimations: FC<{
     if (!ref.current) {
       return;
     }
-    const elements = (ref.current as HTMLDivElement).querySelectorAll(
-      'button>div',
-    );
     const tl = gsap.timeline({
       paused: true,
     });
-    tl.set(elements, {
-      transformOrigin: '0 center',
-    });
 
-    if (stage === 'none' && prevStage === 'entering') {
-      tl.set([elements, ref.current], {
-        autoAlpha: 0,
-      })
-        .to(ref.current, {
-          autoAlpha: 1,
-          delay: index / 10,
-        })
-        .to(elements, {
-          autoAlpha: 1,
-          delay: index / 10,
-        })
-        .play();
-    }
-
-    if (stage === 'leaving' && prevStage === 'none') {
-      tl.to(elements, {
-        autoAlpha: 0,
+    tl.set(ref.current, {
+      autoAlpha: 0,
+    })
+      .to(ref.current, {
+        autoAlpha: 1,
         delay: index / 10,
       })
-        .to(ref.current, {
-          autoAlpha: 0,
-          delay: index / 10,
-        })
-        .play();
+      .play();
+
+    return () => {
+      tl.kill();
+    };
+  }, []);
+
+  useGSAP(() => {
+    if (!ref.current) {
+      return;
+    }
+    const tl = gsap.timeline({
+      paused: true,
+    });
+
+    // if (stage === 'none' && prevStage === 'entering') {
+    //   tl.set(ref.current, {
+    //     autoAlpha: 0,
+    //   })
+    //     .to(ref.current, {
+    //       autoAlpha: 1,
+    //       delay: index / 10,
+    //     })
+    //     .play();
+    // }
+
+    if (stage === 'leaving' && prevStage === 'none') {
+      tl.to(ref.current, {
+        autoAlpha: 0,
+        delay: index / 10,
+      }).play();
     }
 
     setPrevStage(stage);

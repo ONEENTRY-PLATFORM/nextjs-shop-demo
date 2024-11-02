@@ -68,7 +68,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     }
   }, [isAuth, data]);
 
-  if (!data || data.length < 1) {
+  if (!products || products.length < 1) {
     if (!isLoading) {
       return <EmptyFavorites lang={lang} dict={dict} />;
     } else {
@@ -77,30 +77,25 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   }
 
   return (
-    products.length && (
-      <FadeTransition
-        className="flex flex-col pb-5 max-md:max-w-full"
-        index={0}
-      >
-        <div className={'relative box-border flex w-full shrink-0 flex-col'}>
-          <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
-            <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-              {products.map((product: IProductsEntity, index: Key | number) => {
-                return (
-                  <ProductCard
-                    key={index}
-                    product={product}
-                    index={index as number}
-                    lang={lang}
-                    dict={dict}
-                  />
-                );
-              })}
-            </div>
-          </section>
-        </div>
-      </FadeTransition>
-    )
+    <FadeTransition className="flex flex-col pb-5 max-md:max-w-full" index={1}>
+      <div className={'relative box-border flex w-full shrink-0 flex-col'}>
+        <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
+          <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
+            {products.map((product: IProductsEntity, index: Key | number) => {
+              return (
+                <ProductCard
+                  key={index}
+                  product={product}
+                  index={index as number}
+                  lang={lang}
+                  dict={dict}
+                />
+              );
+            })}
+          </div>
+        </section>
+      </div>
+    </FadeTransition>
   );
 };
 

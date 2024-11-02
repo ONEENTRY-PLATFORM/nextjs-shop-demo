@@ -3,6 +3,8 @@ import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 
+import FadeTransition from '@/app/animations/FadeTransition';
+
 interface EmptyCartProps {
   lang: string;
   dict: IAttributeValues;
@@ -12,7 +14,10 @@ const EmptyCart: FC<EmptyCartProps> = ({ lang, dict }) => {
   const { empty_cart_plug, go_to_shop } = dict;
 
   return (
-    <div className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800">
+    <FadeTransition
+      className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800"
+      index={2}
+    >
       <Image
         width={100}
         height={100}
@@ -29,7 +34,7 @@ const EmptyCart: FC<EmptyCartProps> = ({ lang, dict }) => {
       >
         {go_to_shop?.value}
       </Link>
-    </div>
+    </FadeTransition>
   );
 };
 
