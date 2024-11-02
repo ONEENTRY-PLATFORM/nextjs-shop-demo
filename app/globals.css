@@ -323,7 +323,7 @@ input:focus-visible {
     /* opacity: 0; */
   }
   .fade-in {
-    /* opacity: 0; */
+    opacity: 0;
   }
 }
 

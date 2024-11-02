@@ -63,7 +63,7 @@ const FadeTransition: FC<AnimationsProps> = ({
   // }, []);
 
   return (
-    <div ref={ref} className={className}>
+    <div ref={ref} className={className + ' opacity-0'}>
       {children}
     </div>
   );

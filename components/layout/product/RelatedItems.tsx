@@ -6,6 +6,7 @@ import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 
 import ProductCard from '../products-grid/components/product-card/ProductCard';
+import ProductAnimations from './animations/ProductAnimations';
 
 interface RelatedItemsProps {
   marker: string;
@@ -25,9 +26,11 @@ const RelatedItems: FC<RelatedItemsProps> = async ({ marker, lang, dict }) => {
 
   return (
     <section className="flex flex-col max-md:max-w-full">
-      <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
-        {title}
-      </h3>
+      <ProductAnimations className={''} index={0}>
+        <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
+          {title}
+        </h3>
+      </ProductAnimations>
       <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
         {block.similarProducts.map(
           (product: IProductsEntity, i: Key | number) => {

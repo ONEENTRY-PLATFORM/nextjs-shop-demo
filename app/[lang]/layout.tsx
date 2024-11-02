@@ -54,8 +54,6 @@ export default async function RootLayout({
   return (
     <html lang={langCode}>
       <body className={lato.className + ' flex flex-col min-h-screen'}>
-        <RegisterGSAP />
-        <IntroAnimations />
         <StoreProvider>
           <LanguageProvider lang={lang}>
             <AuthProvider langCode={langCode}>
@@ -64,7 +62,7 @@ export default async function RootLayout({
                   <Header />
                   <NavigationMenu />
                   <Breadcrumbs />
-                  <div className="grow p-5 pb-8">
+                  <div className="grow p-5 pb-8 transition-transform duration-500">
                     <TransitionProvider>{children}</TransitionProvider>
                   </div>
                   <Footer />
@@ -75,6 +73,8 @@ export default async function RootLayout({
             </AuthProvider>
           </LanguageProvider>
         </StoreProvider>
+        <RegisterGSAP />
+        <IntroAnimations />
         <ToastContainer position="bottom-right" autoClose={2000} />
       </body>
     </html>

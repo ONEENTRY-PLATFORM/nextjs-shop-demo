@@ -28,8 +28,10 @@ const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
 
     tl.set(ref.current, {
       scale: 0,
+      autoAlpha: 0,
     }).to(ref.current, {
       scale: 1,
+      autoAlpha: 1,
       delay: index / 10,
     });
 
