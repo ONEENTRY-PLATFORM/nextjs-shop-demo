@@ -1,6 +1,5 @@
 import { type FC } from 'react';
 
-import FadeTransition from '@/app/animations/FadeTransition';
 import { blocksColors, blocksData } from '@/components/data';
 
 import BlocksGridAnimations from './animations/BlocksGridAnimations';

@@ -5,7 +5,6 @@ import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC } from 'react';
 import { Suspense, useContext, useEffect, useMemo } from 'react';
 
-import FadeTransition from '@/app/animations/FadeTransition';
 import { useGetAccountsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';

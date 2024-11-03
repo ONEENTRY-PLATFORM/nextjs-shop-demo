@@ -4,7 +4,6 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC, type Key, useContext, useEffect, useState } from 'react';
 
-import FadeTransition from '@/app/animations/FadeTransition';
 import { api, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';

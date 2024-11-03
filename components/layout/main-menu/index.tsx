@@ -1,5 +1,4 @@
 import type { FC } from 'react';
-import { Suspense } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
@@ -24,12 +23,8 @@ const NavigationMenu: FC = async () => {
 
   return (
     <>
-      <Suspense fallback={<MainMenuLoader limit={4} />}>
-        <MainMenu menu={mainMenu} lang={lang} />
-      </Suspense>
-      <Suspense>
-        <OffscreenModal menu={mainMenu} lang={lang} />
-      </Suspense>
+      <MainMenu menu={mainMenu} lang={lang} />
+      <OffscreenModal menu={mainMenu} lang={lang} />
     </>
   );
 };

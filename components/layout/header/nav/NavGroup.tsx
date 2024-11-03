@@ -1,8 +1,8 @@
+import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
+import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { FC } from 'react';
 import { type Key } from 'react';
 
-import { getLocales, getMenuByMarker } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { NavMenuLoader } from '@/components/shared/Loader';
 
 import LangSelector from './LangSelector';
@@ -11,15 +11,15 @@ import NavItemCart from './NavItemCart';
 import NavItemFavorites from './NavItemFavorites';
 import NavItemProfile from './NavItemProfile';
 
-const NavGroup: FC = async () => {
-  const [lang] = useServerProvider('lang');
-  const { menu, isError } = await getMenuByMarker('user_web', lang);
-  const userMenu = await getMenuByMarker('side_web', lang);
-  const { locales } = await getLocales();
-
+const NavGroup: FC<{
+  lang: string;
+  menu: IMenusEntity;
+  userMenu: IMenusEntity;
+  locales: ILocalEntity[];
+}> = async ({ lang, menu, userMenu, locales }) => {
   return (
     <div className="fade-in my-auto flex items-center gap-10 max-md:max-w-full max-md:gap-4 max-sm:gap-2">
-      {!isError && menu && Array.isArray(menu.pages) ? (
+      {menu && Array.isArray(menu.pages) ? (
         menu.pages.map((item: { pageUrl: string }, i: Key) => {
           return (
             <div className="flex size-6 max-xs:hidden" key={i}>
