@@ -22,7 +22,7 @@ export default function TransitionProvider({
         const tl = await gsap
           .timeline()
           .to(ref.current, {
-            height: 'auto',
+            height: (ref.current as HTMLDivElement).clientHeight,
             duration: 0.85,
           })
           .call(next, undefined, 0.75);
@@ -37,11 +37,15 @@ export default function TransitionProvider({
         }
         const tl = await gsap
           .timeline()
+          .from(ref.current, {
+            height: (ref.current as HTMLDivElement).clientHeight,
+            duration: 0.25,
+          })
           .to(ref.current, {
             height: 'auto',
             duration: 0.5,
           })
-          .call(next, undefined, 0.5);
+          .call(next, undefined, 0.65);
 
         return () => {
           tl.kill();

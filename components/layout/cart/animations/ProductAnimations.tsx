@@ -57,7 +57,7 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
 
   // remove Product
   useGSAP(() => {
-    if (product.id !== transitionId) {
+    if (!ref.current || product.id !== transitionId) {
       return;
     }
     const tl = gsap.timeline();
