@@ -195,6 +195,22 @@ export const selectDeliveryData = (state: {
   };
 }) => state.cartReducer.deliveryData;
 
+// selectDeliveryData
+export const selectCartTotal = (state: {
+  cartReducer: {
+    productsData: IProducts[];
+    products: IProductsEntity[];
+  };
+}) => {
+  return state.cartReducer.productsData.reduce((total, product, index) => {
+    if (product.selected) {
+      const p = state.cartReducer.products[index];
+      total += (p?.attributeValues?.sale?.value || p?.price) * product.quantity;
+    }
+    return total;
+  }, 0);
+};
+
 // selectCartItemWithIdLength
 export const selectCartItemWithIdLength = (
   state: {

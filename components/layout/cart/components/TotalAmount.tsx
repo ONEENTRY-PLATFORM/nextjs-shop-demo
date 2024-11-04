@@ -3,6 +3,7 @@ import type { FC } from 'react';
 import { useLayoutEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
+import { selectCartTotal } from '@/app/store/reducers/CartSlice';
 import { UsePrice } from '@/components/utils';
 
 import TableRowAnimations from '../animations/TableRowAnimations';
@@ -15,16 +16,7 @@ interface TotalAmountProps {
 
 const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
   const [cartTotal, setCartTotal] = useState(0);
-  const total = useAppSelector((state) => {
-    return state.cartReducer.productsData.reduce((total, product, index) => {
-      if (product.selected) {
-        const p = state.cartReducer.products[index];
-        total +=
-          (p?.attributeValues?.sale?.value || p?.price) * product.quantity;
-      }
-      return total;
-    }, 0);
-  });
+  const total = useAppSelector(selectCartTotal);
   const deliveryPrice = useAppSelector((state) => {
     return state.cartReducer.delivery?.price || 0;
   });

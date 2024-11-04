@@ -14,7 +14,6 @@ export {
   useLazyGetPaymentSessionByIdQuery,
 } from './api/RTKApi';
 export { useCreateOrder } from './hooks/useCreateOrder';
-export { useGetLocales } from './hooks/useGetLocales';
 export { useSearchProducts } from './hooks/useSearchProducts';
 export { useSetForm } from './hooks/useSetForm';
 export { getSingleAttributeByMarkerSet } from './server/attributes/getSingleAttributeByMarkerSet';

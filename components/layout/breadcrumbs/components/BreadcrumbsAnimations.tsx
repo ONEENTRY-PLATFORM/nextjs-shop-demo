@@ -22,9 +22,10 @@ const BreadcrumbsAnimations: FC<BreadcrumbsAnimationsProps> = ({
   const hidden = pathNames.length < 2;
 
   useGSAP(() => {
-    const tl = gsap.timeline({
-      paused: true,
-    });
+    if (!ref.current) {
+      return;
+    }
+    const tl = gsap.timeline();
 
     if (hidden) {
       tl.to(ref.current, {
@@ -32,14 +33,14 @@ const BreadcrumbsAnimations: FC<BreadcrumbsAnimationsProps> = ({
         autoAlpha: 0,
         display: 'none',
         duration: 0.25,
-      }).play();
+      });
     } else {
       tl.to(ref.current, {
         display: 'flex',
         yPercent: 0,
         autoAlpha: 1,
-        duration: 0.25,
-      }).play();
+        duration: 0.35,
+      });
     }
 
     return () => {
@@ -47,9 +48,9 @@ const BreadcrumbsAnimations: FC<BreadcrumbsAnimationsProps> = ({
     };
   }, [hidden]);
 
-  if (hidden) {
-    return;
-  }
+  // if (hidden) {
+  //   return;
+  // }
   return (
     <div ref={ref} className={className}>
       {children}
