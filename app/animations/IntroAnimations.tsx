@@ -13,16 +13,17 @@ const IntroAnimations = () => {
       .set('.fade-in', {
         autoAlpha: 0,
       })
+      .to(ref.current, {
+        delay: 0.25,
+        autoAlpha: 0,
+        duration: 0.35,
+        display: 'none',
+      })
       .to('.fade-in', {
+        delay: -0.15,
         autoAlpha: 1,
         duration: 0.5,
-        delay: 0.25,
         stagger: 0.1,
-      })
-      .to(ref.current, {
-        autoAlpha: 0,
-        duration: 0.5,
-        display: 'none',
       });
 
     tl.play();
