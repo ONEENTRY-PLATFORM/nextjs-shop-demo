@@ -16,20 +16,20 @@ const CardsGridAnimations: FC<{
   const ref = useRef(null);
 
   useGSAP(() => {
-    // const tl = gsap.timeline({
-    //   paused: true,
-    // });
-    // tl.to(ref.current, {
-    //   autoAlpha: 0,
-    //   duration: 0.35,
-    // });
-    // if (stage === 'leaving' && prevStage === 'none') {
-    //   tl.play();
-    // }
-    // setPrevStage(stage);
-    // return () => {
-    //   tl.kill();
-    // };
+    const tl = gsap.timeline({
+      paused: true,
+    });
+    tl.to(ref.current, {
+      autoAlpha: 0,
+      duration: 0.35,
+    });
+    if (stage === 'leaving' && prevStage === 'none') {
+      tl.play();
+    }
+    setPrevStage(stage);
+    return () => {
+      tl.kill();
+    };
   }, [stage]);
 
   return (

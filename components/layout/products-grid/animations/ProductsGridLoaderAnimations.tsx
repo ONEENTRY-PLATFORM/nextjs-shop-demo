@@ -29,6 +29,7 @@ const ProductsGridLoaderAnimations: FC<{
     }).to(cards, {
       autoAlpha: 1,
       duration: 1,
+      delay: 0.5,
       stagger: 0.1,
     });
 

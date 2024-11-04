@@ -64,9 +64,9 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
 
     tl.to(ref.current, {
       autoAlpha: 0,
-      height: 0,
+      // height: 0,
       duration: 0.5,
-      yPercent: -100,
+      // yPercent: -100,
       onStart: () => {
         dispatch(
           setCartTransition({
@@ -79,8 +79,8 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
     }).to(ref.current, {
       autoAlpha: 1,
       duration: 0.35,
-      yPercent: 0,
-      height: 'auto',
+      // yPercent: 0,
+      // height: 'auto',
     });
 
     return () => {
