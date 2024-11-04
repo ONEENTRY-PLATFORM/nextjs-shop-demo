@@ -15,6 +15,7 @@ const OrderRowAnimations: FC<{
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
+  // intro animations
   useGSAP(() => {
     if (!ref.current) {
       return;
