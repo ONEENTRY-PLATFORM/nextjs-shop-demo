@@ -27,25 +27,32 @@ const FilterModalAnimations = ({ children }: { children: ReactNode }) => {
       },
     });
 
-    gsap.set('#modalBg', {
+    const modalBg =
+      ref.current && (ref.current as HTMLDivElement).querySelector('#modalBg');
+    const modalBody =
+      ref.current &&
+      (ref.current as HTMLDivElement).querySelector('#modalBody');
+
+    gsap.set(modalBg, {
       autoAlpha: 0,
+      transformOrigin: 'right center',
     });
 
-    gsap.set('#modalBody', {
+    gsap.set(modalBody, {
       xPercent: 100,
     });
 
-    tl.to('#modalBg', {
+    tl.to(modalBg, {
       autoAlpha: 1,
       xPercent: 0,
       backdropFilter: 'blur(10px)',
-      duration: 0.35,
+      duration: 0.5,
     }).to(
-      '#modalBody',
+      modalBody,
       {
         autoAlpha: 1,
         xPercent: 0,
-        duration: 0.35,
+        duration: 0.5,
       },
       '-0.25',
     );

@@ -24,7 +24,7 @@ const ProductsGridLoaderAnimations: FC<{
       ref.current &&
       (ref.current as HTMLDivElement).querySelectorAll('.product-card');
 
-    tl.set(cards, {
+    tl.from(cards, {
       autoAlpha: 0,
     }).to(cards, {
       autoAlpha: 1,

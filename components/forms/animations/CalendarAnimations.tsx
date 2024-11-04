@@ -41,10 +41,11 @@ const CalendarAnimations: FC<CalendarAnimationsProps> = ({
         stagger: 0.01,
       },
     );
-    tl.play();
 
     if (transition === 'close') {
-      tl.reverse(3);
+      tl.reverse(2);
+    } else {
+      tl.play();
     }
 
     return () => {

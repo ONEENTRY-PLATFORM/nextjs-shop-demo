@@ -7,13 +7,16 @@ import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-const ModalAnimations: FC<{ children: ReactNode }> = ({ children }) => {
+const ModalAnimations: FC<{ children: ReactNode; component: string }> = ({
+  children,
+  component,
+}) => {
   const { open, transition, setOpen, setTransition } =
     useContext(OpenDrawerContext);
   const ref = useRef(null);
 
   useGSAP(() => {
-    if (!open) {
+    if (!ref.current || !open) {
       return;
     }
     const tl = gsap.timeline({
@@ -27,22 +30,28 @@ const ModalAnimations: FC<{ children: ReactNode }> = ({ children }) => {
       },
     });
 
+    const modalBg = (ref.current as HTMLDivElement).querySelector('#modalBg');
+    const modalBody = (ref.current as HTMLDivElement).querySelector(
+      '#modalBody',
+    );
+
     if (transition === 'close') {
-      tl.to('#modalBg, #modalBody', {
+      const duration = component !== 'CalendarForm' ? 0.5 : 1.5;
+      tl.to([modalBg, modalBody], {
         scaleX: 1,
         autoAlpha: 1,
-        duration: 0.5,
-      }).reverse(0.5);
+        duration: duration,
+      }).reverse(duration);
     } else {
-      tl.set('#modalBg, #modalBody', {
+      tl.set([modalBg, modalBody], {
         scaleX: 0,
         autoAlpha: 0,
       })
-        .to('#modalBg, #modalBody', {
+        .to([modalBg, modalBody], {
           scaleX: 1,
           autoAlpha: 1,
         })
-        .to('#modalBg', {
+        .to(modalBg, {
           backdropFilter: 'blur(10px)',
           delay: -0.35,
         });
