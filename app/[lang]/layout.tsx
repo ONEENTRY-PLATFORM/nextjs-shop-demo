@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { AuthProvider } from '@/app/store/providers/AuthContext';
 import { ContentContextProvider } from '@/app/store/providers/ContentContext';
-import { LanguageProvider } from '@/app/store/providers/LanguageContext';
+// import { LanguageProvider } from '@/app/store/providers/LanguageContext';
 import { OpenDrawerProvider } from '@/app/store/providers/OpenDrawerContext';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import StoreProvider from '@/app/store/providers/StoreProvider';
@@ -55,23 +55,23 @@ export default async function RootLayout({
     <html lang={langCode}>
       <body className={lato.className + ' flex flex-col min-h-screen'}>
         <StoreProvider>
-          <LanguageProvider lang={lang}>
-            <AuthProvider langCode={langCode}>
-              <ContentContextProvider dict={dict}>
-                <OpenDrawerProvider>
-                  <Header />
-                  <NavigationMenu />
-                  <Breadcrumbs />
-                  <div className="grow p-5 pb-8 transition-transform duration-500">
-                    <TransitionProvider>{children}</TransitionProvider>
-                  </div>
-                  <Footer />
-                  <BottomMenu />
-                  <Modal lang={lang} dict={dict} />
-                </OpenDrawerProvider>
-              </ContentContextProvider>
-            </AuthProvider>
-          </LanguageProvider>
+          {/* <LanguageProvider lang={lang}> */}
+          <AuthProvider langCode={langCode}>
+            <ContentContextProvider dict={dict}>
+              <OpenDrawerProvider>
+                <Header />
+                <NavigationMenu />
+                <Breadcrumbs />
+                <div className="grow p-5 pb-8 transition-transform duration-500">
+                  <TransitionProvider>{children}</TransitionProvider>
+                </div>
+                <Footer />
+                <BottomMenu />
+                <Modal lang={lang} dict={dict} />
+              </OpenDrawerProvider>
+            </ContentContextProvider>
+          </AuthProvider>
+          {/* </LanguageProvider> */}
         </StoreProvider>
         <RegisterGSAP />
         <IntroAnimations />

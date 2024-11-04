@@ -12,15 +12,18 @@ interface SearchResultsProps {
   searchValue: string | undefined;
   state: boolean;
   setState: Dispatch<React.SetStateAction<boolean>>;
+  lang: string;
 }
 
 const SearchResults: FC<SearchResultsProps> = ({
   searchValue,
   state,
   setState,
+  lang,
 }) => {
   const { loading, products } = useSearchProducts({
     name: searchValue || '',
+    lang: lang,
   });
 
   if (loading) {

@@ -15,7 +15,7 @@ const WithSidebar = async ({
           <SidebarMenu lang={lang} />
         </aside>
         <FadeTransition
-          className="flex w-[calc(_100%_-_210px_)] grow flex-col max-md:w-full"
+          className="flex w-[calc(_100%_-_210px_)] grow flex-col overflow-hidden max-md:w-full"
           index={0}
         >
           <div className="flex w-full flex-col pb-5">{children}</div>

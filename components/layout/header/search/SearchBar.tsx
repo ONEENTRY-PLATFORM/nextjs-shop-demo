@@ -68,7 +68,12 @@ const SearchBar: FC<{ lang: string; dict: IAttributeValues }> = ({
           <SearchIcon />
         </button>
       </form>
-      <SearchResults searchValue={value} state={state} setState={setState} />
+      <SearchResults
+        searchValue={value}
+        state={state}
+        setState={setState}
+        lang={lang}
+      />
     </div>
   );
 };

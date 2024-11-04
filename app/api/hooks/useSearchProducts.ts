@@ -1,16 +1,22 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { api } from '@/app/api';
-import { LanguageContext } from '@/app/store/providers/LanguageContext';
+import { LanguageEnum } from '@/app/types/enum';
 
-export const useSearchProducts = ({ name }: { name: string }) => {
+export const useSearchProducts = ({
+  name,
+  lang,
+}: {
+  name: string;
+  lang: string;
+}) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [products, setProducts] = useState<IProductsEntity[]>([]);
   const [refetch, setRefetch] = useState(false);
-  const { activeLanguage } = useContext(LanguageContext);
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
   useEffect(() => {
     if (!name) {
@@ -18,11 +24,11 @@ export const useSearchProducts = ({ name }: { name: string }) => {
     }
     (async () => {
       setLoading(true);
-      const result = await api.Products.searchProduct(name, activeLanguage);
+      const result = await api.Products.searchProduct(name, langCode);
       setProducts(result as IProductsEntity[]);
       setLoading(false);
     })();
-  }, [refetch, activeLanguage, name]);
+  }, [refetch, langCode, name]);
 
   return {
     loading,
