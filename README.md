@@ -42,11 +42,15 @@ SDK
 
 ## Environment Variables
 
-To run this project, you will need to add the following environment variables to your .env file
+To run this project, you will need to add the following environment variables to your .env file.
 
-`PROJECT_URL: https://xxx-xxx-xxx.oneentry.cloud`
+`1. Rename .env_example to .env`
 
-`APP_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....`
+`2. Add the following environment variables`
+
+    `PROJECT_URL: https://xxx-xxx-xxx.oneentry.cloud`
+
+    `APP_TOKEN: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....`
 
 
 ## Run Locally
