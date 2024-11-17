@@ -6,6 +6,12 @@ import type { FC, Key } from 'react';
 
 import BreadcrumbItem from './BreadcrumbItem';
 
+/**
+ * Breadcrumbs trail
+ * @param lang current language shortcode
+ *
+ * @returns JSX.Element
+ */
 const BreadcrumbsTrail: FC<{ lang: string }> = ({ lang }) => {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);

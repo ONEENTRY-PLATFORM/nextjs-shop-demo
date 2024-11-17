@@ -1,3 +1,4 @@
+import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
@@ -7,16 +8,28 @@ import BlocksGridLoader from '@/components/layout/blocks-grid/components/BlocksG
 // export const revalidate = 10;
 // export const dynamicParams = true;
 
-const IndexPage = async ({
-  params: { lang },
-}: {
+/**
+ * Home(index) page
+ * @async server component
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ * @param params page params
+ * @returns page layout JSX.Element
+ */
+const IndexPageLayout: FC<{
   params: { lang: string };
-}) => {
+}> = async ({ params: { lang } }) => {
+  // Get home page by Url from api
   const { page, isError } = await getPageByUrl('home_web', lang);
 
-  if (isError || !page || !page.blocks) {
+  if (isError) {
+    return;
+  }
+
+  if (!page || !page.blocks) {
     return <BlocksGridLoader />;
   }
+
+  // extract blocks from page
   const { blocks } = page;
 
   return (
@@ -32,4 +45,4 @@ const IndexPage = async ({
   );
 };
 
-export default IndexPage;
+export default IndexPageLayout;

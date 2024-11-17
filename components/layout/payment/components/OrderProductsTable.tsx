@@ -14,6 +14,12 @@ type PaymentMethodProps = {
   lang: string;
 };
 
+/**
+ * Order products table
+ * @param lang current language shortcode
+ *
+ * @returns JSX.Element
+ */
 const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
   const productsDataInCart = useAppSelector(selectCartData) as Array<{
     id: number;

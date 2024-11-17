@@ -21,11 +21,20 @@ interface DeliveryTableProps {
   dict: IAttributeValues;
 }
 
+/**
+ * Delivery table
+ * @param lang Current language shortcode
+ * @param delivery Represents a product entity object.
+ * @param dict dictionary from server api
+ *
+ * @returns
+ */
 const DeliveryTable: FC<DeliveryTableProps> = ({ delivery, lang, dict }) => {
   const dispatch = useAppDispatch();
   const { user } = useContext(AuthContext);
   const deliveryData = useAppSelector(selectDeliveryData);
 
+  // get form by marker with RTK
   const { data } = useGetFormByMarkerQuery({
     marker: 'order',
     lang,

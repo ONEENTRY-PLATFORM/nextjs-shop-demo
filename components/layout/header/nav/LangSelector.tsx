@@ -1,34 +1,41 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { usePathname, useRouter } from 'next/navigation';
+import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
 import type { FC, Key } from 'react';
 
-const LangSelector: FC<{ locales: any; lang: string }> = ({
+/**
+ * Lang selector
+ * @param locales
+ * @param lang current language shortcode
+ *
+ * @returns Lang selector select
+ */
+const LangSelector: FC<{ locales: ILocalEntity[]; lang: string }> = ({
   locales,
   lang,
 }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  if (!lang) {
+  if (!locales || !lang) {
     return;
   }
 
-  const onChange = (e: any) => {
-    replace('/' + e.target.value + pathname.slice(3));
+  // redirect to locale on change
+  const onChange = (value: string) => {
+    replace('/' + value + pathname.slice(3));
   };
 
   return (
     <select
       defaultValue={lang}
-      onChange={onChange}
+      onChange={(e) => onChange(e.target.value)}
       className="uppercase text-neutral-600"
     >
       {locales
-        ?.filter((locale: { isActive: any }) => locale.isActive && locale)
-        .map((locale: any, i: Key) => {
+        ?.filter((locale: { isActive: boolean }) => locale.isActive && locale)
+        .map((locale: ILocalEntity, i: Key) => {
           return (
             <option key={i} value={locale.shortCode}>
               {locale.shortCode}

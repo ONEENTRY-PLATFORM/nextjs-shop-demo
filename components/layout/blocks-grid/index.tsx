@@ -10,9 +10,16 @@ interface BlocksGridProps {
   lang: string;
 }
 
+/**
+ * Blocks grid
+ * @param blocks array of blocks names
+ * @param lang current language shortcode
+ *
+ * @returns blocks grid with animations
+ */
 const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, lang }) => {
   if (blocks?.length < 1) {
-    return;
+    return 'Blocks not found';
   }
 
   return (

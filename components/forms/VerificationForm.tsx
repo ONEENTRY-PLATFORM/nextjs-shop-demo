@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
-// import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
@@ -17,11 +17,13 @@ import FormAnimations from '@/components/forms/animations/FormAnimations';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
-const VerificationForm: FC<FormProps> = ({
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  lang,
-  dict,
-}) => {
+/**
+ * VerificationForm
+ * @param dict dictionary from server api
+ *
+ * @returns VerificationForm
+ */
+const VerificationForm: FC<FormProps> = ({ dict }) => {
   const router = useTransitionRouter();
   const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);
@@ -39,27 +41,9 @@ const VerificationForm: FC<FormProps> = ({
     verify_now_text,
   } = dict;
 
-  const fields = useAppSelector(
-    (state) => state.formFieldsReducer.fields,
-  ) as object as {
-    phone_reg: {
-      valid: boolean;
-      value: string;
-    };
-    email_reg: {
-      valid: boolean;
-      value: string;
-    };
-    password_reg: {
-      valid: boolean;
-      value: string;
-    };
-    otp_code: {
-      valid: boolean;
-      value: number;
-    };
-  };
+  const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
+  // set otp code to formFields reducer
   useEffect(() => {
     if (otp) {
       dispatch(
@@ -74,7 +58,13 @@ const VerificationForm: FC<FormProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [otp]);
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  /**
+   * Submit form handle for checkCode/activateUser
+   * @async
+   * @param e FormEvent
+   * @returns
+   */
+  const onSubmitHandle = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (otp.length < 6) {
       return;
@@ -83,6 +73,7 @@ const VerificationForm: FC<FormProps> = ({
     try {
       setLoading(true);
       setError('');
+      // check OTP code with API AuthProvider
       if (action !== 'activateUser') {
         // checkCode
         const result = await api.AuthProvider.checkCode(
@@ -90,11 +81,14 @@ const VerificationForm: FC<FormProps> = ({
           fields.email_reg.value,
           otp,
         );
+        // if checkCode is ok show reset password form
         if (result) {
           setComponent('ResetPasswordForm');
         }
         setLoading(false);
-      } else {
+      }
+      // activateUser with API AuthProvider
+      else {
         // activateUser
         const result = await api.AuthProvider.activateUser(
           'email',
@@ -112,7 +106,6 @@ const VerificationForm: FC<FormProps> = ({
             authenticate();
             router.push('/profile');
             setOpen(false);
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (e: any) {
             setError(e.message);
           }
@@ -121,14 +114,17 @@ const VerificationForm: FC<FormProps> = ({
         }
       }
       setLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setError(e.message);
       setLoading(false);
     }
   };
 
-  const onResend = async () => {
+  /**
+   * Generate and resend verification code
+   * @async
+   */
+  const onResendHandle = async () => {
     try {
       setLoading(true);
       setError('');
@@ -138,12 +134,10 @@ const VerificationForm: FC<FormProps> = ({
           fields.email_reg.value,
           'generate_code',
         );
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
         setError(e.message);
       }
       setLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setError(e.message);
       setLoading(false);
@@ -154,7 +148,7 @@ const VerificationForm: FC<FormProps> = ({
     <FormAnimations isLoading={isLoading}>
       <form
         className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
-        onSubmit={(e) => onSubmit(e)}
+        onSubmit={(e) => onSubmitHandle(e)}
       >
         <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
@@ -183,7 +177,7 @@ const VerificationForm: FC<FormProps> = ({
             <button
               className="font-bold text-orange-500"
               type="button"
-              onClick={onResend}
+              onClick={onResendHandle}
             >
               {resend_text.value}
             </button>

@@ -19,14 +19,16 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 
+/**
+ * SignIn form
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns SignIn form
+ */
 const SignInForm: FC<FormProps> = ({ lang, dict }) => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
-
-  const { data, isLoading } = useGetFormByMarkerQuery({
-    marker: 'reg',
-    lang,
-  });
 
   const [tab, setTab] = useState<string>('email');
   const [loading, setLoading] = useState<boolean>(false);
@@ -41,23 +43,25 @@ const SignInForm: FC<FormProps> = ({ lang, dict }) => {
     phone_text,
   } = dict;
 
+  // Get form by marker with RTK
+  const { data, isLoading } = useGetFormByMarkerQuery({
+    marker: 'reg',
+    lang,
+  });
+
+  // get fields from formFieldsReducer
   const { email_reg, password_reg } = useAppSelector(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (state: { formFieldsReducer: { fields: any } }) =>
       state.formFieldsReducer.fields,
-  ) as object as {
-    email_reg: {
-      value: string;
-    };
-    password_reg: {
-      value: string;
-    };
-  };
+  );
 
+  // sort fields by position
   const formFields = data?.attributes
     .slice()
     .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
 
+  // SignIn with API AuthProvider
   const onSignIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email_reg || !password_reg) {

@@ -6,7 +6,7 @@ const EyeIcon = () => {
       viewBox="0 0 25 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="size-full fill-slate-700 group-hover:fill-orange-500"
+      className="size-full fill-slate-700 transition-colors duration-300 group-hover:fill-orange-500"
     >
       <path
         fillRule="evenodd"

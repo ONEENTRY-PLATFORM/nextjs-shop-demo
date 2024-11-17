@@ -5,6 +5,11 @@ import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
+/**
+ * Close modal button
+ *
+ * @returns close modal button
+ */
 const CloseModal: FC = () => {
   const { setTransition } = useContext(OpenDrawerContext);
   return (

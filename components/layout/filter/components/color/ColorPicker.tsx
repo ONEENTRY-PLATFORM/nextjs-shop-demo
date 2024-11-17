@@ -5,10 +5,17 @@ import { memo } from 'react';
 interface ColorPickerProps {
   code: string;
   name: string;
-  key: number;
   setActiveColor: Dispatch<SetStateAction<string>>;
 }
 
+/**
+ * Color picker
+ * @param code color code
+ * @param name color name
+ * @param setActiveColor setActiveColor function
+ *
+ * @returns single color picker
+ */
 const ColorPicker: FC<ColorPickerProps> = ({ code, name, setActiveColor }) => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);

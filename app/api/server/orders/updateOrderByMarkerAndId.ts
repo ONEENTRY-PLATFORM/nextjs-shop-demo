@@ -8,12 +8,32 @@ import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { typeError } from '@/components/utils';
 
-export const updateOrderByMarkerAndId = async (
-  marker: string,
-  id: number,
-  data: IOrderData,
-  lang?: string,
-): Promise<{
+interface HandleProps {
+  marker: string;
+  id: number;
+  data: IOrderData;
+  lang?: string;
+}
+
+/**
+ * Getting all orders from the orders storage object created by the user
+ *
+ * @description This method requires user authorization. For more information about configuring the authorization module, see the documentation in the configuration settings section of the SDK.
+ *
+ * @param marker The text identifier of the order storage object
+ * @param id ID of the order object
+ * @param data Object for updating an order
+ * @param lang Current language shortcode
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ *
+ * @returns Promise
+ */
+export const updateOrderByMarkerAndId = async ({
+  marker,
+  id,
+  data,
+  lang,
+}: HandleProps): Promise<{
   isError: boolean;
   error?: IError;
   order?: IBaseOrdersEntity;

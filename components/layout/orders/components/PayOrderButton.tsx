@@ -4,6 +4,15 @@ import { useCreateOrder } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 
+/**
+ * PayOrder button
+ * @param id
+ * @param lang current language shortcode
+ * @param loading
+ * @param title
+ *
+ * @returns JSX.Element
+ */
 const PayOrderButton: FC<{
   id: number;
   lang: string;

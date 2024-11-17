@@ -13,6 +13,14 @@ interface SidebarMenuItemProps {
   lang: string;
 }
 
+/**
+ * SidebarMenu item
+ *
+ * @param menuItem
+ * @param lang Current language shortcode
+ *
+ * @returns SidebarMenu Item
+ */
 const SidebarMenuItem: FC<SidebarMenuItemProps> = ({ menuItem, lang }) => {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);

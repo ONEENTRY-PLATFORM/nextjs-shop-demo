@@ -8,6 +8,12 @@ interface AvailabilityFilterProps {
   title?: string;
 }
 
+/**
+ * History
+ * @param dict dictionary from server api
+ *
+ * @returns
+ */
 const AvailabilityFilter: FC<AvailabilityFilterProps> = ({ title }) => {
   const pathname = usePathname();
   const { replace } = useRouter();

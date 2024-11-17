@@ -10,6 +10,12 @@ interface ProductDescriptionProps {
   };
 }
 
+/**
+ * Product description
+ * @param description
+ *
+ * @returns Product description
+ */
 const ProductDescription: FC<ProductDescriptionProps> = ({ description }) => {
   if (!description) {
     return;

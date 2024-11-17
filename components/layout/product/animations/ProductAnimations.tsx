@@ -6,6 +6,14 @@ import { useTransitionState } from 'next-transition-router';
 import type { FC, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
+/**
+ * Product animations
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ * @param index Index of element for animations stagger
+ *
+ * @returns data
+ */
 const ProductAnimations: FC<{
   children: ReactNode;
   className: string;
@@ -15,6 +23,7 @@ const ProductAnimations: FC<{
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
+  // enter animations
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,
@@ -33,6 +42,7 @@ const ProductAnimations: FC<{
     };
   }, []);
 
+  // leaving animations
   useGSAP(() => {
     const tl = gsap.timeline();
 

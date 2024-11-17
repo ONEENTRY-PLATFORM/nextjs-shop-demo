@@ -3,6 +3,11 @@
 import { useRouter } from 'next/navigation';
 import type { FC } from 'react';
 
+/**
+ * History back button
+ *
+ * @returns History back button
+ */
 const HistoryBack: FC = () => {
   const router = useRouter();
   return (

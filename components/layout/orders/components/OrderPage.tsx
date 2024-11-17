@@ -13,6 +13,15 @@ import PayOrderButton from './PayOrderButton';
 import ProductCard from './ProductCard';
 import RepeatOrderButton from './RepeatOrderButton';
 
+/**
+ * Order page
+ * @param id
+ * @param settings
+ * @param lang current language shortcode
+ * @param isActive
+ *
+ * @returns JSX.Element
+ */
 const OrderPage: FC<{
   id: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

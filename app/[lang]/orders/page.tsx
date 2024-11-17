@@ -4,22 +4,31 @@ import { Suspense } from 'react';
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
 import { getBlockByMarker } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import type { PageProps } from '@/app/types/global';
 import OrdersPage from '@/components/layout/orders';
 import Loader from '@/components/shared/Loader';
 import type { Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 
-const Page: FC<{
-  params: { page: string; lang: string };
-}> = async ({ params: { lang } }) => {
+/**
+ * Orders page
+ * @async server component
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ * @param params page params
+ * @returns Orders page layout JSX.Element
+ */
+const OrdersPageLayout: FC<PageProps> = async ({ params: { lang } }) => {
+  // Get the dictionary from the API and set the server provider.
   const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
 
-  const { block } = await getBlockByMarker('orders_settings', lang);
+  // Get block by marker from the API.
+  const { block, isError } = await getBlockByMarker('orders_settings', lang);
 
-  if (!block) {
+  if (!block || isError) {
     return;
   }
+
   return (
     <section className="relative mx-auto box-border flex min-h-80 w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
@@ -37,4 +46,4 @@ const Page: FC<{
   );
 };
 
-export default Page;
+export default OrdersPageLayout;

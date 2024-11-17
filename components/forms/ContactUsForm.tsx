@@ -2,7 +2,6 @@
 'use client';
 
 import type { IAttributes } from 'oneentry/dist/base/utils';
-import type { IFormsPost } from 'oneentry/dist/formsData/formsDataInterfaces';
 import type { FC, FormEvent, Key } from 'react';
 import { useState } from 'react';
 
@@ -11,52 +10,43 @@ import { useAppSelector } from '@/app/store/hooks';
 
 import Loader from '../shared/Loader';
 import ErrorMessage from './inputs/ErrorMessage';
-import { FormCaptcha } from './inputs/FormCaptcha';
+import FormCaptcha from './inputs/FormCaptcha';
 import FormInput from './inputs/FormInput';
+import FormReCaptcha from './inputs/FormReCaptcha';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
+/**
+ * ContactUs form
+ * @param className CSS className of ref element
+ * @param lang Current language shortcode
+ *
+ * @returns ContactUs form
+ */
 const ContactUsForm: FC<{ className: string; lang: string }> = ({
   className,
   lang,
 }) => {
-  const { data, isLoading } = useGetFormByMarkerQuery({
-    marker: 'contact_us',
-    lang,
-  });
-
   const [token, setToken] = useState<string | null>();
   const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  const fieldsData = useAppSelector(
-    (state) => state.formFieldsReducer.fields,
-  ) as object as {
-    first_nme: {
-      value: string;
-    };
-    email: {
-      value: string;
-    };
-    surname: {
-      value: string;
-    };
-    topic: {
-      value: string;
-    };
-    text: {
-      value: string;
-    };
-    spam: {
-      value: boolean;
-    };
-  };
+  // Get form by marker with RTK
+  const { data, isLoading } = useGetFormByMarkerQuery({
+    marker: 'contact_us',
+    lang,
+  });
 
+  // get fields from formFieldsReducer
+  const fieldsData = useAppSelector((state) => state.formFieldsReducer.fields);
+
+  // sort fields by position
   const formFields = data?.attributes
     .slice()
     .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
 
-  const onSubmitForm = async (e: FormEvent<HTMLFormElement>) => {
+  // Submit form
+  const onSubmitFormHandle = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const emptyFormData: {
@@ -65,7 +55,9 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
       value: string | object;
     }[] = [];
 
-    if (formFields) {
+    // transform and send form data
+    if (formFields && token) {
+      // transform form data
       const propertiesArray = Object.keys(formFields);
       const transformedFormData = propertiesArray?.reduce((formData, i) => {
         const type = formFields[i].type;
@@ -80,6 +72,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
           type: string;
           value: string | object;
         };
+
         if (marker === 'spam') {
           newData = {
             marker: marker,
@@ -94,7 +87,6 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
             value: 'test',
           };
         }
-
         if (type === 'list') {
           newData = {
             marker: marker,
@@ -119,20 +111,20 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
             ],
           };
         }
+
         if (newData) {
           formData.push(newData);
         }
         return formData;
       }, emptyFormData);
 
-      const formData: IFormsPost = {
-        formIdentifier: 'contact_us',
-        formData: transformedFormData,
-      };
-
+      // send form data to API
       try {
         setLoading(true);
-        await api.FormData.postFormsData(formData);
+        await api.FormData.postFormsData({
+          formIdentifier: 'contact_us',
+          formData: transformedFormData,
+        });
         setLoading(false);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
@@ -152,7 +144,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
         'flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5 ' +
         className
       }
-      onSubmit={(e) => onSubmitForm(e)}
+      onSubmit={(e) => onSubmitFormHandle(e)}
     >
       <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
         {formFields?.map((field: IAttributes, index: Key | number) => {
@@ -167,11 +159,18 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
             );
           } else if (field.type === 'spam') {
             return (
-              <FormCaptcha
-                key={index}
-                setToken={setToken}
-                setIsCaptcha={setIsCaptcha}
-              />
+              <div key={index}>
+                <FormCaptcha
+                  setToken={setToken}
+                  setIsCaptcha={setIsCaptcha}
+                  captchaKey={field.settings?.captchaKey || ''}
+                />
+                {/* <FormReCaptcha
+                  setToken={setToken}
+                  setIsCaptcha={setIsCaptcha}
+                  captchaKey={field.settings?.captchaKey || ''}
+                /> */}
+              </div>
             );
           } else {
             return <FormInput key={index} index={index as number} {...field} />;

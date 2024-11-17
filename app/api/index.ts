@@ -8,6 +8,7 @@ export {
   useGetFormByMarkerQuery,
   useGetOrderStorageByMarkerQuery,
   useGetPaymentSessionByIdQuery,
+  useGetProductByIdQuery,
   useGetProductsByIdsQuery,
   useGetSingleOrderQuery,
   useLazyGetMeQuery,
@@ -27,7 +28,6 @@ export { updateOrderByMarkerAndId } from './server/orders/updateOrderByMarkerAnd
 export { getChildPagesByParentUrl } from './server/pages/getChildPagesByParentUrl';
 export { getPageById } from './server/pages/getPageById';
 export { getPageByUrl } from './server/pages/getPageByUrl';
-export { getPages } from './server/pages/getPages';
 export { getProductById } from './server/products/getProductById';
 export { getProducts } from './server/products/getProducts';
 export { getProductsByPageUrl } from './server/products/getProductsByPageUrl';

@@ -8,6 +8,12 @@ interface PriceDisplayProps {
   lang: string;
 }
 
+/**
+ * Description
+ * @param param0 param0
+ *
+ * @returns
+ */
 const PriceDisplay: React.FC<PriceDisplayProps> = ({
   currentPrice,
   originalPrice,

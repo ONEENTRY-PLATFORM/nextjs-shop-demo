@@ -6,6 +6,15 @@ import { useTransitionState } from 'next-transition-router';
 import type { FC, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
+/**
+ * Payment method animations
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ * @param index Index of element for animations stagger
+ * @param isActive
+ *
+ * @returns JSX.Element
+ */
 const PaymentMethodAnimations: FC<{
   children: ReactNode;
   className: string;

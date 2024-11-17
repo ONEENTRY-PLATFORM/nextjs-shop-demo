@@ -10,13 +10,24 @@ interface StickersProps {
   lang: string;
 }
 
-const Stickers: FC<StickersProps> = ({ product, lang }) => {
+/**
+ * Stickers
+ *
+ * @param product product entity object.
+ * @param lang Current language shortcode
+ *
+ * @returns Stickers array
+ */
+const Stickers: FC<StickersProps> = ({
+  product: { attributeValues },
+  lang,
+}) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { attributeValues } = product;
 
+  // extract attributes from attributeValues field of product
   const attributes = attributeValues[langCode] || attributeValues;
 
-  return [attributes.stickers].map(
+  return [attributes?.stickers].map(
     (
       sticker: {
         value: {

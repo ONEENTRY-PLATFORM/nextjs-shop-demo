@@ -14,7 +14,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import type { FormProps } from '@/app/types/global';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
-import AuthError from '../shared/AuthError';
+import AuthError from '../pages/AuthError';
 import Loader from '../shared/Loader';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
@@ -26,41 +26,34 @@ export type InputValue = {
   [key: string]: unknown;
 };
 
+/**
+ * User form
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns User form
+ */
 const UserForm: FC<FormProps> = ({ lang, dict }) => {
   const { isAuth, refreshUser, user } = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const [isError, setError] = useState('');
+
+  // Get form by marker with RTK
   const { data, isLoading, error } = useGetFormByMarkerQuery({
     marker: 'reg',
     lang,
   });
 
-  const [loading, setLoading] = useState(false);
-  const [isError, setError] = useState('');
+  // get fields from formFieldsReducer
+  const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
-  const fields = useAppSelector(
-    (state) => state.formFieldsReducer.fields,
-  ) as object as {
-    email_reg: {
-      valid: boolean;
-      value: string;
-    };
-    name_reg: {
-      valid: boolean;
-      value: string;
-    };
-    phone_reg: {
-      valid: boolean;
-      value: string;
-    };
-    password_reg: {
-      valid: boolean;
-      value: string;
-    };
-  };
-
+  // Update user data
   const onUpdateUserData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       setLoading(true);
+
+      // prepare form data
       const formData: IAuthFormData[] = data?.attributes
         .map((field: IAttributes, index: Key) => {
           if (field.marker !== 'email_notifications') {
@@ -75,6 +68,8 @@ const UserForm: FC<FormProps> = ({ lang, dict }) => {
         .filter(function (el: null) {
           return el !== null;
         });
+
+      // updateUser with Users API
       if (user?.formIdentifier) {
         await api.Users.updateUser({
           formIdentifier: user.formIdentifier,
@@ -90,7 +85,6 @@ const UserForm: FC<FormProps> = ({ lang, dict }) => {
             phonePush: [],
             phoneSMS: fields['phone_reg'].value,
           },
-          // !!! USER STATE
           state: {},
         });
       }

@@ -1,6 +1,13 @@
 import Image from 'next/image';
 import type { FC } from 'react';
 
+/**
+ * Empty image placeholder
+ *
+ * @param className wrapper className
+ *
+ * @returns Placeholder
+ */
 const Placeholder: FC<{ className?: string }> = ({ className }) => {
   return (
     <div

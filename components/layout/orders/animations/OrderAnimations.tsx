@@ -5,6 +5,14 @@ import { gsap } from 'gsap';
 import type { FC, ReactNode } from 'react';
 import { useRef } from 'react';
 
+/**
+ * Order animations
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ * @param isActive
+ *
+ * @returns JSX.Element
+ */
 const OrderAnimations: FC<{
   children: ReactNode;
   className: string;
@@ -12,6 +20,7 @@ const OrderAnimations: FC<{
 }> = ({ children, className, isActive }) => {
   const ref = useRef(null);
 
+  // open order animations
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,

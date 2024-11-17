@@ -12,6 +12,13 @@ interface SidebarAnimationsProps {
   className: string;
 }
 
+/**
+ * Sidebar animations
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ *
+ * @returns Sidebar animations
+ */
 const SidebarAnimations: FC<SidebarAnimationsProps> = ({
   children,
   className,

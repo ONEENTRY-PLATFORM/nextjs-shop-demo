@@ -1,5 +1,10 @@
 import type { FC } from 'react';
 
+/**
+ * Review form
+ *
+ * @returns ReviewForm
+ */
 const ReviewForm: FC = () => {
   return (
     <form className="relative box-border flex shrink-0 flex-col">

@@ -4,6 +4,12 @@ interface StarRatingProps {
   rating: number;
 }
 
+/**
+ * StarRating
+ * @param rating
+ *
+ * @returns StarRating
+ */
 const StarRating: FC<StarRatingProps> = ({ rating }) => {
   return (
     <div className="flex shrink-0 flex-row items-center gap-1.5">

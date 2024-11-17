@@ -10,20 +10,36 @@ import { addProductToCart } from '@/app/store/reducers/CartSlice';
 import { LanguageEnum } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 
-const RepeatOrderButton: FC<{
+interface RepeatOrderButtonProps {
   data: IOrderByMarkerEntity;
   title: string;
   isLoading: boolean;
   lang: string;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-}> = ({ data, isLoading, title, lang }) => {
+}
+
+/**
+ * RepeatOrder button
+ * @param data
+ * @param title
+ * @param isLoading loading state
+ * @param lang current language shortcode
+ *
+ * @returns JSX.Element
+ */
+const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
+  data,
+  isLoading,
+  title,
+  lang,
+}) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const router = useTransitionRouter();
   const dispatch = useAppDispatch();
 
   const { products } = data;
 
-  const repeatOrder = () => {
+  // repeatOrder - extract products from order and add to cart
+  const repeatOrderHandle = () => {
     products.map(async (p) => {
       if (p.id === 83) {
         return;
@@ -47,7 +63,7 @@ const RepeatOrderButton: FC<{
 
   return (
     <button
-      onClick={() => repeatOrder()}
+      onClick={() => repeatOrderHandle()}
       type="button"
       className="btn btn-sm btn-o btn-o-primary"
     >

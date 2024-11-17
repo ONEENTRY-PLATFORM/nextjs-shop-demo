@@ -11,12 +11,21 @@ import * as forms from '../../forms';
 import CloseModal from './components/CloseModal';
 import ModalBackdrop from './components/ModalBackdrop';
 
+/**
+ * Forms modal component
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @componentType Client component
+ * @returns Modal with form component
+ */
 const Modal: FC<{ lang: string; dict: IAttributeValues }> = ({
   lang,
   dict,
 }) => {
   const { component } = useContext(OpenDrawerContext);
 
+  // select form component by component name
   const Form: FC<{ className: string; lang: string; dict: IAttributeValues }> =
     forms[component as keyof typeof forms] || null;
 

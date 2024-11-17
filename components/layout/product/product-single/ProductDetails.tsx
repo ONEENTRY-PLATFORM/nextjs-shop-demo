@@ -13,19 +13,32 @@ interface ProductDetailsProps {
   dict: IAttributeValues;
 }
 
+/**
+ * Product details
+ *
+ * @param product product entity object
+ * @param lang current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns Product details
+ */
 const ProductDetails: FC<ProductDetailsProps> = async ({
   product,
   lang,
   dict,
 }) => {
-  const { attributeValues, localizeInfos } = product;
-  const units = attributeValues?.units_product?.value;
+  // Extract data from product
+  const {
+    id,
+    statusIdentifier,
+    localizeInfos: { title },
+    attributeValues: { sale, price, units_product },
+  } = product;
+  const units = units_product?.value;
 
   return (
     <>
-      <h1 className="text-xl leading-6 text-neutral-600">
-        {localizeInfos.title}
-      </h1>
+      <h1 className="text-xl leading-6 text-neutral-600">{title}</h1>
 
       {/* !!! category */}
       <p className="mt-3 text-sm leading-4 text-neutral-600">
@@ -42,8 +55,8 @@ const ProductDetails: FC<ProductDetailsProps> = async ({
 
       <div className="mb-5 mt-4 text-left text-xl font-bold leading-8 text-neutral-600">
         <PriceDisplay
-          currentPrice={attributeValues.sale?.value}
-          originalPrice={attributeValues.price?.value}
+          currentPrice={sale?.value}
+          originalPrice={price?.value}
           lang={lang}
         />
       </div>
@@ -51,7 +64,10 @@ const ProductDetails: FC<ProductDetailsProps> = async ({
       <ProductUnits units={units} />
 
       <AddToCartButton
-        product={product}
+        id={id}
+        units={units}
+        statusIdentifier={statusIdentifier || ''}
+        productTitle={title || ''}
         dict={dict}
         height={50}
         className="btn btn-lg btn-primary"

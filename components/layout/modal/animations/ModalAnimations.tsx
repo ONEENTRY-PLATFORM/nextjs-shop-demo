@@ -7,6 +7,13 @@ import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
+/**
+ * Modal open/close animations
+ * @param children children ReactNode
+ * @param component
+ *
+ * @returns Modal wrapper with open/close animations
+ */
 const ModalAnimations: FC<{ children: ReactNode; component: string }> = ({
   children,
   component,

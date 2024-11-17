@@ -12,7 +12,21 @@ interface GridLayoutProps {
   products: IProductsEntity[];
 }
 
-const ProductsGrid: FC<GridLayoutProps> = ({ params, products, dict }) => {
+/**
+ * Products grid
+ * @param params
+ * @param dict dictionary from server api
+ * @param products Represents a product entity array of objects.
+ * @param pagesLimit used for animations
+ *
+ * @returns Products grid
+ */
+const ProductsGrid: FC<GridLayoutProps> = ({
+  params,
+  dict,
+  products,
+  pagesLimit,
+}) => {
   return (
     <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
       {products?.map((product: IProductsEntity, index: number) => {
@@ -24,6 +38,7 @@ const ProductsGrid: FC<GridLayoutProps> = ({ params, products, dict }) => {
             key={product.id}
             product={product}
             index={index}
+            pagesLimit={pagesLimit}
             lang={params.lang}
             dict={dict}
           />

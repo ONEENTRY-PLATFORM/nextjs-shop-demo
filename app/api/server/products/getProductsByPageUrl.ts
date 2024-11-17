@@ -6,6 +6,14 @@ import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
 import { typeError } from '@/components/utils';
 
+/**
+ * Get all products with pagination for the selected category.
+ *
+ * @param props
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ *
+ * @returns Array with ProductEntity objects
+ */
 export const getProductsByPageUrl = async (props: {
   lang: string;
   limit: number;
@@ -37,7 +45,7 @@ export const getProductsByPageUrl = async (props: {
       langCode,
       {
         sortOrder: 'DESC',
-        sortKey: 'id',
+        sortKey: 'date',
         offset: offset,
         limit: limit,
       },

@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import type { FC } from 'react';
+import { type FC } from 'react';
+
+import BreadcrumbProductItem from './BreadcrumbProductItem';
 
 interface BreadcrumbItemProps {
   link: string;
@@ -7,7 +9,17 @@ interface BreadcrumbItemProps {
   isLast: boolean;
 }
 
+/**
+ * Breadcrumb item
+ * @param link current link
+ * @param isLast current link is last
+ * @param lang Current language shortcode
+ *
+ * @returns JSX.Element
+ */
 const BreadcrumbItem: FC<BreadcrumbItemProps> = ({ link, isLast, lang }) => {
+  const isProductId = Number(link) > 0 && isLast;
+
   return (
     <>
       {!isLast ? (
@@ -21,6 +33,8 @@ const BreadcrumbItem: FC<BreadcrumbItemProps> = ({ link, isLast, lang }) => {
               link.slice(1, link.length).replace('_', ' ')}
           </Link>
         </>
+      ) : isProductId ? (
+        <BreadcrumbProductItem link={link} lang={lang} />
       ) : (
         <div>
           /{' '}

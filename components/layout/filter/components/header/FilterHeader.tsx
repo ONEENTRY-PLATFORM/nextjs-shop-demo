@@ -8,6 +8,12 @@ interface FilterHeaderProps {
   dict: IAttributeValues;
 }
 
+/**
+ * Filter Header
+ * @param dict dictionary from server api
+ *
+ * @returns Filter Header
+ */
 const FilterHeader: FC<FilterHeaderProps> = ({ dict }) => {
   const { open_filters_button } = dict;
 

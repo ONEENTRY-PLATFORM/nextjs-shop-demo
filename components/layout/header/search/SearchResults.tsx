@@ -15,6 +15,15 @@ interface SearchResultsProps {
   lang: string;
 }
 
+/**
+ * Search results
+ * @param searchValue
+ * @param state
+ * @param setState
+ * @param lang current language shortcode
+ *
+ * @returns JSX.Element
+ */
 const SearchResults: FC<SearchResultsProps> = ({
   searchValue,
   state,

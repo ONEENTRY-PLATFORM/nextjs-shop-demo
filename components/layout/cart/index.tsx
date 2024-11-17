@@ -28,13 +28,23 @@ interface CartPageProps {
   deliveryData: IProductsEntity;
 }
 
+/**
+ * Cart page
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ * @param deliveryData Represents a product entity object.
+ *
+ * @returns
+ */
 const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   const dispatch = useAppDispatch();
   const { isAuth } = useContext(AuthContext);
   const [products, setProducts] = useState<IProductsEntity[]>([]);
 
+  // products in redux carSlice
   const productsCartData = useAppSelector(selectCartData) as IProducts[];
 
+  // Get Products By Ids from api
   const { data, isLoading } = useGetProductsByIdsQuery({
     items: productsCartData.map((p) => p.id),
   });

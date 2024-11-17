@@ -43,10 +43,25 @@ export const {
   setFavoritesVersion,
 } = favoritesSlice.actions;
 
+/**
+ * Select favorites items
+ *
+ * @param state
+ *
+ * @returns
+ */
 export const selectFavoritesItems = (state: {
   favoritesReducer: { products: number[] };
 }) => state.favoritesReducer.products;
 
+/**
+ * Select is favorites by product id
+ *
+ * @param state
+ * @param id
+ *
+ * @returns
+ */
 export const selectIsFavorites = (
   state: { favoritesReducer: { products: number[] } },
   id: number,
@@ -60,6 +75,13 @@ export const selectIsFavorites = (
   return true;
 };
 
+/**
+ * Select favorites version
+ *
+ * @param state
+ *
+ * @returns
+ */
 export const selectFavoritesVersion = (state: {
   favoritesReducer: { version: number };
 }) => state.favoritesReducer.version;

@@ -5,6 +5,12 @@ interface ProductImageProps {
   imageSrc: string;
 }
 
+/**
+ * Group product image
+ * @param imageSrc
+ *
+ * @returns Group product image
+ */
 const ProductImage: FC<ProductImageProps> = ({ imageSrc }) => {
   return (
     <div

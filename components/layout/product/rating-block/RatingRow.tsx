@@ -13,6 +13,13 @@ interface RatingRowProps {
   state: boolean;
 }
 
+/**
+ * Rating row
+ * @param rating
+ * @param state
+ *
+ * @returns Rating row
+ */
 const RatingRow: FC<RatingRowProps> = ({
   rating: { value, barValue, starCount },
   state,

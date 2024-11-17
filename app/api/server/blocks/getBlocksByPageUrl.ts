@@ -5,13 +5,24 @@ import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { typeError } from '@/components/utils';
 
-export const getBlocksByPageUrl = async ({
-  pageUrl,
-  lang,
-}: {
-  pageUrl: string;
+interface HandleProps {
   lang: string;
-}): Promise<{
+  pageUrl: string;
+}
+
+/**
+ * Get all blocks by page url.
+ *
+ * @param lang Current language shortcode
+ * @param pageUrl Page URL
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ *
+ * @returns all blocks as an array of PositionBlock objects or an empty array [] (if there is no data) for the selected parent
+ */
+export const getBlocksByPageUrl = async ({
+  lang,
+  pageUrl,
+}: HandleProps): Promise<{
   isError: boolean;
   error?: IError;
   blocks?: IPositionBlock[];

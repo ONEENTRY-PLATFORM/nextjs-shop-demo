@@ -5,6 +5,12 @@ import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
+/**
+ * Reset password button
+ * @param title button title
+ *
+ * @returns Reset password button
+ */
 const ResetPasswordButton: FC<{
   title: string;
 }> = ({ title }) => {

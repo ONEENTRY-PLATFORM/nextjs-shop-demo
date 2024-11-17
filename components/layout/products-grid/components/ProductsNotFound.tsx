@@ -9,6 +9,14 @@ interface GridLayoutProps {
   dict: IAttributeValues;
 }
 
+/**
+ * ProductsNotFound
+ *
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns ProductsNotFound
+ */
 const ProductsNotFound: FC<GridLayoutProps> = async ({ lang, dict }) => {
   return (
     <div className="text-center">

@@ -16,6 +16,13 @@ interface PriceFilterProps {
   dict: IAttributeValues;
 }
 
+/**
+ * Price filter
+ * @param prices prices fromTo extracted from one product
+ * @param dict dictionary from server api
+ *
+ * @returns
+ */
 const PriceFilter: FC<PriceFilterProps> = ({ prices, dict }) => {
   const pathname = usePathname();
   const { replace } = useRouter();

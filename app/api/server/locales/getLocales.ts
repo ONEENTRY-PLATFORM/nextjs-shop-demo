@@ -4,6 +4,13 @@ import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
 import { api } from '@/app/api';
 import { typeError } from '@/components/utils';
 
+/**
+ * Get all active language localization objects.
+ *
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ *
+ * @returns an array of LocaleEntity objects Promise
+ */
 export const getLocales = async (): Promise<{
   isError: boolean;
   error?: IError;

@@ -6,6 +6,14 @@ import { useTransitionState } from 'next-transition-router';
 import type { FC, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
+/**
+ * Order row animations
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ * @param index Index of element for animations stagger
+ *
+ * @returns JSX.Element
+ */
 const OrderRowAnimations: FC<{
   children: ReactNode;
   className: string;
@@ -38,6 +46,7 @@ const OrderRowAnimations: FC<{
     };
   }, []);
 
+  // leaving stage animations
   useGSAP(() => {
     if (!ref.current) {
       return;
@@ -45,17 +54,6 @@ const OrderRowAnimations: FC<{
     const tl = gsap.timeline({
       paused: true,
     });
-
-    // if (stage === 'none' && prevStage === 'entering') {
-    //   tl.set(ref.current, {
-    //     autoAlpha: 0,
-    //   })
-    //     .to(ref.current, {
-    //       autoAlpha: 1,
-    //       delay: index / 10,
-    //     })
-    //     .play();
-    // }
 
     if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {

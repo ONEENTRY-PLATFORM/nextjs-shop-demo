@@ -1,10 +1,17 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { IAuthPostBody } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 
 import { api } from '@/app/api';
 
 type LogInProps = { method: string; login: string; password: string };
 
+/**
+ * User authorization with API AuthProvider
+ *
+ * @param marker
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ *
+ * @returns result
+ */
 export const logInUser = async ({ method, login, password }: LogInProps) => {
   try {
     const preparedData: IAuthPostBody = {

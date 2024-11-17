@@ -7,6 +7,13 @@ interface SocialSignInButtonProps {
   alt: string;
 }
 
+/**
+ * Social SignIn button
+ * @param imageSrc icon url
+ * @param lang Current language shortcode
+ *
+ * @returns Social SignIn button
+ */
 const SocialSignInButton: FC<SocialSignInButtonProps> = ({ imageSrc, alt }) => {
   return (
     <button

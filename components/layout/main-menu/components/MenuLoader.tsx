@@ -7,6 +7,12 @@ import type { FC } from 'react';
 
 import type { LoaderProps } from '@/app/types/global';
 
+/**
+ * MainMenu Loader
+ * @param limit
+ *
+ * @returns MainMenu Loader
+ */
 const MainMenuLoader: FC<LoaderProps> = ({ limit = 4 }) => {
   return (
     <div className="relative z-20 items-center justify-center bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">

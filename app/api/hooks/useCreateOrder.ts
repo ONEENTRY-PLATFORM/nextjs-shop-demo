@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
@@ -9,6 +10,11 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { removeProduct } from '@/app/store/reducers/CartSlice';
 import { removeOrder } from '@/app/store/reducers/OrderSlice';
 
+/**
+ * Create order function
+ * @param langCode current language code
+ * @returns useCreateOrder object
+ */
 export const useCreateOrder = ({ langCode }: { langCode: string }) => {
   const router = useTransitionRouter();
   const dispatch = useAppDispatch();
@@ -17,6 +23,11 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
+  /**
+   * Create payment session with Payments API
+   * @async
+   * @returns payment state marker
+   */
   const createSession = async (id: number) => {
     if (!id) {
       return;
@@ -24,11 +35,7 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
     setIsLoading(true);
 
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { paymentUrl, id: orderId } = await api.Payments.createSession(
-        id,
-        'session',
-      );
+      const { paymentUrl } = await api.Payments.createSession(id, 'session');
       if (order?.paymentAccountIdentifier === 'cash') {
         router.push('/orders');
         return 'payment_success';
@@ -38,20 +45,24 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
         return 'payment_method';
       }
       setIsLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setError(e.message);
       setIsLoading(false);
     }
   };
 
+  /**
+   * On confirm order Create order with Orders API
+   * @async
+   * @returns void
+   */
   const onConfirmOrder = async () => {
     setIsLoading(true);
     if (order?.formIdentifier && order?.paymentAccountIdentifier) {
+      // prepare order data
       const orderFormData = order.formData
         .slice()
         .filter((element) => element.marker !== 'time')
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .map((data: { marker: string; type: string; value: any }) => {
           return {
             marker: data.marker,
@@ -59,6 +70,8 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
             value: data.value,
           };
         });
+
+      // Create order with Orders API
       const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
         'order',
         {
@@ -70,9 +83,12 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
         langCode,
       );
 
+      // remove all ordered products from cart
       order.products.forEach((product: IOrderProductData) => {
         dispatch(removeProduct(product.productId));
       });
+
+      // remove order
       dispatch(removeOrder());
 
       if (paymentAccountIdentifier !== 'cash') {

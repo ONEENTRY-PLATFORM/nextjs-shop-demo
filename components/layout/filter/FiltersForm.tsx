@@ -22,6 +22,15 @@ interface FiltersFormProps {
   dict: IAttributeValues;
 }
 
+/**
+ * Products filters form
+ *
+ * @param prices prices fromTo extracted from one product
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns Filters form
+ */
 const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
   const pageInfo = await getPageByUrl('catalog_filters', lang);
   const { isError, error, attribute } = await getSingleAttributeByMarkerSet({

@@ -160,7 +160,14 @@ export const {
   setCartVersion,
 } = cartSlice.actions;
 
-// selectIsInCart
+/**
+ * selectIsInCart
+ *
+ * @param state
+ * @param id product id
+ *
+ * @returns
+ */
 export const selectIsInCart = (
   state: { cartReducer: { productsData: { id: number }[] } },
   id: number,
@@ -174,17 +181,35 @@ export const selectIsInCart = (
   return true;
 };
 
-// selectCartData
+/**
+ * Select cart data
+ *
+ * @param state slice state
+ *
+ * @returns productsData
+ */
 export const selectCartData = (state: {
   cartReducer: { productsData: IProducts[] };
 }) => state.cartReducer.productsData;
 
-// selectCartItems
+/**
+ * Select cart items
+ *
+ * @param state slice state
+ *
+ * @returns
+ */
 export const selectCartItems = (state: {
   cartReducer: { products: IProductsEntity[] };
 }) => state.cartReducer.products;
 
-// selectDeliveryData
+/**
+ * Select delivery data
+ *
+ * @param state slice state
+ *
+ * @returns
+ */
 export const selectDeliveryData = (state: {
   cartReducer: {
     deliveryData: {
@@ -195,7 +220,13 @@ export const selectDeliveryData = (state: {
   };
 }) => state.cartReducer.deliveryData;
 
-// selectDeliveryData
+/**
+ * Select cart total
+ *
+ * @param state slice state
+ *
+ * @returns
+ */
 export const selectCartTotal = (state: {
   cartReducer: {
     productsData: IProducts[];
@@ -211,7 +242,14 @@ export const selectCartTotal = (state: {
   }, 0);
 };
 
-// selectCartItemWithIdLength
+/**
+ * Select cart item by product id
+ *
+ * @param state slice state
+ * @param id product id
+ *
+ * @returns
+ */
 export const selectCartItemWithIdLength = (
   state: {
     cartReducer: {
@@ -222,12 +260,26 @@ export const selectCartItemWithIdLength = (
 ) =>
   state.cartReducer.productsData.find((item: { id: number }) => item.id === id);
 
+/**
+ * Get transition - get product id for animations
+ *
+ * @param state slice state
+ *
+ * @returns transitionId
+ */
 export const getTransition = (state: {
   cartReducer: {
     transitionId: number;
   };
 }) => state.cartReducer;
 
+/**
+ * Select cart version
+ *
+ * @param state slice state
+ *
+ * @returns cart version
+ */
 export const selectCartVersion = (state: {
   favoritesReducer: { version: number };
 }) => state.favoritesReducer.version;

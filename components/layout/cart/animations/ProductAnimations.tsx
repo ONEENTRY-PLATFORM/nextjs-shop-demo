@@ -21,6 +21,16 @@ interface ProductAnimationsProps {
   product: IProductsEntity;
 }
 
+/**
+ * Product animations
+ *
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ * @param product product entity object
+ * @param index index of element in array for stagger
+ *
+ * @returns
+ */
 const ProductAnimations: FC<ProductAnimationsProps> = ({
   children,
   className,
@@ -55,7 +65,7 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
     };
   }, []);
 
-  // remove Product
+  // remove Product from cart animations
   useGSAP(() => {
     if (!ref.current || product.id !== transitionId) {
       return;
@@ -64,9 +74,7 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
 
     tl.to(ref.current, {
       autoAlpha: 0,
-      // height: 0,
       duration: 0.5,
-      // yPercent: -100,
       onStart: () => {
         dispatch(
           setCartTransition({
@@ -79,8 +87,6 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
     }).to(ref.current, {
       autoAlpha: 1,
       duration: 0.35,
-      // yPercent: 0,
-      // height: 'auto',
     });
 
     return () => {

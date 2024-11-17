@@ -12,6 +12,13 @@ import { IMask, IMaskInput } from 'react-imask';
 
 import FormSubmitButton from './inputs/FormSubmitButton';
 
+/**
+ * PaymentForm
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns PaymentForm
+ */
 const PaymentForm: FC<{ lang: string; dict: IAttributeValues }> = ({
   lang,
   dict,

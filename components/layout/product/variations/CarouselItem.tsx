@@ -1,10 +1,9 @@
 import clsx from 'clsx';
-import Image from 'next/image';
-import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, FC, SetStateAction } from 'react';
 
-import Placeholder from '@/components/shared/Placeholder';
+import CarouselItemImage from './CarouselItemImage';
+import CarouselItemTitle from './CarouselItemTitle';
 
 interface VariationProps {
   index: number;
@@ -14,28 +13,33 @@ interface VariationProps {
   setCurrentIndex: Dispatch<SetStateAction<number>>;
 }
 
-const CarouselItem: React.FC<VariationProps> = ({
+/**
+ * CarouselItem
+ *
+ * @param item product object
+ * @param lang current language shortcode
+ * @param index index of slide
+ * @param currentIndex index of current slide
+ * @param setCurrentIndex Set state action
+ *
+ * @returns Carousel card
+ */
+const CarouselItem: FC<VariationProps> = ({
   item,
   lang,
   index,
   currentIndex,
   setCurrentIndex,
 }) => {
-  const onSelect = () => {
-    setCurrentIndex(index);
-  };
   const isActive = index === currentIndex;
 
-  const title = item.localizeInfos.title;
-  const picVal = item.attributeValues.pic?.value || '';
-  const imageSrc = Array.isArray(picVal)
-    ? picVal[0]?.downloadLink
-    : picVal.downloadLink;
-  const colors = item.attributeValues?.color?.value;
+  const onSelectHandle = () => {
+    setCurrentIndex(index);
+  };
 
   return (
     <button
-      onClick={onSelect}
+      onClick={onSelectHandle}
       className={
         'relative rounded-lg box-border flex w-[100px] min-h-[130px] shrink-0 flex-col ' +
         clsx(
@@ -47,26 +51,10 @@ const CarouselItem: React.FC<VariationProps> = ({
     >
       <div className="flex w-full flex-col gap-1 overflow-hidden pb-1 text-center text-sm">
         <div className="flex h-[80px] w-full items-center">
-          <Link href={'/' + lang + '/shop/product/' + item.id} title={title}>
-            {imageSrc ? (
-              <Image
-                width={80}
-                height={80}
-                src={imageSrc}
-                alt={title}
-                className="aspect-auto size-full h-auto min-w-full shrink-0 rounded-lg object-cover"
-              />
-            ) : (
-              <Placeholder />
-            )}
-          </Link>
+          <CarouselItemImage lang={lang} item={item} />
         </div>
         <h3 className="w-full text-center text-xs leading-4">
-          <Link href={'/' + lang + '/shop/product/' + item.id} title={title}>
-            {colors.map((color: { title: string }, i: number) => {
-              return color.title + (i < colors.length - 1 ? ' + ' : '');
-            })}
-          </Link>
+          <CarouselItemTitle lang={lang} item={item} />
         </h3>
       </div>
     </button>

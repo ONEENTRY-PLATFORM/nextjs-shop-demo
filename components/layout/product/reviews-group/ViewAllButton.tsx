@@ -3,6 +3,12 @@ import React from 'react';
 
 import ReviewAnimations from '../animations/ReviewAnimations';
 
+/**
+ * ViewAllButton
+ * @param state
+ *
+ * @returns ViewAllButton
+ */
 const ViewAllButton: FC<{ state: boolean }> = ({ state }) => {
   return (
     <ReviewAnimations

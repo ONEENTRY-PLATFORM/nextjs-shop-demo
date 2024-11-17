@@ -9,7 +9,15 @@ interface EmptyFavoritesProps {
   dict: IAttributeValues;
 }
 
+/**
+ * Empty favorites
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns Empty favorites page with animations
+ */
 const EmptyFavorites: FC<EmptyFavoritesProps> = ({ lang, dict }) => {
+  // extract data from dict
   const { empty_favorites_plug, go_to_shop } = dict;
 
   return (

@@ -1,13 +1,22 @@
 'use client';
 
 import Link from 'next/link';
+import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { FC } from 'react';
 
 import CatalogIcon from '@/components/icons/catalog';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const NavItemCatalog: FC<{ item: any; lang: string }> = ({ item, lang }) => {
-  const { pageUrl, localizeInfos } = item;
+/**
+ * Catalog navigation menu item
+ * @param item menu element object
+ * @param lang current language shortcode
+ *
+ * @returns menu item
+ */
+const NavItemCatalog: FC<{ item: IMenusPages; lang: string }> = ({
+  item: { pageUrl, localizeInfos },
+  lang,
+}) => {
   return (
     <Link
       href={'/' + lang + '/' + pageUrl}

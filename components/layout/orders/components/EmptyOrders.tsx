@@ -3,7 +3,13 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 
 import FadeTransition from '@/app/animations/FadeTransition';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+/**
+ * Empty orders page
+ * @param lang current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns JSX.Element
+ */
 const EmptyOrders = ({
   lang,
   dict,

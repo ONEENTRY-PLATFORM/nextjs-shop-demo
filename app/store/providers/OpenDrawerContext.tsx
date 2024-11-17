@@ -26,6 +26,11 @@ export const OpenDrawerContext = createContext<OpenDrawerContextType>({
   setTransition(value: string): void {},
 });
 
+/**
+ * Context provider for modals
+ * @param children children ReactNode
+ * @returns Drawer context provider
+ */
 export const OpenDrawerProvider = ({ children }: { children: ReactNode }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [component, setComponent] = useState<string>('');

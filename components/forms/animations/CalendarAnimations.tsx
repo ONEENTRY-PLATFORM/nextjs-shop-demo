@@ -12,6 +12,13 @@ interface CalendarAnimationsProps {
   className: string;
 }
 
+/**
+ * Calendar animations
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ *
+ * @returns Calendar animations
+ */
 const CalendarAnimations: FC<CalendarAnimationsProps> = ({
   children,
   className,
@@ -19,6 +26,7 @@ const CalendarAnimations: FC<CalendarAnimationsProps> = ({
   const { open, transition } = useContext(OpenDrawerContext);
   const ref = useRef(null);
 
+  // Form transition animations
   useGSAP(() => {
     if (!ref.current) {
       return;

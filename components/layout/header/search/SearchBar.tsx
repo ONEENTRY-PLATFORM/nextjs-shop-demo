@@ -10,6 +10,13 @@ import SearchIcon from '@/components/icons/search';
 
 import SearchResults from './SearchResults';
 
+/**
+ * SearchBar
+ * @param lang current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns JSX.Element
+ */
 const SearchBar: FC<{ lang: string; dict: IAttributeValues }> = ({
   lang,
   dict,

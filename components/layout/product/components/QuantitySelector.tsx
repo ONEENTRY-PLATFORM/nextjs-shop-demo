@@ -1,38 +1,47 @@
 'use client';
 
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import React, { useEffect, useState } from 'react';
 
-import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
-import {
-  selectCartItemWithIdLength,
-  setProductQty,
-} from '@/app/store/reducers/CartSlice';
+import { useAppSelector } from '@/app/store/hooks';
+import { selectCartItemWithIdLength } from '@/app/store/reducers/CartSlice';
 
 import DecreaseButton from './DecreaseButton';
 import IncreaseButton from './IncreaseButton';
+import QuantityInput from './QuantityInput';
 
 interface QuantitySelectorProps {
-  product: IProductsEntity;
+  id: number;
+  units: number;
+  title: string;
   className?: string;
   height: number;
 }
 
+/**
+ * Quantity selector
+ * @param id - product id
+ * @param units - count of product in shop
+ * @param title
+ * @param height
+ * @param className CSS className of ref element
+ *
+ * @returns Quantity selector with increase decrease buttons
+ */
 const QuantitySelector: FC<QuantitySelectorProps> = ({
-  product,
+  id,
+  units,
+  title,
   height,
   className,
 }) => {
-  const { id, attributeValues } = product;
   const [qty, setQty] = useState(0);
-  const dispatch = useAppDispatch();
-  const data = useAppSelector((state) =>
-    selectCartItemWithIdLength(state, id),
-  ) as { id: number; selected: boolean; quantity: number };
+
+  // extract data from cartSlice
+  const data = useAppSelector((state) => selectCartItemWithIdLength(state, id));
   const quantity = data?.quantity || 0;
 
-  // setQty
+  // setQty state on quantity change
   useEffect(() => {
     if (!quantity) {
       return;
@@ -44,8 +53,6 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
     return;
   }
 
-  const units = attributeValues?.units_product?.value || 0;
-
   return (
     <div
       className={
@@ -54,23 +61,8 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
       }
       style={{ height: height }}
     >
-      <DecreaseButton id={id} qty={qty} title={product.localizeInfos.title} />
-      <input
-        className="relative box-border h-8 w-16 rounded-full bg-transparent text-center text-slate-700 hover:bg-slate-100 hover:text-orange-500 hover:shadow-inner"
-        type="number"
-        name={'qty_selector_' + id}
-        id={'qty_selector_' + id}
-        value={qty}
-        onChange={(e) => {
-          dispatch(
-            setProductQty({
-              id: id,
-              quantity: Number(e.target.value),
-              units: units,
-            }),
-          );
-        }}
-      />
+      <DecreaseButton id={id} qty={qty} title={title} />
+      <QuantityInput id={id} qty={qty} units={units} />
       <IncreaseButton id={id} qty={qty} units={units} />
     </div>
   );

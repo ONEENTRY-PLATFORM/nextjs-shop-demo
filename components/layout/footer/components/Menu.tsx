@@ -9,6 +9,12 @@ import { LanguageEnum } from '@/app/types/enum';
 
 import MenuItem from './MenuItem';
 
+/**
+ * Footer menu
+ * @param menu Represents a menu object.
+ *
+ * @returns footer menu
+ */
 const Menu: FC<{
   menu: IMenusEntity;
 }> = ({ menu }) => {

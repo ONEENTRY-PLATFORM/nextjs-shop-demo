@@ -87,13 +87,6 @@ button.react-calendar__navigation__label {
 .react-calendar__tile--now {
   background: transparent;
 }
-.react-calendar__tile--now:enabled:hover,
-.react-calendar__tile--now:enabled:focus {
-  /* background: #ffffa9; */
-}
-.react-calendar__tile--hasActive {
-  /* background: #76baff; */
-}
 .react-calendar__tile--hasActive:enabled:hover,
 .react-calendar__tile--hasActive:enabled:focus {
   background: #a9d4ff;

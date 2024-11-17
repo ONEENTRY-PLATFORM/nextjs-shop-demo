@@ -12,6 +12,14 @@ interface BlockCardAnimationsProps {
   index: number;
 }
 
+/**
+ * Blocks card animations
+ * @param children children ReactNode
+ * @param className card wrapper className
+ * @param index index of element in array for stagger
+ *
+ * @returns card with animations
+ */
 const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
   children,
   className,
@@ -21,6 +29,7 @@ const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
+  // intro animations
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,
@@ -42,6 +51,7 @@ const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
     };
   }, []);
 
+  // stage leaving animations
   useGSAP(() => {
     const tl = gsap.timeline();
 

@@ -9,6 +9,12 @@ interface CreateAccountButtonProps {
   title: string;
 }
 
+/**
+ * Create account button
+ * @param title
+ *
+ * @returns Create account button
+ */
 const CreateAccountButton: FC<CreateAccountButtonProps> = ({ title }) => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 

@@ -14,6 +14,14 @@ interface ProductsGroupProps {
   dict: IAttributeValues;
 }
 
+/**
+ * ProductsGroup
+ * @param marker
+ * @param lang current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns ProductsGroup
+ */
 const ProductsGroup: FC<ProductsGroupProps> = async ({
   marker,
   lang,
@@ -23,11 +31,8 @@ const ProductsGroup: FC<ProductsGroupProps> = async ({
   const { isError, block } = await getBlockByMarker(marker, lang);
 
   if (isError || !block) {
-    return null;
+    return;
   }
-  const title =
-    block.attributeValues[langCode]?.together_title?.value ||
-    block.attributeValues?.together_title?.value;
 
   return (
     <ProductAnimations
@@ -35,7 +40,8 @@ const ProductsGroup: FC<ProductsGroupProps> = async ({
       index={4}
     >
       <h2 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
-        {title}
+        {block.attributeValues[langCode]?.together_title?.value ||
+          block.attributeValues?.together_title?.value}
       </h2>
       <div className="flex w-full flex-row flex-wrap items-stretch justify-start gap-2.5">
         {block.products?.map((product: IProductsEntity) => (

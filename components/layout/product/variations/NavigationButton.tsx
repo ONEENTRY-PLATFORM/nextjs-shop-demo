@@ -5,6 +5,13 @@ interface NavigationButtonProps {
   direction: 'left' | 'right';
 }
 
+/**
+ * Carousel navigation button
+ *
+ * @param direction - left|right
+ *
+ * @returns icon for button
+ */
 const NavigationButton: React.FC<NavigationButtonProps> = ({ direction }) => {
   return direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />;
 };

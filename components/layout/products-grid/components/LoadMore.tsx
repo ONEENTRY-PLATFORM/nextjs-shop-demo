@@ -10,6 +10,12 @@ import { useCallback } from 'react';
 
 import Spinner from '@/components/shared/Spinner';
 
+/**
+ * LoadMore
+ * @param totalPages
+ *
+ * @returns LoadMore button
+ */
 const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -56,12 +62,6 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
       onEnter: () => {
         goToNextPage();
       },
-      // markers: {
-      //   startColor: 'black',
-      //   endColor: 'black',
-      //   fontSize: '14px',
-      //   indent: 20,
-      // },
     });
 
     return () => {
@@ -78,7 +78,7 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
       className="relative mx-auto flex h-6 w-20"
     >
       {/* {currentPage !== totalPages && 'Load more'} */}
-      {currentPage !== totalPages && <Spinner />}
+      {currentPage < totalPages && <Spinner />}
     </button>
   );
 };

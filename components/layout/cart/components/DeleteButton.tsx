@@ -9,6 +9,12 @@ import {
 } from '@/app/store/reducers/CartSlice';
 import DeleteIcon from '@/components/icons/delete';
 
+/**
+ * Delete product from cart button
+ * @param productId product Id
+ *
+ * @returns
+ */
 const DeleteButton: FC<{ productId: number }> = ({ productId }) => {
   const dispatch = useAppDispatch();
   const { user } = useContext(AuthContext);

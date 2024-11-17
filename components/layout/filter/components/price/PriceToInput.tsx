@@ -6,6 +6,12 @@ interface PriceToInputProps {
   setPrice: Dispatch<SetStateAction<number>>;
 }
 
+/**
+ * History
+ * @param dict dictionary from server api
+ *
+ * @returns
+ */
 const PriceToInput: FC<PriceToInputProps> = ({ price, setPrice }) => {
   return (
     <input

@@ -14,32 +14,26 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
+/**
+ * Reset password form
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns Reset password form
+ */
 const ResetPasswordForm: FC<FormProps> = ({ dict }) => {
   const { email_reg, password_reg, password_confirm, otp_code } =
-    useAppSelector((state) => state.formFieldsReducer.fields) as object as {
-      email_reg: {
-        value: string;
-        valid: boolean;
-      };
-      password_confirm: {
-        value: string;
-        valid: boolean;
-      };
-      password_reg: {
-        value: string;
-        valid: boolean;
-      };
-      otp_code: {
-        value: number;
-        valid: boolean;
-      };
-    };
+    useAppSelector((state) => state.formFieldsReducer.fields);
   const { setComponent, setAction } = useContext(OpenDrawerContext);
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState('');
 
   const { reset_password_text, new_password_desc, change_password_text } = dict;
 
+  /**
+   * Change password with API AuthProvider
+   * @param e FormEvent
+   */
   const onResetSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -53,6 +47,7 @@ const ResetPasswordForm: FC<FormProps> = ({ dict }) => {
         password_reg.value,
         password_confirm.value,
       );
+      // if result is ok open SignIn form
       if (result) {
         setComponent('SignInForm');
         setAction('');

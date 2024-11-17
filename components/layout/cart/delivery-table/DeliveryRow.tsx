@@ -1,15 +1,23 @@
 import Image from 'next/image';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
 import { UsePrice } from '@/components/utils';
 
 import TableRowAnimations from '../animations/TableRowAnimations';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const DeliveryRow: FC<{ lang: string; delivery: any }> = ({
-  lang,
-  delivery,
-}) => {
+interface DeliveryRowProps {
+  lang: string;
+  delivery: IProductsEntity;
+}
+/**
+ * Delivery form row
+ * @param lang Current language shortcode
+ * @param delivery Represents a product entity object.
+ *
+ * @returns
+ */
+const DeliveryRow: FC<DeliveryRowProps> = ({ lang, delivery }) => {
   return (
     <TableRowAnimations
       className="tr h-[100px] border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"

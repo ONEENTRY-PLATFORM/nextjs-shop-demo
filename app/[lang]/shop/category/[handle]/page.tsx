@@ -3,14 +3,20 @@ import { notFound } from 'next/navigation';
 import { type FC, Suspense } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
-import { getBlockByMarker, getPageByUrl } from '@/app/api';
+import { getPageByUrl } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
 
-// generateMetadata
+/**
+ * Generate page metadata
+ * @async server component
+ * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
+ * @param params page params
+ * @returns metadata
+ */
 export async function generateMetadata({
   params: { handle, lang },
 }: MetadataParams): Promise<Metadata> {
@@ -59,16 +65,24 @@ export async function generateMetadata({
   };
 }
 
-// CatalogPage
-const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
-  const [dict] = useServerProvider(
-    'dict',
-    await getDictionary(params.lang as Locale),
-  );
+/**
+ * Shop category page layout
+ * @async server component
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ * @param params page params
+ * @param searchParams
+ * @returns Shop page layout JSX.Element
+ */
+const ShopCategoryLayout: FC<PageProps> = async ({ params, searchParams }) => {
   const { lang, handle } = params;
+  // Get the dictionary from the API and set the server provider.
+  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
+
+  // get page by url from api
   const { page } = await getPageByUrl(handle, lang);
-  const { block } = await getBlockByMarker('main_catalog', lang);
-  const pagesLimit = block?.quantity || 10;
+
+  // !!!extract products per page limit from global settings
+  const pagesLimit = 10;
 
   if (!page) {
     return notFound();
@@ -91,4 +105,4 @@ const CatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
   );
 };
 
-export default CatalogPage;
+export default ShopCategoryLayout;

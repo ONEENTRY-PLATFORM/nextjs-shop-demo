@@ -4,6 +4,8 @@ import eye from './eye';
 import eyeO from './eye-o';
 import favorites from './favorites';
 import filter from './filter';
+import heart from './heart';
+import heartOpen from './heart-o';
 import like from './like';
 import orders from './orders';
 import payment from './payment';
@@ -17,6 +19,8 @@ export {
   eyeO,
   favorites,
   filter,
+  heart,
+  heartOpen,
   like,
   logout,
   orders,

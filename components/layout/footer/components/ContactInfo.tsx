@@ -4,6 +4,11 @@ import { getBlockByMarker } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 
+/**
+ * Contact Info
+ * @async
+ * @returns JSX.Element
+ */
 const ContactInfo: FC = async () => {
   const [lang] = useServerProvider('lang');
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];

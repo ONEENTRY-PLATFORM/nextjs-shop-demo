@@ -1,8 +1,13 @@
 import Link from 'next/link';
 import type { FC } from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Logo: FC<{ lang: any }> = ({ lang }) => {
+/**
+ * Logo
+ * @param lang current language shortcode
+ *
+ * @returns JSX.Element
+ */
+const Logo: FC<{ lang: string }> = ({ lang }) => {
   return (
     <Link
       href={'/' + lang}

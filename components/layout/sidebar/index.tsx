@@ -7,6 +7,13 @@ import LogoutMenuItem from './components/LogoutMenuItem';
 import SidebarMenuItem from './components/SidebarMenuItem';
 import SidebarMenuLoader from './components/SidebarMenuLoader';
 
+/**
+ * SidebarMenu
+ *
+ * @param lang Current language shortcode
+ *
+ * @returns SidebarMenu
+ */
 const SidebarMenu = async ({ lang }: { lang: string }) => {
   const { isError, menu } = await getMenuByMarker('side_web', lang);
 

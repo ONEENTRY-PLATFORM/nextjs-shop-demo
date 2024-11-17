@@ -1,12 +1,29 @@
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
+
 import { getBlockByMarker } from '@/app/api';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const dict = async (langCode: string): Promise<any> => {
+/**
+ * Dictionary - get block by Marker with API Blocks
+ *
+ * @param langCode Current language code
+ *
+ * @returns Current language dictionary
+ */
+const dict = async (langCode: string): Promise<IAttributeValues> => {
   try {
-    const { block } = await getBlockByMarker('system_content', langCode);
-    return { ...block?.attributeValues };
+    const { block, isError } = await getBlockByMarker(
+      'system_content',
+      langCode,
+    );
+
+    if (isError) {
+      return {};
+    } else {
+      return { ...block?.attributeValues };
+    }
   } catch (e) {
     console.log(e);
+    return {};
   }
 };
 

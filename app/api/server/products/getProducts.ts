@@ -6,6 +6,14 @@ import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
 import { typeError } from '@/components/utils';
 
+/**
+ * Get all products with pagination and filter.
+ *
+ * @param props
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ *
+ * @returns Array with ProductEntity objects
+ */
 export const getProducts = async (props: {
   limit: number;
   offset: number;
@@ -32,8 +40,8 @@ export const getProducts = async (props: {
 
   try {
     const data = await api.Products.getProducts(expandedFilters, langCode, {
-      sortOrder: 'DESC',
-      sortKey: 'id',
+      sortOrder: 'ASC',
+      sortKey: 'date',
       offset: offset,
       limit: limit,
     });

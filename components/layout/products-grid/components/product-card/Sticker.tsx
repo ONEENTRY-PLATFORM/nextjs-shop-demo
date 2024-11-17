@@ -15,12 +15,19 @@ interface StickerProps {
   };
 }
 
+/**
+ * Sticker
+ * @param sticker
+ *
+ * @returns Sticker
+ */
 const Sticker: FC<StickerProps> = ({ sticker }) => {
   if (!sticker?.value) {
     return;
   }
 
-  const title = sticker.value.title;
+  // Extract data from sticker
+  const title = sticker.value?.title;
   const imgSrc =
     sticker.value.extended?.value.downloadLink ||
     (Array.isArray(sticker.value) &&

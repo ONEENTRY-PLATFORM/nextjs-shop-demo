@@ -8,9 +8,18 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 import MobileMenu from './MobileMenu';
 
+/**
+ * Mobile menu list item
+ * @param item Represents a menu item objects.
+ * @param lang Current language shortcode
+ *
+ * @returns Mobile menu list item
+ */
 function MobileMenuItem({ item, lang }: { item: IMenusPages; lang: string }) {
   const { setOpen } = useContext(OpenDrawerContext);
+  // check if item has child
   const hasChild = Array.isArray(item.children) && item.children.length > 0;
+  // extract href from item pageUrl
   const href =
     item.pageUrl === 'category'
       ? '/' + lang + '/shop/category/'

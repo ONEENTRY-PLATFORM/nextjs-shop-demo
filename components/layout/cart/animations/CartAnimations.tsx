@@ -8,11 +8,19 @@ import { useRef, useState } from 'react';
 
 import type { AnimationsProps } from '@/app/types/global';
 
+/**
+ * Cart wrapper stage leaving animations
+ * @param children children ReactNode
+ * @param className cart wrapper className
+ *
+ * @returns cart wrapper with animations
+ */
 const CartAnimations: FC<AnimationsProps> = ({ children, className }) => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState<string>('');
   const ref = useRef(null);
 
+  // stage leaving animations
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,

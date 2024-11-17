@@ -4,6 +4,15 @@ import type { Key } from 'react';
 import { api } from '@/app/api';
 import type { IProducts } from '@/app/types/global';
 
+/**
+ * Update user state with API Users
+ * @param favorites array of products ids
+ * @param cart array of products
+ * @param user any
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ *
+ * @returns bool
+ */
 export const updateUserState = async ({
   favorites,
   cart,
@@ -73,12 +82,11 @@ export const updateUserState = async ({
       cart: cart.length > 0 ? cart : user.state.cart,
     },
     notificationData: {
-      email: email.value,
+      email: email?.value,
       phonePush: [],
-      phoneSMS: phone.value,
+      phoneSMS: phone?.value,
     },
   });
-  // console.log({ res, favorites, cart });
 
   if (!res || (res as IError)?.statusCode) {
     return false;

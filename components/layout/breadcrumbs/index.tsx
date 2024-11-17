@@ -2,12 +2,19 @@ import type { FC } from 'react';
 
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
 
+import BreadcrumbsAnimations from './animations/BreadcrumbsAnimations';
 import BackButton from './components/BackButton';
-import BreadcrumbsAnimations from './components/BreadcrumbsAnimations';
 import BreadcrumbsTrail from './components/BreadcrumbsTrail';
 import FilterButton from './components/FilterButton';
 
+/**
+ * Breadcrumbs
+ *
+ * @componentType Server component
+ * @returns JSX.Element
+ */
 const Breadcrumbs: FC = () => {
+  // get lang, dict from server provider
   const [lang] = useServerProvider('lang');
   const [dict] = useServerProvider('dict');
 

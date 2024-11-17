@@ -8,7 +8,6 @@ import cartSlice from './reducers/CartSlice';
 import favoritesSlice from './reducers/FavoritesSlice';
 import formFieldsSlice from './reducers/FormFieldsSlice';
 import orderSlice from './reducers/OrderSlice';
-import systemContentSlice from './reducers/SystemContentSlice';
 
 const createNoopStorage = () => {
   return {
@@ -30,15 +29,9 @@ const storage =
     : createNoopStorage();
 const version = 1;
 
-const systemContentReducer = persistReducer(
-  {
-    key: 'system-slice',
-    storage: storage,
-    version: version,
-    whitelist: ['content'],
-  },
-  systemContentSlice,
-);
+/**
+ * Persist cartReducer
+ */
 const cartReducer = persistReducer(
   {
     key: 'cart-slice',
@@ -48,6 +41,9 @@ const cartReducer = persistReducer(
   },
   cartSlice,
 );
+/**
+ * Persist favoritesReducer
+ */
 const favoritesReducer = persistReducer(
   {
     key: 'favorites-slice',
@@ -57,6 +53,9 @@ const favoritesReducer = persistReducer(
   },
   favoritesSlice,
 );
+/**
+ * Persist formFieldsReducer
+ */
 const formFieldsReducer = persistReducer(
   {
     key: 'form-fields',
@@ -66,6 +65,9 @@ const formFieldsReducer = persistReducer(
   },
   formFieldsSlice,
 );
+/**
+ * Persist orderReducer
+ */
 const orderReducer = persistReducer(
   {
     key: 'order-slice',
@@ -76,8 +78,10 @@ const orderReducer = persistReducer(
   orderSlice,
 );
 
+/**
+ * Combine reducers
+ */
 const rootReducer = combineReducers({
-  systemContentReducer,
   cartReducer,
   favoritesReducer,
   orderReducer,
@@ -85,6 +89,11 @@ const rootReducer = combineReducers({
   [RTKApi.reducerPath]: RTKApi.reducer,
 });
 
+/**
+ * Setup redux store with persistence - save redux state in storage
+ *
+ * @see {@link https://github.com/rt2zz/redux-persist?tab=readme-ov-file#nested-persists}
+ */
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
@@ -99,4 +108,4 @@ export type RootState = ReturnType<typeof rootReducer>;
 export type AppStore = ReturnType<typeof setupStore>;
 export type AppDispatch = AppStore['dispatch'];
 
-export const wrapper = createWrapper<AppStore>(setupStore, { debug: true });
+export const wrapper = createWrapper<AppStore>(setupStore, { debug: false });

@@ -6,6 +6,14 @@ import { useEffect, useState } from 'react';
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 
+/**
+ * Search products with Products API
+ *
+ * @param name product name
+ * @param lang Current language shortcode
+ *
+ * @returns Array with ProductEntity objects
+ */
 export const useSearchProducts = ({
   name,
   lang,
@@ -13,11 +21,12 @@ export const useSearchProducts = ({
   name: string;
   lang: string;
 }) => {
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const [loading, setLoading] = useState<boolean>(false);
   const [products, setProducts] = useState<IProductsEntity[]>([]);
   const [refetch, setRefetch] = useState(false);
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
+  // search products on data change
   useEffect(() => {
     if (!name) {
       return;

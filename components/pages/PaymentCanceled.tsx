@@ -1,19 +1,26 @@
 import type { FC } from 'react';
-import { Suspense } from 'react';
 
 import type { SimplePageProps } from '@/app/types/global';
-import Loader from '@/components/shared/Loader';
 
+/**
+ * PaymentCanceled page
+ * @param page
+ *
+ * @returns PaymentCanceled page
+ */
 const PaymentCanceled: FC<SimplePageProps> = async ({ page }) => {
   if (!page) {
     return;
   }
-  const { localizeInfos } = page;
+
+  // Extract content from page localizeInfos
+  const {
+    localizeInfos: { title },
+  } = page;
+
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
-      <Suspense fallback={<Loader />}>
-        <h1 className="">{localizeInfos.title}</h1>
-      </Suspense>
+      <h1 className="">{title}</h1>
     </div>
   );
 };

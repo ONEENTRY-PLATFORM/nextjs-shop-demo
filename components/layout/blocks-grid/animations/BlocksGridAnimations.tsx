@@ -11,6 +11,13 @@ interface BlocksGridAnimationsProps {
   className: string;
 }
 
+/**
+ * Blocks grid animations
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ *
+ * @returns blocks grid with animations
+ */
 const BlocksGridAnimations: FC<BlocksGridAnimationsProps> = ({
   children,
   className,
@@ -18,6 +25,7 @@ const BlocksGridAnimations: FC<BlocksGridAnimationsProps> = ({
   const { stage } = useTransitionState();
   const ref = useRef(null);
 
+  // stage entering/leaving animations
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,

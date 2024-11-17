@@ -1,5 +1,13 @@
-const ProductUnits = ({ units }: { units: number }) => {
-  const maxUnits = 50;
+import type { FC } from 'react';
+
+/**
+ * Product units
+ * @param units
+ *
+ * @returns Product units
+ */
+const ProductUnits: FC<{ units: number }> = ({ units }) => {
+  const maxUnits = units < 50 ? 50 : units * 1.2;
   const width = (units / maxUnits) * 100;
 
   return (

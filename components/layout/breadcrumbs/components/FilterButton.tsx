@@ -8,17 +8,19 @@ import { useContext } from 'react';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FilterIcon from '@/components/icons/filter';
 
+/**
+ * Filter button in breadcrumbs section
+ * @param dict dictionary from server api
+ *
+ * @returns JSX.Element
+ */
 const FilterButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
   const path = usePathname();
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   const { open_filters_button } = dict;
 
-  if (
-    path.indexOf('shop') === -1 ||
-    path.indexOf('product') !== -1 ||
-    path.indexOf('category') !== -1
-  ) {
+  if (path.indexOf('shop') === -1 || path.indexOf('product') !== -1) {
     return;
   }
 

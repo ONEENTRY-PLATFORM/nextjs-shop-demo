@@ -14,6 +14,13 @@ interface RatingBlockProps {
   state: boolean;
 }
 
+/**
+ * RatingBlock
+ * @param productRating
+ * @param state
+ *
+ * @returns RatingBlock
+ */
 const RatingBlock: FC<RatingBlockProps> = ({ productRating, state }) => {
   return (
     <ReviewAnimations

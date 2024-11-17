@@ -1,13 +1,19 @@
+import type { FC } from 'react';
+
 import FadeTransition from '@/app/animations/FadeTransition';
 import SidebarMenu from '@/components/layout/sidebar';
 
-const WithSidebar = async ({
-  lang,
-  children,
-}: {
+/**
+ * Sidebar layout
+ * @async server component
+ * @param lang Current language shortcode
+ * @param children children ReactNode
+ * @returns Sidebar layout JSX.Element
+ */
+const WithSidebar: FC<{
   lang: string;
   children: React.ReactNode;
-}) => {
+}> = async ({ lang, children }) => {
   return (
     <div className="flex w-full flex-col items-center">
       <div className="mx-auto flex w-full max-w-screen-xl flex-row max-md:flex-row max-md:flex-wrap">

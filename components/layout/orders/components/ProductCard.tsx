@@ -6,12 +6,21 @@ import type { FC } from 'react';
 import Placeholder from '@/components/shared/Placeholder';
 import { UsePrice } from '@/components/utils';
 
+/**
+ * Order product card
+ * @param product product entity object
+ * @param lang current language shortcode
+ * @param settings
+ *
+ * @returns JSX.Element
+ */
 const ProductCard: FC<{
   product: IOrderProducts;
   lang: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   settings: Record<string, any>;
 }> = ({ product, lang, settings }) => {
+  // extract data from product
   const { id, title, price, quantity, previewImage } = product;
   const productImage = previewImage?.[0]?.downloadLink || '';
   const formattedPrice = UsePrice({

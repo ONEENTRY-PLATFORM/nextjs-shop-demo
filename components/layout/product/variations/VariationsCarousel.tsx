@@ -13,7 +13,17 @@ interface VariationsCarouselProps {
   total?: number;
   lang: string;
 }
-
+/**
+ * Variations carousel
+ *
+ * @param items array of products objects
+ * @param total total products count
+ * @param lang Current language shortcode
+ *
+ * @see {@link https://github.com/vadymshymko/react-simply-carousel?tab=readme-ov-file#usage Carousel docs}
+ *
+ * @returns Product variations carousel
+ */
 const VariationsCarousel: FC<VariationsCarouselProps> = ({
   items,
   total,

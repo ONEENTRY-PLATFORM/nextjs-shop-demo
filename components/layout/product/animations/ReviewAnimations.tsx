@@ -6,16 +6,33 @@ import { useTransitionState } from 'next-transition-router';
 import type { FC, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
-const ReviewAnimations: FC<{
+interface ReviewAnimations {
   children: ReactNode;
   className: string;
   index: number;
   state: boolean;
-}> = ({ children, className, index, state }) => {
+}
+
+/**
+ * Review animations
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ * @param index Index of element for animations stagger
+ * @param state
+ *
+ * @returns data
+ */
+const ReviewAnimations: FC<ReviewAnimations> = ({
+  children,
+  className,
+  index,
+  state,
+}) => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
+  // component toggle animations
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,
@@ -47,6 +64,7 @@ const ReviewAnimations: FC<{
     };
   }, [state]);
 
+  // leaving stage animations
   useGSAP(() => {
     const tl = gsap.timeline();
 

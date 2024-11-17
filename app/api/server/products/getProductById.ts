@@ -5,6 +5,15 @@ import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { typeError } from '@/components/utils';
 
+/**
+ * Get product by id.
+ *
+ * @param id Product id.
+ * @param lang Current language shortcode
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ *
+ * @returns ProductEntity object
+ */
 export const getProductById = async (
   id: number,
   lang: string,

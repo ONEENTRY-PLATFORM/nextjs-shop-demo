@@ -6,6 +6,12 @@ import type { LoaderProps } from '@/app/types/global';
 
 import ProductsGridLoaderAnimations from '../animations/ProductsGridLoaderAnimations';
 
+/**
+ * ProductsGridLoader
+ * @param limit
+ *
+ * @returns ProductsGridLoader
+ */
 const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   return (
     <ProductsGridLoaderAnimations

@@ -8,13 +8,24 @@ import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { typeError } from '@/components/utils';
 
+interface HandleProps {
+  type: BlockType;
+  lang: string;
+}
+
+/**
+ * Get blocks by parameters.
+ *
+ * @param type Available values : forCatalogProducts, forBasketPage, forErrorPage, forCatalogPages, forProductPreview, forProductPage, forSimilarProductBlock, forStatisticProductBlock, forProductBlock, forForm, forFormField, forNewsPage, forNewsBlock, forNewsPreview, forOneNewsPage, forUsualPage, forTextBlock, forSlider, forOrder, service
+ * @param lang Current language shortcode
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ *
+ * @returns Return array of BlocksEntity object Promise.
+ */
 export const getBlocks = async ({
   type,
   lang,
-}: {
-  type: BlockType;
-  lang: string;
-}): Promise<{
+}: HandleProps): Promise<{
   isError: boolean;
   error?: IError;
   blocks?: IBlocksResponse;

@@ -14,6 +14,14 @@ interface TotalAmountProps {
   className: string;
 }
 
+/**
+ * Total amount price of all products in cart
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ * @param className CSS className of ref elements
+ *
+ * @returns
+ */
 const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
   const [cartTotal, setCartTotal] = useState(0);
   const total = useAppSelector(selectCartTotal);
@@ -21,6 +29,7 @@ const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
     return state.cartReducer.delivery?.price || 0;
   });
 
+  // set total on data change
   useLayoutEffect(() => {
     if (!total) {
       setCartTotal(0);

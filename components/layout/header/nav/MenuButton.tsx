@@ -4,9 +4,13 @@ import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-const MenuButton = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { open, setOpen, setComponent } = useContext(OpenDrawerContext);
+/**
+ * Mobile menu trigger button
+ *
+ * @returns Mobile menu trigger button
+ */
+const MobileMenuTrigger = () => {
+  const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   return (
     <button
@@ -24,4 +28,4 @@ const MenuButton = () => {
   );
 };
 
-export default MenuButton;
+export default MobileMenuTrigger;

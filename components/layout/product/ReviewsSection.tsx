@@ -10,13 +10,23 @@ import RatingBlock from './rating-block/RatingBlock';
 import RatingButton from './rating-block/RatingButton';
 import ReviewsList from './reviews-group/ReviewsList';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+/**
+ * ReviewsSection
+ * @param dict dictionary from server api
+ *
+ * @returns ReviewsSection
+ */
 const ReviewsSection: FC<{ dict: IAttributeValues }> = ({ dict }) => {
   const [state, setState] = useState(false);
   return (
     <div className="flex justify-between overflow-hidden max-md:flex-wrap">
       <div className="flex flex-col">
-        <RatingButton state={state} setState={setState} {...productRating} />
+        <RatingButton
+          dict={dict}
+          state={state}
+          setState={setState}
+          {...productRating}
+        />
         <ReviewsList state={state} />
       </div>
       <RatingBlock productRating={productRating} state={state} />

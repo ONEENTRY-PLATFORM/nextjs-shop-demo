@@ -5,26 +5,25 @@ import { useAppSelector } from '@/app/store/hooks';
 import { UseDate } from '@/components/utils';
 
 type OrderDataTableProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
   account: IAccountsEntity;
 };
 
-const OrderDataTable: FC<OrderDataTableProps> = () => {
+/**
+ * Order data table
+ * @param dict
+ * @param account
+ *
+ * @returns JSX.Element
+ */
+const OrderDataTable: FC<OrderDataTableProps> = ({ dict }) => {
   const orderData = useAppSelector((state) => state.orderReducer.order);
   const {
     order_info_address_placeholder,
     delivery_date_text,
     delivery_time_text,
-  } = useAppSelector((state) => state.systemContentReducer.content) as {
-    order_info_address_placeholder: {
-      value: string;
-    };
-    delivery_date_text: {
-      value: string;
-    };
-    delivery_time_text: {
-      value: string;
-    };
-  };
+  } = dict;
 
   return orderData?.formData.map(
     (

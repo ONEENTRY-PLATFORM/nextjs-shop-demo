@@ -15,6 +15,15 @@ interface TableRowProps {
   icon?: string;
 }
 
+/**
+ * Delivery table row
+ * @param label
+ * @param value
+ * @param icon icon url
+ * @param placeholder placeholder text in table row input
+ *
+ * @returns
+ */
 const DeliveryTableRow: FC<TableRowProps> = ({
   // field,
   label,

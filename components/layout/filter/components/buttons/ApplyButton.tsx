@@ -6,6 +6,12 @@ import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
+/**
+ * Apply filter button
+ * @param dict dictionary from server api
+ *
+ * @returns ApplyButton
+ */
 const ApplyButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
   const { setTransition } = useContext(OpenDrawerContext);
   const { apply_button_placeholder } = dict;

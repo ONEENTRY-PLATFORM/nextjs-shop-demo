@@ -22,6 +22,13 @@ type Color = {
   selected?: boolean;
 };
 
+/**
+ * Color filter
+ * @param title
+ * @param attributes Represents a template entity object.
+ *
+ * @returns Color filter
+ */
 const ColorFilter: FC<ColorFilterProps> = ({ title, attributes }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -33,6 +40,7 @@ const ColorFilter: FC<ColorFilterProps> = ({ title, attributes }) => {
     params.get('color') || '',
   );
 
+  // get colorFilters from attributes
   const colorFilters = useMemo(() => {
     let colors: Color[] = [];
     if (!attributes) {
@@ -52,6 +60,7 @@ const ColorFilter: FC<ColorFilterProps> = ({ title, attributes }) => {
     return colors;
   }, [attributes]);
 
+  // set URLSearchParams on activeColor change
   useEffect(() => {
     if (activeColor) {
       params.set('color', activeColor);

@@ -7,6 +7,13 @@ interface PaymentButtonProps {
   text: string;
 }
 
+/**
+ * Payment button
+ * @param className CSS className of ref element
+ * @param text
+ *
+ * @returns
+ */
 const PaymentButton: FC<PaymentButtonProps> = ({ className, text }) => {
   return (
     <TableRowAnimations className={'mx-auto flex'} index={10}>

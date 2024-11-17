@@ -7,7 +7,7 @@ import { UsePrice } from '@/components/utils';
 import OrderRowAnimations from '../animations/OrderRowAnimations';
 import OrderPage from './OrderPage';
 
-interface OrderProps {
+interface OrderRowProps {
   order: IOrderByMarkerEntity;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   settings: Record<string, any> | undefined;
@@ -15,7 +15,16 @@ interface OrderProps {
   index: number;
 }
 
-const Order: FC<OrderProps> = ({ order, settings, lang, index }) => {
+/**
+ * Order row
+ * @param order
+ * @param settings
+ * @param lang current language shortcode
+ * @param index Index of element for animations stagger
+ *
+ * @returns JSX.Element
+ */
+const OrderRow: FC<OrderRowProps> = ({ order, settings, lang, index }) => {
   const { id, createdDate, statusIdentifier, totalSum } = order;
 
   const formattedPrice = UsePrice({
@@ -52,4 +61,4 @@ const Order: FC<OrderProps> = ({ order, settings, lang, index }) => {
   );
 };
 
-export default Order;
+export default OrderRow;

@@ -5,6 +5,12 @@ import { useTransitionRouter } from 'next-transition-router';
 import type { FC } from 'react';
 import { useCallback } from 'react';
 
+/**
+ * Pagination
+ * @param totalPages
+ *
+ * @returns Pagination
+ */
 const Pagination: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();

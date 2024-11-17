@@ -15,6 +15,14 @@ interface DeliveryFormProps {
   deliveryData: IProductsEntity;
 }
 
+/**
+ * Delivery form
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ * @param deliveryData Represents a delivery product entity object.
+ *
+ * @returns delivery form
+ */
 const DeliveryForm: FC<DeliveryFormProps> = ({ lang, dict, deliveryData }) => {
   const router = useTransitionRouter();
 

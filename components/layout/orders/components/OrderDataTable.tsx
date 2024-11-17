@@ -6,6 +6,14 @@ import type { FC, Key } from 'react';
 import Loader from '@/components/shared/Loader';
 import { UseDate, UsePrice } from '@/components/utils';
 
+/**
+ * OrderData table
+ * @param settings
+ * @param data
+ * @param lang current language shortcode
+ *
+ * @returns JSX.Element
+ */
 const OrderDataTable: FC<{
   settings: Record<string, any> | undefined;
   data: Record<string, any> | undefined;

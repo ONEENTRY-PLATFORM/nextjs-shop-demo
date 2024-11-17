@@ -5,6 +5,13 @@ import type { FC } from 'react';
 
 import FavoritesIcon from '@/components/icons/favorites';
 
+/**
+ * Nav item favorites link
+ * @param item
+ * @param lang current language shortcode
+ *
+ * @returns JSX.Element
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const NavItemFavorites: FC<{ item: any; lang: string }> = ({ item, lang }) => {
   const { pageUrl, localizeInfos } = item;

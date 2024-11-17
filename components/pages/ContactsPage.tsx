@@ -4,12 +4,23 @@ import type { FC, Key } from 'react';
 import type { SimplePageProps } from '@/app/types/global';
 import ContactUsForm from '@/components/forms/ContactUsForm';
 
+/**
+ * AuthError page
+ * @param page
+ * @param lang Current language shortcode
+ *
+ * @returns AuthError page
+ */
 const ContactsPage: FC<SimplePageProps> = async ({ page, lang }) => {
   if (!page) {
     return;
   }
-  const { localizeInfos, forms } = page;
-  const { title, htmlContent } = localizeInfos;
+
+  // Extract content from page localizeInfos
+  const {
+    localizeInfos: { title, htmlContent },
+    forms,
+  } = page;
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">

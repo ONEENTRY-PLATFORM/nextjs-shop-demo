@@ -1,22 +1,28 @@
 import { useTransitionRouter } from 'next-transition-router';
 import type { FC } from 'react';
 
-import { useAppSelector } from '@/app/store/hooks';
 import Loader from '@/components/shared/Loader';
 
 type EditOrderButtonProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
   isLoading: boolean;
 };
 
-const EditOrderButton: FC<EditOrderButtonProps> = ({ isLoading }) => {
+/**
+ * Edit order button
+ * @param isLoading loading state
+ *
+ * @returns JSX.Element
+ */
+const EditOrderButton: FC<EditOrderButtonProps> = ({ dict, isLoading }) => {
   const router = useTransitionRouter();
-  const { edit_order_text } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  ) as {
-    edit_order_text: {
-      value: string;
-    };
-  };
+  const { edit_order_text } = dict;
+
+  /**
+   * Edit order button click
+   * @async
+   */
   const onEditOrder = async () => {
     router.push('/cart');
   };

@@ -5,6 +5,15 @@ import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { typeError } from '@/components/utils';
 
+/**
+ * Get all related product page objects with API.Products
+ *
+ * @param id Product page identifier for which to find relationship.
+ * @param lang Current language shortcode
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ *
+ * @returns  Array with ProductEntity objects
+ */
 export const getRelatedProductsById = async (
   id: number,
   lang: string,

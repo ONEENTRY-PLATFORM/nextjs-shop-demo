@@ -5,11 +5,16 @@ import type { FC } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
 import { useServerProvider } from '@/app/store/providers/ServerProvider';
-import { VerticalMenuLoader } from '@/components/shared/Loader';
 
 import ContactInfo from './ContactInfo';
 import FooterMenu from './Menu';
+import { VerticalMenuLoader } from './VerticalMenuLoader';
 
+/**
+ * Footer menu section
+ * @async
+ * @returns Footer menu section
+ */
 const FooterMenuSection: FC = async () => {
   const [lang] = useServerProvider('lang');
   const quickLinks = await getMenuByMarker('quick_links', lang);

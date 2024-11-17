@@ -17,6 +17,12 @@ import { timeSlotsData } from '../data';
 import CalendarAnimations from './animations/CalendarAnimations';
 import TimeSlots from './calendar/TimeSlots';
 
+/**
+ * Calendar form
+ * @param lang Current language shortcode
+ *
+ * @returns Calendar form
+ */
 const CalendarForm: FC<{ lang: string }> = ({ lang }) => {
   const dispatch = useAppDispatch();
   const { setTransition } = useContext(OpenDrawerContext);
@@ -25,7 +31,8 @@ const CalendarForm: FC<{ lang: string }> = ({ lang }) => {
   const [date, setDate] = useState<Date>(new Date(deliveryData.date));
   const [time, setTime] = useState<string>(deliveryData.time);
 
-  const onApply = () => {
+  // Apply date to CartSlice
+  const onApplyHandle = () => {
     dispatch(
       setDeliveryData({
         date: date.getTime(),
@@ -53,12 +60,12 @@ const CalendarForm: FC<{ lang: string }> = ({ lang }) => {
       />
       <div className="flex w-full">
         <button
-          onClick={onApply}
+          onClick={onApplyHandle}
           type="button"
           className="btn btn-xl btn-primary mx-auto mt-auto w-[270px] max-md:mt-10"
         >
-          Apply
           {/* !!! */}
+          Apply
         </button>
       </div>
     </CalendarAnimations>

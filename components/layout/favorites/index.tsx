@@ -14,6 +14,13 @@ import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
 import ProductCard from '../products-grid/components/product-card/ProductCard';
 import ProductsGridLoader from '../products-grid/components/ProductsGridLoader';
 
+/**
+ * Favorites page
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns favorites page with animations
+ */
 const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const { isAuth } = useContext(AuthContext);
   const [products, setProducts] = useState<IProductsEntity[]>([]);
@@ -26,7 +33,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     items: favoritesIds,
   });
 
-  // setProducts
+  // set products on data change
   useEffect(() => {
     if (data) {
       setProducts(data);
@@ -88,6 +95,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
                   index={index as number}
                   lang={lang}
                   dict={dict}
+                  pagesLimit={0}
                 />
               );
             })}

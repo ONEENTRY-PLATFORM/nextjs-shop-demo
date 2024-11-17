@@ -11,15 +11,22 @@ import { addData } from '@/app/store/reducers/OrderSlice';
 
 import TableRowAnimations from '../animations/TableRowAnimations';
 
-const DeliveryTable: FC<{ placeholder: string }> = ({ placeholder }) => {
+/**
+ * Address row
+ * @param placeholder
+ *
+ * @returns
+ */
+const AddressRow: FC<{ placeholder: string }> = ({ placeholder }) => {
   const dispatch = useAppDispatch();
   const { user } = useContext(AuthContext);
   const deliveryData = useAppSelector(selectDeliveryData);
 
+  // get address from user formData
   const addressReg =
     user?.formData.find((el) => el.marker === 'address_reg')?.value || '';
 
-  // set address onChange
+  // set address on change deliveryData
   useEffect(() => {
     const address = deliveryData.address || addressReg || '';
     dispatch(
@@ -65,4 +72,4 @@ const DeliveryTable: FC<{ placeholder: string }> = ({ placeholder }) => {
   );
 };
 
-export default DeliveryTable;
+export default AddressRow;

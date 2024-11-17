@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from 'react';
 import FadeTransition from '@/app/animations/FadeTransition';
 import { getAllOrdersByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import AuthError from '@/components/shared/AuthError';
+import AuthError from '@/components/pages/AuthError';
 
 import LoadMore from '../products-grid/components/LoadMore';
 // import Pagination from '../products-grid/Pagination';
@@ -17,6 +17,14 @@ import EmptyOrders from './components/EmptyOrders';
 import Order from './components/OrderRow';
 import OrdersTableLoader from './components/OrdersTableLoader';
 
+/**
+ * Orders page
+ * @param lang current language shortcode
+ * @param dict dictionary from server api
+ * @param settings
+ *
+ * @returns JSX.Element
+ */
 const OrdersPage: FC<{
   lang: string;
   dict: IAttributeValues;
@@ -32,6 +40,7 @@ const OrdersPage: FC<{
   const currentPage = Number(searchParams.get('page')) || 0;
   const pageLimit = settings?.orders_limit.value || 10;
 
+  // get all orders by Marker
   useEffect(() => {
     if (!isAuth) {
       return;

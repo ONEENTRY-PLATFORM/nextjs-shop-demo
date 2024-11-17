@@ -7,6 +7,13 @@ import type { FC } from 'react';
 import type { ReactNode } from 'react';
 import { useRef } from 'react';
 
+/**
+ * ProductsGrid loader animations
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ *
+ * @returns loader with animations
+ */
 const ProductsGridLoaderAnimations: FC<{
   children: ReactNode;
   className: string;

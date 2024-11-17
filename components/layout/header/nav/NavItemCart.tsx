@@ -7,10 +7,18 @@ import { useEffect, useState } from 'react';
 import { useAppSelector } from '@/app/store/hooks';
 import CartIcon from '@/components/icons/cart';
 
+/**
+ * Nav item cart button
+ * @param item
+ * @param lang current language shortcode
+ *
+ * @returns JSX.Element
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const NavItemCart: FC<{ item: any; lang: string }> = ({ item, lang }) => {
   const [count, setCount] = useState(0);
 
+  // get count from cart reducer
   const cartCount = useAppSelector((state) => {
     if (state.cartReducer.productsData.length < 1) {
       return 0;

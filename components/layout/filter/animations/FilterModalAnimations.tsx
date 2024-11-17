@@ -2,12 +2,18 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import type { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-const FilterModalAnimations = ({ children }: { children: ReactNode }) => {
+/**
+ * Filter modal animations
+ * @param children children ReactNode
+ *
+ * @returns filter modal with animations
+ */
+const FilterModalAnimations: FC<{ children: ReactNode }> = ({ children }) => {
   const { open, component, transition, setOpen, setTransition } =
     useContext(OpenDrawerContext);
   const ref = useRef(null);

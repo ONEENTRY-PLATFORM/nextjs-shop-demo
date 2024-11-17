@@ -44,6 +44,12 @@ const TableAnimations = ({
   );
 };
 
+/**
+ * Orders table loader
+ * @param limit
+ *
+ * @returns JSX.Element
+ */
 const OrdersTableLoader: FC<LoaderProps> = ({ limit }) => {
   return (
     <TableAnimations className="my-auto flex w-full max-w-[730px] flex-col max-md:max-w-full">

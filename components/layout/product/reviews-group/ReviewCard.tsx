@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import type { FC } from 'react';
 import React from 'react';
 
@@ -19,6 +18,15 @@ interface ReviewCardProps {
   state: boolean;
 }
 
+/**
+ * Review card
+ *
+ * @param review review object entity
+ * @param index Index of element for animations stagger
+ * @param state state of review card
+ *
+ * @returns Review card
+ */
 const ReviewCard: FC<ReviewCardProps> = ({ review, index, state }) => {
   return (
     <ReviewAnimations

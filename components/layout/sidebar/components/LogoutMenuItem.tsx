@@ -8,6 +8,11 @@ import { logOutUser } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import Profile from '@/components/icons/profile';
 
+/**
+ * Logout menu item
+ *
+ * @returns JSX Logout menu item
+ */
 const LogoutMenuItem: FC = () => {
   const router = useTransitionRouter();
   const { authenticate, isAuth } = useContext(AuthContext);
@@ -15,6 +20,11 @@ const LogoutMenuItem: FC = () => {
   if (!isAuth) {
     return;
   }
+
+  /**
+   * logOut user with AuthContext authenticate function
+   * @async
+   */
   const onLogout = async () => {
     await logOutUser({ marker: 'email' });
     authenticate();

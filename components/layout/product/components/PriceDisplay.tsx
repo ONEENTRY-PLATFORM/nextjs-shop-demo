@@ -9,6 +9,14 @@ interface PriceDisplayProps {
   lang: string;
 }
 
+/**
+ * Price display
+ * @param currentPrice
+ * @param originalPrice
+ * @param lang current language shortcode
+ *
+ * @returns Price display with current/old prices
+ */
 const PriceDisplay: FC<PriceDisplayProps> = ({
   currentPrice,
   originalPrice,

@@ -5,6 +5,12 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 import React from 'react';
 
+/**
+ * Reset filter button
+ * @param dict dictionary from server api
+ *
+ * @returns ResetButton
+ */
 const ResetButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -13,7 +19,7 @@ const ResetButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
 
   const { reset_button_placeholder } = dict;
 
-  const onReset = () => {
+  const onResetHandle = () => {
     params.delete('search');
     params.delete('color');
     params.delete('in_stock');
@@ -23,7 +29,10 @@ const ResetButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
   };
 
   return (
-    <button onClick={onReset} className="btn btn-xl btn-o btn-o-primary w-full">
+    <button
+      onClick={onResetHandle}
+      className="btn btn-xl btn-o btn-o-primary w-full"
+    >
       {reset_button_placeholder?.value}
     </button>
   );

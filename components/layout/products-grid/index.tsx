@@ -23,6 +23,16 @@ interface GridLayoutProps {
   isCategory?: boolean;
 }
 
+/**
+ * ProductsGrid layout
+ * @param params
+ * @param searchParams
+ * @param dict dictionary from server api
+ * @param pagesLimit used for animations
+ * @param isCategory
+ *
+ * @returns ProductsGrid layout
+ */
 const ProductsGridLayout: FC<GridLayoutProps> = async ({
   params,
   searchParams,
@@ -35,6 +45,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   const limit =
     currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
 
+  // Get all products from api or get products byPageUrl
   const { isError, products, total } = !isCategory
     ? await getProducts({
         lang: lang,
@@ -49,7 +60,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
         params: { ...params, searchParams: searchParams },
       });
 
-  const totalPages = Math.ceil(total / limit);
+  const totalPages = Math.ceil(total / pagesLimit);
 
   if (!products || total < 1 || isError) {
     return <ProductsNotFound lang={lang} dict={dict} />;

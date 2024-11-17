@@ -1,45 +1,68 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Dispatch } from 'react';
-import { useEffect, useRef } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
-
-import { useAppSelector } from '@/app/store/hooks';
+import { useEffect } from 'react';
 
 type Props = {
   setToken: Dispatch<string>;
   setIsCaptcha: Dispatch<boolean>;
+  captchaKey: string;
 };
 
-export const FormCaptcha = ({ setToken, setIsCaptcha }: Props) => {
-  const recaptcha = useRef<unknown>();
-  const { verify } = useAppSelector(
-    (state) => state.systemContentReducer.content,
-  );
-
-  const send = () => {
-    // recaptcha.current.open();
-  };
+/**
+ * FormCaptcha
+ * @param setToken
+ * @param setIsCaptcha
+ * @param captchaKey
+ *
+ * @returns FormCaptcha
+ */
+const FormCaptcha = ({ setToken, setIsCaptcha, captchaKey }: Props) => {
+  const testKey = '6LdF4HcqAAAAAD7Mia-zF5SMzY-XjHd_SU2xr0uQ';
+  const siteKey = 'AIzaSyBC4rSjMl4SspgQ2J046ZyRv1IX44v3jgc';
 
   useEffect(() => {
     setIsCaptcha(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onVerify = () => {
-    // setToken(token);
+  const handleLoaded = () => {
+    window.grecaptcha?.enterprise.ready(() => {
+      window.grecaptcha?.enterprise
+        .execute(testKey, { action: 'homepage' })
+        .then((token: string) => {
+          const validationObject = {
+            event: {
+              token,
+              siteKey: testKey,
+            },
+          };
+          validateRecaptcha(validationObject);
+        });
+    });
   };
 
-  return (
-    <>
-      <ReCAPTCHA
-        sitekey="6Lc8mQwqAAAAAASbSC4ANjN7Rsq-xC63iMX8HWG9"
-        onChange={(token: string | null) => setToken(token || '')}
-        className={'mx-auto'}
-      />
-      {/* <Recaptcha
-        siteKey="6Lc8mQwqAAAAAASbSC4ANjN7Rsq-xC63iMX8HWG9"
-        baseUrl="https://react-native-course.oneentry.cloud"
-      />*/}
-    </>
-  );
+  const validateRecaptcha = async (validationObject: {
+    event: { token: string; siteKey: string };
+  }) => {
+    const url = `https://recaptchaenterprise.googleapis.com/v1/projects/oneentrys-captchas/assessments?key=${siteKey}`;
+    await fetch(url, { method: 'post', body: JSON.stringify(validationObject) })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('validation result', data);
+      });
+  };
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/enterprise.js?render=${testKey}`;
+    script.addEventListener('load', handleLoaded);
+    document.body.appendChild(script);
+    return () => {
+      script.removeEventListener('load', handleLoaded);
+    };
+  }, []);
+
+  return '';
 };
+
+export default FormCaptcha;

@@ -14,6 +14,14 @@ interface FormFieldAnimationsProps {
   index: number;
 }
 
+/**
+ * Form field animations
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ * @param index Index of element for animations stagger
+ *
+ * @returns Form field animations
+ */
 const FormFieldAnimations: FC<FormFieldAnimationsProps> = ({
   children,
   className,
@@ -24,7 +32,7 @@ const FormFieldAnimations: FC<FormFieldAnimationsProps> = ({
   const { open, transition } = useContext(OpenDrawerContext);
   const ref = useRef(null);
 
-  // transition animations
+  // Form transition animations
   useGSAP(() => {
     if (!ref.current) {
       return;
@@ -62,7 +70,7 @@ const FormFieldAnimations: FC<FormFieldAnimationsProps> = ({
     };
   }, [transition, open]);
 
-  // reverse animations
+  // Form stage leaving animations
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,

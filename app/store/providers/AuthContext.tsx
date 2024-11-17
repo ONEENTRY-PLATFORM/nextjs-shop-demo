@@ -32,6 +32,11 @@ type ContextProps = {
   refreshUser: () => void;
 };
 
+type AuthProviderProps = {
+  children: ReactNode;
+  langCode: string;
+};
+
 export const AuthContext = createContext<ContextProps>({
   isAuth: false,
   isLoading: false,
@@ -39,32 +44,42 @@ export const AuthContext = createContext<ContextProps>({
   refreshUser: () => {},
 });
 
-type AuthProviderProps = {
-  children: ReactNode;
-  langCode: string;
-};
-
+/**
+ * Auth provider
+ * @param children children ReactNode
+ * @param langCode current language code
+ *
+ * @returns AuthContext Provider
+ */
 export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
+  const dispatch = useAppDispatch();
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [user, setUser] = useState<IUserEntity | undefined>();
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
-
-  const dispatch = useAppDispatch();
+  /**
+   * Get user data from redux AppSelector
+   */
   const cartVersion = useAppSelector(selectCartVersion) as number;
   const favoritesVersion = useAppSelector(selectFavoritesVersion) as number;
-
-  const productsInCart = useAppSelector(selectCartData) as IProducts[];
+  const productsInCart = useAppSelector(selectCartData);
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
-  ) as Array<number>;
+  );
 
+  /**
+   * Check user data loop
+   */
   const [trigger, { isError }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 3000 : 0,
   });
 
+  /**
+   * Initialize authorization
+   * @async
+   */
   const onInit = async () => {
     const refresh = localStorage.getItem('refresh-token');
 
@@ -76,6 +91,10 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     await checkToken();
   };
 
+  /**
+   * Check refresh token
+   * @async
+   */
   const checkToken = async () => {
     trigger({
       langCode,
@@ -95,6 +114,10 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       });
   };
 
+  /**
+   * Update user state on server
+   * @async
+   */
   const updateUser = async () => {
     await updateUserState({
       cart: productsInCart,
@@ -103,6 +126,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     });
   };
 
+  // Update user data on auth
   useEffect(() => {
     if (!isAuth) {
       return;
@@ -110,7 +134,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     updateUser();
   }, [isAuth, productsInCart, favoritesIds]);
 
-  // load cart from user state
+  // Load cart from user state
   useEffect(() => {
     if (!user?.state.cart || cartVersion > 0) {
       return;
@@ -123,7 +147,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     dispatch(setCartVersion(1));
   }, [isAuth, user]);
 
-  // load Favorites from user state
+  // Load favorites from user state
   useEffect(() => {
     if (!user?.state.favorites || favoritesVersion > 0) {
       return;
@@ -134,7 +158,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     dispatch(setFavoritesVersion(1));
   }, [isAuth, user]);
 
-  // refetch
+  // Refetch
   useEffect(() => {
     setIsLoading(true);
     onInit().then(() => {
@@ -142,7 +166,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     });
   }, [refetch, langCode]);
 
-  // isError
+  // Refetch if error and has refresh-token
   useEffect(() => {
     const refresh = localStorage.getItem('refresh-token');
     if (isError && refresh) {
@@ -152,14 +176,13 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     }
   }, [isError]);
 
-  // checkToken
+  // Check token on refetch
   useEffect(() => {
     if (isAuth) {
       checkToken();
     }
   }, [refetch, refetchUser]);
 
-  // eslint-disable-next-line react/jsx-no-constructed-context-values
   const value = {
     isAuth,
     isLoading,

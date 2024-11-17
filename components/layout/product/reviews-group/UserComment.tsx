@@ -15,6 +15,12 @@ interface UserCommentProps {
   };
 }
 
+/**
+ * UserComment
+ * @param review
+ *
+ * @returns UserComment
+ */
 const UserComment: FC<UserCommentProps> = ({ review }) => {
   return (
     <div className="flex flex-col rounded-3xl border border-solid border-slate-300 bg-white px-6 py-4 max-md:px-5">

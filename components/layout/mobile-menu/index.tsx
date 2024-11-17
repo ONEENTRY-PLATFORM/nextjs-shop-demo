@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
+import type { FC } from 'react';
 import { useContext, useEffect } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -12,7 +14,17 @@ import MobileMenuAnimations from './animations/MobileMenuAnimations';
 import CloseModal from './components/CloseModal';
 import MobileMenu from './components/MobileMenu';
 
-function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
+/**
+ * Mobile menu offscreen modal
+ * @param menu Represents a menu - array of objects.
+ * @param lang Current language shortcode
+ *
+ * @returns Mobile menu list item
+ */
+const OffscreenModal: FC<{
+  menu: IMenusPages[];
+  lang: string;
+}> = ({ menu, lang }) => {
   const pathname = usePathname();
   const { open, setOpen, component } = useContext(OpenDrawerContext);
 
@@ -24,12 +36,10 @@ function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   useEffect(() => {
     setOpen(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   if (!open || component !== 'MobileMenu') {
@@ -62,6 +72,6 @@ function OffscreenModal({ menu, lang }: { menu: IMenusPages[]; lang: string }) {
       <ModalBackdrop />
     </MobileMenuAnimations>
   );
-}
+};
 
 export default OffscreenModal;

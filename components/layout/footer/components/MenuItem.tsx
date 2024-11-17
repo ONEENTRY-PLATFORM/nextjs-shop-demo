@@ -7,10 +7,19 @@ import type { FC } from 'react';
 
 import { LanguageEnum } from '@/app/types/enum';
 
-const MenuItem: FC<{
+interface MenuItemProps {
   page: IMenusPages;
   lang: string;
-}> = ({ page, lang }) => {
+}
+
+/**
+ * Footer menu item
+ * @param page Represents a page object.
+ * @param lang Current language shortcode
+ *
+ * @returns menu item
+ */
+const MenuItem: FC<MenuItemProps> = ({ page, lang }) => {
   const paths = usePathname();
   if (!page) {
     return;

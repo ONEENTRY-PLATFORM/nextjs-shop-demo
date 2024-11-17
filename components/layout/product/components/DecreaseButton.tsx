@@ -15,6 +15,12 @@ interface ButtonProps {
   title: string;
 }
 
+/**
+ * Decrease qty button
+ * @param id product id
+ *
+ * @returns Button
+ */
 const DecreaseButton: FC<ButtonProps> = ({ id, qty, title }) => {
   const dispatch = useAppDispatch();
   const { user } = useContext(AuthContext);
@@ -22,6 +28,9 @@ const DecreaseButton: FC<ButtonProps> = ({ id, qty, title }) => {
     return;
   }
 
+  /**
+   * Remove product from cart and unsubscribe from events
+   */
   const onRemoveFromCart = async () => {
     dispatch(removeProduct(id));
     toast('Product ' + title + ' removed from cart!');
@@ -31,13 +40,20 @@ const DecreaseButton: FC<ButtonProps> = ({ id, qty, title }) => {
     }
   };
 
+  /**
+   * Decrease product quantity
+   */
+  const onDecreaseHandle = () => {
+    dispatch(decreaseProductQty({ id: id, quantity: 1 }));
+  };
+
   return (
     <button
       onClick={async () => {
         if (qty <= 1) {
           onRemoveFromCart();
         } else {
-          dispatch(decreaseProductQty({ id: id, quantity: 1 }));
+          onDecreaseHandle();
         }
       }}
       className="relative m-1 box-border size-8 rounded-full text-center text-slate-700 transition-all duration-500 hover:bg-slate-100 hover:text-orange-500 hover:shadow-inner"

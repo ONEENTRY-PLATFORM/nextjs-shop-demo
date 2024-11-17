@@ -12,10 +12,18 @@ interface FormAnimationsProps {
   isLoading: boolean;
 }
 
+/**
+ * Form animations
+ * @param children children ReactNode
+ * @param isLoading loading state
+ *
+ * @returns Form animations
+ */
 const FormAnimations: FC<FormAnimationsProps> = ({ children, isLoading }) => {
   const { open, transition, setTransition } = useContext(OpenDrawerContext);
   const ref = useRef(null);
 
+  // Form transition animations
   useGSAP(() => {
     if (!open || !ref.current || isLoading) {
       return;

@@ -19,6 +19,15 @@ interface ProductCardProps {
   index: number;
 }
 
+/**
+ * Product card in cart
+ * @param product product entity object.
+ * @param selected product selected?
+ * @param lang Current language shortcode
+ * @param index index of element in array for stagger
+ *
+ * @returns ProductCard with animations
+ */
 const ProductCard: FC<ProductCardProps> = ({
   product,
   selected,
@@ -26,8 +35,13 @@ const ProductCard: FC<ProductCardProps> = ({
   index,
 }) => {
   const dispatch = useAppDispatch();
-  const { id, attributeValues, localizeInfos } = product;
-  const imgSrc = attributeValues.pic?.value.downloadLink;
+  // extract data from product
+  const {
+    id,
+    attributeValues: { pic, price, sale, units_product },
+    localizeInfos,
+  } = product;
+  const imgSrc = pic?.value.downloadLink;
   const title = localizeInfos?.title;
 
   return (
@@ -68,8 +82,8 @@ const ProductCard: FC<ProductCardProps> = ({
         <div className="flex flex-col gap-5 self-start text-neutral-600">
           <h2 className="text-base leading-8">{title}</h2>
           <PriceDisplay
-            currentPrice={attributeValues.sale?.value}
-            originalPrice={attributeValues.price?.value}
+            currentPrice={sale?.value}
+            originalPrice={price?.value}
             lang={lang}
           />
         </div>
@@ -81,8 +95,13 @@ const ProductCard: FC<ProductCardProps> = ({
         ></Link>
       </div>
       <div className="z-10 flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:ml-8 max-sm:flex">
-        <QuantitySelector product={product} height={42} />
-        <DeleteButton productId={product.id} />
+        <QuantitySelector
+          id={id}
+          units={units_product?.value}
+          title={title}
+          height={42}
+        />
+        <DeleteButton productId={id} />
       </div>
     </ProductAnimations>
   );

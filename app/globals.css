@@ -300,7 +300,15 @@ input:focus-visible {
   }
 
   .sidebar-menu-item {
-    @apply mr-auto flex justify-start gap-3 whitespace-nowrap hover:text-orange-500;
+    @apply 
+      mr-auto 
+      flex 
+      justify-start 
+      gap-3 
+      whitespace-nowrap 
+      transition-colors 
+      duration-300 
+      hover:text-orange-500;
   }
 
   .input-group {
@@ -336,7 +344,7 @@ input:focus-visible {
   }
 }
 
-
+/* toastify */
 :root {
   --toastify-color-progress-light: linear-gradient(
     to right,

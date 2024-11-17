@@ -3,25 +3,29 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import { useTransitionState } from 'next-transition-router';
 import type { FC } from 'react';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 import type { AnimationsProps } from '../types/global';
 
+/**
+ * Fade transition animations
+ *
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ * @param index Index of element for animations stagger
+ *
+ * @returns JSX.Element with animated ref
+ */
 const FadeTransition: FC<AnimationsProps> = ({
   children,
   className,
   index,
 }) => {
-  const { stage } = useTransitionState();
-  const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
+  // on stage enter animations
   useGSAP(() => {
-    // if (!ref.current) {
-    //   return;
-    // }
     const tl = gsap
       .timeline()
       .set(ref.current, {
@@ -32,36 +36,10 @@ const FadeTransition: FC<AnimationsProps> = ({
         duration: 0.8,
         delay: index / 10,
       });
-    // if (stage === 'leaving' && prevStage === 'none') {
-    //   tl.reverse(1);
-    // }
-    // setPrevStage(stage);
     return () => {
       tl.kill();
     };
   }, []);
-
-  // useGSAP(() => {
-  //   if (!ref.current) {
-  //     return;
-  //   }
-  //   const tl = gsap
-  //     .timeline({ paused: true })
-  //     .set(ref.current, {
-  //       autoAlpha: 0,
-  //     })
-  //     .to(ref.current, {
-  //       autoAlpha: 1,
-  //       duration: 0.5,
-  //       delay: index / 10,
-  //     });
-
-  //   tl.play();
-
-  //   return () => {
-  //     tl.kill();
-  //   };
-  // }, []);
 
   return (
     <div ref={ref} className={className + ' opacity-0'}>

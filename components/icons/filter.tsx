@@ -1,7 +1,7 @@
 const FilterIcon = () => {
   return (
     <svg
-      className="size-full fill-[#4C4D56] transition-colors group-hover:fill-orange-500"
+      className="size-full fill-[#4C4D56] transition-colors duration-300 group-hover:fill-orange-500"
       width="21"
       height="20"
       viewBox="0 0 21 20"

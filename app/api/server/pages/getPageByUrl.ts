@@ -5,6 +5,15 @@ import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { typeError } from '@/components/utils';
 
+/**
+ * Get page object with information about forms, blocks, menus, linked to the page by URL.
+ *
+ * @param url Page URL
+ * @param lang Current language shortcode
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ *
+ * @returns Returns PageEntity object
+ */
 export const getPageByUrl = async (
   url: string,
   lang: string,

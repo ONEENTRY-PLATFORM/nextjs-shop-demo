@@ -5,6 +5,13 @@ interface RatingBarProps {
   maxWidth: string;
 }
 
+/**
+ * RatingBar
+ * @param value
+ * @param maxWidth
+ *
+ * @returns RatingBar
+ */
 const RatingBar: FC<RatingBarProps> = ({ value, maxWidth }) => (
   <div
     className="my-auto flex flex-col justify-center"

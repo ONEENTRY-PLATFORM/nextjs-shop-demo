@@ -10,6 +10,13 @@ import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimatio
 import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
 
+/**
+ * FormInput
+ * @param value field value
+ * @param index Index of element for animations stagger
+ *
+ * @returns FormInput
+ */
 const FormInput: FC<IAttributes & { value?: string; index: number }> = (
   field,
 ) => {

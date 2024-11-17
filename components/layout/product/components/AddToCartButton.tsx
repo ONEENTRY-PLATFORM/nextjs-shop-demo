@@ -1,7 +1,6 @@
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -19,21 +18,33 @@ import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import QuantitySelector from './QuantitySelector';
 
 interface AddToCartProps {
-  product: IProductsEntity;
+  id: number;
+  units: number;
+  productTitle: string;
+  statusIdentifier: string;
   className: string;
   height: number;
   dict: IAttributeValues;
 }
 
+/**
+ * AddToCart button with qty selector
+ * @param id product id
+ * @param units product units qty
+ *
+ * @returns Button | Qty selector
+ */
 const AddToCartButton: FC<AddToCartProps> = ({
-  product,
+  id,
+  units,
+  productTitle,
+  statusIdentifier,
   className,
   height,
   dict,
 }) => {
   const dispatch = useAppDispatch();
-  const { id } = product;
-  const inCart = useAppSelector((state) => selectIsInCart(state, product.id));
+  const inCart = useAppSelector((state) => selectIsInCart(state, id));
   const items = useAppSelector((state) => state.cartReducer.productsData);
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
@@ -44,15 +55,14 @@ const AddToCartButton: FC<AddToCartProps> = ({
 
   const { out_of_stock_button, add_to_cart_button } = dict;
 
+  const notInStock = statusIdentifier !== 'in_stock';
+
   useEffect(() => {
     setInCart(inCart);
   }, [inCart]);
 
-  const notInStock =
-    typeof product.statusIdentifier === 'string' &&
-    product.statusIdentifier !== 'in_stock';
-
-  if (notInStock) {
+  // If not InStock show out_of_stock button
+  if (notInStock && out_of_stock_button) {
     return (
       <div className={'btn btn-o btn-o-gray ' + className}>
         {out_of_stock_button.value}
@@ -60,10 +70,12 @@ const AddToCartButton: FC<AddToCartProps> = ({
     );
   }
 
-  const onAddToCart = async () => {
-    dispatch(addProductToCart({ id: product.id, selected: true, quantity: 1 }));
-    toast('Product ' + product.localizeInfos.title + ' added to cart!');
+  // Add to cart, update user state and subscribe to events
+  const addToCartHandle = async (): Promise<void> => {
+    dispatch(addProductToCart({ id: id, selected: true, quantity: 1 }));
+    toast('Product ' + productTitle + ' added to cart!');
 
+    // Update user state and subscribe to events
     if (user) {
       const updatedItems = items.some(
         (product: { id: number }) => product.id === id,
@@ -84,20 +96,25 @@ const AddToCartButton: FC<AddToCartProps> = ({
         user: user,
       });
 
-      await onSubscribeEvents(product.id);
+      await onSubscribeEvents(id);
     }
   };
 
-  return !productInCart || !inCart ? (
+  return !productInCart ? (
     <button
-      onClick={async () => onAddToCart()}
+      onClick={() => addToCartHandle()}
       type="button"
       className={className}
     >
       {add_to_cart_button.value}
     </button>
   ) : (
-    <QuantitySelector product={product} height={height} />
+    <QuantitySelector
+      height={height}
+      id={id}
+      units={units}
+      title={productTitle}
+    />
   );
 };
 

@@ -6,6 +6,15 @@ import { useTransitionState } from 'next-transition-router';
 import type { ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
+/**
+ * SlideUp transition
+ *
+ * @param children children ReactNode
+ * @param className CSS className of ref element
+ * @param index Index of element for animations stagger
+ *
+ * @returns JSX.Element with animated ref
+ */
 const SlideUpTransition = ({
   children,
   className,
@@ -19,6 +28,7 @@ const SlideUpTransition = ({
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
+  // on stage change transitions
   useGSAP(() => {
     if (!ref.current) {
       return;
@@ -34,8 +44,7 @@ const SlideUpTransition = ({
       autoAlpha: 1,
       yPercent: 0,
       duration: 0.5,
-      delay: index / 20,
-      ease: 'power2.inOut',
+      delay: index / 10,
     });
 
     if (stage === 'none' && prevStage === 'entering') {

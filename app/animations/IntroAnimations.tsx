@@ -4,9 +4,15 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useRef } from 'react';
 
+/**
+ * Intro animations
+ *
+ * @returns JSX.Element with animated ref
+ */
 const IntroAnimations = () => {
   const ref = useRef(null);
 
+  // Intro animations
   useGSAP(() => {
     const tl = gsap
       .timeline()

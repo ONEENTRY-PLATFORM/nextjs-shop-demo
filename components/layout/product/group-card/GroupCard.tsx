@@ -16,6 +16,15 @@ interface GroupCardProps {
   dict: IAttributeValues;
 }
 
+/**
+ * Products group card
+ *
+ * @param product product entity object
+ * @param lang current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns Products group card
+ */
 const GroupCard: FC<GroupCardProps> = ({ product, lang, dict }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const attributeValues =

@@ -20,39 +20,35 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
+/**
+ * SignUp form
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns SignUp form
+ */
 const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
+  const [loading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+
   const { authenticate } = useContext(AuthContext);
   const { setOpen, setComponent, setAction } = useContext(OpenDrawerContext);
 
   const { sign_up_text, sign_in_text, create_account_desc } = dict;
 
+  // Get form by marker with RTK
   const { data, isLoading } = useGetFormByMarkerQuery({
     marker: 'reg',
     lang,
   });
 
-  const [loading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>('');
+  // Get fields from formFieldsReducer
+  const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
-  const fields = useAppSelector(
-    (state) => state.formFieldsReducer.fields,
-  ) as object as {
-    phone_reg: {
-      value: string;
-      valid: boolean;
-    };
-    email_reg: {
-      value: string;
-      valid: boolean;
-    };
-    password_reg: {
-      value: string;
-      valid: boolean;
-    };
-  };
-
+  // signUp with API AuthProvider
   const onSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // required form fields array
     const formFields = [
       'email_reg',
       'password_reg',
@@ -62,6 +58,7 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
       'email_notifications',
     ];
 
+    // check if user can submit form
     const canSubmit = Object.keys(fields).reduce((isValid, field) => {
       if (!isValid || !field) {
         return false;
@@ -70,6 +67,7 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
     }, true);
 
     if (canSubmit) {
+      // prepare form data
       const formData = Object.keys(fields).reduce(
         (
           arr: Array<{
@@ -111,11 +109,12 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
       };
       setIsLoading(true);
 
+      // signUp with API AuthProvider
       try {
         const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
         const res = await api.AuthProvider.signUp('email', data, langCode);
 
-        // if user active try login else Verification and activateUser
+        // if user active try login and authenticate
         if (res && res.isActive) {
           await logInUser({
             method: 'email',
@@ -123,7 +122,9 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
             password: fields.password_reg.value,
           });
           authenticate();
-        } else if (res && !res.isActive && !typeError(res)) {
+        }
+        // if user not active open Verification form with action activateUser
+        else if (res && !res.isActive && !typeError(res)) {
           setOpen(true);
           setComponent('VerificationForm');
           setAction('activateUser');

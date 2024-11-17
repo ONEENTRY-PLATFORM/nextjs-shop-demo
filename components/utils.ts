@@ -10,7 +10,7 @@ export const UsePrice = ({
 }: {
   amount: number | string;
   lang: string;
-}) => {
+}): string => {
   const currency = CurrencyEnum[lang as keyof typeof CurrencyEnum];
   const intlEnum = IntlEnum[lang as keyof typeof IntlEnum];
   const formattedPrice = new Intl.NumberFormat(intlEnum, {
