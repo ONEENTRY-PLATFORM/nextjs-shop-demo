@@ -8,9 +8,10 @@ import { typeError } from '@/components/utils';
 
 /**
  * Get all products with pagination and filter.
- *
+ * @async
  * @param props
- * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ * @see {@link https://doc.oneentry.cloud/docs/catalog OneEntry CMS docs}
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
  * @returns Array with ProductEntity objects
  */

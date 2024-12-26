@@ -30,6 +30,7 @@ const ProductImage: FC<ProductImageProps> = ({ attributes: { pic }, alt }) => {
           sizes="(min-width: 300px) 66vw, 100vw"
           src={imageSrc}
           alt={alt}
+          loading="lazy"
           className="size-40 shrink-0 object-cover transition-transform duration-500 group-hover:scale-125"
         />
       ) : (

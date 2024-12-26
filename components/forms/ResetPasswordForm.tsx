@@ -69,10 +69,10 @@ const ResetPasswordForm: FC<FormProps> = ({ dict }) => {
       >
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="max-w-full text-xl font-bold text-neutral-600">
-            {reset_password_text.value}
+            {reset_password_text?.value}
           </h2>
           <p className="max-w-full text-xs text-gray-400">
-            {new_password_desc.value}
+            {new_password_desc?.value}
           </p>
         </div>
 
@@ -93,7 +93,7 @@ const ResetPasswordForm: FC<FormProps> = ({ dict }) => {
         </div>
 
         <FormSubmitButton
-          title={change_password_text.value}
+          title={change_password_text?.value}
           isLoading={isLoading}
           index={10}
         />

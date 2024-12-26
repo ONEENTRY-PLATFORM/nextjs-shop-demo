@@ -15,9 +15,8 @@ import { getDictionary } from '../../dictionaries';
 /**
  * Generate page metadata
  * @async server component
- * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
  * @param params page params
- *
+ * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
  * @returns metadata
  */
 export async function generateMetadata({

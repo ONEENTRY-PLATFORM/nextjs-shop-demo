@@ -7,10 +7,11 @@ import { typeError } from '@/components/utils';
 
 /**
  * Get child pages object with information as an array.
- *
+ * @async
  * @param url Page URL
  * @param lang Current language shortcode
- * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
  * @returns Returns all created pages as an array of PageEntity objects or an empty array [] (if there is no data) for the selected parent
  */

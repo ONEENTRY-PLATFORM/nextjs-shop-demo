@@ -6,7 +6,7 @@ import { useRef } from 'react';
 
 /**
  * Intro animations
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns JSX.Element with animated ref
  */
 const IntroAnimations = () => {

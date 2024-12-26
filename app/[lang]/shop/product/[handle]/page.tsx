@@ -11,8 +11,8 @@ import type { Locale } from '@/i18n-config';
 /**
  * Generate page metadata
  * @async server component
- * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
  * @param params page params
+ * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
  * @returns metadata
  */
 export async function generateMetadata({
@@ -35,7 +35,7 @@ export async function generateMetadata({
 
   return {
     title: product?.localizeInfos.title,
-    description: product.attributeValues.description?.value?.plainValue,
+    description: product?.attributeValues.description?.value[0]?.plainValue,
     robots: {
       index: indexable,
       follow: indexable,
@@ -62,8 +62,8 @@ export async function generateMetadata({
 /**
  * Product page
  * @async server component
- * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @param params page params
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Product page layout JSX.Element
  */
 const ProductPageLayout: FC<PageProps> = async ({
@@ -91,7 +91,7 @@ const ProductPageLayout: FC<PageProps> = async ({
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: localizeInfos.title,
-    description: attributeValues.description?.value,
+    description: attributeValues.description?.value[0]?.plainValue,
     image: attributeValues.pic?.value?.downloadLink,
     offers: {
       '@type': 'AggregateOffer',

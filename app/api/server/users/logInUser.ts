@@ -6,9 +6,12 @@ type LogInProps = { method: string; login: string; password: string };
 
 /**
  * User authorization with API AuthProvider
- *
- * @param marker
- * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ * @async
+ * @param method The text identifier of the authorization provider. Example - email
+ * @param login
+ * @param password
+ * @see {@link https://doc.oneentry.cloud/docs/users OneEntry CMS docs}
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
  * @returns result
  */

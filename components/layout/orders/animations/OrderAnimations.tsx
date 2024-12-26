@@ -9,8 +9,8 @@ import { useRef } from 'react';
  * Order animations
  * @param children children ReactNode
  * @param className CSS className of ref element
- * @param isActive
- *
+ * @param isActive current state of order block
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns JSX.Element
  */
 const OrderAnimations: FC<{

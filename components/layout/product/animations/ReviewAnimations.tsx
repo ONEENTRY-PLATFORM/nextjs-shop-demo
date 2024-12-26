@@ -18,8 +18,8 @@ interface ReviewAnimations {
  * @param children children ReactNode
  * @param className CSS className of ref element
  * @param index Index of element for animations stagger
- * @param state
- *
+ * @param state current state of review
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns data
  */
 const ReviewAnimations: FC<ReviewAnimations> = ({

@@ -92,7 +92,7 @@ Install dependencies
   npm install
 ```
 
-Start the server
+Start the dev server
 
 ```bash
   next dev
@@ -134,9 +134,19 @@ To deploy this project run
   npm run deploy
 ```
 
-## License
+## Project Structure:
+`app`: Contains the main components of the application, organized by functionality (e.g., cart, favorites, orders, shop).
+`api`: Houses API endpoints and related files, ensuring a clean separation of concerns.
+`store`: Manages the Redux store, including hooks, providers, and reducers.
+`styles`: Contains CSS files, organized by functionality.
+`types`: Includes TypeScript type definitions.
+`components`: Features reusable components like forms, icons, and layout elements.
 
-[MIT](https://choosealicense.com/licenses/mit/)
+
+## Development Tools:
+Scripts: Use npm run dev to start development, npm run build to compile the project, and npm run start to run the production build. The npm run lint script helps maintain code quality.
+Environment Variables: Make sure to set up your .env file with the necessary environment variables to run the project smoothly.
+Internationalization: The project supports multiple languages, configured in i18n-config.ts.
 
 ### Important files and folders
 
@@ -162,3 +172,7 @@ To deploy this project run
 | `@/components/shared`           | Shared between layouts components          |
 |                                 |                                            |
 | `/public`                       | Public content folder                      |
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)

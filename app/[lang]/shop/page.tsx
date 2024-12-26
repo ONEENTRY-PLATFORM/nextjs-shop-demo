@@ -15,8 +15,9 @@ import { getDictionary } from '../dictionaries';
 /**
  * Generate page metadata
  * @async server component
- * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
  * @param params page params
+ * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
+ * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
  * @returns metadata
  */
 export async function generateMetadata({
@@ -71,9 +72,9 @@ export async function generateMetadata({
 /**
  * Shop page
  * @async server component
- * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @param params page params
- * @param searchParams page search params
+ * @param searchParams dynamic search params
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Shop page layout JSX.Element
  */
 const ShopPageLayout: FC<PageProps> = async ({ params, searchParams }) => {

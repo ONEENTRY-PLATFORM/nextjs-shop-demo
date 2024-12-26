@@ -9,7 +9,6 @@ import { blocksColors, blocksData } from '@/components/data';
 
 /**
  * Blocks grid loader
- *
  * @returns Loader
  */
 const BlocksGridLoader: FC<LoaderProps> = () => {

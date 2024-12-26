@@ -12,7 +12,7 @@ import { useRef, useState } from 'react';
  * @param className CSS className of ref element
  * @param index Index of element for animations stagger
  * @param isActive
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns JSX.Element
  */
 const PaymentMethodAnimations: FC<{

@@ -1,11 +1,13 @@
-import type { AttributeType } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 import React from 'react';
 
 import { UsePrice } from '@/components/utils';
 
 interface PriceDisplayProps {
-  attributes: AttributeType;
+  attributes: {
+    sale?: { value: number };
+    price?: { value: number };
+  };
   lang: string;
 }
 
@@ -21,10 +23,10 @@ const PriceDisplay: FC<PriceDisplayProps> = ({
   attributes: { sale, price },
   lang,
 }) => {
-  const currentPrice = sale?.value;
-  const originalPrice = price?.value;
+  const currentPrice = sale?.value || 0;
+  const originalPrice = price?.value || 0;
   if (!currentPrice && !originalPrice) {
-    return;
+    return null;
   }
 
   // Format price with Intl.NumberFormat
@@ -37,7 +39,12 @@ const PriceDisplay: FC<PriceDisplayProps> = ({
   return (
     <div className="flex gap-2.5 self-center font-bold">
       {currentPrice > 0 && (
-        <div className="text-lg leading-6 text-orange-500">{newPrice}</div>
+        <div
+          className="text-lg leading-6 text-orange-500"
+          aria-label={`New price: ${newPrice}`}
+        >
+          {newPrice}
+        </div>
       )}
       {originalPrice > 0 && (
         <div
@@ -47,6 +54,7 @@ const PriceDisplay: FC<PriceDisplayProps> = ({
               ? 'text-slate-300 text-sm'
               : 'text-orange-500 text-lg')
           }
+          aria-label={`Original price: ${oldPrice}`}
         >
           {oldPrice}
         </div>

@@ -6,7 +6,7 @@ const SearchIcon = () => {
       viewBox="0 0 25 26"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="size-full fill-slate-700 transition-colors duration-300 group-hover:fill-orange-500 max-sm:size-4"
+      className="h-[26px] w-[25px] fill-slate-700 transition-colors duration-300 group-hover:fill-orange-500 max-sm:size-4"
     >
       <path
         fillRule="evenodd"

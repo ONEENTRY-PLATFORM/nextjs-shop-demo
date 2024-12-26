@@ -150,7 +150,7 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
       >
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="slide-up text-xl font-bold text-neutral-600 max-md:max-w-full">
-            {sign_up_text.value}
+            {sign_up_text?.value}
           </h2>
 
           <p className="slide-up text-xs text-gray-400 max-md:max-w-full">
@@ -160,9 +160,9 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
               }}
               className="underline"
             >
-              {sign_in_text.value}
+              {sign_in_text?.value}
             </button>{' '}
-            {create_account_desc.value}
+            {create_account_desc?.value}
           </p>
         </div>
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
@@ -175,7 +175,7 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
           })}
         </div>
         <SubmitButton
-          title={sign_up_text.value}
+          title={sign_up_text?.value}
           isLoading={loading || isLoading}
           index={10}
         />

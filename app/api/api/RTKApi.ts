@@ -36,6 +36,9 @@ interface SingleOrderProps {
   activeLang: string;
 }
 
+/**
+ * Creates basic redux logic.
+ */
 export const RTKApi = createApi({
   reducerPath: 'api',
   baseQuery: fakeBaseQuery(),

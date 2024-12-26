@@ -10,7 +10,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 /**
  * Filter modal animations
  * @param children children ReactNode
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns filter modal with animations
  */
 const FilterModalAnimations: FC<{ children: ReactNode }> = ({ children }) => {

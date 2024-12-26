@@ -7,8 +7,8 @@ import OrderPage from '@/components/layout/orders/components/OrderPage';
 /**
  * Order page layout
  * @async server component
- * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @param params page params
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Order page layout JSX.Element
  */
 const OrderPageLayout: FC<PageProps> = ({ params: { handle, lang } }) => {

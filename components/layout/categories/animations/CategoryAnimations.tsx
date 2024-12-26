@@ -17,7 +17,7 @@ interface CategoryAnimationsProps {
  * @param children children ReactNode
  * @param className category card wrapper className
  * @param index index of element in array for stagger
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns category card wrapper with animations
  */
 const CategoryAnimations: FC<CategoryAnimationsProps> = ({

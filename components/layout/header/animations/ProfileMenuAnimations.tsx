@@ -20,7 +20,7 @@ interface ProfileMenuAnimationsProps {
  * @param className CSS className of ref element
  * @param state state of component
  * @param setState setState of component function
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns Profile menu wrapper with animations
  */
 const ProfileMenuAnimations: FC<ProfileMenuAnimationsProps> = ({

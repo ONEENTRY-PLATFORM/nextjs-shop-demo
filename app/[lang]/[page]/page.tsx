@@ -20,8 +20,9 @@ import WithSidebar from './WithSidebar';
 /**
  * Generate page metadata
  * @async server component
- * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @param params page params
+ * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns metadata
  */
 export async function generateMetadata({
@@ -51,8 +52,9 @@ export async function generateMetadata({
 /**
  * Simple page
  * @async server component
- * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @param params page params
+ * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns page layout JSX.Element
  */
 const PageLayout: FC<PageProps> = async ({ params }) => {

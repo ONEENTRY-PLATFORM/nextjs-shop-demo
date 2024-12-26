@@ -13,7 +13,7 @@ import { useRef } from 'react';
  * @param className CSS className of ref element
  * @param index Index of element for animations stagger
  * @param pagesLimit used for animations
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns Card animations
  */
 const CardAnimations: FC<{

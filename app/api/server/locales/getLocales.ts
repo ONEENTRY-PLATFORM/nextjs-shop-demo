@@ -6,8 +6,9 @@ import { typeError } from '@/components/utils';
 
 /**
  * Get all active language localization objects.
- *
- * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ * @async
+ * @see {@link https://doc.oneentry.cloud/docs/languages OneEntry CMS docs}
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
  * @returns an array of LocaleEntity objects Promise
  */

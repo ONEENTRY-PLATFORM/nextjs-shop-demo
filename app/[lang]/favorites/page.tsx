@@ -11,8 +11,8 @@ import { getDictionary } from '../dictionaries';
 /**
  * Favorites page
  * @async server component
- * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @param params page params
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Favorites page layout JSX.Element
  */
 const FavoritesPageLayout: FC<PageProps> = async ({ params: { lang } }) => {

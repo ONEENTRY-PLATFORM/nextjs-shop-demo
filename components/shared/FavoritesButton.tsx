@@ -93,6 +93,7 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
           onUpdateFavoritesHandle();
         }
       }}
+      aria-label={isFav ? 'Remove from favorites' : 'Add to favorites'}
     >
       {isFav ? <HeartIcon /> : <HeartOpenIcon />}
     </button>

@@ -5,6 +5,7 @@ import { getPageByUrl } from '@/app/api';
 /**
  * 404 page layout
  * @async server component
+ * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/not-found Next.js docs}
  * @returns page layout JSX.Element
  */

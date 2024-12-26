@@ -9,7 +9,8 @@ import { useRef } from 'react';
  * Transition provider - main 'stage' transition provider
  *
  * @param children children ReactNode
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
+ * @see {@link https://github.com/ismamz/next-transition-router next-transition-router}
  * @returns TransitionRouter
  */
 export default function TransitionProvider({

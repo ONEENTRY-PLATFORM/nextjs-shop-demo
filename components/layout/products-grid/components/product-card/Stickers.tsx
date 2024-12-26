@@ -27,7 +27,7 @@ const Stickers: FC<StickersProps> = ({
   // extract attributes from attributeValues field of product
   const attributes = attributeValues[langCode] || attributeValues;
 
-  return [attributes?.stickers].map(
+  return [attributes?.stickers || []].map(
     (
       sticker: {
         value: {

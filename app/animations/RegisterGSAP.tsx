@@ -7,7 +7,7 @@ import { useLayoutEffect } from 'react';
 
 /**
  * Register GSAP plugins
- *
+ * @see {@link https://gsap.com/cheatsheet/#plugins- gsap cheatsheet}
  * @returns void
  */
 const RegisterGSAP = () => {

@@ -2,9 +2,9 @@ import { api } from '@/app/api';
 
 /**
  * Subscribe events with Events API
- *
+ * @async
  * @param id product id
- *
+ * @see {@link https://doc.oneentry.cloud/docs/events OneEntry CMS docs}
  * @returns void
  */
 export const onSubscribeEvents = async (id: number) => {
@@ -19,9 +19,9 @@ export const onSubscribeEvents = async (id: number) => {
 
 /**
  * Unsubscribe events with Events API
- *
+ * @async
  * @param id product id
- *
+ * @see {@link https://doc.oneentry.cloud/docs/events OneEntry CMS docs}
  * @returns void
  */
 export const onUnsubscribeEvents = async (id: number) => {

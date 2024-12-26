@@ -79,10 +79,10 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({
       >
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
-            {data.localizeInfos.titleForSite}
+            {data.localizeInfos?.titleForSite}
           </h2>
           <p className="text-xs text-gray-400 max-md:max-w-full">
-            {reset_descr.value}
+            {reset_descr?.value}
           </p>
         </div>
 
@@ -98,7 +98,7 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({
 
         <FormSubmitButton
           index={10}
-          title={send_text.value}
+          title={send_text?.value}
           isLoading={isLoading}
         />
         {isError && <ErrorMessage error={isError} />}

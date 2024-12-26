@@ -17,7 +17,7 @@ interface BlockCardAnimationsProps {
  * @param children children ReactNode
  * @param className card wrapper className
  * @param index index of element in array for stagger
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns card with animations
  */
 const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({

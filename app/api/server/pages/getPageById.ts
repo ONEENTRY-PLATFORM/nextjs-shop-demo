@@ -7,10 +7,11 @@ import { typeError } from '@/components/utils';
 
 /**
  * Get page object with information about forms, blocks, menus, linked to the page.
- *
+ * @async
  * @param id Page id
  * @param lang Current language shortcode
- * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
  * @returns Returns PageEntity object
  */

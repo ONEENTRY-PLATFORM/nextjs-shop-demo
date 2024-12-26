@@ -12,7 +12,7 @@ import type { AnimationsProps } from '@/app/types/global';
  * Cart wrapper stage leaving animations
  * @param children children ReactNode
  * @param className cart wrapper className
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns cart wrapper with animations
  */
 const CartAnimations: FC<AnimationsProps> = ({ children, className }) => {

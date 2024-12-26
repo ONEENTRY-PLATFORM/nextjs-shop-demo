@@ -34,7 +34,7 @@ const RatingButton: FC<ReviewSectionProps> = ({
 
   useEffect(() => {
     if (reviews_title) {
-      setReviewsTitle(reviews_title.value);
+      setReviewsTitle(reviews_title?.value || '');
     }
   }, [reviews_title]);
 

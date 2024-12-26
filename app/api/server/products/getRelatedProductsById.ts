@@ -7,10 +7,11 @@ import { typeError } from '@/components/utils';
 
 /**
  * Get all related product page objects with API.Products
- *
+ * @async
  * @param id Product page identifier for which to find relationship.
  * @param lang Current language shortcode
- * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ * @see {@link https://doc.oneentry.cloud/docs/catalog OneEntry CMS docs}
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
  * @returns  Array with ProductEntity objects
  */

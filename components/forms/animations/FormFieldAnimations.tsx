@@ -19,7 +19,7 @@ interface FormFieldAnimationsProps {
  * @param children children ReactNode
  * @param className CSS className of ref element
  * @param index Index of element for animations stagger
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns Form field animations
  */
 const FormFieldAnimations: FC<FormFieldAnimationsProps> = ({

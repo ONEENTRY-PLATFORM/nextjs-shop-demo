@@ -15,7 +15,7 @@ interface CategoriesGridAnimationsProps {
  * Categories grid stage leaving animations
  * @param children children ReactNode
  * @param className categories grid wrapper className
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns categories grid wrapper with animations
  */
 const CategoriesGridAnimations: FC<CategoriesGridAnimationsProps> = ({

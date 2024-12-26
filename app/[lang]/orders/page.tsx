@@ -14,8 +14,8 @@ import { getDictionary } from '../dictionaries';
 /**
  * Orders page
  * @async server component
- * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @param params page params
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Orders page layout JSX.Element
  */
 const OrdersPageLayout: FC<PageProps> = async ({ params: { lang } }) => {

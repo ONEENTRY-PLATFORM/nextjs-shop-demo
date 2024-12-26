@@ -15,7 +15,7 @@ interface BlocksGridAnimationsProps {
  * Blocks grid animations
  * @param children children ReactNode
  * @param className CSS className of ref element
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns blocks grid with animations
  */
 const BlocksGridAnimations: FC<BlocksGridAnimationsProps> = ({

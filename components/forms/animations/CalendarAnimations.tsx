@@ -16,7 +16,7 @@ interface CalendarAnimationsProps {
  * Calendar animations
  * @param children children ReactNode
  * @param className CSS className of ref element
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns Calendar animations
  */
 const CalendarAnimations: FC<CalendarAnimationsProps> = ({

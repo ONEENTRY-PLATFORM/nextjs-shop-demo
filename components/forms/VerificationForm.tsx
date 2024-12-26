@@ -152,10 +152,10 @@ const VerificationForm: FC<FormProps> = ({ dict }) => {
       >
         <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
-            {verification.value}
+            {verification?.value}
           </h2>
           <p className="text-xs text-gray-400 max-md:max-w-full">
-            {enter_otp_code.value}
+            {enter_otp_code?.value}
           </p>
         </div>
 
@@ -173,19 +173,19 @@ const VerificationForm: FC<FormProps> = ({ dict }) => {
             }
           />
           <div className="self-end text-xs text-orange-500 max-md:mr-2.5">
-            <span className="text-gray-400">{receive_otp_text.value} </span>
+            <span className="text-gray-400">{receive_otp_text?.value} </span>
             <button
               className="font-bold text-orange-500"
               type="button"
               onClick={onResendHandle}
             >
-              {resend_text.value}
+              {resend_text?.value}
             </button>
           </div>
         </div>
 
         <FormSubmitButton
-          title={verify_now_text.value}
+          title={verify_now_text?.value}
           isLoading={isLoading}
           index={0}
         />

@@ -28,7 +28,7 @@ interface ProductAnimationsProps {
  * @param className CSS className of ref element
  * @param product product entity object
  * @param index index of element in array for stagger
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns
  */
 const ProductAnimations: FC<ProductAnimationsProps> = ({

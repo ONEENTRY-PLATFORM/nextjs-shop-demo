@@ -18,7 +18,7 @@ interface FilterAnimationsProps {
  * @param children children ReactNode
  * @param className Filter wrapper className
  * @param index index of element in array for stagger
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns filter wrapper with animations
  */
 const FilterAnimations: FC<FilterAnimationsProps> = ({

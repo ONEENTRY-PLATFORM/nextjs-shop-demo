@@ -29,7 +29,7 @@ const PriceFilter: FC<PriceFilterProps> = ({ prices, dict }) => {
   const searchParams = useSearchParams();
   const params = new URLSearchParams(searchParams);
 
-  const { filter_price_title } = dict;
+  const { filter_price_title, price_from, price_to } = dict;
 
   const STEP = 10;
   const MIN = prices?.min || 0;
@@ -41,8 +41,6 @@ const PriceFilter: FC<PriceFilterProps> = ({ prices, dict }) => {
   const [priceTo, setPriceTo] = useState(
     params.get('maxPrice') ? Number(params.get('maxPrice')) : MAX,
   );
-
-  const { price_from, price_to } = dict;
 
   // params minPrice
   useEffect(() => {

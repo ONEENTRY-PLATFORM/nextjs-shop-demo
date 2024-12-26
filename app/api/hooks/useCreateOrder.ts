@@ -26,6 +26,7 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
   /**
    * Create payment session with Payments API
    * @async
+   * @see {@link https://doc.oneentry.cloud/docs/payments OneEntry CMS docs}
    * @returns payment state marker
    */
   const createSession = async (id: number) => {

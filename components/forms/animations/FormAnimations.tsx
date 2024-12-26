@@ -16,7 +16,7 @@ interface FormAnimationsProps {
  * Form animations
  * @param children children ReactNode
  * @param isLoading loading state
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns Form animations
  */
 const FormAnimations: FC<FormAnimationsProps> = ({ children, isLoading }) => {

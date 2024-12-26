@@ -12,7 +12,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
  * @param children children ReactNode
  * @param className CSS className of ref element
  * @param id
- *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns Mobile menu wrapper with animations
  */
 const MobileMenuAnimations: FC<{

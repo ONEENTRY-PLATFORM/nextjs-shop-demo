@@ -24,14 +24,14 @@ interface GridLayoutProps {
 }
 
 /**
- * ProductsGrid layout
- * @param params
- * @param searchParams
+ * Products grid layout
+ * @param params page params
+ * @param searchParams search params from query string
  * @param dict dictionary from server api
  * @param pagesLimit used for animations
  * @param isCategory
  *
- * @returns ProductsGrid layout
+ * @returns ProductsGrid
  */
 const ProductsGridLayout: FC<GridLayoutProps> = async ({
   params,
@@ -44,6 +44,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   const lang = params.lang;
   const limit =
     currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
+  const combinedParams = { ...params, searchParams };
 
   // Get all products from api or get products byPageUrl
   const { isError, products, total } = !isCategory
@@ -51,20 +52,21 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
         lang: lang,
         limit: limit,
         offset: 0,
-        params: { ...params, searchParams: searchParams },
+        params: combinedParams,
       })
     : await getProductsByPageUrl({
         lang: lang,
         limit: limit,
         offset: 0,
-        params: { ...params, searchParams: searchParams },
+        params: combinedParams,
       });
-
-  const totalPages = Math.ceil(total / pagesLimit);
 
   if (!products || total < 1 || isError) {
     return <ProductsNotFound lang={lang} dict={dict} />;
   }
+
+  const totalPages = Math.ceil(total / pagesLimit);
+  const fromToPrices = products[0]?.additional.prices;
 
   return (
     <>
@@ -73,21 +75,19 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
       >
         <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
           <ProductsGrid
-            params={params}
+            lang={lang}
             dict={dict}
             pagesLimit={pagesLimit}
             products={products}
           />
-          <div className="mt-5 flex w-full justify-center">
-            {totalPages > 1 && <LoadMore totalPages={totalPages} />}
-          </div>
+          {totalPages > 1 && (
+            <div className="mt-5 flex w-full justify-center">
+              <LoadMore totalPages={totalPages} />
+            </div>
+          )}
         </section>
       </CardsGridAnimations>
-      <FilterModal
-        prices={products?.[0]?.additional.prices}
-        lang={params.lang}
-        dict={dict}
-      />
+      <FilterModal prices={fromToPrices} lang={lang} dict={dict} />
     </>
   );
 };

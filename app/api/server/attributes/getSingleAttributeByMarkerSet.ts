@@ -11,12 +11,13 @@ interface HandleProps {
   lang: string;
 }
 /**
- * Get a single attribute with data from the attribute sets.
- *
+ * Get a single attribute with data from the attribute sets with API AttributesSets.
+ * @async
  * @param attributeMarker Text identifier (marker) of the attribute in the set.
  * @param setMarker Text identifier (marker) of the attribute set.
  * @param lang Current language shortcode
- * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ * @see {@link https://doc.oneentry.cloud/docs/attributes OneEntry CMS docs}
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
  * @returns SingleAttribute|Error object.
  */

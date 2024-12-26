@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import { type FC, useMemo } from 'react';
 
 import { LanguageEnum } from '@/app/types/enum';
 import AddToCartButton from '@/components/layout/product/components/AddToCartButton';
@@ -41,9 +41,14 @@ const ProductCard: FC<ProductCardProps> = ({
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, statusIdentifier, attributeValues, localizeInfos } = product;
 
-  const attributes = attributeValues[langCode] || attributeValues;
-  const title = localizeInfos[langCode]?.title || localizeInfos?.title;
-
+  const attributes = useMemo(
+    () => attributeValues?.[langCode] || attributeValues,
+    [attributeValues, langCode],
+  );
+  const title = useMemo(
+    () => localizeInfos?.[langCode]?.title || localizeInfos?.title || '',
+    [localizeInfos, langCode],
+  );
   return (
     <CardAnimations
       className="product-card group"

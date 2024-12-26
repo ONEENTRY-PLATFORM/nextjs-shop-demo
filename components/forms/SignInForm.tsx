@@ -108,7 +108,7 @@ const SignInForm: FC<FormProps> = ({ lang, dict }) => {
             index={0}
             className="max-w-full text-xl font-bold text-neutral-600"
           >
-            <h2>{sign_in_text.value}</h2>
+            <h2>{sign_in_text?.value}</h2>
           </FormFieldAnimations>
 
           <FormFieldAnimations
@@ -121,7 +121,7 @@ const SignInForm: FC<FormProps> = ({ lang, dict }) => {
               }}
               className={tab === 'email' ? 'font-bold' : ''}
             >
-              {email_text.value}
+              {email_text?.value}
             </button>
             /
             <button
@@ -130,7 +130,7 @@ const SignInForm: FC<FormProps> = ({ lang, dict }) => {
               }}
               className={tab === 'phone' ? 'font-bold' : ''}
             >
-              {phone_text.value}
+              {phone_text?.value}
             </button>
           </FormFieldAnimations>
         </div>
@@ -151,7 +151,7 @@ const SignInForm: FC<FormProps> = ({ lang, dict }) => {
 
         <FormSubmitButton
           index={5}
-          title={sign_in_text.value}
+          title={sign_in_text?.value}
           isLoading={loading}
         />
 
@@ -160,12 +160,12 @@ const SignInForm: FC<FormProps> = ({ lang, dict }) => {
           className="mx-auto mb-5 flex w-[380px] max-w-full justify-center gap-5 text-sm"
         >
           <div className="font-bold text-gray-800">
-            {forgot_password_text.value}
+            {forgot_password_text?.value}
           </div>
-          <ResetPasswordButton title={reset_password_text.value} />
+          <ResetPasswordButton title={reset_password_text?.value} />
         </FormFieldAnimations>
         <FormFieldAnimations index={7} className="w-full">
-          <CreateAccountButton title={create_account_text.value} />
+          <CreateAccountButton title={create_account_text?.value} />
         </FormFieldAnimations>
         {error && <ErrorMessage error={error} />}
       </form>

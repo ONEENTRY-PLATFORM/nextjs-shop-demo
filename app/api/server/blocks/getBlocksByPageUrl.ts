@@ -12,10 +12,11 @@ interface HandleProps {
 
 /**
  * Get all blocks by page url.
- *
+ * @async
  * @param lang Current language shortcode
  * @param pageUrl Page URL
- * @see {@link https://oneentry.cloud/instructions/npm OneEntry docs}
+ * @see {@link https://doc.oneentry.cloud/docs/blocks OneEntry CMS docs}
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
  * @returns all blocks as an array of PositionBlock objects or an empty array [] (if there is no data) for the selected parent
  */
