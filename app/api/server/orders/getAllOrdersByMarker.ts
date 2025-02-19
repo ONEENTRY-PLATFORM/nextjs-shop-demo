@@ -7,8 +7,8 @@ import { typeError } from '@/components/utils';
 
 interface HandleProps {
   marker: string;
-  limit: number;
   offset: number;
+  limit: number;
   lang: string;
 }
 /**
@@ -17,8 +17,8 @@ interface HandleProps {
  * @description This method requires user authorization. For more information about configuring the authorization module, see the documentation in the configuration settings section of the SDK.
  * @param marker The text identifier of the order storage object
  * @param lang Current language shortcode
- * @param limit Limit parameter. Default 30
  * @param offset Offset parameter. Default 0
+ * @param limit Limit parameter. Default 30
  * @see {@link https://doc.oneentry.cloud/docs/orders OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
@@ -26,8 +26,8 @@ interface HandleProps {
  */
 export const getAllOrdersByMarker = async ({
   marker,
-  limit,
   offset,
+  limit,
   lang,
 }: HandleProps): Promise<{
   isError: boolean;
@@ -40,8 +40,8 @@ export const getAllOrdersByMarker = async ({
     const data = await api.Orders.getAllOrdersByMarker(
       marker,
       langCode,
-      limit,
       offset,
+      limit,
     );
 
     if (typeError(data)) {

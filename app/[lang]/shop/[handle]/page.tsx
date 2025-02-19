@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
@@ -20,8 +20,9 @@ import { getDictionary } from '../../dictionaries';
  * @returns metadata
  */
 export async function generateMetadata({
-  params: { handle, lang },
+  params,
 }: MetadataParams): Promise<Metadata> {
+  const { handle, lang } = await params;
   const { isError, page } = await getPageByUrl(handle, lang);
 
   if (isError || !page) {
@@ -77,12 +78,10 @@ export async function generateMetadata({
  * @param searchParams
  * @returns Shop page layout JSX.Element
  */
-const ShopCatalogPage: FC<PageProps> = async ({
-  params: { handle, lang },
-  searchParams,
-}) => {
+const ShopCatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
+  const { handle, lang } = await params;
   // Get the dictionary from the API and set the server provider.
-  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
+  const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   // get page by url from the API
   const { page, isError } = await getPageByUrl(handle, lang);

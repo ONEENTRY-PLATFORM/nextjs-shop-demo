@@ -29,9 +29,14 @@ export default function TransitionProvider({
         }
         const tl = await gsap
           .timeline()
+          .to(window, {
+            duration: 0.5,
+            scrollTo: 0,
+          })
           .to(ref.current, {
             height: (ref.current as HTMLDivElement).clientHeight,
             duration: 0.85,
+            delay: -0.5,
           })
           .call(next, undefined, 0.75);
 

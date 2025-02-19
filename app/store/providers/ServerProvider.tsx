@@ -12,7 +12,7 @@ const serverContext = cache(() => new Map());
  * @componentType Server component
  * @returns Provider getter/setter
  */
-export const useServerProvider = <T,>(key: string, defaultValue?: T) => {
+export const ServerProvider = <T,>(key: string, defaultValue?: T) => {
   const global = serverContext();
 
   if (defaultValue !== undefined) {

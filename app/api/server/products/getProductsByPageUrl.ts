@@ -17,8 +17,8 @@ import { typeError } from '@/components/utils';
  */
 export const getProductsByPageUrl = async (props: {
   lang: string;
-  limit: number;
   offset: number;
+  limit: number;
   params: {
     handle: string;
     searchParams?: {
@@ -37,12 +37,12 @@ export const getProductsByPageUrl = async (props: {
 }> => {
   const { limit, offset, params, lang } = props;
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const expandedFilters = getSearchParams(params.searchParams);
+  const body = getSearchParams(params.searchParams);
 
   try {
     const data = await api.Products.getProductsByPageUrl(
       params.handle,
-      expandedFilters,
+      body,
       langCode,
       {
         sortOrder: 'DESC',

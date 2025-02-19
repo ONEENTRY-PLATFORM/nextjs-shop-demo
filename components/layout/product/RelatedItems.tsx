@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
@@ -17,6 +18,7 @@ interface RelatedItemsProps {
 
 /**
  * RelatedItems
+ *
  * @param marker
  * @param lang current language shortcode
  * @param dict dictionary from server api
@@ -42,7 +44,7 @@ const RelatedItems: FC<RelatedItemsProps> = async ({ marker, lang, dict }) => {
         </h3>
       </ProductAnimations>
       <CardsGridAnimations className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-        {block.similarProducts.map(
+        {block?.similarProducts?.items?.map(
           (product: IProductsEntity, i: Key | number) => {
             return (
               <ProductCard

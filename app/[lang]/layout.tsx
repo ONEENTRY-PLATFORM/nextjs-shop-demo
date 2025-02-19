@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { AuthProvider } from '@/app/store/providers/AuthContext';
 import { OpenDrawerProvider } from '@/app/store/providers/OpenDrawerContext';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import StoreProvider from '@/app/store/providers/StoreProvider';
 import BottomMenu from '@/components/layout/bottom-menu';
 import Breadcrumbs from '@/components/layout/breadcrumbs';
@@ -52,22 +52,23 @@ export const metadata: Metadata = {
  */
 export default async function RootLayout({
   children,
-  params: { lang },
+  params,
 }: Readonly<{ children: ReactNode; params: { lang: string } }>) {
+  const { lang } = await params;
   // set current lang to server provider
-  useServerProvider('lang', lang);
+  ServerProvider('lang', lang);
 
   // set current langCode to server provider
-  const [langCode] = useServerProvider(
+  const [langCode] = ServerProvider(
     'langCode',
     LanguageEnum[lang as keyof typeof LanguageEnum],
   );
 
   // Get dictionary and set to server provider
-  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
+  const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   return (
-    <html lang={langCode}>
+    <html lang={lang}>
       <body className={lato.className + ' flex flex-col min-h-screen'}>
         <StoreProvider>
           <AuthProvider langCode={langCode}>

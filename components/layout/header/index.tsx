@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
 import Logo from './Logo';
 import NavGroup from './nav/NavGroup';
@@ -13,8 +13,8 @@ import SearchBar from './search/SearchBar';
  */
 const Header: FC = () => {
   // get props from server provider
-  const [lang] = useServerProvider('lang');
-  const [dict] = useServerProvider('dict');
+  const [lang] = ServerProvider('lang');
+  const [dict] = ServerProvider('dict');
 
   return (
     <header className="z-50 flex items-center justify-center bg-white px-5">

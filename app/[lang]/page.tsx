@@ -19,7 +19,8 @@ export const dynamicParams = true;
  */
 const IndexPageLayout: FC<{
   params: { lang: string };
-}> = async ({ params: { lang } }) => {
+}> = async ({ params }) => {
+  const { lang } = await params;
   // Get home page by Url from api
   const { page, isError } = await getPageByUrl('home_web', lang);
 

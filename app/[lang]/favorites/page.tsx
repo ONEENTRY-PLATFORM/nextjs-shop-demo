@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
 import FavoritesPage from '@/components/layout/favorites';
 import type { Locale } from '@/i18n-config';
@@ -15,9 +15,10 @@ import { getDictionary } from '../dictionaries';
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Favorites page layout JSX.Element
  */
-const FavoritesPageLayout: FC<PageProps> = async ({ params: { lang } }) => {
+const FavoritesPageLayout: FC<PageProps> = async ({ params }) => {
+  const { lang } = await params;
   // Get dictionary and set to server provider
-  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
+  const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   return (
     <section className="relative mx-auto box-border flex min-h-80 w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">

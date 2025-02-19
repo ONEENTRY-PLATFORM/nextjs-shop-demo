@@ -30,7 +30,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   ) as Array<number>;
 
   const { data, isLoading } = useGetProductsByIdsQuery({
-    items: favoritesIds,
+    items: favoritesIds.toString(),
   });
 
   // set products on data change

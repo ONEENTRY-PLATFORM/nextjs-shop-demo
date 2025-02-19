@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import { flatMenuToNested } from '@/components/utils';
 
 import OffscreenModal from '../mobile-menu';
@@ -15,7 +15,7 @@ import NavigationMenu from './components/NavigationMenu';
  */
 const MainMenu: FC = async () => {
   // Get props from server provider
-  const [lang] = useServerProvider('lang');
+  const [lang] = ServerProvider('lang');
 
   // Get menu by marker from api
   const { isError, menu } = await getMenuByMarker('main_web', lang);

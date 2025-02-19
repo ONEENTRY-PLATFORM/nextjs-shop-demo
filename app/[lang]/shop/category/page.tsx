@@ -21,7 +21,8 @@ export async function generateMetadata({
 }: {
   params: { handle: string; lang: string };
 }): Promise<Metadata> {
-  const { isError, page } = await getPageByUrl('category', params.lang);
+  const { lang } = await params;
+  const { isError, page } = await getPageByUrl('category', lang);
 
   if (isError || !page) {
     return notFound();
@@ -74,7 +75,8 @@ export async function generateMetadata({
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Category page layout JSX.Element
  */
-const CategoryPage: FC<PageProps> = async ({ params: { lang } }) => {
+const CategoryPage: FC<PageProps> = async ({ params }) => {
+  const { lang } = await params;
   // Get child pages by parent url
   const { pages, isError } = await getChildPagesByParentUrl('category', lang);
 

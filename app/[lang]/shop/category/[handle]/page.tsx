@@ -4,7 +4,7 @@ import { type FC, Suspense } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getPageByUrl } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
@@ -19,8 +19,9 @@ import type { Locale } from '@/i18n-config';
  * @returns metadata
  */
 export async function generateMetadata({
-  params: { handle, lang },
+  params,
 }: MetadataParams): Promise<Metadata> {
+  const { handle, lang } = await params;
   const { isError, page } = await getPageByUrl(handle, lang);
 
   if (isError || !page) {
@@ -76,9 +77,9 @@ export async function generateMetadata({
  * @returns Shop page layout JSX.Element
  */
 const ShopCategoryLayout: FC<PageProps> = async ({ params, searchParams }) => {
-  const { lang, handle } = params;
+  const { lang, handle } = await params;
   // Get the dictionary from the API and set the server provider.
-  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
+  const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   // get page by url from api
   const { page } = await getPageByUrl(handle, lang);

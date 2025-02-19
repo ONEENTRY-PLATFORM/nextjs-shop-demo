@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
@@ -21,8 +21,9 @@ import { getDictionary } from '../dictionaries';
  * @returns metadata
  */
 export async function generateMetadata({
-  params: { lang },
+  params,
 }: MetadataParams): Promise<Metadata> {
+  const { lang } = await params;
   const { isError, page } = await getPageByUrl('shop', lang);
 
   if (isError || !page) {
@@ -78,14 +79,12 @@ export async function generateMetadata({
  * @returns Shop page layout JSX.Element
  */
 const ShopPageLayout: FC<PageProps> = async ({ params, searchParams }) => {
+  const { lang } = await params;
   // Get the dictionary from the API and set the server provider.
-  const [dict] = useServerProvider(
-    'dict',
-    await getDictionary(params.lang as Locale),
-  );
+  const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   // Get current Page ByUrl from api
-  const { page } = await getPageByUrl('shop', params.lang);
+  const { page } = await getPageByUrl('shop', lang);
 
   // !!! Get pages limit
   const pagesLimit = 10;
@@ -99,10 +98,10 @@ const ShopPageLayout: FC<PageProps> = async ({ params, searchParams }) => {
       <div className="flex w-full flex-col items-center gap-5">
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
-            searchParams={searchParams}
             pagesLimit={pagesLimit}
             dict={dict}
             params={params}
+            searchParams={searchParams}
           />
         </Suspense>
       </div>

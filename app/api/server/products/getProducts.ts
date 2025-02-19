@@ -8,6 +8,7 @@ import { typeError } from '@/components/utils';
 
 /**
  * Get all products with pagination and filter.
+ *
  * @async
  * @param props
  * @see {@link https://doc.oneentry.cloud/docs/catalog OneEntry CMS docs}
@@ -16,8 +17,8 @@ import { typeError } from '@/components/utils';
  * @returns Array with ProductEntity objects
  */
 export const getProducts = async (props: {
-  limit: number;
   offset: number;
+  limit: number;
   lang: string;
   params?: {
     handle?: string;
@@ -35,19 +36,23 @@ export const getProducts = async (props: {
   products?: IProductsEntity[];
   total: number;
 }> => {
-  const { limit, offset, params, lang } = props;
+  const { offset, limit, params, lang } = props;
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const expandedFilters = getSearchParams(params?.searchParams, params?.handle);
+  const body = getSearchParams(params?.searchParams, params?.handle);
 
   try {
-    const data = await api.Products.getProducts(expandedFilters, langCode, {
+    const data = await api.Products.getProducts(body, langCode, {
+      offset,
+      limit,
       sortOrder: 'ASC',
       sortKey: 'date',
-      offset: offset,
-      limit: limit,
     });
     if (typeError(data)) {
-      return { isError: true, error: data, total: 0 };
+      return {
+        isError: true,
+        error: data,
+        total: 0,
+      };
     } else {
       return {
         isError: false,

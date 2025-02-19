@@ -13,7 +13,10 @@ import type {
   IAccountsEntity,
   ISessionEntity,
 } from 'oneentry/dist/payments/paymentsInterfaces';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IProductEntity,
+  IProductsEntity,
+} from 'oneentry/dist/products/productsInterfaces';
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 
 import { LanguageEnum } from '@/app/types/enum';
@@ -80,33 +83,14 @@ export const RTKApi = createApi({
      *
      * @property {string} items - Array of IProductsEntity.
      */
-    getProductsByIds: build.query<IProductsEntity[], { items: number[] }>({
+    getProductsByIds: build.query<IProductsEntity[], { items: string }>({
       queryFn: async ({ items }) => {
-        const getProductsByIds = async (ids: number[]) => {
-          return await Promise.all(
-            ids.map(async (id: number) => {
-              const product = await api.Products.getProductById(id);
-              if (!product || (product as IError).statusCode >= 400) {
-                return undefined;
-              } else {
-                return product as IProductsEntity;
-              }
-            }),
-          ).then((results) => {
-            return results.filter(
-              (product): product is IProductsEntity => product !== undefined,
-            );
-          });
-        };
-
-        const result = await getProductsByIds(items.map((item) => item)).then(
-          (res) => res,
-        );
-
-        if (!result || (result as unknown as IError)?.statusCode) {
+        const products = await api.Products.getProductsByIds(items);
+        if (!products || (products as IError).statusCode >= 400) {
           return { error: 'Data error' };
+        } else {
+          return { data: products as IProductEntity[] };
         }
-        return { data: result };
       },
     }),
     /**

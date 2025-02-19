@@ -4,7 +4,7 @@ import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import type { FC } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
 import ContactInfo from './ContactInfo';
 import FooterMenu from './Menu';
@@ -16,7 +16,7 @@ import { VerticalMenuLoader } from './VerticalMenuLoader';
  * @returns Footer menu section
  */
 const FooterMenuSection: FC = async () => {
-  const [lang] = useServerProvider('lang');
+  const [lang] = ServerProvider('lang');
   const quickLinks = await getMenuByMarker('quick_links', lang);
   const infoLinks = await getMenuByMarker('information', lang);
 

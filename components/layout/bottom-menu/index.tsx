@@ -3,7 +3,7 @@ import type { FC } from 'react';
 import { type Key } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
 import NavItemCart from '../header/nav/NavItemCart';
 import NavItemFavorites from '../header/nav/NavItemFavorites';
@@ -18,7 +18,7 @@ import NavItemHome from './components/NavItemHome';
  * @returns bottom mobile menu JSX.Element
  */
 const BottomMobileMenu: FC = async () => {
-  const [lang] = useServerProvider('lang');
+  const [lang] = ServerProvider('lang');
 
   // Get Menu by marker from api
   const { menu, isError } = await getMenuByMarker('bottom_web', lang);

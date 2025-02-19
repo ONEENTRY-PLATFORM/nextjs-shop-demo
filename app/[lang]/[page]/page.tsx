@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import type { FC } from 'react';
 
 import { getPageByUrl } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
 import PaymentPage from '@/components/layout/payment';
 import ProfilePage from '@/components/layout/profile';
@@ -30,8 +30,9 @@ export async function generateMetadata({
 }: {
   params: { page: string; lang: string };
 }): Promise<Metadata> {
+  const { page: pageData, lang } = await params;
   // get page by Url
-  const { page, isError } = await getPageByUrl(params.page, params.lang);
+  const { page, isError } = await getPageByUrl(pageData, lang);
 
   if (isError || !page) {
     return notFound();
@@ -58,12 +59,12 @@ export async function generateMetadata({
  * @returns page layout JSX.Element
  */
 const PageLayout: FC<PageProps> = async ({ params }) => {
-  const lang = params.lang;
+  const { page: p, lang } = await params;
   // Get dictionary and set to server provider
-  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
+  const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   // Get page by current url
-  const { page, isError } = await getPageByUrl(params.page, lang);
+  const { page, isError } = await getPageByUrl(p, lang);
 
   // if error return notFound
   if (isError || !page) {

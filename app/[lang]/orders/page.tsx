@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
 import { getBlockByMarker } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
 import OrdersPage from '@/components/layout/orders';
 import Loader from '@/components/shared/Loader';
@@ -18,9 +18,10 @@ import { getDictionary } from '../dictionaries';
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Orders page layout JSX.Element
  */
-const OrdersPageLayout: FC<PageProps> = async ({ params: { lang } }) => {
+const OrdersPageLayout: FC<PageProps> = async ({ params }) => {
+  const { lang } = await params;
   // Get the dictionary from the API and set the server provider.
-  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
+  const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   // Get block by marker from the API.
   const { block, isError } = await getBlockByMarker('orders_settings', lang);

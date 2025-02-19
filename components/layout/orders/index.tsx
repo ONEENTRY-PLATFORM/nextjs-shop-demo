@@ -48,8 +48,8 @@ const OrdersPage: FC<{
     (async () => {
       const { isError, error, orders, total } = await getAllOrdersByMarker({
         marker: 'order',
-        limit: pageLimit,
         offset: currentPage * pageLimit,
+        limit: pageLimit,
         lang,
       });
       if (orders && !isError) {

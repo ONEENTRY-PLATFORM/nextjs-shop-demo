@@ -3,7 +3,7 @@ import type { FC } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
 import { getProductById } from '@/app/api';
-import { useServerProvider } from '@/app/store/providers/ServerProvider';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
 import CartPage from '@/components/layout/cart';
 import type { Locale } from '@/i18n-config';
@@ -17,9 +17,10 @@ import { getDictionary } from '../dictionaries';
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Cart page layout JSX.Element
  */
-const CartPageLayout: FC<PageProps> = async ({ params: { lang } }) => {
+const CartPageLayout: FC<PageProps> = async ({ params }) => {
+  const { lang } = await params;
   // Get dictionary and set to server provider
-  const [dict] = useServerProvider('dict', await getDictionary(lang as Locale));
+  const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   // Get delivery(product) data by product id
   const { product } = await getProductById(83, lang);

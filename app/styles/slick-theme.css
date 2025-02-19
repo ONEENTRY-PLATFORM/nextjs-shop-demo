@@ -1,0 +1,132 @@
+/* Arrows */
+.slick-prev, .slick-next {
+    font-size: 0;
+    line-height: 0;
+    position: absolute;
+    top: 50%;
+    display: block;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    -webkit-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+    cursor: pointer;
+    color: transparent;
+    border: none;
+    outline: none;
+    background: transparent;
+    border: 1px solid #e5e5e5;
+    border-radius: 50%;
+}
+.slick-prev:hover,
+.slick-prev:focus,
+.slick-next:hover,
+.slick-next:focus {
+    color: transparent;
+    outline: none;
+    background: transparent;
+}
+.slick-prev:hover:before,
+.slick-prev:focus:before,
+.slick-next:hover:before,
+.slick-next:focus:before {
+    opacity: 1;
+}
+.slick-prev.slick-disabled:before,
+.slick-next.slick-disabled:before {
+    opacity: .25;
+}
+
+.slick-prev:before,
+.slick-next:before {
+    content: "";
+    opacity: .75;
+    color: white;
+    width: 20px;
+    height: 20px;
+    display: block;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: auto;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='15' height='12' viewBox='0 0 15 12' fill='%23B0BCCE' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M8.26476 1.03575C8.45979 0.844657 8.72427 0.737305 9.00005 0.737305C9.27582 0.737305 9.54031 0.844657 9.73534 1.03575L14.4154 5.62279C14.6104 5.81394 14.7199 6.07317 14.7199 6.34346C14.7199 6.61375 14.6104 6.87298 14.4154 7.06413L9.73534 11.6512C9.53919 11.8368 9.27648 11.9396 9.00379 11.9373C8.7311 11.9349 8.47025 11.8277 8.27742 11.6387C8.0846 11.4498 7.97522 11.1941 7.97285 10.9268C7.97048 10.6596 8.07531 10.4021 8.26476 10.2098L11.0801 7.3628H1.19993C0.924099 7.3628 0.659567 7.2554 0.464526 7.06424C0.269485 6.87308 0.159912 6.6138 0.159912 6.34346C0.159912 6.07311 0.269485 5.81384 0.464526 5.62268C0.659567 5.43151 0.924099 5.32412 1.19993 5.32412H11.0801L8.26476 2.4771C8.06978 2.28595 7.96025 2.02672 7.96025 1.75643C7.96025 1.48613 8.06978 1.22691 8.26476 1.03575Z'%3e%3c/path%3e%3c/svg%3e");
+}
+
+.slick-prev {
+    left: 20px;
+}
+.slick-prev:before {
+  transform: rotate(180deg);
+}
+
+.slick-next {
+    right: 20px;
+}
+
+/* Dots */
+.slick-dotted.slick-slider {
+    margin-bottom: 30px;
+}
+
+.slick-dots {
+    position: absolute;
+    bottom: -25px;
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+.slick-dots li {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0 5px;
+    padding: 0;
+    cursor: pointer;
+}
+.slick-dots li button {
+    font-size: 0;
+    line-height: 0;
+    display: block;
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+    cursor: pointer;
+    color: transparent;
+    border: 0;
+    outline: none;
+    background: transparent;
+}
+.slick-dots li button:hover,
+.slick-dots li button:focus {
+    outline: none;
+}
+.slick-dots li button:hover:before,
+.slick-dots li button:focus:before {
+    opacity: 1;
+}
+.slick-dots li button:before {
+    font-family: 'slick';
+    font-size: 6px;
+    line-height: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    content: '•';
+    text-align: center;
+    opacity: .25;
+    color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.slick-dots li.slick-active button:before {
+    opacity: .75;
+    color: black;
+}

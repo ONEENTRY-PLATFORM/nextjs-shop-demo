@@ -33,11 +33,12 @@ interface FiltersFormProps {
  */
 const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
   const pageInfo = await getPageByUrl('catalog_filters', lang);
-  const { isError, error, attribute } = await getSingleAttributeByMarkerSet({
+  const data = await getSingleAttributeByMarkerSet({
     setMarker: 'product',
     attributeMarker: 'color',
     lang: lang,
   });
+  const { isError, error, attribute } = data;
 
   const sortedAttributes: Record<any, any> = sortObjectFieldsByPosition(
     (pageInfo.page as IPagesEntity).attributeValues,

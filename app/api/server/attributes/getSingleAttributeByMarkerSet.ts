@@ -22,8 +22,8 @@ interface HandleProps {
  * @returns SingleAttribute|Error object.
  */
 export const getSingleAttributeByMarkerSet = async ({
-  attributeMarker,
   setMarker,
+  attributeMarker,
   lang,
 }: HandleProps): Promise<{
   isError: boolean;
@@ -34,8 +34,8 @@ export const getSingleAttributeByMarkerSet = async ({
 
   try {
     const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
-      attributeMarker,
       setMarker,
+      attributeMarker,
       langCode,
     );
 
