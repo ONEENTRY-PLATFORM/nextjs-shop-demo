@@ -78,7 +78,9 @@ export async function generateMetadata({
  * @param searchParams
  * @returns Shop page layout JSX.Element
  */
-const ShopCatalogPage: FC<PageProps> = async ({ params, searchParams }) => {
+const ShopCatalogPage: FC<PageProps> = async (props) => {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const { handle, lang } = await params;
   // Get the dictionary from the API and set the server provider.
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));

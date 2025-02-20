@@ -11,7 +11,11 @@ import OrderPage from '@/components/layout/orders/components/OrderPage';
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Order page layout JSX.Element
  */
-const OrderPageLayout: FC<PageProps> = ({ params: { handle, lang } }) => {
+const OrderPageLayout: FC<PageProps> = async (props) => {
+  const params = await props.params;
+
+  const { handle, lang } = params;
+
   return (
     <section className="relative mx-auto box-border flex min-h-80 w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">

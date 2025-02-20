@@ -78,7 +78,9 @@ export async function generateMetadata({
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Shop page layout JSX.Element
  */
-const ShopPageLayout: FC<PageProps> = async ({ params, searchParams }) => {
+const ShopPageLayout: FC<PageProps> = async (props) => {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const { lang } = await params;
   // Get the dictionary from the API and set the server provider.
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
