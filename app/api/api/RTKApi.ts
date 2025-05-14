@@ -84,6 +84,9 @@ export const RTKApi = createApi({
      */
     getProductsByIds: build.query<IProductsEntity[], { items: string }>({
       queryFn: async ({ items }) => {
+        if (!items) {
+          return { data: [] };
+        }
         const products = await api.Products.getProductsByIds(items);
         if (!products || (products as IError).statusCode >= 400) {
           return { error: 'Data error' };

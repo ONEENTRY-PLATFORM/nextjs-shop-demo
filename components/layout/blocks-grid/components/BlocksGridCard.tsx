@@ -3,10 +3,17 @@ import Link from 'next/link';
 import type React from 'react';
 import type { FC } from 'react';
 
+import { Baloo_2 as Baloo } from 'next/font/google';
+
 import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import BlockCardAnimations from '@/components/layout/blocks-grid/animations/BlockCardAnimations';
 import Placeholder from '@/components/shared/Placeholder';
+
+const baloo = Baloo({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+});
 
 interface BlocksGridCardProps {
   marker: string;
@@ -57,7 +64,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
 
   return (
     <BlockCardAnimations
-      className={`block-card group relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
+      className={`${baloo.className} block-card group relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
       index={index}
     >
       <Link
