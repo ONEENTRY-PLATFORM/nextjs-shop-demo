@@ -160,11 +160,11 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
           } else if (field.type === 'spam') {
             return (
               <div key={index}>
-                <FormCaptcha
+                {/* <FormCaptcha
                   setToken={setToken}
                   setIsCaptcha={setIsCaptcha}
                   captchaKey={field.settings?.captchaKey || ''}
-                />
+                /> */}
                 {/* <FormReCaptcha
                   setToken={setToken}
                   setIsCaptcha={setIsCaptcha}

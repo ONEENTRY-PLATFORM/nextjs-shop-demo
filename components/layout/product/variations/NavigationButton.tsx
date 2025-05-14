@@ -9,7 +9,6 @@ interface NavigationButtonProps {
  * Carousel navigation button
  *
  * @param direction - left|right
- *
  * @returns icon for button
  */
 const NavigationButton: React.FC<NavigationButtonProps> = ({ direction }) => {

@@ -48,6 +48,7 @@ const FormCaptcha = ({ setToken, setIsCaptcha, captchaKey }: Props) => {
     await fetch(url, { method: 'post', body: JSON.stringify(validationObject) })
       .then((response) => response.json())
       .then((data) => {
+        // eslint-disable-next-line no-console
         console.log('validation result', data);
       });
   };

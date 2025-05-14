@@ -57,6 +57,7 @@ const OrdersPage: FC<{
         setTotal(total);
       }
       if (isError) {
+        // eslint-disable-next-line no-console
         console.log(error);
       }
     })();

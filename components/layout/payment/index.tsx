@@ -93,7 +93,6 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
         paymentAccountIdentifier: '',
       }),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // add products to orderSlice

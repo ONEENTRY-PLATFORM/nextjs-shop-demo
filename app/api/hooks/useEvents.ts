@@ -13,6 +13,7 @@ export const onSubscribeEvents = async (id: number) => {
     await api.Events.subscribeByMarker('status_out_of_stock', id);
     await api.Events.subscribeByMarker('product_price', id);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
   }
 };
@@ -30,6 +31,7 @@ export const onUnsubscribeEvents = async (id: number) => {
     await api.Events.unsubscribeByMarker('status_out_of_stock', id);
     await api.Events.unsubscribeByMarker('product_price', id);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
   }
 };

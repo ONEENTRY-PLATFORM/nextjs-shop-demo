@@ -6,7 +6,6 @@ import { getBlockByMarker } from '@/app/api';
  * Dictionary - get block by Marker with API Blocks
  *
  * @param langCode Current language code
- *
  * @returns Current language dictionary
  */
 const dict = async (langCode: string): Promise<IAttributeValues> => {
@@ -22,6 +21,7 @@ const dict = async (langCode: string): Promise<IAttributeValues> => {
       return { ...block?.attributeValues };
     }
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
     return {};
   }

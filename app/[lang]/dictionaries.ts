@@ -27,6 +27,7 @@ const dict = async (lang: string): Promise<any> => {
 
     return { ...(blockValues as IAttributeValues) };
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(e);
   }
 };

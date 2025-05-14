@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable tailwindcss/no-custom-classname */
 'use client';
 
 import '@/app/styles/payment.css';
