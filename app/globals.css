@@ -353,3 +353,5 @@ input:focus-visible {
   ) !important;
   --toastify-color-progress-dark: #fb923c;
 }
+
+/* background: radial-gradient(50% 50% at 50% 50%, #FF1DB4 0%, rgba(255, 29, 180, 0) 100%); */
