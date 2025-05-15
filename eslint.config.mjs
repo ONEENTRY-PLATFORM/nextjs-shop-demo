@@ -5,7 +5,7 @@ import { FlatCompat } from "@eslint/eslintrc";
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import reactPlugin from 'eslint-plugin-react';
-// import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import nextPlugin from '@next/eslint-plugin-next';
 import prettierPlugin from 'eslint-plugin-prettier';
 import tailwindcssPlugin from 'eslint-plugin-tailwindcss';
@@ -16,16 +16,12 @@ const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
-  recommendedConfig: {}
 });
 
 const eslintConfig = [
   ...compat.extends(
-    // "next/core-web-vitals",
-    'eslint:recommended',
-    'next',
-    "next/typescript",
-    'plugin:@next/next/recommended'
+    "next/core-web-vitals", 
+    "next/typescript"
   ),
   {
     files: ['**/*.ts', '**/*.tsx'],
@@ -44,7 +40,7 @@ const eslintConfig = [
     plugins: {
       '@typescript-eslint': typescriptPlugin,
       react: reactPlugin,
-      // 'react-hooks': reactHooksPlugin,
+      'react-hooks': reactHooksPlugin,
       next: nextPlugin,
       prettier: prettierPlugin,
       tailwindcss: tailwindcssPlugin,
@@ -53,7 +49,7 @@ const eslintConfig = [
     rules: {
       ...typescriptPlugin.configs.recommended.rules,
       ...reactPlugin.configs.recommended.rules,
-      // ...reactHooksPlugin.configs['recommended-latest'].rules,
+      ...reactHooksPlugin.configs['recommended-latest'].rules,
       ...nextPlugin.configs.recommended.rules,
       ...prettierPlugin.configs.recommended.rules,
       // ...tailwindcssPlugin.configs.recommended,
@@ -84,7 +80,6 @@ const eslintConfig = [
       'import/order': 'off',
       '@typescript-eslint/no-unused-vars': ['warn'],
       'no-console': 'warn',
-      'react/prop-types': 'off',
     },
   },
 ];

@@ -1,9 +1,8 @@
+import { Baloo_2 as Baloo } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
 import type React from 'react';
 import type { FC } from 'react';
-
-import { Baloo_2 as Baloo } from 'next/font/google';
 
 import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
