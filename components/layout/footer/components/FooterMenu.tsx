@@ -31,13 +31,21 @@ const FooterMenuSection: FC = async () => {
     <div
       className={
         baloo.className +
-        'flex w-full items-center justify-center bg-[#4d4b4d] px-5 py-10 max-md:px-5'
+        'flex w-full overflow-hidden items-center justify-center bg-[#4d4b4d] px-5 py-10 max-md:px-5'
       }
     >
-      <div className="flex relative w-full max-w-screen-xl flex-row flex-wrap items-start justify-start gap-10 max-md:justify-start max-md:gap-16 max-sm:gap-6">
+      <div className="flex relative w-ful mx-auto max-w-screen-xl flex-row flex-wrap items-start justify-start gap-10 max-md:justify-start max-md:gap-16 max-sm:gap-6">
         {/* Logo */}
         <Link href={'/' + lang} className="max-md:w-full">
           <LogoWhite />
+          <Image
+            src={'/images/dog.svg'}
+            width={542}
+            height={342}
+            alt="..."
+            loading="lazy"
+            className="z-10 relative h-full shrink-0 -mt-10 -mb-10 max-lg:max-w-[180px] max-sm:mb-5"
+          />
         </Link>
         <ContactInfo />
         {/* quickLinks menu */}
@@ -52,14 +60,6 @@ const FooterMenuSection: FC = async () => {
         ) : (
           <VerticalMenuLoader limit={6} />
         )}
-        <Image
-          src={'/images/dog.svg'}
-          width={250}
-          height={70}
-          alt="..."
-          loading="lazy"
-          className=" h-full absolute left-0 top-0 shrink-0 max-lg:max-w-[180px] max-sm:mb-5"
-        />
       </div>
     </div>
   );

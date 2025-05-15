@@ -86,7 +86,9 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
           )}
 
           {/* title */}
-          <h2 className="z-10 mt-auto uppercase">{title?.value || ''}</h2>
+          <h2 className="z-10 mt-auto uppercase text-2xl">
+            {title?.value || ''}
+          </h2>
 
           {/* quote */}
           {quoteValue && (
