@@ -10,7 +10,7 @@ import { useContext } from 'react';
 
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
-import ProfileIcon from '@/components/icons/profile';
+import ProfileAltIcon from '@/components/icons/profile_alt';
 
 import UserProfileMenu from './user-menu/UserProfileMenu';
 
@@ -40,7 +40,7 @@ const NavItemProfile: FC<NavItemProfileProps> = ({ item, lang, userMenu }) => {
       title={item.localizeInfos.menuTitle}
       className="group relative box-border flex size-6 shrink-0"
     >
-      <ProfileIcon />
+      <ProfileAltIcon />
     </button>
   ) : !userMenu ? (
     <Link
@@ -49,7 +49,7 @@ const NavItemProfile: FC<NavItemProfileProps> = ({ item, lang, userMenu }) => {
       title={item.localizeInfos.menuTitle}
       className="group relative box-border flex size-6 shrink-0"
     >
-      <ProfileIcon />
+      <ProfileAltIcon />
     </Link>
   ) : (
     <UserProfileMenu

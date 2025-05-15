@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import type { FC } from 'react';
 
-import FavoritesIcon from '@/components/icons/favorites';
+import FavoritesAltIcon from '@/components/icons/favorites_alt';
 
 /**
  * Nav item favorites link
@@ -22,7 +22,7 @@ const NavItemFavorites: FC<{ item: any; lang: string }> = ({ item, lang }) => {
       title={localizeInfos.menuTitle}
       className="group relative box-border flex size-6 shrink-0 flex-col"
     >
-      <FavoritesIcon />
+      <FavoritesAltIcon />
     </Link>
   );
 };

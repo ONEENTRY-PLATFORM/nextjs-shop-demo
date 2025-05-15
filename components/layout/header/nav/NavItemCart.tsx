@@ -5,7 +5,7 @@ import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
-import CartIcon from '@/components/icons/cart';
+import CartAltIcon from '@/components/icons/cart_alt';
 
 /**
  * Nav item cart button
@@ -48,8 +48,8 @@ const NavItemCart: FC<{ item: any; lang: string }> = ({ item, lang }) => {
       title={localizeInfos.menuTitle}
       className="group relative box-border flex size-6 shrink-0 flex-col"
     >
-      <CartIcon />
-      <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full bg-orange-400 text-center text-sm leading-4">
+      <CartAltIcon />
+      <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full bg-[#FF00BF] text-center text-sm leading-4">
         {count}
       </div>
     </Link>
