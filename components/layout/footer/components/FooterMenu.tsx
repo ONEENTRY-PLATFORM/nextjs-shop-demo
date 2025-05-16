@@ -34,7 +34,7 @@ const FooterMenuSection: FC = async () => {
         'flex w-full overflow-hidden items-center justify-center bg-[#4d4b4d] px-5 py-10 max-md:px-5'
       }
     >
-      <div className="flex relative mx-auto max-w-screen-xl flex-row flex-wrap items-start justify-start gap-10 max-md:justify-start max-md:gap-16 max-sm:gap-6">
+      <div className="relative mx-auto flex max-w-screen-xl flex-row flex-wrap items-start justify-start gap-10 max-md:justify-start max-md:gap-16 max-sm:gap-6">
         {/* Logo */}
         <Link href={'/' + lang} className="max-md:w-full">
           <LogoWhite />
@@ -44,7 +44,7 @@ const FooterMenuSection: FC = async () => {
             height={342}
             alt="..."
             loading="lazy"
-            className="z-10 relative h-full shrink-0 -mt-10 -mb-10 max-lg:max-w-[180px] max-sm:mb-5"
+            className="relative z-10 -my-10 h-full shrink-0 max-lg:max-w-[180px] max-sm:mb-5"
           />
         </Link>
         <ContactInfo />

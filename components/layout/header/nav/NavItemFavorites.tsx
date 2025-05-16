@@ -20,7 +20,7 @@ const NavItemFavorites: FC<{ item: any; lang: string }> = ({ item, lang }) => {
       prefetch={true}
       href={'/' + lang + '/' + pageUrl}
       title={localizeInfos.menuTitle}
-      className="group relative box-border flex size-8 max-sm:size-6 shrink-0 flex-col"
+      className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
     >
       <FavoritesAltIcon />
     </Link>
