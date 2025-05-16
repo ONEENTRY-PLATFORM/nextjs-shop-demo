@@ -38,7 +38,7 @@ const NavItemProfile: FC<NavItemProfileProps> = ({ item, lang, userMenu }) => {
         setComponent('SignInForm');
       }}
       title={item.localizeInfos.menuTitle}
-      className="group relative box-border flex size-6 shrink-0"
+      className="group relative box-border flex size-8 max-sm:size-6 shrink-0"
     >
       <ProfileAltIcon />
     </button>
@@ -47,7 +47,7 @@ const NavItemProfile: FC<NavItemProfileProps> = ({ item, lang, userMenu }) => {
       prefetch={true}
       href={'/' + lang + '/profile'}
       title={item.localizeInfos.menuTitle}
-      className="group relative box-border flex size-6 shrink-0"
+      className="group relative box-border flex size-8 max-sm:size-6 shrink-0"
     >
       <ProfileAltIcon />
     </Link>

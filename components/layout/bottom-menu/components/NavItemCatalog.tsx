@@ -21,7 +21,7 @@ const NavItemCatalog: FC<{ item: IMenusPages; lang: string }> = ({
     <Link
       href={'/' + lang + '/' + pageUrl}
       title={localizeInfos.menuTitle}
-      className="group relative box-border flex size-6 shrink-0 flex-col"
+      className="group relative box-border flex size-8 max-sm:size-6 shrink-0 flex-col"
     >
       <CatalogIcon />
     </Link>

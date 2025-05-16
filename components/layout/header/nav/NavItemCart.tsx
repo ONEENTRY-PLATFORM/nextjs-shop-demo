@@ -46,7 +46,7 @@ const NavItemCart: FC<{ item: any; lang: string }> = ({ item, lang }) => {
       prefetch={true}
       href={'/' + lang + '/' + pageUrl}
       title={localizeInfos.menuTitle}
-      className="group relative box-border flex size-6 shrink-0 flex-col"
+      className="group relative box-border flex size-8 max-sm:size-6 shrink-0 flex-col"
     >
       <CartAltIcon />
       <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full bg-[#FF00BF] text-center text-sm leading-4">

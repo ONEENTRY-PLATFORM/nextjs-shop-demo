@@ -47,7 +47,7 @@ const UserProfileMenu: FC<UserProfileMenuProps> = ({
           setState(true);
         }}
         title={title}
-        className="group relative box-border flex size-6 shrink-0"
+        className="group relative box-border flex size-8 max-sm:size-6 shrink-0"
       >
         <ProfileIcon />
       </button>

@@ -36,7 +36,7 @@ const NavGroup: FC<{
       {menu && Array.isArray(menu.pages) ? (
         menu.pages.map((item: IMenusPages, i: Key) => {
           return (
-            <div className="flex size-6 max-xs:hidden" key={i}>
+            <div className="flex size-8 max-sm:size-6 max-xs:hidden" key={i}>
               {item.pageUrl === 'profile' && (
                 <NavItemProfile
                   item={item}
