@@ -144,6 +144,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
               <Placeholder />
             </div>
           )}
+          <div className="radial-hover"></div>
         </div>
       </Link>
     </BlockCardAnimations>

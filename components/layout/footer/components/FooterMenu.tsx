@@ -34,7 +34,7 @@ const FooterMenuSection: FC = async () => {
         'flex w-full overflow-hidden items-center justify-center bg-[#4d4b4d] px-5 py-10 max-md:px-5'
       }
     >
-      <div className="flex relative w-ful mx-auto max-w-screen-xl flex-row flex-wrap items-start justify-start gap-10 max-md:justify-start max-md:gap-16 max-sm:gap-6">
+      <div className="flex relative mx-auto max-w-screen-xl flex-row flex-wrap items-start justify-start gap-10 max-md:justify-start max-md:gap-16 max-sm:gap-6">
         {/* Logo */}
         <Link href={'/' + lang} className="max-md:w-full">
           <LogoWhite />
