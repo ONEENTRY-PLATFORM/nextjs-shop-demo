@@ -10,9 +10,9 @@ import { useAppSelector } from '@/app/store/hooks';
 
 import Loader from '../shared/Loader';
 import ErrorMessage from './inputs/ErrorMessage';
-import FormCaptcha from './inputs/FormCaptcha';
+// import FormCaptcha from './inputs/FormCaptcha';
 import FormInput from './inputs/FormInput';
-import FormReCaptcha from './inputs/FormReCaptcha';
+// import FormReCaptcha from './inputs/FormReCaptcha';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
@@ -27,7 +27,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
   lang,
 }) => {
   const [token, setToken] = useState<string | null>();
-  const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
+  // const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
@@ -48,7 +48,6 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
   // Submit form
   const onSubmitFormHandle = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const emptyFormData: {
       marker: string;
       type: string;
@@ -56,7 +55,7 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
     }[] = [];
 
     // transform and send form data
-    if (formFields && token) {
+    if (formFields) {
       // transform form data
       const propertiesArray = Object.keys(formFields);
       const transformedFormData = propertiesArray?.reduce((formData, i) => {
@@ -76,15 +75,15 @@ const ContactUsForm: FC<{ className: string; lang: string }> = ({
         if (marker === 'spam') {
           newData = {
             marker: marker,
-            type: 'string',
-            value: 'test',
+            type: 'spam',
+            value: '',
           };
         }
         if (marker === 'send') {
           newData = {
             marker: marker,
-            type: 'string',
-            value: 'test',
+            type: 'button',
+            value: '',
           };
         }
         if (type === 'list') {

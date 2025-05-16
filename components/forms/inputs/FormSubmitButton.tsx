@@ -25,7 +25,7 @@ const FormSubmitButton: FC<FormSubmitButtonProps> = ({
   return (
     <FormFieldAnimations index={index} className="">
       <button
-        disabled={isLoading}
+        // disabled={isLoading}
         type="submit"
         className="slide-up btn btn-lg btn-primary mx-auto mt-auto w-full max-w-[280px] uppercase max-md:mt-0"
       >

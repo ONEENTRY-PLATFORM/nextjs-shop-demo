@@ -35,14 +35,6 @@ const FormInput: FC<IAttributes & { value?: string; index: number }> = (
   ];
 
   const required = field.validators['requiredValidator']?.strict || false;
-  const minLength =
-    field.marker === 'card_cvc'
-      ? 3
-      : field.validators['stringInspectionValidator']?.stringMin;
-  const maxLength =
-    field.marker === 'card_cvc'
-      ? 3
-      : field.validators['stringInspectionValidator']?.stringMax;
 
   useEffect(() => {
     dispatch(
@@ -109,8 +101,8 @@ const FormInput: FC<IAttributes & { value?: string; index: number }> = (
           required={required}
           onChange={(val) => setValue(val.currentTarget.value)}
           autoComplete={fieldType === 'password' ? 'password' : ''}
-          minLength={minLength}
-          maxLength={maxLength}
+          minLength={field.validators['stringInspectionValidator']?.stringMin}
+          maxLength={field.validators['stringInspectionValidator']?.stringMax}
           value={value}
         />
       )}
