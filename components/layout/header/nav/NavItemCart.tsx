@@ -49,7 +49,7 @@ const NavItemCart: FC<{ item: any; lang: string }> = ({ item, lang }) => {
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
     >
       <CartAltIcon />
-      <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full bg-[#FF00BF] text-center text-sm leading-4">
+      <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full bg-[#FF00BF] text-white text-center text-sm leading-4">
         {count}
       </div>
     </Link>

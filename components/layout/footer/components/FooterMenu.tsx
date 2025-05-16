@@ -36,17 +36,19 @@ const FooterMenuSection: FC = async () => {
     >
       <div className="relative mx-auto flex max-w-screen-xl flex-row flex-wrap items-start justify-start gap-10 max-md:justify-start max-md:gap-16 max-sm:gap-6">
         {/* Logo */}
-        <Link href={'/' + lang} className="max-md:w-full">
-          <LogoWhite />
+        <div className="max-md:w-full">
+          <Link href={'/' + lang}>
+            <LogoWhite />
+          </Link>
           <Image
             src={'/images/dog.svg'}
             width={542}
             height={342}
             alt="..."
             loading="lazy"
-            className="relative z-10 -my-10 h-full shrink-0 max-lg:max-w-[180px] max-sm:mb-5"
+            className="relative z-10 -my-10 h-full shrink-0 max-sm:mb-5"
           />
-        </Link>
+        </div>
         <ContactInfo />
         {/* quickLinks menu */}
         {!quickLinks.isError && quickLinks.menu ? (

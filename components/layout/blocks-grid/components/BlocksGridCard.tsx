@@ -11,7 +11,7 @@ import Placeholder from '@/components/shared/Placeholder';
 
 const baloo = Baloo({
   subsets: ['latin'],
-  weight: ['400', '600'],
+  weight: ['400', '800'],
 });
 
 interface BlocksGridCardProps {
@@ -117,16 +117,14 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
           {block.identifier === 'offer_youtube' ? (
             <YT />
           ) : (
-            <h2 className="z-10 mt-auto text-2xl uppercase">
+            <h2
+              className={
+                'z-10 mt-auto text-2xl font-black uppercase ' +
+                (block.identifier !== 'home_banner' ? 'text-2xl' : 'text-3xl')
+              }
+            >
               {title?.value || ''}
             </h2>
-          )}
-
-          {/* quote */}
-          {quoteValue && (
-            <p className="z-10 ml-auto mt-auto w-60 max-sm:ml-0">
-              {quoteValue}
-            </p>
           )}
 
           {/* Image/Placeholder */}

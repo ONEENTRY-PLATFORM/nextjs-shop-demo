@@ -7,7 +7,7 @@ const LogoWhite = (props?: { active?: boolean }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={
-        'mx-auto -mb-36 relative z-20 group-hover:fill-orange-500 transition-colors duration-300 ' +
+        'mx-auto -mb-36 md:right-10 relative z-20 group-hover:fill-orange-500 transition-colors duration-300 ' +
         (props?.active ? 'fill-orange-500' : 'fill-slate-700')
       }
     >
