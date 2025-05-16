@@ -29,7 +29,7 @@ const BottomMobileMenu: FC = async () => {
         menu.pages.map((item: IMenusPages, i: Key) => {
           return (
             <div className="flex size-6" key={i}>
-              {item.pageUrl === 'home_web' && (
+              {item.pageUrl === 'home' && (
                 <NavItemHome item={item} lang={lang} />
               )}
               {item.pageUrl === 'shop' && (
