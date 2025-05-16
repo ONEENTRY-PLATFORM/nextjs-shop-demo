@@ -5,7 +5,7 @@ import type { FC } from 'react';
 import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
-import CartAltIcon from '@/components/icons/cart_alt';
+import CartAltIcon from '@/components/icons/cart';
 
 /**
  * Nav item cart button

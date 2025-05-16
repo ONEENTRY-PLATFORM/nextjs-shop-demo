@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import type { FC } from 'react';
 
-import FavoritesAltIcon from '@/components/icons/favorites_alt';
+import FavoritesAltIcon from '@/components/icons/favorites';
 
 /**
  * Nav item favorites link

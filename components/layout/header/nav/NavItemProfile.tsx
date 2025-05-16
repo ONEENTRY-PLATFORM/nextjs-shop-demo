@@ -10,7 +10,7 @@ import { useContext } from 'react';
 
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
-import ProfileAltIcon from '@/components/icons/profile_alt';
+import ProfileAltIcon from '@/components/icons/profile';
 
 import UserProfileMenu from './user-menu/UserProfileMenu';
 
