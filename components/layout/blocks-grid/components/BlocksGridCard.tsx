@@ -55,10 +55,11 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
     block.attributeValues[langCode] || block.attributeValues;
 
   // extract data from block attributeValues
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { title, bg_web, link = '', stickers, quote } = attributeValues;
 
   const stickerImage = stickers?.value[0]?.extended?.value?.downloadLink;
-  const quoteValue = quote?.value;
+  // const quoteValue = quote?.value;
   const imageSrc = bg_web?.value[0]?.downloadLink;
 
   const YT = () => (
