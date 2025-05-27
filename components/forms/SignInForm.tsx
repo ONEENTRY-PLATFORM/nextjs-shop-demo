@@ -76,11 +76,8 @@ const SignInForm: FC<FormProps> = ({ lang, dict }) => {
         password: password_reg.value,
       });
       if (result && result.error) {
-        if ('accessToken'.indexOf(result.error) === -1) {
-          throw new Error('User not activated.');
-        } else {
-          throw new Error(result.error);
-        }
+        setError(result.error);
+        throw new Error(result.error);
       } else if (result) {
         setOpen(false);
         authenticate();

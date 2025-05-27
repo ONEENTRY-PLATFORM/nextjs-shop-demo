@@ -59,6 +59,7 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
    */
   const onConfirmOrder = async () => {
     setIsLoading(true);
+    console.log(order);
     if (order?.formIdentifier && order?.paymentAccountIdentifier) {
       // prepare order data
       const orderFormData = order.formData

@@ -34,6 +34,11 @@ const orderReducer = createSlice({
     create(state, action: PayloadAction<IAppOrder>) {
       if (!state.order) {
         state.order = action.payload;
+      } else {
+        state.order = {
+          ...action.payload,
+          ...state.order,
+        };
       }
     },
     remove(state) {
