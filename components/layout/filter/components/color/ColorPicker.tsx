@@ -1,5 +1,4 @@
 import type { Dispatch, FC, SetStateAction } from 'react';
-import { memo } from 'react';
 
 interface ColorPickerProps {
   code: string;
@@ -31,7 +30,11 @@ const ColorPicker: FC<ColorPickerProps> = ({
           : 'hover:bg-slate-100')
       }
       onClick={() => {
-        setActiveColor(code);
+        if (code !== activeColor) {
+          setActiveColor(code);
+        } else {
+          setActiveColor('');
+        }
       }}
     >
       <div
@@ -45,4 +48,4 @@ const ColorPicker: FC<ColorPickerProps> = ({
   );
 };
 
-export default memo(ColorPicker);
+export default ColorPicker;

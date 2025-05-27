@@ -66,7 +66,6 @@ const ColorFilter: FC<ColorFilterProps> = ({ title, attributes }) => {
       params.set('color', activeColor);
     } else {
       params.delete('color');
-      setActiveColor('');
     }
     replace(`${pathname}?${params.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps

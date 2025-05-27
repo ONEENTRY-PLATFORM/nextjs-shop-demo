@@ -31,12 +31,12 @@ export const blocksData = [
   },
 ];
 export const blocksColors = {
-  home_banner: 'bg-amber-600 w-full max-sm:flex-col',
+  home_banner: 'bg-purple-200 w-full max-sm:flex-col',
   offer_best_seller: 'bg-purple-600',
-  offer_promotion: 'bg-blue-500',
-  offer_offer_day: 'bg-lime-700',
+  offer_promotion: 'bg-orange-300',
+  offer_offer_day: 'bg-purple-300',
   offer_new_arrivals: 'bg-teal-300',
-  offer_youtube: 'bg-amber-300',
+  offer_youtube: 'bg-blue-200',
 };
 
 export const resetPasswordFormFields = [
