@@ -18,13 +18,13 @@ This project is a demo version of an e-commerce store, fully integrated with One
 
 ## Key Features
 
--   **Full Control via Admin Panel**: Every element of the store—from product cards to category pages—is customizable and manageable through an intuitive admin panel. This setup allows for quick content updates and store adjustments without needing code changes.
+- **Full Control via Admin Panel**: Every element of the store—from product cards to category pages—is customizable and manageable through an intuitive admin panel. This setup allows for quick content updates and store adjustments without needing code changes.
 
--   **Flexible Content Management**: All content, including product descriptions, images, pricing, and promotions, is managed entirely through the OneEntry admin panel. This makes it easy to keep the store up-to-date, working exclusively through the admin interface.
+- **Flexible Content Management**: All content, including product descriptions, images, pricing, and promotions, is managed entirely through the OneEntry admin panel. This makes it easy to keep the store up-to-date, working exclusively through the admin interface.
 
--   **Quick Start & Easy Adaptation**: Developers can hit the ground running with this ready-made template and customize it as needed to meet specific business or branding requirements.
+- **Quick Start & Easy Adaptation**: Developers can hit the ground running with this ready-made template and customize it as needed to meet specific business or branding requirements.
 
--   **Scalability Support**: With OneEntry Headless CMS, this store can easily scale, handling high traffic and growing data volumes, making it suitable for both small projects and larger stores.
+- **Scalability Support**: With OneEntry Headless CMS, this store can easily scale, handling high traffic and growing data volumes, making it suitable for both small projects and larger stores.
 
 ## Usage
 
@@ -32,25 +32,25 @@ This project is designed for developers using OneEntry Headless CMS who need a q
 
 ## Demo
 
-[https://oneentry-nextjs-shop-demo.vercel.app](https://oneentry-nextjs-shop-demo.vercel.app 'DEMO')
+[https://oneentry-nextjs-e-commerce-demo.vercel.app/](https://oneentry-nextjs-e-commerce-demo.vercel.app/ 'DEMO')
 
 ## Features
 
--   **User creation:** Register users via different providers (email, phone) and customize which data to store.
--   **User Activation:** Activate users via code, such as through email verification.
--   **State Management:** Utilize Redux Toolkit and Server state for effective state management.
--   **Efficient Store Catalog:** Easily manage an unlimited number of products in the catalog.
--   **Dynamic Catalog Updates:** Reload the catalog, with direct editing capabilities in the CMS.
--   **Advanced Filtering:** Apply a variety of filters to the product catalog for better organization and search.
--   **Editable Block Content:** Support for user-editable block content.
--   **Product Recommendations:** Display various selections of products.
--   **Feedback Forms:** Include customizable feedback forms with captcha protection to prevent spam.
--   **Order Creation and Purchases:** Complete transactions using [Stripe] for secure, seamless payments.
--   **Order History:** View past purchases and maintain a record of all transactions.
--   **Event Notifications:** Leverage events to notify users of updates, offers, or important news in real-time.
--   **TypeScript Integration:** The project is beginner-friendly and uses lightweight TypeScript for development.
--   **Tailwind:** User-friendly layout comprehensible to everyone.
--   **JsDoc:** BuiltIn VsCode jsDoc documentation.
+- **User creation:** Register users via different providers (email, phone) and customize which data to store.
+- **User Activation:** Activate users via code, such as through email verification.
+- **State Management:** Utilize Redux Toolkit and Server state for effective state management.
+- **Efficient Store Catalog:** Easily manage an unlimited number of products in the catalog.
+- **Dynamic Catalog Updates:** Reload the catalog, with direct editing capabilities in the CMS.
+- **Advanced Filtering:** Apply a variety of filters to the product catalog for better organization and search.
+- **Editable Block Content:** Support for user-editable block content.
+- **Product Recommendations:** Display various selections of products.
+- **Feedback Forms:** Include customizable feedback forms with captcha protection to prevent spam.
+- **Order Creation and Purchases:** Complete transactions using [Stripe] for secure, seamless payments.
+- **Order History:** View past purchases and maintain a record of all transactions.
+- **Event Notifications:** Leverage events to notify users of updates, offers, or important news in real-time.
+- **TypeScript Integration:** The project is beginner-friendly and uses lightweight TypeScript for development.
+- **Tailwind:** User-friendly layout comprehensible to everyone.
+- **JsDoc:** BuiltIn VsCode jsDoc documentation.
 
 ## Documentation
 
@@ -106,8 +106,6 @@ Build app
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-````
-
 ## Installation
 
 Install oneentry-next-shop with npm
@@ -134,7 +132,8 @@ To deploy this project run
   npm run deploy
 ```
 
-## Project Structure:
+## Project Structure
+
 `app`: Contains the main components of the application, organized by functionality (e.g., cart, favorites, orders, shop).
 `api`: Houses API endpoints and related files, ensuring a clean separation of concerns.
 `store`: Manages the Redux store, including hooks, providers, and reducers.
@@ -142,8 +141,8 @@ To deploy this project run
 `types`: Includes TypeScript type definitions.
 `components`: Features reusable components like forms, icons, and layout elements.
 
+## Development Tools
 
-## Development Tools:
 Scripts: Use npm run dev to start development, npm run build to compile the project, and npm run start to run the production build. The npm run lint script helps maintain code quality.
 Environment Variables: Make sure to set up your .env file with the necessary environment variables to run the project smoothly.
 Internationalization: The project supports multiple languages, configured in i18n-config.ts.
