@@ -18,7 +18,7 @@ interface MainMenuProps {
  */
 const NavigationMenu: FC<MainMenuProps> = async ({ lang, menu }) => {
   return (
-    <nav className="fade-in relative z-20 items-center justify-center bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
+    <nav className="fade-in relative z-20 items-center justify-center bg-white px-5 text-lg font-bold uppercase text-[#4C4D56] max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
       <div className="flex w-full max-w-screen-xl items-center justify-center py-5 max-md:px-5">
         <ul className="flex w-full justify-between gap-5 max-md:flex-wrap">
           {menu.map((item: IMenusPages, index: Key) => (

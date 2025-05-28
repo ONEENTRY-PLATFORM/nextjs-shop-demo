@@ -28,7 +28,7 @@ const Menu: FC<{
   const title = menu.localizeInfos[langCode]?.title || menu.localizeInfos.title;
 
   return (
-    <div className="flex flex-col max-xs:w-full">
+    <div className="flex flex-col max-xs:w-[45%]">
       <nav className="flex flex-col text-white">
         <h2 className="mb-5 text-xl font-bold">{title}</h2>
         <ul className="flex flex-col gap-1.5 text-sm font-semibold">

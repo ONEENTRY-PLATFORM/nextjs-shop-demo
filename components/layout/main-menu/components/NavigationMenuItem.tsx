@@ -31,12 +31,11 @@ const NavigationMenuItem: React.FC<NavigationItemProps> = ({
     <Link
       prefetch={true}
       href={href}
-      className="relative box-border flex shrink-0 flex-row items-center gap-2.5 text-slate-800 transition-colors duration-300 hover:text-red-500"
+      className="relative box-border flex shrink-0 flex-row items-center gap-2.5 transition-colors duration-300 hover:text-red-500"
     >
       <div
         className={clsx(
-          isActive &&
-            'fill-red-500 text-red-500 transition-colors duration-300',
+          isActive && 'text-red-500 transition-colors duration-300',
         )}
       >
         {label}
@@ -52,7 +51,7 @@ const NavigationMenuItem: React.FC<NavigationItemProps> = ({
             'size-[18px] ' +
             clsx(
               isActive
-                ? 'fill-red-500 text-red-500  transition-colors duration-300'
+                ? 'fill-red-500  transition-colors duration-300'
                 : 'fill-current transition-colors duration-300',
             )
           }

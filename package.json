@@ -1,6 +1,6 @@
 {
   "name": "oneentry-next-shop",
-  "version": "0.3.1",
+  "version": "0.3.55",
   "private": true,
   "scripts": {
     "dev": "next dev",

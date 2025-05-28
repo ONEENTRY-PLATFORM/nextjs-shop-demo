@@ -18,8 +18,8 @@ const Header: FC = () => {
 
   return (
     <header className="z-50 flex items-center justify-center bg-white px-5">
-      <section className="mx-auto box-border flex w-full max-w-screen-xl grow flex-col justify-center self-stretch bg-white md:py-6 lg:py-10">
-        <div className="flex w-full max-w-screen-xl justify-between gap-16 max-md:flex-wrap max-md:gap-6 max-sm:gap-4">
+      <section className="mx-auto box-border flex w-full max-w-screen-xl grow flex-col justify-center self-stretch bg-white py-2">
+        <div className="flex w-full max-w-screen-xl justify-between gap-10 max-md:flex-wrap max-md:gap-6 max-sm:gap-4">
           <Logo lang={lang} />
           <SearchBar dict={dict} lang={lang} />
           <NavGroup lang={lang} />
