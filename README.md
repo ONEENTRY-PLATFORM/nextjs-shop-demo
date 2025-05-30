@@ -171,6 +171,39 @@ Internationalization: The project supports multiple languages, configured in i18
 | `@/components/shared`           | Shared between layouts components          |
 |                                 |                                            |
 | `/public`                       | Public content folder                      |
+| ------------------------------- | ------------------------------------------ |
+
+## Detailed docs
+
+This is the central hub for all documentation. Below are links to specific sections.
+
+### Authorization
+
+- [Authorization Documentation](./documentation/Authorization.md)
+- Covers login, sign-up, token management, and account activation.
+
+### Orders
+
+- [Orders Documentation](./documentation/OrderFlow.md)
+- Details order creation, tracking, and transaction handling.
+
+### Events
+
+- [Events Documentation](./documentation/Events.md)
+- Explains real-time updates and event triggers.
+
+### State
+
+- [State Documentation](./documentation/UserState.md)
+- Describes user state management and synchronization.
+
+---
+
+In case of any issues or questions, you can post:
+[GitHub discussion for React Native][discussion]
+
+[discussion]: https://oneentry.cloud/
+[stripe]: https://stripe.com/
 
 ## License
 
