@@ -22,7 +22,6 @@ const FadeTransition: FC<AnimationsProps> = ({
   index,
 }) => {
   const ref = useRef(null);
-
   // on stage enter animations
   useGSAP(() => {
     const tl = gsap
