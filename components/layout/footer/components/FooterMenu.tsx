@@ -31,10 +31,10 @@ const FooterMenuSection: FC = async () => {
     <div
       className={
         baloo.className +
-        'flex w-full overflow-hidden items-center justify-center bg-[#4d4b4d] px-5 py-10 max-md:px-5'
+        ' flex w-full overflow-hidden items-center justify-center bg-[#4d4b4d] px-5 py-10 max-md:px-5'
       }
     >
-      <div className="relative mx-auto flex max-w-screen-xl flex-row flex-wrap items-start justify-start gap-10 max-md:justify-start max-md:gap-16 max-sm:gap-6">
+      <div className="relative mx-auto flex max-w-screen-xl flex-row flex-wrap items-start justify-start w-full gap-8 max-md:justify-start max-md:gap-8 max-sm:gap-6">
         {/* Logo */}
         <div className="max-md:w-full">
           <Link href={'/' + lang}>

@@ -12,7 +12,7 @@ const Logo: FC<{ lang: string }> = ({ lang }) => {
     <Link
       href={'/' + lang}
       prefetch={true}
-      className="fade-in relative flex h-auto w-full max-w-[240px] items-center outline-none max-lg:max-w-[200px] max-md:max-w-[200px] max-sm:max-w-[120px]"
+      className="fade-in relative flex h-auto w-full max-w-[240px] items-center outline-none max-lg:max-w-[200px] max-md:max-w-[160px] max-sm:max-w-[120px]"
     >
       <svg
         width="237"

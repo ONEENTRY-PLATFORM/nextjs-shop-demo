@@ -76,7 +76,7 @@ export default async function RootLayout({
               <Header />
               <NavigationMenu />
               <Breadcrumbs />
-              <div className="grow p-5 pb-8 transition-transform duration-500">
+              <div className="grow p-5 pb-16 transition-transform duration-500">
                 <TransitionProvider>{children}</TransitionProvider>
               </div>
               <Footer />

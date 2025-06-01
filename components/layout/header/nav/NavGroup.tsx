@@ -32,7 +32,7 @@ const NavGroup: FC<{
   }
 
   return (
-    <div className="fade-in my-auto flex items-center gap-5 max-md:max-w-full max-md:gap-4 max-sm:gap-2">
+    <div className="fade-in my-auto flex items-center gap-6 max-md:max-w-full max-md:gap-4 max-sm:gap-2">
       {menu && Array.isArray(menu.pages) ? (
         menu.pages.map((item: IMenusPages, i: Key) => {
           return (

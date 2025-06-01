@@ -43,19 +43,19 @@ const ContactInfo: FC = async () => {
       <div className="flex flex-col gap-1.5 whitespace-nowrap text-sm leading-5 max-md:flex-row max-md:flex-wrap">
         <div className="mb-2 flex w-full flex-col gap-1">
           <div className="font-bold">{info_address_title?.value}</div>
-          <div>{address?.value}</div>
+          <div className="font-normal text-[1rem]">{address?.value}</div>
         </div>
         <div className="mb-2 mr-auto flex flex-col gap-1 max-md:max-w-[50%]">
           <div className="font-bold">{info_phones_title?.value}</div>
           <a
             href={'tel:' + phone_1?.value}
-            className="relative box-border transition-colors hover:text-orange-500"
+            className="relative box-border transition-colors hover:text-orange-500 font-normal text-[1rem]"
           >
             {phone_1?.value}
           </a>
           <a
             href={'tel:' + phone_2?.value}
-            className="relative box-border transition-colors hover:text-orange-500"
+            className="relative box-border transition-colors hover:text-orange-500 font-normal text-[1rem]"
           >
             {phone_2?.value}
           </a>
@@ -64,13 +64,13 @@ const ContactInfo: FC = async () => {
           <div className="font-bold">{info_emails_title?.value}</div>
           <a
             href={'mailto:' + email_1?.value}
-            className="relative box-border transition-colors hover:text-orange-500"
+            className="relative box-border transition-colors hover:text-orange-500 font-normal text-[1rem]"
           >
             {email_1?.value}
           </a>
           <a
             href={'mailto:' + email_2?.value}
-            className="relative box-border transition-colors hover:text-orange-500"
+            className="relative box-border transition-colors hover:text-orange-500 font-normal text-[1rem]"
           >
             {email_2?.value}
           </a>
