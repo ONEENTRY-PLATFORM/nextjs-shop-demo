@@ -24,7 +24,7 @@ Once on the order preparation page ([PrepareOrderScreen]), pay attention to two 
   - Example `.env` entry:
 
      ```env
-     SHIPPING_PRODUCT_ID=12345
+      PING_PRODUCT_ID=12345
      ```
 
 ---

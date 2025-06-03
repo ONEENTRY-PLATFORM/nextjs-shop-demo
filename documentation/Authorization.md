@@ -31,12 +31,12 @@ Authorization is a critical component of the system. Without it, many features a
 All authorization logic, including login and registration, is located in the **[AuthContext]**. This is a React context that centralizes authentication workflows.
 
 - **Usage**:
-  - The `AuthContext` wraps the entire application in `App.tsx`:
+  - The `AuthContext` wraps the entire application in `layout.tsx`:
 
       ```tsx
-      <AuthContext.Provider value={authValue}>
+      <AuthProvider langCode={langCode}>
         <App />
-      </AuthContext.Provider>
+      </AuthProvider>
       ```
 
   - Components outside the context cannot use its features.

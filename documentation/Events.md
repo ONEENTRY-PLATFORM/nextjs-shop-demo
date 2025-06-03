@@ -5,6 +5,7 @@
 ## What Are Events?
 
 Events are used to notify users about changes in specific entities or processes. In our application, notifications are delivered via **Push Notifications** and **WebSocket**. Learn more about events: [Events Documentation](https://doc.oneentry.cloud/docs/category/events).
+[SDK WS Documentation](https://js-sdk.oneentry.cloud/docs/category/ws).
 
 ---
 
@@ -40,7 +41,4 @@ Events are used to notify users about changes in specific entities or processes.
   - Handled by the **[useWebSocket]** hook.
   - This hook listens for real-time updates and triggers appropriate actions in the app.
 
-[useNotifications]: ../src/hooks/shared/useNotifications.ts
-[useWebSocket]: ../src/hooks/shared/useWebSocket.ts
-[AuthContext]: ../src/state/contexts/AuthContext.tsx
-[FavoritesButton]: ../src/components/shared/FavoritesButton.tsx
+[useWebSocket]: ../app/api/hooks/useEvents.ts
