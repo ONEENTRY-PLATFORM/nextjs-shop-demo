@@ -10,8 +10,8 @@ Authorization is a critical component of the system. Without it, many features a
 
 1. **JWT Tokens**
     - **`accessToken`**:
-        - Used for API requests.
-        - Short-lived and frequently refreshed.
+      - Used for API requests.
+      - Short-lived and frequently refreshed.
     - **`refreshToken`**:
         - Stored securely (e.g., in `AsyncStorage`).
         - Changes every 30 days or upon re-authentication.

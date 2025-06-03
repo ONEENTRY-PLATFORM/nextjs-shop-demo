@@ -11,6 +11,7 @@ It is a complex process, let's take a look at it.
 3. Payment : The user chooses a payment method:
    Stripe for online transactions.
    Cash on delivery for in-person payment.
+
 Additionally, each component's functionality described detailed via JSDoc inside of it.
 
 ## Step 1: Order Initialization
@@ -20,12 +21,12 @@ Once on the order preparation page ([PrepareOrderScreen]), pay attention to two 
 - The [ItemsInOrderList] component utilizes the custom hook **[usePrepareOrderData]**.
 - This hook initializes the order data in **Redux**, formatting it for seamless further processing.
 - In addition to the selected products from the cart, it adds **shipping** product.
-  - The `id` of the `shipping` product must be predefined in the `.env` file.
-  - Example `.env` entry:
+- The `id` of the `shipping` product must be predefined in the `.env` file.
+- Example `.env` entry:
 
-     ```env
-      PING_PRODUCT_ID=12345
-     ```
+```env
+  PING_PRODUCT_ID=12345
+```
 
 ---
 
@@ -34,7 +35,7 @@ Once on the order preparation page ([PrepareOrderScreen]), pay attention to two 
 ### Fetching the Order Form with [OrderForm]
 
 - The [OrderForm] component retrieves the form structure for the order from the CMS.
-  - This includes all fields that can be filled out by the user and will later be saved with the order.
+- This includes all fields that can be filled out by the user and will later be saved with the order.
 - Pay attention to the **date field**. It implements an attribute of the interval type from the CMS. It allows for flexible customization of defining delivery time slots.
 - Study this component to understand the intervals - [DatePickerModal].
 - As the user fills out the form, the entered data is dynamically added to the order in **Redux**.
@@ -53,8 +54,8 @@ Once on the order preparation page ([PrepareOrderScreen]), pay attention to two 
 ### Payment Methods Selection
 
 - On the **[CreateOrderScreen]**, the **[PaymentMethodsList]** component fetches and displays all available payment methods from the CMS.
-  - The user can select their preferred payment method (e.g., **Stripe** or **Cash**).
-  - Once selected, the chosen payment method is added to **Redux** for further processing.
+- The user can select their preferred payment method (e.g., **Stripe** or **Cash**).
+- Once selected, the chosen payment method is added to **Redux** for further processing.
 
 ---
 
@@ -62,27 +63,19 @@ Once on the order preparation page ([PrepareOrderScreen]), pay attention to two 
 
 - Once all required order information has been collected, the PaymentActions component provides a checkbox and a button to finalize the order creation process.
 - When the user clicks the **[CreateOrderButton]**, the logic of order creation in the cms is triggered.
-  - If **Stripe** is selected as the payment method:
-    - A payment session is created using the `createSession` function.
-    - This session handles the payment flow through Stripe's API.
+- If **Stripe** is selected as the payment method:
+- A payment session is created using the `createSession` function.
+- This session handles the payment flow through Stripe's API.
 
 ### Payment Process with Stripe
 
 - When a user selects **Stripe** as the payment method, they are redirected to the [PaymentPayScreen]. Here's how it works:
-- **It loads Payment URL in WebView**
-- **Monitor Payment Status**
-- **Based on the payment status, the user is redirected to the corresponding page**
+- **It ...**
+- **It ...**
+- **It ...**
 
 ### Order Creation Process Complete
 
 The order creation process is fully implemented, supporting both **Stripe** and **Cash** for a seamless user experience.
 
-[usePrepareOrderData]: ../src/hooks/content/PrepareOrderScreen/usePrepareOrderData.ts
-[ItemsInOrderList]: ../src/components/content/PrepareOrderScreen/ItemsInOrderList.tsx
-[OrderForm]: ../src/components/content/PrepareOrderScreen/OrderForm.tsx
-[GoToPayButton]: ../src/components/content/PrepareOrderScreen/GoToPayButton.tsx
-[PrepareOrderScreen]: ../src/pages/content/PrepareOrderScreen.tsx
-[CreateOrderScreen]: ../src/pages/content/CreateOrderScreen.tsx
-[DatePickerModal]: ../src/components/content/PrepareOrderScreen/DatePickerModal.tsx
-[PaymentMethodsList]: ../src/components/content/CreateOrderScreen/PaymentMethodsList.tsx
-[CreateOrderButton]: ../src/components/content/CreateOrderScreen/CreateOrderButton.tsx
+[OrderForm]: ../components/layout/payment/index.tsx
