@@ -46,7 +46,7 @@ const FooterMenuSection: FC = async () => {
             height={342}
             alt="..."
             loading="lazy"
-            className="relative z-10 -my-10 h-full shrink-0 max-sm:mb-5"
+            className="relative z-10 -my-10 h-full shrink-0 max-sm:mb-5 max-md:my-0"
           />
         </div>
         <ContactInfo />

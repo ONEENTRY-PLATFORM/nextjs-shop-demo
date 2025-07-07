@@ -39,9 +39,11 @@ const ResetPasswordForm: FC<FormProps> = ({ dict }) => {
 
     try {
       setLoading(true);
+
       const result = await api.AuthProvider.changePassword(
         'email',
         email_reg.value,
+        'reg',
         1,
         otp_code.value.toString(),
         password_reg.value,

@@ -49,14 +49,14 @@ const Image: FC<BlurImageProps> = ({
           alt=""
           fetchPriority="high"
           aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover blur-xl scale-110 z-0 transition-opacity duration-700"
+          className="absolute inset-0 size-full object-cover blur-xl scale-110 z-0 transition-opacity duration-700"
         />
       )}
       <img
         src={src}
         alt={alt}
         loading={loading}
-        className="relative w-full h-full object-cover z-10 transition-opacity duration-700"
+        className="relative size-full object-cover z-10 transition-opacity duration-700"
         onLoad={(e) => {
           if (placeholder) {
             e.currentTarget.previousElementSibling?.classList.add('opacity-0');

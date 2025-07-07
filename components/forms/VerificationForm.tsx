@@ -79,7 +79,7 @@ const VerificationForm: FC<FormProps> = ({ dict }) => {
         const result = await api.AuthProvider.checkCode(
           'email',
           fields.email_reg.value,
-          '',
+          'reg', // generate_code??
           otp,
         );
         // if checkCode is ok show reset password form

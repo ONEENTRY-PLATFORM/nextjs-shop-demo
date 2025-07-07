@@ -38,7 +38,7 @@ const ContactInfo: FC = async () => {
   } = attributeValues;
 
   return (
-    <nav className="flex flex-col font-bold text-white max-lg:max-w-[160px] max-md:max-w-[30%] max-sm:mb-5 max-sm:max-w-full">
+    <nav className="flex flex-col font-bold text-white max-lg:max-w-[160px] max-md:max-w-[50%] max-sm:mb-5 max-sm:max-w-full">
       <h2 className="mb-5 text-xl">{info_title?.value}</h2>
       <div className="flex flex-col gap-1.5 whitespace-nowrap text-sm leading-5 max-md:flex-row max-md:flex-wrap">
         <div className="mb-2 flex w-full flex-col gap-1">
