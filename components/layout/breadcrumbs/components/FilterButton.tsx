@@ -20,7 +20,7 @@ const FilterButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
 
   const { open_filters_button } = dict;
 
-  if (path.indexOf('shop') === -1 || path.indexOf('product') !== -1) {
+  if (path.indexOf('shop') === -1 || path.indexOf('product') !== -1 || path.indexOf('category/') === -1) {
     return;
   }
 
