@@ -84,7 +84,7 @@ export const RTKApi = createApi({
      */
     getProductsByIds: build.query<IProductsEntity[], { items: string }>({
       queryFn: async ({ items }) => {
-        if (!items) {
+        if (!items || items.length < 1) {
           return { data: [] };
         }
         const products = await api.Products.getProductsByIds(items);
