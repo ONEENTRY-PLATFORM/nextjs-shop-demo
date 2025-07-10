@@ -18,7 +18,7 @@
     "next-redux-wrapper": "^8.1.0",
     "next-transition-router": "^0.2.11",
     "nuqs": "^2.4.3",
-    "oneentry": "^1.0.123",
+    "oneentry": "^1.0.124",
     "react": "^18.3.1",
     "react-calendar": "^5.1.0",
     "react-dom": "^18.3.1",
@@ -59,7 +59,7 @@
     "cssnano": "^7.0.7",
     "dayjs": "^1.11.13",
     "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.29",
+    "eslint-config-next": "^14.2.30",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
@@ -74,14 +74,14 @@
     "postcss": "^8.5.6",
     "postcss-import": "^16.1.1",
     "prettier": "^3.6.2",
-    "prettier-plugin-tailwindcss": "^0.6.13",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "sass": "^1.89.2",
     "stylelint": "^16.21.1",
-    "stylelint-config-recess-order": "^7.1.0",
+    "stylelint-config-recess-order": "^6.1.0",
     "stylelint-config-standard-scss": "^15.0.1",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
-    "use-debounce": "^10.0.4"
+    "use-debounce": "^10.0.5"
   },
   "engines": {
     "node": ">=22.11.0"

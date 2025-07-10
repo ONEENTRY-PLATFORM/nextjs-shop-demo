@@ -31,7 +31,7 @@ const LangSelector: FC<{ locales: ILocalEntity[]; lang: string }> = ({
     <select
       defaultValue={lang}
       onChange={(e) => onChange(e.target.value)}
-      className="uppercase text-neutral-600 bg-transparent font-bold text-lg"
+      className="bg-transparent text-lg font-bold uppercase text-neutral-600"
     >
       {locales
         ?.filter((locale: { isActive: boolean }) => locale.isActive && locale)

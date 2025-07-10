@@ -65,7 +65,7 @@ const SearchBar: FC<{ lang: string; dict: IAttributeValues }> = ({
           placeholder={search_placeholder?.value}
           id="quick-search"
           name="quick-search"
-          className="h-auto w-full self-stretch border-none text-lg outline-none max-md:max-w-full px-5 max-md:px-3 rounded-3xl"
+          className="h-auto w-full self-stretch rounded-3xl border-none px-5 text-lg outline-none max-md:max-w-full max-md:px-3"
         />
         <button
           type="submit"
