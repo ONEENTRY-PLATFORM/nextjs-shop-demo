@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
@@ -18,8 +19,8 @@ import {
   selectIsFavorites,
 } from '@/app/store/reducers/FavoritesSlice';
 
-import HeartIcon from '../icons/heart';
-import HeartOpenIcon from '../icons/heart-o';
+import HeartIcon from '../../../oneentry-next-shop/components/icons/heart';
+import HeartOpenIcon from '../../../oneentry-next-shop/components/icons/heart-o';
 
 /**
  * Favorites button
@@ -31,7 +32,9 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
   const dispatch = useAppDispatch();
   const { user, isAuth } = useContext(AuthContext);
   const { id } = product;
-  const isFavorites = useAppSelector((state) => selectIsFavorites(state, id));
+  const isFavorites = useAppSelector((state) =>
+    selectIsFavorites(state as any, id),
+  );
 
   /**
    * Update favorites
