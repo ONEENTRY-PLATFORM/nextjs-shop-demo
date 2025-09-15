@@ -16,7 +16,7 @@ const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
-  recommendedConfig: js.configs.recommended,
+  // recommendedConfig: js.configs.recommended,
 });
 
 const eslintConfig = [
@@ -26,7 +26,7 @@ const eslintConfig = [
     "next/typescript"
   ),
   {
-    files: ['**/*.ts', '**/*.tsx'],
+    files: ['**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx'],
     ignores: ['node_modules/**', '.next/**', 'out/**'],
     languageOptions: {
       parser: typescriptParser,

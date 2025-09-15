@@ -18,9 +18,8 @@ import {
   removeFavorites,
   selectIsFavorites,
 } from '@/app/store/reducers/FavoritesSlice';
-
-import HeartIcon from '../../../oneentry-next-shop/components/icons/heart';
-import HeartOpenIcon from '../../../oneentry-next-shop/components/icons/heart-o';
+import HeartIcon from '@/components/icons/heart';
+import HeartOpenIcon from '@/components/icons/heart-o';
 
 /**
  * Favorites button
@@ -70,7 +69,6 @@ const FavoritesButton: FC<IProductsEntity> = (product) => {
           'Product ' + product.localizeInfos.title + ' removed from Favorites!',
         );
       }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       toast('Auth error! ' + e?.message);
     }

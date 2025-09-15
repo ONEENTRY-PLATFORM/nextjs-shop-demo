@@ -11,6 +11,7 @@ interface NavigationButtonProps {
  * @param direction - left|right
  * @returns icon for button
  */
+// eslint-disable-next-line react/prop-types
 const NavigationButton: React.FC<NavigationButtonProps> = ({ direction }) => {
   return direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />;
 };

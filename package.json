@@ -39,6 +39,7 @@
     "@formatjs/intl-localematcher": "^0.6.1",
     "@gsap/react": "^2.1.2",
     "@next/env": "^15.5.3",
+    "@next/eslint-plugin-next": "^15.5.3",
     "@reduxjs/toolkit": "^2.9.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/postcss": "^4.1.13",
