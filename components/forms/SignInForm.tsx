@@ -71,7 +71,6 @@ const SignInForm: FC<FormProps> = ({ lang, dict }) => {
     try {
       setLoading(true);
       const result = await logInUser({
-        method: 'email',
         login: email_reg.value,
         password: password_reg.value,
       });
