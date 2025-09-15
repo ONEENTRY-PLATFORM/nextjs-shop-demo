@@ -31,6 +31,7 @@ const eslintConfig = [
       "next-env.d.ts"
     ]
   },
+  // Base extends via compat to support flat config plugins
   ...compat.config({
     extends: [
       'eslint:recommended',
@@ -38,13 +39,13 @@ const eslintConfig = [
       'next/typescript',
     ],
   }),
+  // legacy compat extends for some plugins
   ...compat.extends(
     'plugin:react/recommended',
-    // 'next',
-    // 'next/core-web-vitals',
-    // 'plugin:react-hooks/recommended',
     'plugin:@next/next/recommended'
   ),
+
+  // Main ruleset for JS/TS/JSX/TSX
   {
     files: [
       '**/*.js',
@@ -64,8 +65,20 @@ const eslintConfig = [
       sourceType: 'module',
       parserOptions: {
         project: './tsconfig.json',
+        tsconfigRootDir: __dirname,
         ecmaFeatures: {
           jsx: true,
+        },
+      },
+    },
+    settings: {
+      react: {
+        version: 'detect',
+      },
+      // import/resolver settings are useful if you use path aliases (adjust if needed)
+      'import/resolver': {
+        node: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx'],
         },
       },
     },
@@ -79,16 +92,15 @@ const eslintConfig = [
       'simple-import-sort': simpleImportSortPlugin,
     },
     rules: {
+      // bring in recommended configs as base
       ...typescriptPlugin.configs.recommended.rules,
       ...prettierPlugin.configs.recommended.rules,
       ...nextPlugin.configs.recommended.rules,
-      // ...reactPlugin.configs.recommended.rules,
       ...reactPlugin.configs.flat.rules,
       ...reactHooksPlugin.configs['recommended-latest'].rules,
-      ...tailwindcssPlugin.configs["flat/recommended"].rules,
-      "react/jsx-uses-react": "error",
-      "react/jsx-uses-vars": "error",
-      'react/react-in-jsx-scope': 'off',
+      ...tailwindcssPlugin.configs['flat/recommended'].rules,
+
+      // Prettier
       'prettier/prettier': [
         'error',
         {
@@ -96,27 +108,42 @@ const eslintConfig = [
           endOfLine: 'auto',
         },
       ],
-      'import/extensions': 'off',
+
+      // React
+      'react/react-in-jsx-scope': 'off', // Next/React automatic runtime
+      'react/jsx-uses-react': 'off',
+      'react/jsx-uses-vars': 'error',
       'react/function-component-definition': 'off',
       'react/destructuring-assignment': 'off',
       'react/require-default-props': 'off',
       'react/jsx-props-no-spreading': 'off',
-      'eslint/no-unused-vars': 'off',
+
+      // Typescript / unused vars
+      // disable base rule and use typescript-aware rule instead
+      'no-unused-vars': 'off',
       '@typescript-eslint/no-unused-vars': ['warn'],
-      '@typescript-eslint/comma-dangle': 'off',
+      
       '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/comma-dangle': 'off',
+
+      // Import / sorting
+      'import/extensions': 'off',
+      'import/order': 'off',
+      'import/prefer-default-export': 'off',
+
+      // strict sorting
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+
+      // Style / safety
       'no-restricted-syntax': [
         'error',
         'ForInStatement',
         'LabeledStatement',
         'WithStatement',
       ],
-      'import/prefer-default-export': 'off',
-      // 'simple-import-sort/imports': 'error',
-      // 'simple-import-sort/exports': 'error',
-      'import/order': 'off',
+
       'no-console': 'warn',
-      'no-unused-vars': 'warn',
     },
   }
 ];
