@@ -21,7 +21,7 @@ const FavoritesPageLayout: FC<PageProps> = async ({ params }) => {
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   return (
-    <section className="relative mx-auto box-border flex min-h-80 w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
+    <section className="relative mx-auto box-border flex min-h-80 w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
         <WithSidebar lang={lang}>
           <FavoritesPage lang={lang} dict={dict} />

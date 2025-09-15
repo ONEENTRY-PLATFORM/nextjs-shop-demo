@@ -7,7 +7,7 @@ import type { FC } from 'react';
  */
 const Spinner: FC = () => {
   return (
-    <div className="absolute aspect-square size-full translate-x-[calc(50%_-_12px)] translate-y-[calc(50%_-_12px)] overflow-hidden">
+    <div className="absolute aspect-square size-full translate-x-[calc(50%-12px)] translate-y-[calc(50%-12px)] overflow-hidden">
       <svg
         width="24"
         height="24"

@@ -17,7 +17,7 @@ const NotFound = async () => {
   // if no page data return fallback
   if (isError || !page) {
     return (
-      <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col items-center justify-center py-8">
+      <div className="mx-auto flex min-h-80 w-full max-w-(--breakpoint-xl) flex-col items-center justify-center py-8">
         <h1 className="mb-10 text-6xl">404</h1>
         <Link href="/">Return home</Link>
       </div>
@@ -28,7 +28,7 @@ const NotFound = async () => {
   const { localizeInfos, attributeValues } = page;
 
   return (
-    <div className="mx-auto flex min-h-96 w-full max-w-screen-xl flex-col items-center justify-center py-8 text-neutral-700">
+    <div className="mx-auto flex min-h-96 w-full max-w-(--breakpoint-xl) flex-col items-center justify-center py-8 text-neutral-700">
       <h1 className="mb-10 text-6xl">{localizeInfos?.title}</h1>
       <p className="mb-4">
         {attributeValues?.error_description?.value[0]?.plainValue}

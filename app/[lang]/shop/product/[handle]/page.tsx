@@ -109,7 +109,7 @@ const ProductPageLayout: FC<PageProps> = async ({ params }) => {
           __html: JSON.stringify(productJsonLd),
         }}
       />
-      <div className="mx-auto flex w-full max-w-screen-xl flex-col bg-white">
+      <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-col bg-white">
         <ProductSingle lang={lang} product={product} dict={dict} />
       </div>
     </>

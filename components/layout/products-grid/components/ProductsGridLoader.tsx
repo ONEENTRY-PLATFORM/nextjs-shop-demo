@@ -17,7 +17,7 @@ const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
     <ProductsGridLoaderAnimations
       className={'relative box-border flex w-full shrink-0 flex-col'}
     >
-      <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
+      <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
         <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
           {Array.from(Array(limit).keys()).map((item) => (
             <div

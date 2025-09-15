@@ -6,27 +6,27 @@ export const blocksData = [
   },
   // offer_best_seller:
   {
-    width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
+    width: 'w-full lg:w-[calc(33%-0.65rem)] md:w-[calc(50%-0.65rem)]',
     height: 'h-[260px]',
   },
   // offer_promotion:
   {
-    width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
+    width: 'w-full lg:w-[calc(33%-0.65rem)] md:w-[calc(50%-0.65rem)]',
     height: 'h-[260px]',
   },
   // offer_offer_day:
   {
-    width: 'w-full lg:w-[calc(_33%_-_0.65rem)] md:w-[calc(_50%_-_0.65rem)]',
+    width: 'w-full lg:w-[calc(33%-0.65rem)] md:w-[calc(50%-0.65rem)]',
     height: 'h-[260px]',
   },
   // offer_new_arrivals:
   {
-    width: 'w-full md:w-[calc(_50%_-_0.65rem)]',
+    width: 'w-full md:w-[calc(50%-0.65rem)]',
     height: 'h-[260px]',
   },
   // offer_youtube:
   {
-    width: 'w-full lg:w-[calc(_50%_-_0.65rem)]',
+    width: 'w-full lg:w-[calc(50%-0.65rem)]',
     height: 'h-[260px]',
   },
 ];

@@ -75,7 +75,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
       <CardsGridAnimations
         className={'relative box-border flex w-full shrink-0 flex-col'}
       >
-        <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
+        <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
           <ProductsGrid
             lang={lang}
             dict={dict}

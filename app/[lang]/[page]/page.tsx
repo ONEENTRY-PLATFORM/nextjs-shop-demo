@@ -114,7 +114,7 @@ const PageLayout: FC<PageProps> = async ({ params }) => {
   ];
 
   return (
-    <div className="mx-auto flex min-h-80 w-full max-w-screen-xl flex-col overflow-hidden">
+    <div className="mx-auto flex min-h-80 w-full max-w-(--breakpoint-xl) flex-col overflow-hidden">
       {pages.map((p, i) => {
         if (pageUrl !== p.name) {
           return;

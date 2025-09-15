@@ -96,7 +96,7 @@ const ShopCatalogPage: FC<PageProps> = async (props) => {
   }
 
   return (
-    <section className="relative mx-auto box-border flex w-full max-w-screen-xl shrink-0 grow flex-col self-stretch">
+    <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
         <Suspense fallback={<ProductsGridLoader />}>
           <ProductsGridLayout
