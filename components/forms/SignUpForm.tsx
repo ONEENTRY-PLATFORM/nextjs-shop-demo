@@ -117,7 +117,6 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
         // if user active try login and authenticate
         if (res && res.isActive) {
           await logInUser({
-            method: 'email',
             login: res.identifier,
             password: fields.password_reg.value,
           });

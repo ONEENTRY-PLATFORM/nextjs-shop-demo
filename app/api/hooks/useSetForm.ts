@@ -1,6 +1,6 @@
 'use client';
 
-import type { IFormsPost } from 'oneentry/dist/formsData/formsDataInterfaces';
+import type { IBodyPostFormData } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import { useState } from 'react';
 
 import { api } from '@/app/api';
@@ -12,7 +12,7 @@ import { api } from '@/app/api';
  */
 export const useSetForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const sendData = (data: IFormsPost) => {
+  const sendData = (data: IBodyPostFormData) => {
     setLoading(true);
     const result = async () => {
       try {

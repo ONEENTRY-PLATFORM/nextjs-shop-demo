@@ -100,7 +100,6 @@ const VerificationForm: FC<FormProps> = ({ dict }) => {
         if (result) {
           try {
             await logInUser({
-              method: 'email',
               login: fields.email_reg.value,
               password: fields.password_reg.value,
             });

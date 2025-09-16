@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FormDataType } from 'oneentry/dist/formsData/formsDataInterfaces';
+import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { FormDataType } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { FC, FormEvent, Key } from 'react';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -55,7 +54,7 @@ const UserForm: FC<FormProps> = ({ lang, dict }) => {
 
       // prepare form data
       const formData: IAuthFormData[] = data?.attributes
-        .map((field: IAttributes, index: Key) => {
+        .map((field: IAttributes) => {
           if (field.marker !== 'email_notifications') {
             return {
               marker: field.marker,
