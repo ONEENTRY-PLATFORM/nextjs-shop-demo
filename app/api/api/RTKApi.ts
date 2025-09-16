@@ -12,10 +12,7 @@ import type {
   IAccountsEntity,
   ISessionEntity,
 } from 'oneentry/dist/payments/paymentsInterfaces';
-import type {
-  IProductEntity,
-  IProductsEntity,
-} from 'oneentry/dist/products/productsInterfaces';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 
 import { LanguageEnum } from '@/app/types/enum';
@@ -91,7 +88,7 @@ export const RTKApi = createApi({
         if (!products || (products as IError).statusCode >= 400) {
           return { error: 'Data error' };
         } else {
-          return { data: products as IProductEntity[] };
+          return { data: products as IProductsEntity[] };
         }
       },
     }),

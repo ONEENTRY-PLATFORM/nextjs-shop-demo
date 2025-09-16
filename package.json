@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "@eslint/js": "^9.35.0",
     "@formatjs/intl-localematcher": "^0.6.1",
     "@gsap/react": "^2.1.2",
     "@next/env": "^15.5.3",
