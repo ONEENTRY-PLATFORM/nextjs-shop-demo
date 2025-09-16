@@ -54,7 +54,7 @@ const SearchBar: FC<{ lang: string; dict: IAttributeValues }> = ({
     <div className="fade-in relative my-auto ml-9 flex h-[50px] w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-[#A8A9B5] bg-white text-slate-800 transition-all duration-500 max-md:ml-0 max-md:h-[50px] max-md:max-w-full max-md:px-0 max-sm:hidden max-sm:h-[40px] max-sm:gap-0 max-sm:px-4 max-sm:pr-1">
       <form className="flex w-full" onSubmit={handleSubmit}>
         <label htmlFor="quick-search" className="sr-only">
-          {dict.search_placeholder?.value}
+          {dict?.search_placeholder?.value}
         </label>
         <input
           defaultValue={value}
@@ -62,16 +62,16 @@ const SearchBar: FC<{ lang: string; dict: IAttributeValues }> = ({
             handleSearch(e.target.value);
           }}
           type="search"
-          placeholder={dict.search_placeholder?.value}
+          placeholder={dict?.search_placeholder?.value}
           id="quick-search"
           name="quick-search"
           className="h-auto w-full self-stretch rounded-3xl border-none px-5 text-lg outline-none max-md:max-w-full max-md:px-3"
         />
         <button
           type="submit"
-          className="group relative m-auto box-border flex shrink-0 flex-col p-2.5"
+          className="group cursor-pointer relative m-auto box-border flex shrink-0 flex-col p-2.5"
         >
-          <span className="sr-only">{dict.search_placeholder?.value}</span>
+          <span className="sr-only">{dict?.search_placeholder?.value}</span>
           <SearchIcon />
         </button>
       </form>

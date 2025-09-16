@@ -128,6 +128,7 @@ input:focus-visible {
       max-w-full
       text-center
       whitespace-nowrap
+      cursor-pointer
       rounded-[30px];
   }
 
@@ -253,7 +254,7 @@ input:focus-visible {
       flex-col 
       items-center 
       rounded-[20px] 
-      bg-[#F6F7F9] 
+      bg-slate-50 
       p-4 
       transition-shadow 
       duration-500
