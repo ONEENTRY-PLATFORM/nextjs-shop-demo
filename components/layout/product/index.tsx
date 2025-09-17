@@ -16,7 +16,6 @@ import VariationsCarousel from './variations/VariationsCarousel';
 interface ProductSingleProps {
   product: IProductsEntity & {
     blocks?: Array<string>;
-    productPages?: [];
   };
   lang: string;
   dict: IAttributeValues;

@@ -7,6 +7,7 @@ import { getProductById } from '@/app/api';
 import type { PageProps } from '@/app/types/global';
 import ProductSingle from '@/components/layout/product';
 import type { Locale } from '@/i18n-config';
+import { i18n } from '@/i18n-config';
 
 /**
  * Generate page metadata
@@ -34,6 +35,11 @@ export async function generateMetadata({
   return {
     title: product?.localizeInfos.title,
     description: product?.attributeValues.description?.value[0]?.plainValue,
+    alternates: {
+      languages: Object.fromEntries(
+        i18n.locales.map((l) => [l, `/${l}/shop/product/${handle}`]),
+      ),
+    },
     robots: {
       index: indexable,
       follow: indexable,

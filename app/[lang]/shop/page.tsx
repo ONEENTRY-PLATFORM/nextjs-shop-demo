@@ -9,6 +9,7 @@ import type { MetadataParams, PageProps } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
+import { i18n } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 
@@ -47,6 +48,9 @@ export async function generateMetadata({
   return {
     title: localizeInfos.title,
     description: localizeInfos.plainContent,
+    alternates: {
+      languages: Object.fromEntries(i18n.locales.map((l) => [l, `/${l}/shop`])),
+    },
     robots: {
       index: isVisible,
       follow: isVisible,

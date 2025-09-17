@@ -8,7 +8,7 @@ import PriceDisplay from '../components/PriceDisplay';
 import ProductUnits from './ProductUnits';
 
 interface ProductDetailsProps {
-  product: IProductsEntity & { productPages?: [] };
+  product: IProductsEntity;
   lang: string;
   dict: IAttributeValues;
 }
