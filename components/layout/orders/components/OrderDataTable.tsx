@@ -42,7 +42,7 @@ const OrderDataTable: FC<{
 
   return (
     <div className="flex flex-col gap-3">
-      <hr className="mb-4" />
+      <hr className="mb-4 text-slate-400" />
       {formData.map(
         (
           field: {
@@ -92,7 +92,7 @@ const OrderDataTable: FC<{
       <div className="flex gap-2 text-lg">
         <b>{total_amount_title.value}: </b> {formattedTotal}
       </div>
-      <hr className="my-4" />
+      <hr className="my-4 text-slate-400" />
     </div>
   );
 };

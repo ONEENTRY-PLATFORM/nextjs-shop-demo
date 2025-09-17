@@ -12,6 +12,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/pages/AuthError';
 
 import LoadMore from '../products-grid/components/LoadMore';
+import OrderRowAnimations from './animations/OrderRowAnimations';
 // import Pagination from '../products-grid/Pagination';
 import EmptyOrders from './components/EmptyOrders';
 import Order from './components/OrderRow';
@@ -85,11 +86,13 @@ const OrdersPage: FC<{
     >
       <div className="w-full">
         {/* head */}
-        <div className="-mb-px flex w-full border-collapse gap-4 border-y p-4 text-slate-700">
-          <div className="w-1/2">{date_title?.value}</div>
-          <div className="w-1/4">{total_title?.value}</div>
-          <div className="w-1/4">{status_title?.value}</div>
-        </div>
+        <OrderRowAnimations className="w-full" index={0}>
+          <div className="-mb-px flex w-full border-collapse gap-4 border-y border-[#B0BCCE] p-4 text-slate-700">
+            <div className="w-1/2">{date_title?.value}</div>
+            <div className="w-1/4">{total_title?.value}</div>
+            <div className="w-1/4">{status_title?.value}</div>
+          </div>
+        </OrderRowAnimations>
 
         {/* orders */}
         <div className="mb-4 flex flex-col">

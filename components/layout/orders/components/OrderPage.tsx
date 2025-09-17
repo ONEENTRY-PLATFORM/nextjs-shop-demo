@@ -50,7 +50,7 @@ const OrderPage: FC<{
         'flex h-0 opacity-0 flex-col text-[#4C4D56] ' + (isActive ? 'p-4' : '')
       }
     >
-      <div className="flex max-w-[430px] flex-col gap-4 pb-5 max-md:max-w-full">
+      <div className="flex flex-col gap-4 pb-5 max-md:max-w-full">
         {products.map((product: IOrderProducts, i: Key) => {
           if (product.id === 83) {
             return;
