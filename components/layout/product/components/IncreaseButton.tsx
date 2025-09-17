@@ -37,7 +37,7 @@ const IncreaseButton: FC<ButtonProps> = ({ id, qty, units }) => {
   return (
     <button
       onClick={() => onIncreaseHandle()}
-      className="relative m-1 box-border size-8 rounded-full text-center text-slate-700 transition-all duration-500 hover:bg-slate-100 hover:text-orange-500 hover:shadow-inner"
+      className="relative cursor-pointer m-1 box-border size-8 rounded-full text-center text-slate-700 transition-all duration-500 hover:bg-slate-100 hover:text-orange-500 hover:shadow-inner"
       aria-label="Increase quantity"
     >
       +

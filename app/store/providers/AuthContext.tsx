@@ -87,7 +87,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       setIsAuth(false);
       return;
     }
-    await reDefine(refresh, langCode);
+    // await reDefine(refresh, langCode);
     await checkToken();
   };
 
@@ -118,7 +118,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
    * Update user state on server
    * @async
    */
-  const updateUser = async () => {
+  const updateUserData = async () => {
     await updateUserState({
       cart: productsInCart,
       favorites: favoritesIds,
@@ -131,7 +131,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     if (!isAuth) {
       return;
     }
-    updateUser();
+    updateUserData();
   }, [isAuth, productsInCart, favoritesIds]);
 
   // Load cart from user state

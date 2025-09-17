@@ -21,7 +21,7 @@ const DeleteButton: FC<{ productId: number }> = ({ productId }) => {
 
   return (
     <button
-      className="group relative box-border flex size-5 shrink-0 flex-col items-center justify-center"
+      className="group cursor-pointer relative box-border flex size-5 shrink-0 flex-col items-center justify-center"
       aria-label="Delete item"
       onClick={async () => {
         dispatch(setCartTransition({ productId: productId }));

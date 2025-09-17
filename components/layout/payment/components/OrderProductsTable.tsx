@@ -34,7 +34,7 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
   return (
     <>
       {/* head row */}
-      <div className="flex border-b border-solid p-2">
+      <div className="flex border-b border-solid border-[#B0BCCE] p-2">
         <div className="w-1/2 font-bold">Product</div>
         <div className="w-1/4 font-bold">Price</div>
         <div className="w-1/4 font-bold">Quantity</div>
@@ -52,7 +52,10 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
           return;
         }
         return (
-          <div key={i} className="-mt-px flex border-b border-solid p-2">
+          <div
+            key={i}
+            className="-mt-px flex border-b border-solid border-[#B0BCCE] p-2"
+          >
             <div className="w-1/2">{localizeInfos?.title}</div>
             <div className="w-1/4">
               {UsePrice({
@@ -67,10 +70,10 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
 
       {/* delivery row */}
       {delivery && (
-        <div className="-mt-px flex border-b border-solid p-2">
+        <div className="-mt-px flex border-b border-solid border-[#B0BCCE] p-2">
           <div className="w-1/2">{delivery.localizeInfos?.title}</div>
           <div className="w-1/4">
-            {UsePrice({ amount: delivery.price, lang })}
+            {UsePrice({ amount: delivery.price || 0, lang })}
           </div>
           <div className="w-1/4"></div>
         </div>

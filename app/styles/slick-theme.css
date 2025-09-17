@@ -18,6 +18,7 @@
     background: transparent;
     border: 1px solid #e5e5e5;
     border-radius: 50%;
+    z-index: 50;
 }
 .slick-prev:hover,
 .slick-prev:focus,

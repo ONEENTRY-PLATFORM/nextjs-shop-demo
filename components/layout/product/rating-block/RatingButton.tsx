@@ -53,7 +53,7 @@ const RatingButton: FC<ReviewSectionProps> = ({
 
       <div
         className={
-          'my-auto flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600 group-hover:text-orange-500 '
+          'my-auto cursor-pointer flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600 group-hover:text-orange-500 '
         }
       >
         <div className={state ? 'text-orange-500' : ''}>{reviewsTitle}</div>
