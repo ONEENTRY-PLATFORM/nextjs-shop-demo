@@ -4,12 +4,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
 import type { ReactNode } from 'react';
-import { ToastContainer } from 'react-toastify';
 
 import { AuthProvider } from '@/app/store/providers/AuthContext';
 import { OpenDrawerProvider } from '@/app/store/providers/OpenDrawerContext';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import StoreProvider from '@/app/store/providers/StoreProvider';
+import ClientProviders from '@/components/ClientProviders';
 import BottomMenu from '@/components/layout/bottom-menu';
 import Breadcrumbs from '@/components/layout/breadcrumbs';
 import Footer from '@/components/layout/footer';
@@ -17,11 +17,7 @@ import Header from '@/components/layout/header';
 import NavigationMenu from '@/components/layout/main-menu';
 import Modal from '@/components/layout/modal';
 import type { Locale } from '@/i18n-config';
-import { i18n } from '@/i18n-config';
 
-import IntroAnimations from '../animations/IntroAnimations';
-import RegisterGSAP from '../animations/RegisterGSAP';
-import TransitionProvider from '../animations/TransitionProvider';
 import { LanguageEnum } from '../types/enum';
 import { getDictionary } from './dictionaries';
 
@@ -50,13 +46,6 @@ export const metadata: Metadata = {
     ).replace(/\/$/, ''),
   ),
 };
-
-/**
- * Предгенерация статических параметров для локалей
- */
-export function generateStaticParams() {
-  return i18n.locales.map((lang) => ({ lang }));
-}
 
 /**
  * Root layout
@@ -91,18 +80,13 @@ export default async function RootLayout({
               <Header />
               <NavigationMenu />
               <Breadcrumbs />
-              <div className="grow p-5 pb-16 transition-transform duration-500">
-                <TransitionProvider>{children}</TransitionProvider>
-              </div>
+              <ClientProviders>{children}</ClientProviders>
               <Footer />
               <BottomMenu />
               <Modal lang={lang} dict={dict} />
             </OpenDrawerProvider>
           </AuthProvider>
         </StoreProvider>
-        <RegisterGSAP />
-        <IntroAnimations />
-        <ToastContainer position="bottom-right" autoClose={2000} />
       </body>
     </html>
   );

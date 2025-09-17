@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { type FC, Suspense } from 'react';
+import { type FC, memo, Suspense } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getPageByUrl } from '@/app/api';
@@ -96,6 +96,8 @@ const ShopCategoryLayout: FC<PageProps> = async (props) => {
 
   // !!!extract products per page limit from global settings
   const pagesLimit = 10;
+  // Memoize the loader component
+  const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
   if (!page) {
     return notFound();
@@ -104,7 +106,7 @@ const ShopCategoryLayout: FC<PageProps> = async (props) => {
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense fallback={<ProductsGridLoader />}>
+        <Suspense fallback={<MemoizedProductsGridLoader />}>
           <ProductsGridLayout
             searchParams={searchParams}
             pagesLimit={pagesLimit}

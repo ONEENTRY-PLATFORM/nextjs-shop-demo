@@ -48,6 +48,32 @@ export type IProducts = {
   selected: boolean;
   quantity: number;
 };
+export type CartState = {
+  productsData: IProducts[];
+};
+interface IProductMetadata {
+  title: string;
+  description: string;
+  url: string;
+  width: number;
+  height: number;
+  alt: string;
+}
+
+interface IPageMetadata {
+  title: string;
+  description: string;
+  isVisible: boolean;
+  attributeValues: {
+    icon?: {
+      downloadLink: string;
+    };
+  };
+  localizeInfos: {
+    title: string;
+    plainContent: string;
+  };
+}
 
 export type FormProps = { lang: string; dict: IAttributeValues };
 

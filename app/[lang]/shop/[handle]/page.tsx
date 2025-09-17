@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { FC } from 'react';
-import { Suspense } from 'react';
+import { memo, Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
@@ -91,6 +91,9 @@ const ShopCatalogPage: FC<PageProps> = async (props) => {
   // !!!extract products per page limit from global settings
   const pagesLimit = 10;
 
+  // Memoize the loader component
+  const MemoizedProductsGridLoader = memo(ProductsGridLoader);
+
   if (!page || isError) {
     return notFound();
   }
@@ -98,7 +101,7 @@ const ShopCatalogPage: FC<PageProps> = async (props) => {
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <Suspense fallback={<ProductsGridLoader />}>
+        <Suspense fallback={<MemoizedProductsGridLoader />}>
           <ProductsGridLayout
             params={{ handle, lang }}
             searchParams={searchParams}

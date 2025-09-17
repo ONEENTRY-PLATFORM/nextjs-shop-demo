@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { FC } from 'react';
-import { Suspense } from 'react';
+import { memo, Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
@@ -96,6 +96,9 @@ const ShopPageLayout: FC<PageProps> = async (props) => {
   // !!! Get pages limit
   const pagesLimit = 10;
 
+  // Memoize the loader component
+  const MemoizedProductsGridLoader = memo(ProductsGridLoader);
+
   if (!page) {
     return notFound();
   }
@@ -103,7 +106,7 @@ const ShopPageLayout: FC<PageProps> = async (props) => {
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5">
-        <Suspense fallback={<ProductsGridLoader />}>
+        <Suspense fallback={<MemoizedProductsGridLoader />}>
           <ProductsGridLayout
             pagesLimit={pagesLimit}
             dict={dict}

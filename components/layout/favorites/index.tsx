@@ -2,7 +2,14 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { type FC, type Key, useContext, useEffect, useState } from 'react';
+import {
+  type FC,
+  type Key,
+  memo,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import { api, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -74,11 +81,14 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
     }
   }, [isAuth, data]);
 
+  // Memoize the loader component
+  const MemoizedProductsGridLoader = memo(ProductsGridLoader);
+
   if (!products || products.length < 1) {
     if (!isLoading) {
       return <EmptyFavorites lang={lang} dict={dict} />;
     } else {
-      return <ProductsGridLoader />;
+      return <MemoizedProductsGridLoader />;
     }
   }
 
