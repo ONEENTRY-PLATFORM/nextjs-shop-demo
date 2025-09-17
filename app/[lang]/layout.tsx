@@ -17,6 +17,7 @@ import Header from '@/components/layout/header';
 import NavigationMenu from '@/components/layout/main-menu';
 import Modal from '@/components/layout/modal';
 import type { Locale } from '@/i18n-config';
+import { i18n } from '@/i18n-config';
 
 import IntroAnimations from '../animations/IntroAnimations';
 import RegisterGSAP from '../animations/RegisterGSAP';
@@ -42,6 +43,13 @@ export const metadata: Metadata = {
     type: 'website',
   },
 };
+
+/**
+ * Предгенерация статических параметров для локалей
+ */
+export function generateStaticParams() {
+  return i18n.locales.map((lang) => ({ lang }));
+}
 
 /**
  * Root layout

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import type { FC } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
@@ -33,3 +34,24 @@ const OrderPageLayout: FC<PageProps> = async (props) => {
 };
 
 export default OrderPageLayout;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { handle: string; lang: string };
+}): Promise<Metadata> {
+  const { handle, lang } = await params;
+  const title = `Заказ #${handle} — OneEntry Shop`;
+  const description = 'Детали заказа и статус оплаты.';
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `/${lang}/orders/${handle}`,
+      type: 'article',
+    },
+  };
+}

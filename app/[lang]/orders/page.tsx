@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 
@@ -48,3 +49,23 @@ const OrdersPageLayout: FC<PageProps> = async ({ params }) => {
 };
 
 export default OrdersPageLayout;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string };
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const title = 'Мои заказы — OneEntry Shop';
+  const description = 'История заказов и статусы оформления.';
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `/${lang}/orders`,
+      type: 'website',
+    },
+  };
+}

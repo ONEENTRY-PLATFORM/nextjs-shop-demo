@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { FC } from 'react';
 import { Suspense } from 'react';
@@ -5,6 +6,7 @@ import { Suspense } from 'react';
 import { getPageByUrl } from '@/app/api';
 import BlocksGrid from '@/components/layout/blocks-grid';
 import BlocksGridLoader from '@/components/layout/blocks-grid/components/BlocksGridLoader';
+import { i18n } from '@/i18n-config';
 
 export const revalidate = 10;
 export const dynamicParams = true;
@@ -49,3 +51,27 @@ const IndexPageLayout: FC<{
 };
 
 export default IndexPageLayout;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string };
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const title = 'OneEntry Shop';
+  const description = 'OneEntry next-js shop';
+  const alternates: Metadata['alternates'] = {
+    languages: Object.fromEntries(i18n.locales.map((l) => [l, `/${l}`])),
+  };
+  return {
+    title,
+    description,
+    alternates,
+    openGraph: {
+      title,
+      description,
+      url: `/${lang}`,
+      type: 'website',
+    },
+  };
+}

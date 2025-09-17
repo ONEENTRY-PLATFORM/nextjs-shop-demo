@@ -46,7 +46,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
 
   // Get Products By Ids from api
   const { data, isLoading } = useGetProductsByIdsQuery({
-    items: productsCartData.map((p) => p.id),
+    items: productsCartData.map((p) => p.id.toString()).toString(),
   });
 
   // add delivery Data
