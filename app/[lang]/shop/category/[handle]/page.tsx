@@ -4,11 +4,13 @@ import { type FC, Suspense } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getPageByUrl } from '@/app/api';
+import { getChildPagesByParentUrl } from '@/app/api/server/pages/getChildPagesByParentUrl';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
+import { i18n } from '@/i18n-config';
 
 /**
  * Generate page metadata
@@ -44,6 +46,12 @@ export async function generateMetadata({
   return {
     title: localizeInfos.title,
     description: localizeInfos.plainContent,
+    alternates: {
+      languages: Object.fromEntries(
+        i18n.locales.map((l) => [l, `/${l}/shop/category/${handle}`]),
+      ),
+      canonical: `/${lang}/shop/category/${handle}`,
+    },
     robots: {
       index: isVisible,
       follow: isVisible,
@@ -111,3 +119,28 @@ const ShopCategoryLayout: FC<PageProps> = async (props) => {
 };
 
 export default ShopCategoryLayout;
+
+/**
+ * Pre-generation of category pages for each locale
+ */
+export async function generateStaticParams() {
+  const params: Array<{ lang: string; handle: string }> = [];
+  for (const lang of i18n.locales) {
+    const { pages } = await getChildPagesByParentUrl('shop', lang);
+    if (pages && Array.isArray(pages)) {
+      for (const page of pages) {
+        // Use page.url or page.slug as fallback
+        const handle =
+          'url' in page
+            ? (page as { url: string }).url
+            : 'slug' in page
+              ? (page as { slug: string }).slug
+              : '';
+        if (handle) {
+          params.push({ lang, handle });
+        }
+      }
+    }
+  }
+  return params;
+}

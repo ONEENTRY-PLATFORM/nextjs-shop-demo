@@ -4,6 +4,7 @@ import type { FC } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById } from '@/app/api';
+import { getProducts } from '@/app/api/server/products/getProducts';
 import type { PageProps } from '@/app/types/global';
 import ProductSingle from '@/components/layout/product';
 import type { Locale } from '@/i18n-config';
@@ -124,3 +125,20 @@ const ProductPageLayout: FC<PageProps> = async ({ params }) => {
 };
 
 export default ProductPageLayout;
+
+/**
+ * Pre-generation of a portion of product cards for each locale
+ */
+export async function generateStaticParams() {
+  const limit = 20;
+  const params: Array<{ lang: string; handle: string }> = [];
+  for (const lang of i18n.locales) {
+    const { products } = await getProducts({ offset: 0, limit, lang });
+    if (products && products.length) {
+      for (const p of products) {
+        params.push({ lang, handle: String(p.id) });
+      }
+    }
+  }
+  return params;
+}
