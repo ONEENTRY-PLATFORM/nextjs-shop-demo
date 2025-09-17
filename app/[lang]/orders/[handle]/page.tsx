@@ -53,5 +53,8 @@ export async function generateMetadata({
       url: `/${lang}/orders/${handle}`,
       type: 'article',
     },
+    alternates: {
+      canonical: `/${lang}/orders/${handle}`,
+    },
   };
 }

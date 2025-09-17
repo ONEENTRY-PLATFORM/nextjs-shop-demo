@@ -62,6 +62,7 @@ export async function generateMetadata({
   const description = 'OneEntry next-js shop';
   const alternates: Metadata['alternates'] = {
     languages: Object.fromEntries(i18n.locales.map((l) => [l, `/${l}`])),
+    canonical: `/${lang}`,
   };
   return {
     title,

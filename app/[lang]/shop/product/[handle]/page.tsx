@@ -39,6 +39,7 @@ export async function generateMetadata({
       languages: Object.fromEntries(
         i18n.locales.map((l) => [l, `/${l}/shop/product/${handle}`]),
       ),
+      canonical: `/${lang}/shop/product/${handle}`,
     },
     robots: {
       index: indexable,

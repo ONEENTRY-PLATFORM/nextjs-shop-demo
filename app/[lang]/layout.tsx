@@ -42,6 +42,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
   },
+  metadataBase: new URL(
+    (
+      process.env.NEXT_PUBLIC_PROJECT_URL ||
+      process.env.NEXT_PUBLIC_VERCEL_URL ||
+      'http://localhost:3000'
+    ).replace(/\/$/, ''),
+  ),
 };
 
 /**

@@ -50,6 +50,7 @@ export async function generateMetadata({
     description: localizeInfos.plainContent,
     alternates: {
       languages: Object.fromEntries(i18n.locales.map((l) => [l, `/${l}/shop`])),
+      canonical: `/${lang}/shop`,
     },
     robots: {
       index: isVisible,
