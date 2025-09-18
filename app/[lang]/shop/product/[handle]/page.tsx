@@ -1,21 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { FC } from 'react';
+import { type FC } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById } from '@/app/api';
-import { getProducts } from '@/app/api/server/products/getProducts';
-import type { PageProps } from '@/app/types/global';
-import ProductSearchParamsClient from '@/components/layout/product/ProductSearchParamsClient';
-import type { Locale } from '@/i18n-config';
-import { i18n } from '@/i18n-config';
+import ProductClientWrapper from '@/components/layout/product/ProductClientWrapper';
 
 /**
  * Generate page metadata
  * @async server component
  * @param params page params
- * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns metadata
+ * @returns page metadata
  */
 export async function generateMetadata({
   params,
@@ -23,84 +19,69 @@ export async function generateMetadata({
   params: Promise<{ handle: string; lang: string }>;
 }): Promise<Metadata> {
   const { handle, lang } = await params;
-  const { isError, product } = await getProductById(Number(handle), lang);
 
-  if (isError || !product) {
-    return notFound();
-  }
-
-  const { downloadLink, alt = 'alt' } =
-    product.attributeValues.pic?.value || {};
-  const indexable = product.isVisible;
+  const product: any = await getProductById(Number(handle), lang);
 
   return {
-    title: product?.localizeInfos.title,
-    description: product?.attributeValues.description?.value[0]?.plainValue,
-    alternates: {
-      languages: Object.fromEntries(
-        i18n.locales.map((l) => [l, `/${l}/shop/product/${handle}`]),
-      ),
-      canonical: `/${lang}/shop/product/${handle}`,
-    },
-    robots: {
-      index: indexable,
-      follow: indexable,
-      googleBot: {
-        index: indexable,
-        follow: indexable,
-      },
-    },
-    openGraph: downloadLink
-      ? {
-          images: [
-            {
-              url: downloadLink,
-              width: 300,
-              height: 300,
-              alt,
-            },
-          ],
-        }
-      : null,
+    title: product?.attributeValues?.title?.value || 'Product',
+    description: product?.attributeValues?.description?.value || '',
   };
 }
 
 /**
- * Product page
- * @async server component
- * @param params page params
- * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- * @returns Product page layout JSX.Element
+ * Product page layout
+ * @param product product entity object
+ * @param lang current language shortcode
+ * @param dict dictionary from server api
+ *
+ * @returns JSX.Element
  */
-const ProductPageLayout: FC<PageProps> = async ({ params }) => {
-  const { handle, lang } = await params;
-  // Get the dictionary from the API and set the server provider.
-  const dict = await getDictionary(lang as Locale);
-
-  // Get product by current Id
-  const { isError, product } = await getProductById(Number(handle), lang);
-
-  if (isError || !product) {
+const ProductPageLayout: FC<{
+  product: Awaited<ReturnType<typeof getProductById>>;
+  lang: string;
+  dict: Awaited<ReturnType<typeof getDictionary>>;
+}> = async ({
+  product,
+  lang,
+  dict,
+}: {
+  product: any;
+  lang: any;
+  dict: any;
+}) => {
+  if (!product) {
     return notFound();
   }
 
-  // extract data from product
-  const { attributeValues, localizeInfos, additional, statusIdentifier } =
-    product;
+  const { attributeValues } = product;
+  const additional = product.additional || {};
 
-  /**
-   * product Json liked data
-   * https://json-ld.org/
-   */
+  // Product structured data
+  // https://developers.google.com/search/docs/appearance/structured-data/product
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: localizeInfos.title,
-    description: attributeValues.description?.value[0]?.plainValue,
+    name: attributeValues.title?.value,
     image: attributeValues.pic?.value?.downloadLink,
+    description: attributeValues.description?.value,
+    sku: product.sku,
+    brand: {
+      '@type': 'Brand',
+      name: product.marker,
+    },
     offers: {
-      '@type': 'AggregateOffer',
-      availability: statusIdentifier
+      '@type': 'Offer',
+      url: `${process.env.NEXT_PUBLIC_SITE_URL}/${lang}/shop/product/${product.id}`,
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: attributeValues.price?.value,
+        priceCurrency: attributeValues.currency?.value,
+        availability: attributeValues.in_stock?.value
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
+        priceValidUntil: additional.prices?.max,
+      },
+      availability: attributeValues.in_stock?.value
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
       priceCurrency: attributeValues.currency?.value,
@@ -118,27 +99,22 @@ const ProductPageLayout: FC<PageProps> = async ({ params }) => {
         }}
       />
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-col bg-white">
-        <ProductSearchParamsClient lang={lang} product={product} dict={dict} />
+        <ProductClientWrapper lang={lang} product={product} dict={dict} />
       </div>
     </>
   );
 };
 
-export default ProductPageLayout;
+const ProductPage = async ({
+  params,
+}: {
+  params: Promise<{ handle: string; lang: string }>;
+}) => {
+  const { handle, lang } = await params;
+  const product = await getProductById(Number(handle), lang);
+  const dict = await getDictionary(lang as any);
 
-/**
- * Pre-generation of a portion of product cards for each locale
- */
-export async function generateStaticParams() {
-  const limit = 20;
-  const params: Array<{ lang: string; handle: string }> = [];
-  for (const lang of i18n.locales) {
-    const { products } = await getProducts({ offset: 0, limit, lang });
-    if (products && products.length) {
-      for (const p of products) {
-        params.push({ lang, handle: String(p.id) });
-      }
-    }
-  }
-  return params;
-}
+  return <ProductPageLayout product={product} lang={lang} dict={dict} />;
+};
+
+export default ProductPage;
