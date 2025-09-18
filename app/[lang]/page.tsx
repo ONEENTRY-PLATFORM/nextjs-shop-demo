@@ -46,18 +46,49 @@ const IndexPageLayout: FC<{
   // Extract blocks from the fetched page data
   const { blocks } = page;
 
+  // Organization structured data
+  const organizationStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'OneEntry Shop',
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/${lang}`,
+    logo: `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`,
+  };
+
+  // WebSite structured data
+  const websiteStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'OneEntry Shop',
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/${lang}`,
+  };
+
   // Render the main layout of the page
   return (
-    <main className="flex flex-col items-center justify-between gap-16">
-      <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
-        <div className="flex w-full flex-col items-center gap-5 bg-white">
-          {/* Use React's Suspense to handle asynchronous rendering of blocks */}
-          <Suspense fallback={<BlocksGridLoader />}>
-            <BlocksGrid blocks={blocks as Array<string>} lang={lang} />
-          </Suspense>
-        </div>
-      </section>
-    </main>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationStructuredData),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(websiteStructuredData),
+        }}
+      />
+      <main className="flex flex-col items-center justify-between gap-16">
+        <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+          <div className="flex w-full flex-col items-center gap-5 bg-white">
+            {/* Use React's Suspense to handle asynchronous rendering of blocks */}
+            <Suspense fallback={<BlocksGridLoader />}>
+              <BlocksGrid blocks={blocks as Array<string>} lang={lang} />
+            </Suspense>
+          </div>
+        </section>
+      </main>
+    </>
   );
 };
 
@@ -97,6 +128,7 @@ export async function generateMetadata({
       title,
       description,
       url: `/${lang}`,
+      siteName: 'OneEntry Shop',
       type: 'website',
     },
   };

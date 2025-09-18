@@ -33,10 +33,14 @@ const lato = Lato({
  * @param params page params
  */
 export const metadata: Metadata = {
-  title: 'OneEntry Shop',
+  title: {
+    default: 'OneEntry Shop',
+    template: '%s | OneEntry Shop',
+  },
   description: 'OneEntry next-js shop',
   openGraph: {
     type: 'website',
+    siteName: 'OneEntry Shop',
   },
   metadataBase: new URL(
     (
@@ -80,7 +84,9 @@ export default async function RootLayout({
               <Header />
               <NavigationMenu />
               <Breadcrumbs />
-              <ClientProviders>{children}</ClientProviders>
+              <main className="flex-grow">
+                <ClientProviders>{children}</ClientProviders>
+              </main>
               <Footer />
               <BottomMenu />
               <Modal lang={lang} dict={dict} />

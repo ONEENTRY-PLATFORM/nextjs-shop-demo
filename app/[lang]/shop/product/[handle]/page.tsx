@@ -20,11 +20,32 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { handle, lang } = await params;
 
-  const product: any = await getProductById(Number(handle), lang);
+  const { product } = await getProductById(Number(handle), lang);
+
+  if (!product) {
+    return notFound();
+  }
+  const { attributeValues } = product;
+
+  const title = attributeValues?.title?.value || 'Product';
+  const description = attributeValues?.description?.value || '';
+  const image = attributeValues?.pic?.value?.downloadLink || '';
 
   return {
-    title: product?.attributeValues?.title?.value || 'Product',
-    description: product?.attributeValues?.description?.value || '',
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: image ? [image] : [],
+      type: 'article',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: image ? [image] : [],
+    },
   };
 }
 
@@ -54,7 +75,6 @@ const ProductPageLayout: FC<{
   }
 
   const { attributeValues } = product;
-  const additional = product.additional || {};
 
   // Product structured data
   // https://developers.google.com/search/docs/appearance/structured-data/product
@@ -62,7 +82,9 @@ const ProductPageLayout: FC<{
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: attributeValues.title?.value,
-    image: attributeValues.pic?.value?.downloadLink,
+    image: attributeValues.pic?.value?.downloadLink
+      ? [attributeValues.pic?.value?.downloadLink]
+      : [],
     description: attributeValues.description?.value,
     sku: product.sku,
     brand: {
@@ -71,22 +93,12 @@ const ProductPageLayout: FC<{
     },
     offers: {
       '@type': 'Offer',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL}/${lang}/shop/product/${product.id}`,
-      priceSpecification: {
-        '@type': 'UnitPriceSpecification',
-        price: attributeValues.price?.value,
-        priceCurrency: attributeValues.currency?.value,
-        availability: attributeValues.in_stock?.value
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-        priceValidUntil: additional.prices?.max,
-      },
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}/shop/product/${product.id}`,
+      priceCurrency: attributeValues.currency?.value,
+      price: attributeValues.price?.value,
       availability: attributeValues.in_stock?.value
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
-      priceCurrency: attributeValues.currency?.value,
-      highPrice: additional.prices?.max,
-      lowPrice: additional.prices?.min,
     },
   };
 
@@ -98,9 +110,9 @@ const ProductPageLayout: FC<{
           __html: JSON.stringify(productJsonLd),
         }}
       />
-      <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-col bg-white">
+      <main className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-col bg-white">
         <ProductClientWrapper lang={lang} product={product} dict={dict} />
-      </div>
+      </main>
     </>
   );
 };

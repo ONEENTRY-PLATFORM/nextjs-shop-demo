@@ -93,12 +93,40 @@ const CategoryPage: FC<PageProps> = async ({ params }) => {
     };
   });
 
+  // Breadcrumb structured data
+  const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Categories',
+        item: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}/shop/category`,
+      },
+    ],
+  };
+
   return (
-    <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
-      <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <CategoriesGrid categories={categories} />
-      </div>
-    </section>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData),
+        }}
+      />
+      <main className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+        <div className="flex w-full flex-col items-center gap-5 bg-white">
+          <CategoriesGrid categories={categories} />
+        </div>
+      </main>
+    </>
   );
 };
 

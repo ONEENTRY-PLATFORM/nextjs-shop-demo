@@ -46,7 +46,7 @@ export async function generateMetadata({
   };
 
   return {
-    title: localizeInfos.title,
+    title: `${localizeInfos.title} | OneEntry Shop`,
     description: localizeInfos.plainContent,
     alternates: {
       languages: Object.fromEntries(i18n.locales.map((l) => [l, `/${l}/shop`])),
@@ -70,6 +70,8 @@ export async function generateMetadata({
               alt,
             },
           ],
+          title: localizeInfos.title,
+          description: localizeInfos.plainContent,
         }
       : null,
   };
@@ -103,19 +105,47 @@ const ShopPageLayout: FC<PageProps> = async (props: any) => {
     return notFound();
   }
 
+  // Breadcrumb structured data
+  const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: page.localizeInfos.title,
+        item: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}/shop`,
+      },
+    ],
+  };
+
   return (
-    <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
-      <div className="flex w-full flex-col items-center gap-5">
-        <Suspense fallback={<MemoizedProductsGridLoader />}>
-          <ProductsGridLayout
-            pagesLimit={pagesLimit}
-            dict={dict}
-            params={params}
-            searchParams={searchParams}
-          />
-        </Suspense>
-      </div>
-    </section>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData),
+        }}
+      />
+      <main className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+        <div className="flex w-full flex-col items-center gap-5">
+          <Suspense fallback={<MemoizedProductsGridLoader />}>
+            <ProductsGridLayout
+              pagesLimit={pagesLimit}
+              dict={dict}
+              params={params}
+              searchParams={searchParams}
+            />
+          </Suspense>
+        </div>
+      </main>
+    </>
   );
 };
 
