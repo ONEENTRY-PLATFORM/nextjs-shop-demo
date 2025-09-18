@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import type { ReactNode } from 'react';
 import { Suspense } from 'react';
 
-// Ленивая загрузка тяжёлых клиентских компонентов
+// Lazy loading of heavy client components
 const ToastContainer = dynamic(
   () => import('react-toastify').then((mod) => mod.ToastContainer),
   {
@@ -51,7 +51,7 @@ export default function ClientProviders({ children }: ClientProvidersProps) {
         </Suspense>
       </div>
 
-      {/* Ленивая загрузка анимаций и уведомлений */}
+      {/* Lazy loading of animations and notifications */}
       <Suspense fallback={null}>
         <RegisterGSAP />
         <IntroAnimations />

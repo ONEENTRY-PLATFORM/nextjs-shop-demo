@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
+import { memo } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { deselectProduct } from '@/app/store/reducers/CartSlice';
@@ -41,8 +42,13 @@ const ProductCard: FC<ProductCardProps> = ({
     attributeValues: { pic, price, sale, units_product },
     localizeInfos,
   } = product;
+
   const imgSrc = pic?.value.downloadLink;
   const title = localizeInfos?.title;
+  // Handle checkbox toggle
+  const handleCheckboxChange = () => {
+    dispatch(deselectProduct(id));
+  };
 
   return (
     <ProductAnimations
@@ -53,14 +59,13 @@ const ProductCard: FC<ProductCardProps> = ({
       <div className="relative flex justify-between gap-5">
         <div className="relative z-10 mb-auto box-border flex shrink-0 flex-row self-center overflow-hidden rounded-md">
           <input
-            onChange={() => {
-              dispatch(deselectProduct(id));
-            }}
+            onChange={handleCheckboxChange}
             type="checkbox"
             name={'deselectProduct-' + id}
             id={'deselectProduct-' + id}
             checked={selected}
             className="size-5 border-spacing-3 accent-orange-500 ring-2 ring-orange-700"
+            aria-label={`Select product ${title}`}
           />
         </div>
 
@@ -92,6 +97,7 @@ const ProductCard: FC<ProductCardProps> = ({
           prefetch={true}
           href={`/shop/product/` + id}
           className="absolute left-0 top-0 z-0 flex size-full"
+          aria-label={`${title}`}
         ></Link>
       </div>
       <div className="z-10 flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:ml-8 max-sm:flex">
@@ -107,4 +113,14 @@ const ProductCard: FC<ProductCardProps> = ({
   );
 };
 
-export default ProductCard;
+// Memoize component to prevent unnecessary re-renders
+const MemoizedProductCard = memo(ProductCard, (prevProps, nextProps) => {
+  return (
+    prevProps.selected === nextProps.selected &&
+    prevProps.lang === nextProps.lang &&
+    prevProps.index === nextProps.index &&
+    prevProps.product === nextProps.product
+  );
+});
+
+export default MemoizedProductCard;

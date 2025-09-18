@@ -36,10 +36,10 @@ const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
     });
 
     tl.set(ref.current, {
-      scale: 0,
+      // scale: 0,
       autoAlpha: 0,
     }).to(ref.current, {
-      scale: 1,
+      // scale: 1,
       autoAlpha: 1,
       delay: index / 10,
     });
@@ -57,7 +57,7 @@ const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
 
     if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {
-        scale: 0,
+        autoAlpha: 0,
         duration: 0.5,
         delay: index / 20,
       });
