@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type { IAttributes } from 'oneentry/dist/base/utils';
@@ -25,7 +24,7 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 const ContactUsForm: FC<{ className: string; lang: string }> = memo(
   // eslint-disable-next-line react/prop-types
   ({ className, lang }) => {
-    const [token, setToken] = useState<string | null>();
+    // const [token, setToken] = useState<string | null>();
     // const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');

@@ -37,6 +37,12 @@ const ResetPasswordForm: FC<FormProps> = ({ dict }) => {
   const onResetSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Add null checks for form fields
+    if (!email_reg || !otp_code || !password_reg || !password_confirm) {
+      setError('Form fields are not properly initialized');
+      return;
+    }
+
     try {
       setLoading(true);
 

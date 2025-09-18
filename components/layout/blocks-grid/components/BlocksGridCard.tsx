@@ -27,6 +27,7 @@ interface BlocksGridCardProps {
 
 /**
  * Blocks grid card
+ *
  * @param marker text marker of block
  * @param bgColor card background color
  * @param lang current language shortcode
@@ -55,8 +56,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
     block.attributeValues[langCode] || block.attributeValues;
 
   // extract data from block attributeValues
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { title, bg_web, link = '', stickers, quote } = attributeValues;
+  const { title, bg_web, link = '', stickers } = attributeValues;
 
   const stickerImage = stickers?.value[0]?.extended?.value?.downloadLink;
   // const quoteValue = quote?.value;

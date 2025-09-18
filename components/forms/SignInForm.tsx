@@ -142,6 +142,7 @@ const SignInForm: FC<FormProps> = ({ lang, dict }) => {
             if (field.marker === 'password_reg') {
               return <FormInput key={index} index={4} {...field} />;
             }
+            return;
           })}
         </div>
 

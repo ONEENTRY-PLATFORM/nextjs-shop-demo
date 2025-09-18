@@ -10,8 +10,8 @@ import { toast } from 'react-toastify';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
-  getTransition,
   removeProduct,
+  selectCartVersion,
   setCartTransition,
 } from '@/app/store/reducers/CartSlice';
 
@@ -36,7 +36,7 @@ const ProductAnimations: FC<ProductAnimationsProps> = memo(
   ({ children, className, product, index }) => {
     const dispatch = useAppDispatch();
     const ref = useRef(null);
-    const { transitionId } = useAppSelector(getTransition);
+    const transitionId = useAppSelector(selectCartVersion);
 
     // Memoized callback for removing product
     const removeProductCallback = useCallback(() => {

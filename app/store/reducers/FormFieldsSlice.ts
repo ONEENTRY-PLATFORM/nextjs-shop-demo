@@ -42,7 +42,10 @@ const formFieldsSlice = createSlice({
     addField(state, action: PayloadAction<{ [key: string]: FieldType }>) {
       const key = getFirstKey(action.payload); // Get the first key from the action payload.
       if (key) {
-        state.fields[key] = action.payload[key]; // Add or update the field in the state.
+        const field = action.payload[key];
+        if (field) {
+          state.fields[key] = field; // Add or update the field in the state.
+        }
       }
     },
   },

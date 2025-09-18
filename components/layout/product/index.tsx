@@ -95,6 +95,7 @@ const ProductSingle: FC<ProductSingleProps> = async ({
       };
     }
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.warn('Failed to load related products:', error);
     // Continue with empty related products
   }

@@ -64,11 +64,13 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
 
               setProducts((prevProducts) => {
                 const newProducts = [...prevProducts];
-                newProducts[index] = {
-                  ...products[index],
-                  price: newPrice,
-                  statusIdentifier: res?.product?.status?.identifier,
-                };
+                if (index !== -1 && products[index]) {
+                  newProducts[index] = {
+                    ...products[index],
+                    price: newPrice,
+                    statusIdentifier: res?.product?.status?.identifier,
+                  };
+                }
                 return newProducts;
               });
             }
@@ -79,6 +81,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
         }
       }
     }
+    return;
   }, [isAuth, data]);
 
   // Memoize the loader component

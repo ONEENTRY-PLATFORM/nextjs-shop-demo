@@ -17,7 +17,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 // Import Redux actions and selectors
 import {
   addDeliveryToCart,
-  addProductsToCart,
+  // addProductsToCart,
   selectCartData,
 } from '@/app/store/reducers/CartSlice';
 // Import custom types and components
@@ -91,66 +91,50 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
               // Update product price and status on receiving a notification
               setProducts((prevProducts) => {
                 const newProducts = [...prevProducts];
-                newProducts[index] = {
-                  ...products[index],
-                  price: newPrice,
-                  statusIdentifier: res?.product?.status?.identifier,
-                };
+                if (index !== -1 && prevProducts[index]) {
+                  newProducts[index] = {
+                    ...prevProducts[index],
+                    price: newPrice,
+                    statusIdentifier: res?.product?.status?.identifier,
+                  };
+                }
                 return newProducts;
               });
             }
           });
-
-          return () => {
-            ws.disconnect(); // Disconnect WebSocket on cleanup
-          };
         }
       }
     }
-  }, [data]);
+  }, [data, isAuth]);
 
-  // Update products in the cart when products state changes
-  useEffect(() => {
-    if (products) {
-      dispatch(addProductsToCart(products));
-    }
-  }, [products]);
-
-  // Render loading spinner if data is still loading
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  // Render empty cart message if no products are available
-  if (!products || products.length < 1) {
-    return <EmptyCart lang={lang} dict={dict} />;
-  }
-
-  // Render the cart page with products and delivery form
   return (
-    <div className="flex w-full flex-col overflow-hidden pb-5 lg:max-w-[730px]">
-      <CartAnimations className={'mb-4 flex w-full flex-col gap-4'} index={1}>
-        {products.map((product: IProductsEntity, i: number) => {
-          // Find the corresponding item in productsCartData by product ID
-          const cartDataItem = productsCartData.find(
-            (item) => item.id === product.id,
-          );
-
-          return (
-            <ProductCard
-              key={product.id} // Use product ID instead of index
-              index={i}
-              product={product}
-              selected={cartDataItem?.selected ?? false}
-              lang={lang}
-            />
-          );
-        })}
-      </CartAnimations>
-      <DeliveryForm lang={lang} dict={dict} deliveryData={deliveryData} />
-    </div>
+    <CartAnimations className={''} index={0}>
+      <div className="cart">
+        <div className="cart__container">
+          <div className="cart__products">
+            {isLoading ? (
+              <Loader />
+            ) : products.length ? (
+              products.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  lang={lang}
+                  selected={false}
+                  index={0}
+                />
+              ))
+            ) : (
+              <EmptyCart lang={lang} dict={dict} />
+            )}
+          </div>
+          <div className="cart__delivery">
+            <DeliveryForm lang={lang} dict={dict} deliveryData={deliveryData} />
+          </div>
+        </div>
+      </div>
+    </CartAnimations>
   );
 };
 
-// Export the default CartPage component
 export default CartPage;

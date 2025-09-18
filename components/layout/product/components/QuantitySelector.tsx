@@ -37,7 +37,7 @@ const QuantitySelector: FC<QuantitySelectorProps> = memo(
     const data = useAppSelector((state) =>
       selectCartItemWithIdLength(state, id),
     );
-    const quantity = data?.quantity || 0;
+    const quantity = data || 0;
 
     // setQty state on quantity change
     useEffect(() => {

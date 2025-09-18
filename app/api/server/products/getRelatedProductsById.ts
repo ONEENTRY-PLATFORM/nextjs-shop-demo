@@ -1,9 +1,19 @@
 import type { IError } from 'oneentry/dist/base/utils';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IProductsEntity,
+  IProductsResponse,
+} from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
+
+interface RelatedProductsResult {
+  isError: boolean;
+  error?: IError;
+  products?: IProductsEntity[];
+  total: number;
+}
 
 /**
  * Get all related product page objects with API.Products
@@ -18,23 +28,56 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 export const getRelatedProductsById = async (
   id: number,
   lang: string,
-): Promise<{
-  isError: boolean;
-  error?: IError;
-  products?: IProductsEntity[];
-  total: number;
-}> => {
+): Promise<RelatedProductsResult> => {
+  // Validate inputs
+  if (!id || id <= 0) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: 'Invalid product ID provided',
+      } as IError,
+      total: 0,
+    };
+  }
+
+  if (!lang) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: 'Language parameter is required',
+      } as IError,
+      total: 0,
+    };
+  }
+
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+
+  // Validate language code
+  if (!langCode) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: `Unsupported language: ${lang}`,
+      } as IError,
+      total: 0,
+    };
+  }
+
   try {
     const data = await api.Products.getRelatedProductsById(id, langCode);
 
     if (isIError(data)) {
       return { isError: true, error: data as IError, total: 0 };
     } else {
+      // Type assertion to ensure we're working with the correct type
+      const productsResponse = data as IProductsResponse;
       return {
         isError: false,
-        products: data.items,
-        total: data.total,
+        products: productsResponse.items,
+        total: productsResponse.total,
       };
     }
   } catch (error) {

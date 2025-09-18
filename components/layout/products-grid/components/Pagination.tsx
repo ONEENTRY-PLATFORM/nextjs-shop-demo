@@ -4,14 +4,16 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useTransitionRouter } from 'next-transition-router';
 import type { FC } from 'react';
 
-/**
- * Pagination Item
- */
-const PaginationItem: FC<{
+interface PaginationItemProps {
   page: number;
   isActive: boolean;
   href: string;
-}> = ({ page, isActive, href }) => {
+}
+
+/**
+ * Pagination Item
+ */
+const PaginationItem: FC<PaginationItemProps> = ({ page, isActive, href }) => {
   const router = useTransitionRouter();
 
   return (
@@ -28,27 +30,33 @@ const PaginationItem: FC<{
   );
 };
 
+interface PaginationProps {
+  totalPages: number;
+}
+
 /**
- * Pagination
- * @param totalPages
+ * Pagination component
+ * @param totalPages - Total number of pages
  *
- * @returns Pagination
+ * @returns Pagination component
  */
-const Pagination: FC<{ totalPages: number }> = ({ totalPages }) => {
+const Pagination: FC<PaginationProps> = ({ totalPages }) => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   // Handle useSearchParams in a try/catch to prevent build errors
-  let searchParamsString;
+  let searchParamsString = '';
+  let currentPage = 1;
+
   try {
+    const searchParams = useSearchParams();
     searchParamsString = searchParams?.toString() || '';
+    currentPage = Number(searchParams?.get('page')) || 1;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     // If useSearchParams fails (e.g. during SSR), create empty params
     searchParamsString = '';
+    currentPage = 1;
   }
-
-  const currentPage = Number(searchParams?.get('page')) || 1;
 
   const createQueryString = (page: number) => {
     const params = new URLSearchParams(searchParamsString);
@@ -98,7 +106,13 @@ const Pagination: FC<{ totalPages: number }> = ({ totalPages }) => {
 
   const pageNumbers = getPageNumbers();
 
+  // Don't render pagination if there's only one page
   if (totalPages <= 1) {
+    return null;
+  }
+
+  // Don't render if we don't have a pathname
+  if (!pathname) {
     return null;
   }
 

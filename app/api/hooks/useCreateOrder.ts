@@ -47,10 +47,12 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
         return 'payment_method';
       }
       setIsLoading(false);
+      return; // Add explicit return to fix TS7030
     } catch (error) {
       const apiError = handleApiError(error);
       setError(apiError.message);
       setIsLoading(false);
+      return; // Add explicit return to fix TS7030
     }
   };
 

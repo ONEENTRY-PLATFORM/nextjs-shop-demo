@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
@@ -191,5 +192,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     refreshUser: () => setRefetchUser(!refetchUser),
   };
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value as any}>{children}</AuthContext.Provider>
+  );
 };

@@ -86,6 +86,7 @@ const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
             </FilterAnimations>
           );
         }
+        return;
       })}
       <div className="relative mt-auto box-border flex shrink-0 flex-col gap-4">
         <FilterAnimations className="w-full" index={3}>

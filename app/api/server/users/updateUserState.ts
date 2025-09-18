@@ -98,6 +98,7 @@ export const updateUserState = async ({
     if (res === true) {
       return true;
     }
+    return false;
   } catch (error) {
     const apiError = handleApiError(error);
     // eslint-disable-next-line no-console

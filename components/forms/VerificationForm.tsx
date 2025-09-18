@@ -78,7 +78,7 @@ const VerificationForm: FC<FormProps> = ({ dict }) => {
         // checkCode
         const result = await api.AuthProvider.checkCode(
           'email',
-          fields.email_reg.value,
+          fields.email_reg?.value || '',
           'reg', // generate_code??
           otp,
         );
@@ -93,15 +93,15 @@ const VerificationForm: FC<FormProps> = ({ dict }) => {
         // activateUser
         const result = await api.AuthProvider.activateUser(
           'email',
-          fields.email_reg.value,
+          fields.email_reg?.value || '',
           otp,
         );
         // if activate User logInUser and authenticate
         if (result) {
           try {
             await logInUser({
-              login: fields.email_reg.value,
-              password: fields.password_reg.value,
+              login: fields.email_reg?.value || '',
+              password: fields.password_reg?.value || '',
             });
             authenticate();
             router.push('/profile');
@@ -131,7 +131,7 @@ const VerificationForm: FC<FormProps> = ({ dict }) => {
       try {
         await api.AuthProvider.generateCode(
           'email',
-          fields.email_reg.value,
+          fields.email_reg?.value || '',
           'generate_code',
         );
       } catch (e: any) {

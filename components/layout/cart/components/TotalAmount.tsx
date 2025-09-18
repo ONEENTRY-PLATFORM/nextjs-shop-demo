@@ -34,7 +34,7 @@ const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
     if (!total) {
       setCartTotal(0);
     } else {
-      setCartTotal(total + deliveryPrice);
+      setCartTotal((total as number) + deliveryPrice);
     }
   }, [total, deliveryPrice]);
 

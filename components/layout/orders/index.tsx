@@ -3,10 +3,9 @@
 import { useSearchParams } from 'next/navigation';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
-import type { FC, Key } from 'react';
+import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
-import FadeTransition from '@/app/animations/FadeTransition';
 import { getAllOrdersByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/pages/AuthError';
@@ -18,6 +17,32 @@ import EmptyOrders from './components/EmptyOrders';
 import Order from './components/OrderRow';
 import OrdersTableLoader from './components/OrdersTableLoader';
 
+interface OrdersPageProps {
+  lang: string;
+  dict: IAttributeValues;
+  settings: {
+    orders_limit?: {
+      value: number;
+    };
+    date_title?: {
+      value: string;
+    };
+    total_title?: {
+      value: string;
+    };
+    status_title?: {
+      value: string;
+    };
+  };
+}
+
+interface OrderState {
+  orders?: IOrderByMarkerEntity[] | undefined;
+  total: number;
+  loading: boolean;
+  error?: string | undefined;
+}
+
 /**
  * Orders page
  * @param lang current language shortcode
@@ -26,12 +51,7 @@ import OrdersTableLoader from './components/OrdersTableLoader';
  *
  * @returns JSX.Element
  */
-const OrdersPage: FC<{
-  lang: string;
-  dict: IAttributeValues;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  settings: any;
-}> = ({ lang, dict, settings }) => {
+const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
   // Handle useSearchParams in a try/catch to prevent build errors
   let currentPage = 0;
   try {
@@ -43,88 +63,111 @@ const OrdersPage: FC<{
     currentPage = 0;
   }
 
-  const { isAuth, user } = useContext(AuthContext);
+  const { isAuth } = useContext(AuthContext);
 
-  const [orders, setOrders] = useState<Array<IOrderByMarkerEntity>>();
-  const [total, setTotal] = useState<number>(0);
+  const [orderState, setOrderState] = useState<OrderState>({
+    orders: undefined,
+    total: 0,
+    loading: true,
+    error: undefined,
+  });
 
-  const pageLimit = settings?.orders_limit.value || 10;
+  const pageLimit = settings?.orders_limit?.value || 10;
 
   // get all orders by Marker
   useEffect(() => {
     if (!isAuth) {
+      setOrderState((prev) => ({ ...prev, loading: false }));
       return;
     }
-    (async () => {
-      const { isError, error, orders, total } = await getAllOrdersByMarker({
-        marker: 'order',
-        offset: currentPage * pageLimit,
-        limit: pageLimit,
-        lang,
-      });
-      if (orders && !isError) {
-        setOrders(orders);
-        setTotal(total);
-      }
-      if (isError) {
+
+    const fetchOrders = async () => {
+      try {
+        setOrderState((prev) => ({ ...prev, loading: true, error: undefined }));
+
+        const { isError, error, orders, total } = await getAllOrdersByMarker({
+          marker: 'order',
+          offset: currentPage * pageLimit,
+          limit: pageLimit,
+          lang,
+        });
+
+        if (orders && !isError) {
+          setOrderState((prev) => ({
+            ...prev,
+            orders,
+            total,
+            loading: false,
+            error: undefined,
+          }));
+        }
+
+        if (isError) {
+          // eslint-disable-next-line no-console
+          console.error('Failed to fetch orders:', error);
+          setOrderState((prev) => ({
+            ...prev,
+            loading: false,
+            error: error?.message || 'Failed to load orders',
+          }));
+        }
+      } catch (error) {
         // eslint-disable-next-line no-console
-        console.log(error);
+        console.error('Unexpected error fetching orders:', error);
+        setOrderState((prev) => ({
+          ...prev,
+          loading: false,
+          error: 'An unexpected error occurred',
+        }));
       }
-    })();
-  }, [lang, currentPage, isAuth, pageLimit, user]);
+    };
+
+    fetchOrders();
+  }, [isAuth, currentPage, pageLimit, lang]);
+
+  const { orders, total, loading, error } = orderState;
 
   if (!isAuth) {
     return <AuthError dict={dict} />;
   }
 
-  if (!orders) {
-    return <OrdersTableLoader limit={10} />;
-  }
-
-  if (orders && orders.length < 1) {
-    return <EmptyOrders lang={lang} dict={dict} />;
-  }
-
-  const totalPages = Math.floor(total / pageLimit);
-  const { date_title, total_title, status_title } = settings;
-
   return (
-    <FadeTransition
-      className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full"
-      index={0}
-    >
-      <div className="w-full">
-        {/* head */}
-        <OrderRowAnimations className="w-full" index={10}>
-          <div className="-mb-px flex w-full border-collapse gap-4 border-y border-[#B0BCCE] p-4 text-slate-700">
-            <div className="w-1/2">{date_title?.value}</div>
-            <div className="w-1/4">{total_title?.value}</div>
-            <div className="w-1/4">{status_title?.value}</div>
+    <div className="orders-page">
+      <div className="orders-table">
+        <div className="orders-table__header">
+          <div className="orders-table__header__item">
+            {settings?.date_title?.value || 'Date'}
           </div>
-        </OrderRowAnimations>
-
-        {/* orders */}
-        <div className="mb-4 flex flex-col">
-          {orders?.map((order: IOrderByMarkerEntity, i: Key | number) => {
-            return (
-              <Order
-                key={i}
-                index={i as number}
-                order={order}
-                settings={settings}
-                lang={lang}
-              />
-            );
-          })}
+          <div className="orders-table__header__item">
+            {settings?.total_title?.value || 'Total'}
+          </div>
+          <div className="orders-table__header__item">
+            {settings?.status_title?.value || 'Status'}
+          </div>
         </div>
-
-        {/* LoadMore */}
-        <div className="mx-auto flex flex-row justify-center">
-          {/* {totalPages > 1 && <Pagination totalPages={totalPages} />} */}
-          {totalPages > 1 && <LoadMore totalPages={totalPages} />}
+        <div className="orders-table__body">
+          {loading ? (
+            <OrdersTableLoader />
+          ) : orders && orders.length > 0 ? (
+            orders.map((order, index) => (
+              <OrderRowAnimations key={order.id} className={''} index={0}>
+                <Order
+                  order={order}
+                  settings={settings}
+                  lang={lang}
+                  index={index}
+                />
+              </OrderRowAnimations>
+            ))
+          ) : (
+            <EmptyOrders lang={''} dict={dict} />
+          )}
         </div>
       </div>
-    </FadeTransition>
+      {total > pageLimit && !loading && !error && (
+        <LoadMore totalPages={total} />
+      )}
+    </div>
   );
 };
 

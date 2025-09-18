@@ -45,11 +45,9 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const { data, error, isLoading: isAccountsLoading } = useGetAccountsQuery({});
 
   // Fetch products by IDs
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { data: productsData, isLoading: isProductsLoading } =
-    useGetProductsByIdsQuery({
-      items: productsCartData.map((p) => p.id.toString()).toString(),
-    });
+  useGetProductsByIdsQuery({
+    items: productsCartData.map((p) => p.id.toString()).toString(),
+  });
 
   // Allowed payment methods
   const whitelistMethods = useMemo(() => {
@@ -61,6 +59,7 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
         if (index !== -1) {
           return method;
         }
+        return [];
       });
     }
     return [];
@@ -117,10 +116,7 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
   }
 
   // Loader
-  if (
-    (productsCartData.length > 0 && (isProductsLoading || isAccountsLoading)) ||
-    isAccountsLoading
-  ) {
+  if ((productsCartData.length > 0 && isAccountsLoading) || isAccountsLoading) {
     return <Loader />;
   }
 
