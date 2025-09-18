@@ -19,8 +19,18 @@ interface ButtonProps {
  */
 const IncreaseButton: FC<ButtonProps> = ({ id, qty, units }) => {
   const dispatch = useAppDispatch();
-  if (qty < 1) {
-    return;
+  
+  // Не отображаем кнопку, если количество товара уже максимальное
+  if (qty >= units) {
+    return (
+      <button
+        disabled
+        className="relative cursor-not-allowed m-1 box-border size-8 rounded-full text-center text-slate-400"
+        aria-label="Maximum quantity reached"
+      >
+        +
+      </button>
+    );
   }
 
   // Increase product quantity

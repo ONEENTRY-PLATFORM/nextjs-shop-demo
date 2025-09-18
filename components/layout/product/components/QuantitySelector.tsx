@@ -35,7 +35,7 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
   height,
   className,
 }) => {
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
 
   // extract data from cartSlice
   const data = useAppSelector((state) => selectCartItemWithIdLength(state, id));
@@ -43,14 +43,14 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
 
   // setQty state on quantity change
   useEffect(() => {
-    if (!quantity) {
-      return;
+    if (quantity >= 0) {
+      setQty(quantity);
     }
-    setQty(quantity);
   }, [quantity]);
 
-  if (qty < 1 || !quantity) {
-    return;
+  // Показываем компонент всегда, когда товар добавлен в корзину (quantity >= 0)
+  if (quantity < 0) {
+    return null;
   }
 
   return (

@@ -24,10 +24,15 @@ const QuantityInput: FC<QuantitySelectorProps> = ({ id, qty, units }) => {
 
   // Set ProductQty in cartSlice on change input value
   const onChangeQtyHandle = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+
+    // Ограничиваем значение в пределах от 1 до units
+    const clampedValue = Math.max(1, Math.min(units, isNaN(value) ? 1 : value));
+
     dispatch(
       setProductQty({
         id: id,
-        quantity: Number(e.target.value),
+        quantity: clampedValue,
         units: units,
       }),
     );
@@ -39,6 +44,8 @@ const QuantityInput: FC<QuantitySelectorProps> = ({ id, qty, units }) => {
       type="number"
       name={'qty_selector_' + id}
       id={'qty_selector_' + id}
+      min="1"
+      max={units}
       value={qty}
       onChange={(e) => onChangeQtyHandle(e)}
     />

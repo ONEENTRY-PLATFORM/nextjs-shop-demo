@@ -35,7 +35,7 @@ const DeliveryTableRow: FC<TableRowProps> = ({
 
   return (
     <TableRowAnimations
-      className="tr h-[50px] border-t border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
+      className="tr h-[50px] border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
       index={7}
     >
       <div className="td w-3/12 align-middle text-sm">

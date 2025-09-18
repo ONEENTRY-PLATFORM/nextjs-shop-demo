@@ -101,7 +101,7 @@ export const cartSlice = createSlice({
         selected: state.productsData[index].selected,
         quantity:
           qty <= 0
-            ? 0
+            ? 1
             : qty > action.payload.units
               ? action.payload.units
               : qty,
