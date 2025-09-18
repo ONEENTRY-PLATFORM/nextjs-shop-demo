@@ -70,7 +70,8 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
     if (data) {
       setProducts(data);
       if (isAuth) {
-        const ws = api.WS.connect(); // Connect to WebSocket if authenticated
+        // Connect to WebSocket if authenticated
+        const ws = api.WS.connect();
         if (ws) {
           ws.on('notification', async (res) => {
             if (res?.product) {
@@ -130,14 +131,14 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
     <div className="flex w-full flex-col overflow-hidden pb-5 lg:max-w-[730px]">
       <CartAnimations className={'mb-4 flex w-full flex-col gap-4'} index={1}>
         {products.map((product: IProductsEntity, i: number) => {
-          // Найдем соответствующий элемент в productsCartData по ID продукта
+          // Find the corresponding item in productsCartData by product ID
           const cartDataItem = productsCartData.find(
             (item) => item.id === product.id,
           );
 
           return (
             <ProductCard
-              key={product.id} // Используем ID продукта вместо индекса
+              key={product.id} // Use product ID instead of index
               index={i}
               product={product}
               selected={cartDataItem?.selected ?? false}

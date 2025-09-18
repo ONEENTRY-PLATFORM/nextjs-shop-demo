@@ -51,14 +51,14 @@ export const cartSlice = createSlice({
         (product: { id: number }) => product.id === action.payload.id,
       );
       if (index === -1) {
-        // Добавляем товар в корзину с указанным количеством (минимум 1)
+        // Add the product to the cart with the specified quantity (minimum 1)
         state.productsData.push({
           id: action.payload.id,
           selected: action.payload.selected,
           quantity: Math.max(1, action.payload.quantity),
         });
       } else {
-        // Если товар уже в корзине, увеличиваем его количество
+        // If the product is already in the cart, we increase its quantity
         state.productsData[index] = {
           ...state.productsData[index],
           quantity: Math.max(
@@ -68,6 +68,7 @@ export const cartSlice = createSlice({
         };
       }
     },
+    // Define a function named `addProductsToCart` that takes two parameters
     addProductsToCart(state, action: PayloadAction<IProductsEntity[]>) {
       state.products = action.payload;
     },
@@ -80,7 +81,7 @@ export const cartSlice = createSlice({
       );
 
       if (index === -1) {
-        // Если товара нет в корзине, добавляем его с количеством 1
+        // If the product is not in the cart, add it with a quantity of 1
         state.productsData.push({
           id: action.payload.id,
           quantity: 1,
@@ -91,7 +92,7 @@ export const cartSlice = createSlice({
 
       const qty = state.productsData[index].quantity + action.payload.quantity;
 
-      // Ограничиваем количество максимальным доступным
+      // Limit the number to the maximum available
       const clampedQty = Math.min(qty, action.payload.units);
 
       state.productsData[index] = {
@@ -114,7 +115,7 @@ export const cartSlice = createSlice({
 
       const qty = state.productsData[index].quantity - action.payload.quantity;
 
-      // Если количество меньше или равно 0, удаляем товар из корзины
+      // If the quantity is less than or equal to 0, remove the item from the cart
       if (qty <= 0) {
         state.productsData = state.productsData.filter(
           (item: IProducts) => item.id !== action.payload.id,
@@ -138,7 +139,7 @@ export const cartSlice = createSlice({
 
       const qty = action.payload.quantity;
 
-      // Если количество меньше или равно 0, удаляем товар из корзины
+      // If the quantity is less than or equal to 0, remove the item from the cart
       if (qty <= 0) {
         state.productsData = state.productsData.filter(
           (item: IProducts) => item.id !== action.payload.id,
@@ -146,7 +147,7 @@ export const cartSlice = createSlice({
         return;
       }
 
-      // Ограничиваем количество максимальным доступным
+      // Limit the number to the maximum available
       const clampedQty = Math.min(qty, action.payload.units);
 
       if (index !== -1) {
@@ -156,7 +157,7 @@ export const cartSlice = createSlice({
           quantity: clampedQty,
         };
       } else {
-        // Если товара еще нет в корзине, добавляем его
+        // If the product is not yet in the cart, add it
         state.productsData.push({
           id: action.payload.id,
           quantity: clampedQty,

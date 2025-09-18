@@ -46,7 +46,7 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
     setQty(quantity > 0 ? quantity : 1);
   }, [quantity]);
 
-  // Показываем компонент всегда, когда товар добавлен в корзину (quantity > 0)
+  // Show the component whenever the product is added to the cart (quantity > 0)
   if (quantity <= 0) {
     return null;
   }

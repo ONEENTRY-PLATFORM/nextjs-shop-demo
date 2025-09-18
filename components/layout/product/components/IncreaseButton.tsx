@@ -19,8 +19,8 @@ interface ButtonProps {
  */
 const IncreaseButton: FC<ButtonProps> = ({ id, qty, units }) => {
   const dispatch = useAppDispatch();
-  
-  // Не отображаем кнопку, если количество товара уже максимальное
+
+  // Do not display the button if the product quantity is already at maximum
   if (qty >= units) {
     return (
       <button
