@@ -130,12 +130,17 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
     <div className="flex w-full flex-col overflow-hidden pb-5 lg:max-w-[730px]">
       <CartAnimations className={'mb-4 flex w-full flex-col gap-4'} index={1}>
         {products.map((product: IProductsEntity, i: number) => {
+          // Найдем соответствующий элемент в productsCartData по ID продукта
+          const cartDataItem = productsCartData.find(
+            (item) => item.id === product.id,
+          );
+
           return (
             <ProductCard
-              key={i}
+              key={product.id} // Используем ID продукта вместо индекса
               index={i}
               product={product}
-              selected={productsCartData[i]?.selected}
+              selected={cartDataItem?.selected ?? false}
               lang={lang}
             />
           );

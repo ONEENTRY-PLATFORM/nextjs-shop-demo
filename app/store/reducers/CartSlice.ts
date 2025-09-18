@@ -113,10 +113,14 @@ export const cartSlice = createSlice({
       );
     },
     deselectProduct(state, action: PayloadAction<number>) {
-      state.productsData.map((product) => {
+      state.productsData = state.productsData.map((product) => {
         if (product.id === action.payload) {
-          product.selected = !product.selected;
+          return {
+            ...product,
+            selected: !product.selected,
+          };
         }
+        return product;
       });
     },
     removeAllProducts(state) {

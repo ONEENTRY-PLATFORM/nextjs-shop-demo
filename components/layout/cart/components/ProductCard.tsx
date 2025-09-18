@@ -119,7 +119,7 @@ const MemoizedProductCard = memo(ProductCard, (prevProps, nextProps) => {
     prevProps.selected === nextProps.selected &&
     prevProps.lang === nextProps.lang &&
     prevProps.index === nextProps.index &&
-    prevProps.product === nextProps.product
+    prevProps.product.id === nextProps.product.id
   );
 });
 
