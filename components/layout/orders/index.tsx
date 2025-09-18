@@ -86,7 +86,7 @@ const OrdersPage: FC<{
     >
       <div className="w-full">
         {/* head */}
-        <OrderRowAnimations className="w-full" index={0}>
+        <OrderRowAnimations className="w-full" index={10}>
           <div className="-mb-px flex w-full border-collapse gap-4 border-y border-[#B0BCCE] p-4 text-slate-700">
             <div className="w-1/2">{date_title?.value}</div>
             <div className="w-1/4">{total_title?.value}</div>

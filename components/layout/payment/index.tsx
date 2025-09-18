@@ -5,7 +5,7 @@ import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC } from 'react';
 import { useContext, useEffect, useMemo } from 'react';
 
-import { useGetAccountsQuery } from '@/app/api';
+import { useGetAccountsQuery, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { selectCartData } from '@/app/store/reducers/CartSlice';
@@ -42,7 +42,13 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const deliveryData = useAppSelector((state) => state.cartReducer.delivery);
 
   // Get all payment accounts as an array
-  const { data, error, isLoading } = useGetAccountsQuery({});
+  const { data, error, isLoading: isAccountsLoading } = useGetAccountsQuery({});
+
+  // Fetch products by IDs
+  const { data: productsData, isLoading: isProductsLoading } =
+    useGetProductsByIdsQuery({
+      items: productsCartData.map((p) => p.id.toString()).toString(),
+    });
 
   // Allowed payment methods
   const whitelistMethods = useMemo(() => {
@@ -81,23 +87,25 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
         selected: true,
       },
     ];
-  }, [productsCartData]);
+  }, [productsCartData, deliveryData]);
 
   // Create order in orderSlice on init component
   useEffect(() => {
-    dispatch(
-      createOrder({
-        formIdentifier: 'order',
-        formData: [],
-        products: productsInOrder,
-        paymentAccountIdentifier: '',
-      }),
-    );
-  }, []);
+    if (productsInOrder.length > 0) {
+      dispatch(
+        createOrder({
+          formIdentifier: 'order',
+          formData: [],
+          products: productsInOrder,
+          paymentAccountIdentifier: '',
+        }),
+      );
+    }
+  }, [productsInOrder]);
 
   // add products to orderSlice
   useEffect(() => {
-    if (productsInOrder) {
+    if (productsInOrder && productsInOrder.length > 0) {
       dispatch(addProducts(productsInOrder));
     }
   }, [productsInOrder]);
@@ -108,7 +116,10 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
   }
 
   // Loader
-  if ((productsCartData.length < 1 && isLoading) || isLoading) {
+  if (
+    (productsCartData.length > 0 && (isProductsLoading || isAccountsLoading)) ||
+    isAccountsLoading
+  ) {
     return <Loader />;
   }
 

@@ -1,19 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-'use client';
+// This disables the ESLint rule for exhaustive dependencies in useEffect hooks
 
+'use client';
+// Indicates that this file is a client-side component in Next.js
+
+// Import necessary types and React functions
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
+// Import API hooks and Redux hooks
 import { api, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
+// Import Redux actions and selectors
 import {
   addDeliveryToCart,
   addProductsToCart,
   selectCartData,
 } from '@/app/store/reducers/CartSlice';
+// Import custom types and components
 import type { IProducts } from '@/app/types/global';
 import CartAnimations from '@/components/layout/cart/animations/CartAnimations';
 import EmptyCart from '@/components/layout/cart/components/EmptyCart';
@@ -22,46 +29,48 @@ import Loader from '@/components/shared/Loader';
 
 import DeliveryForm from './delivery-table/DeliveryForm';
 
+// Define the props interface for the CartPage component
 interface CartPageProps {
-  lang: string;
-  dict: IAttributeValues;
-  deliveryData: IProductsEntity;
+  lang: string; // Current language shortcode
+  dict: IAttributeValues; // Dictionary from server API
+  deliveryData: IProductsEntity; // Represents a product entity object
 }
 
 /**
- * Cart page
- * @param lang Current language shortcode
- * @param dict dictionary from server api
- * @param deliveryData Represents a product entity object.
+ * Cart page component
  *
- * @returns
+ * @param lang - Current language shortcode
+ * @param dict - Dictionary from server API
+ * @param deliveryData - Represents a product entity object
+ *
+ * @returns JSX.Element representing the cart page
  */
 const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
-  const dispatch = useAppDispatch();
-  const { isAuth } = useContext(AuthContext);
-  const [products, setProducts] = useState<IProductsEntity[]>([]);
+  const dispatch = useAppDispatch(); // Initialize Redux dispatch function
+  const { isAuth } = useContext(AuthContext); // Get authentication status from context
+  const [products, setProducts] = useState<IProductsEntity[]>([]); // State to store products
 
-  // products in redux carSlice
+  // Get products data from Redux cart slice
   const productsCartData = useAppSelector(selectCartData) as IProducts[];
 
-  // Get Products By Ids from api
+  // Fetch products by IDs using a custom query hook
   const { data, isLoading } = useGetProductsByIdsQuery({
     items: productsCartData.map((p) => p.id.toString()).toString(),
   });
 
-  // add delivery Data
+  // Add delivery data to the cart
   useEffect(() => {
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
     }
   }, [deliveryData]);
 
-  // add products to cart slice
+  // Add fetched products to the cart slice
   useEffect(() => {
     if (data) {
       setProducts(data);
       if (isAuth) {
-        const ws = api.WS.connect();
+        const ws = api.WS.connect(); // Connect to WebSocket if authenticated
         if (ws) {
           ws.on('notification', async (res) => {
             if (res?.product) {
@@ -78,6 +87,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
                 10,
               );
 
+              // Update product price and status on receiving a notification
               setProducts((prevProducts) => {
                 const newProducts = [...prevProducts];
                 newProducts[index] = {
@@ -91,28 +101,31 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
           });
 
           return () => {
-            ws.disconnect();
+            ws.disconnect(); // Disconnect WebSocket on cleanup
           };
         }
       }
     }
   }, [data]);
 
-  // update products in cart
+  // Update products in the cart when products state changes
   useEffect(() => {
     if (products) {
       dispatch(addProductsToCart(products));
     }
   }, [products]);
 
+  // Render loading spinner if data is still loading
   if (isLoading) {
     return <Loader />;
   }
 
+  // Render empty cart message if no products are available
   if (!products || products.length < 1) {
     return <EmptyCart lang={lang} dict={dict} />;
   }
 
+  // Render the cart page with products and delivery form
   return (
     <div className="flex w-full flex-col overflow-hidden pb-5 lg:max-w-[730px]">
       <CartAnimations className={'mb-4 flex w-full flex-col gap-4'} index={1}>
@@ -133,4 +146,5 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   );
 };
 
+// Export the default CartPage component
 export default CartPage;
