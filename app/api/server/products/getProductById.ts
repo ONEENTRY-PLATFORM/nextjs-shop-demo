@@ -23,7 +23,40 @@ export const getProductById = async (
   error?: IError;
   product?: IProductsEntity;
 }> => {
+  // Validate inputs
+  if (!id || id <= 0) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: 'Invalid product ID provided',
+      } as IError,
+    };
+  }
+
+  if (!lang) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: 'Language parameter is required',
+      } as IError,
+    };
+  }
+
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+
+  // Validate language code
+  if (!langCode) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: `Unsupported language: ${lang}`,
+      } as IError,
+    };
+  }
+
   try {
     const data = await api.Products.getProductById(id, langCode);
 

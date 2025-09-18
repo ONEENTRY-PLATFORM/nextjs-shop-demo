@@ -1,35 +1,69 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { type FC } from 'react';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FC } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById } from '@/app/api';
 import ProductClientWrapper from '@/components/layout/product/ProductClientWrapper';
 
+interface ProductParams {
+  handle: string;
+  lang: string;
+}
+
+interface ProductPageProps {
+  params: Promise<ProductParams>;
+}
+
+interface ProductJsonLd {
+  '@context': string;
+  '@type': string;
+  name: string | undefined;
+  image: string[];
+  description: string | undefined;
+  sku: string | undefined;
+  brand: {
+    '@type': string;
+    name: string | undefined;
+  };
+  offers: {
+    '@type': string;
+    url: string;
+    priceCurrency: string | undefined;
+    price: number | undefined;
+    availability: string;
+  };
+}
+
 /**
  * Generate page metadata
- * @async server component
- * @param params page params
- * @returns page metadata
+ * @param params Page parameters containing handle and language
+ * @returns Page metadata
  */
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ handle: string; lang: string }>;
-}): Promise<Metadata> {
+}: ProductPageProps): Promise<Metadata> {
   const { handle, lang } = await params;
 
-  const { product } = await getProductById(Number(handle), lang);
-
-  if (!product) {
+  // Validate product ID
+  const productId = Number(handle);
+  if (isNaN(productId)) {
     return notFound();
   }
+
+  const { product, isError } = await getProductById(productId, lang);
+
+  if (isError || !product) {
+    return notFound();
+  }
+
   const { attributeValues } = product;
 
-  const title = attributeValues?.title?.value || 'Product';
-  const description = attributeValues?.description?.value || '';
-  const image = attributeValues?.pic?.value?.downloadLink || '';
+  const title = (attributeValues?.title?.value as string) || 'Product';
+  const description = (attributeValues?.description?.value as string) || '';
+  const image = (attributeValues?.pic?.value?.downloadLink as string) || '';
 
   return {
     title,
@@ -49,53 +83,48 @@ export async function generateMetadata({
   };
 }
 
-/**
- * Product page layout
- * @param product product entity object
- * @param lang current language shortcode
- * @param dict dictionary from server api
- *
- * @returns JSX.Element
- */
-const ProductPageLayout: FC<{
-  product: Awaited<ReturnType<typeof getProductById>>;
+interface ProductPageLayoutProps {
+  product: IProductsEntity;
   lang: string;
-  dict: Awaited<ReturnType<typeof getDictionary>>;
-}> = async ({
+  dict: IAttributeValues;
+}
+
+/**
+ * Product page layout component
+ * @param props Product page layout props
+ * @returns JSX Element
+ */
+const ProductPageLayout: FC<ProductPageLayoutProps> = ({
   product,
   lang,
   dict,
-}: {
-  product: any;
-  lang: any;
-  dict: any;
 }) => {
   if (!product) {
     return notFound();
   }
 
-  const { attributeValues } = product;
+  const { attributeValues, sku, statusIdentifier: marker, id } = product;
 
   // Product structured data
   // https://developers.google.com/search/docs/appearance/structured-data/product
-  const productJsonLd = {
+  const productJsonLd: ProductJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: attributeValues.title?.value,
+    name: attributeValues.title?.value as string,
     image: attributeValues.pic?.value?.downloadLink
-      ? [attributeValues.pic?.value?.downloadLink]
+      ? [attributeValues.pic?.value?.downloadLink as string]
       : [],
-    description: attributeValues.description?.value,
-    sku: product.sku,
+    description: attributeValues.description?.value as string,
+    sku: sku || undefined,
     brand: {
       '@type': 'Brand',
-      name: product.marker,
+      name: marker || undefined,
     },
     offers: {
       '@type': 'Offer',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}/shop/product/${product.id}`,
-      priceCurrency: attributeValues.currency?.value,
-      price: attributeValues.price?.value,
+      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}/shop/product/${id}`,
+      priceCurrency: attributeValues.currency?.value as string,
+      price: attributeValues.price?.value as number,
       availability: attributeValues.in_stock?.value
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
@@ -117,14 +146,27 @@ const ProductPageLayout: FC<{
   );
 };
 
-const ProductPage = async ({
-  params,
-}: {
-  params: Promise<{ handle: string; lang: string }>;
-}) => {
+/**
+ * Product page component
+ * @param props Product page props
+ * @returns Product page
+ */
+const ProductPage = async ({ params }: ProductPageProps) => {
   const { handle, lang } = await params;
-  const product = await getProductById(Number(handle), lang);
-  const dict = await getDictionary(lang as any);
+
+  // Validate product ID
+  const productId = Number(handle);
+  if (isNaN(productId)) {
+    return notFound();
+  }
+
+  const { product, isError } = await getProductById(productId, lang);
+
+  if (isError || !product) {
+    return notFound();
+  }
+
+  const dict = await getDictionary(lang as keyof typeof getDictionary);
 
   return <ProductPageLayout product={product} lang={lang} dict={dict} />;
 };

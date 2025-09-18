@@ -35,11 +35,71 @@ const ProductSingle: FC<ProductSingleProps> = async ({
   lang,
   dict,
 }) => {
+  // Validate required props
+  if (!product) {
+    return (
+      <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <p>Product not found</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!lang) {
+    return (
+      <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <p>Language not specified</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (!dict) {
+    return (
+      <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <p>Dictionary not loaded</p>
+        </div>
+      </section>
+    );
+  }
+
   // extract data from product
   const { attributeValues, localizeInfos, blocks, id } = product;
 
-  // Get all related products by Id
-  const { products, total } = await getRelatedProductsById(id, lang);
+  // Validate required product data
+  if (!localizeInfos?.title) {
+    return (
+      <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <p>Invalid product data</p>
+        </div>
+      </section>
+    );
+  }
+
+  // Get all related products by Id with error handling
+  let relatedProductsData = {
+    products: [] as IProductsEntity[],
+    total: 0,
+  };
+
+  try {
+    const result = await getRelatedProductsById(id, lang);
+    if (!result.isError && result.products) {
+      relatedProductsData = {
+        products: result.products,
+        total: result.products.length,
+      };
+    }
+  } catch (error) {
+    console.warn('Failed to load related products:', error);
+    // Continue with empty related products
+  }
+
+  const { products, total } = relatedProductsData;
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
@@ -62,7 +122,7 @@ const ProductSingle: FC<ProductSingleProps> = async ({
           </div>
 
           {/* ProductDescription */}
-          <ProductDescription description={attributeValues.description} />
+          <ProductDescription description={attributeValues?.description} />
         </ProductAnimations>
 
         {/* ProductDetails - col-3 */}
@@ -101,6 +161,7 @@ const ProductSingle: FC<ProductSingleProps> = async ({
               />
             );
           }
+          return null;
         })}
     </section>
   );

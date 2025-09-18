@@ -15,6 +15,10 @@ export const revalidate = 10;
 // Enable dynamic route parameters
 export const dynamicParams = true;
 
+interface IndexPageLayoutProps {
+  params: Promise<{ lang: string }>;
+}
+
 /**
  * Home(index) page component
  * @async server component
@@ -24,22 +28,27 @@ export const dynamicParams = true;
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns JSX.Element representing the page layout
  */
-const IndexPageLayout: FC<{
-  params: Promise<{ lang: string }>;
-}> = async ({ params }) => {
+const IndexPageLayout: FC<IndexPageLayoutProps> = async ({ params }) => {
   // Destructure language parameter from params
   const { lang } = await params;
+
+  // Validate language parameter
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if (!lang || !i18n.locales.includes(lang as any)) {
+    return notFound();
+  }
 
   // Fetch home page data by URL from the API
   const { page, isError } = await getPageByUrl('home_web', lang);
 
   // If there's an error, render a "not found" page
-  if (isError) {
+  if (isError || !page) {
+    console.error('Failed to load home page:', isError);
     return notFound();
   }
 
   // If no page or blocks are found, render a loading state
-  if (!page || !page.blocks) {
+  if (!page.blocks) {
     return <BlocksGridLoader />;
   }
 
@@ -51,8 +60,8 @@ const IndexPageLayout: FC<{
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'OneEntry Shop',
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}/${lang}`,
-    logo: `${process.env.NEXT_PUBLIC_SITE_URL}/logo.png`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}`,
+    logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/logo.png`,
   };
 
   // WebSite structured data
@@ -60,7 +69,7 @@ const IndexPageLayout: FC<{
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'OneEntry Shop',
-    url: `${process.env.NEXT_PUBLIC_SITE_URL}/${lang}`,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}`,
   };
 
   // Render the main layout of the page
@@ -103,11 +112,18 @@ export default IndexPageLayout;
  */
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ lang: string }>;
-}): Promise<Metadata> {
+}: IndexPageLayoutProps): Promise<Metadata> {
   // Destructure language parameter from params
   const { lang } = await params;
+
+  // Validate language parameter
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  if (!lang || !i18n.locales.includes(lang as any)) {
+    return {
+      title: 'Page Not Found',
+      description: 'The requested page could not be found',
+    };
+  }
 
   // Define metadata properties
   const title = 'OneEntry Shop';
