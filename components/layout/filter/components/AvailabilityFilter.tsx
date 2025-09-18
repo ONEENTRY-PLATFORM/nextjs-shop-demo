@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 
 interface AvailabilityFilterProps {
   title?: string;
@@ -14,7 +15,7 @@ interface AvailabilityFilterProps {
  *
  * @returns
  */
-const AvailabilityFilter: FC<AvailabilityFilterProps> = ({ title }) => {
+const AvailabilityFilter: FC<AvailabilityFilterProps> = memo(({ title }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
@@ -23,6 +24,10 @@ const AvailabilityFilter: FC<AvailabilityFilterProps> = ({ title }) => {
   const [available, setAvailability] = useState(
     params.get('in_stock') ? true : false,
   );
+
+  const handleAvailabilityChange = useCallback(() => {
+    setAvailability(!available);
+  }, [available]);
 
   useEffect(() => {
     if (available) {
@@ -47,7 +52,7 @@ const AvailabilityFilter: FC<AvailabilityFilterProps> = ({ title }) => {
           id="availability"
           type="checkbox"
           checked={params.get('in_stock') ? true : false}
-          onChange={() => setAvailability(!available)}
+          onChange={handleAvailabilityChange}
           className="toggle-checkbox absolute block size-6 cursor-pointer appearance-none rounded-full border-4 bg-white transition-all duration-300 hover:border-orange-500"
         />
         <label
@@ -57,6 +62,8 @@ const AvailabilityFilter: FC<AvailabilityFilterProps> = ({ title }) => {
       </div>
     </div>
   );
-};
+});
+
+AvailabilityFilter.displayName = 'AvailabilityFilter';
 
 export default AvailabilityFilter;

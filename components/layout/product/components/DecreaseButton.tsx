@@ -1,18 +1,18 @@
-import { type FC, useContext } from 'react'; // Importing the Function Component (FC) type and useContext hook from React.
-import { toast } from 'react-toastify'; // Importing the toast function for displaying notifications.
+import { type FC, memo, useCallback, useContext } from 'react';
+import { toast } from 'react-toastify';
 
-import { onUnsubscribeEvents } from '@/app/api/hooks/useEvents'; // Importing a function to unsubscribe from events.
-import { useAppDispatch } from '@/app/store/hooks'; // Importing a custom hook to dispatch actions in the Redux store.
-import { AuthContext } from '@/app/store/providers/AuthContext'; // Importing the AuthContext to access authentication state.
+import { onUnsubscribeEvents } from '@/app/api/hooks/useEvents';
+import { useAppDispatch } from '@/app/store/hooks';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   decreaseProductQty,
   removeProduct,
-} from '@/app/store/reducers/CartSlice'; // Importing actions to modify the cart state.
+} from '@/app/store/reducers/CartSlice';
 
 interface ButtonProps {
-  id: number; // The unique identifier for the product.
-  qty: number; // The current quantity of the product in the cart.
-  title: string; // The title or name of the product.
+  id: number;
+  qty: number;
+  title: string;
 }
 
 /**
@@ -24,44 +24,49 @@ interface ButtonProps {
  *
  * @returns A button that decreases the product quantity in the cart
  */
-const DecreaseButton: FC<ButtonProps> = ({ id, qty, title }) => {
-  const dispatch = useAppDispatch(); // Hook to dispatch actions to the Redux store.
-  const { user } = useContext(AuthContext); // Access the authenticated user from the AuthContext.
+// eslint-disable-next-line react/prop-types
+const DecreaseButton: FC<ButtonProps> = memo(({ id, qty, title }) => {
+  const dispatch = useAppDispatch();
+  const { user } = useContext(AuthContext);
 
   /**
    * Remove product from cart and unsubscribe from events if user is authenticated
    */
-  const onRemoveFromCart = async () => {
-    dispatch(removeProduct(id)); // Dispatch action to remove the product from the cart.
-    toast('Product ' + title + ' removed from cart!'); // Show a notification that the product was removed.
+  const onRemoveFromCart = useCallback(async () => {
+    dispatch(removeProduct(id));
+    toast('Product ' + title + ' removed from cart!');
 
     if (user) {
-      await onUnsubscribeEvents(id); // Unsubscribe from events related to the product if the user is logged in.
+      await onUnsubscribeEvents(id);
     }
-  };
+  }, [dispatch, id, title, user]);
 
   /**
    * Decrease product quantity in the cart
    */
-  const onDecreaseHandle = () => {
-    dispatch(decreaseProductQty({ id: id, quantity: 1 })); // Dispatch action to decrease the product quantity by 1.
-  };
+  const onDecreaseHandle = useCallback(() => {
+    dispatch(decreaseProductQty({ id: id, quantity: 1 }));
+  }, [dispatch, id]);
+
+  const handleClick = useCallback(() => {
+    if (qty <= 1) {
+      onRemoveFromCart();
+    } else {
+      onDecreaseHandle();
+    }
+  }, [qty, onRemoveFromCart, onDecreaseHandle]);
 
   return (
     <button
-      onClick={async () => {
-        if (qty <= 1) {
-          onRemoveFromCart(); // If the quantity is 1 or less, remove the product from the cart.
-        } else {
-          onDecreaseHandle(); // Otherwise, just decrease the quantity.
-        }
-      }}
+      onClick={handleClick}
       className="relative cursor-pointer m-1 box-border size-8 rounded-full text-center text-slate-700 transition-all duration-500 hover:bg-slate-100 hover:text-orange-500 hover:shadow-inner"
-      aria-label="Decrease quantity" // Accessibility label for the button.
+      aria-label="Decrease quantity"
     >
       –
     </button>
   );
-};
+});
 
-export default DecreaseButton; // Export the component as the default export.
+DecreaseButton.displayName = 'DecreaseButton';
+
+export default DecreaseButton;
