@@ -6,7 +6,7 @@ import type {
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
-import { typeError } from '@/components/utils';
+import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 interface HandleProps {
   marker: string;
@@ -47,13 +47,19 @@ export const updateOrderByMarkerAndId = async ({
       langCode,
     );
 
-    if (typeError(orderData)) {
+    if (isIError(orderData)) {
       return { isError: true, error: orderData };
     } else {
       return { isError: false, order: orderData };
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    return { isError: true, error: e };
+  } catch (error) {
+    const apiError = handleApiError(error);
+    return {
+      isError: true,
+      error: {
+        statusCode: apiError.statusCode,
+        message: apiError.message,
+      } as IError,
+    };
   }
 };

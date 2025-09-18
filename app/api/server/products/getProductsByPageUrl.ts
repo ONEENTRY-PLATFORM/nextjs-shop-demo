@@ -4,7 +4,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import { api } from '@/app/api';
 import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
-import { typeError } from '@/components/utils';
+import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get all products with pagination for the selected category.
@@ -52,13 +52,20 @@ export const getProductsByPageUrl = async (props: {
       },
     );
 
-    if (typeError(data)) {
+    if (isIError(data)) {
       return { isError: true, error: data, total: 0 };
     } else {
       return { isError: false, products: data.items, total: data.total };
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    return { isError: true, error: e, total: 0 };
+  } catch (error) {
+    const apiError = handleApiError(error);
+    return {
+      isError: true,
+      error: {
+        statusCode: apiError.statusCode,
+        message: apiError.message,
+      } as IError,
+      total: 0,
+    };
   }
 };

@@ -3,7 +3,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
-import { typeError } from '@/components/utils';
+import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get all related product page objects with API.Products
@@ -28,7 +28,7 @@ export const getRelatedProductsById = async (
   try {
     const data = await api.Products.getRelatedProductsById(id, langCode);
 
-    if (typeError(data)) {
+    if (isIError(data)) {
       return { isError: true, error: data as IError, total: 0 };
     } else {
       return {
@@ -37,8 +37,15 @@ export const getRelatedProductsById = async (
         total: data.total,
       };
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    return { isError: true, error: e, total: 0 };
+  } catch (error) {
+    const apiError = handleApiError(error);
+    return {
+      isError: true,
+      error: {
+        statusCode: apiError.statusCode,
+        message: apiError.message,
+      } as IError,
+      total: 0,
+    };
   }
 };

@@ -28,43 +28,42 @@ interface QuantitySelectorProps {
  *
  * @returns Quantity selector with increase decrease buttons
  */
-const QuantitySelector: FC<QuantitySelectorProps> = memo(({
-  id,
-  units,
-  title,
-  height,
-  className,
-}) => {
-  const [qty, setQty] = useState(1);
+const QuantitySelector: FC<QuantitySelectorProps> = memo(
+  // eslint-disable-next-line react/prop-types
+  ({ id, units, title, height, className }) => {
+    const [qty, setQty] = useState(1);
 
-  // extract data from cartSlice
-  const data = useAppSelector((state) => selectCartItemWithIdLength(state, id));
-  const quantity = data?.quantity || 0;
+    // extract data from cartSlice
+    const data = useAppSelector((state) =>
+      selectCartItemWithIdLength(state, id),
+    );
+    const quantity = data?.quantity || 0;
 
-  // setQty state on quantity change
-  useEffect(() => {
-    setQty(quantity > 0 ? quantity : 1);
-  }, [quantity]);
+    // setQty state on quantity change
+    useEffect(() => {
+      setQty(quantity > 0 ? quantity : 1);
+    }, [quantity]);
 
-  // Show the component whenever the product is added to the cart (quantity > 0)
-  if (quantity <= 0) {
-    return null;
-  }
+    // Show the component whenever the product is added to the cart (quantity > 0)
+    if (quantity <= 0) {
+      return null;
+    }
 
-  return (
-    <div
-      className={
-        'flex items-center justify-between rounded-3xl bg-slate-50 px-2' +
-        className
-      }
-      style={{ height: height }}
-    >
-      <DecreaseButton id={id} qty={qty} title={title} />
-      <QuantityInput id={id} qty={qty} units={units} />
-      <IncreaseButton id={id} qty={qty} units={units} />
-    </div>
-  );
-});
+    return (
+      <div
+        className={
+          'flex items-center justify-between rounded-3xl bg-slate-50 px-2' +
+          className
+        }
+        style={{ height: height }}
+      >
+        <DecreaseButton id={id} qty={qty} title={title} />
+        <QuantityInput id={id} qty={qty} units={units} />
+        <IncreaseButton id={id} qty={qty} units={units} />
+      </div>
+    );
+  },
+);
 
 QuantitySelector.displayName = 'QuantitySelector';
 
