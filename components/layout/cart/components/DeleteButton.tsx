@@ -3,10 +3,7 @@ import { type FC, useContext } from 'react';
 import { onUnsubscribeEvents } from '@/app/api/hooks/useEvents';
 import { useAppDispatch } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import {
-  removeProduct,
-  setCartTransition,
-} from '@/app/store/reducers/CartSlice';
+import { setCartTransition } from '@/app/store/reducers/CartSlice';
 import DeleteIcon from '@/components/icons/delete';
 
 /**
@@ -25,7 +22,6 @@ const DeleteButton: FC<{ productId: number }> = ({ productId }) => {
       aria-label="Delete item"
       onClick={async () => {
         dispatch(setCartTransition({ productId: productId }));
-        dispatch(removeProduct(productId));
         if (user) {
           await onUnsubscribeEvents(productId);
         }

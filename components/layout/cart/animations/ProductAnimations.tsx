@@ -81,12 +81,11 @@ const ProductAnimations: FC<ProductAnimationsProps> = ({
             productId: 0,
           }),
         );
+      },
+      onComplete: () => {
         dispatch(removeProduct(product.id));
         toast('Product ' + product.localizeInfos.title + ' removed from cart!');
       },
-    }).to(ref.current, {
-      autoAlpha: 1,
-      duration: 0.35,
     });
 
     return () => {
