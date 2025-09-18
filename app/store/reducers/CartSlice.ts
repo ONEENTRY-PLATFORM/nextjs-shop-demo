@@ -1,44 +1,52 @@
 'use client';
 
+// Importing necessary types and functions from Redux Toolkit
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
+// Importing product entity interface
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
+// Importing custom product type
 import type { IProducts } from '@/app/types/global';
 
+// Defining the shape of the initial state for the cart slice
 type InitialStateType = {
-  products: IProductsEntity[];
-  productsData: IProducts[];
-  currency?: string;
-  delivery: IProductsEntity;
+  products: IProductsEntity[]; // Array to store product entities
+  productsData: IProducts[]; // Array to store product data with additional properties like quantity
+  currency?: string; // Optional currency type
+  delivery: IProductsEntity; // Delivery product entity
   deliveryData: {
-    date: number;
-    time: string;
-    address: string;
+    // Details about delivery
+    date: number; // Delivery date as a timestamp
+    time: string; // Delivery time
+    address: string; // Delivery address
   };
-  transitionId: number;
-  total: number;
-  version: number;
+  transitionId: number; // ID used for transitions/animations
+  total: number; // Total cost of items in the cart
+  version: number; // Version of the cart, useful for updates
 };
 
+// Initial state setup for the cart slice
 const initialState: InitialStateType = {
-  products: [],
-  productsData: [],
-  delivery: {} as IProductsEntity,
+  products: [], // Initialize empty array for products
+  productsData: [], // Initialize empty array for product data
+  delivery: {} as IProductsEntity, // Initialize delivery as an empty object casted to IProductsEntity
   deliveryData: {
-    date: new Date().getTime(),
-    time: '',
-    address: '',
+    date: new Date().getTime(), // Current timestamp for delivery date
+    time: '', // Empty string for delivery time
+    address: '', // Empty string for delivery address
   },
-  transitionId: 0,
-  total: 0,
-  version: 0,
+  transitionId: 0, // Default transition ID
+  total: 0, // Default total cost
+  version: 0, // Default version
 };
 
+// Creating a Redux slice for cart management
 export const cartSlice = createSlice({
-  name: 'cart-slice',
-  initialState,
+  name: 'cart-slice', // Name of the slice
+  initialState, // Initial state defined above
   reducers: {
+    // Reducer to add a product to the cart
     addProductToCart(
       state,
       action: PayloadAction<{
@@ -68,10 +76,15 @@ export const cartSlice = createSlice({
         };
       }
     },
-    // Define a function named `addProductsToCart` that takes two parameters
+    /**
+     * Reducer to add multiple products to the cart
+     */
     addProductsToCart(state, action: PayloadAction<IProductsEntity[]>) {
       state.products = action.payload;
     },
+    /**
+     * Reducer to increase the quantity of a product in the cart
+     */
     increaseProductQty(
       state,
       action: PayloadAction<{ units: number; id: number; quantity: number }>,
@@ -101,6 +114,9 @@ export const cartSlice = createSlice({
         quantity: clampedQty,
       };
     },
+    /**
+     * Reducer to decrease the quantity of a product in the cart
+     */
     decreaseProductQty(
       state,
       action: PayloadAction<{ id: number; quantity: number }>,
@@ -129,6 +145,9 @@ export const cartSlice = createSlice({
         quantity: qty,
       };
     },
+    /**
+     * Reducer to set the quantity of a product in the cart
+     */
     setProductQty(
       state,
       action: PayloadAction<{ units: number; id: number; quantity: number }>,
@@ -165,11 +184,17 @@ export const cartSlice = createSlice({
         });
       }
     },
+    /**
+     * Reducer to remove a product from the cart
+     */
     removeProduct(state, action: PayloadAction<number>) {
       state.productsData = state.productsData.filter(
         (item: IProducts) => item.id !== action.payload,
       );
     },
+    /**
+     * Reducer to toggle the selection status of a product in the cart
+     */
     deselectProduct(state, action: PayloadAction<number>) {
       state.productsData = state.productsData.map((product) => {
         if (product.id === action.payload) {
@@ -181,13 +206,22 @@ export const cartSlice = createSlice({
         return product;
       });
     },
+    /**
+     * Reducer to remove all products from the cart
+     */
     removeAllProducts(state) {
       state.productsData = initialState.productsData;
       state.products = initialState.products;
     },
+    /**
+     * Reducer to add delivery information to the cart
+     */
     addDeliveryToCart(state, action: PayloadAction<IProductsEntity>) {
       state.delivery = action.payload;
     },
+    /**
+     * Reducer to set delivery data
+     */
     setDeliveryData(
       state,
       action: PayloadAction<{ date: number; time: string; address: string }>,
@@ -198,15 +232,22 @@ export const cartSlice = createSlice({
         address: action.payload.address,
       };
     },
+    /**
+     * Reducer to set the transition ID for animations
+     */
     setCartTransition(state, action: PayloadAction<{ productId: number }>) {
       state.transitionId = action.payload.productId;
     },
+    /**
+     * Reducer to set the cart version
+     */
     setCartVersion(state, action: PayloadAction<number>) {
       state.version = action.payload;
     },
   },
 });
 
+// Exporting actions generated by createSlice
 export const {
   addProductToCart,
   addProductsToCart,
@@ -225,10 +266,10 @@ export const {
 /**
  * selectIsInCart
  *
- * @param state
- * @param id product id
+ * @param state The current state of the Redux store
+ * @param id Product ID to check
  *
- * @returns
+ * @returns Boolean indicating if the product is in the cart
  */
 export const selectIsInCart = (
   state: { cartReducer: { productsData: { id: number }[] } },
@@ -246,9 +287,9 @@ export const selectIsInCart = (
 /**
  * Select cart data
  *
- * @param state slice state
+ * @param state The current state of the Redux store
  *
- * @returns productsData
+ * @returns Array of products data in the cart
  */
 export const selectCartData = (state: {
   cartReducer: { productsData: IProducts[] };
@@ -257,9 +298,9 @@ export const selectCartData = (state: {
 /**
  * Select cart items
  *
- * @param state slice state
+ * @param state The current state of the Redux store
  *
- * @returns
+ * @returns Array of product entities in the cart
  */
 export const selectCartItems = (state: {
   cartReducer: { products: IProductsEntity[] };
@@ -268,9 +309,9 @@ export const selectCartItems = (state: {
 /**
  * Select delivery data
  *
- * @param state slice state
+ * @param state The current state of the Redux store
  *
- * @returns
+ * @returns Delivery data object
  */
 export const selectDeliveryData = (state: {
   cartReducer: {
@@ -285,9 +326,9 @@ export const selectDeliveryData = (state: {
 /**
  * Select cart total
  *
- * @param state slice state
+ * @param state The current state of the Redux store
  *
- * @returns
+ * @returns Total cost of selected products in the cart
  */
 export const selectCartTotal = (state: {
   cartReducer: {
@@ -307,10 +348,10 @@ export const selectCartTotal = (state: {
 /**
  * Select cart item by product id
  *
- * @param state slice state
- * @param id product id
+ * @param state The current state of the Redux store
+ * @param id Product ID to find
  *
- * @returns
+ * @returns Product data object if found, otherwise undefined
  */
 export const selectCartItemWithIdLength = (
   state: {
@@ -325,9 +366,9 @@ export const selectCartItemWithIdLength = (
 /**
  * Get transition - get product id for animations
  *
- * @param state slice state
+ * @param state The current state of the Redux store
  *
- * @returns transitionId
+ * @returns Transition ID for animations
  */
 export const getTransition = (state: {
   cartReducer: {
@@ -338,12 +379,13 @@ export const getTransition = (state: {
 /**
  * Select cart version
  *
- * @param state slice state
+ * @param state The current state of the Redux store
  *
- * @returns cart version
+ * @returns Cart version number
  */
 export const selectCartVersion = (state: {
   favoritesReducer: { version: number };
 }) => state.favoritesReducer.version;
 
+// Exporting the reducer generated by createSlice
 export default cartSlice.reducer;
