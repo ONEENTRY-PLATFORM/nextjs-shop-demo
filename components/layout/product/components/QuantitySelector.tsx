@@ -1,7 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { selectCartItemWithIdLength } from '@/app/store/reducers/CartSlice';
@@ -22,13 +22,13 @@ interface QuantitySelectorProps {
  * Quantity selector
  * @param id - product id
  * @param units - count of product in shop
- * @param title
- * @param height
- * @param className CSS className of ref element
+ * @param title - product title
+ * @param height - height of the selector component
+ * @param className - CSS className of ref element
  *
  * @returns Quantity selector with increase decrease buttons
  */
-const QuantitySelector: FC<QuantitySelectorProps> = ({
+const QuantitySelector: FC<QuantitySelectorProps> = memo(({
   id,
   units,
   title,
@@ -64,6 +64,8 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
       <IncreaseButton id={id} qty={qty} units={units} />
     </div>
   );
-};
+});
+
+QuantitySelector.displayName = 'QuantitySelector';
 
 export default QuantitySelector;
