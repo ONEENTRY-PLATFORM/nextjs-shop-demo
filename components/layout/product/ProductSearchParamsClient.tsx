@@ -7,19 +7,20 @@ import type { FC } from 'react';
 
 import ProductSingle from '.';
 
-const ProductSearchParamsWrapper: FC<{
+const ProductSearchParamsClient: FC<{
   product: IProductsEntity & {
     blocks?: Array<string>;
   };
   lang: string;
   dict: IAttributeValues;
 }> = ({ product, lang, dict }) => {
-  // This will be called in a client component context, so it's safe
-  // We're not actually using the searchParams in this component, but this
-  // ensures that if any child components need searchParams, they'll work properly
-  useSearchParams();
+  // Безопасно используем useSearchParams в клиентском компоненте
+  try {
+    useSearchParams();
+    // eslint-disable-next-line no-empty, @typescript-eslint/no-unused-vars
+  } catch (e) {}
 
   return <ProductSingle product={product} lang={lang} dict={dict} />;
 };
 
-export default ProductSearchParamsWrapper;
+export default ProductSearchParamsClient;

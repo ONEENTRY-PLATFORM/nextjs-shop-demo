@@ -13,11 +13,11 @@ import ProductsNotFound from './components/ProductsNotFound';
 interface GridLayoutProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: any;
-  searchParams?: {
+  searchParams?: Promise<{
     search?: string;
     page?: string;
     filters?: IFilterParams[];
-  };
+  }>;
   dict: IAttributeValues;
   pagesLimit: number;
   isCategory?: boolean;
