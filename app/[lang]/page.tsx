@@ -25,7 +25,7 @@ export const dynamicParams = true;
  * @returns JSX.Element representing the page layout
  */
 const IndexPageLayout: FC<{
-  params: { lang: string };
+  params: Promise<{ lang: string }>;
 }> = async ({ params }) => {
   // Destructure language parameter from params
   const { lang } = await params;
@@ -73,7 +73,7 @@ export default IndexPageLayout;
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: string };
+  params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   // Destructure language parameter from params
   const { lang } = await params;

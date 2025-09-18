@@ -5,7 +5,7 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
-import { reDefine, useLazyGetMeQuery } from '@/app/api';
+import { useLazyGetMeQuery } from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import type { IProducts } from '@/app/types/global';
 

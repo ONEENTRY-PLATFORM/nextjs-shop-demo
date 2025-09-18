@@ -68,7 +68,7 @@ const getSearchParams = (
       attributeMarker: 'price',
       conditionMarker: 'mth',
       conditionValue: searchParams.minPrice,
-      pageUrl: ['shop'],
+      pageUrl: 'shop',
       title: searchParams.search || '',
       isNested: false,
     };
@@ -80,7 +80,7 @@ const getSearchParams = (
       attributeMarker: 'price',
       conditionMarker: 'lth',
       conditionValue: searchParams.maxPrice,
-      pageUrl: ['shop'],
+      pageUrl: 'shop',
       title: searchParams.search || '',
       isNested: false,
     };

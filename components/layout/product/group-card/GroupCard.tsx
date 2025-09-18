@@ -43,7 +43,7 @@ const GroupCard: FC<GroupCardProps> = ({ product, lang, dict }) => {
           <h3 className="mb-5 text-sm leading-4 text-neutral-600">{title}</h3>
           <PriceDisplay
             currentPrice={attributeValues?.sale?.value}
-            originalPrice={product.price}
+            originalPrice={product.price as number}
             lang={lang}
           />
           <ApplyButton product={product} dict={dict} />

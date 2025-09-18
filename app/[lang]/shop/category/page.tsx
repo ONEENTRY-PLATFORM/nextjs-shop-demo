@@ -19,7 +19,7 @@ import CategoriesGrid from '@/components/layout/categories';
 export async function generateMetadata({
   params,
 }: {
-  params: { handle: string; lang: string };
+  params: Promise<{ handle: string; lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
   const { isError, page } = await getPageByUrl('category', lang);

@@ -13,7 +13,6 @@ import PriceFromInput from './PriceFromInput';
 import PriceToInput from './PriceToInput';
 
 interface PriceFilterProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prices: any;
   dict: IAttributeValues;
 }
@@ -29,7 +28,8 @@ const PriceFilter: FC<PriceFilterProps> = memo(({ prices, dict }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
+
+  const params = new URLSearchParams(searchParams?.toString() || '');
 
   const { filter_price_title, price_from, price_to } = dict;
 

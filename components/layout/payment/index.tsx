@@ -45,6 +45,7 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const { data, error, isLoading: isAccountsLoading } = useGetAccountsQuery({});
 
   // Fetch products by IDs
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { data: productsData, isLoading: isProductsLoading } =
     useGetProductsByIdsQuery({
       items: productsCartData.map((p) => p.id.toString()).toString(),

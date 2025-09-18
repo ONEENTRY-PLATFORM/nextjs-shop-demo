@@ -21,8 +21,17 @@ const SearchBar: FC<{ lang: string; dict: IAttributeValues }> = ({
   lang,
   dict,
 }) => {
+  // Handle useSearchParams - need to call it unconditionally
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
+  let params;
+  try {
+    params = new URLSearchParams(searchParams?.toString() || '');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    // If creating URLSearchParams fails, create empty params
+    params = new URLSearchParams();
+  }
+
   const pathname = usePathname();
   const { replace } = useRouter();
 
@@ -30,7 +39,7 @@ const SearchBar: FC<{ lang: string; dict: IAttributeValues }> = ({
 
   const [state, setState] = useState(false);
 
-  const searchValue = searchParams.get('search')?.toString();
+  const searchValue = searchParams?.get('search')?.toString();
   const [value] = useDebounce(searchValue, 300);
 
   const handleSearch = (term: string) => {

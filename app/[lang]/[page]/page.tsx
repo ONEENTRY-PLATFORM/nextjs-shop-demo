@@ -4,7 +4,6 @@ import type { FC } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
-import type { PageProps } from '@/app/types/global';
 import PaymentPage from '@/components/layout/payment';
 import ProfilePage from '@/components/layout/profile';
 import AboutPage from '@/components/pages/AboutPage';
@@ -28,7 +27,7 @@ import WithSidebar from './WithSidebar';
 export async function generateMetadata({
   params,
 }: {
-  params: { page: string; lang: string };
+  params: Promise<{ page: string; lang: string }>;
 }): Promise<Metadata> {
   const { page: pageData, lang } = await params;
   // get page by Url
@@ -58,7 +57,8 @@ export async function generateMetadata({
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns page layout JSX.Element
  */
-const PageLayout: FC<PageProps> = async ({ params }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PageLayout: FC<any> = async ({ params }) => {
   const { page: p, lang } = await params;
   // Get dictionary and set to server provider
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));

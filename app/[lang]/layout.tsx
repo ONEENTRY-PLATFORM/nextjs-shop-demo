@@ -57,7 +57,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params,
-}: Readonly<{ children: ReactNode; params: { lang: string } }>) {
+}: Readonly<{ children: ReactNode; params: Promise<{ lang: string }> }>) {
   const { lang } = await params;
   // set current lang to server provider
   ServerProvider('lang', lang);

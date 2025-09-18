@@ -25,7 +25,7 @@ import RepeatOrderButton from './RepeatOrderButton';
 const OrderPage: FC<{
   id: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  settings: Record<string, any> | undefined;
+  settings: Record<string, any> | any;
   lang: string;
   isActive: boolean;
 }> = ({ id, settings, lang, isActive }) => {

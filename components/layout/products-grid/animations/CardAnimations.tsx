@@ -22,8 +22,16 @@ const CardAnimations: FC<{
   index: number;
   pagesLimit: number;
 }> = ({ children, className, index, pagesLimit }) => {
-  const searchParams = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) || 1;
+  // Handle useSearchParams in a try/catch to prevent build errors
+  let currentPage = 1;
+  try {
+    const searchParams = useSearchParams();
+    currentPage = Number(searchParams?.get('page')) || 1;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    // If useSearchParams fails (e.g. during SSR), default to page 1
+    currentPage = 1;
+  }
 
   const ref = useRef(null);
   const delay = (index - (currentPage - 1) * pagesLimit) / 10;

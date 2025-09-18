@@ -32,13 +32,22 @@ const OrdersPage: FC<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   settings: any;
 }> = ({ lang, dict, settings }) => {
-  const searchParams = useSearchParams();
+  // Handle useSearchParams in a try/catch to prevent build errors
+  let currentPage = 0;
+  try {
+    const searchParams = useSearchParams();
+    currentPage = Number(searchParams?.get('page')) || 0;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    // If useSearchParams fails (e.g. during SSR), default to page 0
+    currentPage = 0;
+  }
+
   const { isAuth, user } = useContext(AuthContext);
 
   const [orders, setOrders] = useState<Array<IOrderByMarkerEntity>>();
   const [total, setTotal] = useState<number>(0);
 
-  const currentPage = Number(searchParams.get('page')) || 0;
   const pageLimit = settings?.orders_limit.value || 10;
 
   // get all orders by Marker

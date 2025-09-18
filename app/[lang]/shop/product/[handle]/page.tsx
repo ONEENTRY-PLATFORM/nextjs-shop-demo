@@ -20,7 +20,7 @@ import { i18n } from '@/i18n-config';
 export async function generateMetadata({
   params,
 }: {
-  params: { handle: string; lang: string };
+  params: Promise<{ handle: string; lang: string }>;
 }): Promise<Metadata> {
   const { handle, lang } = await params;
   const { isError, product } = await getProductById(Number(handle), lang);

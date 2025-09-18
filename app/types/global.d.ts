@@ -8,12 +8,12 @@ declare type LocalizeInfo = {
 };
 
 declare type PageProps = {
-  params: { page: string; handle: string; lang: string };
-  searchParams?: {
+  params: Promise<{ page: string; handle: string; lang: string }>;
+  searchParams?: Promise<{
     search?: string;
     page?: string;
     filters?: IFilterParams[];
-  };
+  }>;
 };
 
 declare type SimplePageProps = {
@@ -29,12 +29,13 @@ declare type LoaderProps = {
 };
 
 declare type MetadataParams = {
-  params: { handle: string; lang: string };
+  params: Promise<{ handle: string; lang: string }>;
 };
 
 export type CartState = {
   quantity: number;
   id: number;
+  productsData: IProducts[];
 };
 
 export type AnimationsProps = {
@@ -47,9 +48,6 @@ export type IProducts = {
   id: number;
   selected: boolean;
   quantity: number;
-};
-export type CartState = {
-  productsData: IProducts[];
 };
 interface IProductMetadata {
   title: string;

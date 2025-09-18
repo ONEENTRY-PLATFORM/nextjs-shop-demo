@@ -53,11 +53,11 @@ export default OrdersPageLayout;
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: string };
+  params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  const title = 'Мои заказы — OneEntry Shop';
-  const description = 'История заказов и статусы оформления.';
+  const title = 'My orders';
+  const description = 'Order history and processing statuses.';
   return {
     title,
     description,

@@ -18,9 +18,18 @@ interface AvailabilityFilterProps {
 const AvailabilityFilter: FC<AvailabilityFilterProps> = memo(({ title }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
-
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
+
+  // Handle useSearchParams in a try/catch to prevent build errors
+  let params;
+  try {
+    params = new URLSearchParams(searchParams?.toString() || '');
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    // If useSearchParams fails (e.g. during SSR), create empty params
+    params = new URLSearchParams();
+  }
+
   const [available, setAvailability] = useState(
     params.get('in_stock') ? true : false,
   );

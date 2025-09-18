@@ -18,16 +18,26 @@ import Spinner from '@/components/shared/Spinner';
  */
 const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const router = useRouter();
-  const currentPage = Number(searchParams.get('page')) || 1;
+  const searchParams = useSearchParams();
+
+  // Handle the .get() call in a try/catch to prevent runtime errors
+  let currentPage = 1;
+  try {
+    currentPage = Number(searchParams?.get('page')) || 1;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    // If accessing search params fails (e.g. during SSR), default to page 1
+    currentPage = 1;
+  }
+
   const nextPage = (currentPage < 1 ? 1 : currentPage) + 1;
 
   const ref = useRef(null);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
+      const params = new URLSearchParams(searchParams?.toString() || '');
       params.set(name, value);
 
       return params.toString();
