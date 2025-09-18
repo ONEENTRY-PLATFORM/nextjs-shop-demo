@@ -43,13 +43,11 @@ const QuantitySelector: FC<QuantitySelectorProps> = ({
 
   // setQty state on quantity change
   useEffect(() => {
-    if (quantity >= 0) {
-      setQty(quantity);
-    }
+    setQty(quantity > 0 ? quantity : 1);
   }, [quantity]);
 
-  // Показываем компонент всегда, когда товар добавлен в корзину (quantity >= 0)
-  if (quantity < 0) {
+  // Показываем компонент всегда, когда товар добавлен в корзину (quantity > 0)
+  if (quantity <= 0) {
     return null;
   }
 

@@ -51,7 +51,21 @@ export const cartSlice = createSlice({
         (product: { id: number }) => product.id === action.payload.id,
       );
       if (index === -1) {
-        state.productsData.push(action.payload);
+        // Добавляем товар в корзину с указанным количеством (минимум 1)
+        state.productsData.push({
+          id: action.payload.id,
+          selected: action.payload.selected,
+          quantity: Math.max(1, action.payload.quantity),
+        });
+      } else {
+        // Если товар уже в корзине, увеличиваем его количество
+        state.productsData[index] = {
+          ...state.productsData[index],
+          quantity: Math.max(
+            1,
+            state.productsData[index].quantity + action.payload.quantity,
+          ),
+        };
       }
     },
     addProductsToCart(state, action: PayloadAction<IProductsEntity[]>) {
@@ -64,13 +78,26 @@ export const cartSlice = createSlice({
       const index = state.productsData.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
+
+      if (index === -1) {
+        // Если товара нет в корзине, добавляем его с количеством 1
+        state.productsData.push({
+          id: action.payload.id,
+          quantity: 1,
+          selected: true,
+        });
+        return;
+      }
+
       const qty = state.productsData[index].quantity + action.payload.quantity;
+
+      // Ограничиваем количество максимальным доступным
+      const clampedQty = Math.min(qty, action.payload.units);
 
       state.productsData[index] = {
         ...state.productsData[index],
         selected: state.productsData[index].selected,
-        quantity:
-          qty > action.payload.units ? Number(action.payload.units) : qty,
+        quantity: clampedQty,
       };
     },
     decreaseProductQty(
@@ -80,11 +107,25 @@ export const cartSlice = createSlice({
       const index = state.productsData.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
+
+      if (index === -1) {
+        return;
+      }
+
       const qty = state.productsData[index].quantity - action.payload.quantity;
+
+      // Если количество меньше или равно 0, удаляем товар из корзины
+      if (qty <= 0) {
+        state.productsData = state.productsData.filter(
+          (item: IProducts) => item.id !== action.payload.id,
+        );
+        return;
+      }
+
       state.productsData[index] = {
         ...state.productsData[index],
         selected: state.productsData[index].selected,
-        quantity: qty <= 0 ? 1 : qty,
+        quantity: qty,
       };
     },
     setProductQty(
@@ -94,18 +135,34 @@ export const cartSlice = createSlice({
       const index = state.productsData.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
+
       const qty = action.payload.quantity;
 
-      state.productsData[index] = {
-        ...state.productsData[index],
-        selected: state.productsData[index].selected,
-        quantity:
-          qty <= 0
-            ? 1
-            : qty > action.payload.units
-              ? action.payload.units
-              : qty,
-      };
+      // Если количество меньше или равно 0, удаляем товар из корзины
+      if (qty <= 0) {
+        state.productsData = state.productsData.filter(
+          (item: IProducts) => item.id !== action.payload.id,
+        );
+        return;
+      }
+
+      // Ограничиваем количество максимальным доступным
+      const clampedQty = Math.min(qty, action.payload.units);
+
+      if (index !== -1) {
+        state.productsData[index] = {
+          ...state.productsData[index],
+          selected: state.productsData[index].selected,
+          quantity: clampedQty,
+        };
+      } else {
+        // Если товара еще нет в корзине, добавляем его
+        state.productsData.push({
+          id: action.payload.id,
+          quantity: clampedQty,
+          selected: true,
+        });
+      }
     },
     removeProduct(state, action: PayloadAction<number>) {
       state.productsData = state.productsData.filter(

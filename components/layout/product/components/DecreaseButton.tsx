@@ -24,9 +24,6 @@ interface ButtonProps {
 const DecreaseButton: FC<ButtonProps> = ({ id, qty, title }) => {
   const dispatch = useAppDispatch();
   const { user } = useContext(AuthContext);
-  if (qty < 1) {
-    return;
-  }
 
   /**
    * Remove product from cart and unsubscribe from events
