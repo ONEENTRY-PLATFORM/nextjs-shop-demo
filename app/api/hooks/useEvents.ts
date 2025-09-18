@@ -1,4 +1,5 @@
 import { api } from '@/app/api';
+import { handleApiError } from '@/app/utils/errorHandler';
 
 /**
  * Subscribe events with Events API
@@ -12,9 +13,10 @@ export const onSubscribeEvents = async (id: number) => {
     // await api.Events.subscribeByMarker('catalog_event', id);
     await api.Events.subscribeByMarker('status_out_of_stock', id);
     await api.Events.subscribeByMarker('product_price', id);
-  } catch (e) {
+  } catch (error) {
+    const apiError = handleApiError(error);
     // eslint-disable-next-line no-console
-    console.log(e);
+    console.log('Error subscribing to events:', apiError.message);
   }
 };
 
@@ -30,8 +32,9 @@ export const onUnsubscribeEvents = async (id: number) => {
     // await api.Events.unsubscribeByMarker('catalog_event', id);
     await api.Events.unsubscribeByMarker('status_out_of_stock', id);
     await api.Events.unsubscribeByMarker('product_price', id);
-  } catch (e) {
+  } catch (error) {
+    const apiError = handleApiError(error);
     // eslint-disable-next-line no-console
-    console.log(e);
+    console.log('Error unsubscribing from events:', apiError.message);
   }
 };
