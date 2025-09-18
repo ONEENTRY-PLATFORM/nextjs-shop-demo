@@ -9,7 +9,9 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 // Importing custom product type
 import type { IProducts } from '@/app/types/global';
 
-// Defining the shape of the initial state for the cart slice
+/**
+ * Defining the shape of the initial state for the cart slice
+ */
 type InitialStateType = {
   products: IProductsEntity[]; // Array to store product entities
   productsData: IProducts[]; // Array to store product data with additional properties like quantity
@@ -26,7 +28,9 @@ type InitialStateType = {
   version: number; // Version of the cart, useful for updates
 };
 
-// Initial state setup for the cart slice
+/**
+ * Initial state setup for the cart slice
+ */
 const initialState: InitialStateType = {
   products: [], // Initialize empty array for products
   productsData: [], // Initialize empty array for product data
@@ -41,12 +45,16 @@ const initialState: InitialStateType = {
   version: 0, // Default version
 };
 
-// Creating a Redux slice for cart management
+/**
+ * Creating a Redux slice for cart management
+ */
 export const cartSlice = createSlice({
   name: 'cart-slice', // Name of the slice
   initialState, // Initial state defined above
   reducers: {
-    // Reducer to add a product to the cart
+    /**
+     * Reducer to add a product to the cart
+     */
     addProductToCart(
       state,
       action: PayloadAction<{

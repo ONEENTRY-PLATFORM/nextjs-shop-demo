@@ -14,19 +14,26 @@ type InitialStateType = {
   };
 };
 
-// Initialize the state with an empty fields object.
+/**
+ * Initialize the state with an empty fields object.
+ */
 const initialState: InitialStateType = {
   fields: {}, // Start with no fields defined.
 };
 
-// Utility function to get the first key of an object.
-// Returns the first key if it exists, otherwise returns undefined.
+/**
+ * Utility function to get the first key of an object.
+ *
+ * Returns the first key if it exists, otherwise returns undefined.
+ */
 function getFirstKey(obj: Record<string, FieldType>): string | undefined {
   const keys = Object.keys(obj); // Get all keys of the object.
   return keys.length > 0 ? keys[0] : undefined; // Return the first key if available.
 }
 
-// Create a slice for managing form fields.
+/**
+ * Create a slice for managing form fields.
+ */
 const formFieldsSlice = createSlice({
   name: 'form-fields', // Name of the slice.
   initialState, // The initial state defined above.

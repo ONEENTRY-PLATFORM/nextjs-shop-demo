@@ -6,18 +6,24 @@ type InitialStateType = {
   version: number; // A version number to track changes in the favorites list.
 };
 
-// Define the initial state for the favorites slice.
+/**
+ * Define the initial state for the favorites slice.
+ */
 const initialState: InitialStateType = {
   products: [], // Start with an empty list of favorite products.
   version: 0, // Initial version set to 0.
 };
 
-// Create a slice for managing favorite products.
+/**
+ * Create a slice for managing favorite products.
+ */
 export const favoritesSlice = createSlice({
   name: 'favorites-slice', // Name of the slice.
   initialState, // The initial state defined above.
   reducers: {
-    // Reducer to add a product to the favorites list.
+    /**
+     * Reducer to add a product to the favorites list.
+     */
     addFavorites(state, action: PayloadAction<number>) {
       // Check if the product ID is already in the favorites list.
       const isUnique = state.products.findIndex((productId: number) => {
@@ -28,18 +34,24 @@ export const favoritesSlice = createSlice({
         state.products.push(action.payload);
       }
     },
-    // Reducer to remove a product from the favorites list.
+    /**
+     * Reducer to remove a product from the favorites list.
+     */
     removeFavorites(state, action: PayloadAction<number>) {
       // Filter out the product ID to be removed.
       state.products = state.products.filter(
         (product: number) => product !== action.payload,
       );
     },
-    // Reducer to remove all products from the favorites list.
+    /**
+     * Reducer to remove all products from the favorites list.
+     */
     removeAllFavorites(state) {
       state.products = initialState.products; // Reset to initial empty state.
     },
-    // Reducer to set the version of the favorites list.
+    /**
+     * Reducer to set the version of the favorites list.
+     */
     setFavoritesVersion(state, action: PayloadAction<number>) {
       state.version = action.payload; // Update the version number.
     },
