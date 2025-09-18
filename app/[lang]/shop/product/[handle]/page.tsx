@@ -6,7 +6,7 @@ import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById } from '@/app/api';
 import { getProducts } from '@/app/api/server/products/getProducts';
 import type { PageProps } from '@/app/types/global';
-import ProductSingle from '@/components/layout/product';
+import ProductSearchParamsWrapper from '@/components/layout/product/ProductSearchParamsWrapper';
 import type { Locale } from '@/i18n-config';
 import { i18n } from '@/i18n-config';
 
@@ -118,7 +118,7 @@ const ProductPageLayout: FC<PageProps> = async ({ params }) => {
         }}
       />
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-col bg-white">
-        <ProductSingle lang={lang} product={product} dict={dict} />
+        <ProductSearchParamsWrapper lang={lang} product={product} dict={dict} />
       </div>
     </>
   );

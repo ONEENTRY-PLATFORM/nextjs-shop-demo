@@ -18,6 +18,7 @@ interface ProductCardProps {
   index: number;
   dict: IAttributeValues;
   pagesLimit: number;
+  currentPage?: number;
 }
 
 /**
@@ -28,6 +29,7 @@ interface ProductCardProps {
  * @param dict dictionary from server api
  * @param index Index of element for animations stagger
  * @param pagesLimit used for animations
+ * @param currentPage current page number for animations
  *
  * @returns Product card
  */
@@ -37,6 +39,7 @@ const ProductCard: FC<ProductCardProps> = ({
   dict,
   index,
   pagesLimit,
+  currentPage = 1,
 }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, statusIdentifier, attributeValues, localizeInfos } = product;
@@ -54,6 +57,7 @@ const ProductCard: FC<ProductCardProps> = ({
       className="product-card group"
       index={index}
       pagesLimit={pagesLimit}
+      currentPage={currentPage}
     >
       <div className="z-10 flex justify-between gap-5 self-stretch">
         <Stickers product={product} lang={lang} />

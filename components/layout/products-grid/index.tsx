@@ -81,6 +81,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
             dict={dict}
             pagesLimit={pagesLimit}
             products={products}
+            currentPage={currentPage}
           />
           {totalPages > 1 && (
             <div className="mt-5 flex w-full justify-center">
