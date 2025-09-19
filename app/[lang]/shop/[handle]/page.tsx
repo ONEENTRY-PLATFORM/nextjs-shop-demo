@@ -6,7 +6,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 import { memo, Suspense } from 'react';
 
-import { getPageByUrl, getProducts } from '@/app/api';
+import { getChildPagesByParentUrl, getPageByUrl, getProducts } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
@@ -85,9 +85,18 @@ export default ShopCatalogPage;
  * Pre-generation of shop page
  */
 export async function generateStaticParams() {
-  const params: Array<{ lang: string }> = [];
+  const params: Array<{ lang: string; handle: string }> = [];
   for (const lang of i18n.locales) {
-    params.push({ lang });
+    const { pages }: any = await getChildPagesByParentUrl('shop', lang);
+    if (pages && Array.isArray(pages)) {
+      for (const page of pages) {
+        if (page) {
+          const handle = page.pageUrl;
+
+          params.push({ lang, handle });
+        }
+      }
+    }
   }
   return params;
 }

@@ -43,16 +43,16 @@ const ProductPageLayout: FC<{
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: localizeInfos?.title,
-    description: attributeValues?.description?.value[0]?.plainValue,
-    image: attributeValues?.pic?.value?.downloadLink,
+    description: attributeValues?.description?.value[0]?.plainValue || '',
+    image: attributeValues?.pic?.value?.downloadLink || '',
     offers: {
       '@type': 'AggregateOffer',
       availability: statusIdentifier
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
-      priceCurrency: attributeValues?.currency?.value,
-      highPrice: additional?.prices?.max,
-      lowPrice: additional?.prices?.min,
+      priceCurrency: attributeValues?.currency?.value || '',
+      highPrice: additional?.prices?.max || 1,
+      lowPrice: additional?.prices?.min || 1,
     },
   };
 
