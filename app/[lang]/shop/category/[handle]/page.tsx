@@ -88,11 +88,11 @@ export async function generateMetadata({
  * @returns Shop page layout JSX.Element
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ShopCategoryLayout: FC<PageProps> = async (props: any) => {
+const ShopCategoryLayout: FC<any> = async (props: any) => {
   // Access searchParams without await to keep page static
   const searchParams = props.searchParams;
-  const params = await props.params;
-  const { lang, handle } = await params;
+  const params = props.params;
+  const { lang, handle } = params;
   // Get the dictionary from the API and set the server provider.
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 

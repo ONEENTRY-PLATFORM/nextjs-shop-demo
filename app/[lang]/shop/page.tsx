@@ -6,7 +6,6 @@ import { memo, Suspense } from 'react';
 import { getPageByUrl, getProducts } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
@@ -109,7 +108,8 @@ const ShopPageLayout: FC<PageProps> = async (props) => {
     lang: lang,
     offset: 0,
     limit: pagesLimit,
-    params: { ...params, searchParams },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    params: { handle: params.handle, searchParams: searchParams as any },
   });
 
   const productsData = {
@@ -153,7 +153,6 @@ const ShopPageLayout: FC<PageProps> = async (props) => {
               pagesLimit={pagesLimit}
               dict={dict}
               params={params}
-              searchParams={searchParams}
               productsData={productsData}
             />
           </Suspense>
