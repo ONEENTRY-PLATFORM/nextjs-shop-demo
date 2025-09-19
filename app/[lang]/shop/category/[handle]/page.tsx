@@ -89,7 +89,9 @@ export async function generateMetadata({
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ShopCategoryLayout: FC<PageProps> = async (props: any) => {
-  const { params, searchParams } = await props;
+  // Access searchParams without await to keep page static
+  const searchParams = props.searchParams;
+  const params = await props.params;
   const { lang, handle } = await params;
   // Get the dictionary from the API and set the server provider.
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
@@ -106,12 +108,14 @@ const ShopCategoryLayout: FC<PageProps> = async (props: any) => {
     return notFound();
   }
 
+  const currentPage = Number(searchParams?.page) || 1;
+
   // Fetch products data
   const { isError, products, total } = await getProductsByPageUrl({
     lang: lang,
-    offset: 0,
+    offset: (currentPage - 1) * pagesLimit,
     limit: pagesLimit,
-    params: { ...params, searchParams: await searchParams },
+    params: { ...params, searchParams },
   });
 
   const productsData = {
@@ -158,7 +162,6 @@ const ShopCategoryLayout: FC<PageProps> = async (props: any) => {
         <div className="flex w-full flex-col items-center gap-5 bg-white">
           <Suspense fallback={<MemoizedProductsGridLoader />}>
             <ProductsGridLayout
-              searchParams={await searchParams}
               pagesLimit={pagesLimit}
               params={params}
               dict={dict}
