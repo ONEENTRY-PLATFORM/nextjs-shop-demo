@@ -77,7 +77,7 @@ export const cartSlice = createSlice({
         // If the product is already in the cart, we increase its quantity
         state.productsData[index] = {
           id: state.productsData[index]?.id || action.payload.id,
-          selected: state.productsData[index]?.selected || false,
+          selected: state.productsData[index]?.selected ?? true,
           quantity: Math.max(
             1,
             (state.productsData[index]?.quantity || 0) +
@@ -153,7 +153,7 @@ export const cartSlice = createSlice({
 
       state.productsData[index] = {
         id: state.productsData[index]?.id || action.payload.id,
-        selected: state.productsData[index]?.selected || true,
+        selected: state.productsData[index]?.selected ?? true,
         quantity: qty,
       };
     },
@@ -184,7 +184,7 @@ export const cartSlice = createSlice({
       if (index !== -1) {
         state.productsData[index] = {
           id: state.productsData[index]?.id || action.payload.id,
-          selected: state.productsData[index]?.selected || true,
+          selected: state.productsData[index]?.selected ?? true,
           quantity: clampedQty,
         };
       } else {
@@ -215,10 +215,7 @@ export const cartSlice = createSlice({
             selected: !product.selected,
           };
         }
-        return {
-          ...product,
-          selected: product.selected ?? true,
-        };
+        return product;
       });
     },
     /**
@@ -272,6 +269,19 @@ export const cartSlice = createSlice({
 export const selectCartVersion = (state: {
   cartReducer: { version: number };
 }) => state.cartReducer.version;
+
+/**
+ * Get cart transition
+ *
+ * @param state The current state of the Redux store
+ *
+ * @returns Object containing transitionId
+ */
+export const getTransition = (state: {
+  cartReducer: { transitionId: number };
+}) => {
+  return { transitionId: state.cartReducer.transitionId };
+};
 
 /**
  * Select cart data

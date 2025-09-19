@@ -22,11 +22,7 @@ interface ProductDetailsProps {
  *
  * @returns Product details
  */
-const ProductDetails: FC<ProductDetailsProps> = async ({
-  product,
-  lang,
-  dict,
-}) => {
+const ProductDetails: FC<ProductDetailsProps> = ({ product, lang, dict }) => {
   // Extract data from product
   const {
     id,

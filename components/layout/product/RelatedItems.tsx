@@ -2,35 +2,34 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
 
-import { getBlockByMarker } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
-
 import CardsGridAnimations from '../products-grid/animations/CardsGridAnimations';
 import ProductCard from '../products-grid/components/product-card/ProductCard';
 import ProductAnimations from './animations/ProductAnimations';
 
 interface RelatedItemsProps {
-  marker: string;
+  block: {
+    attributeValues: any;
+    similarProducts?: {
+      items?: IProductsEntity[];
+    };
+  };
   lang: string;
   dict: IAttributeValues;
+  langCode: string;
 }
 
 /**
  * RelatedItems
  *
- * @param marker
+ * @param block - The block data containing similar products
  * @param lang current language shortcode
  * @param dict dictionary from server api
+ * @param langCode - The language code for attribute values
  *
  * @returns RelatedItems
  */
-const RelatedItems: FC<RelatedItemsProps> = async ({ marker, lang, dict }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-
-  // Get related items block from api
-  const { isError, block } = await getBlockByMarker(marker, lang);
-
-  if (isError || !block || !block.similarProducts) {
+const RelatedItems: FC<RelatedItemsProps> = ({ block, lang, dict, langCode }) => {
+  if (!block || !block.similarProducts) {
     return null;
   }
 

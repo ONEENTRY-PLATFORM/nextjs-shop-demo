@@ -59,7 +59,7 @@ const ProductsGrid: FC<ProductsGridProps> = ({
   );
 
   return (
-    <div className="grid grid-cols-4 gap-5 max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-2 max-sm:grid-cols-1">
+    <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-2">
       {preparedProducts.map((product, i) => {
         // Check if product has multiply items marker
         const isGroup =

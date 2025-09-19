@@ -1,8 +1,10 @@
+'use client';
+
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import { getRelatedProductsById } from '@/app/api';
+import { LanguageEnum } from '@/app/types/enum';
 
 import ProductAnimations from './animations/ProductAnimations';
 import ProductDescription from './product-single/ProductDescription';
@@ -19,6 +21,10 @@ interface ProductSingleProps {
   };
   lang: string;
   dict: IAttributeValues;
+  relatedProducts: IProductsEntity[];
+  relatedProductsTotal: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  blocksData?: Record<string, any>;
 }
 
 /**
@@ -27,13 +33,19 @@ interface ProductSingleProps {
  * @param product product entity object
  * @param lang current language shortcode
  * @param dict dictionary from server api
+ * @param relatedProducts array of related products
+ * @param relatedProductsTotal total number of related products
+ * @param blocksData pre-fetched block data
  *
  * @returns Product single
  */
-const ProductSingle: FC<ProductSingleProps> = async ({
+const ProductSingle: FC<ProductSingleProps> = ({
   product,
   lang,
   dict,
+  relatedProducts,
+  relatedProductsTotal,
+  blocksData = {},
 }) => {
   // Validate required props
   if (!product) {
@@ -67,7 +79,7 @@ const ProductSingle: FC<ProductSingleProps> = async ({
   }
 
   // extract data from product
-  const { attributeValues, localizeInfos, blocks, id } = product;
+  const { attributeValues, localizeInfos, blocks } = product;
 
   // Validate required product data
   if (!localizeInfos?.title) {
@@ -80,27 +92,7 @@ const ProductSingle: FC<ProductSingleProps> = async ({
     );
   }
 
-  // Get all related products by Id with error handling
-  let relatedProductsData = {
-    products: [] as IProductsEntity[],
-    total: 0,
-  };
-
-  try {
-    const result = await getRelatedProductsById(id, lang);
-    if (!result.isError && result.products) {
-      relatedProductsData = {
-        products: result.products,
-        total: result.products.length,
-      };
-    }
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.warn('Failed to load related products:', error);
-    // Continue with empty related products
-  }
-
-  const { products, total } = relatedProductsData;
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
@@ -119,7 +111,11 @@ const ProductSingle: FC<ProductSingleProps> = async ({
           index={1}
         >
           <div className="relative mb-6 box-border flex shrink-0 flex-col">
-            <VariationsCarousel items={products} total={total} lang={lang} />
+            <VariationsCarousel
+              items={relatedProducts}
+              total={relatedProductsTotal}
+              lang={lang}
+            />
           </div>
 
           {/* ProductDescription */}
@@ -143,22 +139,24 @@ const ProductSingle: FC<ProductSingleProps> = async ({
       {/* blocks */}
       {Array.isArray(blocks) &&
         blocks.map((block: string) => {
-          if (block === 'multiply_items_offer') {
+          if (block === 'multiply_items_offer' && blocksData[block]) {
             return (
               <ProductsGroup
                 key={block}
-                marker={block}
+                block={blocksData[block]}
                 lang={lang}
                 dict={dict}
+                langCode={langCode}
               />
             );
-          } else if (block === 'similar') {
+          } else if (block === 'similar' && blocksData[block]) {
             return (
               <RelatedItems
                 key={block}
-                marker={block}
+                block={blocksData[block]}
                 lang={lang}
                 dict={dict}
+                langCode={langCode}
               />
             );
           }

@@ -1,133 +1,113 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById } from '@/app/api';
-import ProductClientWrapper from '@/components/layout/product/ProductClientWrapper';
-
-interface ProductParams {
-  handle: string;
-  lang: string;
-}
-
-interface ProductPageProps {
-  params: Promise<ProductParams>;
-}
-
-interface ProductJsonLd {
-  '@context': string;
-  '@type': string;
-  name: string | undefined;
-  image: string[];
-  description: string | undefined;
-  sku: string | undefined;
-  brand: {
-    '@type': string;
-    name: string | undefined;
-  };
-  offers: {
-    '@type': string;
-    url: string;
-    priceCurrency: string | undefined;
-    price: number | undefined;
-    availability: string;
-  };
-}
+import ProductSingleServer from '@/components/layout/product/ProductSingleServer';
+import type { Locale } from '@/i18n-config';
+import { i18n } from '@/i18n-config';
 
 /**
  * Generate page metadata
- * @param params Page parameters containing handle and language
- * @returns Page metadata
+ * @async server component
+ * @param params page params
+ * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
+ * @returns metadata
  */
 export async function generateMetadata({
   params,
-}: ProductPageProps): Promise<Metadata> {
+}: {
+  params: { handle: string; lang: string };
+}): Promise<Metadata> {
   const { handle, lang } = await params;
-
-  // Validate product ID
-  const productId = Number(handle);
-  if (isNaN(productId)) {
-    return notFound();
-  }
-
-  const { product, isError } = await getProductById(productId, lang);
+  const { isError, product } = await getProductById(Number(handle), lang);
 
   if (isError || !product) {
     return notFound();
   }
 
-  const { attributeValues } = product;
-
-  const title = (attributeValues?.title?.value as string) || 'Product';
-  const description = (attributeValues?.description?.value as string) || '';
-  const image = (attributeValues?.pic?.value?.downloadLink as string) || '';
+  const { downloadLink, alt = 'alt' } =
+    product.attributeValues.pic?.value || {};
+  const indexable = product.isVisible;
 
   return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      images: image ? [image] : [],
-      type: 'article',
+    title: product?.localizeInfos.title,
+    description: product?.attributeValues.description?.value[0]?.plainValue,
+    alternates: {
+      languages: Object.fromEntries(
+        i18n.locales.map((l) => [l, `/${l}/shop/product/${handle}`]),
+      ),
+      canonical: `/${lang}/shop/product/${handle}`,
     },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      images: image ? [image] : [],
+    robots: {
+      index: indexable,
+      follow: indexable,
+      googleBot: {
+        index: indexable,
+        follow: indexable,
+      },
     },
+    openGraph: downloadLink
+      ? {
+          images: [
+            {
+              url: downloadLink,
+              width: 300,
+              height: 300,
+              alt,
+            },
+          ],
+        }
+      : null,
   };
 }
 
-interface ProductPageLayoutProps {
-  product: IProductsEntity;
-  lang: string;
-  dict: IAttributeValues;
-}
-
 /**
- * Product page layout component
- * @param props Product page layout props
- * @returns JSX Element
+ * Product page
+ * @async server component
+ * @param params page params
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ * @returns Product page layout JSX.Element
  */
-const ProductPageLayout: FC<ProductPageLayoutProps> = ({
-  product,
-  lang,
-  dict,
-}) => {
-  if (!product) {
+
+const ProductPageLayout: FC<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params: Promise<{ handle: string; lang: any; product: any }>;
+}> = async ({ params }) => {
+  const { handle, lang } = await params;
+  // Get the dictionary from the API and set the server provider.
+  const dict = await getDictionary(lang as Locale);
+
+  // Get product by current Id
+  const { isError, product } = await getProductById(Number(handle), lang);
+
+  if (isError || !product) {
     return notFound();
   }
 
-  const { attributeValues, sku, statusIdentifier: marker, id } = product;
+  // extract data from product
+  const { attributeValues, localizeInfos, additional, statusIdentifier } =
+    product;
 
-  // Product structured data
-  // https://developers.google.com/search/docs/appearance/structured-data/product
-  const productJsonLd: ProductJsonLd = {
+  /**
+   * product Json liked data
+   * https://json-ld.org/
+   */
+  const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: attributeValues.title?.value as string,
-    image: attributeValues.pic?.value?.downloadLink
-      ? [attributeValues.pic?.value?.downloadLink as string]
-      : [],
-    description: attributeValues.description?.value as string,
-    sku: sku || undefined,
-    brand: {
-      '@type': 'Brand',
-      name: marker || undefined,
-    },
+    name: localizeInfos.title,
+    description: attributeValues.description?.value[0]?.plainValue,
+    image: attributeValues.pic?.value?.downloadLink,
     offers: {
-      '@type': 'Offer',
-      url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}/shop/product/${id}`,
-      priceCurrency: attributeValues.currency?.value as string,
-      price: attributeValues.price?.value as number,
-      availability: attributeValues.in_stock?.value
+      '@type': 'AggregateOffer',
+      availability: statusIdentifier
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
+      priceCurrency: attributeValues.currency?.value,
+      highPrice: additional.prices?.max,
+      lowPrice: additional.prices?.min,
     },
   };
 
@@ -139,36 +119,29 @@ const ProductPageLayout: FC<ProductPageLayoutProps> = ({
           __html: JSON.stringify(productJsonLd),
         }}
       />
-      <main className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-col bg-white">
-        <ProductClientWrapper lang={lang} product={product} dict={dict} />
-      </main>
+      <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-col bg-white">
+        <ProductSingleServer lang={lang} product={product} dict={dict} />
+      </div>
     </>
   );
 };
 
+export default ProductPageLayout;
+
 /**
- * Product page component
- * @param props Product page props
- * @returns Product page
+ * Pre-generation of a portion of product cards for each locale
  */
-const ProductPage = async ({ params }: ProductPageProps) => {
-  const { handle, lang } = await params;
-
-  // Validate product ID
-  const productId = Number(handle);
-  if (isNaN(productId)) {
-    return notFound();
+export async function generateStaticParams() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const params: Array<{ lang: string; handle: string; product: any }> = [];
+  for (const lang of i18n.locales) {
+    // We need to get an actual product ID to generate static params
+    // For now, we'll use a placeholder - in a real implementation, you'd fetch product IDs
+    const productId = 1; // Replace with actual product ID fetching logic
+    const { product } = await getProductById(productId, lang);
+    if (product) {
+      params.push({ lang, handle: String(product.id), product });
+    }
   }
-
-  const { product, isError } = await getProductById(productId, lang);
-
-  if (isError || !product) {
-    return notFound();
-  }
-
-  const dict = await getDictionary(lang as keyof typeof getDictionary);
-
-  return <ProductPageLayout product={product} lang={lang} dict={dict} />;
-};
-
-export default ProductPage;
+  return params;
+}

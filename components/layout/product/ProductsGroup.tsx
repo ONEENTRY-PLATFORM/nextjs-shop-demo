@@ -2,38 +2,35 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import { getBlockByMarker } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
-
 import ProductAnimations from './animations/ProductAnimations';
 import GroupCard from './group-card/GroupCard';
 
 interface ProductsGroupProps {
-  marker: string;
+  block: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    attributeValues: any;
+    products?: IProductsEntity[];
+  };
   lang: string;
   dict: IAttributeValues;
+  langCode: string;
 }
 
 /**
  * ProductsGroup
- * @param marker
+ * @param block - The block data containing products and attributes
  * @param lang current language shortcode
  * @param dict dictionary from server api
+ * @param langCode - The language code for attribute values
  *
  * @returns ProductsGroup
  */
-const ProductsGroup: FC<ProductsGroupProps> = async ({
-  marker,
+const ProductsGroup: FC<ProductsGroupProps> = ({
+  block,
   lang,
   dict,
+  langCode,
 }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { isError, block } = await getBlockByMarker(marker, lang);
-
-  if (isError || !block) {
-    return;
-  }
-
   return (
     <ProductAnimations
       className="mb-8 flex flex-col max-md:max-w-full"

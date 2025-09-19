@@ -3,7 +3,10 @@ import { type FC, memo, useCallback, useContext } from 'react';
 import { onUnsubscribeEvents } from '@/app/api/hooks/useEvents';
 import { useAppDispatch } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import { setCartTransition } from '@/app/store/reducers/CartSlice';
+import {
+  removeProduct,
+  setCartTransition,
+} from '@/app/store/reducers/CartSlice';
 import DeleteIcon from '@/components/icons/delete';
 
 /**
@@ -19,6 +22,7 @@ const DeleteButton: FC<{ productId: number }> = memo(({ productId }) => {
 
   const handleDelete = useCallback(async () => {
     dispatch(setCartTransition({ productId: productId }));
+    dispatch(removeProduct(productId));
     if (user) {
       await onUnsubscribeEvents(productId);
     }

@@ -4,11 +4,11 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import ProductSingle from './index';
+import ProductSingleServer from './ProductSingleServer';
 
 /**
  * Safe wrapper for ProductSingle
- * This component simply renders the client-side ProductSingle with provided props.
+ * This component simply renders the server-side ProductSingleServer with provided props.
  */
 const SafeProductSingle: FC<{
   product: IProductsEntity & {
@@ -17,7 +17,7 @@ const SafeProductSingle: FC<{
   lang: string;
   dict: IAttributeValues;
 }> = ({ product, lang, dict }) => {
-  return <ProductSingle product={product} lang={lang} dict={dict} />;
+  return <ProductSingleServer product={product} lang={lang} dict={dict} />;
 };
 
 export default SafeProductSingle;

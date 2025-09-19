@@ -45,8 +45,9 @@ const ProductCard: FC<ProductCardProps> = ({
 
   const imgSrc = pic?.value.downloadLink;
   const title = localizeInfos?.title;
-  // Handle checkbox toggle
+  // Handle checkbox toggle: when checked, it means the user wants to select the product
   const handleCheckboxChange = () => {
+    // Regardless of checkbox state, toggle the product selection
     dispatch(deselectProduct(id));
   };
 
@@ -65,7 +66,7 @@ const ProductCard: FC<ProductCardProps> = ({
             id={'deselectProduct-' + id}
             checked={selected}
             className="size-5 border-spacing-3 accent-orange-500 ring-2 ring-orange-700"
-            aria-label={`Select product ${title}`}
+            aria-label={`Deselect product ${title}`}
           />
         </div>
 

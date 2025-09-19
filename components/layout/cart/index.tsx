@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-// This disables the ESLint rule for exhaustive dependencies in useEffect hooks
-
 'use client';
 // Indicates that this file is a client-side component in Next.js
 
@@ -63,6 +60,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryData]);
 
   // Add fetched products to the cart slice
@@ -108,22 +106,27 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   }, [data, isAuth]);
 
   return (
-    <CartAnimations className={''} index={0}>
+    <CartAnimations className={'w-[730px] max-w-full'} index={0}>
       <div className="cart">
         <div className="cart__container">
           <div className="cart__products">
             {isLoading ? (
               <Loader />
             ) : products.length ? (
-              products.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  lang={lang}
-                  selected={false}
-                  index={0}
-                />
-              ))
+              products.map((product, index) => {
+                const cartItem = productsCartData.find(
+                  (item) => item.id === product.id,
+                );
+                return (
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    lang={lang}
+                    selected={cartItem?.selected ?? true}
+                    index={index}
+                  />
+                );
+              })
             ) : (
               <EmptyCart lang={lang} dict={dict} />
             )}

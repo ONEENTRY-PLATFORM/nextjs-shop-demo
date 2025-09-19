@@ -28,7 +28,7 @@ const DeliveryForm: FC<DeliveryFormProps> = ({ lang, dict, deliveryData }) => {
 
   return (
     <form
-      className="flex w-[730px] max-w-full flex-col pb-5"
+      className="flex max-w-full flex-col pb-5"
       onSubmit={(e) => {
         e.preventDefault();
         router.push('/payment');
