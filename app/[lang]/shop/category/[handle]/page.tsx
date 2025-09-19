@@ -111,7 +111,8 @@ const ShopCategoryLayout: FC<any> = async (props: any) => {
     return notFound();
   }
 
-  const currentPage = Number(searchParams?.page) || 1;
+  // Parse current page safely
+  const currentPage = Number(searchParams?.page || 1);
 
   // Fetch products data
   const { isError, products, total } = await getProductsByPageUrl({

@@ -85,8 +85,7 @@ export async function generateMetadata({
  * @returns Shop page layout JSX.Element
  */
 // PageProps
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ShopPageLayout: FC<any> = async (props) => {
+const ShopPageLayout: FC<PageProps> = async (props) => {
   const searchParams = await props.searchParams;
   const params = await props.params;
   const { lang } = params;
@@ -107,7 +106,7 @@ const ShopPageLayout: FC<any> = async (props) => {
   }
 
   // Parse current page safely
-  const currentPage = Number(searchParams.page) || 1;
+  const currentPage = Number(searchParams?.page || 1);
 
   // Fetch products data
   const { isError, products, total } = await getProducts({
@@ -117,14 +116,6 @@ const ShopPageLayout: FC<any> = async (props) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     params: { handle: params.handle, searchParams: searchParams as any },
   });
-  // console.log({
-  //   isError,
-  //   products,
-  //   total,
-  //   currentPage,
-  //   pagesLimit,
-  //   offset: currentPage * pagesLimit,
-  // });
 
   const productsData = {
     isError,
