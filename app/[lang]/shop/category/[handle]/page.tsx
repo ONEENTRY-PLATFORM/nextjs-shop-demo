@@ -7,7 +7,7 @@ import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getPageByUrl, getProductsByPageUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api/server/pages/getChildPagesByParentUrl';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
-import type { MetadataParams, PageProps } from '@/app/types/global';
+import type { MetadataParams } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
