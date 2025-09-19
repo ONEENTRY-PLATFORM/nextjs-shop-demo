@@ -73,7 +73,7 @@ interface IPageMetadata {
   };
 }
 
-interface IOrderProducts {
+export type IOrderProducts = {
   id: number;
   quantity: number;
   title: string;
@@ -81,7 +81,7 @@ interface IOrderProducts {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   previewImage: any;
   price: number;
-}
+};
 
 export type FormProps = { lang: string; dict: IAttributeValues };
 
