@@ -45,6 +45,14 @@ export async function generateStaticParams() {
   return params;
 }
 
+/**
+ * Generate page metadata
+ * @async server component
+ * @param params page params
+ * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ * @returns metadata
+ */
 export async function generateMetadata({
   params,
 }: {

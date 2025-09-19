@@ -14,68 +14,6 @@ import { i18n } from '@/i18n-config';
 import { getDictionary } from '../dictionaries';
 
 /**
- * Generate page metadata
- * @async server component
- * @param params page params
- * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
- * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns metadata
- */
-export async function generateMetadata({
-  params,
-}: MetadataParams): Promise<Metadata> {
-  const { lang } = await params;
-  const { isError, page } = await getPageByUrl('shop', lang);
-
-  if (isError || !page) {
-    return notFound();
-  }
-
-  const { localizeInfos, isVisible, attributeValues } = page;
-
-  const {
-    url,
-    width,
-    height,
-    altText: alt,
-  } = {
-    url: attributeValues?.icon?.downloadLink,
-    width: 300,
-    height: 300,
-    altText: localizeInfos.title,
-  };
-
-  return {
-    title: localizeInfos.title,
-    description: localizeInfos.plainContent,
-    alternates: {
-      languages: Object.fromEntries(i18n.locales.map((l) => [l, `/${l}/shop`])),
-      canonical: `/${lang}/shop`,
-    },
-    robots: {
-      index: isVisible,
-      follow: isVisible,
-      googleBot: {
-        index: isVisible,
-        follow: isVisible,
-      },
-    },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-        }
-      : null,
-  };
-}
-
-/**
  * Shop page
  *
  * @async server component
@@ -84,7 +22,6 @@ export async function generateMetadata({
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Shop page layout JSX.Element
  */
-// PageProps
 const ShopPageLayout: FC<PageProps> = async (props) => {
   const searchParams = await props.searchParams;
   const params = await props.params;
@@ -179,4 +116,66 @@ export async function generateStaticParams() {
     params.push({ lang });
   }
   return params;
+}
+
+/**
+ * Generate page metadata
+ * @async server component
+ * @param params page params
+ * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
+ * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
+ * @returns metadata
+ */
+export async function generateMetadata({
+  params,
+}: MetadataParams): Promise<Metadata> {
+  const { lang } = await params;
+  const { isError, page } = await getPageByUrl('shop', lang);
+
+  if (isError || !page) {
+    return notFound();
+  }
+
+  const { localizeInfos, isVisible, attributeValues } = page;
+
+  const {
+    url,
+    width,
+    height,
+    altText: alt,
+  } = {
+    url: attributeValues?.icon?.downloadLink,
+    width: 300,
+    height: 300,
+    altText: localizeInfos.title,
+  };
+
+  return {
+    title: localizeInfos.title,
+    description: localizeInfos.plainContent,
+    alternates: {
+      languages: Object.fromEntries(i18n.locales.map((l) => [l, `/${l}/shop`])),
+      canonical: `/${lang}/shop`,
+    },
+    robots: {
+      index: isVisible,
+      follow: isVisible,
+      googleBot: {
+        index: isVisible,
+        follow: isVisible,
+      },
+    },
+    openGraph: url
+      ? {
+          images: [
+            {
+              url,
+              width,
+              height,
+              alt,
+            },
+          ],
+        }
+      : null,
+  };
 }

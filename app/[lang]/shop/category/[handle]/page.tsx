@@ -16,71 +16,6 @@ import type { Locale } from '@/i18n-config';
 import { i18n } from '@/i18n-config';
 
 /**
- * Generate page metadata
- * @async server component
- * @param params page params
- * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
- * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns metadata
- */
-export async function generateMetadata({
-  params,
-}: MetadataParams): Promise<Metadata> {
-  const { handle, lang } = await params;
-  const { isError, page } = await getPageByUrl(handle, lang);
-
-  if (isError || !page) {
-    return notFound();
-  }
-  const { localizeInfos, isVisible, attributeValues } = page;
-
-  const {
-    url,
-    width,
-    height,
-    altText: alt,
-  } = {
-    url: attributeValues.icon?.downloadLink,
-    width: 300,
-    height: 300,
-    altText: localizeInfos.title,
-  };
-
-  return {
-    title: `${localizeInfos.title} | OneEntry Shop`,
-    description: localizeInfos.plainContent,
-    alternates: {
-      languages: Object.fromEntries(
-        i18n.locales.map((l) => [l, `/${l}/shop/category/${handle}`]),
-      ),
-      canonical: `/${lang}/shop/category/${handle}`,
-    },
-    robots: {
-      index: isVisible,
-      follow: isVisible,
-      googleBot: {
-        index: isVisible,
-        follow: isVisible,
-      },
-    },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-          title: localizeInfos.title,
-          description: localizeInfos.plainContent,
-        }
-      : null,
-  };
-}
-
-/**
  * Shop category page layout
  * @async server component
  * @param params page params
@@ -181,6 +116,9 @@ const ShopCategoryLayout: FC<any> = async (props: any) => {
 
 export default ShopCategoryLayout;
 
+/**
+ * Pre-generation pages for each locale
+ */
 export async function generateStaticParams() {
   const params: Array<{ lang: string; handle: string }> = [];
   for (const lang of i18n.locales) {
@@ -193,4 +131,69 @@ export async function generateStaticParams() {
     }
   }
   return params;
+}
+
+/**
+ * Generate page metadata
+ * @async server component
+ * @param params page params
+ * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
+ * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
+ * @returns metadata
+ */
+export async function generateMetadata({
+  params,
+}: MetadataParams): Promise<Metadata> {
+  const { handle, lang } = await params;
+  const { isError, page } = await getPageByUrl(handle, lang);
+
+  if (isError || !page) {
+    return notFound();
+  }
+  const { localizeInfos, isVisible, attributeValues } = page;
+
+  const {
+    url,
+    width,
+    height,
+    altText: alt,
+  } = {
+    url: attributeValues.icon?.downloadLink,
+    width: 300,
+    height: 300,
+    altText: localizeInfos.title,
+  };
+
+  return {
+    title: `${localizeInfos.title} | OneEntry Shop`,
+    description: localizeInfos.plainContent,
+    alternates: {
+      languages: Object.fromEntries(
+        i18n.locales.map((l) => [l, `/${l}/shop/category/${handle}`]),
+      ),
+      canonical: `/${lang}/shop/category/${handle}`,
+    },
+    robots: {
+      index: isVisible,
+      follow: isVisible,
+      googleBot: {
+        index: isVisible,
+        follow: isVisible,
+      },
+    },
+    openGraph: url
+      ? {
+          images: [
+            {
+              url,
+              width,
+              height,
+              alt,
+            },
+          ],
+          title: localizeInfos.title,
+          description: localizeInfos.plainContent,
+        }
+      : null,
+  };
 }
