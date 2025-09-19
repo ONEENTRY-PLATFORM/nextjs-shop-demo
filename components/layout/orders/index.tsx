@@ -47,21 +47,21 @@ interface OrderState {
 /**
  * Orders page
  * @param lang current language shortcode
- * @param dict dictionary from server api
+ * * @param dict dictionary from server api
  * @param settings
  *
  * @returns JSX.Element
  */
 const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
   // Handle useSearchParams in a try/catch to prevent build errors
-  let currentPage = 0;
+  let currentPage = 1;
   try {
     const searchParams = useSearchParams();
-    currentPage = Number(searchParams?.get('page')) || 0;
+    currentPage = Number(searchParams?.get('page')) || 1;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    // If useSearchParams fails (e.g. during SSR), default to page 0
-    currentPage = 0;
+    // If useSearchParams fails (e.g. during SSR), default to page 1
+    currentPage = 1;
   }
 
   const { isAuth } = useContext(AuthContext);
@@ -88,7 +88,7 @@ const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
 
         const { isError, error, orders, total } = await getAllOrdersByMarker({
           marker: 'order',
-          offset: currentPage * pageLimit,
+          offset: (currentPage - 1) * pageLimit,
           limit: pageLimit,
           lang,
         });
@@ -96,7 +96,8 @@ const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
         if (orders && !isError) {
           setOrderState((prev) => ({
             ...prev,
-            orders,
+            orders:
+              currentPage === 1 ? orders : [...(prev.orders || []), ...orders],
             total,
             loading: false,
             error: undefined,
@@ -154,7 +155,7 @@ const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
             </div>
           </OrderRowAnimations>
           <div className="orders-table__body mb-4 flex flex-col">
-            {loading ? (
+            {loading && currentPage === 1 ? (
               <OrdersTableLoader />
             ) : orders && orders.length > 0 ? (
               orders.map((order, index) => (
@@ -170,10 +171,14 @@ const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
             ) : (
               <EmptyOrders lang={''} dict={dict} />
             )}
+            {loading && currentPage > 0 && (
+              <div className="p-4 text-center">Loading more orders...</div>
+            )}
           </div>
         </div>
-        {total > pageLimit && !loading && !error && (
-          <LoadMore totalPages={total} />
+        {}
+        {total > currentPage * pageLimit && !loading && !error && (
+          <LoadMore totalPages={Math.ceil(total / pageLimit)} />
         )}
       </div>
     </FadeTransition>

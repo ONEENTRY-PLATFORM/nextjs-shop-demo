@@ -4,91 +4,93 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type { FC } from 'react';
-import { useLayoutEffect, useRef } from 'react';
+import type { FC, RefObject } from 'react';
+import { useEffect, useRef } from 'react';
 import { useCallback } from 'react';
 
 import Spinner from '@/components/shared/Spinner';
 
 /**
  * LoadMore
- * @param totalPages
+ * @param totalPages - Total number of pages available
  *
- * @returns LoadMore button
+ * @returns LoadMore button that triggers infinite scroll or pagination
  */
 const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const ref = useRef<HTMLButtonElement | null>(null);
 
-  // Handle the .get() call in a try/catch to prevent runtime errors
-  let currentPage = 1;
-  try {
-    currentPage = Number(searchParams?.get('page')) || 1;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
-    // If accessing search params fails (e.g. during SSR), default to page 1
-    currentPage = 1;
-  }
+  // Parse current page safely
+  const currentPage = (() => {
+    try {
+      const page = searchParams?.get('page');
+      return page ? Math.max(1, Number(page)) : 1;
+    } catch {
+      return 1;
+    }
+  })();
 
-  const nextPage = (currentPage < 1 ? 1 : currentPage) + 1;
-
-  const ref = useRef(null);
+  const nextPage = currentPage + 1;
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams?.toString() || '');
       params.set(name, value);
-
       return params.toString();
     },
     [searchParams],
   );
 
-  useLayoutEffect(() => {
-    gsap.registerPlugin(useGSAP, ScrollTrigger);
+  // Register GSAP plugins once
+  useEffect(() => {
+    gsap.registerPlugin(useGSAP);
+    gsap.registerPlugin(ScrollTrigger);
   }, []);
 
-  const goToNextPage = () => {
+  const goToNextPage = useCallback(() => {
+    if (nextPage > totalPages) return;
+
     router.push(
-      pathname +
-        '?' +
-        createQueryString(
-          'page',
-          (nextPage <= totalPages ? nextPage : currentPage).toString(),
-        ),
+      `${pathname}?${createQueryString('page', nextPage.toString())}`,
       { scroll: false },
     );
-  };
+  }, [nextPage, totalPages, pathname, createQueryString, router]);
 
-  useGSAP(() => {
-    if (nextPage > totalPages) {
-      return;
-    }
-    const trigger = ScrollTrigger.create({
-      trigger: ref.current,
-      start: 'top bottom',
-      end: 'bottom bottom',
-      onEnter: () => {
-        goToNextPage();
-      },
-    });
+  useGSAP(
+    () => {
+      if (nextPage > totalPages || !ref.current) return;
 
-    return () => {
-      trigger.kill();
-    };
-  }, [currentPage]);
+      const trigger = ScrollTrigger.create({
+        trigger: ref.current,
+        start: 'top bottom',
+        end: 'bottom bottom',
+        onEnter: goToNextPage,
+        once: true, // Prevent multiple firings
+      });
+
+      return () => {
+        trigger.kill();
+      };
+    },
+    {
+      dependencies: [nextPage, totalPages],
+      scope: ref,
+    },
+  );
 
   return (
     <button
-      onClick={() => {
-        goToNextPage();
-      }}
-      ref={ref}
-      className="relative mx-auto flex h-6 w-20"
+      onClick={goToNextPage}
+      ref={ref as RefObject<HTMLButtonElement>}
+      className="relative mx-auto flex h-6 w-20 cursor-pointer"
+      disabled={nextPage > totalPages}
+      aria-label={
+        nextPage > totalPages ? 'No more pages to load' : 'Load more items'
+      }
     >
-      {/* {currentPage !== totalPages && 'Load more'} */}
-      {currentPage < totalPages && <Spinner />}
+      {nextPage <= totalPages && <Spinner />}
     </button>
   );
 };
