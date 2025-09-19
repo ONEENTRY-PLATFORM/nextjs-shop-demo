@@ -91,8 +91,8 @@ export async function generateMetadata({
 const ShopCategoryLayout: FC<any> = async (props: any) => {
   // Access searchParams without await to keep page static
   const searchParams = props.searchParams;
-  const params = props.params;
-  const { lang, handle } = params;
+  const params = await props.params;
+  const { lang, handle } = await params;
   // Get the dictionary from the API and set the server provider.
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
