@@ -18,7 +18,7 @@ export default function Error({
         className="rounded bg-black px-4 py-2 text-white hover:bg-gray-800"
         onClick={() => reset()}
       >
-        Повторить попытку
+        Try again
       </button>
     </div>
   );

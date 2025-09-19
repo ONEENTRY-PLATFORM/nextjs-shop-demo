@@ -88,11 +88,12 @@ export async function generateStaticParams() {
   const params: Array<{ lang: string; handle: string }> = [];
   for (const lang of i18n.locales) {
     const { pages }: any = await getChildPagesByParentUrl('shop', lang);
+    console.log(pages);
+
     if (pages && Array.isArray(pages)) {
       for (const page of pages) {
         if (page) {
           const handle = page.pageUrl;
-
           params.push({ lang, handle });
         }
       }
