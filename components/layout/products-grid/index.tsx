@@ -17,13 +17,7 @@ interface GridLayoutProps {
     [key: string]: string | undefined;
   };
   /** Search parameters from query string including page, search, and filters */
-  searchParams?:
-    | {
-        search?: string;
-        page?: string;
-        filters?: IFilterParams[];
-      }
-    | undefined;
+  currentPage?: number;
   /** Dictionary of localized strings from server API */
   dict: IAttributeValues;
   /** Maximum number of products to display per page */
@@ -47,7 +41,7 @@ interface GridLayoutProps {
  * category-specific product listings.
  *
  * @param params - Page parameters including language and other route parameters
- * @param searchParams - Search parameters from query string
+ * @param currentPage
  * @param dict - Dictionary of localized strings from server API
  * @param pagesLimit - Maximum number of products to display per page
  * @param isCategory - Flag indicating if this is a category page (default: false)
@@ -56,14 +50,13 @@ interface GridLayoutProps {
  */
 const ProductsGridLayout: FC<GridLayoutProps> = ({
   params,
-  searchParams,
+  currentPage,
   dict,
   pagesLimit,
   productsData,
 }) => {
   const { isError, products, total } = productsData;
 
-  const currentPage = Number(searchParams?.page) || 1;
   const { lang } = params;
 
   if (!products || total < 1 || isError) {
@@ -84,7 +77,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = ({
             dict={dict}
             pagesLimit={pagesLimit}
             products={products}
-            currentPage={currentPage}
+            currentPage={currentPage as number}
           />
           {totalPages > 1 && (
             <div className="mt-5 flex w-full justify-center">

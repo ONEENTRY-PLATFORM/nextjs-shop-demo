@@ -41,7 +41,7 @@ export const getProducts = async (props: {
   const body = getSearchParams(params?.searchParams, params?.handle);
 
   try {
-    const data = await api.Products.getProducts(body, langCode, {
+    const data = await api.Products.getProducts(body || undefined, langCode, {
       offset,
       limit,
       sortOrder: 'ASC',

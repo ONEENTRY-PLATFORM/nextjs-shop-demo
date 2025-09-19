@@ -108,6 +108,8 @@ const ShopCatalogPage: FC<any> = async (props: {
 
   const combinedParams = { ...page, searchParams } as any;
 
+  const currentPage = Number(searchParams?.page) || 1;
+
   // Get all products from api or get products byPageUrl
   const productsData: {
     isError: boolean;
@@ -117,13 +119,13 @@ const ShopCatalogPage: FC<any> = async (props: {
   } = !isCategory
     ? await getProducts({
         lang: lang,
-        offset: 0,
+        offset: currentPage,
         limit: pagesLimit,
         params: combinedParams,
       })
     : await getProductsByPageUrl({
         lang: lang,
-        offset: 0,
+        offset: currentPage,
         limit: pagesLimit,
         params: combinedParams,
       });
@@ -141,7 +143,7 @@ const ShopCatalogPage: FC<any> = async (props: {
         <Suspense fallback={<MemoizedProductsGridLoader />}>
           <ProductsGridLayout
             params={{ handle, lang }}
-            searchParams={searchParams}
+            currentPage={currentPage}
             pagesLimit={pagesLimit}
             dict={dict}
             productsData={productsData as any}

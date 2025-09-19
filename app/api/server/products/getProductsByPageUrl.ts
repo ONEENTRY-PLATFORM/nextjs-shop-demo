@@ -42,7 +42,7 @@ export const getProductsByPageUrl = async (props: {
   try {
     const data = await api.Products.getProductsByPageUrl(
       params.handle,
-      body,
+      body || undefined,
       langCode,
       {
         sortOrder: 'DESC',

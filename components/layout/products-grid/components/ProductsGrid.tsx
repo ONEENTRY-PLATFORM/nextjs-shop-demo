@@ -21,7 +21,7 @@ interface ProductsGridProps {
   /** Maximum number of products to display per page, used for animations */
   pagesLimit: number;
   /** Current page number, used for animations (default: 1) */
-  currentPage?: number;
+  currentPage: number;
 }
 
 /**
