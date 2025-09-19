@@ -133,14 +133,13 @@ export default ProductPageLayout;
  */
 export async function generateStaticParams() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const params: Array<{ lang: string; handle: string; product: any }> = [];
+  const params: Array<{ lang: string; handle: string }> = [];
   for (const lang of i18n.locales) {
     // We need to get an actual product ID to generate static params
-    // For now, we'll use a placeholder - in a real implementation, you'd fetch product IDs
     const productId = 1; // Replace with actual product ID fetching logic
     const { product } = await getProductById(productId, lang);
     if (product) {
-      params.push({ lang, handle: String(product.id), product });
+      params.push({ lang, handle: String(product.id) });
     }
   }
   return params;

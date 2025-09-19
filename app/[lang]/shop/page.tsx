@@ -89,6 +89,7 @@ const ShopPageLayout: FC<PageProps> = async (props) => {
   const searchParams = await props.searchParams;
   const params = await props.params;
   const { lang } = params;
+
   // Get the dictionary from the API and set the server provider.
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
@@ -173,9 +174,9 @@ export default ShopPageLayout;
  * Pre-generation of shop page
  */
 export async function generateStaticParams() {
-  const params: Array<{ lang: string; handle: string }> = [];
+  const params: Array<{ lang: string }> = [];
   for (const lang of i18n.locales) {
-    params.push({ lang, handle: 'shop' });
+    params.push({ lang });
   }
   return params;
 }

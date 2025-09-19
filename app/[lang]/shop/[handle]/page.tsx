@@ -6,12 +6,12 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 import { memo, Suspense } from 'react';
 
-import { getPageByUrl, getProducts, getProductsByPageUrl } from '@/app/api';
+import { getPageByUrl, getProducts } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
-import type { Locale } from '@/i18n-config';
+import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../../dictionaries';
 
@@ -86,8 +86,8 @@ const ShopCatalogPage: FC<any> = async (props: {
   params: Promise<{ handle: any; lang: any }>;
   searchParams: any;
 }) => {
-  const params = await props.params;
   const searchParams = await props.searchParams;
+  const params = await props.params;
   const { handle, lang } = params;
 
   // Get the dictionary from the API and set the server provider.
@@ -96,17 +96,7 @@ const ShopCatalogPage: FC<any> = async (props: {
   // !!!extract products per page limit from global settings
   const pagesLimit = 10;
 
-  // get page by url from the API
-  const { page, isError: err } = await getPageByUrl(handle, lang);
-
-  if (err) {
-    return notFound();
-  }
-
-  // Check if this is a category page by checking page type
-  const isCategory = page?.type === ('Category' as any);
-
-  const combinedParams = { ...page, searchParams } as any;
+  const combinedParams = { handle: handle, searchParams: searchParams } as any;
 
   const currentPage = Number(searchParams?.page) || 1;
 
@@ -116,24 +106,17 @@ const ShopCatalogPage: FC<any> = async (props: {
     error?: IError;
     products?: IProductsEntity[];
     total: number;
-  } = !isCategory
-    ? await getProducts({
-        lang: lang,
-        offset: currentPage,
-        limit: pagesLimit,
-        params: combinedParams,
-      })
-    : await getProductsByPageUrl({
-        lang: lang,
-        offset: currentPage,
-        limit: pagesLimit,
-        params: combinedParams,
-      });
+  } = await getProducts({
+    lang: lang,
+    offset: 0,
+    limit: currentPage * pagesLimit,
+    params: combinedParams,
+  });
 
   // Memoize the loader component
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
-  if (!page || productsData.isError) {
+  if (productsData.isError) {
     return notFound();
   }
 
@@ -155,3 +138,17 @@ const ShopCatalogPage: FC<any> = async (props: {
 };
 
 export default ShopCatalogPage;
+
+/**
+ * Pre-generation of shop page
+ */
+export async function generateStaticParams() {
+  const params: Array<{ lang: string; handle: string }> = [];
+  for (const lang of i18n.locales) {
+    const { page }: any = await getPageByUrl('category', lang);
+
+    const handle = page.pageUrl || '';
+    params.push({ lang, handle });
+  }
+  return params;
+}
