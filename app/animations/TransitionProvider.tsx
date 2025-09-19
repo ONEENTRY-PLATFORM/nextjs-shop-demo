@@ -27,6 +27,13 @@ export default function TransitionProvider({
         if (!ref.current) {
           return;
         }
+
+        // Check if we're in browser environment before accessing window
+        if (typeof window === 'undefined') {
+          next();
+          return;
+        }
+
         const tl = await gsap
           .timeline()
           .to(window, {
@@ -48,6 +55,13 @@ export default function TransitionProvider({
         if (!ref.current) {
           return;
         }
+
+        // Check if we're in browser environment before accessing window
+        if (typeof window === 'undefined') {
+          next();
+          return;
+        }
+
         const tl = await gsap
           .timeline()
           .set(ref.current, {

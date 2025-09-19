@@ -7,6 +7,7 @@ import { getPageByUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api';
 import type { PageProps } from '@/app/types/global';
 import CategoriesGrid from '@/components/layout/categories';
+import { i18n } from '@/i18n-config';
 
 /**
  * Generate page metadata
@@ -131,3 +132,21 @@ const CategoryPage: FC<PageProps> = async ({ params }) => {
 };
 
 export default CategoryPage;
+
+/**
+ * Pre-generation of category pages for each locale
+ */
+export async function generateStaticParams() {
+  const params: Array<{ lang: string; handle: string }> = [];
+  for (const lang of i18n.locales) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const { page }: any = await getPageByUrl('category', lang);
+    if (page) {
+      const handle =
+        'pageUrl' in page ? (page as { pageUrl: string }).pageUrl : '';
+
+      params.push({ lang, handle });
+    }
+  }
+  return params;
+}

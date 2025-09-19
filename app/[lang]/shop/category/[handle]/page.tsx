@@ -1,10 +1,13 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-// import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC, memo, Suspense } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
-import { getPageByUrl, getProductsByPageUrl } from '@/app/api';
+import {
+  getChildPagesByParentUrl,
+  getPageByUrl,
+  getProductsByPageUrl,
+} from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
@@ -89,7 +92,8 @@ export async function generateMetadata({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ShopCategoryLayout: FC<any> = async (props: any) => {
   // Access searchParams without await to keep page static
-  const searchParams = props.searchParams;
+  const searchParams = await props.searchParams;
+
   const params = await props.params;
   const { lang, handle } = await params;
   // Get the dictionary from the API and set the server provider.
@@ -175,3 +179,43 @@ const ShopCategoryLayout: FC<any> = async (props: any) => {
 };
 
 export default ShopCategoryLayout;
+
+/**
+ * Pre-generation of category pages for each locale
+ */
+// export async function generateStaticParams() {
+//   const params: Array<{ lang: string; handle: string }> = [];
+//   for (const lang of i18n.locales) {
+//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+//     const { page }: any = await getPageByUrl('category', lang);
+//     if (page) {
+//       // Use page.url or page.slug as fallback
+//       const handle =
+//         'url' in page
+//           ? (page as { url: string }).url
+//           : 'slug' in page
+//             ? (page as { slug: string }).slug
+//             : '';
+//       if (handle) {
+//         params.push({ lang, handle });
+//       }
+//     }
+//   }
+//   return params;
+// }
+export async function generateStaticParams() {
+  const params: Array<{ lang: string; handle: string }> = [];
+  for (const lang of i18n.locales) {
+    const { pages } = await getChildPagesByParentUrl('shop', lang);
+    if (pages && Array.isArray(pages)) {
+      for (const page of pages) {
+        // Use page.url or page.slug as fallback
+        const handle =
+          'pageUrl' in page ? (page as { pageUrl: string }).pageUrl : '';
+
+        params.push({ lang, handle });
+      }
+    }
+  }
+  return params;
+}
