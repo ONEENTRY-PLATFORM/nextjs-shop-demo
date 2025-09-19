@@ -51,6 +51,7 @@ export async function generateMetadata({
 
 /**
  * Simple page
+ *
  * @async server component
  * @param params page params
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
@@ -58,7 +59,9 @@ export async function generateMetadata({
  * @returns page layout JSX.Element
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PageLayout: FC<any> = async ({ params }) => {
+const PageLayout: FC<{ params: Promise<{ page: any; lang: any }> }> = async ({
+  params,
+}) => {
   const { page: p, lang } = await params;
   // Get dictionary and set to server provider
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
