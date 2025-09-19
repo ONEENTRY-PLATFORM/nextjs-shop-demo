@@ -26,11 +26,11 @@ interface ProductsGridProps {
 
 /**
  * ProductsGrid component that displays a grid of products
- * 
+ *
  * This component renders a responsive grid of products with support for both
  * individual products and product groups. It handles language localization
  * and passes necessary data to child components for animations.
- * 
+ *
  * @param products - Array of product entities to display
  * @param lang - Current language shortcode
  * @param dict - Dictionary of localized strings from server API
@@ -49,7 +49,7 @@ const ProductsGrid: FC<ProductsGridProps> = ({
 
   /**
    * Prepare products with localized data
-   * 
+   *
    * This memoized function processes the product data to ensure proper
    * localization based on the current language. It selects the appropriate
    * language-specific attribute values and localized information.

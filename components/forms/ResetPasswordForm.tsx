@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { FC, FormEvent } from 'react';
@@ -61,7 +62,6 @@ const ResetPasswordForm: FC<FormProps> = ({ dict }) => {
         setAction('');
       }
       setLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setError(e.message);
       setLoading(false);
@@ -85,9 +85,12 @@ const ResetPasswordForm: FC<FormProps> = ({ dict }) => {
         </div>
 
         <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
-          {resetPasswordFormFields.map((field, index) => {
+          {resetPasswordFormFields.map((field: any, index: any) => {
             return (
               <FormInput
+                localizeInfos={field.localizeInfos}
+                marker={''}
+                isVisible={false}
                 index={index}
                 listTitles={[]}
                 position={0}

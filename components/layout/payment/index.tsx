@@ -149,6 +149,7 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
       );
       dispatch(addProducts(productsInOrder));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productsInOrder]);
 
   // Auth Error
