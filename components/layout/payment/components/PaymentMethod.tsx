@@ -51,6 +51,10 @@ const PaymentMethod: FC<PaymentMethodProps> = ({
   const orderData = useAppSelector((state) => state.orderReducer.order);
   const isActive = orderData?.paymentAccountIdentifier === account.identifier;
 
+  // Get cart data
+  const cartData = useAppSelector((state) => state.cartReducer.productsData);
+  const hasCartItems = cartData && cartData.some((item) => item.selected);
+
   return (
     <PaymentMethodAnimations
       className={
@@ -74,7 +78,9 @@ const PaymentMethod: FC<PaymentMethodProps> = ({
           </p>
           <button
             onClick={() => {
-              dispatch(addPaymentMethod(isActive ? '' : account.identifier));
+              if (isActive) {
+                dispatch(addPaymentMethod(''));
+              }
             }}
             className="absolute bottom-4 right-4 size-6 rounded-full bg-slate-50 text-center"
           >
@@ -85,11 +91,15 @@ const PaymentMethod: FC<PaymentMethodProps> = ({
         <div id="cartData" className={`w-full ${isActive ? '' : 'hidden'}`}>
           <div className="flex flex-wrap justify-between text-[#4C4D56]">
             <div className="flex w-2/3 min-h-full justify-between flex-col border border-r-0 border-b-0 border-solid border-[#B0BCCE] max-md:w-full max-md:max-w-full">
-              <OrderProductsTable
-                lang={lang}
-                products={products}
-                delivery={delivery}
-              />
+              {hasCartItems ? (
+                <OrderProductsTable
+                  lang={lang}
+                  products={products}
+                  delivery={delivery}
+                />
+              ) : (
+                <div className="p-4">No items in cart</div>
+              )}
             </div>
             <div className="flex w-1/3 flex-col border border-solid border-[#B0BCCE] px-6 py-2 max-md:w-full max-md:max-w-full max-md:border-t-0 max-md:px-2">
               <OrderDataTable dict={dict} account={account} />

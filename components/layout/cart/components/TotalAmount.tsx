@@ -26,17 +26,25 @@ const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
   const [cartTotal, setCartTotal] = useState(0);
   const total = useAppSelector(selectCartTotal);
   const delivery = useAppSelector((state) => state.cartReducer.delivery);
+  const productsData = useAppSelector(
+    (state) => state.cartReducer.productsData,
+  );
+
+  // Check if we have products in cart
+  const hasProducts =
+    productsData && productsData.some((item) => item.selected);
 
   // set total on data change
   useEffect(() => {
     const deliveryPrice =
       delivery?.attributeValues?.price?.value || delivery?.price || 0;
-    if (!total) {
-      setCartTotal(deliveryPrice || 0);
+
+    if (!hasProducts) {
+      setCartTotal(0);
     } else {
       setCartTotal((total as number) + deliveryPrice);
     }
-  }, [total, delivery]);
+  }, [total, delivery, hasProducts]);
 
   return (
     <TableRowAnimations className={className} index={12}>

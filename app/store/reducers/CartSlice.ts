@@ -332,13 +332,16 @@ export const selectCartTotal = (state: {
     products: IProductsEntity[];
   };
 }) => {
-  return state.cartReducer.productsData.reduce((total, product, index) => {
+  return state.cartReducer.productsData.reduce((total, product) => {
     if (product.selected) {
-      const p = state.cartReducer.products[index];
-      const price =
-        p?.attributeValues?.sale?.value ||
-        p?.attributeValues?.price?.value ||
-        0;
+      // Find product by ID instead of using index
+      const p = state.cartReducer.products.find((p) => p.id === product.id);
+      const price = p
+        ? p.attributeValues?.sale?.value ||
+          p.attributeValues?.price?.value ||
+          p.price ||
+          0
+        : 0;
       total += price * product.quantity;
     }
     return total;

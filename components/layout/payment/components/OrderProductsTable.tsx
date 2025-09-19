@@ -41,6 +41,15 @@ const OrderProductsTable: FC<OrderProductsTableProps> = ({
   const actualProducts = products || productsInCart;
   const actualProductsData = productsDataInCart;
 
+  // Check if we have data to display
+  const hasProducts =
+    actualProductsData && actualProductsData.some((item) => item.selected);
+  const hasDelivery = delivery || d;
+
+  if (!hasProducts && !hasDelivery) {
+    return <div className="p-4">No products or delivery information</div>;
+  }
+
   return (
     <>
       {/* head row */}
@@ -52,15 +61,15 @@ const OrderProductsTable: FC<OrderProductsTableProps> = ({
 
       {/* products row */}
       {actualProductsData.map((product, i) => {
-        if (!actualProducts[i]) {
-          return;
+        // Find the actual product by ID
+        const actualProduct = actualProducts.find((p) => p.id === product.id);
+        if (!actualProduct || !product.selected) {
+          return null;
         }
-        const { selected, quantity } = product;
-        const { localizeInfos, price, attributeValues } = actualProducts[i];
 
-        if (!selected) {
-          return;
-        }
+        const { quantity } = product;
+        const { localizeInfos, price, attributeValues } = actualProduct;
+
         return (
           <div
             key={i}
@@ -69,7 +78,11 @@ const OrderProductsTable: FC<OrderProductsTableProps> = ({
             <div className="w-1/2">{localizeInfos?.title}</div>
             <div className="w-1/4">
               {UsePrice({
-                amount: attributeValues.sale?.value || price,
+                amount:
+                  attributeValues?.sale?.value ||
+                  attributeValues?.price?.value ||
+                  price ||
+                  0,
                 lang,
               })}
             </div>
@@ -79,23 +92,25 @@ const OrderProductsTable: FC<OrderProductsTableProps> = ({
       })}
 
       {/* delivery row */}
-      {(delivery || d) && (
+      {hasDelivery && (
         <div className="-mt-px flex border-b border-solid border-[#B0BCCE] p-2">
           <div className="w-1/2">
-            {delivery?.localizeInfos?.title || d?.localizeInfos?.title}
+            {delivery?.localizeInfos?.title ||
+              d?.localizeInfos?.title ||
+              'Delivery'}
           </div>
           <div className="w-1/4">
             {UsePrice({
               amount:
-                delivery?.price ||
                 delivery?.attributeValues?.price?.value ||
-                d?.price ||
+                delivery?.price ||
                 d?.attributeValues?.price?.value ||
+                d?.price ||
                 0,
               lang,
             })}
           </div>
-          <div className="w-1/4"></div>
+          <div className="w-1/4">1</div>
         </div>
       )}
     </>
