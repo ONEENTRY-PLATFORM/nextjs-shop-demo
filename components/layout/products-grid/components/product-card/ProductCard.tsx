@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { type FC, useMemo } from 'react';
+import { type FC, useEffect, useMemo, useRef, useState } from 'react';
 
 import { LanguageEnum } from '@/app/types/enum';
 import AddToCartButton from '@/components/layout/product/components/AddToCartButton';
@@ -52,6 +52,35 @@ const ProductCard: FC<ProductCardProps> = ({
 }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, statusIdentifier, attributeValues, localizeInfos } = product;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [isInViewport, setIsInViewport] = useState(false);
+
+  /**
+   * Use Intersection Observer to detect when the card is in the viewport
+   */
+  useEffect(() => {
+    if (!cardRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry && entry.isIntersecting) {
+          setIsInViewport(true);
+          // Unobserve once we've determined the card is in viewport
+          observer.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.1, // Trigger when 10% of the card is visible
+      },
+    );
+
+    observer.observe(cardRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   /**
    * Get localized product attributes
@@ -76,45 +105,47 @@ const ProductCard: FC<ProductCardProps> = ({
   );
 
   return (
-    <CardAnimations
-      className="product-card group"
-      index={index}
-      pagesLimit={pagesLimit}
-      currentPage={currentPage}
-    >
-      <div className="z-10 flex justify-between gap-5 self-stretch">
-        <Stickers product={product} lang={lang} />
-        <FavoritesButton {...product} />
-      </div>
+    <div ref={cardRef}>
+      <CardAnimations
+        className="product-card group"
+        index={index}
+        pagesLimit={pagesLimit}
+        currentPage={currentPage}
+      >
+        <div className="z-10 flex justify-between gap-5 self-stretch">
+          <Stickers product={product} lang={lang} />
+          <FavoritesButton {...product} />
+        </div>
 
-      {/* ProductImage */}
-      <ProductImage attributes={attributes} alt={title} />
+        {/* ProductImage */}
+        <ProductImage attributes={attributes} alt={title} />
 
-      {/* Product Data */}
-      <div className="z-10 mb-5 mt-auto flex w-full max-w-[160px] flex-col gap-2.5">
-        <h2 className="text-center text-sm leading-4 text-neutral-600">
-          {title}
-        </h2>
+        {/* Product Data */}
+        <div className="z-10 mb-5 mt-auto flex w-full max-w-[160px] flex-col gap-2.5">
+          <h2 className="text-center text-sm leading-4 text-neutral-600">
+            {title}
+          </h2>
 
-        <PriceDisplay attributes={attributes} lang={lang} />
+          <PriceDisplay attributes={attributes} lang={lang} />
 
-        <AddToCartButton
-          id={id}
-          productTitle={title}
-          statusIdentifier={statusIdentifier || ''}
-          units={attributeValues.units_product.value}
-          dict={dict}
-          height={42}
-          className="btn btn-md btn-primary"
-        />
-      </div>
+          <AddToCartButton
+            id={id}
+            productTitle={title}
+            statusIdentifier={statusIdentifier || ''}
+            units={attributeValues.units_product.value}
+            dict={dict}
+            height={42}
+            className="btn btn-md btn-primary"
+          />
+        </div>
 
-      <Link
-        prefetch={true}
-        href={'/' + lang + '/shop/product/' + id}
-        className="absolute left-0 top-0 z-0 flex size-full"
-      ></Link>
-    </CardAnimations>
+        <Link
+          prefetch={isInViewport}
+          href={'/' + lang + '/shop/product/' + id}
+          className="absolute left-0 top-0 z-0 flex size-full"
+        ></Link>
+      </CardAnimations>
+    </div>
   );
 };
 
