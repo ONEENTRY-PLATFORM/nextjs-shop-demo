@@ -108,8 +108,8 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   return (
     <CartAnimations className={'w-[730px] max-w-full'} index={0}>
       <div className="cart">
-        <div className="cart__container">
-          <div className="cart__products">
+        <div className="cart__container flex flex-col gap-4">
+          <div className="cart__products flex flex-col gap-4">
             {isLoading ? (
               <Loader />
             ) : products.length ? (

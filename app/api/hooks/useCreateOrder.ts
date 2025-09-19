@@ -81,10 +81,11 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
         const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
           'order',
           {
-            ...order,
+            // ...order,
             formData: orderFormData,
-            formIdentifier: order.formIdentifier,
+            products: order.products,
             paymentAccountIdentifier: order.paymentAccountIdentifier,
+            formIdentifier: order.formIdentifier,
           },
           langCode,
         );
@@ -107,6 +108,9 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
         setError(apiError.message);
         setIsLoading(false);
       }
+    } else {
+      setError('Please select a payment method');
+      setIsLoading(false);
     }
   };
 

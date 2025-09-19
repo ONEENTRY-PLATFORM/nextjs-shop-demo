@@ -66,7 +66,7 @@ const DeliveryTableRow: FC<TableRowProps> = ({
             loading="lazy"
             src={icon}
             alt={placeholder}
-            className="aspect-square w-5"
+            className="aspect-square w-5 cursor-pointer"
             onClick={() => {
               setOpen(true);
               setComponent('CalendarForm');

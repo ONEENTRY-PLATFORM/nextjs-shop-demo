@@ -77,7 +77,7 @@ const PaymentMethod: FC<PaymentMethodProps> = ({
           </button>
         </div>
 
-        <div id="cartData" className="w-full opacity-0">
+        <div id="cartData" className={`w-full ${isActive ? '' : 'hidden'}`}>
           <div className="flex flex-wrap justify-between text-[#4C4D56]">
             <div className="flex w-2/3 min-h-full justify-between flex-col border border-r-0 border-b-0 border-solid border-[#B0BCCE] max-md:w-full max-md:max-w-full">
               <OrderProductsTable account={account} lang={lang} />
