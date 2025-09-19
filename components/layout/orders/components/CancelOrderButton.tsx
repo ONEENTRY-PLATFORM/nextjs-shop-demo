@@ -6,6 +6,7 @@ import type {
 import type { FC } from 'react';
 
 import { updateOrderByMarkerAndId } from '@/app/api';
+import type { IOrderProducts } from '@/app/types/global';
 import Loader from '@/components/shared/Loader';
 
 interface CancelOrderButtonProps {
@@ -35,8 +36,7 @@ const CancelOrderButton: FC<CancelOrderButtonProps> = ({
   const cancelOrderHandle = async () => {
     const formData = {
       ...data,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      products: data.products.map((product: any) => ({
+      products: data.products.map((product: IOrderProducts) => ({
         productId: product.id,
         quantity: product.quantity,
       })) as IOrderProductData[],

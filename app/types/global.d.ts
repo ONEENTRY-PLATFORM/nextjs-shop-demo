@@ -73,6 +73,16 @@ interface IPageMetadata {
   };
 }
 
+interface IOrderProducts {
+  id: number;
+  quantity: number;
+  title: string;
+  sku: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  previewImage: any;
+  price: number;
+}
+
 export type FormProps = { lang: string; dict: IAttributeValues };
 
 declare global {
