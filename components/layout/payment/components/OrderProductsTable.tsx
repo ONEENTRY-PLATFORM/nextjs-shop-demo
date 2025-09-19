@@ -1,4 +1,3 @@
-import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
@@ -9,18 +8,25 @@ import {
 } from '@/app/store/reducers/CartSlice';
 import { UsePrice } from '@/components/utils';
 
-type PaymentMethodProps = {
-  account: IAccountsEntity;
+type OrderProductsTableProps = {
   lang: string;
+  products: IProductsEntity[] | undefined;
+  delivery: IProductsEntity | undefined;
 };
 
 /**
  * Order products table
  * @param lang current language shortcode
+ * @param products Products data
+ * @param delivery Delivery data
  *
  * @returns JSX.Element
  */
-const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
+const OrderProductsTable: FC<OrderProductsTableProps> = ({
+  lang,
+  products,
+  delivery,
+}) => {
   const productsDataInCart = useAppSelector(selectCartData) as Array<{
     id: number;
     quantity: number;
@@ -29,7 +35,11 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
   const productsInCart = useAppSelector(
     selectCartItems,
   ) as Array<IProductsEntity>;
-  const delivery = useAppSelector((state) => state.cartReducer.delivery);
+  const d = useAppSelector((state) => state.cartReducer.delivery);
+
+  // Use passed products or fallback to Redux state
+  const actualProducts = products || productsInCart;
+  const actualProductsData = productsDataInCart;
 
   return (
     <>
@@ -41,12 +51,12 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
       </div>
 
       {/* products row */}
-      {productsDataInCart.map((product, i) => {
-        if (!productsInCart[i]) {
+      {actualProductsData.map((product, i) => {
+        if (!actualProducts[i]) {
           return;
         }
         const { selected, quantity } = product;
-        const { localizeInfos, price, attributeValues } = productsInCart[i];
+        const { localizeInfos, price, attributeValues } = actualProducts[i];
 
         if (!selected) {
           return;
@@ -69,11 +79,21 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
       })}
 
       {/* delivery row */}
-      {delivery && (
+      {(delivery || d) && (
         <div className="-mt-px flex border-b border-solid border-[#B0BCCE] p-2">
-          <div className="w-1/2">{delivery.localizeInfos?.title}</div>
+          <div className="w-1/2">
+            {delivery?.localizeInfos?.title || d?.localizeInfos?.title}
+          </div>
           <div className="w-1/4">
-            {UsePrice({ amount: delivery.price || 0, lang })}
+            {UsePrice({
+              amount:
+                delivery?.price ||
+                delivery?.attributeValues?.price?.value ||
+                d?.price ||
+                d?.attributeValues?.price?.value ||
+                0,
+              lang,
+            })}
           </div>
           <div className="w-1/4"></div>
         </div>

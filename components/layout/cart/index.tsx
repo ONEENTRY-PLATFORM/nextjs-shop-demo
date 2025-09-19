@@ -14,7 +14,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 // Import Redux actions and selectors
 import {
   addDeliveryToCart,
-  // addProductsToCart,
+  addProductsToCart,
   selectCartData,
 } from '@/app/store/reducers/CartSlice';
 // Import custom types and components
@@ -67,6 +67,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   useEffect(() => {
     if (data) {
       setProducts(data);
+      dispatch(addProductsToCart(data));
       if (isAuth) {
         // Connect to WebSocket if authenticated
         const ws = api.WS.connect();

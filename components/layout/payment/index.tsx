@@ -3,12 +3,15 @@
 
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC } from 'react';
-import { useContext, useEffect, useMemo } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 
 import { useGetAccountsQuery, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import { selectCartData } from '@/app/store/reducers/CartSlice';
+import {
+  selectCartData,
+  selectCartItems,
+} from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { SimplePageProps } from '@/app/types/global';
 import PaymentMethod from '@/components/layout/payment/components/PaymentMethod';
@@ -25,29 +28,46 @@ import Loader from '@/components/shared/Loader';
 const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const dispatch = useAppDispatch();
   const { isAuth } = useContext(AuthContext);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Payment methods in orderSlice
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,
   );
 
-  // Products data in orderSlice
+  // Products data in cartSlice
   const productsCartData = useAppSelector(selectCartData) as Array<{
     id: number;
     quantity: number;
     selected: boolean;
   }>;
 
-  // Delivery data in orderSlice
+  // Products items in cartSlice
+  const productsItems = useAppSelector(selectCartItems);
+
+  // Delivery data in cartSlice
   const deliveryData = useAppSelector((state) => state.cartReducer.delivery);
 
   // Get all payment accounts as an array
   const { data, error, isLoading: isAccountsLoading } = useGetAccountsQuery({});
 
   // Fetch products by IDs
-  useGetProductsByIdsQuery({
-    items: productsCartData.map((p) => p.id.toString()).toString(),
-  });
+  const { data: productsData } = useGetProductsByIdsQuery(
+    {
+      items: productsCartData.map((p) => p.id.toString()).toString(),
+    },
+    {
+      skip: productsCartData.length === 0,
+    },
+  );
+
+  // Combine products from cart and loaded products data
+  const combinedProducts = useMemo(() => {
+    if (!productsData || productsData.length === 0) {
+      return productsItems;
+    }
+    return productsData;
+  }, [productsData, productsItems]);
 
   // Allowed payment methods
   const whitelistMethods = useMemo(() => {
@@ -82,16 +102,17 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
         [],
       ),
       {
-        productId: deliveryData.id,
+        productId: deliveryData?.id,
         quantity: 1,
         selected: true,
       },
-    ];
+    ].filter((product) => product.productId);
   }, [productsCartData, deliveryData]);
 
   // Create order in orderSlice on init component
   useEffect(() => {
-    if (productsInOrder.length > 0) {
+    if (productsInOrder.length > 0 && !isInitialized) {
+      setIsInitialized(true);
       dispatch(
         createOrder({
           formIdentifier: 'order',
@@ -101,14 +122,15 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
         }),
       );
     }
-  }, [productsInOrder]);
+  }, [productsInOrder, isInitialized]);
 
   // add products to orderSlice
   useEffect(() => {
-    if (productsInOrder && productsInOrder.length > 0) {
+    if (productsInOrder && productsInOrder.length > 0 && !isInitialized) {
+      setIsInitialized(true);
       dispatch(addProducts(productsInOrder));
     }
-  }, [productsInOrder]);
+  }, [productsInOrder, isInitialized]);
 
   // Auth Error
   if (!isAuth || error) {
@@ -116,7 +138,11 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
   }
 
   // Loader
-  if ((productsCartData.length > 0 && isAccountsLoading) || isAccountsLoading) {
+  if (
+    (productsCartData.length > 0 && isAccountsLoading) ||
+    isAccountsLoading ||
+    (!isInitialized && productsCartData.length > 0)
+  ) {
     return <Loader />;
   }
 
@@ -130,6 +156,8 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
             account={item}
             lang={lang}
             dict={dict}
+            products={combinedProducts}
+            delivery={deliveryData}
           />
         );
       })}

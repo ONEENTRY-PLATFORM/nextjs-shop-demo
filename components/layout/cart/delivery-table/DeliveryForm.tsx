@@ -43,6 +43,7 @@ const DeliveryForm: FC<DeliveryFormProps> = ({ lang, dict, deliveryData }) => {
         <TotalAmount
           lang={lang}
           dict={dict}
+          // deliveryData={deliveryData}
           className="flex self-center text-lg font-bold leading-6 text-slate-700 lg:self-end"
         />
         <PaymentButton
