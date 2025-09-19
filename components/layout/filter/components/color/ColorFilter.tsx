@@ -50,6 +50,7 @@ const ColorFilter: FC<ColorFilterProps> = memo(({ title, attributes }) => {
     } else {
       newParams.delete('color');
     }
+    // Navigate to the provided href. Replaces the current history entry.
     replace(`${pathname}?${newParams.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentColor, pathname, replace]);

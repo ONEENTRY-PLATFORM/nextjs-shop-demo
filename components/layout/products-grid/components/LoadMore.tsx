@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FC, RefObject } from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useCallback } from 'react';
 
 import Spinner from '@/components/shared/Spinner';
@@ -34,6 +34,9 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
 
   const nextPage = currentPage + 1;
 
+  /**
+   * createQueryString
+   */
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams?.toString() || '');
@@ -44,11 +47,14 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   );
 
   // Register GSAP plugins once
-  useEffect(() => {
+  useLayoutEffect(() => {
     gsap.registerPlugin(useGSAP);
     gsap.registerPlugin(ScrollTrigger);
   }, []);
 
+  /**
+   * goToNextPage
+   */
   const goToNextPage = useCallback(() => {
     if (nextPage > totalPages) return;
 

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { FC, Key } from 'react';
 
@@ -27,7 +28,14 @@ const OrderDataTable: FC<OrderDataTableProps> = ({ dict, account }) => {
 
   // If no order data, show a message
   if (!orderData || !orderData.formData || orderData.formData.length === 0) {
-    return <div className="p-4">No order data available</div>;
+    return (
+      <div className="p-4 text-center">
+        No order data available, go to{' '}
+        <a href="/cart/" className="text-orange-500">
+          cart page
+        </a>
+      </div>
+    );
   }
 
   return (

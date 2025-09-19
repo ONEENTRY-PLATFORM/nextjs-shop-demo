@@ -1,12 +1,10 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
-// import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 
-import { api, useGetAccountsQuery, useGetProductsByIdsQuery } from '@/app/api';
+import { useGetAccountsQuery, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
@@ -20,6 +18,8 @@ import type { SimplePageProps } from '@/app/types/global';
 import PaymentMethod from '@/components/layout/payment/components/PaymentMethod';
 import AuthError from '@/components/pages/AuthError';
 import Loader from '@/components/shared/Loader';
+
+import EmptyCart from '../cart/components/EmptyCart';
 
 /**
  * Payment page
@@ -76,14 +76,15 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryData]);
 
   // Add fetched products to the cart slice
   useEffect(() => {
     if (productsData) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      dispatch(addProductsToCart(productsData as any));
+      dispatch(addProductsToCart(productsData as IProductsEntity[]));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productsData]);
 
   // Combine products from cart and loaded products data
@@ -162,7 +163,7 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
 
   // If no products in cart
   if (!hasCartItems && !deliveryData) {
-    return <div className="p-4">No items in cart</div>;
+    return <EmptyCart lang={lang} dict={dict} />;
   }
 
   return (
