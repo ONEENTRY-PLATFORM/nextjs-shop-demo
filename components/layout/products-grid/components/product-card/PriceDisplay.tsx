@@ -4,20 +4,27 @@ import React from 'react';
 import { UsePrice } from '@/components/utils';
 
 interface PriceDisplayProps {
+  /** Product attributes containing price information */
   attributes: {
+    /** Sale price of the product (if on sale) */
     sale?: { value: number };
+    /** Regular price of the product */
     price?: { value: number };
   };
+  /** Current language shortcode used for price formatting (e.g., 'en', 'fr') */
   lang: string;
 }
 
 /**
- * Price display
+ * PriceDisplay component that shows product pricing information
  *
- * @param attributes
- * @param lang Current language shortcode
+ * This component displays the current price of a product, handling both regular
+ * and sale prices. It formats prices according to the current language and
+ * provides appropriate visual styling for sale vs. regular prices.
  *
- * @returns Price display with current/old prices
+ * @param attributes - Product attributes containing price information
+ * @param lang - Current language shortcode used for price formatting
+ * @returns Price display with current/old prices, properly formatted
  */
 const PriceDisplay: FC<PriceDisplayProps> = ({
   attributes: { sale, price },

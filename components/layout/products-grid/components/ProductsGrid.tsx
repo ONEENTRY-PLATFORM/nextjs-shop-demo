@@ -12,22 +12,31 @@ import Placeholder from '@/components/shared/Placeholder';
 import ProductCard from './product-card/ProductCard';
 
 interface ProductsGridProps {
+  /** Array of product entities to display */
   products: Array<IProductsEntity>;
+  /** Current language shortcode (e.g., 'en', 'fr') */
   lang: string;
+  /** Dictionary of localized strings from server API */
   dict: IAttributeValues;
+  /** Maximum number of products to display per page, used for animations */
   pagesLimit: number;
+  /** Current page number, used for animations (default: 1) */
   currentPage?: number;
 }
 
 /**
- * Products grid
- * @param products array of products entity object
- * @param lang current language shortcode
- * @param dict dictionary from server api
- * @param pagesLimit used for animations
- * @param currentPage current page number for animations
- *
- * @returns Products grid
+ * ProductsGrid component that displays a grid of products
+ * 
+ * This component renders a responsive grid of products with support for both
+ * individual products and product groups. It handles language localization
+ * and passes necessary data to child components for animations.
+ * 
+ * @param products - Array of product entities to display
+ * @param lang - Current language shortcode
+ * @param dict - Dictionary of localized strings from server API
+ * @param pagesLimit - Maximum number of products to display per page
+ * @param currentPage - Current page number for animations (default: 1)
+ * @returns Responsive grid of product cards
  */
 const ProductsGrid: FC<ProductsGridProps> = ({
   products,
@@ -38,6 +47,13 @@ const ProductsGrid: FC<ProductsGridProps> = ({
 }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
+  /**
+   * Prepare products with localized data
+   * 
+   * This memoized function processes the product data to ensure proper
+   * localization based on the current language. It selects the appropriate
+   * language-specific attribute values and localized information.
+   */
   const preparedProducts = useMemo(
     () =>
       products.map((product) => {

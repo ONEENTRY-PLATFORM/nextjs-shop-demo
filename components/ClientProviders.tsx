@@ -35,12 +35,27 @@ const TransitionProvider = dynamic(
 );
 
 interface ClientProvidersProps {
+  /** Child components to be wrapped by the client providers */
   children: ReactNode;
 }
 
 /**
- * Client-side providers with lazy loading
- * Only client-side effects/animations and notifications live here
+ * ClientProviders component that wraps the application with client-side providers
+ * 
+ * This component serves as a wrapper for all client-side functionality in the application.
+ * It uses dynamic imports with lazy loading to optimize performance by only loading
+ * heavy client components when needed. The component handles:
+ * - Toast notifications
+ * - GSAP animation registration
+ * - Intro animations
+ * - Page transition animations
+ * 
+ * All client-side effects and animations are managed here to separate them from
+ * server-side rendering concerns.
+ * 
+ * @param props - Component properties
+ * @param props.children - Child components to be wrapped
+ * @returns JSX element with all client-side providers and components
  */
 export default function ClientProviders({ children }: ClientProvidersProps) {
   return (

@@ -11,27 +11,37 @@ import ProductsGrid from './components/ProductsGrid';
 import ProductsNotFound from './components/ProductsNotFound';
 
 interface GridLayoutProps {
+  /** Page parameters including language and other route parameters */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: any;
+  /** Search parameters from query string including page, search, and filters */
   searchParams?: Promise<{
     search?: string;
     page?: string;
     filters?: IFilterParams[];
   }>;
+  /** Dictionary of localized strings from server API */
   dict: IAttributeValues;
+  /** Maximum number of products to display per page */
   pagesLimit: number;
+  /** Flag indicating if this is a category page (default: false) */
   isCategory?: boolean;
 }
 
 /**
- * Products grid layout
- * @param params page params
- * @param searchParams search params from query string
- * @param dict dictionary from server api
- * @param pagesLimit used for animations
- * @param isCategory
+ * ProductsGridLayout component that manages the overall product grid display
  *
- * @returns ProductsGrid
+ * This is the main component for displaying products in a grid layout. It handles
+ * data fetching, pagination, and orchestrates the display of products, pagination
+ * controls, and filter modal. It supports both regular product listings and
+ * category-specific product listings.
+ *
+ * @param params - Page parameters including language and other route parameters
+ * @param searchParams - Search parameters from query string
+ * @param dict - Dictionary of localized strings from server API
+ * @param pagesLimit - Maximum number of products to display per page
+ * @param isCategory - Flag indicating if this is a category page (default: false)
+ * @returns Complete product grid layout with products, pagination, and filters
  */
 const ProductsGridLayout: FC<GridLayoutProps> = async ({
   params,

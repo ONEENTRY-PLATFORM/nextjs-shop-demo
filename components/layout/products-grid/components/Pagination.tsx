@@ -11,7 +11,14 @@ interface PaginationItemProps {
 }
 
 /**
- * Pagination Item
+ * Pagination Item component that represents a single page button
+ * 
+ * This component renders a button for a specific page number in the pagination controls.
+ * It handles the visual styling for active vs inactive pages and navigation to the selected page.
+ * 
+ * @param page - The page number to display on this button
+ * @param isActive - Whether this page is currently active/selected
+ * @param href - The URL to navigate to when this button is clicked
  */
 const PaginationItem: FC<PaginationItemProps> = ({ page, isActive, href }) => {
   const router = useTransitionRouter();
@@ -35,10 +42,14 @@ interface PaginationProps {
 }
 
 /**
- * Pagination component
- * @param totalPages - Total number of pages
- *
- * @returns Pagination component
+ * Pagination component that displays page navigation controls
+ * 
+ * This component renders a pagination control with smart page numbering that
+ * adapts based on the current page and total number of pages. It shows a
+ * fixed number of page buttons and adds ellipses when there are many pages.
+ * 
+ * @param totalPages - Total number of pages available
+ * @returns Pagination component with navigation buttons
  */
 const Pagination: FC<PaginationProps> = ({ totalPages }) => {
   const pathname = usePathname();
@@ -58,6 +69,12 @@ const Pagination: FC<PaginationProps> = ({ totalPages }) => {
     currentPage = 1;
   }
 
+  /**
+   * Creates a query string for a specific page number
+   * 
+   * @param page - The page number to include in the query string
+   * @returns The query string with the page parameter set
+   */
   const createQueryString = (page: number) => {
     const params = new URLSearchParams(searchParamsString);
     params.set('page', page.toString());
@@ -65,7 +82,15 @@ const Pagination: FC<PaginationProps> = ({ totalPages }) => {
     return params.toString();
   };
 
-  // Create an array of page numbers to display
+  /**
+   * Generates an array of page numbers to display in the pagination controls
+   * 
+   * This function implements smart pagination that shows a fixed number of
+   * page buttons and adds ellipses when there are many pages. It keeps the
+   * current page centered when possible.
+   * 
+   * @returns Array of page numbers and ellipsis markers to display
+   */
   const getPageNumbers = () => {
     const pages = [];
     const maxVisiblePages = 5; // Maximum number of page buttons to show

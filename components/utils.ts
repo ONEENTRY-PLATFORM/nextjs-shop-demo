@@ -3,7 +3,24 @@ import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
 import { CurrencyEnum, IntlEnum } from '@/app/types/enum';
 
-// UsePrice
+/**
+ * Formats a numeric amount as a currency string based on the specified language
+ *
+ * This function takes a numeric amount and formats it as a localized currency
+ * string using Intl.NumberFormat. It determines the appropriate currency and
+ * locale settings based on the provided language code.
+ *
+ * @param options - Configuration options
+ * @param options.amount - The numeric amount to format
+ * @param options.lang - The language code to determine currency and formatting
+ * @returns Formatted currency string (e.g., "$123.45", "€123,45")
+ *
+ * @example
+ * ```typescript
+ * const price = UsePrice({ amount: 123.45, lang: 'en' });
+ * // Returns "$123.45"
+ * ```
+ */
 export const UsePrice = ({
   amount,
   lang,
@@ -21,7 +38,23 @@ export const UsePrice = ({
   return formattedPrice;
 };
 
-// UseDate
+/**
+ * Formats a date into a localized string representation
+ *
+ * This function takes a date and formats it as a localized string with
+ * day, month, and year components. The format varies based on the locale.
+ *
+ * @param options - Configuration options
+ * @param options.fullDate - The date to format (as Date, string, or timestamp)
+ * @param options.format - The locale identifier for formatting (default: 'en')
+ * @returns Formatted date string (e.g., "01-Jan-2023")
+ *
+ * @example
+ * ```typescript
+ * const date = UseDate({ fullDate: new Date(), format: 'en' });
+ * // Returns "01-Jan-2023"
+ * ```
+ */
 export const UseDate = ({
   fullDate,
   format = 'en',
@@ -45,6 +78,25 @@ export const UseDate = ({
   return date;
 };
 
+/**
+ * Sorts object fields by their position property
+ *
+ * This function takes an object and sorts its entries based on the
+ * position property of each value. The result is a new object with
+ * the same keys but ordered by position.
+ *
+ * @param obj - The object to sort
+ * @returns A new object with entries sorted by position
+ *
+ * @example
+ * ```typescript
+ * const sorted = sortObjectFieldsByPosition({
+ *   a: { position: 2 },
+ *   b: { position: 1 }
+ * });
+ * // Returns { b: { position: 1 }, a: { position: 2 } }
+ * ```
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const sortObjectFieldsByPosition = (obj: Record<any, any>) => {
   const entries = Object.entries(obj);
@@ -58,7 +110,25 @@ export const sortObjectFieldsByPosition = (obj: Record<any, any>) => {
   return sortedObj;
 };
 
-// flatMenuToNested
+/**
+ * Converts a flat menu array into a nested structure
+ *
+ * This function takes a flat array of menu items and converts it into
+ * a hierarchical tree structure based on parent-child relationships.
+ *
+ * @param data - Array of menu items
+ * @param pid - Parent ID to start from (null for root level)
+ * @returns Nested array of menu items with children
+ *
+ * @example
+ * ```typescript
+ * const nested = flatMenuToNested([
+ *   { id: 1, parentId: null },
+ *   { id: 2, parentId: 1 }
+ * ], null);
+ * // Returns [{ id: 1, parentId: null, children: [{ id: 2, parentId: 1 }] }]
+ * ```
+ */
 export const flatMenuToNested = (
   data: [] | Array<IMenusPages>,
   pid: number | null,
@@ -76,6 +146,22 @@ export const flatMenuToNested = (
   }, []);
 };
 
+/**
+ * Type guard to check if a value is an IError object
+ *
+ * This function checks if the provided value has the properties of an
+ * IError object, specifically checking for the presence of a statusCode.
+ *
+ * @param res - The value to check
+ * @returns True if the value is an IError object, false otherwise
+ *
+ * @example
+ * ```typescript
+ * if (typeError(result)) {
+ *   console.log('Error occurred:', result.statusCode);
+ * }
+ * ```
+ */
 export function typeError(res: IError | unknown): res is IError {
   if ((res as IError)?.statusCode) {
     return true;

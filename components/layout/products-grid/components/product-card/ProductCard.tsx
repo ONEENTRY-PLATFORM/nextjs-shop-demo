@@ -13,25 +13,34 @@ import ProductImage from './ProductImage';
 import Stickers from './Stickers';
 
 interface ProductCardProps {
+  /** Product entity object containing all product data */
   product: IProductsEntity;
+  /** Current language shortcode (e.g., 'en', 'fr') */
   lang: string;
+  /** Index of element for animations stagger */
   index: number;
+  /** Dictionary of localized strings from server API */
   dict: IAttributeValues;
+  /** Maximum number of products to display per page, used for animations */
   pagesLimit: number;
+  /** Current page number, used for animations (default: 1) */
   currentPage?: number;
 }
 
 /**
- * Product card
+ * ProductCard component that displays a single product in the product grid
  *
- * @param product product entity object
- * @param lang Current language shortcode
- * @param dict dictionary from server api
- * @param index Index of element for animations stagger
- * @param pagesLimit used for animations
- * @param currentPage current page number for animations
+ * This component renders an individual product card with its image, title, price,
+ * and action buttons. It includes animations, stickers for special product states,
+ * and links to the product detail page.
  *
- * @returns Product card
+ * @param product - Product entity object containing all product data
+ * @param lang - Current language shortcode
+ * @param index - Index of element for animations stagger
+ * @param dict - Dictionary of localized strings from server API
+ * @param pagesLimit - Maximum number of products to display per page
+ * @param currentPage - Current page number for animations (default: 1)
+ * @returns Product card with image, title, price and action buttons
  */
 const ProductCard: FC<ProductCardProps> = ({
   product,
@@ -44,14 +53,28 @@ const ProductCard: FC<ProductCardProps> = ({
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, statusIdentifier, attributeValues, localizeInfos } = product;
 
+  /**
+   * Get localized product attributes
+   *
+   * Extracts the attributes for the current language, falling back to the
+   * default attributes if language-specific ones are not available.
+   */
   const attributes = useMemo(
     () => attributeValues?.[langCode] || attributeValues,
     [attributeValues, langCode],
   );
+
+  /**
+   * Get localized product title
+   *
+   * Extracts the title for the current language, with fallbacks to the
+   * language-specific title or default title if not available.
+   */
   const title = useMemo(
     () => localizeInfos?.[langCode]?.title || localizeInfos?.title || '',
     [localizeInfos, langCode],
   );
+
   return (
     <CardAnimations
       className="product-card group"
