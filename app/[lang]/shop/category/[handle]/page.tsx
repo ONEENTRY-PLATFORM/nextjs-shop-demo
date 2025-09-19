@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+// import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC, memo, Suspense } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
-import { getPageByUrl } from '@/app/api';
+import { getPageByUrl, getProductsByPageUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api/server/pages/getChildPagesByParentUrl';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
@@ -105,6 +106,20 @@ const ShopCategoryLayout: FC<PageProps> = async (props: any) => {
     return notFound();
   }
 
+  // Fetch products data
+  const { isError, products, total } = await getProductsByPageUrl({
+    lang: lang,
+    offset: 0,
+    limit: pagesLimit,
+    params: { ...params, searchParams: await searchParams },
+  });
+
+  const productsData = {
+    isError,
+    products: products || [],
+    total,
+  };
+
   // Breadcrumb structured data
   const breadcrumbStructuredData = {
     '@context': 'https://schema.org',
@@ -143,11 +158,12 @@ const ShopCategoryLayout: FC<PageProps> = async (props: any) => {
         <div className="flex w-full flex-col items-center gap-5 bg-white">
           <Suspense fallback={<MemoizedProductsGridLoader />}>
             <ProductsGridLayout
-              searchParams={searchParams}
+              searchParams={await searchParams}
               pagesLimit={pagesLimit}
               params={params}
               dict={dict}
               isCategory={true}
+              productsData={productsData}
             />
           </Suspense>
         </div>

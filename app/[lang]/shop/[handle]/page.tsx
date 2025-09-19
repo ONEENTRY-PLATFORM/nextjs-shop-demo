@@ -1,11 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import type { IError } from 'oneentry/dist/base/utils';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { memo, Suspense } from 'react';
 
-import { getPageByUrl } from '@/app/api';
+import { getPageByUrl, getProducts, getProductsByPageUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
-import type { MetadataParams, PageProps } from '@/app/types/global';
+import type { MetadataParams } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
@@ -72,31 +75,63 @@ export async function generateMetadata({
 
 /**
  * Shop catalog page
+ *
  * @async server component
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @param params page params
  * @param searchParams
  * @returns Shop page layout JSX.Element
  */
-const ShopCatalogPage: FC<PageProps> = async (props) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const searchParams: any = await props.searchParams;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const params: any = await props.params;
-  const { handle, lang } = await params;
+const ShopCatalogPage: FC<any> = async (props: {
+  params: Promise<{ handle: any; lang: any }>;
+  searchParams: any;
+}) => {
+  const params = await props.params;
+  const searchParams = await props.searchParams;
+  const { handle, lang } = params;
+
   // Get the dictionary from the API and set the server provider.
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
-
-  // get page by url from the API
-  const { page, isError } = await getPageByUrl(handle, lang);
 
   // !!!extract products per page limit from global settings
   const pagesLimit = 10;
 
+  // get page by url from the API
+  const { page, isError: err } = await getPageByUrl(handle, lang);
+
+  if (err) {
+    return notFound();
+  }
+
+  // Check if this is a category page by checking page type
+  const isCategory = page?.type === ('Category' as any);
+
+  const combinedParams = { ...page, searchParams } as any;
+
+  // Get all products from api or get products byPageUrl
+  const productsData: {
+    isError: boolean;
+    error?: IError;
+    products?: IProductsEntity[];
+    total: number;
+  } = !isCategory
+    ? await getProducts({
+        lang: lang,
+        offset: 0,
+        limit: pagesLimit,
+        params: combinedParams,
+      })
+    : await getProductsByPageUrl({
+        lang: lang,
+        offset: 0,
+        limit: pagesLimit,
+        params: combinedParams,
+      });
+
   // Memoize the loader component
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
-  if (!page || isError) {
+  if (!page || productsData.isError) {
     return notFound();
   }
 
@@ -109,6 +144,7 @@ const ShopCatalogPage: FC<PageProps> = async (props) => {
             searchParams={searchParams}
             pagesLimit={pagesLimit}
             dict={dict}
+            productsData={productsData as any}
           />
         </Suspense>
       </div>

@@ -3,9 +3,10 @@ import { notFound } from 'next/navigation';
 import type { FC } from 'react';
 import { memo, Suspense } from 'react';
 
-import { getPageByUrl } from '@/app/api';
+import { getPageByUrl, getProducts } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
@@ -46,7 +47,7 @@ export async function generateMetadata({
   };
 
   return {
-    title: `${localizeInfos.title} | OneEntry Shop`,
+    title: localizeInfos.title,
     description: localizeInfos.plainContent,
     alternates: {
       languages: Object.fromEntries(i18n.locales.map((l) => [l, `/${l}/shop`])),
@@ -70,8 +71,6 @@ export async function generateMetadata({
               alt,
             },
           ],
-          title: localizeInfos.title,
-          description: localizeInfos.plainContent,
         }
       : null,
   };
@@ -85,9 +84,9 @@ export async function generateMetadata({
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Shop page layout JSX.Element
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ShopPageLayout: FC<PageProps> = async (props: any) => {
-  const { params, searchParams } = await props;
+const ShopPageLayout: FC<PageProps> = async (props) => {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const { lang } = await params;
   // Get the dictionary from the API and set the server provider.
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
@@ -104,6 +103,20 @@ const ShopPageLayout: FC<PageProps> = async (props: any) => {
   if (!page) {
     return notFound();
   }
+
+  // Fetch products data
+  const { isError, products, total } = await getProducts({
+    lang: lang,
+    offset: 0,
+    limit: pagesLimit,
+    params: { ...params, searchParams },
+  });
+
+  const productsData = {
+    isError,
+    products: products || [],
+    total,
+  };
 
   // Breadcrumb structured data
   const breadcrumbStructuredData = {
@@ -141,6 +154,7 @@ const ShopPageLayout: FC<PageProps> = async (props: any) => {
               dict={dict}
               params={params}
               searchParams={searchParams}
+              productsData={productsData}
             />
           </Suspense>
         </div>

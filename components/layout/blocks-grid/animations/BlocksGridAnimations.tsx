@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
 import type { FC, ReactNode } from 'react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 interface BlocksGridAnimationsProps {
   children: ReactNode;
@@ -23,6 +23,7 @@ const BlocksGridAnimations: FC<BlocksGridAnimationsProps> = ({
   className,
 }) => {
   const { stage } = useTransitionState();
+  const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
   // stage entering/leaving animations
@@ -31,20 +32,22 @@ const BlocksGridAnimations: FC<BlocksGridAnimationsProps> = ({
       paused: true,
     });
 
-    if (stage === 'leaving') {
+    // if (stage === 'none' && prevStage === 'entering') {
+    //   tl.set(ref.current, {
+    //     autoAlpha: 0,
+    //   }).to(ref.current, {
+    //     autoAlpha: 1,
+    //   });
+    //   tl.play();
+    // } else
+    if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {
         autoAlpha: 0,
       });
       tl.play();
     }
-    if (stage === 'entering') {
-      tl.set(ref.current, {
-        autoAlpha: 0,
-      }).to(ref.current, {
-        autoAlpha: 1,
-      });
-      tl.play();
-    }
+
+    setPrevStage(stage);
 
     return () => {
       tl.kill();

@@ -57,8 +57,9 @@ const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
 
     if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {
-        autoAlpha: 0,
-        duration: 0.5,
+        // autoAlpha: 0,
+        scale: 0,
+        duration: 0.35,
         delay: index / 20,
       });
     }

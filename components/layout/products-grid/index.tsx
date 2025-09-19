@@ -1,8 +1,8 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
-import { getProducts, getProductsByPageUrl } from '@/app/api';
 import FilterModal from '@/components/layout/filter/FilterModal';
 import CardsGridAnimations from '@/components/layout/products-grid/animations/CardsGridAnimations';
 
@@ -12,20 +12,30 @@ import ProductsNotFound from './components/ProductsNotFound';
 
 interface GridLayoutProps {
   /** Page parameters including language and other route parameters */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params: any;
+  params: {
+    lang: string;
+    [key: string]: string | undefined;
+  };
   /** Search parameters from query string including page, search, and filters */
-  searchParams?: Promise<{
-    search?: string;
-    page?: string;
-    filters?: IFilterParams[];
-  }>;
+  searchParams?:
+    | {
+        search?: string;
+        page?: string;
+        filters?: IFilterParams[];
+      }
+    | undefined;
   /** Dictionary of localized strings from server API */
   dict: IAttributeValues;
   /** Maximum number of products to display per page */
   pagesLimit: number;
   /** Flag indicating if this is a category page (default: false) */
   isCategory?: boolean;
+  /** Products data */
+  productsData: {
+    isError: boolean;
+    products: IProductsEntity[];
+    total: number;
+  };
 }
 
 /**
@@ -41,37 +51,20 @@ interface GridLayoutProps {
  * @param dict - Dictionary of localized strings from server API
  * @param pagesLimit - Maximum number of products to display per page
  * @param isCategory - Flag indicating if this is a category page (default: false)
+ * @param productsData - Pre-fetched products data
  * @returns Complete product grid layout with products, pagination, and filters
  */
-const ProductsGridLayout: FC<GridLayoutProps> = async ({
+const ProductsGridLayout: FC<GridLayoutProps> = ({
   params,
-  searchParams: sp,
+  searchParams,
   dict,
   pagesLimit,
-  isCategory,
+  productsData,
 }) => {
-  const p = await params;
-  const searchParams = await sp;
-  const currentPage = Number(searchParams?.page) || 1;
-  const { lang } = await params;
-  const limit =
-    currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
-  const combinedParams = { ...p, searchParams };
+  const { isError, products, total } = productsData;
 
-  // Get all products from api or get products byPageUrl
-  const { isError, products, total } = !isCategory
-    ? await getProducts({
-        lang: lang,
-        offset: 0,
-        limit: limit,
-        params: combinedParams,
-      })
-    : await getProductsByPageUrl({
-        lang: lang,
-        offset: 0,
-        limit: limit,
-        params: combinedParams,
-      });
+  const currentPage = Number(searchParams?.page) || 1;
+  const { lang } = params;
 
   if (!products || total < 1 || isError) {
     return <ProductsNotFound lang={lang} dict={dict} />;

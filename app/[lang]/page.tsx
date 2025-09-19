@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { FC } from 'react';
@@ -33,7 +34,6 @@ const IndexPageLayout: FC<IndexPageLayoutProps> = async ({ params }) => {
   const { lang } = await params;
 
   // Validate language parameter
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if (!lang || !i18n.locales.includes(lang as any)) {
     return notFound();
   }
@@ -91,7 +91,6 @@ const IndexPageLayout: FC<IndexPageLayoutProps> = async ({ params }) => {
       <main className="flex flex-col items-center justify-between gap-16">
         <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
           <div className="flex w-full flex-col items-center gap-5 bg-white">
-            {/* Use React's Suspense to handle asynchronous rendering of blocks */}
             <Suspense fallback={<BlocksGridLoader />}>
               <BlocksGrid blocks={blocks as Array<string>} lang={lang} />
             </Suspense>
