@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 // import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
@@ -5,7 +6,6 @@ import type { FC, Key } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
-import type { IOrderProducts } from '@/app/types/global';
 
 import OrderAnimations from '../animations/OrderAnimations';
 import CancelOrderButton from './CancelOrderButton';
@@ -52,7 +52,7 @@ const OrderPage: FC<{
       }
     >
       <div className="flex flex-col gap-4 pb-5 max-md:max-w-full">
-        {products.map((product: IOrderProducts, i: Key) => {
+        {products.map((product: any, i: Key) => {
           if (product.id === 83) {
             return;
           }
