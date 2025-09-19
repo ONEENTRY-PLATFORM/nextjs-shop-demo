@@ -6,7 +6,7 @@ import { getProductById } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
 import CartPage from '@/components/layout/cart';
-import type { Locale } from '@/i18n-config';
+import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 
@@ -41,3 +41,14 @@ const CartPageLayout: FC<PageProps> = async ({ params }) => {
 };
 
 export default CartPageLayout;
+
+/**
+ * Pre-generation page params
+ */
+export async function generateStaticParams() {
+  const params: Array<{ lang: string }> = [];
+  for (const lang of i18n.locales) {
+    params.push({ lang });
+  }
+  return params;
+}

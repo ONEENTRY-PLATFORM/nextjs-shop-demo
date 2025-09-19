@@ -10,66 +10,8 @@ import CategoriesGrid from '@/components/layout/categories';
 import { i18n } from '@/i18n-config';
 
 /**
- * Generate page metadata
- * @async server component
- * @param params page params
- * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
- * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns metadata
- */
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ handle: string; lang: string }>;
-}): Promise<Metadata> {
-  const { lang } = await params;
-  const { isError, page } = await getPageByUrl('category', lang);
-
-  if (isError || !page) {
-    return notFound();
-  }
-  const { localizeInfos, isVisible, attributeValues } = page;
-
-  const {
-    url,
-    width,
-    height,
-    altText: alt,
-  } = {
-    url: attributeValues.icon?.downloadLink,
-    width: 300,
-    height: 300,
-    altText: localizeInfos.title,
-  };
-
-  return {
-    title: localizeInfos.title,
-    description: localizeInfos.plainContent,
-    robots: {
-      index: isVisible,
-      follow: isVisible,
-      googleBot: {
-        index: isVisible,
-        follow: isVisible,
-      },
-    },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-        }
-      : null,
-  };
-}
-
-/**
  * Category page
+ *
  * @async server component
  * @param params page params
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
@@ -149,4 +91,63 @@ export async function generateStaticParams() {
     }
   }
   return params;
+}
+
+/**
+ * Generate page metadata
+ * @async server component
+ * @param params page params
+ * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
+ * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
+ * @returns metadata
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ handle: string; lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const { isError, page } = await getPageByUrl('category', lang);
+
+  if (isError || !page) {
+    return notFound();
+  }
+  const { localizeInfos, isVisible, attributeValues } = page;
+
+  const {
+    url,
+    width,
+    height,
+    altText: alt,
+  } = {
+    url: attributeValues.icon?.downloadLink,
+    width: 300,
+    height: 300,
+    altText: localizeInfos.title,
+  };
+
+  return {
+    title: localizeInfos.title,
+    description: localizeInfos.plainContent,
+    robots: {
+      index: isVisible,
+      follow: isVisible,
+      googleBot: {
+        index: isVisible,
+        follow: isVisible,
+      },
+    },
+    openGraph: url
+      ? {
+          images: [
+            {
+              url,
+              width,
+              height,
+              alt,
+            },
+          ],
+        }
+      : null,
+  };
 }

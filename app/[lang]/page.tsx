@@ -105,6 +105,17 @@ const IndexPageLayout: FC<IndexPageLayoutProps> = async ({ params }) => {
 export default IndexPageLayout;
 
 /**
+ * Pre-generation of shop page
+ */
+export async function generateStaticParams() {
+  const params: Array<{ lang: string }> = [];
+  for (const lang of i18n.locales) {
+    params.push({ lang });
+  }
+  return params;
+}
+
+/**
  * Generate metadata for the page
  *
  * @param params - Page parameters including language
@@ -117,7 +128,6 @@ export async function generateMetadata({
   const { lang } = await params;
 
   // Validate language parameter
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if (!lang || !i18n.locales.includes(lang as any)) {
     return {
       title: 'Page Not Found',

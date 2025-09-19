@@ -11,43 +11,10 @@ import ContactsPage from '@/components/pages/ContactsPage';
 import PaymentCanceled from '@/components/pages/PaymentCanceled';
 import PaymentSuccess from '@/components/pages/PaymentSuccess';
 import ServicesPage from '@/components/pages/ServicesPage';
-import type { Locale } from '@/i18n-config';
+import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 import WithSidebar from './WithSidebar';
-
-/**
- * Generate page metadata
- * @async server component
- * @param params page params
- * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
- * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- * @returns metadata
- */
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ page: string; lang: string }>;
-}): Promise<Metadata> {
-  const { page: pageData, lang } = await params;
-  // get page by Url
-  const { page, isError } = await getPageByUrl(pageData, lang);
-
-  if (isError || !page) {
-    return notFound();
-  }
-
-  // extract data from page
-  const { localizeInfos } = page;
-
-  return {
-    title: localizeInfos?.title,
-    description: localizeInfos?.title,
-    openGraph: {
-      type: 'article',
-    },
-  };
-}
 
 /**
  * Simple page
@@ -135,3 +102,47 @@ const PageLayout: FC<{ params: Promise<{ page: any; lang: any }> }> = async ({
 };
 
 export default PageLayout;
+
+/**
+ * Pre-generation of shop page
+ */
+export async function generateStaticParams() {
+  const params: Array<{ lang: string }> = [];
+  for (const lang of i18n.locales) {
+    params.push({ lang });
+  }
+  return params;
+}
+
+/**
+ * Generate page metadata
+ * @async server component
+ * @param params page params
+ * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ * @returns metadata
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ page: string; lang: string }>;
+}): Promise<Metadata> {
+  const { page: pageData, lang } = await params;
+  // get page by Url
+  const { page, isError } = await getPageByUrl(pageData, lang);
+
+  if (isError || !page) {
+    return notFound();
+  }
+
+  // extract data from page
+  const { localizeInfos } = page;
+
+  return {
+    title: localizeInfos?.title,
+    description: localizeInfos?.title,
+    openGraph: {
+      type: 'article',
+    },
+  };
+}

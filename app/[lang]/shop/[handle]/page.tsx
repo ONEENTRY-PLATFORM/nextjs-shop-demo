@@ -16,64 +16,6 @@ import { i18n, type Locale } from '@/i18n-config';
 import { getDictionary } from '../../dictionaries';
 
 /**
- * Generate page metadata
- * @async server component
- * @param params page params
- * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns metadata
- */
-export async function generateMetadata({
-  params,
-}: MetadataParams): Promise<Metadata> {
-  const { handle, lang } = await params;
-  const { isError, page } = await getPageByUrl(handle, lang);
-
-  if (isError || !page) {
-    return notFound();
-  }
-
-  // extract data from page
-  const { localizeInfos, isVisible, attributeValues } = page;
-
-  const {
-    url,
-    width,
-    height,
-    altText: alt,
-  } = {
-    url: attributeValues?.icon?.downloadLink,
-    width: 300,
-    height: 300,
-    altText: localizeInfos?.title,
-  };
-
-  return {
-    title: localizeInfos?.title,
-    description: localizeInfos?.plainContent,
-    robots: {
-      index: isVisible,
-      follow: isVisible,
-      googleBot: {
-        index: isVisible,
-        follow: isVisible,
-      },
-    },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-        }
-      : null,
-  };
-}
-
-/**
  * Shop catalog page
  *
  * @async server component
@@ -143,12 +85,67 @@ export default ShopCatalogPage;
  * Pre-generation of shop page
  */
 export async function generateStaticParams() {
-  const params: Array<{ lang: string; handle: string }> = [];
+  const params: Array<{ lang: string }> = [];
   for (const lang of i18n.locales) {
-    const { page }: any = await getPageByUrl('category', lang);
-
-    const handle = page.pageUrl || '';
-    params.push({ lang, handle });
+    params.push({ lang });
   }
   return params;
+}
+
+/**
+ * Generate page metadata
+ * @async server component
+ * @param params page params
+ * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
+ * @returns metadata
+ */
+export async function generateMetadata({
+  params,
+}: MetadataParams): Promise<Metadata> {
+  const { handle, lang } = await params;
+  const { isError, page } = await getPageByUrl(handle, lang);
+
+  if (isError || !page) {
+    return notFound();
+  }
+
+  // extract data from page
+  const { localizeInfos, isVisible, attributeValues } = page;
+
+  const {
+    url,
+    width,
+    height,
+    altText: alt,
+  } = {
+    url: attributeValues?.icon?.downloadLink,
+    width: 300,
+    height: 300,
+    altText: localizeInfos?.title,
+  };
+
+  return {
+    title: localizeInfos?.title,
+    description: localizeInfos?.plainContent,
+    robots: {
+      index: isVisible,
+      follow: isVisible,
+      googleBot: {
+        index: isVisible,
+        follow: isVisible,
+      },
+    },
+    openGraph: url
+      ? {
+          images: [
+            {
+              url,
+              width,
+              height,
+              alt,
+            },
+          ],
+        }
+      : null,
+  };
 }

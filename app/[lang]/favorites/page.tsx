@@ -1,10 +1,11 @@
+import type { Metadata } from 'next';
 import type { FC } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
 import FavoritesPage from '@/components/layout/favorites';
-import type { Locale } from '@/i18n-config';
+import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 
@@ -32,3 +33,38 @@ const FavoritesPageLayout: FC<PageProps> = async ({ params }) => {
 };
 
 export default FavoritesPageLayout;
+
+/**
+ * Pre-generation page params
+ */
+export async function generateStaticParams() {
+  const params: Array<{ lang: string }> = [];
+  for (const lang of i18n.locales) {
+    params.push({ lang });
+  }
+  return params;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const title = 'My orders';
+  const description = 'Order history and processing statuses.';
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `/${lang}/orders`,
+      type: 'website',
+    },
+    alternates: {
+      canonical: `/${lang}/orders`,
+    },
+  };
+}

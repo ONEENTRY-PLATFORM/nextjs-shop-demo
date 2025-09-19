@@ -58,7 +58,7 @@ const AvailabilityFilter: FC<AvailabilityFilterProps> = memo(({ title }) => {
         htmlFor="availability"
         className="flex-auto text-lg leading-8 text-[#4C4D56]"
       >
-        {title}
+        {title || 'Availability'}
       </label>
       <div className="relative inline-block w-10 select-none align-middle transition duration-200 ease-in">
         <input
