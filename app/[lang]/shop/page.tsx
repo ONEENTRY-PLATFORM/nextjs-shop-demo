@@ -77,13 +77,16 @@ export async function generateMetadata({
 
 /**
  * Shop page
+ *
  * @async server component
  * @param params page params
  * @param searchParams dynamic search params
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Shop page layout JSX.Element
  */
-const ShopPageLayout: FC<PageProps> = async (props) => {
+// PageProps
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const ShopPageLayout: FC<any> = async (props) => {
   const searchParams = await props.searchParams;
   const params = await props.params;
   const { lang } = params;
@@ -103,14 +106,25 @@ const ShopPageLayout: FC<PageProps> = async (props) => {
     return notFound();
   }
 
+  // Parse current page safely
+  const currentPage = Number(searchParams.page) || 1;
+
   // Fetch products data
   const { isError, products, total } = await getProducts({
     lang: lang,
     offset: 0,
-    limit: pagesLimit,
+    limit: currentPage * pagesLimit,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     params: { handle: params.handle, searchParams: searchParams as any },
   });
+  // console.log({
+  //   isError,
+  //   products,
+  //   total,
+  //   currentPage,
+  //   pagesLimit,
+  //   offset: currentPage * pagesLimit,
+  // });
 
   const productsData = {
     isError,
@@ -163,3 +177,14 @@ const ShopPageLayout: FC<PageProps> = async (props) => {
 };
 
 export default ShopPageLayout;
+
+/**
+ * Pre-generation of shop page
+ */
+export async function generateStaticParams() {
+  const params: Array<{ lang: string; handle: string }> = [];
+  for (const lang of i18n.locales) {
+    params.push({ lang, handle: 'shop' });
+  }
+  return params;
+}

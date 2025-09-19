@@ -116,8 +116,8 @@ const ShopCategoryLayout: FC<any> = async (props: any) => {
   // Fetch products data
   const { isError, products, total } = await getProductsByPageUrl({
     lang: lang,
-    offset: (currentPage - 1) * pagesLimit,
-    limit: pagesLimit,
+    offset: 0,
+    limit: currentPage * pagesLimit,
     params: { ...params, searchParams },
   });
 

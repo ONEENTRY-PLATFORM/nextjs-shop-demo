@@ -42,8 +42,8 @@ export const getProducts = async (props: {
 
   try {
     const data = await api.Products.getProducts(body || undefined, langCode, {
-      offset,
       limit,
+      offset,
       sortOrder: 'ASC',
       sortKey: 'date',
     });
