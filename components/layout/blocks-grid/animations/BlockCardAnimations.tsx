@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useGSAP } from '@gsap/react';
@@ -34,11 +35,11 @@ const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
     const tl = gsap.timeline({
       paused: true,
     });
-
-    tl.set(ref.current, {
+    // img
+    tl.set((ref.current as any)?.getElementsByTagName('img'), {
       // scale: 0,
       autoAlpha: 0,
-    }).to(ref.current, {
+    }).to((ref.current as any)?.getElementsByTagName('img'), {
       // scale: 1,
       autoAlpha: 1,
       delay: index / 10,
