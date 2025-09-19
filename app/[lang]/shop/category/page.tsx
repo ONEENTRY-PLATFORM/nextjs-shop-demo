@@ -7,6 +7,7 @@ import { getPageByUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api';
 import type { PageProps } from '@/app/types/global';
 import CategoriesGrid from '@/components/layout/categories';
+import { i18n } from '@/i18n-config';
 
 /**
  * Generate page metadata
