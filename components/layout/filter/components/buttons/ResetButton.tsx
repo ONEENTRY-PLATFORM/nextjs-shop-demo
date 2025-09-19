@@ -30,7 +30,7 @@ const ResetButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
       onClick={handleClick}
       className="btn btn-o btn-o-gray relative box-border flex h-12 w-full shrink-0 flex-col items-center justify-center rounded-3xl px-5 py-3 text-center text-base font-medium uppercase"
     >
-      {dict?.filter_reset_button?.value}
+      {dict?.filter_reset_button?.value || 'Reset'}
     </button>
   );
 };

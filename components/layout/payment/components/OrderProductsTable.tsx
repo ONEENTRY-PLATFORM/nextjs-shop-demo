@@ -31,9 +31,6 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
   ) as Array<IProductsEntity>;
   const delivery = useAppSelector((state) => state.cartReducer.delivery);
 
-  // Check if we have products data
-  const hasProducts = productsDataInCart && productsDataInCart.length > 0;
-
   return (
     <>
       {/* head row */}
@@ -43,21 +40,16 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
         <div className="w-1/4 font-bold">Quantity</div>
       </div>
 
-      {/* Show message if no products in cart */}
-      {!hasProducts && (
-        <div className="p-2 text-center text-gray-500">No products in cart</div>
-      )}
-
       {/* products row */}
       {productsDataInCart.map((product, i) => {
         if (!productsInCart[i]) {
-          return null;
+          return;
         }
         const { selected, quantity } = product;
         const { localizeInfos, price, attributeValues } = productsInCart[i];
 
         if (!selected) {
-          return null;
+          return;
         }
         return (
           <div
@@ -67,11 +59,7 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
             <div className="w-1/2">{localizeInfos?.title}</div>
             <div className="w-1/4">
               {UsePrice({
-                amount:
-                  attributeValues.sale?.value ||
-                  attributeValues.price?.value ||
-                  price ||
-                  0,
+                amount: attributeValues.sale?.value || price,
                 lang,
               })}
             </div>
@@ -87,7 +75,7 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
           <div className="w-1/4">
             {UsePrice({ amount: delivery.price || 0, lang })}
           </div>
-          <div className="w-1/4">1</div>
+          <div className="w-1/4"></div>
         </div>
       )}
     </>

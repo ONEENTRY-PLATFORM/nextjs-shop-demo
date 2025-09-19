@@ -6,6 +6,7 @@ import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces
 import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
+import FadeTransition from '@/app/animations/FadeTransition';
 import { getAllOrdersByMarker } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/pages/AuthError';
@@ -132,42 +133,50 @@ const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
   }
 
   return (
-    <div className="orders-page">
-      <div className="orders-table">
-        <div className="orders-table__header">
-          <div className="orders-table__header__item">
-            {settings?.date_title?.value || 'Date'}
-          </div>
-          <div className="orders-table__header__item">
-            {settings?.total_title?.value || 'Total'}
-          </div>
-          <div className="orders-table__header__item">
-            {settings?.status_title?.value || 'Status'}
+    <FadeTransition
+      className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full"
+      index={0}
+    >
+      <div className="orders-page">
+        <div className="orders-table">
+          {/* head */}
+          <OrderRowAnimations className="w-full" index={0}>
+            <div className="-mb-px flex w-full border-collapse gap-4 border-y border-[#B0BCCE] p-4 text-slate-700">
+              <div className="w-1/2">
+                {settings?.date_title?.value || 'Date'}
+              </div>
+              <div className="w-1/4">
+                {settings?.total_title?.value || 'Total'}
+              </div>
+              <div className="w-1/4">
+                {settings?.status_title?.value || 'Status'}
+              </div>
+            </div>
+          </OrderRowAnimations>
+          <div className="orders-table__body mb-4 flex flex-col">
+            {loading ? (
+              <OrdersTableLoader />
+            ) : orders && orders.length > 0 ? (
+              orders.map((order, index) => (
+                <OrderRowAnimations key={order.id} className={''} index={0}>
+                  <Order
+                    order={order}
+                    settings={settings}
+                    lang={lang}
+                    index={index}
+                  />
+                </OrderRowAnimations>
+              ))
+            ) : (
+              <EmptyOrders lang={''} dict={dict} />
+            )}
           </div>
         </div>
-        <div className="orders-table__body">
-          {loading ? (
-            <OrdersTableLoader />
-          ) : orders && orders.length > 0 ? (
-            orders.map((order, index) => (
-              <OrderRowAnimations key={order.id} className={''} index={0}>
-                <Order
-                  order={order}
-                  settings={settings}
-                  lang={lang}
-                  index={index}
-                />
-              </OrderRowAnimations>
-            ))
-          ) : (
-            <EmptyOrders lang={''} dict={dict} />
-          )}
-        </div>
+        {total > pageLimit && !loading && !error && (
+          <LoadMore totalPages={total} />
+        )}
       </div>
-      {total > pageLimit && !loading && !error && (
-        <LoadMore totalPages={total} />
-      )}
-    </div>
+    </FadeTransition>
   );
 };
 

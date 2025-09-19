@@ -8,10 +8,7 @@ import { useContext, useEffect, useMemo } from 'react';
 import { useGetAccountsQuery, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-import {
-  addProductsToCart,
-  selectCartData,
-} from '@/app/store/reducers/CartSlice';
+import { selectCartData } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { SimplePageProps } from '@/app/types/global';
 import PaymentMethod from '@/components/layout/payment/components/PaymentMethod';
@@ -48,17 +45,9 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
   const { data, error, isLoading: isAccountsLoading } = useGetAccountsQuery({});
 
   // Fetch products by IDs
-  const { data: productsData, isLoading: isProductsLoading } =
-    useGetProductsByIdsQuery({
-      items: productsCartData.map((p) => p.id.toString()).toString(),
-    });
-
-  // Add fetched products to cart when they are loaded
-  useEffect(() => {
-    if (productsData) {
-      dispatch(addProductsToCart(productsData));
-    }
-  }, [productsData]);
+  useGetProductsByIdsQuery({
+    items: productsCartData.map((p) => p.id.toString()).toString(),
+  });
 
   // Allowed payment methods
   const whitelistMethods = useMemo(() => {
@@ -127,7 +116,7 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
   }
 
   // Loader
-  if ((productsCartData.length > 0 && isProductsLoading) || isAccountsLoading) {
+  if ((productsCartData.length > 0 && isAccountsLoading) || isAccountsLoading) {
     return <Loader />;
   }
 

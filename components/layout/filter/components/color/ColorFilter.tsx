@@ -77,15 +77,33 @@ const ColorFilter: FC<ColorFilterProps> = memo(({ title, attributes }) => {
       <div className="mb-5 text-lg text-[#4C4D56]">{title}</div>
       <div className="mb-9 flex flex-wrap gap-1 whitespace-nowrap text-sm leading-8 text-slate-400">
         {colors.map((color: { code: string; name: string }, index: Key) => (
+          // <button
+          //   key={index}
+          //   onClick={() => handleColorChange(color.code)}
+          //   className={`relative box-border flex size-8 cursor-pointer flex-col items-center justify-center rounded-full p-1 ${
+          //     currentColor === color.code ? 'outline-2 outline-orange-500' : ''
+          //   }`}
+          //   style={{ backgroundColor: color.code }}
+          //   aria-label={color.name}
+          // ></button>
           <button
             key={index}
+            className={
+              'flex cursor-pointer gap-1.5 rounded-full pl-1 pr-2 transition-colors w-24 ' +
+              (color.code === currentColor
+                ? 'bg-slate-100 text-neutral-700'
+                : 'hover:bg-slate-100')
+            }
             onClick={() => handleColorChange(color.code)}
-            className={`relative box-border flex size-8 cursor-pointer flex-col items-center justify-center rounded-full p-1 ${
-              currentColor === color.code ? 'outline-2 outline-orange-500' : ''
-            }`}
-            style={{ backgroundColor: color.code }}
-            aria-label={color.name}
-          ></button>
+          >
+            <div
+              className={'my-auto size-6 rounded-full '}
+              style={{
+                backgroundColor: color.code,
+              }}
+            ></div>
+            <span className="leading-6">{color.name}</span>
+          </button>
         ))}
       </div>
     </div>

@@ -75,7 +75,7 @@ const ProductAnimations: FC<ProductAnimationsProps> = memo(
       return () => {
         tl.kill();
       };
-    }, [index]);
+    }, []);
 
     // remove Product from cart animations
     useGSAP(() => {
