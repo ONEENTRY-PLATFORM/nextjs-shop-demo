@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
+// import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC } from 'react';
 import { memo } from 'react';
 
@@ -8,7 +8,8 @@ import Placeholder from '@/components/shared/Placeholder';
 import { UsePrice } from '@/components/utils';
 
 interface ProductCardProps {
-  product: IOrderProducts;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  product: any;
   lang: string;
   settings: {
     product_qty_title: {
