@@ -104,6 +104,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
         }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isAuth]);
 
   return (

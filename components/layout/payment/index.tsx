@@ -11,6 +11,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   selectCartData,
   selectCartItems,
+  // selectCartTotal,
 } from '@/app/store/reducers/CartSlice';
 import { addProducts, createOrder } from '@/app/store/reducers/OrderSlice';
 import type { SimplePageProps } from '@/app/types/global';
@@ -45,21 +46,28 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
   // Products items in cartSlice
   const productsItems = useAppSelector(selectCartItems);
 
+  // Cart total
+  // const cartTotal = useAppSelector(selectCartTotal);
+
   // Delivery data in cartSlice
   const deliveryData = useAppSelector((state) => state.cartReducer.delivery);
+
+  // Order data in orderSlice
+  const orderData = useAppSelector((state) => state.orderReducer.order);
 
   // Get all payment accounts as an array
   const { data, error, isLoading: isAccountsLoading } = useGetAccountsQuery({});
 
   // Fetch products by IDs
-  const { data: productsData } = useGetProductsByIdsQuery(
-    {
-      items: productsCartData.map((p) => p.id.toString()).toString(),
-    },
-    {
-      skip: productsCartData.length === 0,
-    },
-  );
+  const { data: productsData, isLoading: isProductsLoading } =
+    useGetProductsByIdsQuery(
+      {
+        items: productsCartData.map((p) => p.id.toString()).toString(),
+      },
+      {
+        skip: productsCartData.length === 0,
+      },
+    );
 
   // Combine products from cart and loaded products data
   const combinedProducts = useMemo(() => {
@@ -111,26 +119,32 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
 
   // Create order in orderSlice on init component
   useEffect(() => {
-    if (productsInOrder.length > 0 && !isInitialized) {
-      setIsInitialized(true);
+    // Initialize order if it doesn't exist or is empty
+    if (
+      productsInOrder.length > 0 &&
+      (!orderData || orderData.products?.length === 0)
+    ) {
       dispatch(
         createOrder({
           formIdentifier: 'order',
           formData: [],
           products: productsInOrder,
-          paymentAccountIdentifier: '',
+          paymentAccountIdentifier: orderData?.paymentAccountIdentifier || '',
         }),
       );
-    }
-  }, [productsInOrder, isInitialized]);
-
-  // add products to orderSlice
-  useEffect(() => {
-    if (productsInOrder && productsInOrder.length > 0 && !isInitialized) {
-      setIsInitialized(true);
       dispatch(addProducts(productsInOrder));
+      setIsInitialized(true);
+    } else if (
+      productsInOrder.length === 0 &&
+      orderData?.products?.length > 0
+    ) {
+      // If we have order data but no cart data, we still want to show the order
+      setIsInitialized(true);
+    } else if (productsInOrder.length > 0 && orderData?.products?.length > 0) {
+      // Already initialized
+      setIsInitialized(true);
     }
-  }, [productsInOrder, isInitialized]);
+  }, [productsInOrder, orderData]);
 
   // Auth Error
   if (!isAuth || error) {
@@ -139,11 +153,19 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
 
   // Loader
   if (
-    (productsCartData.length > 0 && isAccountsLoading) ||
+    (productsCartData.length > 0 && (isAccountsLoading || isProductsLoading)) ||
     isAccountsLoading ||
     (!isInitialized && productsCartData.length > 0)
   ) {
     return <Loader />;
+  }
+
+  // If no products in cart and no order data, nothing to show
+  if (
+    productsCartData.length === 0 &&
+    (!orderData || orderData.products?.length === 0)
+  ) {
+    return <div className="p-4">No items in cart</div>;
   }
 
   return (

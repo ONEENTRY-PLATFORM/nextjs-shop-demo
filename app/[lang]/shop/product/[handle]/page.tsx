@@ -18,7 +18,7 @@ import { i18n } from '@/i18n-config';
 export async function generateMetadata({
   params,
 }: {
-  params: { handle: string; lang: string };
+  params: Promise<{ handle: string; lang: string }>;
 }): Promise<Metadata> {
   const { handle, lang } = await params;
   const { isError, product } = await getProductById(Number(handle), lang);
@@ -73,7 +73,7 @@ export async function generateMetadata({
 
 const ProductPageLayout: FC<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params: Promise<{ handle: string; lang: any; product: any }>;
+  params: Promise<{ handle: string; lang: any }>;
 }> = async ({ params }) => {
   const { handle, lang } = await params;
   // Get the dictionary from the API and set the server provider.

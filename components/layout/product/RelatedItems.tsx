@@ -8,6 +8,7 @@ import ProductAnimations from './animations/ProductAnimations';
 
 interface RelatedItemsProps {
   block: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     attributeValues: any;
     similarProducts?: {
       items?: IProductsEntity[];
@@ -28,7 +29,12 @@ interface RelatedItemsProps {
  *
  * @returns RelatedItems
  */
-const RelatedItems: FC<RelatedItemsProps> = ({ block, lang, dict, langCode }) => {
+const RelatedItems: FC<RelatedItemsProps> = ({
+  block,
+  lang,
+  dict,
+  langCode,
+}) => {
   if (!block || !block.similarProducts) {
     return null;
   }

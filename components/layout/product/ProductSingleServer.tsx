@@ -3,7 +3,6 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { FC } from 'react';
 
 import { getBlockByMarker, getRelatedProductsById } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
 
 import ProductSingle from './index';
 
@@ -30,31 +29,13 @@ const ProductSingleServer: FC<ProductSingleServerProps> = async ({
   dict,
 }) => {
   // Validate required props
-  if (!product) {
+  if (!product || !lang || !dict) {
     return (
       <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
         <div className="flex items-center justify-center min-h-[400px]">
-          <p>Product not found</p>
-        </div>
-      </section>
-    );
-  }
-
-  if (!lang) {
-    return (
-      <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
-        <div className="flex items-center justify-center min-h-[400px]">
-          <p>Language not specified</p>
-        </div>
-      </section>
-    );
-  }
-
-  if (!dict) {
-    return (
-      <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
-        <div className="flex items-center justify-center min-h-[400px]">
-          <p>Dictionary not loaded</p>
+          {!product && <p>Product not found</p>}
+          {!lang && <p>Language not specified</p>}
+          {!dict && <p>Dictionary not loaded</p>}
         </div>
       </section>
     );
