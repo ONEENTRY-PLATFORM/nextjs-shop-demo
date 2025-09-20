@@ -22,42 +22,63 @@ const CartAnimations: FC<AnimationsProps> = ({ children, className }) => {
 
   // stage leaving animations
   useGSAP(() => {
-    const tl = gsap.timeline({
-      paused: true,
-      onReverseComplete: () => {
-        gsap.set('.product-in-cart, .tr, #total', {
-          autoAlpha: 0,
-          yPercent: 100,
-        });
-      },
-    });
+    // Check if elements exist before creating animation
+    const productElements = ref.current
+      ? (ref.current as HTMLElement).querySelectorAll('.product-in-cart')
+      : [];
+    const trElements = ref.current
+      ? (ref.current as HTMLElement).querySelectorAll('.tr')
+      : [];
+    const totalElement = ref.current
+      ? (ref.current as HTMLElement).querySelectorAll('#total')
+      : [];
 
-    tl.set('.product-in-cart, .tr, #total', {
-      autoAlpha: 0,
-      yPercent: 100,
-    })
-      .to('.product-in-cart', {
-        autoAlpha: 1,
-        yPercent: 0,
-        stagger: 0.1,
-        delay: 0.35,
-      })
-      .to('.tr, #total', {
-        autoAlpha: 1,
-        yPercent: 0,
-        stagger: 0.1,
+    // Only create timeline if elements exist
+    if (
+      productElements.length > 0 ||
+      trElements.length > 0 ||
+      totalElement.length > 0
+    ) {
+      const tl = gsap.timeline({
+        paused: true,
+        onReverseComplete: () => {
+          gsap.set(productElements, {
+            autoAlpha: 0,
+            yPercent: 100,
+          });
+        },
       });
 
-    if (stage === 'leaving' && prevStage === 'none') {
-      tl.reverse(1.2);
+      tl.set([productElements, trElements, totalElement], {
+        autoAlpha: 0,
+        yPercent: 100,
+      })
+        .to(productElements, {
+          autoAlpha: 1,
+          yPercent: 0,
+          stagger: 0.1,
+          delay: 0.35,
+        })
+        .to([trElements, totalElement], {
+          autoAlpha: 1,
+          yPercent: 0,
+          stagger: 0.1,
+        });
+
+      if (stage === 'leaving' && prevStage === 'none') {
+        tl.reverse(1.2);
+      }
+
+      setPrevStage(stage);
+
+      return () => {
+        tl.kill();
+      };
     }
 
-    setPrevStage(stage);
-
-    return () => {
-      tl.kill();
-    };
-  }, [stage]);
+    // Return a no-op cleanup function to satisfy TypeScript
+    return () => {};
+  }, [stage, prevStage]);
 
   return (
     <div ref={ref} className={className}>
