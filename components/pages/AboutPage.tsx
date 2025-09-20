@@ -1,11 +1,11 @@
-import parse from 'html-react-parser';
+// import parse from 'html-react-parser';
 import Image from 'next/image';
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { FC } from 'react';
 
 import SlideUpTransition from '@/app/animations/SlideUpTransition';
-import type { SimplePageProps } from '@/app/types/global';
 
-import { useImageUrl, useString, useText } from '../utils/useAttributes';
+import { useImageUrl, useString, useText } from '../hooks/useAttributes';
 
 /**
  * About page
@@ -13,7 +13,7 @@ import { useImageUrl, useString, useText } from '../utils/useAttributes';
  *
  * @returns About page
  */
-const AboutPage: FC<SimplePageProps> = ({ page }) => {
+const AboutPage: FC<{ page: IPagesEntity }> = ({ page }) => {
   // Safely extract content from page using utility functions
   const attributeValues = page.attributeValues;
   const pageTitle = useString('title', attributeValues);

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 
@@ -17,9 +18,10 @@ declare type PageProps = {
 };
 
 declare type SimplePageProps = {
-  page: IPagesEntity;
   lang: string;
   dict: IAttributeValues;
+  page?: any;
+  [key as string]: any;
 };
 
 declare type LoaderProps = {
@@ -78,7 +80,6 @@ export type IOrderProducts = {
   quantity: number;
   title: string;
   sku: string | null;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   previewImage: any;
   price: number;
 };

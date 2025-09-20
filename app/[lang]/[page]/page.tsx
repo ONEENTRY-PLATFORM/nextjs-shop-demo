@@ -49,37 +49,37 @@ const PageLayout: FC<{ params: Promise<{ page: any; lang: any }> }> = async ({
     {
       templateType: templateIdentifier,
       name: 'profile',
-      component: <ProfilePage page={page} lang={lang} dict={dict} />,
+      component: <ProfilePage lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment',
-      component: <PaymentPage page={page} lang={lang} dict={dict} />,
+      component: <PaymentPage lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'about_us',
-      component: <AboutPage page={page} lang={lang} dict={dict} />,
+      component: <AboutPage page={page} />,
     },
     {
       templateType: templateIdentifier,
       name: 'services',
-      component: <ServicesPage page={page} lang={lang} dict={dict} />,
+      component: <ServicesPage lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'contact_us',
-      component: <ContactsPage page={page} lang={lang} dict={dict} />,
+      component: <ContactsPage lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_success',
-      component: <PaymentSuccess page={page} lang={lang} dict={dict} />,
+      component: <PaymentSuccess lang={lang} dict={dict} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_canceled',
-      component: <PaymentCanceled page={page} lang={lang} dict={dict} />,
+      component: <PaymentCanceled lang={lang} dict={dict} />,
     },
   ];
 
