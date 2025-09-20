@@ -10,8 +10,8 @@ import BlocksGrid from '@/components/layout/blocks-grid';
 import BlocksGridLoader from '@/components/layout/blocks-grid/components/BlocksGridLoader';
 import { i18n } from '@/i18n-config';
 
-// Set revalidation time for the page (in seconds)
-export const revalidate = 10;
+// Increase revalidation time to reduce server load (60 seconds instead of 10)
+// export const revalidate = 60;
 
 // Enable dynamic route parameters
 export const dynamicParams = true;

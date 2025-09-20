@@ -2,6 +2,7 @@ import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attribu
 import type { IError } from 'oneentry/dist/base/utils';
 
 import { api } from '@/app/api';
+import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -31,6 +32,13 @@ export const getSingleAttributeByMarkerSet = async ({
   attribute?: IAttributesSetsEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const cacheKey = `${setMarker}-${attributeMarker}-${langCode}`;
+
+  // Check cache first
+  const cached = getCachedData<IAttributesSetsEntity>(cacheKey);
+  if (cached) {
+    return { isError: false, attribute: cached };
+  }
 
   try {
     const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
@@ -42,6 +50,8 @@ export const getSingleAttributeByMarkerSet = async ({
     if (isIError(attribute)) {
       return { isError: true, error: attribute as IError };
     } else {
+      // Cache the result
+      setCachedData<IAttributesSetsEntity>(cacheKey, attribute);
       return { isError: false, attribute: attribute };
     }
   } catch (error) {

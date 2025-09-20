@@ -2,6 +2,7 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 
 import { api } from '@/app/api';
+import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -24,12 +25,22 @@ export const getPageByUrl = async (
   page?: IPagesEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const cacheKey = `page-url-${url}-${langCode}`;
+
+  // Check cache first
+  const cached = getCachedData<IPagesEntity>(cacheKey);
+  if (cached) {
+    return { isError: false, page: cached };
+  }
+
   try {
     const data = await api.Pages.getPageByUrl(url, langCode);
 
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
+      // Cache the result
+      setCachedData<IPagesEntity>(cacheKey, data);
       return { isError: false, page: data };
     }
   } catch (error) {

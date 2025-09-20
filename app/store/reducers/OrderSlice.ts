@@ -43,7 +43,7 @@ const orderReducer = createSlice({
   initialState, // Initial state defined above
   name: 'order', // Name of the slice
   reducers: {
-    // Reducer to create or update an order
+    // create or update an order
     create(state, action: PayloadAction<IAppOrder>) {
       if (!state.order) {
         state.order = action.payload; // If no order exists, set the new order
@@ -54,14 +54,14 @@ const orderReducer = createSlice({
         };
       }
     },
-    // Reducer to remove an order by resetting it to its initial state
+    // remove an order by resetting it to its initial state
     remove(state) {
       state.order = {
         formData: [], // Reset form data
         products: [], // Reset products
       };
     },
-    // Reducer to add or update form data in the order
+    // add or update form data in the order
     addData(
       state,
       action: PayloadAction<IOrdersFormData & { valid?: boolean }>,
@@ -79,14 +79,14 @@ const orderReducer = createSlice({
         state.order.formData.push(action.payload); // Add new form data
       }
     },
-    // Reducer to add products to the order
+    // add products to the order
     addProducts(state, action: PayloadAction<IOrderProductData[]>) {
       if (!state.order) {
         return; // If no order exists, do nothing
       }
       state.order.products = action.payload; // Set the products in the order
     },
-    // Reducer to add payment methods to the order
+    // add payment methods to the order
     addPaymentMethods(
       state,
       action: PayloadAction<
@@ -99,14 +99,14 @@ const orderReducer = createSlice({
         state.paymentMethods = action.payload; // Set the payment methods if they don't exist
       }
     },
-    // Reducer to set the payment account identifier for the order
+    // set the payment account identifier for the order
     addPaymentMethod(state, action: PayloadAction<string>) {
       if (!state.order) {
         return; // If no order exists, do nothing
       }
       state.order.paymentAccountIdentifier = action.payload; // Set the payment account identifier
     },
-    // Reducer to set the currency for the order
+    // set the currency for the order
     addOrderCurrency(state, action: PayloadAction<string>) {
       if (!state.order) {
         return; // If no order exists, do nothing

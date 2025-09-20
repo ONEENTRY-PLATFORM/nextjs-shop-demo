@@ -2,6 +2,7 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
+import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -57,12 +58,22 @@ export const getProductById = async (
     };
   }
 
+  const cacheKey = `product-${id}-${langCode}`;
+
+  // Check cache first
+  const cached = getCachedData<IProductsEntity>(cacheKey);
+  if (cached) {
+    return { isError: false, product: cached };
+  }
+
   try {
     const data = await api.Products.getProductById(id, langCode);
 
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
+      // Cache the result
+      setCachedData<IProductsEntity>(cacheKey, data);
       return { isError: false, product: data };
     }
   } catch (error) {

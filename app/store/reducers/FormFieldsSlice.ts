@@ -38,7 +38,7 @@ const formFieldsSlice = createSlice({
   name: 'form-fields', // Name of the slice.
   initialState, // The initial state defined above.
   reducers: {
-    // Reducer to add a new field to the form.
+    // add a new field to the form.
     addField(state, action: PayloadAction<{ [key: string]: FieldType }>) {
       const key = getFirstKey(action.payload); // Get the first key from the action payload.
       if (key) {

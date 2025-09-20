@@ -22,7 +22,7 @@ export const favoritesSlice = createSlice({
   initialState, // The initial state defined above.
   reducers: {
     /**
-     * Reducer to add a product to the favorites list.
+     * add a product to the favorites list.
      */
     addFavorites(state, action: PayloadAction<number>) {
       // Check if the product ID is already in the favorites list.
@@ -35,7 +35,7 @@ export const favoritesSlice = createSlice({
       }
     },
     /**
-     * Reducer to remove a product from the favorites list.
+     * remove a product from the favorites list.
      */
     removeFavorites(state, action: PayloadAction<number>) {
       // Filter out the product ID to be removed.
@@ -44,13 +44,13 @@ export const favoritesSlice = createSlice({
       );
     },
     /**
-     * Reducer to remove all products from the favorites list.
+     * remove all products from the favorites list.
      */
     removeAllFavorites(state) {
       state.products = initialState.products; // Reset to initial empty state.
     },
     /**
-     * Reducer to set the version of the favorites list.
+     * set the version of the favorites list.
      */
     setFavoritesVersion(state, action: PayloadAction<number>) {
       state.version = action.payload; // Update the version number.
@@ -103,5 +103,5 @@ export const selectFavoritesVersion = (state: {
   favoritesReducer: { version: number };
 }) => state.favoritesReducer.version;
 
-// Export the reducer to be used in the store configuration.
+// Export the be used in the store configuration.
 export default favoritesSlice.reducer;

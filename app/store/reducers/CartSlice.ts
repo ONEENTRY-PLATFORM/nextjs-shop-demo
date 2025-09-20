@@ -2,7 +2,7 @@
 
 // Importing necessary types and functions from Redux Toolkit
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { createSlice, createSelector } from '@reduxjs/toolkit';
+import { createSelector, createSlice } from '@reduxjs/toolkit';
 // Importing product entity interface
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
@@ -276,8 +276,9 @@ export const selectCartVersion = (state: {
  * @returns Object containing transitionId
  */
 export const getTransition = createSelector(
-  (state: { cartReducer: { transitionId: number } }) => state.cartReducer.transitionId,
-  (transitionId) => ({ transitionId })
+  (state: { cartReducer: { transitionId: number } }) =>
+    state.cartReducer.transitionId,
+  (transitionId) => ({ transitionId }),
 );
 
 /**

@@ -2,6 +2,7 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
+import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
@@ -39,6 +40,21 @@ export const getProductsByPageUrl = async (props: {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const body = getSearchParams(params.searchParams);
 
+  // Create cache key from parameters
+  const cacheKey = `products-page-${JSON.stringify({ limit, offset, params, langCode, body })}`;
+
+  // Check cache first
+  const cached = getCachedData<{ products: IProductsEntity[]; total: number }>(
+    cacheKey,
+  );
+  if (cached) {
+    return {
+      isError: false,
+      products: cached.products,
+      total: cached.total,
+    };
+  }
+
   try {
     const data = await api.Products.getProductsByPageUrl(
       params.handle,
@@ -55,6 +71,11 @@ export const getProductsByPageUrl = async (props: {
     if (isIError(data)) {
       return { isError: true, error: data, total: 0 };
     } else {
+      // Cache the result
+      setCachedData<{ products: IProductsEntity[]; total: number }>(cacheKey, {
+        products: data.items,
+        total: data.total,
+      });
       return { isError: false, products: data.items, total: data.total };
     }
   } catch (error) {

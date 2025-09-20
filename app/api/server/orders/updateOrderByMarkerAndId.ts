@@ -5,6 +5,7 @@ import type {
 } from 'oneentry/dist/orders/ordersInterfaces';
 
 import { api } from '@/app/api';
+import { clearAllCache } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -39,6 +40,10 @@ export const updateOrderByMarkerAndId = async ({
   order?: IBaseOrdersEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+
+  // For update operations, we should clear the cache to ensure data consistency
+  clearAllCache();
+
   try {
     const orderData = await api.Orders.updateOrderByMarkerAndId(
       marker,

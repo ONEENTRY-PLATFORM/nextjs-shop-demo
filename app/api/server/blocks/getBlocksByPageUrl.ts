@@ -2,6 +2,7 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
 
 import { api } from '@/app/api';
+import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -29,12 +30,22 @@ export const getBlocksByPageUrl = async ({
   blocks?: IPositionBlock[];
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const cacheKey = `${pageUrl}-${langCode}`;
+
+  // Check cache first
+  const cached = getCachedData<IPositionBlock[]>(cacheKey);
+  if (cached) {
+    return { isError: false, blocks: cached };
+  }
+
   try {
     const data = await api.Pages.getBlocksByPageUrl(pageUrl, langCode);
 
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
+      // Cache the result
+      setCachedData<IPositionBlock[]>(cacheKey, data);
       return { isError: false, blocks: data };
     }
   } catch (error) {
