@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { FC, Key } from 'react';
 
@@ -6,13 +7,13 @@ import { useAppSelector } from '@/app/store/hooks';
 import { UseDate } from '@/components/utils';
 
 type OrderDataTableProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
   account: IAccountsEntity;
 };
 
 /**
  * Order data table
+ *
  * @param dict
  * @param account
  *

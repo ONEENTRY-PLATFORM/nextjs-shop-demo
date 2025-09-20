@@ -16,6 +16,7 @@ type OrderProductsTableProps = {
 
 /**
  * Order products table
+ *
  * @param lang current language shortcode
  * @param products Products data
  * @param delivery Delivery data

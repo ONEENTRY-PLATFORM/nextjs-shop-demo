@@ -1,11 +1,11 @@
 import { useTransitionRouter } from 'next-transition-router';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 
 import Loader from '@/components/shared/Loader';
 
 type EditOrderButtonProps = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
   isLoading: boolean;
 };
 

@@ -27,8 +27,9 @@ type PaymentMethodProps = {
 
 /**
  * Payment method
+ *
  * @param account
- * @param lang current language shortcode
+ * @param lang - current language shortcode
  * @param dict dictionary from server api
  * @param index Index of element for animations stagger
  * @param products Products data
