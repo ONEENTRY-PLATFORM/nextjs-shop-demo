@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 
-import { UsePrice } from '../../../utils';
+import { UsePrice } from '../../../utils/utils';
 
 interface PriceDisplayProps {
   currentPrice: number;

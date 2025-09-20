@@ -7,7 +7,7 @@ import type { FC } from 'react';
 import { getSingleAttributeByMarkerSet } from '@/app/api';
 import { getPageByUrl } from '@/app/api/server/pages/getPageByUrl';
 import Loader from '@/components/shared/Loader';
-import { sortObjectFieldsByPosition } from '@/components/utils';
+import { sortObjectFieldsByPosition } from '@/components/utils/utils';
 
 import FilterAnimations from './animations/FilterAnimations';
 import AvailabilityFilter from './components/AvailabilityFilter';

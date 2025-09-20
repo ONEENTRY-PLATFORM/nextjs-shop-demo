@@ -5,7 +5,7 @@ import { api } from '@/app/api';
 import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
-import { typeError } from '@/components/utils';
+import { typeError } from '@/components/utils/utils';
 
 /**
  * Get all products with pagination and filter.

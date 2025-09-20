@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { UsePrice } from '@/components/utils';
+import { UsePrice } from '@/components/utils/utils';
 
 interface PriceDisplayProps {
   currentPrice: number;

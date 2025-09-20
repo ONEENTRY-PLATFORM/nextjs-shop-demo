@@ -4,7 +4,7 @@
 import type { FC, Key } from 'react';
 
 import Loader from '@/components/shared/Loader';
-import { UseDate, UsePrice } from '@/components/utils';
+import { UseDate, UsePrice } from '@/components/utils/utils';
 
 /**
  * OrderData table

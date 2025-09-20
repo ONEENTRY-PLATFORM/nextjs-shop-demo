@@ -5,13 +5,7 @@ import type { FC } from 'react';
 import SlideUpTransition from '@/app/animations/SlideUpTransition';
 import type { SimplePageProps } from '@/app/types/global';
 
-import {
-  getListContent,
-  getListTitle,
-  getPageContent,
-  getPageImageUrl,
-  getPageTitle,
-} from './page-utils';
+import { useImageUrl, useString, useText } from '../utils/useAttributes';
 
 /**
  * About page
@@ -20,24 +14,18 @@ import {
  * @returns About page
  */
 const AboutPage: FC<SimplePageProps> = ({ page }) => {
+  // Safely extract content from page using utility functions
+  const attributeValues = page.attributeValues;
+  const pageTitle = useString('title', attributeValues);
+  const imageSrc = useImageUrl('img', attributeValues) || '';
+  // const title = useString('title', attributeValues);
+  const contentData = useText('content', attributeValues, 'html');
+  const listTitle = useString('list_title', attributeValues);
+  const listData = useText('list', attributeValues, 'html');
+
   if (!page) {
     return <></>;
   }
-
-  // Safely extract content from page using utility functions
-  const pageTitle = getPageTitle(page);
-  const imageSrc = getPageImageUrl(page) || '';
-  const contentDataObj = getPageContent(page);
-  const listTitle = getListTitle(page);
-  const listDataObj = getListContent(page);
-
-  const contentData = contentDataObj
-    ? parse(contentDataObj.htmlValue || contentDataObj.plainValue || '')
-    : null;
-
-  const listData = listDataObj
-    ? parse(listDataObj.htmlValue || listDataObj.plainValue || '')
-    : null;
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">

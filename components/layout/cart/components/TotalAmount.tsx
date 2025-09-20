@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { selectCartTotal } from '@/app/store/reducers/CartSlice';
-import { UsePrice } from '@/components/utils';
+import { UsePrice } from '@/components/utils/utils';
 
 import TableRowAnimations from '../animations/TableRowAnimations';
 

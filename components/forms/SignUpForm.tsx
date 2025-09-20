@@ -15,7 +15,7 @@ import { LanguageEnum } from '@/app/types/enum';
 import type { FormProps } from '@/app/types/global';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
-import { typeError } from '../utils';
+import { typeError } from '../utils/utils';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';

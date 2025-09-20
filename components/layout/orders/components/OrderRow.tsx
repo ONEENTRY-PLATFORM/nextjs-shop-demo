@@ -2,7 +2,7 @@ import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces
 import type { FC } from 'react';
 import { useState } from 'react';
 
-import { UsePrice } from '@/components/utils';
+import { UsePrice } from '@/components/utils/utils';
 
 import OrderRowAnimations from '../animations/OrderRowAnimations';
 import OrderPage from './OrderPage';

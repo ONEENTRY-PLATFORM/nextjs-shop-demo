@@ -4,7 +4,7 @@ import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces'
 import type { FC, Key } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
-import { UseDate } from '@/components/utils';
+import { UseDate } from '@/components/utils/utils';
 
 type OrderDataTableProps = {
   dict: IAttributeValues;

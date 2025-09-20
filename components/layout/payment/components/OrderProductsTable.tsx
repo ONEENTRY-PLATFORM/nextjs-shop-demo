@@ -6,7 +6,7 @@ import {
   selectCartData,
   selectCartItems,
 } from '@/app/store/reducers/CartSlice';
-import { UsePrice } from '@/components/utils';
+import { UsePrice } from '@/components/utils/utils';
 
 type OrderProductsTableProps = {
   lang: string;

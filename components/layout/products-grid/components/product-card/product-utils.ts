@@ -3,9 +3,11 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 
 /**
  * Safely extracts the product title from localized information
+ *
  * @param product The product entity
  * @param langCode The language code
  * @param fallback The fallback string if title is not found
+ *
  * @returns The product title or a fallback string
  */
 export const getProductTitle = (
