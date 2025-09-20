@@ -27,11 +27,13 @@ const Image: FC<BlurImageProps> = ({
   alt = '',
   width,
   height,
-  loading = 'lazy',
-  placeholder,
-  blurDataURL,
+  priority,
   className = '',
   style = {},
+  placeholder,
+  blurDataURL,
+
+  loading = 'lazy',
   ref,
   onClick,
   fetchPriority,
@@ -46,7 +48,7 @@ const Image: FC<BlurImageProps> = ({
       {placeholder && (
         <img
           src={blurDataURL}
-          alt=""
+          alt={alt}
           fetchPriority="high"
           aria-hidden="true"
           className="absolute inset-0 z-0 size-full scale-110 object-cover blur-xl transition-opacity duration-700"

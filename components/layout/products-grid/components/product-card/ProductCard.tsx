@@ -7,7 +7,7 @@ import { LanguageEnum } from '@/app/types/enum';
 import AddToCartButton from '@/components/layout/product/components/AddToCartButton';
 import FavoritesButton from '@/components/shared/FavoritesButton';
 
-import { getProductTitle } from '../../../../hooks/useProductsData';
+import { getProductTitle } from '../../../../../app/hooks/useProductsData';
 import CardAnimations from '../../animations/CardAnimations';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';

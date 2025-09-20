@@ -5,7 +5,7 @@ import type { FC } from 'react';
 
 import SlideUpTransition from '@/app/animations/SlideUpTransition';
 
-import { useImageUrl, useString, useText } from '../hooks/useAttributes';
+import { useImageUrl, useString, useText } from '../../app/hooks/useAttributes';
 
 /**
  * About page

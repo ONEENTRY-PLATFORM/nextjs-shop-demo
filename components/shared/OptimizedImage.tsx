@@ -1,10 +1,12 @@
 'use client';
 
-import Image from 'next/image';
+import NextImage from 'next/image';
 import type { FC } from 'react';
 import { useState } from 'react';
 
 import { useOptimizedImage } from '@/components/hooks/useOptimizedImage';
+
+import Image from './Image';
 
 interface OptimizedImageProps {
   src: string;
@@ -14,10 +16,12 @@ interface OptimizedImageProps {
   priority?: boolean;
   className?: string;
   quality?: number;
+  type?: string;
 }
 
 /**
  * Optimized image component with LQIP placeholder and lazy loading
+ *
  * @param src Image source URL
  * @param alt Image alt text
  * @param width Image width
@@ -35,6 +39,7 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
   priority = false,
   className = '',
   quality = 75,
+  type = 'next',
 }) => {
   // Handle the exactOptionalPropertyTypes issue by explicitly building the props object
   const useOptimizedImageProps = {
@@ -102,8 +107,11 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
       {isLoading && (
         <div className="absolute inset-0 bg-gray-200 animate-pulse" />
       )}
-
-      <Image {...imageProps} />
+      {type === 'next' ? (
+        <NextImage {...imageProps} />
+      ) : (
+        <Image {...imageProps} />
+      )}
     </div>
   );
 };

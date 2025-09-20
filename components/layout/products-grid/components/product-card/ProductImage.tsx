@@ -4,7 +4,7 @@ import type { FC } from 'react';
 
 import Placeholder from '@/components/shared/Placeholder';
 
-import { getProductImageUrl } from '../../../../hooks/useProductsData';
+import { getProductImageUrl } from '../../../../../app/hooks/useProductsData';
 
 interface ProductImageProps {
   attributes: AttributeType;

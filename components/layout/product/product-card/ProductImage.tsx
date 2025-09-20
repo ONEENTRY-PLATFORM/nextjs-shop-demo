@@ -3,7 +3,7 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import OptimizedImage from '@/components/hooks/OptimizedImage';
+import OptimizedImage from '@/components/shared/OptimizedImage';
 
 interface ProductImageProps {
   product: IProductsEntity;
