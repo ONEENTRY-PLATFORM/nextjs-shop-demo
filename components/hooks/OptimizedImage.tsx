@@ -4,7 +4,7 @@ import Image from 'next/image';
 import type { FC } from 'react';
 import { useState } from 'react';
 
-import { useOptimizedImage } from '@/app/hooks/useOptimizedImage';
+import { useOptimizedImage } from '@/components/hooks/useOptimizedImage';
 
 interface OptimizedImageProps {
   src: string;
