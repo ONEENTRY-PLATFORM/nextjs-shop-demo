@@ -7,7 +7,8 @@ import type { FC } from 'react';
 import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import BlockCardAnimations from '@/components/layout/blocks-grid/animations/BlockCardAnimations';
-import Placeholder from '@/components/shared/Placeholder';
+
+import BlocksGridImage from './BlocksGridImage';
 
 const baloo = Baloo({
   subsets: ['latin'],
@@ -52,11 +53,10 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
     block?.attributeValues[langCode] || block?.attributeValues;
 
   // extract data from block attributeValues
-  const { title = '', bg_web, link = '', stickers } = attributeValues;
+  const { title = '', link = '', stickers } = attributeValues;
 
   const stickerImage = stickers?.value[0]?.extended?.value?.downloadLink;
   // const quoteValue = quote?.value;
-  const imageSrc = bg_web?.value[0]?.downloadLink;
 
   const YT = () => (
     <svg
@@ -129,22 +129,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
           )}
 
           {/* Image/Placeholder */}
-          {imageSrc ? (
-            <Image
-              fill
-              sizes="(min-width: 1024px) 66vw, 100vw"
-              src={imageSrc}
-              // placeholder="blur"
-              // blurDataURL={thumb}
-              fetchPriority="high"
-              alt={title?.value || ''}
-              className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-transform duration-500 group-hover:scale-125"
-            />
-          ) : (
-            <div className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover opacity-15 invert">
-              <Placeholder />
-            </div>
-          )}
+          <BlocksGridImage attributeValues={attributeValues} />
           <div className="radial-hover"></div>
         </div>
       </Link>
