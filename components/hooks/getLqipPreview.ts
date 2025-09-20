@@ -45,6 +45,7 @@ const getLqipPreview = async (imageUrl: string): Promise<string> => {
     return dataURI;
   } catch (error) {
     // Return a default placeholder if LQIP generation fails
+    // eslint-disable-next-line no-console
     console.warn(`Failed to generate LQIP for ${imageUrl}:`, error);
     return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4=';
   }
