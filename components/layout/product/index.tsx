@@ -10,6 +10,7 @@ import ProductAnimations from './animations/ProductAnimations';
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
 import ProductImage from './product-single/ProductImageGallery';
+import { getProductTitle } from './product-utils';
 import ProductsGroup from './ProductsGroup';
 import RelatedItems from './RelatedItems';
 import ReviewsSection from './ReviewsSection';
@@ -48,8 +49,17 @@ const ProductSingle: FC<ProductSingleProps> = ({
   blocksData = {},
 }) => {
   // extract data from product
-  const { attributeValues, localizeInfos, blocks } = product;
+  const { attributeValues, blocks } = product;
+  const productTitle = getProductTitle(product);
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+
+  // Create a mock block object for RelatedItems component
+  const relatedItemsBlock = {
+    attributeValues: {},
+    similarProducts: {
+      items: relatedProducts,
+    },
+  };
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
@@ -59,7 +69,7 @@ const ProductSingle: FC<ProductSingleProps> = ({
           className="relative mb-10 flex min-h-[280px] w-[30%] grow flex-col max-md:mb-4 max-md:w-4/12 max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full"
           index={0}
         >
-          <ProductImage alt={localizeInfos.title} product={product} />
+          <ProductImage product={product} alt={productTitle} />
         </ProductAnimations>
 
         {/* VariationsCarousel + ProductDescription - col-2 */}
@@ -100,25 +110,24 @@ const ProductSingle: FC<ProductSingleProps> = ({
             return (
               <ProductsGroup
                 key={block}
-                block={blocksData[block]}
-                lang={lang}
+                {...blocksData[block]}
+                lang={langCode}
                 dict={dict}
-                langCode={langCode}
-              />
-            );
-          } else if (block === 'similar' && blocksData[block]) {
-            return (
-              <RelatedItems
-                key={block}
-                block={blocksData[block]}
-                lang={lang}
-                dict={dict}
-                langCode={langCode}
               />
             );
           }
           return null;
         })}
+
+      {/* Related products */}
+      <ProductAnimations className={'mb-10'} index={4}>
+        <RelatedItems
+          block={relatedItemsBlock}
+          lang={lang}
+          dict={dict}
+          langCode={langCode}
+        />
+      </ProductAnimations>
     </section>
   );
 };

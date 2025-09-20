@@ -9,6 +9,7 @@ import FavoritesButton from '@/components/shared/FavoritesButton';
 
 import CardAnimations from '../../animations/CardAnimations';
 import PriceDisplay from './PriceDisplay';
+import { getProductTitle } from './product-utils';
 import ProductImage from './ProductImage';
 import Stickers from './Stickers';
 
@@ -51,7 +52,7 @@ const ProductCard: FC<ProductCardProps> = ({
   currentPage = 1,
 }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const { id, statusIdentifier, attributeValues, localizeInfos } = product;
+  const { id, statusIdentifier, attributeValues } = product;
   const cardRef = useRef<HTMLDivElement>(null);
   const [isInViewport, setIsInViewport] = useState(false);
 
@@ -100,9 +101,21 @@ const ProductCard: FC<ProductCardProps> = ({
    * language-specific title or default title if not available.
    */
   const title = useMemo(
-    () => localizeInfos?.[langCode]?.title || localizeInfos?.title || '',
-    [localizeInfos, langCode],
+    () => getProductTitle(product, langCode, ''),
+    [product, langCode],
   );
+
+  // Safely extract units value
+  const units = useMemo(() => {
+    if (
+      attributeValues?.units_product &&
+      typeof attributeValues.units_product === 'object' &&
+      'value' in attributeValues.units_product
+    ) {
+      return attributeValues.units_product.value;
+    }
+    return undefined;
+  }, [attributeValues]);
 
   return (
     <div ref={cardRef}>
@@ -132,7 +145,7 @@ const ProductCard: FC<ProductCardProps> = ({
             id={id}
             productTitle={title}
             statusIdentifier={statusIdentifier || ''}
-            units={attributeValues.units_product.value}
+            units={units}
             dict={dict}
             height={42}
             className="btn btn-md btn-primary"

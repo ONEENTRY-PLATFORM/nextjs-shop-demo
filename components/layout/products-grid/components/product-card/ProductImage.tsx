@@ -4,23 +4,21 @@ import type { FC } from 'react';
 
 import Placeholder from '@/components/shared/Placeholder';
 
+import { getProductImageUrl } from './product-utils';
+
 interface ProductImageProps {
   attributes: AttributeType;
   alt: string;
 }
 
 /**
- * Product image
- * @param attributes
- * @param alt
- *
- * @returns Product image/placeholder
+ * Product image component that displays the product image or a placeholder
+ * @param attributes Product attributes containing the image data
+ * @param alt Alternative text for the image
+ * @returns Product image or placeholder component
  */
-const ProductImage: FC<ProductImageProps> = ({ attributes: { pic }, alt }) => {
-  const productImage = pic?.value;
-  const imageSrc = Array.isArray(productImage)
-    ? productImage[0]?.downloadLink
-    : productImage?.downloadLink;
+const ProductImage: FC<ProductImageProps> = ({ attributes, alt }) => {
+  const imageSrc = getProductImageUrl(attributes);
 
   return (
     <div className="relative mb-3 size-40">

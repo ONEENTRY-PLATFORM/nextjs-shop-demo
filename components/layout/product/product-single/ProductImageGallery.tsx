@@ -14,9 +14,11 @@ import Slider from 'react-slick';
 import FavoritesButton from '@/components/shared/FavoritesButton';
 import Placeholder from '@/components/shared/Placeholder';
 
+import { getProductImageUrl, getProductTitle } from '../product-utils';
+
 interface ProductImageProps {
-  alt: string;
   product: IProductsEntity;
+  alt?: string;
 }
 
 /**
@@ -31,26 +33,51 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
   const [nav2, setNav2] = useState<Slider>();
   let sliderRef1 = useRef<RefObject<Slider | null>>(null);
   let sliderRef2 = useRef<RefObject<Slider | null>>(null);
-  // extract attributeValues from product
+
+  // Extract attributeValues from product
   const { attributeValues } = product;
+
+  // Use safe utility to get product title for alt text
+  const productTitle = getProductTitle(product, 'Product image');
+  const imageAlt = alt || productTitle;
 
   useEffect(() => {
     setNav1(sliderRef1 as any);
     setNav2(sliderRef2 as any);
   }, []);
 
-  // extract images from attributeValues
-  const imageSrc = attributeValues.pic.value;
-  const morePic = attributeValues.more_pic.value;
+  // Extract images from attributeValues with safety checks
+  const imageSrc = attributeValues?.pic?.value;
+  const morePic = attributeValues?.more_pic?.value || [];
   const isGallery = morePic.length > 0;
-  const imagesData = isGallery
-    ? [imageSrc, ...morePic].map((img) => {
-        return {
-          original: img?.downloadLink,
-          thumbnail: img?.downloadLink,
-        };
-      })
-    : imageSrc;
+
+  // Safely construct images data
+  const imagesData = imageSrc
+    ? isGallery
+      ? [imageSrc, ...morePic].map((img) => {
+          if (img && typeof img === 'object' && 'downloadLink' in img) {
+            return {
+              original: img.downloadLink as string,
+              thumbnail: img.downloadLink as string,
+            };
+          }
+          return {
+            original: '/placeholder.jpg',
+            thumbnail: '/placeholder.jpg',
+          };
+        })
+      : [
+          {
+            original: getProductImageUrl(product),
+            thumbnail: getProductImageUrl(product),
+          },
+        ]
+    : [
+        {
+          original: '/placeholder.jpg',
+          thumbnail: '/placeholder.jpg',
+        },
+      ];
 
   return (
     <div className="flex flex-row flex-wrap gap-2">
@@ -64,7 +91,7 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
               asNavFor={nav2}
               ref={(slide) => (sliderRef1 = slide as any)}
             >
-              {imagesData.map((image: any, i: Key) => {
+              {imagesData.map((image, i: Key) => {
                 return (
                   <div key={i} className="w-full items-center">
                     <Image
@@ -72,7 +99,7 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
                       height={280}
                       sizes="(min-width: 1024px) 66vw, 100vw"
                       src={image.original}
-                      alt={''}
+                      alt={imageAlt}
                       className="mx-auto self-center"
                     />
                   </div>
@@ -87,14 +114,14 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
               focusOnSelect={true}
               arrows={false}
             >
-              {imagesData.map((image: any, i: Key) => {
+              {imagesData.map((image, i: Key) => {
                 return (
                   <div key={i} className="w-full items-center">
                     <Image
                       width={80}
                       height={80}
                       src={image.thumbnail}
-                      alt={''}
+                      alt={imageAlt}
                       className="mx-auto self-center"
                     />
                   </div>
@@ -103,12 +130,16 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
             </Slider>
           </div>
         ) : (
-          <Image
-            fill
-            sizes="(min-width: 1024px) 66vw, 100vw"
-            src={imageSrc.downloadLink}
-            alt={alt}
-          />
+          <div className="relative w-full">
+            <Image
+              width={360}
+              height={280}
+              sizes="(min-width: 1024px) 66vw, 100vw"
+              src={imagesData[0]?.original || '/placeholder.jpg'}
+              alt={imageAlt}
+              className="mx-auto self-center"
+            />
+          </div>
         )
       ) : (
         <Placeholder />
