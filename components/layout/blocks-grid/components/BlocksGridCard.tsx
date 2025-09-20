@@ -47,16 +47,12 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   // Get block by marker from the API.
   const { block, isError } = await getBlockByMarker(marker, lang);
 
-  if (!block || isError) {
-    return 'Block error';
-  }
-
   // extract attributeValues from block
   const attributeValues =
-    block.attributeValues[langCode] || block.attributeValues;
+    block?.attributeValues[langCode] || block?.attributeValues;
 
   // extract data from block attributeValues
-  const { title, bg_web, link = '', stickers } = attributeValues;
+  const { title = '', bg_web, link = '', stickers } = attributeValues;
 
   const stickerImage = stickers?.value[0]?.extended?.value?.downloadLink;
   // const quoteValue = quote?.value;
@@ -90,13 +86,17 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
     </svg>
   );
 
+  if (!block || isError) {
+    return 'Block error';
+  }
+
   return (
     <BlockCardAnimations
       className={`${baloo.className} block-card group relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
       index={index}
     >
       <Link
-        prefetch={true}
+        prefetch={false}
         target={link.value?.indexOf('http') === -1 ? '' : '_blank'}
         href={
           (link.value?.indexOf('http') === -1 ? '/' + lang + '/shop/' : '') +
@@ -132,9 +132,11 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
           {imageSrc ? (
             <Image
               fill
-              fetchPriority="high"
               sizes="(min-width: 1024px) 66vw, 100vw"
               src={imageSrc}
+              // placeholder="blur"
+              // blurDataURL={thumb}
+              fetchPriority="high"
               alt={title?.value || ''}
               className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-transform duration-500 group-hover:scale-125"
             />

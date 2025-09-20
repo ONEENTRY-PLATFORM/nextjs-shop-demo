@@ -75,6 +75,21 @@ const nextConfig = {
       },
     ];
   },
+
+  async rewrites() {
+    return [
+      {
+        source: '/fonts/:path*',
+        destination: '/api/fonts/:path*',
+      },
+    ];
+  },
+  // Оптимизация компиляции
+  swcMinify: true,
+  // Компрессия ответов
+  compress: true,
+  // Оптимизация изображений
+  optimizeImages: true,
 };
 
 export default nextConfig;
