@@ -1,13 +1,13 @@
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { type FC, useEffect, useMemo, useRef, useState } from 'react';
+import { type FC, useMemo, useRef, useState } from 'react';
 
+import { getProductTitle } from '@/app/hooks/useProductsData';
 import { LanguageEnum } from '@/app/types/enum';
 import AddToCartButton from '@/components/layout/product/components/AddToCartButton';
 import FavoritesButton from '@/components/shared/FavoritesButton';
 
-import { getProductTitle } from '../../../../../app/hooks/useProductsData';
 import CardAnimations from '../../animations/CardAnimations';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
@@ -54,34 +54,7 @@ const ProductCard: FC<ProductCardProps> = ({
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, statusIdentifier, attributeValues } = product;
   const cardRef = useRef<HTMLDivElement>(null);
-  const [isInViewport, setIsInViewport] = useState(false);
-
-  /**
-   * Use Intersection Observer to detect when the card is in the viewport
-   */
-  useEffect(() => {
-    if (!cardRef.current) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry && entry.isIntersecting) {
-          setIsInViewport(true);
-          // Unobserve once we've determined the card is in viewport
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.1, // Trigger when 10% of the card is visible
-      },
-    );
-
-    observer.observe(cardRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
+  const [isPrefetch, setPrefetch] = useState(false);
 
   /**
    * Get localized product attributes
@@ -131,7 +104,7 @@ const ProductCard: FC<ProductCardProps> = ({
         </div>
 
         {/* ProductImage */}
-        <ProductImage attributes={attributes} alt={title} />
+        <ProductImage product={product} alt={title} />
 
         {/* Product Data */}
         <div className="z-10 mb-5 mt-auto flex w-full max-w-[160px] flex-col gap-2.5">
@@ -153,7 +126,9 @@ const ProductCard: FC<ProductCardProps> = ({
         </div>
 
         <Link
-          prefetch={isInViewport}
+          title={title}
+          prefetch={isPrefetch}
+          onMouseEnter={() => setPrefetch(true)}
           href={'/' + lang + '/shop/product/' + id}
           className="absolute left-0 top-0 z-0 flex size-full"
         ></Link>

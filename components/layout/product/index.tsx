@@ -4,13 +4,13 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
+import { getProductTitle } from '@/app/hooks/useProductsData';
 import { LanguageEnum } from '@/app/types/enum';
 
 import ProductAnimations from './animations/ProductAnimations';
 import ProductDescription from './product-single/ProductDescription';
 import ProductDetails from './product-single/ProductDetails';
-import ProductImage from './product-single/ProductImageGallery';
-import { getProductTitle } from './product-utils';
+import ProductImageGallery from './product-single/ProductImageGallery';
 import ProductsGroup from './ProductsGroup';
 import RelatedItems from './RelatedItems';
 import ReviewsSection from './ReviewsSection';
@@ -69,7 +69,7 @@ const ProductSingle: FC<ProductSingleProps> = ({
           className="relative mb-10 flex min-h-[280px] w-[30%] grow flex-col max-md:mb-4 max-md:w-4/12 max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full"
           index={0}
         >
-          <ProductImage product={product} alt={productTitle} />
+          <ProductImageGallery product={product} alt={productTitle} />
         </ProductAnimations>
 
         {/* VariationsCarousel + ProductDescription - col-2 */}

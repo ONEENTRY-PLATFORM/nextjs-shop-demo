@@ -3,9 +3,13 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
+import {
+  getProductCategory,
+  getProductTitle,
+} from '@/app/hooks/useProductsData';
+
 import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';
-import { getProductCategory, getProductTitle } from '../product-utils';
 import ProductUnits from './ProductUnits';
 
 interface ProductDetailsProps {

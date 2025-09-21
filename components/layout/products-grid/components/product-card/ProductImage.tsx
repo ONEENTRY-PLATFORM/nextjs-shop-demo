@@ -1,22 +1,22 @@
-import type { AttributeType } from 'oneentry/dist/base/utils';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
 import { getProductImageUrl } from '@/app/hooks/useProductsData';
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
 interface ProductImageProps {
-  attributes: AttributeType;
+  product: IProductsEntity;
   alt: string;
 }
 
 /**
  * Product image component that displays the product image or a placeholder
- * @param attributes Product attributes containing the image data
+ * @param product Product containing the image data
  * @param alt Alternative text for the image
  * @returns Product image or placeholder component
  */
-const ProductImage: FC<ProductImageProps> = ({ attributes, alt }) => {
-  const imageSrc = getProductImageUrl(attributes);
+const ProductImage: FC<ProductImageProps> = ({ product, alt }) => {
+  const imageSrc = getProductImageUrl('pic', product);
 
   return (
     <div className="relative mb-3 size-40">

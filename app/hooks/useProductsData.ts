@@ -40,19 +40,43 @@ export const getProductTitle = (
   return fallback;
 };
 
+// /**
+//  * Safely extracts the product title from localized information
+//  * @param product The product entity
+//  * @param fallback The fallback string if title is not found
+//  * @returns The product title or a fallback string
+//  */
+// export const getProductTitle = (
+//   product: IProductsEntity,
+//   fallback = 'Product',
+// ): string => {
+//   if (
+//     product?.localizeInfos &&
+//     typeof product.localizeInfos === 'object' &&
+//     'title' in product.localizeInfos &&
+//     typeof product.localizeInfos.title === 'string'
+//   ) {
+//     return product.localizeInfos.title;
+//   }
+//   return fallback;
+// };
+
 /**
  * Safely extracts the product image URL from attribute values
  * @param attributes The product attributes
  * @returns The product image URL or undefined
  */
 export const getProductImageUrl = (
-  attributes: AttributeType,
-): string | undefined => {
-  if (!attributes || !attributes.pic) {
-    return undefined;
+  name: string,
+  product: IProductsEntity,
+): string => {
+  const data = product.attributeValues[name];
+
+  if (!data) {
+    return '';
   }
 
-  const picValue = attributes.pic.value;
+  const picValue = data.value;
 
   if (Array.isArray(picValue) && picValue.length > 0) {
     const firstImage = picValue[0];
@@ -73,7 +97,7 @@ export const getProductImageUrl = (
     return picValue.downloadLink;
   }
 
-  return undefined;
+  return '';
 };
 
 /**
@@ -81,9 +105,7 @@ export const getProductImageUrl = (
  * @param attributes The product attributes
  * @returns The price value or undefined
  */
-export const getProductPrice = (
-  attributes: AttributeType,
-): number | undefined => {
+export const getProductPrice = (attributes: AttributeType): number => {
   if (
     attributes?.price &&
     typeof attributes.price === 'object' &&
@@ -92,7 +114,7 @@ export const getProductPrice = (
   ) {
     return attributes.price.value;
   }
-  return undefined;
+  return 0;
 };
 
 /**
@@ -110,6 +132,33 @@ export const getProductSalePrice = (
     typeof attributes.sale.value === 'number'
   ) {
     return attributes.sale.value;
+  }
+  return undefined;
+};
+
+/**
+ * Safely extracts the product category from attribute values
+ * @param product The product entity
+ * @returns The product category or undefined
+ */
+export const getProductCategory = (
+  product: IProductsEntity,
+): { value: string; title: string } | undefined => {
+  if (
+    product?.attributeValues?.category &&
+    typeof product.attributeValues.category === 'object' &&
+    'value' in product.attributeValues.category &&
+    product.attributeValues.category.value &&
+    typeof product.attributeValues.category.value === 'object' &&
+    'value' in product.attributeValues.category.value &&
+    'title' in product.attributeValues.category.value &&
+    typeof product.attributeValues.category.value.value === 'string' &&
+    typeof product.attributeValues.category.value.title === 'string'
+  ) {
+    return {
+      value: product.attributeValues.category.value.value,
+      title: product.attributeValues.category.value.title,
+    };
   }
   return undefined;
 };

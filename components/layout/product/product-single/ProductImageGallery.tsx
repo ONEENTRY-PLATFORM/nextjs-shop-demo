@@ -5,16 +5,18 @@ import '@/app/styles/image-gallery.css';
 import '@/app/styles/slick.css';
 import '@/app/styles/slick-theme.css';
 
-import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key, RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import Slider from 'react-slick';
 
+import {
+  getProductImageUrl,
+  getProductTitle,
+} from '@/app/hooks/useProductsData';
 import FavoritesButton from '@/components/shared/FavoritesButton';
+import OptimizedImage from '@/components/shared/OptimizedImage';
 import Placeholder from '@/components/shared/Placeholder';
-
-import { getProductImageUrl, getProductTitle } from '../product-utils';
 
 interface ProductImageProps {
   product: IProductsEntity;
@@ -51,14 +53,19 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
   const morePic = attributeValues?.more_pic?.value || [];
   const isGallery = morePic.length > 0;
 
-  // Safely construct images data
-  const imagesData = imageSrc
+  // Safely construct Gallery
+  const imagesData: {
+    original: string;
+    thumbnail: string;
+  }[] = imageSrc
     ? isGallery
       ? [imageSrc, ...morePic].map((img) => {
           if (img && typeof img === 'object' && 'downloadLink' in img) {
+            const downloadLink =
+              (img.downloadLink as string) || '/placeholder.jpg';
             return {
-              original: img.downloadLink as string,
-              thumbnail: img.downloadLink as string,
+              original: downloadLink,
+              thumbnail: downloadLink,
             };
           }
           return {
@@ -68,8 +75,8 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
         })
       : [
           {
-            original: getProductImageUrl(product),
-            thumbnail: getProductImageUrl(product),
+            original: getProductImageUrl('pic', product) || '/placeholder.jpg',
+            thumbnail: getProductImageUrl('pic', product) || '/placeholder.jpg',
           },
         ]
     : [
@@ -94,12 +101,13 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
               {imagesData.map((image, i: Key) => {
                 return (
                   <div key={i} className="w-full items-center">
-                    <Image
+                    <OptimizedImage
                       width={360}
                       height={280}
-                      sizes="(min-width: 1024px) 66vw, 100vw"
                       src={image.original}
                       alt={imageAlt}
+                      quality={85}
+                      sizes="(min-width: 1024px) 66vw, 100vw"
                       className="mx-auto self-center"
                     />
                   </div>
@@ -117,11 +125,12 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
               {imagesData.map((image, i: Key) => {
                 return (
                   <div key={i} className="w-full items-center">
-                    <Image
+                    <OptimizedImage
                       width={80}
                       height={80}
                       src={image.thumbnail}
                       alt={imageAlt}
+                      quality={85}
                       className="mx-auto self-center"
                     />
                   </div>
@@ -131,12 +140,12 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
           </div>
         ) : (
           <div className="relative w-full">
-            <Image
+            <OptimizedImage
               width={360}
               height={280}
-              sizes="(min-width: 1024px) 66vw, 100vw"
               src={imagesData[0]?.original || '/placeholder.jpg'}
               alt={imageAlt}
+              quality={85}
               className="mx-auto self-center"
             />
           </div>

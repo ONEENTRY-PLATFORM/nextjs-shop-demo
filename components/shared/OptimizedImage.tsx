@@ -41,7 +41,7 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
   width,
   height,
   sizes,
-  priority = 'high',
+  priority = 'auto',
   className = '',
   quality = 85,
   type = '',
