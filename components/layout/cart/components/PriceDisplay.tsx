@@ -9,8 +9,7 @@ interface PriceDisplayProps {
 }
 
 /**
- * Description
- * @param param0 param0
+ * PriceDisplay
  *
  * @returns
  */
