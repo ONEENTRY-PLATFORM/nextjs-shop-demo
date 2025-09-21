@@ -3,7 +3,6 @@ import type React from 'react';
 import type { FC } from 'react';
 
 import OptimizedImage from '@/components/shared/OptimizedImage';
-import Placeholder from '@/components/shared/Placeholder';
 
 /**
  * Blocks grid image
@@ -18,14 +17,6 @@ const BlocksGridImage: FC<{ attributeValues: any }> = async ({
   const { title = '', bg_web } = attributeValues;
 
   const imageSrc = bg_web?.value[0]?.downloadLink;
-
-  if (!imageSrc) {
-    return (
-      <div className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover opacity-15 invert">
-        <Placeholder />
-      </div>
-    );
-  }
 
   return (
     <OptimizedImage

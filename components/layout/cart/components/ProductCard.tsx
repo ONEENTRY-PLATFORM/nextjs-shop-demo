@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
@@ -6,7 +5,7 @@ import { memo } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { deselectProduct } from '@/app/store/reducers/CartSlice';
-import Placeholder from '@/components/shared/Placeholder';
+import OptimizedImage from '@/components/shared/OptimizedImage';
 
 import QuantitySelector from '../../product/components/QuantitySelector';
 import ProductAnimations from '../animations/ProductAnimations';
@@ -71,18 +70,15 @@ const ProductCard: FC<ProductCardProps> = ({
         </div>
 
         <div className="relative h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-50">
-          {imgSrc ? (
-            <Image
-              width={130}
-              height={150}
-              loading="lazy"
-              src={imgSrc}
-              alt={title}
-              className="size-full shrink-0 self-start object-cover"
-            />
-          ) : (
-            <Placeholder />
-          )}
+          <OptimizedImage
+            width={130}
+            height={150}
+            loading="lazy"
+            src={imgSrc}
+            alt={title}
+            quality={85}
+            className="size-full shrink-0 self-start object-cover"
+          />
         </div>
 
         <div className="flex flex-col gap-5 self-start text-neutral-600">

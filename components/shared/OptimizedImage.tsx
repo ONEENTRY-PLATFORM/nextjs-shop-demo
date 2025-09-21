@@ -20,6 +20,7 @@ interface OptimizedImageProps {
   className?: string;
   quality?: number;
   type?: string;
+  loading?: string;
 }
 
 /**
@@ -33,6 +34,7 @@ interface OptimizedImageProps {
  * @param priority Priority loading flag
  * @param className Additional CSS classes
  * @param quality Image quality (1-100)
+ * @param loading Image loading behavior ("eager" | "lazy")
  * @returns Optimized image JSX element
  */
 const OptimizedImage: FC<OptimizedImageProps> = ({
@@ -45,6 +47,7 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
   className = '',
   quality = 85,
   type = '',
+  loading,
 }) => {
   const [isImageLoading, setImageLoading] = useState(true);
   const ref = useRef<HTMLImageElement>(null);
@@ -71,6 +74,7 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
     ...(height !== undefined && { height }),
     priority,
     quality,
+    loading,
     className: `
       duration-300 ease-in-out
       ${isImageLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0'}

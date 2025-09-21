@@ -15,7 +15,7 @@ const Image: FC<ImageProps> = ({
   placeholder,
   blurDataURL,
   isImageLoading,
-  loading = 'lazy',
+  loading,
   ref,
   onLoadingComplete,
 }) => {

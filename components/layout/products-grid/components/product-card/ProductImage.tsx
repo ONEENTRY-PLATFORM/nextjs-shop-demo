@@ -20,16 +20,14 @@ const ProductImage: FC<ProductImageProps> = ({ product, alt }) => {
 
   return (
     <div className="relative mb-3 size-40">
-      {imageSrc && (
-        <OptimizedImage
-          src={imageSrc}
-          alt={alt}
-          priority={'high'}
-          quality={85}
-          sizes="(min-width: 1024px) 66vw, 100vw"
-          className="size-40 shrink-0 object-cover transition-transform duration-500 group-hover:scale-125"
-        />
-      )}
+      <OptimizedImage
+        src={imageSrc}
+        alt={alt}
+        priority={'high'}
+        quality={85}
+        sizes="(min-width: 1024px) 66vw, 100vw"
+        className="size-40 shrink-0 object-cover transition-transform duration-500 group-hover:scale-125"
+      />
     </div>
   );
 };
