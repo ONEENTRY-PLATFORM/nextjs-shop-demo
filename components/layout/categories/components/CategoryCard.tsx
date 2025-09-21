@@ -32,7 +32,6 @@ const CategoryCard: FC<CategoryCardProps> = ({
       index={index}
     >
       <Link
-        prefetch={true}
         href={link}
         className="relative flex size-full h-64 bg-slate-100 p-6"
       >

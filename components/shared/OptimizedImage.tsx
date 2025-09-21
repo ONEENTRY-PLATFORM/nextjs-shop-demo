@@ -2,7 +2,7 @@
 
 import NextImage from 'next/image';
 import type { FC } from 'react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useOptimizedImage } from '@/components/hooks/useOptimizedImage';
 
@@ -44,9 +44,10 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
   priority = 'high',
   className = '',
   quality = 85,
-  type = 'next',
+  type = '',
 }) => {
   const [isImageLoading, setImageLoading] = useState(true);
+  const ref = useRef<HTMLImageElement>(null);
 
   // Handle the exactOptionalPropertyTypes issue by explicitly building the props object
   const { optimizedSrc, blurDataURL, isLoading, isError } = useOptimizedImage({
@@ -57,14 +58,7 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
   });
 
   if (isError || !src) {
-    return (
-      <div
-        className={`bg-gray-200 flex items-center justify-center ${className}`}
-        style={{ width, height }}
-      >
-        <Placeholder />
-      </div>
-    );
+    return <Placeholder />;
   }
 
   // Prepare props for Next.js Image component
@@ -78,10 +72,11 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
     priority,
     quality,
     className: `
-      duration-700 ease-in-out
+      duration-300 ease-in-out
       ${isImageLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0'}
       ${isLoading ? 'opacity-0' : 'opacity-100'}
     `,
+    ref,
     onLoadingComplete: () => setImageLoading(false),
     onError: () => {
       setImageLoading(false);
@@ -104,14 +99,14 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
 
   return (
     <div className={`${className} overflow-hidden`} style={{ width, height }}>
-      {isLoading && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse" />
-      )}
       {type === 'next' ? (
         <NextImage {...imageProps} />
       ) : (
         <Image {...imageProps} />
       )}
+      {/* {isLoading && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse" />
+      )} */}
     </div>
   );
 };

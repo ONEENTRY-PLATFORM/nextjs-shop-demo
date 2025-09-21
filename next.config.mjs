@@ -11,7 +11,7 @@ const nextConfig = {
       dynamic: 30,
       static: 180,
     },
-    // optimizeCss: true,
+    optimizeCss: true,
     optimizePackageImports: ['gsap', 'react-toastify'],
     serverActions: {
       bodySizeLimit: '2mb',
@@ -27,9 +27,9 @@ const nextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60,
-    deviceSizes: [320, 420, 640, 768, 1024, 1280, 1536, 1920, 2560],
-    imageSizes: [16, 24, 32, 48, 64, 96, 128, 256],
-    // qualities: [50, 75],
+    deviceSizes: [320, 640, 768, 1024, 1280, 1536, 1920, 2560],
+    imageSizes: [16, 32, 64, 96, 128, 256],
+    qualities: [50, 75],
     unoptimized: false,
     remotePatterns: [
       {
@@ -75,7 +75,6 @@ const nextConfig = {
       },
     ];
   },
-
   async rewrites() {
     return [
       {
@@ -84,12 +83,7 @@ const nextConfig = {
       },
     ];
   },
-  // Оптимизация компиляции
-  swcMinify: true,
-  // Компрессия ответов
   compress: true,
-  // Оптимизация изображений
-  optimizeImages: true,
 };
 
 export default nextConfig;

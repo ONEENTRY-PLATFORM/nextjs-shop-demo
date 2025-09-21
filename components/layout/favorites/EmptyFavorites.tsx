@@ -44,7 +44,6 @@ const EmptyFavorites: FC<EmptyFavoritesProps> = ({ lang, dict }) => {
         {empty_favorites_plug?.value}
       </h1>
       <Link
-        prefetch={true}
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"
       >

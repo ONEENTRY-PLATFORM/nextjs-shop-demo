@@ -37,11 +37,11 @@ const ProductsGroup: FC<ProductsGroupProps> = ({
       index={4}
     >
       <h2 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
-        {block.attributeValues[langCode]?.together_title?.value ||
-          block.attributeValues?.together_title?.value}
+        {block?.attributeValues?.[langCode]?.together_title?.value ||
+          block?.attributeValues?.together_title?.value}
       </h2>
       <div className="flex w-full flex-row flex-wrap items-stretch justify-start gap-2.5">
-        {block.products?.map((product: IProductsEntity) => (
+        {block?.products?.map((product: IProductsEntity) => (
           <div
             key={product.id}
             className="relative box-border flex w-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%]"

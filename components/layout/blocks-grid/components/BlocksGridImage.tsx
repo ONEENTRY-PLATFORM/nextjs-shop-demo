@@ -11,7 +11,9 @@ import Placeholder from '@/components/shared/Placeholder';
  * @returns block card with animations
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const BlocksGridImage: FC<any> = async ({ attributeValues }) => {
+const BlocksGridImage: FC<{ attributeValues: any }> = async ({
+  attributeValues,
+}) => {
   // extract data from block attributeValues
   const { title = '', bg_web } = attributeValues;
 
@@ -26,14 +28,6 @@ const BlocksGridImage: FC<any> = async ({ attributeValues }) => {
   }
 
   return (
-    // <Image
-    //   fill
-    //   sizes="(min-width: 1024px) 66vw, 100vw"
-    //   src={imageSrc}
-    //   fetchPriority="high"
-    //   alt={title?.value || ''}
-    //   className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-transform duration-500 group-hover:scale-125"
-    // />
     <OptimizedImage
       src={imageSrc}
       alt={title.value}

@@ -69,7 +69,6 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
       index={index}
     >
       <Link
-        prefetch={false}
         target={link.value?.indexOf('http') === -1 ? '' : '_blank'}
         href={
           (link.value?.indexOf('http') === -1 ? '/' + lang + '/shop/' : '') +

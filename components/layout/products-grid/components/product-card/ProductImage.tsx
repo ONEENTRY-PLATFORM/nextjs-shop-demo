@@ -1,10 +1,8 @@
-import Image from 'next/image';
 import type { AttributeType } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 
-import Placeholder from '@/components/shared/Placeholder';
-
-import { getProductImageUrl } from '../../../../../app/hooks/useProductsData';
+import { getProductImageUrl } from '@/app/hooks/useProductsData';
+import OptimizedImage from '@/components/shared/OptimizedImage';
 
 interface ProductImageProps {
   attributes: AttributeType;
@@ -22,17 +20,15 @@ const ProductImage: FC<ProductImageProps> = ({ attributes, alt }) => {
 
   return (
     <div className="relative mb-3 size-40">
-      {imageSrc ? (
-        <Image
-          fill
-          sizes="(min-width: 300px) 66vw, 100vw"
+      {imageSrc && (
+        <OptimizedImage
           src={imageSrc}
           alt={alt}
-          loading="lazy"
+          priority={'high'}
+          quality={85}
+          sizes="(min-width: 1024px) 66vw, 100vw"
           className="size-40 shrink-0 object-cover transition-transform duration-500 group-hover:scale-125"
         />
-      ) : (
-        <Placeholder />
       )}
     </div>
   );

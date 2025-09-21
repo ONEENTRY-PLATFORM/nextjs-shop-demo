@@ -83,6 +83,26 @@ export type IOrderProducts = {
   price: number;
 };
 
+export type ImageProps = {
+  src: string;
+  alt?: string;
+  fill: boolean;
+  width?: number;
+  height?: number;
+  loading?: 'eager' | 'lazy' | undefined;
+  placeholder?: 'blur' | 'empty' | `data:image/${string}`;
+  blurDataURL?: string;
+  isImageLoading: boolean;
+  className?: string;
+  style?: React.CSSProperties;
+  objectFit?: string;
+  priority?: 'auto' | 'low' | 'high' | undefined;
+  onLoadingComplete?: any;
+  ref: any;
+  onClick?: any;
+  // decoding?: 'async' | 'sync' | 'auto';
+};
+
 export type FormProps = { lang: string; dict: IAttributeValues };
 
 declare global {

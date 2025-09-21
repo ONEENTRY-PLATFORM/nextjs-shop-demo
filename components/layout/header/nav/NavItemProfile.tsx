@@ -44,7 +44,6 @@ const NavItemProfile: FC<NavItemProfileProps> = ({ item, lang, userMenu }) => {
     </button>
   ) : !userMenu ? (
     <Link
-      prefetch={true}
       href={'/' + lang + '/profile'}
       title={item.localizeInfos.menuTitle}
       className="group cursor-pointer relative box-border flex size-8 shrink-0 max-sm:size-6"

@@ -43,7 +43,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, lang, dict }) => {
       {/* Category */}
       {category && (
         <p className="mt-3 text-sm leading-4 text-neutral-600">
-          <Link prefetch={false} href={'/shop/category/' + category.value}>
+          <Link href={'/shop/category/' + category.value}>
             {category.title}
           </Link>
         </p>
