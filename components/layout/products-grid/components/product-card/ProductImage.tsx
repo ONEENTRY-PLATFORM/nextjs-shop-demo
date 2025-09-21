@@ -25,6 +25,7 @@ const ProductImage: FC<ProductImageProps> = ({ product, alt }) => {
         alt={alt}
         priority={'high'}
         quality={85}
+        type="img"
         sizes="(min-width: 1024px) 66vw, 100vw"
         className="size-40 shrink-0 object-cover transition-transform duration-500 group-hover:scale-125"
       />
