@@ -1,5 +1,13 @@
 import lqipModern from 'lqip-modern';
 
+// This file has been moved to app/api/utils/getLqipPreview.ts because it uses the lqip-modern package
+// which depends on sharp, a Node.js library that uses built-in modules like child_process and fs
+// that are not available in the browser environment.
+//
+// If you need to use this functionality in client-side code, you should either:
+// 1. Create an API endpoint that uses this server-side function
+// 2. Use a browser-compatible alternative
+
 // Simple in-memory cache for LQIP previews
 const lqipCache = new Map<string, { dataURI: string; timestamp: number }>();
 const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes

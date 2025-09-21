@@ -1,7 +1,8 @@
-import Image from 'next/image';
+// import Image from 'next/image';
 import type React from 'react';
 import type { FC } from 'react';
 
+import OptimizedImage from '@/components/shared/OptimizedImage';
 import Placeholder from '@/components/shared/Placeholder';
 
 /**
@@ -25,12 +26,20 @@ const BlocksGridImage: FC<any> = async ({ attributeValues }) => {
   }
 
   return (
-    <Image
-      fill
-      sizes="(min-width: 1024px) 66vw, 100vw"
+    // <Image
+    //   fill
+    //   sizes="(min-width: 1024px) 66vw, 100vw"
+    //   src={imageSrc}
+    //   fetchPriority="high"
+    //   alt={title?.value || ''}
+    //   className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-transform duration-500 group-hover:scale-125"
+    // />
+    <OptimizedImage
       src={imageSrc}
-      fetchPriority="high"
-      alt={title?.value || ''}
+      alt={title.value}
+      priority={'high'}
+      quality={85}
+      sizes="(min-width: 1024px) 66vw, 100vw"
       className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-transform duration-500 group-hover:scale-125"
     />
   );

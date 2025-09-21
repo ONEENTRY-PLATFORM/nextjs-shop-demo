@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import type { FC } from 'react';
 
-interface BlurImageProps {
+interface ImageProps {
   src: string;
   alt?: string;
   width?: number;
@@ -22,12 +22,12 @@ interface BlurImageProps {
   // decoding?: 'async' | 'sync' | 'auto';
 }
 
-const Image: FC<BlurImageProps> = ({
+const Image: FC<ImageProps> = ({
   src,
   alt = '',
   width,
   height,
-  priority,
+  // priority,
   className = '',
   style = {},
   placeholder,

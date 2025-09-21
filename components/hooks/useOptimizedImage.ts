@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react';
 
-import getLqipPreview from '@/components/hooks/getLqipPreview';
-
 interface UseOptimizedImageProps {
   src: string;
   width?: number;
@@ -49,10 +47,17 @@ export const useOptimizedImage = ({
         setIsLoading(true);
         setIsError(false);
 
-        // Generate LQIP preview
-        const preview = await getLqipPreview(src);
+        // Fetch LQIP preview from API endpoint
+        const response = await fetch(
+          `/api/lqip?url=${encodeURIComponent(src)}`,
+        );
+        if (!response.ok) {
+          throw new Error(`Failed to fetch LQIP: ${response.status}`);
+        }
+
+        const data = await response.json();
         if (isMounted) {
-          setBlurDataURL(preview);
+          setBlurDataURL(data.preview);
         }
       } catch (error) {
         if (isMounted) {
@@ -76,7 +81,9 @@ export const useOptimizedImage = ({
 
   // Generate optimized image URL with parameters
   const optimizedSrc = src
-    ? `${src}${src.includes('?') ? '&' : '?'}${width ? `w=${width}&` : ''}${height ? `h=${height}&` : ''}q=${quality}`
+    ? `${src}${src.includes('?') ? '&' : '?'}${
+        width ? `w=${width}&` : ''
+      }${height ? `h=${height}&` : ''}q=${quality}`
     : '';
 
   return {

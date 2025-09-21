@@ -7,13 +7,16 @@ import { useState } from 'react';
 import { useOptimizedImage } from '@/components/hooks/useOptimizedImage';
 
 import Image from './Image';
+import Placeholder from './Placeholder';
 
 interface OptimizedImageProps {
   src: string;
   alt: string;
   width?: number;
   height?: number;
-  priority?: boolean;
+  sizes?: string;
+  fill?: boolean;
+  priority?: string;
   className?: string;
   quality?: number;
   type?: string;
@@ -26,6 +29,7 @@ interface OptimizedImageProps {
  * @param alt Image alt text
  * @param width Image width
  * @param height Image height
+ * @param sizes Image sizes
  * @param priority Priority loading flag
  * @param className Additional CSS classes
  * @param quality Image quality (1-100)
@@ -36,24 +40,21 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
   alt,
   width,
   height,
-  priority = false,
+  sizes,
+  priority = 'high',
   className = '',
-  quality = 75,
+  quality = 85,
   type = 'next',
 }) => {
+  const [isImageLoading, setImageLoading] = useState(true);
+
   // Handle the exactOptionalPropertyTypes issue by explicitly building the props object
-  const useOptimizedImageProps = {
+  const { optimizedSrc, blurDataURL, isLoading, isError } = useOptimizedImage({
     src,
     quality,
     ...(width !== undefined && { width }),
     ...(height !== undefined && { height }),
-  };
-
-  const { optimizedSrc, blurDataURL, isLoading, isError } = useOptimizedImage(
-    useOptimizedImageProps,
-  );
-
-  const [isImageLoading, setImageLoading] = useState(true);
+  });
 
   if (isError || !src) {
     return (
@@ -61,7 +62,7 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
         className={`bg-gray-200 flex items-center justify-center ${className}`}
         style={{ width, height }}
       >
-        <span className="text-gray-500 text-xs">Image not available</span>
+        <Placeholder />
       </div>
     );
   }
@@ -88,7 +89,9 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
     sizes:
       width && height
         ? `${width}px`
-        : '(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw',
+        : sizes
+          ? sizes
+          : '(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw',
   };
 
   // Conditionally add placeholder and blurDataURL only when they exist
@@ -100,10 +103,7 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
   }
 
   return (
-    <div
-      className={`${className} relative overflow-hidden`}
-      style={{ width, height }}
-    >
+    <div className={`${className} overflow-hidden`} style={{ width, height }}>
       {isLoading && (
         <div className="absolute inset-0 bg-gray-200 animate-pulse" />
       )}
