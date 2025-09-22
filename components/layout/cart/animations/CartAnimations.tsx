@@ -22,6 +22,16 @@ const CartAnimations: FC<AnimationsProps> = ({ children, className }) => {
 
   // stage leaving animations
   useGSAP(() => {
+    const tl = gsap.timeline({
+      paused: true,
+      onReverseComplete: () => {
+        gsap.set(productElements, {
+          autoAlpha: 0,
+          yPercent: 100,
+        });
+      },
+    });
+
     // Check if elements exist before creating animation
     const productElements = ref.current
       ? (ref.current as HTMLElement).querySelectorAll('.product-in-cart')
@@ -39,16 +49,6 @@ const CartAnimations: FC<AnimationsProps> = ({ children, className }) => {
       trElements.length > 0 ||
       totalElement.length > 0
     ) {
-      const tl = gsap.timeline({
-        paused: true,
-        onReverseComplete: () => {
-          gsap.set(productElements, {
-            autoAlpha: 0,
-            yPercent: 100,
-          });
-        },
-      });
-
       tl.set([productElements, trElements, totalElement], {
         autoAlpha: 0,
         yPercent: 100,
@@ -70,14 +70,11 @@ const CartAnimations: FC<AnimationsProps> = ({ children, className }) => {
       }
 
       setPrevStage(stage);
-
-      return () => {
-        tl.kill();
-      };
     }
 
-    // Return a no-op cleanup function to satisfy TypeScript
-    return () => {};
+    return () => {
+      tl.kill();
+    };
   }, [stage, prevStage]);
 
   return (
