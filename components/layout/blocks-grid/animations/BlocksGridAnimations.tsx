@@ -26,7 +26,8 @@ const BlocksGridAnimations: FC<BlocksGridAnimationsProps> = ({
 }) => {
   const { stage } = useTransitionState(); // Get current transition stage
   const [prevStage, setPrevStage] = useState(''); // State to track the previous transition stage
-  const ref = useRef(null); // Reference to the DOM element for animations
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const ref = useRef<any>(null); // Reference to the DOM element for animations
 
   // Stage entering/leaving animations
   useGSAP(() => {

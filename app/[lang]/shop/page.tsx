@@ -97,6 +97,7 @@ const ShopPageLayout: FC<PageProps> = async (props) => {
               dict={dict}
               params={params}
               productsData={productsData}
+              searchParams={searchParams}
             />
           </Suspense>
         </div>

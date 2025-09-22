@@ -1,7 +1,9 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
+import { getProducts, getProductsByPageUrl } from '@/app/api';
 import FilterModal from '@/components/layout/filter/FilterModal';
 import CardsGridAnimations from '@/components/layout/products-grid/animations/CardsGridAnimations';
 
@@ -12,10 +14,14 @@ import ProductsNotFound from './components/ProductsNotFound';
 interface GridLayoutProps {
   /** Page parameters including language and other route parameters */
   params: {
+    page?: IPagesEntity;
+    handle: string;
     lang: string;
-    [key: string]: string | undefined;
   };
   /** Search parameters from query string including page, search, and filters */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  searchParams: any;
+  /** Current page number */
   currentPage?: number;
   /** Dictionary of localized strings from server API */
   dict: IAttributeValues;
@@ -40,23 +46,42 @@ interface GridLayoutProps {
  * category-specific product listings.
  *
  * @param params - Page parameters including language and other route parameters
- * @param currentPage
+ * @param searchParams - Dynamic search parameters
  * @param dict - Dictionary of localized strings from server API
  * @param pagesLimit - Maximum number of products to display per page
  * @param isCategory - Flag indicating if this is a category page (default: false)
- * @param productsData - Pre-fetched products data
  * @returns Complete product grid layout with products, pagination, and filters
  */
-const ProductsGridLayout: FC<GridLayoutProps> = ({
+const ProductsGridLayout: FC<GridLayoutProps> = async ({
   params,
-  currentPage,
+  searchParams: sp,
   dict,
   pagesLimit,
-  productsData,
+  isCategory,
 }) => {
-  const { isError, products, total } = productsData;
+  const p = await params;
+  const { lang } = await params;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const searchParams: any = await sp;
+  const currentPage = Number(searchParams?.page) || 1;
+  const limit =
+    currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
+  const combinedParams = { ...p, searchParams };
 
-  const { lang } = params;
+  // Get all products from api or get products byPageUrl
+  const { isError, products, total } = !isCategory
+    ? await getProducts({
+        lang: lang,
+        offset: 0,
+        limit: limit,
+        params: combinedParams,
+      })
+    : await getProductsByPageUrl({
+        lang: lang,
+        offset: 0,
+        limit: limit,
+        params: combinedParams,
+      });
 
   if (!products || total < 1 || isError) {
     return <ProductsNotFound lang={lang} dict={dict} />;

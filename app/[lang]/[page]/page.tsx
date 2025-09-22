@@ -143,6 +143,7 @@ export async function generateStaticParams() {
 
 /**
  * Generate page metadata
+ *
  * @async server component
  * @param params page params
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}

@@ -26,7 +26,7 @@ import { getDictionary } from '../../dictionaries';
  */
 const ShopCatalogPage: FC<any> = async (props: {
   params: Promise<{ handle: any; lang: any }>;
-  searchParams: any;
+  searchParams: Promise<any>;
 }) => {
   const searchParams = await props.searchParams;
   const params = await props.params;
@@ -72,6 +72,7 @@ const ShopCatalogPage: FC<any> = async (props: {
             pagesLimit={pagesLimit}
             dict={dict}
             productsData={productsData as any}
+            searchParams={searchParams}
           />
         </Suspense>
       </div>

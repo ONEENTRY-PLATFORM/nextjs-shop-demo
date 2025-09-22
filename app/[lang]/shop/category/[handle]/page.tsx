@@ -106,6 +106,7 @@ const ShopCategoryLayout: FC<any> = async (props: any) => {
               dict={dict}
               isCategory={true}
               productsData={productsData}
+              searchParams={searchParams}
             />
           </Suspense>
         </div>
