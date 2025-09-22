@@ -8,7 +8,7 @@ declare type LocalizeInfo = {
 };
 
 declare type PageProps = {
-  params: Promise<{ page: any; handle: string; lang: string }>;
+  params: Promise<{ page?: any; handle: string; lang: string }>;
   searchParams?: Promise<{
     search?: string;
     page?: string;
@@ -17,9 +17,9 @@ declare type PageProps = {
 };
 
 declare type SimplePageProps = {
+  page?: any;
   lang?: string;
   dict?: IAttributeValues;
-  page?: any;
   [key as string]: any;
 };
 

@@ -33,8 +33,8 @@ export const getProducts = async (props: {
   };
 }): Promise<{
   isError: boolean;
-  error?: IError;
-  products?: IProductsEntity[];
+  error: IError;
+  products: IProductsEntity[];
   total: number;
 }> => {
   const { offset, limit, params, lang } = props;
@@ -49,7 +49,12 @@ export const getProducts = async (props: {
     cacheKey,
   );
   if (cached) {
-    return { isError: false, products: cached.products, total: cached.total };
+    return {
+      isError: false,
+      error: {} as IError,
+      products: cached.products,
+      total: cached.total,
+    };
   }
 
   try {
@@ -63,6 +68,7 @@ export const getProducts = async (props: {
       return {
         isError: true,
         error: data,
+        products: [],
         total: 0,
       };
     } else {
@@ -73,6 +79,7 @@ export const getProducts = async (props: {
       });
       return {
         isError: false,
+        error: {} as IError,
         products: data.items,
         total: data.total,
       };
@@ -81,6 +88,7 @@ export const getProducts = async (props: {
     return {
       isError: true,
       error: error as IError,
+      products: [],
       total: 0,
     };
   }

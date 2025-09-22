@@ -32,8 +32,8 @@ export const getProductsByPageUrl = async (props: {
   };
 }): Promise<{
   isError: boolean;
-  error?: IError;
-  products?: IProductsEntity[];
+  error: IError;
+  products: IProductsEntity[] | [];
   total: number;
 }> => {
   const { limit, offset, params, lang } = props;
@@ -50,6 +50,7 @@ export const getProductsByPageUrl = async (props: {
   if (cached) {
     return {
       isError: false,
+      error: {} as IError,
       products: cached.products,
       total: cached.total,
     };
@@ -58,7 +59,7 @@ export const getProductsByPageUrl = async (props: {
   try {
     const data = await api.Products.getProductsByPageUrl(
       params.handle,
-      body || undefined,
+      body,
       langCode,
       {
         sortOrder: 'DESC',
@@ -69,14 +70,19 @@ export const getProductsByPageUrl = async (props: {
     );
 
     if (isIError(data)) {
-      return { isError: true, error: data, total: 0 };
+      return { isError: true, error: data, products: [], total: 0 };
     } else {
       // Cache the result
       setCachedData<{ products: IProductsEntity[]; total: number }>(cacheKey, {
         products: data.items,
         total: data.total,
       });
-      return { isError: false, products: data.items, total: data.total };
+      return {
+        isError: false,
+        error: {} as IError,
+        products: data.items,
+        total: data.total,
+      };
     }
   } catch (error) {
     const apiError = handleApiError(error);
@@ -86,6 +92,7 @@ export const getProductsByPageUrl = async (props: {
         statusCode: apiError.statusCode,
         message: apiError.message,
       } as IError,
+      products: [],
       total: 0,
     };
   }

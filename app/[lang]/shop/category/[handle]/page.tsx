@@ -3,11 +3,7 @@ import { notFound } from 'next/navigation';
 import { type FC, memo, Suspense } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
-import {
-  getChildPagesByParentUrl,
-  getPageByUrl,
-  getProductsByPageUrl,
-} from '@/app/api';
+import { getChildPagesByParentUrl, getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
@@ -39,29 +35,13 @@ const ShopCategoryLayout: FC<any> = async (props: any) => {
 
   // !!!extract products per page limit from global settings
   const pagesLimit = 10;
+
   // Memoize the loader component
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
   if (!page) {
     return notFound();
   }
-
-  // Parse current page safely
-  const currentPage = Number(searchParams?.page || 1);
-
-  // Fetch products data
-  const { isError, products, total } = await getProductsByPageUrl({
-    lang: lang,
-    offset: 0,
-    limit: currentPage * pagesLimit,
-    params: { ...params, searchParams },
-  });
-
-  const productsData = {
-    isError,
-    products: products || [],
-    total,
-  };
 
   // Breadcrumb structured data
   const breadcrumbStructuredData = {
@@ -101,12 +81,11 @@ const ShopCategoryLayout: FC<any> = async (props: any) => {
         <div className="flex w-full flex-col items-center gap-5 bg-white">
           <Suspense fallback={<MemoizedProductsGridLoader />}>
             <ProductsGridLayout
-              pagesLimit={pagesLimit}
               params={params}
+              searchParams={searchParams}
+              pagesLimit={pagesLimit}
               dict={dict}
               isCategory={true}
-              productsData={productsData}
-              searchParams={searchParams}
             />
           </Suspense>
         </div>

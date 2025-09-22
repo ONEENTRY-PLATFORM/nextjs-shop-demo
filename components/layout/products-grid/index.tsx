@@ -1,6 +1,4 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
 import { getProducts, getProductsByPageUrl } from '@/app/api';
@@ -14,27 +12,18 @@ import ProductsNotFound from './components/ProductsNotFound';
 interface GridLayoutProps {
   /** Page parameters including language and other route parameters */
   params: {
-    page?: IPagesEntity;
     handle: string;
     lang: string;
   };
   /** Search parameters from query string including page, search, and filters */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   searchParams: any;
-  /** Current page number */
-  currentPage?: number;
   /** Dictionary of localized strings from server API */
   dict: IAttributeValues;
-  /** Maximum number of products to display per page */
+  /** Maximum number of products to display per page, used for animations */
   pagesLimit: number;
   /** Flag indicating if this is a category page (default: false) */
   isCategory?: boolean;
-  /** Products data */
-  productsData: {
-    isError: boolean;
-    products: IProductsEntity[];
-    total: number;
-  };
 }
 
 /**
@@ -59,8 +48,8 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   pagesLimit,
   isCategory,
 }) => {
-  const p = await params;
-  const { lang } = await params;
+  const p = params;
+  const { lang } = params;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const searchParams: any = await sp;
   const currentPage = Number(searchParams?.page) || 1;

@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { IError } from 'oneentry/dist/base/utils';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { memo, Suspense } from 'react';
 
-import { getChildPagesByParentUrl, getPageByUrl, getProducts } from '@/app/api';
+import { getChildPagesByParentUrl, getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams } from '@/app/types/global';
 import ProductsGridLayout from '@/components/layout/products-grid';
@@ -30,49 +28,28 @@ const ShopCatalogPage: FC<any> = async (props: {
 }) => {
   const searchParams = await props.searchParams;
   const params = await props.params;
-  const { handle, lang } = params;
 
   // Get the dictionary from the API and set the server provider.
-  const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
+  const [dict] = ServerProvider(
+    'dict',
+    await getDictionary(params.lang as Locale),
+  );
 
   // !!!extract products per page limit from global settings
   const pagesLimit = 10;
 
-  const combinedParams = { handle: handle, searchParams: searchParams } as any;
-
-  const currentPage = Number(searchParams?.page) || 1;
-
-  // Get all products from api or get products byPageUrl
-  const productsData: {
-    isError: boolean;
-    error?: IError;
-    products?: IProductsEntity[];
-    total: number;
-  } = await getProducts({
-    lang: lang,
-    offset: 0,
-    limit: currentPage * pagesLimit,
-    params: combinedParams,
-  });
-
   // Memoize the loader component
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
-
-  if (productsData.isError) {
-    return notFound();
-  }
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
         <Suspense fallback={<MemoizedProductsGridLoader />}>
           <ProductsGridLayout
-            params={{ handle, lang }}
-            currentPage={currentPage}
+            params={params}
+            searchParams={searchParams}
             pagesLimit={pagesLimit}
             dict={dict}
-            productsData={productsData as any}
-            searchParams={searchParams}
           />
         </Suspense>
       </div>
