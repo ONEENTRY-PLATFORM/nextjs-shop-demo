@@ -8,7 +8,7 @@ export default function ApiTestPage() {
 
   const testApiPerformance = async () => {
     const times = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 20; i++) {
       const startTime = performance.now();
       try {
         const response = await fetch('/api/test-connection');

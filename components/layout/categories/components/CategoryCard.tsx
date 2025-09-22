@@ -43,7 +43,7 @@ const CategoryCard: FC<CategoryCardProps> = ({
           src={imgSrc ? imgSrc : '/images/card.svg'}
           alt={title}
           quality={85}
-          className="size-full rounded-3xl object-cover transition-all duration-500 group-hover:scale-125"
+          className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-all duration-500 group-hover:scale-125"
         />
         <div className="radial-hover"></div>
       </Link>

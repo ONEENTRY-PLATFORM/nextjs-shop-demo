@@ -18,7 +18,7 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: #4C4D56;
 }
 
 ::-webkit-inner-spin-button,
