@@ -55,15 +55,19 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   const currentPage = Number(sp?.page) || 1;
   // Calculate limit for product fetching based on current page and page limit
   const limit =
-    currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
+    (currentPage - 1) * pagesLimit > 0
+      ? (currentPage - 1) * pagesLimit
+      : currentPage;
+
   const combinedParams = { ...params, sp };
+  console.log('combinedParams', combinedParams);
 
   // Get all products from api or get products byPageUrl
   const { isError, products, total } = !isCategory
     ? await getProducts({
         lang: lang,
-        offset: 0,
-        limit: limit,
+        offset: limit,
+        limit: pagesLimit,
         params: combinedParams,
       })
     : await getProductsByPageUrl({

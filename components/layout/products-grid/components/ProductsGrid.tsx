@@ -2,10 +2,8 @@
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
-import { useMemo } from 'react';
+import { type FC, useEffect, useState } from 'react';
 
-import { LanguageEnum } from '@/app/types/enum';
 import GroupCard from '@/components/layout/product/group-card/GroupCard';
 import Placeholder from '@/components/shared/Placeholder';
 
@@ -45,38 +43,15 @@ const ProductsGrid: FC<ProductsGridProps> = ({
   pagesLimit,
   currentPage = 1,
 }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const [p, setP] = useState<IProductsEntity[]>([]);
 
-  /**
-   * Prepare products with localized data
-   *
-   * This memoized function processes the product data to ensure proper
-   * localization based on the current language. It selects the appropriate
-   * language-specific attribute values and localized information.
-   */
-  const preparedProducts = useMemo(
-    () =>
-      products.map((product) => {
-        return {
-          ...product,
-          // Select language
-          attributeValues:
-            product.attributeValues?.[langCode] || product.attributeValues,
-          localizeInfos: {
-            ...product.localizeInfos,
-            title:
-              product.localizeInfos?.[langCode]?.title ||
-              product.localizeInfos?.title ||
-              '',
-          },
-        };
-      }),
-    [products, langCode],
-  );
+  useEffect(() => {
+    setP([...p, ...products]);
+  }, [products]);
 
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-2">
-      {preparedProducts.map((product, i) => {
+      {p?.map((product, i) => {
         // Check if product has multiply items marker
         const isGroup =
           product?.attributeValues?.multiply_items?.value ||
@@ -101,7 +76,7 @@ const ProductsGrid: FC<ProductsGridProps> = ({
           />
         );
       })}
-      {preparedProducts && preparedProducts.length < 1 && (
+      {products && products.length < 1 && (
         <Placeholder className="col-span-4" />
       )}
     </div>

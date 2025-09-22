@@ -49,8 +49,9 @@ export const getProductTitle = (
 export const getProductImageUrl = (
   name: string,
   product: IProductsEntity,
+  type: 'image' | 'preview' = 'image',
 ): string => {
-  const data = product.attributeValues[name];
+  const data = product?.attributeValues?.[name];
 
   if (!data) {
     return '';
@@ -74,7 +75,11 @@ export const getProductImageUrl = (
     'downloadLink' in picValue &&
     typeof picValue.downloadLink === 'string'
   ) {
-    return picValue.downloadLink;
+    if (type === 'image') {
+      return picValue.downloadLink;
+    } else {
+      return picValue.downloadLink;
+    }
   }
 
   return '';
