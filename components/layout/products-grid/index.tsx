@@ -51,29 +51,29 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   const { lang } = params;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sp: any = await searchParams;
+
   // Calculate current page number from search parameters, default to 1
   const currentPage = Number(sp?.page) || 1;
   // Calculate limit for product fetching based on current page and page limit
-  const limit =
+  const offset =
     (currentPage - 1) * pagesLimit > 0
       ? (currentPage - 1) * pagesLimit
       : currentPage;
 
   const combinedParams = { ...params, sp };
-  console.log('combinedParams', combinedParams);
 
   // Get all products from api or get products byPageUrl
   const { isError, products, total } = !isCategory
     ? await getProducts({
         lang: lang,
-        offset: limit,
+        offset: offset,
         limit: pagesLimit,
         params: combinedParams,
       })
     : await getProductsByPageUrl({
         lang: lang,
-        offset: 0,
-        limit: limit,
+        offset: offset,
+        limit: pagesLimit,
         params: combinedParams,
       });
 

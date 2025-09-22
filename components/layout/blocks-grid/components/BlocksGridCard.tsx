@@ -53,6 +53,10 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   const attributeValues =
     block?.attributeValues[langCode] || block?.attributeValues;
 
+  if (!attributeValues) {
+    return 'Block error';
+  }
+
   // extract data from block attributeValues
   const { title = '', link = '', stickers } = attributeValues;
 

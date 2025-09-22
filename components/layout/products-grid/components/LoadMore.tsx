@@ -70,10 +70,22 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   const goToNextPage = useCallback(() => {
     if (nextPage > totalPages) return;
 
+    // Save current scroll position
+    const scrollPosition = typeof window !== 'undefined' ? window.scrollY : 0;
+
     router.push(
       `${pathname}?${createQueryString('page', nextPage.toString())}`,
       { scroll: false },
     );
+
+    // Restore scroll position after navigation in production
+    // This is needed because scroll: false doesn't work properly in production
+    if (typeof window !== 'undefined') {
+      // Use setTimeout to ensure navigation has completed
+      setTimeout(() => {
+        window.scrollTo(0, scrollPosition);
+      }, 0);
+    }
   }, [nextPage, totalPages, pathname, createQueryString, router]);
 
   /**
