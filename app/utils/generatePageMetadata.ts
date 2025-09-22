@@ -22,7 +22,7 @@ interface PageMetadataOptions {
  * @returns Next.js Metadata object
  */
 export const generatePageMetadata = ({
-  handle,
+  handle = '',
   title,
   description,
   isVisible,
@@ -45,11 +45,11 @@ export const generatePageMetadata = ({
     title,
     description,
     alternates: {
-      canonical: `/${lang}${baseUrl}${handle}`,
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}${baseUrl}${handle}`,
       languages: Object.fromEntries(
         i18n.locales.map((lng, i) => [
           i18n.localesData[i],
-          `/${lng}${baseUrl}${handle}`,
+          `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lng}${baseUrl}${handle}`,
         ]),
       ),
     },

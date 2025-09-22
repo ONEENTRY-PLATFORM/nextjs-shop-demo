@@ -127,12 +127,20 @@ export async function generateMetadata({
   params,
 }: IndexPageLayoutProps): Promise<Metadata> {
   const { lang } = await params;
+  const { isError, page } = await getPageByUrl('home_web', lang);
+
+  if (isError || !page) {
+    return notFound();
+  }
+  const { localizeInfos, isVisible, attributeValues } = page;
 
   // Return metadata object
   return generatePageMetadata({
-    title: 'OneEntry Shop',
-    description: 'OneEntry next-js shop',
-    isVisible: true,
+    title: localizeInfos.title,
+    description: localizeInfos.plainContent,
+    isVisible: isVisible,
+    imageUrl: attributeValues?.icon?.downloadLink,
+    imageAlt: localizeInfos.title,
     lang: lang,
     handle: '',
     baseUrl: '',

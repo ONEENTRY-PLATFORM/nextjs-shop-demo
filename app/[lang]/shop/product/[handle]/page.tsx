@@ -4,6 +4,7 @@ import type { FC } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById, getProducts } from '@/app/api';
+import { getImageUrl, getString, getText } from '@/app/hooks/useAttributesData';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import ProductSingleServer from '@/components/layout/product/ProductSingleServer';
 import type { Locale } from '@/i18n-config';
@@ -44,14 +45,14 @@ const ProductPageLayout: FC<{
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: localizeInfos?.title,
-    description: attributeValues?.description?.value[0]?.plainValue || '',
-    image: attributeValues?.pic?.value?.downloadLink || '',
+    description: getText('description', attributeValues, 'plain'),
+    image: getImageUrl('pic', attributeValues),
     offers: {
       '@type': 'AggregateOffer',
       availability: statusIdentifier
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
-      priceCurrency: attributeValues?.currency?.value || '',
+      priceCurrency: getString('currency', attributeValues),
       highPrice: additional?.prices?.max || 1,
       lowPrice: additional?.prices?.min || 1,
     },

@@ -182,14 +182,8 @@ export const getImageUrl = (
   type: 'image' | 'preview' = 'image',
 ): string => {
   const data = attributeValues?.[name];
-  if (
-    data &&
-    typeof data === 'object' &&
-    'value' in data &&
-    Array.isArray(data.value) &&
-    data.value.length > 0
-  ) {
-    const firstImage = data.value[0];
+  if (data && typeof data === 'object' && 'value' in data) {
+    const firstImage = data.value[0] || data.value;
 
     if (
       firstImage &&
@@ -198,7 +192,7 @@ export const getImageUrl = (
       typeof firstImage.downloadLink === 'string'
     ) {
       if (type === 'preview') {
-        return firstImage.downloadLink;
+        return firstImage.previewLink;
       } else {
         return firstImage.downloadLink;
       }
