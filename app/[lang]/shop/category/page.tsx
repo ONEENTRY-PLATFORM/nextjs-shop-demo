@@ -7,6 +7,7 @@ import { getPageByUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api';
 import { getImageUrl } from '@/app/hooks/useAttributesData';
 import type { PageProps } from '@/app/types/global';
+import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import CategoriesGrid from '@/components/layout/categories';
 import { i18n } from '@/i18n-config';
 
@@ -108,7 +109,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ handle: string; lang: string }>;
 }): Promise<Metadata> {
-  const { lang } = await params;
+  const { handle, lang } = await params;
   const { isError, page } = await getPageByUrl('category', lang);
 
   if (isError || !page) {
@@ -116,40 +117,15 @@ export async function generateMetadata({
   }
   const { localizeInfos, isVisible, attributeValues } = page;
 
-  const {
-    url,
-    width,
-    height,
-    altText: alt,
-  } = {
-    url: attributeValues.icon?.downloadLink,
-    width: 300,
-    height: 300,
-    altText: localizeInfos.title,
-  };
-
-  return {
+  // Return metadata object
+  return generatePageMetadata({
+    handle: handle,
     title: localizeInfos.title,
     description: localizeInfos.plainContent,
-    robots: {
-      index: isVisible,
-      follow: isVisible,
-      googleBot: {
-        index: isVisible,
-        follow: isVisible,
-      },
-    },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-        }
-      : null,
-  };
+    isVisible: isVisible,
+    imageUrl: attributeValues?.icon?.downloadLink,
+    imageAlt: localizeInfos.title,
+    lang: lang,
+    baseUrl: '',
+  });
 }

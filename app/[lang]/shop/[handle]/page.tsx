@@ -7,6 +7,7 @@ import { memo, Suspense } from 'react';
 import { getChildPagesByParentUrl, getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams } from '@/app/types/global';
+import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import { i18n, type Locale } from '@/i18n-config';
@@ -99,40 +100,15 @@ export async function generateMetadata({
   // extract data from page
   const { localizeInfos, isVisible, attributeValues } = page;
 
-  const {
-    url,
-    width,
-    height,
-    altText: alt,
-  } = {
-    url: attributeValues?.icon?.downloadLink,
-    width: 300,
-    height: 300,
-    altText: localizeInfos?.title,
-  };
-
-  return {
-    title: localizeInfos?.title,
-    description: localizeInfos?.plainContent,
-    robots: {
-      index: isVisible,
-      follow: isVisible,
-      googleBot: {
-        index: isVisible,
-        follow: isVisible,
-      },
-    },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-        }
-      : null,
-  };
+  // Return metadata object
+  return generatePageMetadata({
+    handle: handle,
+    title: localizeInfos.title,
+    description: localizeInfos.plainContent,
+    isVisible: isVisible,
+    imageUrl: attributeValues?.icon?.downloadLink,
+    imageAlt: localizeInfos.title,
+    lang: lang,
+    baseUrl: '',
+  });
 }

@@ -10,6 +10,8 @@ import BlocksGrid from '@/components/layout/blocks-grid';
 import BlocksGridLoader from '@/components/layout/blocks-grid/components/BlocksGridLoader';
 import { i18n } from '@/i18n-config';
 
+import { generatePageMetadata } from '../utils/generatePageMetadata';
+
 // Increase revalidation time to reduce server load (60 seconds instead of 10)
 // export const revalidate = 60;
 
@@ -124,38 +126,15 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: IndexPageLayoutProps): Promise<Metadata> {
-  // Destructure language parameter from params
   const { lang } = await params;
 
-  // Validate language parameter
-  if (!lang || !i18n.locales.includes(lang as any)) {
-    return {
-      title: 'Page Not Found',
-      description: 'The requested page could not be found',
-    };
-  }
-
-  // Define metadata properties
-  const title = 'OneEntry Shop';
-  const description = 'OneEntry next-js shop';
-
-  // Define alternate languages for the page
-  const alternates: Metadata['alternates'] = {
-    languages: Object.fromEntries(i18n.locales.map((l) => [l, `/${l}`])),
-    canonical: `/${lang}`,
-  };
-
   // Return metadata object
-  return {
-    title,
-    description,
-    alternates,
-    openGraph: {
-      title,
-      description,
-      url: `/${lang}`,
-      siteName: 'OneEntry Shop',
-      type: 'website',
-    },
-  };
+  return generatePageMetadata({
+    title: 'OneEntry Shop',
+    description: 'OneEntry next-js shop',
+    isVisible: true,
+    lang: lang,
+    handle: '',
+    baseUrl: '',
+  });
 }

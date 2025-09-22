@@ -6,10 +6,10 @@ import { memo, Suspense } from 'react';
 import { getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
+import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
-import type { Locale } from '@/i18n-config';
-import { i18n } from '@/i18n-config';
+import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 
@@ -111,7 +111,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: MetadataParams): Promise<Metadata> {
-  const { lang } = await params;
+  const { handle, lang } = await params;
   const { isError, page } = await getPageByUrl('shop', lang);
 
   if (isError || !page) {
@@ -120,44 +120,15 @@ export async function generateMetadata({
 
   const { localizeInfos, isVisible, attributeValues } = page;
 
-  const {
-    url,
-    width,
-    height,
-    altText: alt,
-  } = {
-    url: attributeValues?.icon?.downloadLink,
-    width: 300,
-    height: 300,
-    altText: localizeInfos.title,
-  };
-
-  return {
+  // Return metadata object
+  return generatePageMetadata({
+    handle: handle,
     title: localizeInfos.title,
     description: localizeInfos.plainContent,
-    alternates: {
-      languages: Object.fromEntries(i18n.locales.map((l) => [l, `/${l}/shop`])),
-      canonical: `/${lang}/shop`,
-    },
-    robots: {
-      index: isVisible,
-      follow: isVisible,
-      googleBot: {
-        index: isVisible,
-        follow: isVisible,
-      },
-    },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-        }
-      : null,
-  };
+    isVisible: isVisible,
+    imageUrl: attributeValues?.icon?.downloadLink,
+    imageAlt: localizeInfos.title,
+    lang: lang,
+    baseUrl: '',
+  });
 }

@@ -1,7 +1,10 @@
 // app/utils/metadataUtils.ts
 import type { Metadata } from 'next';
 
+import { i18n } from '@/i18n-config';
+
 interface PageMetadataOptions {
+  handle: string;
   title: string;
   description: string;
   isVisible: boolean;
@@ -9,8 +12,8 @@ interface PageMetadataOptions {
   imageWidth?: number;
   imageHeight?: number;
   imageAlt?: string;
-  canonicalUrl: string;
-  alternateUrls: Record<string, string>;
+  lang: string;
+  baseUrl: string;
 }
 
 /**
@@ -19,6 +22,7 @@ interface PageMetadataOptions {
  * @returns Next.js Metadata object
  */
 export const generatePageMetadata = ({
+  handle,
   title,
   description,
   isVisible,
@@ -26,15 +30,28 @@ export const generatePageMetadata = ({
   imageWidth = 300,
   imageHeight = 300,
   imageAlt,
-  canonicalUrl,
-  alternateUrls,
+  lang,
+  baseUrl = '',
 }: PageMetadataOptions): Metadata => {
+  // Validate language parameter
+  if (!lang) {
+    return {
+      title: 'Page Not Found',
+      description: 'The requested page could not be found',
+    };
+  }
+
   return {
     title,
     description,
     alternates: {
-      languages: alternateUrls,
-      canonical: canonicalUrl,
+      canonical: `/${lang}${baseUrl}${handle}`,
+      languages: Object.fromEntries(
+        i18n.locales.map((lng, i) => [
+          i18n.localesData[i],
+          `/${lng}${baseUrl}${handle}`,
+        ]),
+      ),
     },
     robots: {
       index: isVisible,

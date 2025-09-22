@@ -4,6 +4,7 @@ import type { FC } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById, getProducts } from '@/app/api';
+import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import ProductSingleServer from '@/components/layout/product/ProductSingleServer';
 import type { Locale } from '@/i18n-config';
 import { i18n } from '@/i18n-config';
@@ -115,40 +116,17 @@ export async function generateMetadata({
   if (isError || !product) {
     return notFound();
   }
+  const { attributeValues, localizeInfos, isVisible } = product;
 
-  const { downloadLink, alt = 'alt' } =
-    product.attributeValues.pic?.value || {};
-  const indexable = product.isVisible;
-
-  return {
-    title: product?.localizeInfos?.title || '',
-    description:
-      product?.attributeValues?.description?.value[0]?.plainValue || '',
-    alternates: {
-      languages: Object.fromEntries(
-        i18n.locales.map((l) => [l, `/${l}/shop/product/${handle}`]),
-      ),
-      canonical: `/${lang}/shop/product/${handle}`,
-    },
-    robots: {
-      index: indexable,
-      follow: indexable,
-      googleBot: {
-        index: indexable,
-        follow: indexable,
-      },
-    },
-    openGraph: downloadLink
-      ? {
-          images: [
-            {
-              url: downloadLink,
-              width: 300,
-              height: 300,
-              alt,
-            },
-          ],
-        }
-      : null,
-  };
+  // Return metadata object
+  return generatePageMetadata({
+    handle: handle,
+    title: localizeInfos.title,
+    description: localizeInfos.plainContent,
+    isVisible: isVisible,
+    imageUrl: attributeValues?.pic?.value?.downloadLink,
+    imageAlt: localizeInfos.title,
+    lang: lang,
+    baseUrl: `/${lang}/shop/product/${handle}`,
+  });
 }

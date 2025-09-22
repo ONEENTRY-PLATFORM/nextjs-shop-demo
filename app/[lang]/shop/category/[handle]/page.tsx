@@ -6,6 +6,7 @@ import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getChildPagesByParentUrl, getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams } from '@/app/types/global';
+import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
@@ -132,48 +133,15 @@ export async function generateMetadata({
   }
   const { localizeInfos, isVisible, attributeValues } = page;
 
-  const {
-    url,
-    width,
-    height,
-    altText: alt,
-  } = {
-    url: attributeValues.icon?.downloadLink,
-    width: 300,
-    height: 300,
-    altText: localizeInfos.title,
-  };
-
-  return {
-    title: `${localizeInfos.title} | OneEntry Shop`,
+  // Return metadata object
+  return generatePageMetadata({
+    handle: handle,
+    title: localizeInfos.title,
     description: localizeInfos.plainContent,
-    alternates: {
-      languages: Object.fromEntries(
-        i18n.locales.map((l) => [l, `/${l}/shop/category/${handle}`]),
-      ),
-      canonical: `/${lang}/shop/category/${handle}`,
-    },
-    robots: {
-      index: isVisible,
-      follow: isVisible,
-      googleBot: {
-        index: isVisible,
-        follow: isVisible,
-      },
-    },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-          title: localizeInfos.title,
-          description: localizeInfos.plainContent,
-        }
-      : null,
-  };
+    isVisible: isVisible,
+    imageUrl: attributeValues?.icon?.downloadLink,
+    imageAlt: localizeInfos.title,
+    lang: lang,
+    baseUrl: '',
+  });
 }
