@@ -61,11 +61,9 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
     ? isGallery
       ? [imageSrc, ...morePic].map((img) => {
           if (img && typeof img === 'object' && 'downloadLink' in img) {
-            const downloadLink =
-              (img.downloadLink as string) || '/placeholder.jpg';
             return {
-              original: downloadLink,
-              thumbnail: downloadLink,
+              original: getProductImageUrl('pic', product),
+              thumbnail: getProductImageUrl('pic', product),
             };
           }
           return {
@@ -75,8 +73,8 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
         })
       : [
           {
-            original: getProductImageUrl('pic', product) || '/placeholder.jpg',
-            thumbnail: getProductImageUrl('pic', product) || '/placeholder.jpg',
+            original: getProductImageUrl('pic', product),
+            thumbnail: getProductImageUrl('pic', product),
           },
         ]
     : [

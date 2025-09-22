@@ -5,7 +5,7 @@ import type { FC } from 'react';
 
 import SlideUpTransition from '@/app/animations/SlideUpTransition';
 
-import { useImageUrl, useString, useText } from '../../app/hooks/useAttributes';
+import { getImageUrl, getString, getText } from '../../app/hooks/useAttributes';
 
 /**
  * About page
@@ -16,12 +16,11 @@ import { useImageUrl, useString, useText } from '../../app/hooks/useAttributes';
 const AboutPage: FC<{ page: IPagesEntity }> = ({ page }) => {
   // Safely extract content from page using utility functions
   const attributeValues = page.attributeValues;
-  const pageTitle = useString('title', attributeValues);
-  const imageSrc = useImageUrl('img', attributeValues) || '';
-  // const title = useString('title', attributeValues);
-  const contentData = useText('content', attributeValues, 'html');
-  const listTitle = useString('list_title', attributeValues);
-  const listData = useText('list', attributeValues, 'html');
+  const pageTitle = getString('title', attributeValues);
+  const imageSrc = getImageUrl('img', attributeValues);
+  const contentData = getText('content', attributeValues, 'html');
+  const listTitle = getString('list_title', attributeValues);
+  const listData = getText('list', attributeValues, 'html');
 
   if (!page) {
     return <></>;
@@ -51,18 +50,20 @@ const AboutPage: FC<{ page: IPagesEntity }> = ({ page }) => {
               </h1>
             </SlideUpTransition>
             {contentData && (
-              <div className="max-md:max-w-full">{contentData}</div>
+              <SlideUpTransition index={5} className={''}>
+                <div className="max-md:max-w-full">{contentData}</div>
+              </SlideUpTransition>
             )}
           </section>
           {listTitle && (
-            <SlideUpTransition index={5} className={''}>
+            <SlideUpTransition index={6} className={''}>
               <h2 className="mt-5 text-base font-bold leading-6 text-neutral-600 max-md:mt-10">
                 {listTitle}
               </h2>
             </SlideUpTransition>
           )}
           {listData && (
-            <SlideUpTransition index={6} className={'max-md:mt-10'}>
+            <SlideUpTransition index={7} className={'max-md:mt-10'}>
               <div className="mt-2.5 text-sm leading-5 text-neutral-600 max-md:max-w-full">
                 {listData}
               </div>

@@ -5,6 +5,7 @@ import type { FC } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api';
+import { getImageUrl } from '@/app/hooks/useAttributes';
 import type { PageProps } from '@/app/types/global';
 import CategoriesGrid from '@/components/layout/categories';
 import { i18n } from '@/i18n-config';
@@ -23,18 +24,19 @@ const CategoryPage: FC<PageProps> = async ({ params }) => {
   // Get child pages by parent url
   const { pages, isError } = await getChildPagesByParentUrl('category', lang);
 
-  if (isError || !pages || !Array.isArray(pages)) {
-    return notFound();
-  }
-
   // extract categories data from pages
-  const categories = pages.map((page: IPagesEntity) => {
+  const categories = pages?.map((page: IPagesEntity) => {
     return {
       title: page.localizeInfos.title,
       link: '/' + lang + '/shop/category/' + page.pageUrl,
-      imgSrc: page.attributeValues.opengraph_image?.value[0]?.downloadLink,
+      imgSrc: getImageUrl('opengraph_image', page.attributeValues),
+      // imgSrc: page.attributeValues.opengraph_image?.value[0]?.downloadLink,
     };
   });
+
+  if (isError || !pages || !Array.isArray(pages)) {
+    return notFound();
+  }
 
   // Breadcrumb structured data
   const breadcrumbStructuredData = {

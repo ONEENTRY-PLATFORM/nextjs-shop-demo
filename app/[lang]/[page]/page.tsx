@@ -64,22 +64,22 @@ const PageLayout: FC<{ params: Promise<{ page: any; lang: any }> }> = async ({
     {
       templateType: templateIdentifier,
       name: 'services',
-      component: <ServicesPage lang={lang} dict={dict} />,
+      component: <ServicesPage lang={lang} dict={dict} page={page} />,
     },
     {
       templateType: templateIdentifier,
       name: 'contact_us',
-      component: <ContactsPage lang={lang} dict={dict} />,
+      component: <ContactsPage lang={lang} dict={dict} page={page} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_success',
-      component: <PaymentSuccess lang={lang} dict={dict} />,
+      component: <PaymentSuccess lang={lang} dict={dict} page={page} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_canceled',
-      component: <PaymentCanceled lang={lang} dict={dict} />,
+      component: <PaymentCanceled lang={lang} dict={dict} page={page} />,
     },
   ];
 
@@ -104,7 +104,7 @@ const PageLayout: FC<{ params: Promise<{ page: any; lang: any }> }> = async ({
 export default PageLayout;
 
 /**
- * Pre-generation of shop page
+ * Pre-generation of pages for static export
  */
 export async function generateStaticParams() {
   const params: Array<{ lang: string }> = [];

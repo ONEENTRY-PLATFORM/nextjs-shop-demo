@@ -9,7 +9,7 @@ import parse from 'html-react-parser';
  *
  * @returns String value or undefined
  */
-export const useString = (
+export const getString = (
   name: string,
   attributeValues: Record<string, any>,
 ): string => {
@@ -33,7 +33,7 @@ export const useString = (
  *
  * @returns HTML content
  */
-export const useText = (
+export const getText = (
   name: string,
   attributeValues: any,
   type: 'html' | 'plain' = 'plain',
@@ -64,13 +64,13 @@ export const useText = (
 };
 
 // /**
-//  * useTextWithHeader
+//  * getTextWithHeader
 //  *
 //  * @param name
 //  * @param attributeValues
 //  * @param type
 //  */
-// export const useTextWithHeader = (
+// export const getTextWithHeader = (
 //   name: string,
 //   attributeValues: any,
 //   type: 'html' | 'plain' = 'plain',
@@ -176,11 +176,11 @@ export const useText = (
  *
  * @returns The image URL or undefined
  */
-export const useImageUrl = (
+export const getImageUrl = (
   name: any,
   attributeValues: any,
   type: 'image' | 'preview' = 'image',
-): string | undefined => {
+): string => {
   const data = attributeValues?.[name];
   if (
     data &&

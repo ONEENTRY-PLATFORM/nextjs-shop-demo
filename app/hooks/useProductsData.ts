@@ -40,29 +40,9 @@ export const getProductTitle = (
   return fallback;
 };
 
-// /**
-//  * Safely extracts the product title from localized information
-//  * @param product The product entity
-//  * @param fallback The fallback string if title is not found
-//  * @returns The product title or a fallback string
-//  */
-// export const getProductTitle = (
-//   product: IProductsEntity,
-//   fallback = 'Product',
-// ): string => {
-//   if (
-//     product?.localizeInfos &&
-//     typeof product.localizeInfos === 'object' &&
-//     'title' in product.localizeInfos &&
-//     typeof product.localizeInfos.title === 'string'
-//   ) {
-//     return product.localizeInfos.title;
-//   }
-//   return fallback;
-// };
-
 /**
  * Safely extracts the product image URL from attribute values
+ *
  * @param attributes The product attributes
  * @returns The product image URL or undefined
  */
@@ -102,6 +82,7 @@ export const getProductImageUrl = (
 
 /**
  * Safely extracts the price from attribute values
+ *
  * @param attributes The product attributes
  * @returns The price value or undefined
  */
@@ -119,6 +100,7 @@ export const getProductPrice = (attributes: AttributeType): number => {
 
 /**
  * Safely extracts the sale price from attribute values
+ *
  * @param attributes The product attributes
  * @returns The sale price value or undefined
  */
@@ -138,6 +120,7 @@ export const getProductSalePrice = (
 
 /**
  * Safely extracts the product category from attribute values
+ *
  * @param product The product entity
  * @returns The product category or undefined
  */
@@ -156,8 +139,8 @@ export const getProductCategory = (
     typeof product.attributeValues.category.value.title === 'string'
   ) {
     return {
-      value: product.attributeValues.category.value.value,
       title: product.attributeValues.category.value.title,
+      value: product.attributeValues.category.value.value,
     };
   }
   return undefined;
