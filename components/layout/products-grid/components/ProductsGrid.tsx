@@ -2,7 +2,7 @@
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { type FC, useEffect, useState } from 'react';
+import type { FC } from 'react';
 
 import GroupCard from '@/components/layout/product/group-card/GroupCard';
 import Placeholder from '@/components/shared/Placeholder';
@@ -43,15 +43,9 @@ const ProductsGrid: FC<ProductsGridProps> = ({
   pagesLimit,
   currentPage = 1,
 }) => {
-  const [p, setP] = useState<IProductsEntity[]>([]);
-
-  useEffect(() => {
-    setP([...p, ...products]);
-  }, [products]);
-
   return (
     <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-xl:grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-2">
-      {p?.map((product, i) => {
+      {products?.map((product, i) => {
         // Check if product has multiply items marker
         const isGroup =
           product?.attributeValues?.multiply_items?.value ||

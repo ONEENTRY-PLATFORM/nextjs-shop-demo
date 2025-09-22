@@ -53,7 +53,7 @@ const ProductCard: FC<ProductCardProps> = memo(
     const product_card_title = settings?.product_card_title || { value: '' };
 
     return (
-      <div className="relative flex w-full flex-row gap-4">
+      <div className="relative flex w-full flex-row gap-4 py-2">
         <div className="relative h-[150px] w-[320px]">
           {productImage ? (
             <Image
@@ -80,7 +80,7 @@ const ProductCard: FC<ProductCardProps> = memo(
         <Link
           prefetch={true}
           href={'/' + lang + '/shop/product/' + id}
-          className="absolute left-0 top-0 z-0 flex size-full rounded-lg hover:border hover:border-solid"
+          className="absolute left-0 top-0 z-0 flex size-full rounded-lg transition-shadow duration-500 hover:shadow-xl"
           aria-label={`View details for ${title}`}
         ></Link>
       </div>

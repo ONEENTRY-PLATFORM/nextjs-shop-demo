@@ -9,20 +9,24 @@ import LoadMore from './components/LoadMore';
 import ProductsGrid from './components/ProductsGrid';
 import ProductsNotFound from './components/ProductsNotFound';
 
+/**
+ * GridLayoutProps
+ *
+ * @param {string} params - Page parameters including language and other route parameters.
+ * @param {any} searchParams - Search parameters from query string including page, search, and filters.
+ * @param {IAttributeValues} dict - Dictionary of localized strings from server API.
+ * @param {number} pagesLimit - Maximum number of products to display per page, used for animations.
+ * @param {boolean} isCategory - Flag indicating if this is a category page (default: false).
+ */
 interface GridLayoutProps {
-  /** Page parameters including language and other route parameters */
   params: {
     handle: string;
     lang: string;
   };
-  /** Search parameters from query string including page, search, and filters */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   searchParams: any;
-  /** Dictionary of localized strings from server API */
   dict: IAttributeValues;
-  /** Maximum number of products to display per page, used for animations */
   pagesLimit: number;
-  /** Flag indicating if this is a category page (default: false) */
   isCategory?: boolean;
 }
 
@@ -54,11 +58,6 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
 
   // Calculate current page number from search parameters, default to 1
   const currentPage = Number(sp?.page) || 1;
-  // Calculate limit for product fetching based on current page and page limit
-  const offset =
-    (currentPage - 1) * pagesLimit > 0
-      ? (currentPage - 1) * pagesLimit
-      : currentPage;
 
   const combinedParams = { ...params, sp };
 
@@ -66,14 +65,14 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   const { isError, products, total } = !isCategory
     ? await getProducts({
         lang: lang,
-        offset: offset,
-        limit: pagesLimit,
+        offset: 0,
+        limit: currentPage * pagesLimit,
         params: combinedParams,
       })
     : await getProductsByPageUrl({
         lang: lang,
-        offset: offset,
-        limit: pagesLimit,
+        offset: 0,
+        limit: currentPage * pagesLimit,
         params: combinedParams,
       });
 
