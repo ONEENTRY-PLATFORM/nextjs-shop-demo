@@ -4,12 +4,13 @@ import type { FC } from 'react';
 import type { SimplePageProps } from '@/app/types/global';
 
 /**
- * Services page
+ * BookOnlinePage page
  * @param page
+ * @param lang Current language shortcode
  *
- * @returns Services page
+ * @returns BookOnlinePage page
  */
-const ServicesPage: FC<SimplePageProps> = ({ page }) => {
+const BookOnlinePage: FC<SimplePageProps> = async ({ page }) => {
   if (!page) {
     return;
   }
@@ -22,11 +23,11 @@ const ServicesPage: FC<SimplePageProps> = ({ page }) => {
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <div className="flex flex-col">
-        <h1>{title}</h1>
+        <h1 className="mb-3">{title}</h1>
         {htmlContent && <div className="mb-6">{parse(htmlContent)}</div>}
       </div>
     </div>
   );
 };
 
-export default ServicesPage;
+export default BookOnlinePage;

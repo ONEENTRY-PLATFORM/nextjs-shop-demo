@@ -17,8 +17,8 @@ declare type PageProps = {
 };
 
 declare type SimplePageProps = {
-  lang: string;
-  dict: IAttributeValues;
+  lang?: string;
+  dict?: IAttributeValues;
   page?: any;
   [key as string]: any;
 };

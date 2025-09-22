@@ -164,7 +164,7 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
 
   // If no products in cart
   if (!hasCartItems && !deliveryData) {
-    return <EmptyCart lang={lang} dict={dict} />;
+    return <EmptyCart lang={lang as string} dict={dict} />;
   }
 
   return (
@@ -175,7 +175,7 @@ const PaymentPage: FC<SimplePageProps> = ({ lang, dict }) => {
             key={index}
             index={index as number}
             account={item}
-            lang={lang}
+            lang={lang as string}
             dict={dict}
             products={combinedProducts}
             delivery={deliveryData}

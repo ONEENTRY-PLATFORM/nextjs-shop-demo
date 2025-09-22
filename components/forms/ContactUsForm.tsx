@@ -34,7 +34,6 @@ const ContactUsForm: FC<{ className: string; lang: string }> = memo(
       marker: 'contact_us',
       lang,
     });
-    console.log(data);
 
     // get fields from formFieldsReducer
     const fieldsData = useAppSelector(

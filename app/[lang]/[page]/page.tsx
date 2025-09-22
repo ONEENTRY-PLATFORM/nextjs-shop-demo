@@ -7,7 +7,9 @@ import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import PaymentPage from '@/components/layout/payment';
 import ProfilePage from '@/components/layout/profile';
 import AboutPage from '@/components/pages/AboutPage';
+import BookOnlinePage from '@/components/pages/BookOnlinePage';
 import ContactsPage from '@/components/pages/ContactsPage';
+import DeliveryPage from '@/components/pages/DeliveryPage';
 import PaymentCanceled from '@/components/pages/PaymentCanceled';
 import PaymentSuccess from '@/components/pages/PaymentSuccess';
 import ServicesPage from '@/components/pages/ServicesPage';
@@ -69,17 +71,27 @@ const PageLayout: FC<{ params: Promise<{ page: any; lang: any }> }> = async ({
     {
       templateType: templateIdentifier,
       name: 'contact_us',
-      component: <ContactsPage lang={lang} dict={dict} page={page} />,
+      component: <ContactsPage lang={lang} page={page} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_success',
-      component: <PaymentSuccess lang={lang} dict={dict} page={page} />,
+      component: <PaymentSuccess page={page} />,
     },
     {
       templateType: templateIdentifier,
       name: 'payment_canceled',
-      component: <PaymentCanceled lang={lang} dict={dict} page={page} />,
+      component: <PaymentCanceled page={page} />,
+    },
+    {
+      templateType: templateIdentifier,
+      name: 'book_online',
+      component: <BookOnlinePage page={page} />,
+    },
+    {
+      templateType: templateIdentifier,
+      name: 'delivery',
+      component: <DeliveryPage page={page} />,
     },
   ];
 
@@ -107,9 +119,24 @@ export default PageLayout;
  * Pre-generation of pages for static export
  */
 export async function generateStaticParams() {
-  const params: Array<{ lang: string }> = [];
-  for (const lang of i18n.locales) {
-    params.push({ lang });
+  // array of pages components with additional settings for next router
+  const pages = [
+    'profile',
+    'payment',
+    'about_us',
+    'services',
+    'contact_us',
+    'payment_success',
+    'payment_canceled',
+    'book_online',
+    'delivery',
+  ];
+
+  const params: Array<{ lang: string; page: string }> = [];
+  for (const page of pages) {
+    for (const lang of i18n.locales) {
+      params.push({ lang, page });
+    }
   }
   return params;
 }

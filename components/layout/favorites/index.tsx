@@ -89,7 +89,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
 
   if (!products || products.length < 1) {
     if (!isLoading) {
-      return <EmptyFavorites lang={lang} dict={dict} />;
+      return <EmptyFavorites lang={lang as string} dict={dict} />;
     } else {
       return <MemoizedProductsGridLoader />;
     }
@@ -106,7 +106,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
                   key={index}
                   product={product}
                   index={index as number}
-                  lang={lang}
+                  lang={lang as string}
                   dict={dict}
                   pagesLimit={0}
                 />

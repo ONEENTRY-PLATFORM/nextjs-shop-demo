@@ -26,7 +26,7 @@ const ContactsPage: FC<SimplePageProps> = async ({ page, lang }) => {
       <div className="flex flex-col items-center">
         <h1 className="mb-3">{title}</h1>
         {htmlContent && <div className="mb-6">{parse(htmlContent)}</div>}
-        <ContactUsForm key={'i'} className="" lang={lang} />
+        <ContactUsForm key={'i'} className="" lang={lang as string} />
       </div>
     </div>
   );
