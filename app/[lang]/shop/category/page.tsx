@@ -123,7 +123,7 @@ export async function generateMetadata({
     title: localizeInfos.title,
     description: localizeInfos.plainContent,
     isVisible: isVisible,
-    imageUrl: attributeValues?.icon?.downloadLink,
+    imageUrl: getImageUrl('opengraph_image', attributeValues),
     imageAlt: localizeInfos.title,
     lang: lang,
     baseUrl: '',

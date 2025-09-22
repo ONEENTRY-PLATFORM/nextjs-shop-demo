@@ -10,6 +10,7 @@ import BlocksGrid from '@/components/layout/blocks-grid';
 import BlocksGridLoader from '@/components/layout/blocks-grid/components/BlocksGridLoader';
 import { i18n } from '@/i18n-config';
 
+import { getImageUrl } from '../hooks/useAttributesData';
 import { generatePageMetadata } from '../utils/generatePageMetadata';
 
 // Increase revalidation time to reduce server load (60 seconds instead of 10)
@@ -139,7 +140,7 @@ export async function generateMetadata({
     title: localizeInfos.title,
     description: localizeInfos.plainContent,
     isVisible: isVisible,
-    imageUrl: attributeValues?.icon?.downloadLink,
+    imageUrl: getImageUrl('opengraph_image', attributeValues),
     imageAlt: localizeInfos.title,
     lang: lang,
     handle: '',

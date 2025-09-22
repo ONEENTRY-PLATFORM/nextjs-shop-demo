@@ -43,20 +43,20 @@ interface GridLayoutProps {
  */
 const ProductsGridLayout: FC<GridLayoutProps> = async ({
   params,
-  searchParams: sp,
+  searchParams,
   dict,
   pagesLimit,
   isCategory,
 }) => {
   const { lang } = params;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const searchParams: any = await sp;
+  const sp: any = await searchParams;
   // Calculate current page number from search parameters, default to 1
-  const currentPage = Number(searchParams?.page) || 1;
+  const currentPage = Number(sp?.page) || 1;
   // Calculate limit for product fetching based on current page and page limit
   const limit =
     currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
-  const combinedParams = { ...params, searchParams };
+  const combinedParams = { ...params, sp };
 
   // Get all products from api or get products byPageUrl
   const { isError, products, total } = !isCategory
@@ -77,6 +77,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   if (!products || total < 1 || isError) {
     return <ProductsNotFound lang={lang} dict={dict} />;
   }
+
   // Calculate total number of pages for pagination
   const totalPages = Math.ceil(total / pagesLimit);
   // Extract price information from the first product for filter modal

@@ -4,6 +4,7 @@ import type { FC } from 'react';
 import { memo, Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
+import { getImageUrl } from '@/app/hooks/useAttributesData';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
@@ -126,7 +127,7 @@ export async function generateMetadata({
     title: localizeInfos.title,
     description: localizeInfos.plainContent,
     isVisible: isVisible,
-    imageUrl: attributeValues?.icon?.downloadLink,
+    imageUrl: getImageUrl('opengraph_image', attributeValues),
     imageAlt: localizeInfos.title,
     lang: lang,
     baseUrl: '',

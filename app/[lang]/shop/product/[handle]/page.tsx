@@ -125,7 +125,7 @@ export async function generateMetadata({
     title: localizeInfos.title,
     description: localizeInfos.plainContent,
     isVisible: isVisible,
-    imageUrl: attributeValues?.pic?.value?.downloadLink,
+    imageUrl: getImageUrl('pic', attributeValues),
     imageAlt: localizeInfos.title,
     lang: lang,
     baseUrl: `/${lang}/shop/product/${handle}`,
