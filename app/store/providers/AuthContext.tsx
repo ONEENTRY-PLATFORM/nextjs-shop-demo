@@ -129,11 +129,11 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
 
   // Update user data on auth
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAuth || !user) {
       return;
     }
     updateUserData();
-  }, [isAuth, productsInCart, favoritesIds]);
+  }, [isAuth, user, productsInCart, favoritesIds]);
 
   // Load cart from user state
   useEffect(() => {

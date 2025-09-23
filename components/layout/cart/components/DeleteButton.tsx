@@ -18,15 +18,15 @@ import DeleteIcon from '@/components/icons/delete';
 // eslint-disable-next-line react/prop-types
 const DeleteButton: FC<{ productId: number }> = memo(({ productId }) => {
   const dispatch = useAppDispatch();
-  const { user } = useContext(AuthContext);
+  const { user, isAuth } = useContext(AuthContext);
 
   const handleDelete = useCallback(async () => {
     dispatch(setCartTransition({ productId: productId }));
     dispatch(removeProduct(productId));
-    if (user) {
+    if (user && isAuth) {
       await onUnsubscribeEvents(productId);
     }
-  }, [dispatch, productId, user]);
+  }, [dispatch, productId, user, isAuth]);
 
   return (
     <button

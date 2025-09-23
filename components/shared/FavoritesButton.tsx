@@ -58,12 +58,16 @@ const FavoritesButton: FC<IProductsEntity> = memo((product) => {
     try {
       if (!isFav) {
         dispatch(addFavorites(product.id));
-        await onSubscribeEvents(product.id);
+        if (user && isAuth) {
+          await onSubscribeEvents(product.id);
+        }
 
         toast('Product ' + product.localizeInfos.title + ' add to Favorites!');
       } else {
         dispatch(removeFavorites(product.id));
-        await onUnsubscribeEvents(product.id);
+        if (user && isAuth) {
+          await onUnsubscribeEvents(product.id);
+        }
 
         toast(
           'Product ' + product.localizeInfos.title + ' removed from Favorites!',
@@ -72,7 +76,7 @@ const FavoritesButton: FC<IProductsEntity> = memo((product) => {
     } catch (e: any) {
       toast('Auth error! ' + e?.message);
     }
-  }, [isFav, dispatch, product.id, product.localizeInfos.title]);
+  }, [isFav, user, isAuth, dispatch, product.id, product.localizeInfos.title]);
 
   const handleClick = useCallback(() => {
     if (user && isAuth && (user as IUserEntity).id) {

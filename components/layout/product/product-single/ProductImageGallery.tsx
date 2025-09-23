@@ -5,6 +5,7 @@ import '@/app/styles/image-gallery.css';
 import '@/app/styles/slick.css';
 import '@/app/styles/slick-theme.css';
 
+import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key, RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
@@ -15,7 +16,6 @@ import {
   getProductTitle,
 } from '@/app/hooks/useProductsData';
 import FavoritesButton from '@/components/shared/FavoritesButton';
-import OptimizedImage from '@/components/shared/OptimizedImage';
 import Placeholder from '@/components/shared/Placeholder';
 
 interface ProductImageProps {
@@ -99,12 +99,11 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
               {imagesData.map((image, i: Key) => {
                 return (
                   <div key={i} className="w-full items-center">
-                    <OptimizedImage
+                    <Image
                       width={360}
                       height={280}
                       src={image.original}
                       alt={imageAlt}
-                      quality={85}
                       sizes="(min-width: 1024px) 66vw, 100vw"
                       className="mx-auto self-center"
                     />
@@ -123,12 +122,11 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
               {imagesData.map((image, i: Key) => {
                 return (
                   <div key={i} className="w-full items-center">
-                    <OptimizedImage
+                    <Image
                       width={80}
                       height={80}
                       src={image.thumbnail}
                       alt={imageAlt}
-                      quality={85}
                       className="mx-auto self-center"
                     />
                   </div>
@@ -138,12 +136,11 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
           </div>
         ) : (
           <div className="relative w-full">
-            <OptimizedImage
+            <Image
               width={360}
               height={280}
               src={imagesData[0]?.original || '/placeholder.jpg'}
               alt={imageAlt}
-              quality={85}
               className="mx-auto self-center"
             />
           </div>
