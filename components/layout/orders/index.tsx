@@ -157,7 +157,7 @@ const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
           <div className="orders-table__body mb-4 flex flex-col">
             {loading && currentPage === 1 ? (
               <OrdersTableLoader />
-            ) : orders && orders.length > 0 ? (
+            ) : Array.isArray(orders) && orders.length > 0 ? (
               orders.map((order, index) => (
                 <OrderRowAnimations key={order.id} className={''} index={0}>
                   <Order

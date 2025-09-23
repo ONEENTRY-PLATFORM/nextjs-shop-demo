@@ -4,7 +4,11 @@ import type { FC } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById, getProducts } from '@/app/api';
-import { getImageUrl, getString, getText } from '@/app/api/hooks/useAttributesData';
+import {
+  getImageUrl,
+  getString,
+  getText,
+} from '@/app/api/hooks/useAttributesData';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import ProductSingleServer from '@/components/layout/product/ProductSingleServer';
 import type { Locale } from '@/i18n-config';

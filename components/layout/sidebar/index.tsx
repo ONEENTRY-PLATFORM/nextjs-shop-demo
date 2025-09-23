@@ -27,11 +27,15 @@ const SidebarMenu = async ({ lang }: { lang: string }) => {
     <nav className="flex w-full pr-5">
       <SidebarAnimations className={''}>
         <ul className="sidebar-menu">
-          {pages.map((item) => {
-            return (
-              <SidebarMenuItem key={item.id} menuItem={item} lang={lang} />
-            );
-          })}
+          {Array.isArray(pages) ? (
+            pages.map((item) => {
+              return (
+                <SidebarMenuItem key={item.id} menuItem={item} lang={lang} />
+              );
+            })
+          ) : (
+            <SidebarMenuLoader />
+          )}
           <LogoutMenuItem />
         </ul>
       </SidebarAnimations>

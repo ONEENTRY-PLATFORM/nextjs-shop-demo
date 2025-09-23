@@ -22,14 +22,14 @@ function MobileMenu({
   className?: string;
   lang: string;
 }) {
-  return (
-    menu.length > 1 && (
-      <ul className={'flex flex-col ' + className}>
-        {menu.map((item: IMenusPages, index: Key) => (
-          <MobileMenuItem key={index} item={item} lang={lang} />
-        ))}
-      </ul>
-    )
+  return Array.isArray(menu) && menu.length > 1 ? (
+    <ul className={'flex flex-col ' + className}>
+      {menu.map((item: IMenusPages, index: Key) => (
+        <MobileMenuItem key={index} item={item} lang={lang} />
+      ))}
+    </ul>
+  ) : (
+    <div>Menu not available</div>
   );
 }
 

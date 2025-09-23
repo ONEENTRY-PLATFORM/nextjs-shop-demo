@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 
 declare type LocalizeInfo = {
@@ -17,7 +18,7 @@ declare type PageProps = {
 };
 
 declare type SimplePageProps = {
-  page?: any;
+  page?: IPagesEntity;
   lang?: string;
   dict?: IAttributeValues;
   [key as string]: any;

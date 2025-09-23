@@ -52,42 +52,48 @@ const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
     return <Loader />;
   }
 
+  const attributeKeys = Object.keys(sortedAttributes);
+
   return (
     <div
       id="filter"
       className="flex size-full h-auto flex-col overflow-x-hidden overscroll-y-auto px-8 pb-16 pt-5 max-md:max-h-full max-md:px-6"
     >
-      {Object.keys(sortedAttributes).map((attr, index) => {
-        if (attr === 'price_filter' && prices) {
-          return (
-            <FilterAnimations key={index} className="w-full" index={0}>
-              <PricePickerFilter prices={prices} dict={dict} />
-            </FilterAnimations>
-          );
-        }
-        if (attr === 'color_filter') {
-          return (
-            <FilterAnimations key={index} className="w-full" index={1}>
-              <ColorFilter
-                key={index}
-                title={sortedAttributes[attr]?.value}
-                attributes={attribute as IAttributesSetsEntity}
-              />
-            </FilterAnimations>
-          );
-        }
-        if (attr === 'availability_filter') {
-          return (
-            <FilterAnimations key={index} className="w-full" index={2}>
-              <AvailabilityFilter
-                key={index}
-                title={sortedAttributes[attr]?.value}
-              />
-            </FilterAnimations>
-          );
-        }
-        return;
-      })}
+      {Array.isArray(attributeKeys) ? (
+        attributeKeys.map((attr, index) => {
+          if (attr === 'price_filter' && prices) {
+            return (
+              <FilterAnimations key={index} className="w-full" index={0}>
+                <PricePickerFilter prices={prices} dict={dict} />
+              </FilterAnimations>
+            );
+          }
+          if (attr === 'color_filter') {
+            return (
+              <FilterAnimations key={index} className="w-full" index={1}>
+                <ColorFilter
+                  key={index}
+                  title={sortedAttributes[attr]?.value}
+                  attributes={attribute as IAttributesSetsEntity}
+                />
+              </FilterAnimations>
+            );
+          }
+          if (attr === 'availability_filter') {
+            return (
+              <FilterAnimations key={index} className="w-full" index={2}>
+                <AvailabilityFilter
+                  key={index}
+                  title={sortedAttributes[attr]?.value}
+                />
+              </FilterAnimations>
+            );
+          }
+          return null;
+        })
+      ) : (
+        <Loader />
+      )}
       <div className="relative mt-auto box-border flex shrink-0 flex-col gap-4">
         <FilterAnimations className="w-full" index={3}>
           <ResetButton dict={dict} />
@@ -99,5 +105,4 @@ const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
     </div>
   );
 };
-
 export default FiltersForm;

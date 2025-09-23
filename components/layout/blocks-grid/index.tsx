@@ -18,7 +18,7 @@ interface BlocksGridProps {
  * @returns blocks grid with animations
  */
 const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, lang }) => {
-  if (blocks?.length < 1) {
+  if (!blocks || blocks?.length < 1) {
     return 'Blocks not found';
   }
 
@@ -27,25 +27,29 @@ const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, lang }) => {
       className={'block-card relative box-border w-full shrink-0'}
     >
       <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
-        {blocks.map((block, index) => {
-          const className = blocksData[index as keyof typeof blocksData];
+        {Array.isArray(blocks) ? (
+          blocks.map((block, index) => {
+            const className = blocksData[index as keyof typeof blocksData];
 
-          return (
-            <BlocksGridCard
-              key={index}
-              index={index}
-              marker={block}
-              className={
-                className as {
-                  width: string;
-                  height: string;
+            return (
+              <BlocksGridCard
+                key={index}
+                index={index}
+                marker={block}
+                className={
+                  className as {
+                    width: string;
+                    height: string;
+                  }
                 }
-              }
-              bgColor={blocksColors[block as keyof typeof blocksColors] || ''}
-              lang={lang}
-            />
-          );
-        })}
+                bgColor={blocksColors[block as keyof typeof blocksColors] || ''}
+                lang={lang}
+              />
+            );
+          })
+        ) : (
+          <div>Blocks not found</div>
+        )}
       </div>
     </BlocksGridAnimations>
   );

@@ -21,7 +21,7 @@ import FormSubmitButton from './inputs/FormSubmitButton';
  *
  * @returns ContactUs form
  */
-const ContactUsForm: FC<{ className: string; lang: string }> = memo(
+const ContactUsForm: FC<{ className?: string; lang: string }> = memo(
   // eslint-disable-next-line react/prop-types
   ({ className, lang }) => {
     // const [token, setToken] = useState<string | null>();

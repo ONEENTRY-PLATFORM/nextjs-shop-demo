@@ -10,19 +10,30 @@ import type { SimplePageProps } from '@/app/types/global';
  * @returns PaymentSuccess page
  */
 const PaymentSuccess: FC<SimplePageProps> = async ({ page }) => {
-  if (!page) {
-    return;
+  // Более надежная проверка на наличие страницы
+  if (!page || !page.localizeInfos) {
+    return (
+      <div className="flex flex-col pb-5 max-md:max-w-full">
+        <h1>Payment Success</h1>
+        <p>Your payment has been processed successfully.</p>
+      </div>
+    );
   }
 
   // Extract content from page localizeInfos
   const {
-    localizeInfos: { title, htmlContent },
+    localizeInfos: {
+      title = 'Payment Success',
+      htmlContent = 'Your payment has been processed successfully.',
+    },
   } = page;
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
-      <h1 className="">{title}</h1>
-      {htmlContent && <div className="mb-6">{parse(htmlContent)}</div>}
+      <h1 className="mb-3">{title || 'Payment Success'}</h1>
+      {htmlContent && htmlContent !== '' && (
+        <div className="mb-6">{parse(htmlContent)}</div>
+      )}
     </div>
   );
 };

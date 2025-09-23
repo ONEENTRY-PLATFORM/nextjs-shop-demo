@@ -11,8 +11,14 @@ import type { SimplePageProps } from '@/app/types/global';
  * @returns DeliveryPage page
  */
 const DeliveryPage: FC<SimplePageProps> = async ({ page }) => {
-  if (!page) {
-    return;
+  // Более надежная проверка на наличие страницы
+  if (!page || !page.localizeInfos) {
+    return (
+      <div className="flex flex-col pb-5 max-md:max-w-full">
+        <h1>Delivery Information</h1>
+        <p>Delivery information page content.</p>
+      </div>
+    );
   }
 
   // Extract content from page localizeInfos
@@ -22,10 +28,12 @@ const DeliveryPage: FC<SimplePageProps> = async ({ page }) => {
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
-      <div className="flex flex-col">
-        <h1 className="mb-3">{title}</h1>
-        {htmlContent && <div className="mb-6">{parse(htmlContent)}</div>}
-      </div>
+      <h1 className="mb-3">{title || 'Delivery Information'}</h1>
+      {htmlContent && htmlContent !== '' ? (
+        <div className="mb-6">{parse(htmlContent)}</div>
+      ) : (
+        <p>Delivery information page content.</p>
+      )}
     </div>
   );
 };

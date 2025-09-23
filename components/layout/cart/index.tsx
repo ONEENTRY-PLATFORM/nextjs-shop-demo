@@ -114,7 +114,7 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
           <div className="cart__products flex flex-col gap-4">
             {isLoading ? (
               <Loader />
-            ) : products.length ? (
+            ) : Array.isArray(products) && products.length ? (
               products.map((product, index) => {
                 const cartItem = productsCartData.find(
                   (item) => item.id === product.id,

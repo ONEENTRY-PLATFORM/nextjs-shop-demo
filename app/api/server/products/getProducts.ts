@@ -5,7 +5,7 @@ import { api } from '@/app/api';
 import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
-import { typeError } from '@/components/utils/utils';
+import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get all products with pagination and filter.
@@ -33,8 +33,8 @@ export const getProducts = async (props: {
   };
 }): Promise<{
   isError: boolean;
-  error: IError;
-  products: IProductsEntity[];
+  error?: IError;
+  products?: IProductsEntity[];
   total: number;
 }> => {
   const { offset, limit, params, lang } = props;
@@ -51,7 +51,6 @@ export const getProducts = async (props: {
   if (cached) {
     return {
       isError: false,
-      error: {} as IError,
       products: cached.products,
       total: cached.total,
     };
@@ -64,11 +63,10 @@ export const getProducts = async (props: {
       sortOrder: 'ASC',
       sortKey: 'date',
     });
-    if (typeError(data)) {
+    if (isIError(data)) {
       return {
         isError: true,
         error: data,
-        products: [],
         total: 0,
       };
     } else {
@@ -79,16 +77,18 @@ export const getProducts = async (props: {
       });
       return {
         isError: false,
-        error: {} as IError,
         products: data.items,
         total: data.total,
       };
     }
   } catch (error) {
+    const apiError = handleApiError(error);
     return {
       isError: true,
-      error: error as IError,
-      products: [],
+      error: {
+        statusCode: apiError.statusCode,
+        message: apiError.message,
+      } as IError,
       total: 0,
     };
   }

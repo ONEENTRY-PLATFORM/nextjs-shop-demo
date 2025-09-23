@@ -10,8 +10,14 @@ import type { SimplePageProps } from '@/app/types/global';
  * @returns PaymentCanceled page
  */
 const PaymentCanceled: FC<SimplePageProps> = async ({ page }) => {
-  if (!page) {
-    return;
+  // Более надежная проверка на наличие страницы
+  if (!page || !page.localizeInfos) {
+    return (
+      <div className="flex flex-col pb-5 max-md:max-w-full">
+        <h1>Payment Canceled</h1>
+        <p>Your payment has been canceled.</p>
+      </div>
+    );
   }
 
   // Extract content from page localizeInfos
@@ -21,8 +27,12 @@ const PaymentCanceled: FC<SimplePageProps> = async ({ page }) => {
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
-      <h1 className="">{title}</h1>
-      {htmlContent && <div className="mb-6">{parse(htmlContent)}</div>}
+      <h1 className="mb-3">{title || 'Payment Canceled'}</h1>
+      {htmlContent && htmlContent !== '' ? (
+        <div className="mb-6">{parse(htmlContent)}</div>
+      ) : (
+        <p>Your payment has been canceled.</p>
+      )}
     </div>
   );
 };

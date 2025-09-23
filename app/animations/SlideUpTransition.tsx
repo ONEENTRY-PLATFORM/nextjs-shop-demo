@@ -47,6 +47,9 @@ const SlideUpTransition = ({
       delay: index / 10,
     });
 
+    if (stage === 'none' && prevStage === '') {
+      tl.play();
+    }
     if (stage === 'none' && prevStage === 'entering') {
       tl.play();
     }

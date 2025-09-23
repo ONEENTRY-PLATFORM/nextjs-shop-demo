@@ -26,9 +26,15 @@ const CategoriesGrid: FC<CategoriesGridProps> = ({ categories }) => {
   }
   return (
     <CategoriesGridAnimations className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
-      {categories.map((category: CategoryCardProps, i: Key) => {
-        return <CategoryCard key={i} category={category} index={i as number} />;
-      })}
+      {Array.isArray(categories) ? (
+        categories.map((category: CategoryCardProps, i: Key) => {
+          return (
+            <CategoryCard key={i} category={category} index={i as number} />
+          );
+        })
+      ) : (
+        <CategoriesLoader />
+      )}
     </CategoriesGridAnimations>
   );
 };

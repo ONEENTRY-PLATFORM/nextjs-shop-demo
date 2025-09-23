@@ -97,18 +97,22 @@ const PageLayout: FC<{ params: Promise<{ page: any; lang: any }> }> = async ({
 
   return (
     <div className="mx-auto flex min-h-80 w-full max-w-(--breakpoint-xl) flex-col overflow-hidden">
-      {pages.map((p, i) => {
-        if (pageUrl !== p.name) {
-          return;
-        }
-        return p.templateType === 'withSidebar' ? (
-          <WithSidebar lang={lang} key={i}>
-            {p.component}
-          </WithSidebar>
-        ) : (
-          <div key={i}>{p.component}</div>
-        );
-      })}
+      {Array.isArray(pages) ? (
+        pages.map((p, i) => {
+          if (pageUrl !== p.name) {
+            return null;
+          }
+          return p.templateType === 'withSidebar' ? (
+            <WithSidebar lang={lang} key={i}>
+              {p.component}
+            </WithSidebar>
+          ) : (
+            <div key={i}>{p.component}</div>
+          );
+        })
+      ) : (
+        <div>Page not found</div>
+      )}
     </div>
   );
 };

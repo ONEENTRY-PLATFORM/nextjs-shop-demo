@@ -45,11 +45,11 @@ export const generatePageMetadata = ({
     title,
     description,
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}${baseUrl}${handle}`,
+      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}${baseUrl && baseUrl + '/'}${handle && '/' + handle}`,
       languages: Object.fromEntries(
         i18n.locales.map((lng, i) => [
           i18n.localesData[i],
-          `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lng}${baseUrl}${handle}`,
+          `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lng}${baseUrl && baseUrl + '/'}${handle && '/' + handle}`,
         ]),
       ),
     },

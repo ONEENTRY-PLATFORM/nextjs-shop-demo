@@ -87,6 +87,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
   // Memoize the loader component
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
+  // Более надежная проверка на наличие продуктов
   if (!products || products.length < 1) {
     if (!isLoading) {
       return <EmptyFavorites lang={lang as string} dict={dict} />;
@@ -100,18 +101,23 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
       <div className={'relative box-border flex w-full shrink-0 flex-col'}>
         <section className="relative mx-auto box-border flex min-h-[320px] w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
           <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-            {products.map((product: IProductsEntity, index: Key | number) => {
-              return (
-                <ProductCard
-                  key={index}
-                  product={product}
-                  index={index as number}
-                  lang={lang as string}
-                  dict={dict}
-                  pagesLimit={0}
-                />
-              );
-            })}
+            {/* Убедимся, что products - это массив перед вызовом map */}
+            {Array.isArray(products) && products.length > 0 ? (
+              products.map((product: IProductsEntity, index: Key | number) => {
+                return (
+                  <ProductCard
+                    key={index}
+                    product={product}
+                    index={index as number}
+                    lang={lang as string}
+                    dict={dict}
+                    pagesLimit={0}
+                  />
+                );
+              })
+            ) : (
+              <EmptyFavorites lang={lang as string} dict={dict} />
+            )}
           </div>
         </section>
       </div>

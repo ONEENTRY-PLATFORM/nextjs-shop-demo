@@ -29,20 +29,22 @@ const ProductsGrid: FC<GridLayoutProps> = ({
 }) => {
   return (
     <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-      {products
-        ?.filter((item) => item.isVisible)
-        .map((product: IProductsEntity, index: number) => {
-          return (
-            <ProductCard
-              key={product.id}
-              product={product}
-              index={index}
-              pagesLimit={pagesLimit}
-              lang={lang}
-              dict={dict}
-            />
-          );
-        })}
+      {Array.isArray(products)
+        ? products
+            ?.filter((item) => item.isVisible)
+            .map((product: IProductsEntity, index: number) => {
+              return (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  index={index}
+                  pagesLimit={pagesLimit}
+                  lang={lang}
+                  dict={dict}
+                />
+              );
+            })
+        : []}
     </div>
   );
 };

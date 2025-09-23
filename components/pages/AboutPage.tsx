@@ -18,6 +18,15 @@ import {
  * @returns About page
  */
 const AboutPage: FC<{ page: IPagesEntity }> = ({ page }) => {
+  // Safely check if page exists
+  if (!page || !page.attributeValues) {
+    return (
+      <div className="flex flex-col pb-5 max-md:max-w-full">
+        <h1>About Us</h1>
+        <p>About us page content.</p>
+      </div>
+    );
+  }
   // Safely extract content from page using utility functions
   const attributeValues = page.attributeValues;
   const pageTitle = getString('title', attributeValues);
@@ -25,10 +34,6 @@ const AboutPage: FC<{ page: IPagesEntity }> = ({ page }) => {
   const contentData = getText('content', attributeValues, 'html');
   const listTitle = getString('list_title', attributeValues);
   const listData = getText('list', attributeValues, 'html');
-
-  if (!page) {
-    return <></>;
-  }
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">

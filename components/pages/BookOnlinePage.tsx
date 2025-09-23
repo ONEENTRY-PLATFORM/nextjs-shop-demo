@@ -11,20 +11,28 @@ import type { SimplePageProps } from '@/app/types/global';
  * @returns BookOnlinePage page
  */
 const BookOnlinePage: FC<SimplePageProps> = async ({ page }) => {
-  if (!page) {
-    return;
+  // Более надежная проверка на наличие страницы
+  if (!page || !page.localizeInfos) {
+    return (
+      <div className="flex flex-col pb-5 max-md:max-w-full">
+        <h1>Book Online</h1>
+        <p>Online booking page content.</p>
+      </div>
+    );
   }
 
   // Extract content from page localizeInfos
-  const {
-    localizeInfos: { title, htmlContent },
-  } = page;
+  const { localizeInfos } = page;
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <div className="flex flex-col">
-        <h1 className="mb-3">{title}</h1>
-        {htmlContent && <div className="mb-6">{parse(htmlContent)}</div>}
+        <h1 className="mb-3">{localizeInfos?.title || 'Book Online'}</h1>
+        {localizeInfos?.htmlContent ? (
+          <div className="mb-6">{parse(localizeInfos.htmlContent)}</div>
+        ) : (
+          <p>Online booking page content.</p>
+        )}
       </div>
     </div>
   );
