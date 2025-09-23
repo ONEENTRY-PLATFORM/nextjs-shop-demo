@@ -1,12 +1,12 @@
 'use client';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { Dispatch, FC } from 'react';
 import { useEffect, useState } from 'react';
 
 import StarRating from './StarRating';
 
 interface ReviewSectionProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  dict: any;
+  dict: IAttributeValues;
   rating: number;
   reviewCount: number;
   state: boolean;

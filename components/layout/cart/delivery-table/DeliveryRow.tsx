@@ -2,7 +2,7 @@ import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import { UsePrice } from '@/components/utils';
+import { UsePrice } from '@/components/utils/utils';
 
 import TableRowAnimations from '../animations/TableRowAnimations';
 
@@ -40,7 +40,7 @@ const DeliveryRow: FC<DeliveryRowProps> = ({ lang, delivery }) => {
           </div>
           <div className="mb-2 text-xl font-bold leading-8">
             {UsePrice({
-              amount: delivery?.price,
+              amount: delivery?.price || 0,
               lang,
             })}
           </div>

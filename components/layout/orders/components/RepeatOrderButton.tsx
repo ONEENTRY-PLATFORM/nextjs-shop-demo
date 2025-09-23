@@ -40,7 +40,8 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
 
   // repeatOrder - extract products from order and add to cart
   const repeatOrderHandle = () => {
-    products.map(async (p) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    products.map(async (p: any) => {
       if (p.id === 83) {
         return;
       }

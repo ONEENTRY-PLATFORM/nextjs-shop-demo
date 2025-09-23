@@ -15,7 +15,7 @@ import { LanguageEnum } from '@/app/types/enum';
 import type { FormProps } from '@/app/types/global';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
-import { typeError } from '../utils';
+import { typeError } from '../utils/utils';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
@@ -63,7 +63,8 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
       if (!isValid || !field) {
         return false;
       }
-      return fields[field as keyof typeof fields].valid;
+      const fieldData = fields[field as keyof typeof fields];
+      return fieldData ? fieldData.valid : false;
     }, true);
 
     if (canSubmit) {
@@ -77,10 +78,11 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
           }>,
           field,
         ) => {
+          const fieldValue = fields[field as keyof typeof fields];
           const candidate = {
             marker: field,
             type: 'string',
-            value: fields[field as keyof typeof fields].value,
+            value: fieldValue ? fieldValue.value : '',
           };
           if (formFields.includes(field)) {
             arr.push(candidate);
@@ -92,19 +94,19 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
       formData.push({
         marker: 'email_notifications',
         type: 'string',
-        value: fields.email_reg.value,
+        value: fields.email_reg?.value || '',
       });
       const data: ISignUpData = {
         formIdentifier: 'reg',
         authData: [
-          { marker: 'email_reg', value: fields.email_reg.value },
-          { marker: 'password_reg', value: fields.password_reg.value },
+          { marker: 'email_reg', value: fields.email_reg?.value || '' },
+          { marker: 'password_reg', value: fields.password_reg?.value || '' },
         ],
         formData,
         notificationData: {
-          email: fields.email_reg.value,
-          phonePush: [fields.phone_reg.value],
-          phoneSMS: fields.phone_reg.value,
+          email: fields.email_reg?.value || '',
+          phonePush: [fields.phone_reg?.value || ''],
+          phoneSMS: fields.phone_reg?.value || '',
         },
       };
       setIsLoading(true);
@@ -118,7 +120,7 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
         if (res && res.isActive) {
           await logInUser({
             login: res.identifier,
-            password: fields.password_reg.value,
+            password: fields.password_reg?.value || '',
           });
           authenticate();
         }
@@ -171,6 +173,7 @@ const SignUpForm: FC<FormProps> = ({ lang, dict }) => {
                 <FormInput index={index as number} key={index} {...field} />
               );
             }
+            return;
           })}
         </div>
         <SubmitButton

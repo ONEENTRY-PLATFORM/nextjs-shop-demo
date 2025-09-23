@@ -20,10 +20,10 @@ export const OpenDrawerContext = createContext<OpenDrawerContextType>({
   component: '',
   action: '',
   transition: '',
-  setOpen(value: boolean): void {},
-  setComponent(value: string): void {},
-  setAction(value: string): void {},
-  setTransition(value: string): void {},
+  setOpen(_value: boolean): void {},
+  setComponent(_value: string): void {},
+  setAction(_value: string): void {},
+  setTransition(_value: string): void {},
 });
 
 /**

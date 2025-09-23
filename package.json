@@ -61,6 +61,7 @@
     "@typescript-eslint/parser": "^8.43.0",
     "autoprefixer": "^10.4.21",
     "clsx": "^2.1.1",
+    "critters": "^0.0.23",
     "cssnano": "^7.1.1",
     "dayjs": "^1.11.18",
     "eslint": "^9.35.0",

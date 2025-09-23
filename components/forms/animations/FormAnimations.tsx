@@ -14,47 +14,53 @@ interface FormAnimationsProps {
 
 /**
  * Form animations
+ *
  * @param children children ReactNode
  * @param isLoading loading state
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns Form animations
+ * @returns A form component wrapper with animations applied
  */
 const FormAnimations: FC<FormAnimationsProps> = ({ children, isLoading }) => {
-  const { open, transition, setTransition } = useContext(OpenDrawerContext);
-  const ref = useRef(null);
+  const { open, transition, setTransition } = useContext(OpenDrawerContext); // Get open, transition states, and setter from context
+  const ref = useRef(null); // Reference to the DOM element for animations
 
   // Form transition animations
   useGSAP(() => {
+    // Exit early if the drawer is not open, reference is not set, or form is loading
     if (!open || !ref.current || isLoading) {
       return;
     }
+
     const tl = gsap.timeline({
-      paused: true,
+      paused: true, // Create a new GSAP timeline and pause it initially
       onComplete: () => {
-        setTransition('');
+        setTransition(''); // Reset transition state when animation completes
       },
       onReverseComplete: () => {
-        setTransition('');
+        setTransition(''); // Reset transition state when reverse animation completes
       },
     });
 
+    // Define animation from hidden (autoAlpha: 0) to visible (autoAlpha: 1)
     tl.from(ref.current, {
-      autoAlpha: 0,
+      autoAlpha: 0, // Initial state: hidden
     }).to(ref.current, {
-      autoAlpha: 1,
+      autoAlpha: 1, // Animate to visible state
     });
 
+    // Reverse or play the animation based on transition state
     if (transition === 'close') {
-      tl.reverse(0.5);
+      tl.reverse(0.5); // Reverse the animation over 0.5 seconds
     } else {
-      tl.play();
+      tl.play(); // Play the animation
     }
 
     return () => {
-      tl.kill();
+      tl.kill(); // Clean up the timeline on unmount or dependency change
     };
-  }, [transition, open, isLoading]);
+  }, [transition, open, isLoading]); // Dependencies for re-running the animation
 
+  // Render the component with the provided children
   return <div ref={ref}>{children}</div>;
 };
 

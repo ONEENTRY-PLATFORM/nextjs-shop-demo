@@ -1,6 +1,7 @@
 import type {
   IOrderByMarkerEntity,
   IOrderData,
+  IOrderProductData,
 } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC } from 'react';
 
@@ -34,10 +35,11 @@ const CancelOrderButton: FC<CancelOrderButtonProps> = ({
   const cancelOrderHandle = async () => {
     const formData = {
       ...data,
-      products: data.products.map((product) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      products: data.products.map((product: any) => ({
         productId: product.id,
         quantity: product.quantity,
-      })),
+      })) as IOrderProductData[],
       statusIdentifier: 'canceled',
     } as IOrderData;
 

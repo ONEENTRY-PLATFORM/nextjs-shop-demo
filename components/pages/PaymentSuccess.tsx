@@ -1,3 +1,4 @@
+import parse from 'html-react-parser';
 import type { FC } from 'react';
 
 import type { SimplePageProps } from '@/app/types/global';
@@ -15,12 +16,13 @@ const PaymentSuccess: FC<SimplePageProps> = async ({ page }) => {
 
   // Extract content from page localizeInfos
   const {
-    localizeInfos: { title },
+    localizeInfos: { title, htmlContent },
   } = page;
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <h1 className="">{title}</h1>
+      {htmlContent && <div className="mb-6">{parse(htmlContent)}</div>}
     </div>
   );
 };

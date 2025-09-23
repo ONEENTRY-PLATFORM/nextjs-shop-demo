@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useGSAP } from '@gsap/react';
@@ -27,22 +28,34 @@ const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
 }) => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
-  const ref = useRef(null);
+  const ref = useRef<any>(null);
 
   // intro animations
   useGSAP(() => {
     const tl = gsap.timeline({
       paused: true,
     });
+    // img
+    // tl.set((ref.current as any)?.getElementsByTagName('img'), {
+    //   scale: 0,
+    //   autoAlpha: 0,
+    // }).to((ref.current as any)?.getElementsByTagName('img'), {
+    //   scale: 1,
+    //   autoAlpha: 1,
+    //   delay: index / 10,
+    // });
 
-    tl.set(ref.current, {
-      scale: 0,
-      autoAlpha: 0,
-    }).to(ref.current, {
-      scale: 1,
-      autoAlpha: 1,
-      delay: index / 10,
-    });
+    if (stage === 'none' && prevStage === '') {
+      tl.set(ref.current, {
+        scale: 0,
+        autoAlpha: 0,
+      }).to(ref.current, {
+        scale: 1,
+        autoAlpha: 1,
+        duration: 0.5,
+        delay: index / 10,
+      });
+    }
 
     tl.play();
 
@@ -57,9 +70,22 @@ const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
 
     if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {
+        autoAlpha: 0,
         scale: 0,
-        duration: 0.5,
+        duration: 0.35,
         delay: index / 20,
+      });
+    }
+
+    if (stage === 'none' && prevStage === 'entering') {
+      tl.set(ref.current?.querySelectorAll('img'), {
+        // scale: 0,
+        autoAlpha: 0,
+      }).to(ref.current?.querySelectorAll('img'), {
+        // scale: 1,
+        autoAlpha: 1,
+        duration: 0.35,
+        delay: index / 10,
       });
     }
 

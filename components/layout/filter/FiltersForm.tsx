@@ -7,7 +7,7 @@ import type { FC } from 'react';
 import { getSingleAttributeByMarkerSet } from '@/app/api';
 import { getPageByUrl } from '@/app/api/server/pages/getPageByUrl';
 import Loader from '@/components/shared/Loader';
-import { sortObjectFieldsByPosition } from '@/components/utils';
+import { sortObjectFieldsByPosition } from '@/components/utils/utils';
 
 import FilterAnimations from './animations/FilterAnimations';
 import AvailabilityFilter from './components/AvailabilityFilter';
@@ -86,6 +86,7 @@ const FiltersForm: FC<FiltersFormProps> = async ({ prices, lang, dict }) => {
             </FilterAnimations>
           );
         }
+        return;
       })}
       <div className="relative mt-auto box-border flex shrink-0 flex-col gap-4">
         <FilterAnimations className="w-full" index={3}>

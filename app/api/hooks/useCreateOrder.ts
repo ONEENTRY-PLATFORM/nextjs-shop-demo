@@ -9,6 +9,7 @@ import { api } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { removeProduct } from '@/app/store/reducers/CartSlice';
 import { removeOrder } from '@/app/store/reducers/OrderSlice';
+import { handleApiError } from '@/app/utils/errorHandler';
 
 /**
  * Create order function
@@ -46,9 +47,12 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
         return 'payment_method';
       }
       setIsLoading(false);
-    } catch (e: any) {
-      setError(e.message);
+      return; // Add explicit return to fix TS7030
+    } catch (error) {
+      const apiError = handleApiError(error);
+      setError(apiError.message);
       setIsLoading(false);
+      return; // Add explicit return to fix TS7030
     }
   };
 
@@ -72,39 +76,48 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
           };
         });
 
-      // Create order with Orders API
-      const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
-        'order',
-        {
-          ...order,
-          formData: orderFormData,
-          formIdentifier: order.formIdentifier,
-          paymentAccountIdentifier: order.paymentAccountIdentifier,
-        },
-        langCode,
-      );
+      try {
+        // Create order with Orders API
+        const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
+          'order',
+          {
+            // ...order,
+            formData: orderFormData,
+            products: order.products,
+            paymentAccountIdentifier: order.paymentAccountIdentifier,
+            formIdentifier: order.formIdentifier,
+          },
+          langCode,
+        );
 
-      // remove all ordered products from cart
-      order.products.forEach((product: IOrderProductData) => {
-        dispatch(removeProduct(product.productId));
-      });
+        // remove all ordered products from cart
+        order.products.forEach((product: IOrderProductData) => {
+          dispatch(removeProduct(product.productId));
+        });
 
-      // remove order
-      dispatch(removeOrder());
+        // remove order
+        dispatch(removeOrder());
 
-      if (paymentAccountIdentifier !== 'cash') {
-        await createSession(id);
-      } else {
-        router.push('/orders');
+        if (paymentAccountIdentifier !== 'cash') {
+          await createSession(id);
+        } else {
+          router.push('/orders');
+        }
+      } catch (error) {
+        const apiError = handleApiError(error);
+        setError(apiError.message);
+        setIsLoading(false);
       }
+    } else {
+      setError('Please select a payment method');
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return {
     onConfirmOrder,
-    createSession,
     isLoading,
     error,
+    setError,
   };
 };

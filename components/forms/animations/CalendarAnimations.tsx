@@ -14,6 +14,7 @@ interface CalendarAnimationsProps {
 
 /**
  * Calendar animations
+ *
  * @param children children ReactNode
  * @param className CSS className of ref element
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
@@ -23,44 +24,47 @@ const CalendarAnimations: FC<CalendarAnimationsProps> = ({
   children,
   className,
 }) => {
-  const { open, transition } = useContext(OpenDrawerContext);
-  const ref = useRef(null);
+  const { open, transition } = useContext(OpenDrawerContext); // Get open and transition states from context
+  const ref = useRef(null); // Reference to the DOM element for animations
 
   // Form transition animations
   useGSAP(() => {
     if (!ref.current) {
-      return;
+      return; // If the reference is not set, exit early
     }
 
     const tl = gsap.timeline({
-      paused: true,
+      paused: true, // Create a new GSAP timeline and pause it initially
     });
 
+    // Define animation for calendar weekdays and buttons
     tl.fromTo(
       '.react-calendar__month-view__weekdays__weekday abbr, #modalBody > div button',
       {
-        scale: 0,
-        opacity: 0,
+        scale: 0, // Initial scale: 0 (hidden)
+        opacity: 0, // Initial opacity: 0 (transparent)
       },
       {
-        scale: 1,
-        opacity: 1,
-        delay: 0.15,
-        stagger: 0.01,
+        scale: 1, // Animate to full size
+        opacity: 1, // Animate to fully visible
+        delay: 0.15, // Delay before starting the animation
+        stagger: 0.01, // Stagger effect for each element
       },
     );
 
+    // Reverse or play the animation based on transition state
     if (transition === 'close') {
-      tl.reverse(2);
+      tl.reverse(2); // Reverse the animation over 2 seconds
     } else {
-      tl.play();
+      tl.play(); // Play the animation
     }
 
     return () => {
-      tl.kill();
+      tl.kill(); // Clean up the timeline on unmount or dependency change
     };
-  }, [transition, open]);
+  }, [transition, open]); // Dependencies for re-running the animation
 
+  // Render the component with the provided className and children
   return (
     <div ref={ref} className={className}>
       {children}

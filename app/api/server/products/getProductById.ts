@@ -2,8 +2,9 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
+import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
-import { typeError } from '@/components/utils';
+import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get product by id.
@@ -23,17 +24,66 @@ export const getProductById = async (
   error?: IError;
   product?: IProductsEntity;
 }> => {
+  // Validate inputs
+  if (!id || id <= 0) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: 'Invalid product ID provided',
+      } as IError,
+    };
+  }
+
+  if (!lang) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: 'Language parameter is required',
+      } as IError,
+    };
+  }
+
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+
+  // Validate language code
+  if (!langCode) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: `Unsupported language: ${lang}`,
+      } as IError,
+    };
+  }
+
+  const cacheKey = `product-${id}-${langCode}`;
+
+  // Check cache first
+  const cached = getCachedData<IProductsEntity>(cacheKey);
+  if (cached) {
+    return { isError: false, product: cached };
+  }
+
   try {
     const data = await api.Products.getProductById(id, langCode);
 
-    if (typeError(data)) {
+    if (isIError(data)) {
       return { isError: true, error: data };
     } else {
+      // Cache the result
+      setCachedData<IProductsEntity>(cacheKey, data);
       return { isError: false, product: data };
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    return { isError: true, error: e };
+  } catch (error) {
+    const apiError = handleApiError(error);
+    return {
+      isError: true,
+      error: {
+        statusCode: apiError.statusCode,
+        message: apiError.message,
+      } as IError,
+    };
   }
 };

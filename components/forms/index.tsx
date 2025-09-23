@@ -7,6 +7,14 @@ import SignUpForm from '@/components/forms/SignUpForm';
 import UserForm from '@/components/forms/UserForm';
 import VerificationForm from '@/components/forms/VerificationForm';
 
+/**
+ * Form components barrel export
+ *
+ * This file exports all form components used throughout the application,
+ * providing a centralized import point for forms.
+ *
+ * @module Forms
+ */
 export {
   CalendarForm,
   ContactUsForm,

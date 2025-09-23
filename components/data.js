@@ -1,3 +1,12 @@
+/**
+ * Configuration data for different block types used in the application
+ *
+ * This array contains width and height configurations for various block types
+ * used throughout the application. Each entry corresponds to a specific block
+ * identifier and contains CSS classes for styling.
+ *
+ * @type {Array<{width: string, height: string}>}
+ */
 export const blocksData = [
   // home_banner:
   {
@@ -30,6 +39,16 @@ export const blocksData = [
     height: 'h-[260px]',
   },
 ];
+
+/**
+ * Color configurations for different block types
+ *
+ * This object maps block identifiers to their corresponding background color
+ * classes and additional styling. Used to apply consistent color schemes
+ * across different sections of the application.
+ *
+ * @type {Object.<string, string>}
+ */
 export const blocksColors = {
   home_banner: 'bg-purple-200 w-full max-sm:flex-col',
   offer_best_seller: 'bg-purple-600',
@@ -39,6 +58,15 @@ export const blocksColors = {
   offer_youtube: 'bg-blue-200',
 };
 
+/**
+ * Form field configurations for the reset password form
+ *
+ * This array defines the structure and properties of form fields used in
+ * the reset password functionality. Each field includes type, visibility,
+ * localization, placeholder, marker, and required status information.
+ *
+ * @type {Array<Object>}
+ */
 export const resetPasswordFormFields = [
   {
     fieldType: 'password',
@@ -62,6 +90,14 @@ export const resetPasswordFormFields = [
   },
 ];
 
+/**
+ * Configuration for social provider buttons
+ *
+ * This array contains the source paths and alt text for social sign-in
+ * option icons. Used to render social authentication buttons.
+ *
+ * @type {Array<{src: string, alt: string}>}
+ */
 export const socialProvidersButtons = [
   {
     src: '/icons/google.svg',
@@ -73,7 +109,15 @@ export const socialProvidersButtons = [
   },
 ];
 
-// timeSlots
+/**
+ * Time slots data for delivery or appointment scheduling
+ *
+ * This array contains time slot information with properties indicating
+ * availability and selection status. Used in scheduling components to
+ * display available time options.
+ *
+ * @type {Array<{time: string, isDisabled?: boolean, isSelected?: boolean}>}
+ */
 export const timeSlotsData = [
   {
     time: '10:00',
@@ -117,12 +161,28 @@ export const timeSlotsData = [
   },
 ];
 
-// productRating
+/**
+ * Product rating information
+ *
+ * This object contains overall product rating data including average rating
+ * and total review count. Used to display product ratings in the UI.
+ *
+ * @type {{rating: number, reviewCount: number}}
+ */
 export const productRating = {
   rating: 4.7,
   reviewCount: 7979,
 };
 
+/**
+ * Detailed ratings data for product reviews
+ *
+ * This array contains detailed breakdown of product ratings by star count,
+ * including value, bar value, and star count information. Used to display
+ * rating distribution charts.
+ *
+ * @type {Array<{value: number, barValue: number, starCount: number}>}
+ */
 export const ratingsData = [
   { value: 87, barValue: 100, starCount: 5 },
   { value: 95, barValue: 80, starCount: 4 },
@@ -131,6 +191,15 @@ export const ratingsData = [
   { value: 0, barValue: 0, starCount: 1 },
 ];
 
+/**
+ * Sample product reviews data
+ *
+ * This array contains sample product review data including reviewer name,
+ * avatar, content, like count, comment count, and rating. Used for
+ * displaying product reviews in the UI.
+ *
+ * @type {Array<{name: string, avatarSrc: string, content: string, likeCount: number, commentCount: number, rating: number}>}
+ */
 export const reviewsData = [
   {
     name: 'Ahmet K.',

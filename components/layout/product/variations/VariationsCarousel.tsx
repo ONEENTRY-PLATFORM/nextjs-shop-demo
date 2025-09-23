@@ -40,7 +40,7 @@ const VariationsCarousel: FC<VariationsCarouselProps> = ({
   return (
     <div
       className={
-        'flex h-[130px] w-full items-start justify-start self-stretch max-md:justify-center ' +
+        'flex h-[130px] w-full items-center justify-center self-stretch ' +
         containerClass
       }
     >
@@ -62,10 +62,11 @@ const VariationsCarousel: FC<VariationsCarouselProps> = ({
           containerProps={{
             style: {
               userSelect: 'none',
-              justifyContent: 'flexStart',
+              justifyContent: 'flexCenter',
+              overflow: 'hidden',
             },
             className:
-              'flex min-w-full wrap w-full flex-row w-full items-start max-md:justify-center max-md:items-center justify-start gap-[4%] self-stretch overflow-hidden',
+              'flex min-w-full wrap w-full flex-row w-full justify-center items-center gap-[4%] self-stretch',
           }}
           activeSlideProps={{
             style: {},

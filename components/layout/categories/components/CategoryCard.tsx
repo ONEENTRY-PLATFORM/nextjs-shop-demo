@@ -1,7 +1,8 @@
 import { Baloo_2 as Baloo } from 'next/font/google';
-import Image from 'next/image';
 import Link from 'next/link';
 import type { FC } from 'react';
+
+import OptimizedImage from '@/components/shared/OptimizedImage';
 
 import CategoryAnimations from '../animations/CategoryAnimations';
 
@@ -32,17 +33,17 @@ const CategoryCard: FC<CategoryCardProps> = ({
       index={index}
     >
       <Link
-        prefetch={true}
         href={link}
         className="relative flex size-full h-64 bg-slate-100 p-6"
       >
         <h2 className="z-10 mt-auto uppercase">{title}</h2>
-        <Image
+        <OptimizedImage
           fill
           sizes="(min-width: 1024px) 66vw, 100vw"
           src={imgSrc ? imgSrc : '/images/card.svg'}
           alt={title}
-          className="size-full rounded-3xl object-cover transition-all duration-500 group-hover:scale-125"
+          quality={85}
+          className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-all duration-500 group-hover:scale-125"
         />
         <div className="radial-hover"></div>
       </Link>

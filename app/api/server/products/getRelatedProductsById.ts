@@ -1,9 +1,20 @@
 import type { IError } from 'oneentry/dist/base/utils';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IProductsEntity,
+  IProductsResponse,
+} from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
+import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
-import { typeError } from '@/components/utils';
+import { handleApiError, isIError } from '@/app/utils/errorHandler';
+
+interface RelatedProductsResult {
+  isError: boolean;
+  error?: IError;
+  products?: IProductsEntity[];
+  total: number;
+}
 
 /**
  * Get all related product page objects with API.Products
@@ -18,27 +29,88 @@ import { typeError } from '@/components/utils';
 export const getRelatedProductsById = async (
   id: number,
   lang: string,
-): Promise<{
-  isError: boolean;
-  error?: IError;
-  products?: IProductsEntity[];
-  total: number;
-}> => {
+): Promise<RelatedProductsResult> => {
+  // Validate inputs
+  if (!id || id <= 0) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: 'Invalid product ID provided',
+      } as IError,
+      total: 0,
+    };
+  }
+
+  if (!lang) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: 'Language parameter is required',
+      } as IError,
+      total: 0,
+    };
+  }
+
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+
+  // Validate language code
+  if (!langCode) {
+    return {
+      isError: true,
+      error: {
+        statusCode: 400,
+        message: `Unsupported language: ${lang}`,
+      } as IError,
+      total: 0,
+    };
+  }
+
+  const cacheKey = `related-products-${id}-${langCode}`;
+
+  // Check cache first
+  const cached = getCachedData<{ products: IProductsEntity[]; total: number }>(
+    cacheKey,
+  );
+  if (cached) {
+    return {
+      isError: false,
+      products: cached.products,
+      total: cached.total,
+    };
+  }
+
   try {
     const data = await api.Products.getRelatedProductsById(id, langCode);
 
-    if (typeError(data)) {
+    if (isIError(data)) {
       return { isError: true, error: data as IError, total: 0 };
     } else {
+      // Type assertion to ensure we're working with the correct type
+      const productsResponse = data as IProductsResponse;
+
+      // Cache the result
+      setCachedData<{ products: IProductsEntity[]; total: number }>(cacheKey, {
+        products: productsResponse.items,
+        total: productsResponse.total,
+      });
+
       return {
         isError: false,
-        products: data.items,
-        total: data.total,
+        products: productsResponse.items,
+        total: productsResponse.total,
       };
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    return { isError: true, error: e, total: 0 };
+  } catch (error) {
+    const apiError = handleApiError(error);
+    return {
+      isError: true,
+      error: {
+        statusCode: apiError.statusCode,
+        message: apiError.message,
+      } as IError,
+      total: 0,
+    };
   }
 };

@@ -39,13 +39,14 @@ const BreadcrumbsAnimations: FC<BreadcrumbsAnimationsProps> = ({
       tl.to(ref.current, {
         yPercent: -100,
         autoAlpha: 0,
-        display: 'none',
+        height: 0,
         duration: 0.15,
       });
     } else {
       tl.to(ref.current, {
         display: 'flex',
         yPercent: 0,
+        height: 'auto',
         autoAlpha: 1,
         duration: 0.35,
       });

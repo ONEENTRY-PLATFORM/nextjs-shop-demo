@@ -2,7 +2,7 @@ import type { FC } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
-import { flatMenuToNested } from '@/components/utils';
+import { flatMenuToNested } from '@/components/utils/utils';
 
 import OffscreenModal from '../mobile-menu';
 import MainMenuLoader from './components/MenuLoader';

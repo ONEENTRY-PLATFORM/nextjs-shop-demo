@@ -37,7 +37,13 @@ const cartReducer = persistReducer(
     key: 'cart-slice',
     storage: storage,
     version: version,
-    whitelist: ['productsData', 'currency', 'deliveryData'],
+    whitelist: [
+      'productsData',
+      'currency',
+      'deliveryData',
+      'delivery',
+      'total',
+    ],
   },
   cartSlice,
 );
@@ -73,7 +79,7 @@ const orderReducer = persistReducer(
     key: 'order-slice',
     storage: storage,
     version: version,
-    whitelist: ['products'],
+    whitelist: ['order'], // Сохраняем весь объект order
   },
   orderSlice,
 );

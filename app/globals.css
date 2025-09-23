@@ -18,7 +18,7 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: #4C4D56;
 }
 
 ::-webkit-inner-spin-button,
@@ -87,17 +87,20 @@ input:focus-visible {
   @apply: bg-orange-500;
   background-color: #f97316;
 }
-.text-2xl {
-  font-size: 1.5rem /* 24px */;
-  line-height: 2rem /* 32px */;
+.text-lg {
+  font-size: 1.125rem /* 18px */;
+  line-height: 1.75rem /* 28px */;
 }
 .text-xl {
   font-size: 1.25rem /* 20px */;
   line-height: 1.75rem /* 28px */;
 }
-.text-lg {
-  font-size: 1.125rem /* 18px */;
-  line-height: 1.75rem /* 28px */;
+.text-2xl {
+  font-size: 1.5rem /* 24px */;
+  line-height: 2rem /* 32px */;
+}
+.bg-purple-200 .text-3xl {
+  font-size: 45px;
 }
 /* components */
 @layer components {

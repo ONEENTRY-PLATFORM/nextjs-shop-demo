@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
+// import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC, Key } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
@@ -24,8 +25,7 @@ import RepeatOrderButton from './RepeatOrderButton';
  */
 const OrderPage: FC<{
   id: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  settings: Record<string, any> | undefined;
+  settings: Record<string, any> | any;
   lang: string;
   isActive: boolean;
 }> = ({ id, settings, lang, isActive }) => {
@@ -50,8 +50,8 @@ const OrderPage: FC<{
         'flex h-0 opacity-0 flex-col text-[#4C4D56] ' + (isActive ? 'p-4' : '')
       }
     >
-      <div className="flex max-w-[430px] flex-col gap-4 pb-5 max-md:max-w-full">
-        {products.map((product: IOrderProducts, i: Key) => {
+      <div className="flex flex-col gap-4 pb-5 max-md:max-w-full">
+        {products.map((product: any, i: Key) => {
           if (product.id === 83) {
             return;
           }

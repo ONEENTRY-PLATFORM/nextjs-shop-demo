@@ -17,7 +17,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    // "allowImportingTsExtensions": true,
+    "allowImportingTsExtensions": true,
     "plugins": [
       {
         "name": "next"
@@ -27,7 +27,21 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    // Более строгие правила типизации
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true
   },
   "include": [
     "next-env.d.ts",
