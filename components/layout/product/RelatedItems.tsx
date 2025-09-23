@@ -58,7 +58,6 @@ const RelatedItems: FC<RelatedItemsProps> = ({
                 dict={dict}
                 index={i as number}
                 pagesLimit={0}
-                currentPage={1}
               />
             );
           },
