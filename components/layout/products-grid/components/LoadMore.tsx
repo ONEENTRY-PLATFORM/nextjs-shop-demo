@@ -51,9 +51,19 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
 
   const goToNextPage = () => {
     const page = nextPage <= totalPages ? nextPage : currentPage;
+    // Сохраняем текущую позицию прокрутки
+    const scrollPosition = typeof window !== 'undefined' ? window.scrollY : 0;
+
     router.push(pathname + '?' + createQueryString('page', page.toString()), {
       scroll: false,
     });
+
+    // Восстанавливаем позицию прокрутки после перехода
+    if (typeof window !== 'undefined') {
+      setTimeout(() => {
+        window.scrollTo(0, scrollPosition);
+      }, 0);
+    }
   };
 
   useGSAP(() => {
@@ -74,7 +84,7 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
     return () => {
       trigger.kill();
     };
-  }, [currentPage]);
+  }, [nextPage]);
 
   return (
     <button
