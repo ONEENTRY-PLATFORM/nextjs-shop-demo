@@ -12,9 +12,6 @@ const APP_TOKEN = process.env.NEXT_PUBLIC_APP_TOKEN as string;
  * @returns void
  */
 const saveFunction = async (refreshToken: string) => {
-  if (!refreshToken) {
-    return;
-  }
   localStorage.setItem('refresh-token', refreshToken);
 };
 
