@@ -6,7 +6,7 @@ import type { FC } from 'react';
 import {
   getProductCategory,
   getProductTitle,
-} from '@/app/hooks/useProductsData';
+} from '@/app/api/hooks/useProductsData';
 
 import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';

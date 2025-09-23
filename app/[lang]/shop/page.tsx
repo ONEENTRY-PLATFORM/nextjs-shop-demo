@@ -4,7 +4,7 @@ import type { FC } from 'react';
 import { memo, Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
-import { getImageUrl } from '@/app/hooks/useAttributesData';
+import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';

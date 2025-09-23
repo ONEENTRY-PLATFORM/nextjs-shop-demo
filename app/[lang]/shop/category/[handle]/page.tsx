@@ -4,7 +4,7 @@ import { type FC, memo, Suspense } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getChildPagesByParentUrl, getPageByUrl } from '@/app/api';
-import { getImageUrl } from '@/app/hooks/useAttributesData';
+import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams } from '@/app/types/global';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';

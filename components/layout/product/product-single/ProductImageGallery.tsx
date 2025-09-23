@@ -14,7 +14,7 @@ import Slider from 'react-slick';
 import {
   getProductImageUrl,
   getProductTitle,
-} from '@/app/hooks/useProductsData';
+} from '@/app/api/hooks/useProductsData';
 import FavoritesButton from '@/components/shared/FavoritesButton';
 import Placeholder from '@/components/shared/Placeholder';
 

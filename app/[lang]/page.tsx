@@ -10,7 +10,7 @@ import BlocksGrid from '@/components/layout/blocks-grid';
 import BlocksGridLoader from '@/components/layout/blocks-grid/components/BlocksGridLoader';
 import { i18n } from '@/i18n-config';
 
-import { getImageUrl } from '../hooks/useAttributesData';
+import { getImageUrl } from '../api/hooks/useAttributesData';
 import { generatePageMetadata } from '../utils/generatePageMetadata';
 
 // Increase revalidation time to reduce server load (60 seconds instead of 10)

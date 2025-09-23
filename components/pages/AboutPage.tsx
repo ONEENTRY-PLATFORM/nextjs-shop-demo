@@ -9,7 +9,7 @@ import {
   getImageUrl,
   getString,
   getText,
-} from '../../app/hooks/useAttributesData';
+} from '../../app/api/hooks/useAttributesData';
 
 /**
  * About page

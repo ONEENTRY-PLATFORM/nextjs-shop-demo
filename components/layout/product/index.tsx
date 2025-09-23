@@ -4,7 +4,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import { getProductTitle } from '@/app/hooks/useProductsData';
+import { getProductTitle } from '@/app/api/hooks/useProductsData';
 import { LanguageEnum } from '@/app/types/enum';
 
 import ProductAnimations from './animations/ProductAnimations';

@@ -5,7 +5,7 @@ import type { FC } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api';
-import { getImageUrl } from '@/app/hooks/useAttributesData';
+import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import type { PageProps } from '@/app/types/global';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import CategoriesGrid from '@/components/layout/categories';
