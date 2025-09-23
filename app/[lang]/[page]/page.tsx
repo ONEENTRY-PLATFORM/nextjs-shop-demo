@@ -66,7 +66,7 @@ const PageLayout: FC<{ params: Promise<{ page: any; lang: any }> }> = async ({
     {
       templateType: templateIdentifier,
       name: 'services',
-      component: <ServicesPage lang={lang} dict={dict} page={page} />,
+      component: <ServicesPage page={page} />,
     },
     {
       templateType: templateIdentifier,

@@ -10,7 +10,6 @@ import type { SimplePageProps } from '@/app/types/global';
  * @returns PaymentCanceled page
  */
 const PaymentCanceled: FC<SimplePageProps> = async ({ page }) => {
-  // Более надежная проверка на наличие страницы
   if (!page || !page.localizeInfos) {
     return (
       <div className="flex flex-col pb-5 max-md:max-w-full">

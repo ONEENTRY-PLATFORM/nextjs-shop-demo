@@ -12,6 +12,7 @@ interface BlocksGridProps {
 
 /**
  * Blocks grid
+ *
  * @param blocks array of blocks names
  * @param lang current language shortcode
  *
