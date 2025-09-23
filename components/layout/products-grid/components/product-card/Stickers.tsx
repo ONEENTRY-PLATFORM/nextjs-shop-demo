@@ -25,7 +25,7 @@ const Stickers: FC<StickersProps> = ({
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
   // extract attributes from attributeValues field of product
-  const attributes = attributeValues?.[langCode] || attributeValues;
+  const attributes = attributeValues[langCode] || attributeValues;
 
   return [attributes?.stickers || []].map(
     (

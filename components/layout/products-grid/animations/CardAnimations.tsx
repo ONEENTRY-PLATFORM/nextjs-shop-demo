@@ -3,6 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import { useSearchParams } from 'next/navigation';
 import type { FC, ReactNode } from 'react';
 import { useRef } from 'react';
 
@@ -12,7 +13,6 @@ import { useRef } from 'react';
  * @param className CSS className of ref element
  * @param index Index of element for animations stagger
  * @param pagesLimit used for animations
- * @param currentPage current page number for animations
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns Card animations
  */
@@ -21,8 +21,10 @@ const CardAnimations: FC<{
   className: string;
   index: number;
   pagesLimit: number;
-  currentPage?: number;
-}> = ({ children, className, index, pagesLimit, currentPage = 1 }) => {
+}> = ({ children, className, index, pagesLimit }) => {
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get('page')) || 1;
+
   const ref = useRef(null);
   const delay = (index - (currentPage - 1) * pagesLimit) / 10;
   const inView = ref.current && ScrollTrigger.isInViewport(ref.current, 0.05);

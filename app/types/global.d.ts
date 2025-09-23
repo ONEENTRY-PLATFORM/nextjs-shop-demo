@@ -9,7 +9,7 @@ declare type LocalizeInfo = {
 
 declare type PageProps = {
   params: Promise<{ page?: any; handle: string; lang: string }>;
-  searchParams?: Promise<{
+  searchParams: Promise<{
     search?: string;
     page?: string;
     filters?: IFilterParams[];

@@ -18,26 +18,16 @@ import Spinner from '@/components/shared/Spinner';
  */
 const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   const pathname = usePathname();
-  const router = useRouter();
   const searchParams = useSearchParams();
-
-  // Handle the .get() call in a try/catch to prevent runtime errors
-  let currentPage = 1;
-  try {
-    currentPage = Number(searchParams?.get('page'));
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
-    // If accessing search params fails (e.g. during SSR), default to page 1
-    currentPage = 1;
-  }
-
+  const router = useRouter();
+  const currentPage = Number(searchParams.get('page')) || 1;
   const nextPage = (currentPage < 1 ? 1 : currentPage) + 1;
 
   const ref = useRef(null);
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams?.toString() || '');
+      const params = new URLSearchParams(searchParams.toString());
       params.set(name, value);
 
       return params.toString();
@@ -50,28 +40,21 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   }, []);
 
   const goToNextPage = () => {
-    const page = nextPage <= totalPages ? nextPage : currentPage;
-    // Сохраняем текущую позицию прокрутки
-    const scrollPosition = typeof window !== 'undefined' ? window.scrollY : 0;
-
-    router.push(pathname + '?' + createQueryString('page', page.toString()), {
-      scroll: false,
-    });
-
-    // Восстанавливаем позицию прокрутки после перехода
-    if (typeof window !== 'undefined') {
-      setTimeout(() => {
-        window.scrollTo(0, scrollPosition);
-      }, 0);
-    }
+    router.push(
+      pathname +
+        '?' +
+        createQueryString(
+          'page',
+          (nextPage <= totalPages ? nextPage : currentPage).toString(),
+        ),
+      { scroll: false },
+    );
   };
 
   useGSAP(() => {
     if (nextPage > totalPages) {
       return;
     }
-    console.log('trigger');
-
     const trigger = ScrollTrigger.create({
       trigger: ref.current,
       start: 'top bottom',
@@ -84,7 +67,7 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
     return () => {
       trigger.kill();
     };
-  }, [nextPage]);
+  }, [currentPage]);
 
   return (
     <button

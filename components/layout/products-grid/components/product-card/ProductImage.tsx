@@ -1,34 +1,41 @@
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import Image from 'next/image';
+import type { AttributeType } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
 
-import { getProductImageUrl } from '@/app/hooks/useProductsData';
-import OptimizedImage from '@/components/shared/OptimizedImage';
+import Placeholder from '@/components/shared/Placeholder';
 
 interface ProductImageProps {
-  product: IProductsEntity;
+  attributes: AttributeType;
   alt: string;
 }
 
 /**
- * Product image component that displays the product image or a placeholder
- * @param product Product containing the image data
- * @param alt Alternative text for the image
- * @returns Product image or placeholder component
+ * Product image
+ * @param attributes
+ * @param alt
+ *
+ * @returns Product image/placeholder
  */
-const ProductImage: FC<ProductImageProps> = ({ product, alt }) => {
-  const imageSrc = getProductImageUrl('pic', product);
+const ProductImage: FC<ProductImageProps> = ({ attributes: { pic }, alt }) => {
+  const productImage = pic?.value;
+  const imageSrc = Array.isArray(productImage)
+    ? productImage[0]?.downloadLink
+    : productImage?.downloadLink;
 
   return (
     <div className="relative mb-3 size-40">
-      <OptimizedImage
-        src={imageSrc}
-        alt={alt}
-        priority={'high'}
-        quality={85}
-        type="img"
-        sizes="(min-width: 1024px) 66vw, 100vw"
-        className="size-40 shrink-0 object-cover transition-transform duration-500 group-hover:scale-125"
-      />
+      {imageSrc ? (
+        <Image
+          fill
+          sizes="(min-width: 300px) 66vw, 100vw"
+          src={imageSrc}
+          alt={alt}
+          loading="lazy"
+          className="size-40 shrink-0 object-cover transition-transform duration-500 group-hover:scale-125"
+        />
+      ) : (
+        <Placeholder />
+      )}
     </div>
   );
 };
