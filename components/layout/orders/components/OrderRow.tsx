@@ -2,7 +2,7 @@ import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces
 import type { FC } from 'react';
 import { useState } from 'react';
 
-import { UsePrice } from '@/components/utils';
+import { UsePrice } from '@/components/utils/utils';
 
 import OrderRowAnimations from '../animations/OrderRowAnimations';
 import OrderPage from './OrderPage';
@@ -44,7 +44,8 @@ const OrderRow: FC<OrderRowProps> = ({ order, settings, lang, index }) => {
           setState(!state);
         }}
         className={
-          '-mb-px flex w-full gap-4 border-y p-4 text-left ' + rowClass
+          '-mb-px flex cursor-pointer w-full gap-4 border-y border-[#B0BCCE] p-4 text-left ' +
+          rowClass
         }
       >
         <div className="w-1/2">{date}</div>

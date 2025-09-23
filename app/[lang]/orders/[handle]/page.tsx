@@ -1,7 +1,7 @@
+import type { Metadata } from 'next';
 import type { FC } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
-import type { PageProps } from '@/app/types/global';
 import OrderPage from '@/components/layout/orders/components/OrderPage';
 
 /**
@@ -11,7 +11,8 @@ import OrderPage from '@/components/layout/orders/components/OrderPage';
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Order page layout JSX.Element
  */
-const OrderPageLayout: FC<PageProps> = async (props) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const OrderPageLayout: FC<any> = async (props) => {
   const params = await props.params;
 
   const { handle, lang } = params;
@@ -33,3 +34,27 @@ const OrderPageLayout: FC<PageProps> = async (props) => {
 };
 
 export default OrderPageLayout;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ handle: string; lang: string }>;
+}): Promise<Metadata> {
+  const { handle, lang } = await params;
+  const title = `Заказ #${handle} — OneEntry Shop`;
+  const description = 'Детали заказа и статус оплаты.';
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `/${lang}/orders/${handle}`,
+      type: 'article',
+    },
+    alternates: {
+      canonical: `/${lang}/orders/${handle}`,
+    },
+  };
+}

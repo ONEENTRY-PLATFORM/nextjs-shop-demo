@@ -1,7 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { selectCartItemWithIdLength } from '@/app/store/reducers/CartSlice';
@@ -22,50 +22,49 @@ interface QuantitySelectorProps {
  * Quantity selector
  * @param id - product id
  * @param units - count of product in shop
- * @param title
- * @param height
- * @param className CSS className of ref element
+ * @param title - product title
+ * @param height - height of the selector component
+ * @param className - CSS className of ref element
  *
  * @returns Quantity selector with increase decrease buttons
  */
-const QuantitySelector: FC<QuantitySelectorProps> = ({
-  id,
-  units,
-  title,
-  height,
-  className,
-}) => {
-  const [qty, setQty] = useState(0);
+const QuantitySelector: FC<QuantitySelectorProps> = memo(
+  // eslint-disable-next-line react/prop-types
+  ({ id, units, title, height, className }) => {
+    const [qty, setQty] = useState(1);
 
-  // extract data from cartSlice
-  const data = useAppSelector((state) => selectCartItemWithIdLength(state, id));
-  const quantity = data?.quantity || 0;
+    // extract data from cartSlice
+    const data = useAppSelector((state) =>
+      selectCartItemWithIdLength(state, id),
+    );
+    const quantity = data || 0;
 
-  // setQty state on quantity change
-  useEffect(() => {
-    if (!quantity) {
-      return;
+    // setQty state on quantity change
+    useEffect(() => {
+      setQty(quantity > 0 ? quantity : 1);
+    }, [quantity]);
+
+    // Show the component whenever the product is added to the cart (quantity > 0)
+    if (quantity <= 0) {
+      return null;
     }
-    setQty(quantity);
-  }, [quantity]);
 
-  if (qty < 1 || !quantity) {
-    return;
-  }
+    return (
+      <div
+        className={
+          'flex items-center justify-between rounded-3xl bg-slate-50 px-2' +
+          className
+        }
+        style={{ height: height }}
+      >
+        <DecreaseButton id={id} qty={qty} title={title} />
+        <QuantityInput id={id} qty={qty} units={units} />
+        <IncreaseButton id={id} qty={qty} units={units} />
+      </div>
+    );
+  },
+);
 
-  return (
-    <div
-      className={
-        'flex items-center justify-between rounded-3xl bg-slate-50 px-2' +
-        className
-      }
-      style={{ height: height }}
-    >
-      <DecreaseButton id={id} qty={qty} title={title} />
-      <QuantityInput id={id} qty={qty} units={units} />
-      <IncreaseButton id={id} qty={qty} units={units} />
-    </div>
-  );
-};
+QuantitySelector.displayName = 'QuantitySelector';
 
 export default QuantitySelector;

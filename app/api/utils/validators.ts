@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { compileRegex } from './compileRegex';
 
@@ -11,10 +10,10 @@ export type Validators = {
 };
 
 export const validators: Validators = {
-  requiredValidator: (value: string, validator: any) => {
+  requiredValidator: (value: string) => {
     return !!value.length;
   },
-  emailInspectionValidator: (value: string, validator?: any) => {
+  emailInspectionValidator: (value: string) => {
     const emailRegex = /^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{1,7}$/;
     return emailRegex.test(value);
   },

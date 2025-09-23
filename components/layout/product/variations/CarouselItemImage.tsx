@@ -1,9 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import Placeholder from '@/components/shared/Placeholder';
+import OptimizedImage from '@/components/shared/OptimizedImage';
 
 interface CarouselItemImageProps {
   lang: string;
@@ -27,17 +26,15 @@ const CarouselItemImage: FC<CarouselItemImageProps> = ({ item, lang }) => {
 
   return (
     <Link href={'/' + lang + '/shop/product/' + item.id} title={title}>
-      {imageSrc ? (
-        <Image
-          width={80}
-          height={80}
-          src={imageSrc}
-          alt={title}
-          className="aspect-auto size-full h-auto min-w-full shrink-0 rounded-lg object-cover"
-        />
-      ) : (
-        <Placeholder />
-      )}
+      <OptimizedImage
+        width={80}
+        height={80}
+        src={imageSrc}
+        alt={title}
+        quality={85}
+        className="aspect-auto size-full h-auto min-w-full shrink-0 rounded-lg object-cover"
+        type="image"
+      />
     </Link>
   );
 };

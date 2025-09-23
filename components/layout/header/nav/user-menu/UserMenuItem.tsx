@@ -20,7 +20,6 @@ const UserMenuItem: FC<{
 }> = ({ lang, page, setState }) => {
   return (
     <Link
-      prefetch={true}
       href={'/' + lang + '/' + page.pageUrl}
       title={page.localizeInfos.menuTitle}
       className="group relative box-border flex p-2 text-slate-800 hover:text-orange-500"

@@ -43,13 +43,12 @@ const NavItemCart: FC<{ item: any; lang: string }> = ({ item, lang }) => {
 
   return (
     <Link
-      prefetch={true}
       href={'/' + lang + '/' + pageUrl}
       title={localizeInfos.menuTitle}
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
     >
       <CartAltIcon />
-      <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full bg-orange-500 text-center text-sm leading-4">
+      <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full text-white bg-orange-500 text-center text-xs leading-4">
         {count}
       </div>
     </Link>

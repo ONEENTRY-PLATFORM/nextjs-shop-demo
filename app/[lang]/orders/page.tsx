@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import type { FC } from 'react';
 import { Suspense } from 'react';
 
@@ -7,7 +8,7 @@ import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
 import OrdersPage from '@/components/layout/orders';
 import Loader from '@/components/shared/Loader';
-import type { Locale } from '@/i18n-config';
+import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 
@@ -48,3 +49,38 @@ const OrdersPageLayout: FC<PageProps> = async ({ params }) => {
 };
 
 export default OrdersPageLayout;
+
+/**
+ * Pre-generation page params
+ */
+export async function generateStaticParams() {
+  const params: Array<{ lang: string }> = [];
+  for (const lang of i18n.locales) {
+    params.push({ lang });
+  }
+  return params;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  const title = 'My orders';
+  const description = 'Order history and processing statuses.';
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `/${lang}/orders`,
+      type: 'website',
+    },
+    alternates: {
+      canonical: `/${lang}/orders`,
+    },
+  };
+}

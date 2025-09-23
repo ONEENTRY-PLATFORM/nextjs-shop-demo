@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Please provide a site map
+Sitemap: ${NEXT_PUBLIC_PROJECT_URL}/sitemap.xml

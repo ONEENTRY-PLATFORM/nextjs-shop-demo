@@ -29,7 +29,7 @@ const BreadcrumbItem: FC<BreadcrumbItemProps> = ({ link, isLast, lang }) => {
             href={'/' + lang + '/' + link}
             className="my-auto text-base hover:text-orange-500"
           >
-            {link[0].toUpperCase() +
+            {link[0]?.toUpperCase() +
               link.slice(1, link.length).replace('_', ' ')}
           </Link>
         </>
@@ -39,7 +39,7 @@ const BreadcrumbItem: FC<BreadcrumbItemProps> = ({ link, isLast, lang }) => {
         <div>
           /{' '}
           <span className="text-orange-500">
-            {link[0].toUpperCase() +
+            {link[0]?.toUpperCase() +
               link.slice(1, link.length).replace('_', ' ')}
           </span>
         </div>

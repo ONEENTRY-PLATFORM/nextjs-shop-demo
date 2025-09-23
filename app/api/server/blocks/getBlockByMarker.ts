@@ -2,8 +2,9 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 
 import { api } from '@/app/api';
+import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
-import { typeError } from '@/components/utils';
+import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get block by marker.
@@ -24,17 +25,32 @@ export const getBlockByMarker = async (
   block?: IBlockEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const cacheKey = `${marker}-${langCode}`;
+
+  // Check cache first
+  const cached = getCachedData<IBlockEntity>(cacheKey);
+  if (cached) {
+    return { isError: false, block: cached };
+  }
 
   try {
     const data = await api.Blocks.getBlockByMarker(marker, langCode);
 
-    if (typeError(data)) {
+    if (isIError(data)) {
       return { isError: true, error: data };
     } else {
+      // Cache the result
+      setCachedData<IBlockEntity>(cacheKey, data);
       return { isError: false, block: data };
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    return { isError: true, error: e };
+  } catch (error) {
+    const apiError = handleApiError(error);
+    return {
+      isError: true,
+      error: {
+        statusCode: apiError.statusCode,
+        message: apiError.message,
+      } as IError,
+    };
   }
 };

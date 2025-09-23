@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
@@ -5,14 +6,13 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC } from 'react';
-import { useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';
 
 import PriceFromInput from './PriceFromInput';
 import PriceToInput from './PriceToInput';
 
 interface PriceFilterProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prices: any;
   dict: IAttributeValues;
 }
@@ -24,11 +24,12 @@ interface PriceFilterProps {
  *
  * @returns
  */
-const PriceFilter: FC<PriceFilterProps> = ({ prices, dict }) => {
+const PriceFilter: FC<PriceFilterProps> = memo(({ prices, dict }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
+
+  const params = new URLSearchParams(searchParams?.toString() || '');
 
   const { filter_price_title, price_from, price_to } = dict;
 
@@ -42,6 +43,11 @@ const PriceFilter: FC<PriceFilterProps> = ({ prices, dict }) => {
   const [priceTo, setPriceTo] = useState(
     params.get('maxPrice') ? Number(params.get('maxPrice')) : MAX,
   );
+
+  const handlePriceChange = useCallback((values: number[]) => {
+    setPriceFrom(values[0]);
+    setPriceTo(values[1]);
+  }, []);
 
   // params minPrice
   useEffect(() => {
@@ -76,6 +82,79 @@ const PriceFilter: FC<PriceFilterProps> = ({ prices, dict }) => {
       setPriceTo(MAX);
     }
   }, [params.get('maxPrice')]);
+
+  const renderMark = useCallback(
+    ({ props, index }: { props: any; index: number }) => (
+      <div
+        {...props}
+        key={props.key}
+        style={{
+          ...props.style,
+          height: '16px',
+          width: '1px',
+          backgroundColor:
+            index * STEP < priceFrom
+              ? '#ccc'
+              : index * STEP > priceTo
+                ? '#ccc'
+                : '#ffa03d',
+        }}
+      />
+    ),
+    [priceFrom, priceTo, STEP],
+  );
+
+  const renderTrack = useCallback(
+    ({ props, children }: { props: any; children: any }) => (
+      <div
+        onMouseDown={props.onMouseDown}
+        onTouchStart={props.onTouchStart}
+        style={{
+          ...props.style,
+          height: '36px',
+          display: 'flex',
+          width: '100%',
+        }}
+      >
+        <div
+          ref={props.ref}
+          style={{
+            height: '5px',
+            width: '100%',
+            borderRadius: '4px',
+            background: getTrackBackground({
+              values: [priceFrom, priceTo],
+              colors: ['#ccc', '#ffa03d', '#ccc'],
+              min: MIN,
+              max: MAX,
+            }),
+            alignSelf: 'center',
+          }}
+        >
+          {children}
+        </div>
+      </div>
+    ),
+    [priceFrom, priceTo, MIN, MAX],
+  );
+
+  const renderThumb = useCallback(
+    ({ props }: { props: any; isDragged: boolean }) => (
+      <div
+        {...props}
+        key={props.key}
+        style={{
+          ...props.style,
+          height: '20px',
+          width: '20px',
+          borderRadius: '50%',
+          backgroundColor: '#f97316',
+          outline: '3px solid #ec722b80',
+        }}
+      />
+    ),
+    [],
+  );
 
   return (
     <div className="relative box-border flex shrink-0 flex-col">
@@ -114,76 +193,16 @@ const PriceFilter: FC<PriceFilterProps> = ({ prices, dict }) => {
           min={MIN}
           max={MAX}
           values={[priceFrom, priceTo]}
-          onChange={(values) => {
-            setPriceFrom(values[0]);
-            setPriceTo(values[1]);
-          }}
-          renderMark={({ props, index }) => (
-            <div
-              {...props}
-              key={props.key}
-              style={{
-                ...props.style,
-                height: '16px',
-                width: '1px',
-                backgroundColor:
-                  index * STEP < priceFrom
-                    ? '#ccc'
-                    : index * STEP > priceTo
-                      ? '#ccc'
-                      : '#ffa03d',
-              }}
-            />
-          )}
-          renderTrack={({ props, children }) => (
-            <div
-              onMouseDown={props.onMouseDown}
-              onTouchStart={props.onTouchStart}
-              style={{
-                ...props.style,
-                height: '36px',
-                display: 'flex',
-                width: '100%',
-              }}
-            >
-              <div
-                ref={props.ref}
-                style={{
-                  height: '5px',
-                  width: '100%',
-                  borderRadius: '4px',
-                  background: getTrackBackground({
-                    values: [priceFrom, priceTo],
-                    colors: ['#ccc', '#ffa03d', '#ccc'],
-                    min: MIN,
-                    max: MAX,
-                  }),
-                  alignSelf: 'center',
-                }}
-              >
-                {children}
-              </div>
-            </div>
-          )}
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          renderThumb={({ index, props, isDragged }) => (
-            <div
-              {...props}
-              key={props.key}
-              style={{
-                ...props.style,
-                height: '20px',
-                width: '20px',
-                borderRadius: '50%',
-                backgroundColor: '#f97316',
-                outline: '3px solid #ec722b80',
-              }}
-            />
-          )}
+          onChange={handlePriceChange}
+          renderMark={renderMark}
+          renderTrack={renderTrack}
+          renderThumb={renderThumb}
         />
       </div>
     </div>
   );
-};
+});
+
+PriceFilter.displayName = 'PriceFilter';
 
 export default PriceFilter;

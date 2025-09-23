@@ -15,7 +15,7 @@ import { setupStore } from '../store';
  * @returns Redux provider
  */
 export default function StoreProvider({ children }: { children: ReactNode }) {
-  const storeRef = useRef<AppStore>();
+  const storeRef = useRef<AppStore>(undefined);
   if (!storeRef.current) {
     storeRef.current = setupStore();
     persistStore(storeRef.current);

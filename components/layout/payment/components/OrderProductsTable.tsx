@@ -1,4 +1,3 @@
-import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type FC } from 'react';
 
@@ -7,20 +6,28 @@ import {
   selectCartData,
   selectCartItems,
 } from '@/app/store/reducers/CartSlice';
-import { UsePrice } from '@/components/utils';
+import { UsePrice } from '@/components/utils/utils';
 
-type PaymentMethodProps = {
-  account: IAccountsEntity;
+type OrderProductsTableProps = {
   lang: string;
+  products: IProductsEntity[] | undefined;
+  delivery: IProductsEntity | undefined;
 };
 
 /**
  * Order products table
+ *
  * @param lang current language shortcode
+ * @param products Products data
+ * @param delivery Delivery data
  *
  * @returns JSX.Element
  */
-const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
+const OrderProductsTable: FC<OrderProductsTableProps> = ({
+  lang,
+  products,
+  delivery,
+}) => {
   const productsDataInCart = useAppSelector(selectCartData) as Array<{
     id: number;
     quantity: number;
@@ -29,7 +36,20 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
   const productsInCart = useAppSelector(
     selectCartItems,
   ) as Array<IProductsEntity>;
-  const delivery = useAppSelector((state) => state.cartReducer.delivery);
+  const d = useAppSelector((state) => state.cartReducer.delivery);
+
+  // Use passed products or fallback to Redux state
+  const actualProducts = products || productsInCart;
+  const actualProductsData = productsDataInCart;
+
+  // Check if we have data to display
+  const hasProducts =
+    actualProductsData && actualProductsData.some((item) => item.selected);
+  const hasDelivery = delivery || d;
+
+  if (!hasProducts && !hasDelivery) {
+    return <div className="p-4">No products or delivery information</div>;
+  }
 
   return (
     <>
@@ -41,16 +61,16 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
       </div>
 
       {/* products row */}
-      {productsDataInCart.map((product, i) => {
-        if (!productsInCart[i]) {
-          return;
+      {actualProductsData.map((product, i) => {
+        // Find the actual product by ID
+        const actualProduct = actualProducts.find((p) => p.id === product.id);
+        if (!actualProduct || !product.selected) {
+          return null;
         }
-        const { selected, quantity } = product;
-        const { localizeInfos, price, attributeValues } = productsInCart[i];
 
-        if (!selected) {
-          return;
-        }
+        const { quantity } = product;
+        const { localizeInfos, price, attributeValues } = actualProduct;
+
         return (
           <div
             key={i}
@@ -59,7 +79,11 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
             <div className="w-1/2">{localizeInfos?.title}</div>
             <div className="w-1/4">
               {UsePrice({
-                amount: attributeValues.sale?.value || price,
+                amount:
+                  attributeValues?.sale?.value ||
+                  attributeValues?.price?.value ||
+                  price ||
+                  0,
                 lang,
               })}
             </div>
@@ -69,13 +93,25 @@ const OrderProductsTable: FC<PaymentMethodProps> = ({ lang }) => {
       })}
 
       {/* delivery row */}
-      {delivery && (
+      {hasDelivery && (
         <div className="-mt-px flex border-b border-solid border-[#B0BCCE] p-2">
-          <div className="w-1/2">{delivery.localizeInfos?.title}</div>
-          <div className="w-1/4">
-            {UsePrice({ amount: delivery.price || 0, lang })}
+          <div className="w-1/2">
+            {delivery?.localizeInfos?.title ||
+              d?.localizeInfos?.title ||
+              'Delivery'}
           </div>
-          <div className="w-1/4"></div>
+          <div className="w-1/4">
+            {UsePrice({
+              amount:
+                delivery?.attributeValues?.price?.value ||
+                delivery?.price ||
+                d?.attributeValues?.price?.value ||
+                d?.price ||
+                0,
+              lang,
+            })}
+          </div>
+          <div className="w-1/4">1</div>
         </div>
       )}
     </>

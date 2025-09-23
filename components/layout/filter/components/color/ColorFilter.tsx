@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
@@ -6,10 +7,8 @@ import type {
   IListTitle,
 } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IError } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
-import React, { useEffect, useMemo, useState } from 'react';
-
-import ColorPicker from './ColorPicker';
+import type { FC, Key } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 
 interface ColorFilterProps {
   title?: string;
@@ -19,7 +18,6 @@ interface ColorFilterProps {
 type Color = {
   code: string;
   name: string;
-  selected?: boolean;
 };
 
 /**
@@ -29,49 +27,44 @@ type Color = {
  *
  * @returns Color filter
  */
-const ColorFilter: FC<ColorFilterProps> = ({ title, attributes }) => {
+
+const ColorFilter: FC<ColorFilterProps> = memo(({ title, attributes }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
-
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
 
-  const [activeColor, setActiveColor] = useState<string>(
+  const params = new URLSearchParams(searchParams?.toString() || '');
+  const [currentColor, setCurrentColor] = useState<string>(
     params.get('color') || '',
   );
 
-  // get colorFilters from attributes
-  const colorFilters = useMemo(() => {
-    let colors: Color[] = [];
-    if (!attributes) {
-      return colors;
-    }
-    colors = attributes.listTitles.reduce(
-      (arr: Color[], option: IListTitle) => {
-        const color: Color = {
-          code: option.value.toString(),
-          name: option.title,
-        };
-        arr.push(color);
-        return arr;
-      },
-      [],
-    );
-    return colors;
-  }, [attributes]);
+  const handleColorChange = useCallback((color: string) => {
+    setCurrentColor(color);
+  }, []);
 
-  // set URLSearchParams on activeColor change
+  // Update URL when currentColor changes
   useEffect(() => {
-    if (activeColor) {
-      params.set('color', activeColor);
+    const newParams = new URLSearchParams(params);
+    if (currentColor) {
+      newParams.set('color', currentColor);
     } else {
-      params.delete('color');
+      newParams.delete('color');
     }
-    replace(`${pathname}?${params.toString()}`);
+    // Navigate to the provided href. Replaces the current history entry.
+    replace(`${pathname}?${newParams.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeColor]);
+  }, [currentColor, pathname, replace]);
 
-  if (!attributes) {
+  // Extract color options from attributes
+  const colors: Color[] =
+    attributes && !('error' in attributes)
+      ? attributes.listTitles.map((item: IListTitle) => ({
+          code: item.value.toString(),
+          name: item.title,
+        }))
+      : [];
+
+  if (!attributes || 'error' in attributes) {
     return (
       <div>
         <div className="mb-5 h-5 bg-slate-100">{title}</div>
@@ -84,20 +77,31 @@ const ColorFilter: FC<ColorFilterProps> = ({ title, attributes }) => {
     <div>
       <div className="mb-5 text-lg text-[#4C4D56]">{title}</div>
       <div className="mb-9 flex flex-wrap gap-1 whitespace-nowrap text-sm leading-8 text-slate-400">
-        {colorFilters.map((color, index) => {
-          return (
-            <ColorPicker
-              key={index}
-              code={color.code}
-              name={color.name}
-              activeColor={activeColor}
-              setActiveColor={setActiveColor}
-            />
-          );
-        })}
+        {colors.map((color: { code: string; name: string }, index: Key) => (
+          <button
+            key={index}
+            className={
+              'flex cursor-pointer gap-1.5 rounded-full pl-1 pr-2 transition-colors w-24 ' +
+              (color.code === currentColor
+                ? 'bg-slate-100 text-neutral-700'
+                : 'hover:bg-slate-100')
+            }
+            onClick={() => handleColorChange(color.code)}
+          >
+            <div
+              className={'my-auto size-6 rounded-full '}
+              style={{
+                backgroundColor: color.code,
+              }}
+            ></div>
+            <span className="leading-6">{color.name}</span>
+          </button>
+        ))}
       </div>
     </div>
   );
-};
+});
+
+ColorFilter.displayName = 'ColorFilter';
 
 export default ColorFilter;

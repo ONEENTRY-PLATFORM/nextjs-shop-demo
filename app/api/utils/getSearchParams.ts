@@ -17,9 +17,7 @@ const getSearchParams = (
   },
   handle?: string,
 ) => {
-  const expandedFilters:
-    | Array<IFilterParams & { statusMarker?: string }>
-    | undefined = [];
+  const expandedFilters: Array<IFilterParams & { statusMarker?: string }> = [];
 
   // check if product has SKU or this is service product
   const servicesFilter: IFilterParams = {
@@ -68,7 +66,7 @@ const getSearchParams = (
       attributeMarker: 'price',
       conditionMarker: 'mth',
       conditionValue: searchParams.minPrice,
-      pageUrl: ['shop'],
+      pageUrl: 'shop',
       title: searchParams.search || '',
       isNested: false,
     };
@@ -80,14 +78,15 @@ const getSearchParams = (
       attributeMarker: 'price',
       conditionMarker: 'lth',
       conditionValue: searchParams.maxPrice,
-      pageUrl: ['shop'],
+      pageUrl: 'shop',
       title: searchParams.search || '',
       isNested: false,
     };
     expandedFilters.push(filter);
   }
 
-  return expandedFilters;
+  // Return undefined if no filters are applied to avoid empty filter blocking results
+  return expandedFilters.length > 0 ? expandedFilters : undefined;
 };
 
 export default getSearchParams;

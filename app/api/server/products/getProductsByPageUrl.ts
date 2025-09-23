@@ -2,9 +2,10 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
+import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
-import { typeError } from '@/components/utils';
+import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get all products with pagination for the selected category.
@@ -31,13 +32,29 @@ export const getProductsByPageUrl = async (props: {
   };
 }): Promise<{
   isError: boolean;
-  error?: IError;
-  products?: IProductsEntity[];
+  error: IError;
+  products: IProductsEntity[] | [];
   total: number;
 }> => {
   const { limit, offset, params, lang } = props;
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const body = getSearchParams(params.searchParams);
+
+  // Create cache key from parameters
+  const cacheKey = `products-page-${JSON.stringify({ limit, offset, params, langCode, body })}`;
+
+  // Check cache first
+  const cached = getCachedData<{ products: IProductsEntity[]; total: number }>(
+    cacheKey,
+  );
+  if (cached) {
+    return {
+      isError: false,
+      error: {} as IError,
+      products: cached.products,
+      total: cached.total,
+    };
+  }
 
   try {
     const data = await api.Products.getProductsByPageUrl(
@@ -52,13 +69,31 @@ export const getProductsByPageUrl = async (props: {
       },
     );
 
-    if (typeError(data)) {
-      return { isError: true, error: data, total: 0 };
+    if (isIError(data)) {
+      return { isError: true, error: data, products: [], total: 0 };
     } else {
-      return { isError: false, products: data.items, total: data.total };
+      // Cache the result
+      setCachedData<{ products: IProductsEntity[]; total: number }>(cacheKey, {
+        products: data.items,
+        total: data.total,
+      });
+      return {
+        isError: false,
+        error: {} as IError,
+        products: data.items,
+        total: data.total,
+      };
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    return { isError: true, error: e, total: 0 };
+  } catch (error) {
+    const apiError = handleApiError(error);
+    return {
+      isError: true,
+      error: {
+        statusCode: apiError.statusCode,
+        message: apiError.message,
+      } as IError,
+      products: [],
+      total: 0,
+    };
   }
 };

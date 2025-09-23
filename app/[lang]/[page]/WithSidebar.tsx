@@ -5,6 +5,7 @@ import SidebarMenu from '@/components/layout/sidebar';
 
 /**
  * Sidebar layout
+ *
  * @async server component
  * @param lang Current language shortcode
  * @param children children ReactNode

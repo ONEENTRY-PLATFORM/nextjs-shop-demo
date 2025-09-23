@@ -28,7 +28,7 @@ const DeliveryForm: FC<DeliveryFormProps> = ({ lang, dict, deliveryData }) => {
 
   return (
     <form
-      className="flex w-[730px] max-w-full flex-col pb-5"
+      className="flex max-w-full flex-col pb-5"
       onSubmit={(e) => {
         e.preventDefault();
         router.push('/payment');
@@ -43,6 +43,7 @@ const DeliveryForm: FC<DeliveryFormProps> = ({ lang, dict, deliveryData }) => {
         <TotalAmount
           lang={lang}
           dict={dict}
+          // deliveryData={deliveryData}
           className="flex self-center text-lg font-bold leading-6 text-slate-700 lg:self-end"
         />
         <PaymentButton

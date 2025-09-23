@@ -5,8 +5,9 @@ import type {
 } from 'oneentry/dist/orders/ordersInterfaces';
 
 import { api } from '@/app/api';
+import { clearAllCache } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
-import { typeError } from '@/components/utils';
+import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 interface HandleProps {
   marker: string;
@@ -39,6 +40,10 @@ export const updateOrderByMarkerAndId = async ({
   order?: IBaseOrdersEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+
+  // For update operations, we should clear the cache to ensure data consistency
+  clearAllCache();
+
   try {
     const orderData = await api.Orders.updateOrderByMarkerAndId(
       marker,
@@ -47,13 +52,19 @@ export const updateOrderByMarkerAndId = async ({
       langCode,
     );
 
-    if (typeError(orderData)) {
+    if (isIError(orderData)) {
       return { isError: true, error: orderData };
     } else {
       return { isError: false, order: orderData };
     }
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (e: any) {
-    return { isError: true, error: e };
+  } catch (error) {
+    const apiError = handleApiError(error);
+    return {
+      isError: true,
+      error: {
+        statusCode: apiError.statusCode,
+        message: apiError.message,
+      } as IError,
+    };
   }
 };
