@@ -1,8 +1,8 @@
+import type { IError } from 'oneentry/dist/base/utils';
 import type { Key } from 'react';
 
 import { api } from '@/app/api';
 import type { IProducts } from '@/app/types/global';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Update user state with API Users
@@ -76,38 +76,30 @@ export const updateUserState = async ({
     [],
   );
 
-  try {
-    const res = await api.Users.updateUser({
-      formIdentifier: 'reg',
-      formData: [...formData],
-      state: {
-        favorites: favorites.length > 0 ? favorites : user.state.favorites,
-        cart: cart.length > 0 ? cart : user.state.cart,
-      },
-      notificationData: {
-        email: email?.value,
-        phonePush: [],
-        phoneSMS: phone?.value,
-      },
-    });
+  const res = await api.Users.updateUser({
+    formIdentifier: 'reg',
+    formData: [...formData],
+    state: {
+      favorites: favorites.length > 0 ? favorites : user.state.favorites,
+      cart: cart.length > 0 ? cart : user.state.cart,
+    },
+    notificationData: {
+      email: email?.value,
+      phonePush: [],
+      phoneSMS: phone?.value,
+    },
+  });
 
-    if (!res || isIError(res)) {
-      return false;
-    }
+  if (!res || (res as IError)?.statusCode) {
+    return false;
+  }
 
-    if (res === true) {
-      return true;
-    }
-    return false;
-  } catch (error) {
-    const apiError = handleApiError(error);
-    // eslint-disable-next-line no-console
-    console.log('Error updating user state:', apiError.message);
-    return false;
+  if (res === true) {
+    return true;
   }
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const clearUserState = async (user: any) => {
-  return updateUserState({ favorites: [], cart: [], user: user });
+  updateUserState({ favorites: [], cart: [], user: user });
 };

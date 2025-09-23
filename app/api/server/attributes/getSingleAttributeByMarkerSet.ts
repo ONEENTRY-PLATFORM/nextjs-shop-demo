@@ -2,9 +2,8 @@ import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attribu
 import type { IError } from 'oneentry/dist/base/utils';
 
 import { api } from '@/app/api';
-import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
+import { typeError } from '@/components/utils';
 
 interface HandleProps {
   attributeMarker: string;
@@ -32,13 +31,6 @@ export const getSingleAttributeByMarkerSet = async ({
   attribute?: IAttributesSetsEntity;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const cacheKey = `${setMarker}-${attributeMarker}-${langCode}`;
-
-  // Check cache first
-  const cached = getCachedData<IAttributesSetsEntity>(cacheKey);
-  if (cached) {
-    return { isError: false, attribute: cached };
-  }
 
   try {
     const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
@@ -47,21 +39,13 @@ export const getSingleAttributeByMarkerSet = async ({
       langCode,
     );
 
-    if (isIError(attribute)) {
+    if (typeError(attribute)) {
       return { isError: true, error: attribute as IError };
     } else {
-      // Cache the result
-      setCachedData<IAttributesSetsEntity>(cacheKey, attribute);
       return { isError: false, attribute: attribute };
     }
-  } catch (error) {
-    const apiError = handleApiError(error);
-    return {
-      isError: true,
-      error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
-      } as IError,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { isError: true, error: e };
   }
 };

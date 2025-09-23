@@ -5,9 +5,8 @@ import type {
 } from 'oneentry/dist/blocks/blocksInterfaces';
 
 import { api } from '@/app/api';
-import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
+import { typeError } from '@/components/utils';
 
 interface HandleProps {
   type: BlockType;
@@ -33,32 +32,16 @@ export const getBlocks = async ({
   blocks?: IBlocksResponse;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const cacheKey = `${type}-${langCode}`;
-
-  // Check cache first
-  const cached = getCachedData<IBlocksResponse>(cacheKey);
-  if (cached) {
-    return { isError: false, blocks: cached };
-  }
-
   try {
     const data = await api.Blocks.getBlocks(type, langCode);
 
-    if (isIError(data)) {
+    if (typeError(data)) {
       return { isError: true, error: data };
     } else {
-      // Cache the result
-      setCachedData<IBlocksResponse>(cacheKey, data);
       return { isError: false, blocks: data };
     }
-  } catch (error) {
-    const apiError = handleApiError(error);
-    return {
-      isError: true,
-      error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
-      } as IError,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { isError: true, error: e };
   }
 };

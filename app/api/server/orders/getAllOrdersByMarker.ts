@@ -2,8 +2,8 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 
 import { api } from '@/app/api';
-import { getCachedData, setCachedData } from '@/app/api/utils/cache';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
+import { LanguageEnum } from '@/app/types/enum';
+import { typeError } from '@/components/utils';
 
 interface HandleProps {
   marker: string;
@@ -35,22 +35,7 @@ export const getAllOrdersByMarker = async ({
   orders?: IOrderByMarkerEntity[];
   total: number;
 }> => {
-  const langCode = lang.toUpperCase();
-  const cacheKey = `orders-${marker}-${offset}-${limit}-${langCode}`;
-
-  // Check cache first
-  const cached = getCachedData<{
-    orders: IOrderByMarkerEntity[];
-    total: number;
-  }>(cacheKey);
-  if (cached) {
-    return {
-      isError: false,
-      orders: cached.orders,
-      total: cached.total,
-    };
-  }
-
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   try {
     const data = await api.Orders.getAllOrdersByMarker(
       marker,
@@ -59,28 +44,13 @@ export const getAllOrdersByMarker = async ({
       limit,
     );
 
-    if (isIError(data)) {
+    if (typeError(data)) {
       return { isError: true, error: data, total: 0 };
     } else {
-      // Cache the result
-      setCachedData<{ orders: IOrderByMarkerEntity[]; total: number }>(
-        cacheKey,
-        {
-          orders: data.items,
-          total: data.total,
-        },
-      );
       return { isError: false, orders: data.items, total: data.total };
     }
-  } catch (error) {
-    const apiError = handleApiError(error);
-    return {
-      isError: true,
-      error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
-      } as IError,
-      total: 0,
-    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    return { isError: true, error: e, total: 0 };
   }
 };

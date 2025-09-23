@@ -1,11 +1,11 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
-import { memo } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { deselectProduct } from '@/app/store/reducers/CartSlice';
-import OptimizedImage from '@/components/shared/OptimizedImage';
+import Placeholder from '@/components/shared/Placeholder';
 
 import QuantitySelector from '../../product/components/QuantitySelector';
 import ProductAnimations from '../animations/ProductAnimations';
@@ -41,14 +41,8 @@ const ProductCard: FC<ProductCardProps> = ({
     attributeValues: { pic, price, sale, units_product },
     localizeInfos,
   } = product;
-
   const imgSrc = pic?.value.downloadLink;
   const title = localizeInfos?.title;
-  // Handle checkbox toggle: when checked, it means the user wants to select the product
-  const handleCheckboxChange = () => {
-    // Regardless of checkbox state, toggle the product selection
-    dispatch(deselectProduct(id));
-  };
 
   return (
     <ProductAnimations
@@ -59,26 +53,30 @@ const ProductCard: FC<ProductCardProps> = ({
       <div className="relative flex justify-between gap-5">
         <div className="relative z-10 mb-auto box-border flex shrink-0 flex-row self-center overflow-hidden rounded-md">
           <input
-            onChange={handleCheckboxChange}
+            onChange={() => {
+              dispatch(deselectProduct(id));
+            }}
             type="checkbox"
             name={'deselectProduct-' + id}
             id={'deselectProduct-' + id}
             checked={selected}
             className="size-5 border-spacing-3 accent-orange-500 ring-2 ring-orange-700"
-            aria-label={`Deselect product ${title}`}
           />
         </div>
 
         <div className="relative h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-50">
-          <OptimizedImage
-            width={130}
-            height={150}
-            loading="lazy"
-            src={imgSrc}
-            alt={title}
-            quality={85}
-            className="size-full shrink-0 self-start object-cover"
-          />
+          {imgSrc ? (
+            <Image
+              width={130}
+              height={150}
+              loading="lazy"
+              src={imgSrc}
+              alt={title}
+              className="size-full shrink-0 self-start object-cover"
+            />
+          ) : (
+            <Placeholder />
+          )}
         </div>
 
         <div className="flex flex-col gap-5 self-start text-neutral-600">
@@ -91,9 +89,9 @@ const ProductCard: FC<ProductCardProps> = ({
         </div>
 
         <Link
+          prefetch={true}
           href={`/shop/product/` + id}
           className="absolute left-0 top-0 z-0 flex size-full"
-          aria-label={`${title}`}
         ></Link>
       </div>
       <div className="z-10 flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:ml-8 max-sm:flex">
@@ -109,14 +107,4 @@ const ProductCard: FC<ProductCardProps> = ({
   );
 };
 
-// Memoize component to prevent unnecessary re-renders
-const MemoizedProductCard = memo(ProductCard, (prevProps, nextProps) => {
-  return (
-    prevProps.selected === nextProps.selected &&
-    prevProps.lang === nextProps.lang &&
-    prevProps.index === nextProps.index &&
-    prevProps.product.id === nextProps.product.id
-  );
-});
-
-export default MemoizedProductCard;
+export default ProductCard;

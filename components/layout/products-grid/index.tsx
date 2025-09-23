@@ -10,12 +10,10 @@ import LoadMore from './components/LoadMore';
 import ProductsGrid from './components/ProductsGrid';
 import ProductsNotFound from './components/ProductsNotFound';
 
-export const dynamic = 'force-dynamic';
-
 interface GridLayoutProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: any;
-  searchParams: {
+  searchParams?: {
     search?: string;
     page?: string;
     filters?: IFilterParams[];
@@ -37,16 +35,18 @@ interface GridLayoutProps {
  */
 const ProductsGridLayout: FC<GridLayoutProps> = async ({
   params,
-  searchParams,
+  searchParams: sp,
   dict,
   pagesLimit,
   isCategory,
 }) => {
+  const p = await params;
+  const searchParams = await sp;
   const currentPage = Number(searchParams?.page) || 1;
-  const { lang } = params;
+  const { lang } = await params;
   const limit =
     currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
-  const combinedParams = { ...params, searchParams };
+  const combinedParams = { ...p, searchParams };
 
   // Get all products from api or get products byPageUrl
   const { isError, products, total } = !isCategory

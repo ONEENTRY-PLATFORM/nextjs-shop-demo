@@ -19,7 +19,7 @@ const MobileMenuTrigger = () => {
         setComponent('MobileMenu');
       }}
       aria-label="Open menu"
-      className="flex size-10 flex-col items-center justify-center gap-1 rounded-md transition-colors md:hidden"
+      className="flex cursor-pointer size-10 flex-col items-center justify-center gap-1 rounded-md transition-colors md:hidden"
     >
       <span className={'block h-0.5 w-8 bg-gray-600 '}></span>
       <span className={'block h-0.5 w-8 bg-gray-600 '}></span>

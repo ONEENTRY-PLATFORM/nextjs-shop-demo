@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import React from 'react';
 
-import { UsePrice } from '@/components/utils/utils';
+import { UsePrice } from '@/components/utils';
 
 interface PriceDisplayProps {
   attributes: {

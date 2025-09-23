@@ -1,56 +1,38 @@
-/* eslint-disable react/prop-types */
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { FC } from 'react';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface AvailabilityFilterProps {
   title?: string;
 }
 
 /**
- * Availability filter component for products
- * @param title - Filter title
+ * History
+ * @param dict dictionary from server api
  *
- * @returns JSX Element
+ * @returns
  */
-const AvailabilityFilter: FC<AvailabilityFilterProps> = memo(({ title }) => {
+const AvailabilityFilter: FC<AvailabilityFilterProps> = ({ title }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  // Handle useSearchParams in a try/catch to prevent build errors
-  let params: URLSearchParams;
-  try {
-    const searchParams = useSearchParams();
-    params = new URLSearchParams(searchParams?.toString() || '');
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
-    // If useSearchParams fails (e.g. during SSR), create empty params
-    params = new URLSearchParams();
-  }
-
-  const [available, setAvailability] = useState<boolean>(
-    params.get('in_stock') === 'true',
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
+  const [available, setAvailability] = useState(
+    params.get('in_stock') ? true : false,
   );
-
-  const handleAvailabilityChange = useCallback(() => {
-    setAvailability(!available);
-  }, [available]);
 
   useEffect(() => {
     if (available) {
-      params.set('in_stock', 'true');
+      params.set('in_stock', available ? 'true' : '');
     } else {
       params.delete('in_stock');
     }
-
-    // Only update URL if we have pathname
-    if (pathname) {
-      replace(`${pathname}?${params.toString()}`);
-    }
+    replace(`${pathname}?${params.toString()}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [available, pathname, replace]);
+  }, [available]);
 
   return (
     <div className="mb-9 flex gap-5">
@@ -58,14 +40,14 @@ const AvailabilityFilter: FC<AvailabilityFilterProps> = memo(({ title }) => {
         htmlFor="availability"
         className="flex-auto text-lg leading-8 text-[#4C4D56]"
       >
-        {title || 'Availability'}
+        {title}
       </label>
       <div className="relative inline-block w-10 select-none align-middle transition duration-200 ease-in">
         <input
           id="availability"
           type="checkbox"
-          checked={available}
-          onChange={handleAvailabilityChange}
+          checked={params.get('in_stock') ? true : false}
+          onChange={() => setAvailability(!available)}
           className="toggle-checkbox absolute block size-6 cursor-pointer appearance-none rounded-full border-4 bg-white transition-all duration-300 hover:border-orange-500"
         />
         <label
@@ -75,8 +57,6 @@ const AvailabilityFilter: FC<AvailabilityFilterProps> = memo(({ title }) => {
       </div>
     </div>
   );
-});
-
-AvailabilityFilter.displayName = 'AvailabilityFilter';
+};
 
 export default AvailabilityFilter;

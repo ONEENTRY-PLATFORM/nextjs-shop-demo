@@ -1,5 +1,4 @@
 import { api } from '@/app/api';
-import { handleApiError } from '@/app/utils/errorHandler';
 
 type LogOutProps = { marker: string; token?: string };
 
@@ -21,8 +20,7 @@ export const logOutUser = async ({ marker }: LogOutProps) => {
     }
     const result = await api.AuthProvider.logout(marker, token);
     return { data: result };
-  } catch (error) {
-    const apiError = handleApiError(error);
-    return { error: apiError.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 };

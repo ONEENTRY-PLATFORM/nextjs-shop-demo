@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Dispatch } from 'react';
 import { useEffect } from 'react';
 
@@ -16,7 +17,7 @@ type Props = {
  *
  * @returns FormCaptcha
  */
-const FormCaptcha = ({ setIsCaptcha }: Props) => {
+const FormCaptcha = ({ setToken, setIsCaptcha, captchaKey }: Props) => {
   const testKey = '6LdF4HcqAAAAAD7Mia-zF5SMzY-XjHd_SU2xr0uQ';
   const siteKey = 'AIzaSyBC4rSjMl4SspgQ2J046ZyRv1IX44v3jgc';
 

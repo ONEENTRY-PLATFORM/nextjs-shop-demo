@@ -19,28 +19,14 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 
-interface SignInFormProps extends FormProps {
-  /** Current language shortcode (e.g., 'en', 'fr') */
-  lang: string;
-  /** Dictionary of localized strings from server API */
-  dict: IAttributes;
-}
-
 /**
- * SignInForm component that handles user authentication
+ * SignIn form
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
  *
- * This component renders a sign-in form with email/phone and password fields.
- * It supports switching between email and phone number authentication methods,
- * handles form submission, and integrates with the authentication context.
- * The form includes animations, error handling, and links to related actions
- * such as password reset and account creation.
- *
- * @param props - Component properties
- * @param props.lang - Current language shortcode
- * @param props.dict - Dictionary of localized strings from server API
- * @returns Sign-in form with email/phone and password fields
+ * @returns SignIn form
  */
-const SignInForm: FC<SignInFormProps> = ({ lang, dict }) => {
+const SignInForm: FC<FormProps> = ({ lang, dict }) => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
 
@@ -75,15 +61,7 @@ const SignInForm: FC<SignInFormProps> = ({ lang, dict }) => {
     .slice()
     .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
 
-  /**
-   * Handles the sign-in form submission
-   *
-   * This function validates the form data, sends authentication request to the API,
-   * and handles success or error responses. On successful authentication, it updates
-   * the authentication context and closes the modal.
-   *
-   * @param e - Form submission event
-   */
+  // SignIn with API AuthProvider
   const onSignIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!email_reg || !password_reg) {
@@ -164,7 +142,6 @@ const SignInForm: FC<SignInFormProps> = ({ lang, dict }) => {
             if (field.marker === 'password_reg') {
               return <FormInput key={index} index={4} {...field} />;
             }
-            return;
           })}
         </div>
 

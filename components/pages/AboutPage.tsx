@@ -1,15 +1,9 @@
-// import parse from 'html-react-parser';
+import parse from 'html-react-parser';
 import Image from 'next/image';
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { FC } from 'react';
 
 import SlideUpTransition from '@/app/animations/SlideUpTransition';
-
-import {
-  getImageUrl,
-  getString,
-  getText,
-} from '../../app/hooks/useAttributesData';
+import type { SimplePageProps } from '@/app/types/global';
 
 /**
  * About page
@@ -17,18 +11,29 @@ import {
  *
  * @returns About page
  */
-const AboutPage: FC<{ page: IPagesEntity }> = ({ page }) => {
-  // Safely extract content from page using utility functions
-  const attributeValues = page.attributeValues;
-  const pageTitle = getString('title', attributeValues);
-  const imageSrc = getImageUrl('img', attributeValues);
-  const contentData = getText('content', attributeValues, 'html');
-  const listTitle = getString('list_title', attributeValues);
-  const listData = getText('list', attributeValues, 'html');
-
+const AboutPage: FC<SimplePageProps> = ({ page }) => {
   if (!page) {
-    return <></>;
+    return;
   }
+
+  // Extract content from page attributeValues
+  const {
+    attributeValues: { img, title, content, list_title, list },
+  } = page;
+
+  const pageTitle = title?.value || '';
+  const imageSrc = img?.value[0].downloadLink || '';
+
+  const contentAttr = content?.value[0] || '';
+  const contentData =
+    (contentAttr?.htmlValue || contentAttr?.plainValue) &&
+    parse(contentAttr?.htmlValue || contentAttr?.plainValue);
+
+  const listTitle = list_title?.value;
+  const listAttr = list?.value[0] || '';
+  const listData =
+    (listAttr.htmlValue || listAttr.plainValue) &&
+    parse(listAttr.htmlValue || listAttr.plainValue);
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
@@ -54,25 +59,23 @@ const AboutPage: FC<{ page: IPagesEntity }> = ({ page }) => {
               </h1>
             </SlideUpTransition>
             {contentData && (
-              <SlideUpTransition index={5} className={''}>
-                <div className="max-md:max-w-full">{contentData}</div>
+              <SlideUpTransition index={5} className={'flex flex-col gap-3'}>
+                {contentData}
+              </SlideUpTransition>
+            )}
+            {listTitle && (
+              <SlideUpTransition index={6} className={''}>
+                <h2 className="mb-3 mt-4 text-xl font-bold underline">
+                  {listTitle}
+                </h2>
+              </SlideUpTransition>
+            )}
+            {listData && (
+              <SlideUpTransition index={7} className={''}>
+                {listData}
               </SlideUpTransition>
             )}
           </section>
-          {listTitle && (
-            <SlideUpTransition index={6} className={''}>
-              <h2 className="mt-5 text-base font-bold leading-6 text-neutral-600 max-md:mt-10">
-                {listTitle}
-              </h2>
-            </SlideUpTransition>
-          )}
-          {listData && (
-            <SlideUpTransition index={7} className={'max-md:mt-10'}>
-              <div className="mt-2.5 text-sm leading-5 text-neutral-600 max-md:max-w-full">
-                {listData}
-              </div>
-            </SlideUpTransition>
-          )}
         </div>
       </section>
     </div>

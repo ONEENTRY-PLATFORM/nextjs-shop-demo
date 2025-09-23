@@ -49,8 +49,7 @@ const SlideUpTransition = ({
 
     if (stage === 'none' && prevStage === 'entering') {
       tl.play();
-    }
-    if (stage === 'leaving' && prevStage === 'none') {
+    } else if (stage === 'leaving' && prevStage === 'none') {
       tl.reverse(1);
     }
 

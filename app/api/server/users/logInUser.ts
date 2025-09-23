@@ -1,7 +1,6 @@
 import type { IAuthPostBody } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 
 import { api } from '@/app/api';
-import { handleApiError } from '@/app/utils/errorHandler';
 
 type LogInProps = { login: string; password: string };
 
@@ -33,10 +32,7 @@ export const logInUser = async ({ login, password }: LogInProps) => {
     if (result && result.accessToken && result.refreshToken) {
       return { data: result };
     }
-    // Handle case where result exists but doesn't have required tokens
-    return { error: 'Authentication failed' };
-  } catch (error) {
-    const apiError = handleApiError(error);
-    return { error: apiError.message };
+  } catch (e: unknown) {
+    return { error: (e as Error).message };
   }
 };

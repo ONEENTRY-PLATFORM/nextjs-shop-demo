@@ -1,53 +1,68 @@
 /* eslint-disable @next/next/no-img-element */
 import type { FC } from 'react';
 
-import type { ImageProps } from '@/app/types/global';
+interface BlurImageProps {
+  src: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  priority?: boolean;
+  loading?: 'eager' | 'lazy' | undefined;
+  placeholder?: 'blur' | 'empty' | `data:image/${string}`;
+  blurDataURL?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  objectFit?: string;
+  fetchPriority?: 'auto' | 'low' | 'high' | undefined;
+  // onLoadingComplete?: OnLoadingComplete;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ref?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onClick?: any;
+  // decoding?: 'async' | 'sync' | 'auto';
+}
 
-const Image: FC<ImageProps> = ({
+const Image: FC<BlurImageProps> = ({
   src,
   alt = '',
-  fill,
   width,
   height,
-  priority,
-  className = '',
-  style = {},
+  loading = 'lazy',
   placeholder,
   blurDataURL,
-  isImageLoading,
-  loading,
+  className = '',
+  style = {},
   ref,
-  onLoadingComplete,
+  onClick,
+  fetchPriority,
 }) => {
   return (
     <div
-      className={`relative overflow-hidden ${fill ? 'size-full' : ''} ${className}`}
+      className={`relative overflow-hidden ${className}`}
       style={{ width, height, ...style }}
       ref={ref}
+      onClick={(e) => onClick(e)}
     >
       {placeholder && (
         <img
           src={blurDataURL}
-          alt={alt}
+          alt=""
           fetchPriority="high"
           aria-hidden="true"
-          className={
-            'absolute inset-0 z-0 size-full scale-110 object-cover blur-xl transition-opacity duration-300 ' +
-            isImageLoading
-              ? 'hidden'
-              : ''
-          }
+          className="absolute inset-0 z-0 size-full scale-110 object-cover blur-xl transition-opacity duration-700"
         />
       )}
       <img
         src={src}
         alt={alt}
         loading={loading}
-        className={
-          'relative z-10 size-full object-cover transition-opacity duration-300 '
-        }
-        onLoad={() => onLoadingComplete()}
-        fetchPriority={priority || 'auto'}
+        className="relative z-10 size-full object-cover transition-opacity duration-700"
+        onLoad={(e) => {
+          if (placeholder) {
+            e.currentTarget.previousElementSibling?.classList.add('opacity-0');
+          }
+        }}
+        fetchPriority={fetchPriority || 'auto'}
       />
     </div>
   );

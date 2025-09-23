@@ -46,13 +46,6 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({
   // Submit form
   const onSubmitFormHandle = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // Check if email field exists
-    if (!fields.email_reg) {
-      setError('Email field is missing');
-      return;
-    }
-
     try {
       // generate verification code with API
       await api.AuthProvider.generateCode(
@@ -100,7 +93,6 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({
                 <FormInput key={index} index={index as number} {...field} />
               );
             }
-            return;
           })}
         </div>
 

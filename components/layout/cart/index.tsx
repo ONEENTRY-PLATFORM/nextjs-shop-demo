@@ -1,23 +1,19 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
-// Indicates that this file is a client-side component in Next.js
 
-// Import necessary types and React functions
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
-// Import API hooks and Redux hooks
 import { api, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
-// Import Redux actions and selectors
 import {
   addDeliveryToCart,
   addProductsToCart,
   selectCartData,
 } from '@/app/store/reducers/CartSlice';
-// Import custom types and components
 import type { IProducts } from '@/app/types/global';
 import CartAnimations from '@/components/layout/cart/animations/CartAnimations';
 import EmptyCart from '@/components/layout/cart/components/EmptyCart';
@@ -26,50 +22,45 @@ import Loader from '@/components/shared/Loader';
 
 import DeliveryForm from './delivery-table/DeliveryForm';
 
-// Define the props interface for the CartPage component
 interface CartPageProps {
-  lang: string; // Current language shortcode
-  dict: IAttributeValues; // Dictionary from server API
-  deliveryData: IProductsEntity; // Represents a product entity object
+  lang: string;
+  dict: IAttributeValues;
+  deliveryData: IProductsEntity;
 }
 
 /**
- * Cart page component
+ * Cart page
+ * @param lang Current language shortcode
+ * @param dict dictionary from server api
+ * @param deliveryData Represents a product entity object.
  *
- * @param lang - Current language shortcode
- * @param dict - Dictionary from server API
- * @param deliveryData - Represents a product entity object
- *
- * @returns JSX.Element representing the cart page
+ * @returns
  */
 const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
-  const dispatch = useAppDispatch(); // Initialize Redux dispatch function
-  const { isAuth } = useContext(AuthContext); // Get authentication status from context
-  const [products, setProducts] = useState<IProductsEntity[]>([]); // State to store products
+  const dispatch = useAppDispatch();
+  const { isAuth } = useContext(AuthContext);
+  const [products, setProducts] = useState<IProductsEntity[]>([]);
 
-  // Get products data from Redux cart slice
+  // products in redux carSlice
   const productsCartData = useAppSelector(selectCartData) as IProducts[];
 
-  // Fetch products by IDs using a custom query hook
+  // Get Products By Ids from api
   const { data, isLoading } = useGetProductsByIdsQuery({
-    items: productsCartData.map((p) => p.id.toString()).toString(),
+    items: productsCartData.map((p) => p.id),
   });
 
-  // Add delivery data to the cart
+  // add delivery Data
   useEffect(() => {
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryData]);
 
-  // Add fetched products to the cart slice
+  // add products to cart slice
   useEffect(() => {
     if (data) {
       setProducts(data);
-      dispatch(addProductsToCart(data));
       if (isAuth) {
-        // Connect to WebSocket if authenticated
         const ws = api.WS.connect();
         if (ws) {
           ws.on('notification', async (res) => {
@@ -87,58 +78,58 @@ const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
                 10,
               );
 
-              // Update product price and status on receiving a notification
               setProducts((prevProducts) => {
                 const newProducts = [...prevProducts];
-                if (index !== -1 && prevProducts[index]) {
-                  newProducts[index] = {
-                    ...prevProducts[index],
-                    price: newPrice,
-                    statusIdentifier: res?.product?.status?.identifier,
-                  };
-                }
+                newProducts[index] = {
+                  ...products[index],
+                  price: newPrice,
+                  statusIdentifier: res?.product?.status?.identifier,
+                };
                 return newProducts;
               });
             }
           });
+
+          return () => {
+            ws.disconnect();
+          };
         }
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isAuth]);
+  }, [data]);
+
+  // update products in cart
+  useEffect(() => {
+    if (products) {
+      dispatch(addProductsToCart(products));
+    }
+  }, [products]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (!products || products.length < 1) {
+    return <EmptyCart lang={lang} dict={dict} />;
+  }
 
   return (
-    <CartAnimations className={'w-[730px] max-w-full'} index={0}>
-      <div className="cart">
-        <div className="cart__container flex flex-col gap-4">
-          <div className="cart__products flex flex-col gap-4">
-            {isLoading ? (
-              <Loader />
-            ) : products.length ? (
-              products.map((product, index) => {
-                const cartItem = productsCartData.find(
-                  (item) => item.id === product.id,
-                );
-                return (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    lang={lang}
-                    selected={cartItem?.selected ?? true}
-                    index={index}
-                  />
-                );
-              })
-            ) : (
-              <EmptyCart lang={lang} dict={dict} />
-            )}
-          </div>
-          <div className="cart__delivery">
-            <DeliveryForm lang={lang} dict={dict} deliveryData={deliveryData} />
-          </div>
-        </div>
-      </div>
-    </CartAnimations>
+    <div className="flex w-full flex-col overflow-hidden pb-5 lg:max-w-[730px]">
+      <CartAnimations className={'mb-4 flex w-full flex-col gap-4'} index={1}>
+        {products.map((product: IProductsEntity, i: number) => {
+          return (
+            <ProductCard
+              key={i}
+              index={i}
+              product={product}
+              selected={productsCartData[i]?.selected}
+              lang={lang}
+            />
+          );
+        })}
+      </CartAnimations>
+      <DeliveryForm lang={lang} dict={dict} deliveryData={deliveryData} />
+    </div>
   );
 };
 

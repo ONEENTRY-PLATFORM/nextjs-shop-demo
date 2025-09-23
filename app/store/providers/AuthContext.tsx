@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
@@ -6,7 +5,7 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
-import { useLazyGetMeQuery } from '@/app/api';
+import { reDefine, useLazyGetMeQuery } from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import type { IProducts } from '@/app/types/global';
 
@@ -88,7 +87,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       setIsAuth(false);
       return;
     }
-    await reDefine(refresh, langCode);
+    // await reDefine(refresh, langCode);
     await checkToken();
   };
 
@@ -119,7 +118,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
    * Update user state on server
    * @async
    */
-  const updateUser = async () => {
+  const updateUserData = async () => {
     await updateUserState({
       cart: productsInCart,
       favorites: favoritesIds,
@@ -129,10 +128,10 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
 
   // Update user data on auth
   useEffect(() => {
-    if (!isAuth || !user) {
+    if (!isAuth) {
       return;
     }
-    updateUser();
+    updateUserData();
   }, [isAuth, productsInCart, favoritesIds]);
 
   // Load cart from user state
@@ -192,7 +191,5 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     refreshUser: () => setRefetchUser(!refetchUser),
   };
 
-  return (
-    <AuthContext.Provider value={value as any}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

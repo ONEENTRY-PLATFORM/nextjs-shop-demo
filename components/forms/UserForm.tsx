@@ -56,14 +56,11 @@ const UserForm: FC<FormProps> = ({ lang, dict }) => {
       const formData: IAuthFormData[] = data?.attributes
         .map((field: IAttributes) => {
           if (field.marker !== 'email_notifications') {
-            const fieldData = fields[field.marker as keyof typeof fields];
-            if (fieldData) {
-              return {
-                marker: field.marker,
-                value: fieldData.value,
-                type: 'string',
-              };
-            }
+            return {
+              marker: field.marker,
+              value: fields[field.marker as keyof typeof fields].value,
+              type: 'string',
+            };
           }
           return null;
         })
@@ -79,13 +76,13 @@ const UserForm: FC<FormProps> = ({ lang, dict }) => {
           authData: [
             {
               marker: 'password_reg',
-              value: fields['password_reg']?.value || '',
+              value: fields['password_reg'].value,
             },
           ],
           notificationData: {
-            email: fields['email_reg']?.value || '',
+            email: fields['email_reg'].value,
             phonePush: [],
-            phoneSMS: fields['phone_reg']?.value || '',
+            phoneSMS: fields['phone_reg'].value,
           },
           state: {},
         });
@@ -133,7 +130,6 @@ const UserForm: FC<FormProps> = ({ lang, dict }) => {
                 />
               );
             }
-            return;
           })}
         </div>
 

@@ -7,7 +7,7 @@ interface TimeSlotsProps {
   timeSlots: Array<{
     time: string;
     isSelected?: boolean | undefined;
-    isDisabled?: boolean;
+    isDisabled?: boolean | undefined;
   }>;
   currentTime: string;
   setTime: Dispatch<React.SetStateAction<string>>;

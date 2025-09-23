@@ -14,14 +14,14 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
  */
 const ApplyButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
   const { setTransition } = useContext(OpenDrawerContext);
-  const apply_button_placeholder = dict?.apply_button_placeholder;
+  const { apply_button_placeholder } = dict;
 
   return (
     <button
       onClick={() => setTransition('close')}
       className="btn btn-xl btn-primary w-full"
     >
-      {apply_button_placeholder?.value || 'Apply'}
+      {apply_button_placeholder?.value}
     </button>
   );
 };

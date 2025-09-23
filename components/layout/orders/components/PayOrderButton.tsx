@@ -20,8 +20,7 @@ const PayOrderButton: FC<{
   title: string;
 }> = ({ id, lang, loading, title }) => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { createSession, isLoading }: any = useCreateOrder({ langCode });
+  const { createSession, isLoading } = useCreateOrder({ langCode });
 
   return (
     <button

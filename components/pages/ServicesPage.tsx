@@ -1,4 +1,3 @@
-import parse from 'html-react-parser';
 import type { FC } from 'react';
 
 import type { SimplePageProps } from '@/app/types/global';
@@ -16,14 +15,13 @@ const ServicesPage: FC<SimplePageProps> = ({ page }) => {
 
   // Extract content from page localizeInfos
   const {
-    localizeInfos: { title, htmlContent },
+    localizeInfos: { title },
   } = page;
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <div className="flex flex-col">
         <h1>{title}</h1>
-        {htmlContent && <div className="mb-6">{parse(htmlContent)}</div>}
       </div>
     </div>
   );

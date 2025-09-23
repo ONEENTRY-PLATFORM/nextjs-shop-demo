@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import 'server-only';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
@@ -9,17 +10,12 @@ import { i18n, type Locale } from '../../i18n-config.ts';
 
 /**
  * Get dictionary from block by marker
- *
  * @param lang Current language shortcode
+ *
  * @returns Current lang dictionary
  */
-const dict = async (lang: string): Promise<IAttributeValues> => {
+const dict = async (lang: string): Promise<any> => {
   try {
-    // Ensure lang is a valid locale
-    if (!i18n.locales.includes(lang as Locale)) {
-      lang = i18n.defaultLocale;
-    }
-
     const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
     // get block by marker from api
@@ -29,13 +25,10 @@ const dict = async (lang: string): Promise<IAttributeValues> => {
     const blockValues =
       block?.attributeValues[langCode] || block?.attributeValues;
 
-    // Return the values or an empty object as fallback
-    return (blockValues as IAttributeValues) || {};
+    return { ...(blockValues as IAttributeValues) };
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);
-    // Return empty object as fallback
-    return {};
   }
 };
 
@@ -45,28 +38,13 @@ const dict = async (lang: string): Promise<IAttributeValues> => {
  *
  * @returns Current lang dictionary
  */
-export const getDictionary = async (
-  locale: Locale,
-): Promise<IAttributeValues> => {
-  try {
-    const dictionaries: Record<string, () => Promise<IAttributeValues>> =
-      i18n.locales.reduce(
-        (acc, lang) => {
-          acc[lang] = () => dict(lang);
-          return acc;
-        },
-        {} as Record<string, () => Promise<IAttributeValues>>,
-      );
+export const getDictionary = async (locale: Locale) => {
+  const dictionaries = i18n.locales?.reduce(
+    (a, v) => ({ ...a, [v]: () => dict(v) }),
+    {},
+  ) as any;
 
-    const dictionary = dictionaries[locale]
-      ? await dictionaries[locale]()
-      : (await dictionaries[i18n.defaultLocale]?.()) || {};
-
-    return dictionary || {};
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Error loading dictionary for locale:', locale, error);
-    // Ensure we always return an object, even if empty
-    return {};
-  }
+  return (
+    dictionaries[locale as keyof typeof dictionaries]?.() ?? dictionaries.en()
+  );
 };

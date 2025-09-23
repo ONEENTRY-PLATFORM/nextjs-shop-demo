@@ -1,0 +1,83 @@
+# стадии выпоолнения заданий
+stages:
+  - build-image
+  - deploy
+
+variables:
+  DOCKER_AUTH_CONFIG_PATH: ~/.docker-${CI_PROJECT_NAME}
+  GIT_DEPTH: "1"  # только последний коммит, чтобы не тянуть весь .git
+
+.rules:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: on_success
+
+# Общий шаблон сборки образа. привязывается к стадиям выполняются паралельно
+.build-site-image:
+  stage: build-image
+  before_script:
+    - echo $CI_REGISTRY_PASSWORD | docker --config $DOCKER_AUTH_CONFIG_PATH login -u "$CI_REGISTRY_USER" --password-stdin $CI_REGISTRY
+  script:
+    # Проверим размер перед сборкой
+    - echo "🔍 Размер проекта:"
+    - du -sh .
+    - du -sh .git || true
+
+    # Сборка и публикация Docker-образа
+    - docker --config $DOCKER_AUTH_CONFIG_PATH build 
+      --build-arg NEXT_PUBLIC_PROJECT_URL=${NEXT_PUBLIC_PROJECT_URL} 
+      --build-arg NEXT_PUBLIC_APP_TOKEN=${NEXT_PUBLIC_APP_TOKEN}     
+      --pull 
+      -t "$CI_REGISTRY_IMAGE":latest .
+    - docker --config $DOCKER_AUTH_CONFIG_PATH push "$CI_REGISTRY_IMAGE":latest
+  after_script:
+    # Очистка временных ресурсов Docker
+    - docker --config $DOCKER_AUTH_CONFIG_PATH system prune -f || true
+
+# Сборка для региона ru
+build-ru:
+  extends:
+    - .rules
+    - .build-site-image
+  tags:
+    - shell
+    - ru
+
+# Шаблон деплоя
+.deploy:
+  stage: deploy
+  script:
+    # Подключаем SSH-ключ
+    - 'which ssh-agent || ( apk add openssh-client )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan "$SERVER_IP" >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - 'which rsync || ( apk add rsync )'
+
+    # Копирование файлов
+    - 'which rsync || ( apk add rsync )'
+    - "rsync --mkpath --rsync-path='sudo rsync' docker-compose.yml ${SSH_USER}@${SERVER_IP}:${ROOT_DIRECTORY_PATH}/"
+    
+    # Перезапуск контейнеров
+    - >
+      ssh ${SSH_USER}@${SERVER_IP}
+      "sudo docker --config $DOCKER_AUTH_CONFIG_PATH logout $CI_REGISTRY;
+      echo $DOCKER_REGISTRY_PASS | sudo docker --config $DOCKER_AUTH_CONFIG_PATH login -u $DOCKER_REGISTRY_USER --password-stdin $CI_REGISTRY;
+      sudo docker --config $DOCKER_AUTH_CONFIG_PATH compose -f ${ROOT_DIRECTORY_PATH}/docker-compose.yml pull;
+      sudo docker compose -f ${ROOT_DIRECTORY_PATH}/docker-compose.yml up -d;
+      sudo docker image prune -f
+      "
+
+# Деплой ru
+deploy-ru:
+  extends:
+    - .rules
+    - .deploy
+  tags:
+    - docker
+    - ru
+  needs:
+    - build-ru

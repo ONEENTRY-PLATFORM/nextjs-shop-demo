@@ -40,7 +40,7 @@ const VariationsCarousel: FC<VariationsCarouselProps> = ({
   return (
     <div
       className={
-        'flex h-[130px] w-full items-center justify-center self-stretch ' +
+        'flex h-[130px] w-full items-start justify-start self-stretch max-md:justify-center ' +
         containerClass
       }
     >
@@ -62,11 +62,10 @@ const VariationsCarousel: FC<VariationsCarouselProps> = ({
           containerProps={{
             style: {
               userSelect: 'none',
-              justifyContent: 'flexCenter',
-              overflow: 'hidden',
+              justifyContent: 'flexStart',
             },
             className:
-              'flex min-w-full wrap w-full flex-row w-full justify-center items-center gap-[4%] self-stretch',
+              'flex min-w-full wrap w-full flex-row w-full items-start max-md:justify-center max-md:items-center justify-start gap-[4%] self-stretch overflow-hidden',
           }}
           activeSlideProps={{
             style: {},
@@ -78,7 +77,7 @@ const VariationsCarousel: FC<VariationsCarouselProps> = ({
               alignSelf: 'center',
             },
             className:
-              'absolute top-[calc(50%-15px)] z-10 right-0 size-[30px] group flex aspect-square items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500',
+              'absolute cursor-pointer top-[calc(50%-15px)] z-10 right-0 size-[30px] group flex aspect-square items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500',
           }}
           backwardBtnProps={{
             children: <NavigationButton direction="left" />,
@@ -87,7 +86,7 @@ const VariationsCarousel: FC<VariationsCarouselProps> = ({
               alignSelf: 'center',
             },
             className:
-              'absolute top-[calc(50%-15px)] z-10 left-0 size-[30px] group flex aspect-square items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500',
+              'absolute cursor-pointer top-[calc(50%-15px)] z-10 left-0 size-[30px] group flex aspect-square items-center justify-center rounded-full border border-neutral-200 bg-white p-2 transition-colors hover:border-orange-500',
           }}
           preventScrollOnSwipe
           swipeTreshold={60}

@@ -24,7 +24,7 @@ const ColorPicker: FC<ColorPickerProps> = ({
   return (
     <button
       className={
-        'flex gap-1.5 rounded-full pl-1 pr-2 transition-colors w-24 ' +
+        'flex cursor-pointer gap-1.5 rounded-full pl-1 pr-2 transition-colors w-24 ' +
         (code === activeColor
           ? 'bg-slate-100 text-neutral-700'
           : 'hover:bg-slate-100')

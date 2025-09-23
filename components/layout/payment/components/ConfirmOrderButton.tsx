@@ -1,11 +1,11 @@
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { FC } from 'react';
 
 import Loader from '@/components/shared/Loader';
 
 type ConfirmOrderButtonProps = {
-  dict: IAttributeValues;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
   account: IAccountsEntity;
   isLoading: boolean;
   onConfirmOrder: () => Promise<void>;

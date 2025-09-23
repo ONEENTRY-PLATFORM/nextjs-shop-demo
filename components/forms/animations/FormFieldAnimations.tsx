@@ -27,83 +27,78 @@ const FormFieldAnimations: FC<FormFieldAnimationsProps> = ({
   className,
   index,
 }) => {
-  const { stage } = useTransitionState(); // Get the current transition stage
-  const [prevStage, setPrevStage] = useState<string>(''); // State to track the previous stage
-  const { open, transition } = useContext(OpenDrawerContext); // Get open and transition states from context
-  const ref = useRef(null); // Reference to the DOM element for animations
+  const { stage } = useTransitionState();
+  const [prevStage, setPrevStage] = useState<string>('');
+  const { open, transition } = useContext(OpenDrawerContext);
+  const ref = useRef(null);
 
   // Form transition animations
   useGSAP(() => {
     if (!ref.current) {
-      return; // Exit early if the reference is not set
+      return;
     }
 
     gsap.set(ref.current, {
-      transformOrigin: '0 0', // Set the transform origin for scaling animations
-      overflow: 'hidden', // Hide overflow to prevent content from spilling out
+      transformOrigin: '0 0',
+      overflow: 'hidden',
     });
 
     const tl = gsap.timeline({
-      paused: true, // Create a new GSAP timeline and pause it initially
+      paused: true,
     });
 
-    // Define animation from hidden (width: 0, opacity: 0) to visible (width: 100%, opacity: 1)
     tl.fromTo(
       ref.current,
       {
-        width: 0, // Initial width: 0 (collapsed)
-        opacity: 0, // Initial opacity: 0 (transparent)
+        width: 0,
+        opacity: 0,
       },
       {
-        width: '100%', // Animate to full width
-        opacity: 1, // Animate to fully visible
-        delay: index / 10 + 0.35, // Stagger effect based on index
+        width: '100%',
+        opacity: 1,
+        delay: index / 10 + 0.35,
       },
     );
-    tl.play(); // Play the animation
+    tl.play();
 
-    // Reverse the animation if transitioning to close
     if (transition === 'close') {
-      tl.reverse(index / 10 + 0.65); // Reverse with stagger based on index
+      tl.reverse(index / 10 + 0.65);
     }
 
     return () => {
-      tl.kill(); // Clean up the timeline on unmount or dependency change
+      tl.kill();
     };
-  }, [transition, open]); // Dependencies for re-running the animation
+  }, [transition, open]);
 
   // Form stage leaving animations
   useGSAP(() => {
     const tl = gsap.timeline({
-      paused: true, // Create a new GSAP timeline and pause it initially
+      paused: true,
     });
 
-    // Define animation from hidden (width: 0, opacity: 0) to visible (width: 100%, opacity: 1)
     tl.fromTo(
       ref.current,
       {
-        width: 0, // Initial width: 0 (collapsed)
-        opacity: 0, // Initial opacity: 0 (transparent)
+        width: 0,
+        opacity: 0,
       },
       {
-        width: '100%', // Animate to full width
-        opacity: 1, // Animate to fully visible
-        delay: index / 10 + 0.35, // Stagger effect based on index
+        width: '100%',
+        opacity: 1,
+        delay: index / 10 + 0.35,
       },
     );
 
-    // Reverse the animation if the current stage is 'leaving' and the previous stage was 'none'
     if (stage === 'leaving' && prevStage === 'none') {
-      tl.reverse(1); // Reverse the animation over 1 second
+      tl.reverse(1);
     }
-    setPrevStage(stage); // Update the previous stage
+    setPrevStage(stage);
 
     return () => {
-      tl.kill(); // Clean up the timeline on unmount or dependency change
+      tl.kill();
     };
-  }, [stage]); // Dependency for re-running the animation
+  }, [stage]);
 
-  // Render the component with the provided className and children
   return (
     <div ref={ref} className={className}>
       {children}

@@ -1,0 +1,9 @@
+.git
+.gitlab
+.gitignore
+node_modules
+.next
+Dockerfile
+docker-compose.yml
+README.md
+*.log

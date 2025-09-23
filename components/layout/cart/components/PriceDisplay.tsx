@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { UsePrice } from '@/components/utils/utils';
+import { UsePrice } from '@/components/utils';
 
 interface PriceDisplayProps {
   currentPrice: number;
@@ -9,7 +9,8 @@ interface PriceDisplayProps {
 }
 
 /**
- * PriceDisplay
+ * Description
+ * @param param0 param0
  *
  * @returns
  */

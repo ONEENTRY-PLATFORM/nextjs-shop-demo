@@ -10,40 +10,28 @@ import SearchIcon from '@/components/icons/search';
 
 import SearchResults from './SearchResults';
 
-interface SearchBarProps {
-  lang: string;
-  dict: IAttributeValues;
-}
-
 /**
- * SearchBar component
+ * SearchBar
  * @param lang current language shortcode
  * @param dict dictionary from server api
  *
  * @returns JSX.Element
  */
-const SearchBar: FC<SearchBarProps> = ({ lang, dict }) => {
-  // Handle useSearchParams in a try/catch to prevent build errors
-  let params: URLSearchParams;
-  let searchParamsValue: string | null = null;
-
-  try {
-    const searchParams = useSearchParams();
-    params = new URLSearchParams(searchParams?.toString() || '');
-    searchParamsValue = searchParams?.get('search')?.toString() || null;
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
-    // If creating URLSearchParams fails, create empty params
-    params = new URLSearchParams();
-    searchParamsValue = null;
-  }
-
+const SearchBar: FC<{ lang: string; dict: IAttributeValues }> = ({
+  lang,
+  dict,
+}) => {
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
   const pathname = usePathname();
   const { replace } = useRouter();
 
+  // const { search_placeholder } = dict;
+
   const [state, setState] = useState(false);
 
-  const [value] = useDebounce(searchParamsValue, 300);
+  const searchValue = searchParams.get('search')?.toString();
+  const [value] = useDebounce(searchValue, 300);
 
   const handleSearch = (term: string) => {
     if (term) {
@@ -53,19 +41,12 @@ const SearchBar: FC<SearchBarProps> = ({ lang, dict }) => {
       params.delete('search');
       setState(false);
     }
-
-    // Only update URL if we have pathname
-    if (pathname) {
-      replace(`${pathname}?${params.toString()}`);
-    }
+    replace(`${pathname}?${params.toString()}`);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Only update URL if we have pathname
-    if (pathname) {
-      replace(`/${lang}/shop?${params.toString()}`);
-    }
+    replace(`/${lang}/shop?${params.toString()}`);
     setState(false);
   };
 
@@ -76,12 +57,12 @@ const SearchBar: FC<SearchBarProps> = ({ lang, dict }) => {
           {dict?.search_placeholder?.value}
         </label>
         <input
-          defaultValue={value || ''}
+          defaultValue={value}
           onChange={(e) => {
             handleSearch(e.target.value);
           }}
           type="search"
-          placeholder={dict?.search_placeholder?.value as string}
+          placeholder={dict?.search_placeholder?.value}
           id="quick-search"
           name="quick-search"
           className="h-auto w-full self-stretch rounded-3xl border-none px-5 text-lg outline-none max-md:max-w-full max-md:px-3"
@@ -95,7 +76,7 @@ const SearchBar: FC<SearchBarProps> = ({ lang, dict }) => {
         </button>
       </form>
       <SearchResults
-        searchValue={value || undefined}
+        searchValue={value}
         state={state}
         setState={setState}
         lang={lang}

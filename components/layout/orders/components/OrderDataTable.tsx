@@ -4,7 +4,7 @@
 import type { FC, Key } from 'react';
 
 import Loader from '@/components/shared/Loader';
-import { UseDate, UsePrice } from '@/components/utils/utils';
+import { UseDate, UsePrice } from '@/components/utils';
 
 /**
  * OrderData table
@@ -42,7 +42,7 @@ const OrderDataTable: FC<{
 
   return (
     <div className="flex flex-col gap-3">
-      <hr className="mb-4 text-slate-400" />
+      <hr className="mb-4" />
       {formData.map(
         (
           field: {
@@ -92,7 +92,7 @@ const OrderDataTable: FC<{
       <div className="flex gap-2 text-lg">
         <b>{total_amount_title.value}: </b> {formattedTotal}
       </div>
-      <hr className="my-4 text-slate-400" />
+      <hr className="my-4" />
     </div>
   );
 };

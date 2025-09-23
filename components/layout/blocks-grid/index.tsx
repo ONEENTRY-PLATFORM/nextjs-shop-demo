@@ -41,7 +41,7 @@ const BlocksGrid: FC<BlocksGridProps> = async ({ blocks, lang }) => {
                   height: string;
                 }
               }
-              bgColor={blocksColors[block as keyof typeof blocksColors] || ''}
+              bgColor={blocksColors[block as keyof typeof blocksColors]}
               lang={lang}
             />
           );

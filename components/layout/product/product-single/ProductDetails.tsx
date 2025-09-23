@@ -3,17 +3,12 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
-import {
-  getProductCategory,
-  getProductTitle,
-} from '@/app/hooks/useProductsData';
-
 import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';
 import ProductUnits from './ProductUnits';
 
 interface ProductDetailsProps {
-  product: IProductsEntity;
+  product: IProductsEntity & { productPages?: [] };
   lang: string;
   dict: IAttributeValues;
 }
@@ -27,15 +22,16 @@ interface ProductDetailsProps {
  *
  * @returns Product details
  */
-const ProductDetails: FC<ProductDetailsProps> = ({ product, lang, dict }) => {
-  // Extract data using safe utility functions
-  const title = getProductTitle(product);
-  const category = getProductCategory(product);
-
-  // Extract other data from product
+const ProductDetails: FC<ProductDetailsProps> = async ({
+  product,
+  lang,
+  dict,
+}) => {
+  // Extract data from product
   const {
     id,
     statusIdentifier,
+    localizeInfos: { title },
     attributeValues: { sale, price, units_product },
   } = product;
   const units = units_product?.value;
@@ -44,14 +40,18 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, lang, dict }) => {
     <>
       <h1 className="text-xl leading-6 text-neutral-600">{title}</h1>
 
-      {/* Category */}
-      {category && (
-        <p className="mt-3 text-sm leading-4 text-neutral-600">
-          <Link href={'/shop/category/' + category.value}>
-            {category.title}
-          </Link>
-        </p>
-      )}
+      {/* !!! category */}
+      <p className="mt-3 text-sm leading-4 text-neutral-600">
+        <Link
+          prefetch={true}
+          href={
+            '/shop/category/' + product.attributeValues.category?.value.value
+          }
+        >
+          {product.attributeValues.category?.value.title}
+        </Link>
+      </p>
+      {/* !!! category */}
 
       <div className="mb-5 mt-4 text-left text-xl font-bold leading-8 text-neutral-600">
         <PriceDisplay
@@ -67,7 +67,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, lang, dict }) => {
         id={id}
         units={units}
         statusIdentifier={statusIdentifier || ''}
-        productTitle={title}
+        productTitle={title || ''}
         dict={dict}
         height={50}
         className="btn btn-lg btn-primary"

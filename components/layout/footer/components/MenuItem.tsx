@@ -30,6 +30,7 @@ const MenuItem: FC<MenuItemProps> = ({ page, lang }) => {
   return (
     <li className="relative box-border">
       <Link
+        prefetch={true}
         className={
           'hover:text-red-500 font-normal ' + (isActive ? 'text-red-500' : '')
         }

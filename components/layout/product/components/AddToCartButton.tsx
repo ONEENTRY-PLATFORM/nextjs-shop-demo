@@ -50,7 +50,7 @@ const AddToCartButton: FC<AddToCartProps> = ({
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   );
-  const { user, isAuth } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const { out_of_stock_button, add_to_cart_button } = dict;
   const notInStock = useMemo(
     () => statusIdentifier !== 'in_stock',
@@ -58,10 +58,10 @@ const AddToCartButton: FC<AddToCartProps> = ({
   );
 
   // If not InStock show out_of_stock button
-  if (notInStock || units < 1) {
+  if (notInStock && out_of_stock_button) {
     return (
       <div className={'btn btn-o btn-o-gray ' + className}>
-        {out_of_stock_button?.value || 'Out of stock'}
+        {out_of_stock_button?.value}
       </div>
     );
   }
@@ -89,7 +89,7 @@ const AddToCartButton: FC<AddToCartProps> = ({
     toast('Product ' + productTitle + ' added to cart!');
 
     // Update user state and subscribe to events
-    if (user && isAuth) {
+    if (user) {
       updateUserCartState();
     }
   };

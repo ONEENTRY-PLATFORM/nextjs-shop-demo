@@ -1,6 +1,5 @@
+import Image from 'next/image';
 import type { FC } from 'react';
-
-import OptimizedImage from '@/components/shared/OptimizedImage';
 
 interface ProductImageProps {
   imageSrc: string;
@@ -19,12 +18,11 @@ const ProductImage: FC<ProductImageProps> = ({ imageSrc }) => {
       role="img"
       aria-label="Product image"
     >
-      <OptimizedImage
+      <Image
         fill
         sizes="(min-width: 600px) 66vw, 100vw"
         src={imageSrc}
-        alt={'Product'}
-        quality={85}
+        alt="Product"
         className="mb-10 size-full shrink-0 rounded-xl object-cover max-md:mb-8 max-sm:mb-8"
       />
     </div>

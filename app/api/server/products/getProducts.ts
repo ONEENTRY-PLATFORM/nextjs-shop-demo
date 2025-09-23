@@ -2,10 +2,9 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
-import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
-import { typeError } from '@/components/utils/utils';
+import { typeError } from '@/components/utils';
 
 /**
  * Get all products with pagination and filter.
@@ -33,34 +32,18 @@ export const getProducts = async (props: {
   };
 }): Promise<{
   isError: boolean;
-  error: IError;
-  products: IProductsEntity[];
+  error?: IError;
+  products?: IProductsEntity[];
   total: number;
 }> => {
   const { offset, limit, params, lang } = props;
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const body = getSearchParams(params?.searchParams, params?.handle);
 
-  // Create cache key from parameters
-  const cacheKey = `products-${JSON.stringify({ offset, limit, langCode, body })}`;
-
-  // Check cache first
-  const cached = getCachedData<{ products: IProductsEntity[]; total: number }>(
-    cacheKey,
-  );
-  if (cached) {
-    return {
-      isError: false,
-      error: {} as IError,
-      products: cached.products,
-      total: cached.total,
-    };
-  }
-
   try {
-    const data = await api.Products.getProducts(body || undefined, langCode, {
-      limit,
+    const data = await api.Products.getProducts(body, langCode, {
       offset,
+      limit,
       sortOrder: 'ASC',
       sortKey: 'date',
     });
@@ -68,18 +51,11 @@ export const getProducts = async (props: {
       return {
         isError: true,
         error: data,
-        products: [],
         total: 0,
       };
     } else {
-      // Cache the result
-      setCachedData<{ products: IProductsEntity[]; total: number }>(cacheKey, {
-        products: data.items,
-        total: data.total,
-      });
       return {
         isError: false,
-        error: {} as IError,
         products: data.items,
         total: data.total,
       };
@@ -88,7 +64,6 @@ export const getProducts = async (props: {
     return {
       isError: true,
       error: error as IError,
-      products: [],
       total: 0,
     };
   }

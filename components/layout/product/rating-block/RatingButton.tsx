@@ -1,12 +1,12 @@
 'use client';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { Dispatch, FC } from 'react';
 import { useEffect, useState } from 'react';
 
 import StarRating from './StarRating';
 
 interface ReviewSectionProps {
-  dict: IAttributeValues;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  dict: any;
   rating: number;
   reviewCount: number;
   state: boolean;
@@ -53,7 +53,7 @@ const RatingButton: FC<ReviewSectionProps> = ({
 
       <div
         className={
-          'my-auto flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600 group-hover:text-orange-500 '
+          'my-auto cursor-pointer flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600 group-hover:text-orange-500 '
         }
       >
         <div className={state ? 'text-orange-500' : ''}>{reviewsTitle}</div>

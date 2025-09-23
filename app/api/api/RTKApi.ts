@@ -145,17 +145,11 @@ export const RTKApi = createApi({
      */
     getMe: build.query<IUserEntity, { langCode: string }>({
       queryFn: async ({ langCode }) => {
-        try {
-          const result = await api.Users.getUser(langCode).catch(
-            (error) => error,
-          );
-          if (!result || (result as IError)?.statusCode) {
-            return { error: result };
-          }
-          return { data: result as IUserEntity };
-        } catch (error) {
-          return { error: error };
+        const result = await api.Users.getUser(langCode);
+        if (!result || (result as IError)?.statusCode) {
+          return { error: result };
         }
+        return { data: result as IUserEntity };
       },
     }),
     /**

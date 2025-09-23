@@ -2,14 +2,7 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import {
-  type FC,
-  type Key,
-  memo,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import { type FC, type Key, useContext, useEffect, useState } from 'react';
 
 import { api, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -64,13 +57,11 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
 
               setProducts((prevProducts) => {
                 const newProducts = [...prevProducts];
-                if (index !== -1 && products[index]) {
-                  newProducts[index] = {
-                    ...products[index],
-                    price: newPrice,
-                    statusIdentifier: res?.product?.status?.identifier,
-                  };
-                }
+                newProducts[index] = {
+                  ...products[index],
+                  price: newPrice,
+                  statusIdentifier: res?.product?.status?.identifier,
+                };
                 return newProducts;
               });
             }
@@ -81,24 +72,20 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
         }
       }
     }
-    return;
   }, [isAuth, data]);
-
-  // Memoize the loader component
-  const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
   if (!products || products.length < 1) {
     if (!isLoading) {
-      return <EmptyFavorites lang={lang as string} dict={dict} />;
+      return <EmptyFavorites lang={lang} dict={dict} />;
     } else {
-      return <MemoizedProductsGridLoader />;
+      return <ProductsGridLoader />;
     }
   }
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <div className={'relative box-border flex w-full shrink-0 flex-col'}>
-        <section className="relative mx-auto box-border flex min-h-[320px] w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+        <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
           <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
             {products.map((product: IProductsEntity, index: Key | number) => {
               return (
@@ -106,7 +93,7 @@ const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
                   key={index}
                   product={product}
                   index={index as number}
-                  lang={lang as string}
+                  lang={lang}
                   dict={dict}
                   pagesLimit={0}
                 />

@@ -1,11 +1,10 @@
-/* eslint-disable react/prop-types */
 'use client';
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, ReactNode } from 'react';
-import { memo, useCallback, useRef } from 'react';
+import { useRef } from 'react';
 import { toast } from 'react-toastify';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -32,83 +31,74 @@ interface ProductAnimationsProps {
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns
  */
-const ProductAnimations: FC<ProductAnimationsProps> = memo(
-  ({ children, className, product, index }) => {
-    const dispatch = useAppDispatch();
-    const ref = useRef(null);
-    const { transitionId } = useAppSelector(getTransition);
+const ProductAnimations: FC<ProductAnimationsProps> = ({
+  children,
+  className,
+  product,
+  index,
+}) => {
+  const dispatch = useAppDispatch();
+  const ref = useRef(null);
+  const { transitionId } = useAppSelector(getTransition);
 
-    // Memoized callback for removing product
-    const removeProductCallback = useCallback(() => {
-      dispatch(removeProduct(product.id));
-      toast('Product ' + product.localizeInfos.title + ' removed from cart!');
-    }, [dispatch, product.id, product.localizeInfos.title]);
+  // first load animations
+  useGSAP(() => {
+    if (!ref.current) {
+      return;
+    }
+    const tl = gsap.timeline({
+      paused: true,
+    });
 
-    // Memoized callback for setting transition
-    const setCartTransitionCallback = useCallback(() => {
-      dispatch(
-        setCartTransition({
-          productId: 0,
-        }),
-      );
-    }, [dispatch]);
+    tl.set(ref.current, {
+      opacity: 0,
+      yPercent: 100,
+    }).to(ref.current, {
+      opacity: 1,
+      yPercent: 0,
+      delay: index / 10,
+    });
+    tl.play();
 
-    // first load animations
-    useGSAP(() => {
-      if (!ref.current) {
-        return;
-      }
-      const tl = gsap.timeline({
-        paused: true,
-      });
+    return () => {
+      tl.kill();
+    };
+  }, []);
 
-      tl.set(ref.current, {
-        opacity: 0,
-        yPercent: 100,
-      }).to(ref.current, {
-        opacity: 1,
-        yPercent: 0,
-        delay: index / 10,
-      });
-      tl.play();
+  // remove Product from cart animations
+  useGSAP(() => {
+    if (!ref.current || product.id !== transitionId) {
+      return;
+    }
+    const tl = gsap.timeline();
 
-      return () => {
-        tl.kill();
-      };
-    }, [index]);
+    tl.to(ref.current, {
+      autoAlpha: 0,
+      duration: 0.5,
+      onStart: () => {
+        dispatch(
+          setCartTransition({
+            productId: 0,
+          }),
+        );
+        dispatch(removeProduct(product.id));
+        toast('Product ' + product.localizeInfos.title + ' removed from cart!');
+      },
+    }).to(ref.current, {
+      autoAlpha: 1,
+      duration: 0.35,
+    });
 
-    // remove Product from cart animations
-    useGSAP(() => {
-      if (!ref.current || product.id !== transitionId) {
-        return;
-      }
-      const tl = gsap.timeline();
+    return () => {
+      tl.kill();
+    };
+  }, [transitionId]);
 
-      tl.to(ref.current, {
-        autoAlpha: 0,
-        duration: 0.5,
-        onStart: setCartTransitionCallback,
-        onComplete: removeProductCallback,
-      });
-
-      return () => {
-        tl.kill();
-      };
-    }, [
-      product.id,
-      transitionId,
-      setCartTransitionCallback,
-      removeProductCallback,
-    ]);
-
-    return (
-      <div ref={ref} className={className}>
-        {children}
-      </div>
-    );
-  },
-);
-
-ProductAnimations.displayName = 'ProductAnimations';
+  return (
+    <div ref={ref} className={className}>
+      {children}
+    </div>
+  );
+};
 
 export default ProductAnimations;
