@@ -14,10 +14,7 @@ import ReviewsSection from './ReviewsSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 
 interface ProductSingleProps {
-  product: IProductsEntity & {
-    blocks?: Array<string>;
-    productPages?: [];
-  };
+  product: IProductsEntity;
   lang: string;
   dict: IAttributeValues;
 }
