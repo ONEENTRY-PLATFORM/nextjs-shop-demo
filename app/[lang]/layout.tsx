@@ -4,12 +4,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
 import type { ReactNode } from 'react';
-import { ToastContainer } from 'react-toastify';
 
 import { AuthProvider } from '@/app/store/providers/AuthContext';
 import { OpenDrawerProvider } from '@/app/store/providers/OpenDrawerContext';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import StoreProvider from '@/app/store/providers/StoreProvider';
+import ClientProviders from '@/components/ClientProviders';
 import BottomMenu from '@/components/layout/bottom-menu';
 import Breadcrumbs from '@/components/layout/breadcrumbs';
 import Footer from '@/components/layout/footer';
@@ -18,9 +18,6 @@ import NavigationMenu from '@/components/layout/main-menu';
 import Modal from '@/components/layout/modal';
 import type { Locale } from '@/i18n-config';
 
-import IntroAnimations from '../animations/IntroAnimations';
-import RegisterGSAP from '../animations/RegisterGSAP';
-import TransitionProvider from '../animations/TransitionProvider';
 import { LanguageEnum } from '../types/enum';
 import { getDictionary } from './dictionaries';
 
@@ -36,11 +33,22 @@ const lato = Lato({
  * @param params page params
  */
 export const metadata: Metadata = {
-  title: 'OneEntry Shop',
+  title: {
+    default: 'OneEntry Shop',
+    template: '%s | OneEntry Shop',
+  },
   description: 'OneEntry next-js shop',
   openGraph: {
     type: 'website',
+    siteName: 'OneEntry Shop',
   },
+  metadataBase: new URL(
+    (
+      process.env.NEXT_PUBLIC_PROJECT_URL ||
+      process.env.NEXT_PUBLIC_VERCEL_URL ||
+      'http://localhost:3000'
+    ).replace(/\/$/, ''),
+  ),
 };
 
 /**
@@ -53,7 +61,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   children,
   params,
-}: Readonly<{ children: ReactNode; params: { lang: string } }>) {
+}: Readonly<{ children: ReactNode; params: Promise<{ lang: string }> }>) {
   const { lang } = await params;
   // set current lang to server provider
   ServerProvider('lang', lang);
@@ -76,18 +84,15 @@ export default async function RootLayout({
               <Header />
               <NavigationMenu />
               <Breadcrumbs />
-              <div className="grow p-5 pb-16 transition-transform duration-500">
-                <TransitionProvider>{children}</TransitionProvider>
-              </div>
+              <main className="flex-grow">
+                <ClientProviders>{children}</ClientProviders>
+              </main>
               <Footer />
               <BottomMenu />
               <Modal lang={lang} dict={dict} />
             </OpenDrawerProvider>
           </AuthProvider>
         </StoreProvider>
-        <RegisterGSAP />
-        <IntroAnimations />
-        <ToastContainer position="bottom-right" autoClose={2000} />
       </body>
     </html>
   );
