@@ -3,8 +3,21 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 
 import { api } from '@/app/api';
 import { getCachedData, setCachedData } from '@/app/api/utils/cache';
+import type { ApiResponse as CustomApiResponse } from '@/app/types/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
+
+/**
+ * Generic API response structure
+ */
+export type ApiResponse<T = unknown> = {
+  isError: boolean;
+  error?: {
+    statusCode: number;
+    message: string;
+  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+} & (T extends { [key: string]: any } ? T : object);
 
 /**
  * Get product by id.
@@ -19,11 +32,13 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 export const getProductById = async (
   id: number,
   lang: string,
-): Promise<{
-  isError: boolean;
-  error?: IError;
-  product?: IProductsEntity;
-}> => {
+): Promise<
+  CustomApiResponse<{
+    isError: boolean;
+    error?: IError;
+    product?: IProductsEntity;
+  }>
+> => {
   // Validate inputs
   if (!id || id <= 0) {
     return {
@@ -53,37 +68,64 @@ export const getProductById = async (
       isError: true,
       error: {
         statusCode: 400,
-        message: `Unsupported language: ${lang}`,
+        message: 'Invalid language code',
       } as IError,
     };
-  }
-
-  const cacheKey = `product-${id}-${langCode}`;
-
-  // Check cache first
-  const cached = getCachedData<IProductsEntity>(cacheKey);
-  if (cached) {
-    return { isError: false, product: cached };
   }
 
   try {
-    const data = await api.Products.getProductById(id, langCode);
+    // Try to get from cache first
+    const cacheKey = `product_${id}_${langCode}`;
+    const cachedProduct = getCachedData<IProductsEntity>(cacheKey);
 
-    if (isIError(data)) {
-      return { isError: true, error: data };
-    } else {
-      // Cache the result
-      setCachedData<IProductsEntity>(cacheKey, data);
-      return { isError: false, product: data };
+    if (cachedProduct) {
+      return {
+        isError: false,
+        product: cachedProduct,
+      } as CustomApiResponse<{
+        isError: boolean;
+        error?: IError;
+        product?: IProductsEntity;
+      }>;
     }
+
+    // Fetch from API
+    const product = await api.Products.getProductById(id, langCode);
+
+    if (isIError(product)) {
+      return {
+        isError: true,
+        error: handleApiError(product),
+      } as CustomApiResponse<{
+        isError: boolean;
+        error?: IError;
+        product?: IProductsEntity;
+      }>;
+    }
+
+    // Cache the result
+    setCachedData(cacheKey, product as IProductsEntity);
+
+    return {
+      isError: false,
+      product: product as IProductsEntity,
+    } as CustomApiResponse<{
+      isError: boolean;
+      error?: IError;
+      product?: IProductsEntity;
+    }>;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    const apiError = handleApiError(error);
     return {
       isError: true,
       error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
+        statusCode: 500,
+        message: 'Internal server error',
       } as IError,
-    };
+    } as CustomApiResponse<{
+      isError: boolean;
+      error?: IError;
+      product?: IProductsEntity;
+    }>;
   }
 };

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /**
  * Simple in-memory cache utility
  *
@@ -5,60 +6,68 @@
  * to reduce the number of external API calls and improve performance.
  */
 
-// Cache storage
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const cache = new Map<string, { data: any; timestamp: number }>();
-
 // Default cache duration (5 minutes)
-const DEFAULT_CACHE_DURATION = 5 * 60 * 1000;
+// const DEFAULT_CACHE_DURATION = 5 * 60 * 1000;
 
-/**
- * Get cached data if it exists and is still valid
- *
- * @param key - Cache key
- * @param cacheDuration - Cache duration in milliseconds
- * @returns Cached data or null if not found or expired
- */
-export function getCachedData<T>(
-  key: string,
-  cacheDuration: number = DEFAULT_CACHE_DURATION,
-): T | null {
-  const cached = cache.get(key);
-  if (cached && Date.now() - cached.timestamp < cacheDuration) {
-    return cached.data as T;
-  }
-  return null;
+// Generic cache functions with strict typing
+export interface CacheItem<T> {
+  data: T;
+  timestamp: number;
+  ttl: number; // Time to live in milliseconds
 }
 
-/**
- * Set data in cache
- *
- * @param key - Cache key
- * @param data - Data to cache
- */
-export function setCachedData<T>(key: string, data: T): void {
-  cache.set(key, { data, timestamp: Date.now() });
-}
+// Generic function to get cached data
+export function getCachedData<T>(key: string): T | null {
+  if (typeof window === 'undefined') return null;
 
-/**
- * Clear expired cache entries
- *
- * @param cacheDuration - Cache duration in milliseconds
- */
-export function clearExpiredCache(
-  cacheDuration: number = DEFAULT_CACHE_DURATION,
-): void {
-  const now = Date.now();
-  for (const [key, value] of cache.entries()) {
-    if (now - value.timestamp >= cacheDuration) {
-      cache.delete(key);
+  try {
+    const cached = localStorage.getItem(key);
+    if (!cached) return null;
+
+    const parsed: CacheItem<T> = JSON.parse(cached);
+    const now = Date.now();
+
+    // Check if cache is expired
+    if (now - parsed.timestamp > parsed.ttl) {
+      localStorage.removeItem(key);
+      return null;
     }
+
+    return parsed.data;
+  } catch (e) {
+    console.error('Error getting cached data:', e);
+    return null;
   }
 }
 
-/**
- * Clear all cache
- */
-export function clearAllCache(): void {
-  cache.clear();
+// Generic function to set cached data
+export function setCachedData<T>(
+  key: string,
+  data: T,
+  ttl: number = 5 * 60 * 1000,
+): void {
+  if (typeof window === 'undefined') return;
+
+  try {
+    const cacheItem: CacheItem<T> = {
+      data,
+      timestamp: Date.now(),
+      ttl,
+    };
+
+    localStorage.setItem(key, JSON.stringify(cacheItem));
+  } catch (e) {
+    console.error('Error setting cached data:', e);
+  }
+}
+
+// Generic function to clear cached data
+export function clearCachedData(key: string): void {
+  if (typeof window === 'undefined') return;
+
+  try {
+    localStorage.removeItem(key);
+  } catch (e) {
+    console.error('Error clearing cached data:', e);
+  }
 }

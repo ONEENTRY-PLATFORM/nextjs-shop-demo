@@ -16,6 +16,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 
 import { LanguageEnum } from '@/app/types/enum';
+import type { ApiResponse } from '@/app/types/hooks';
 
 import { api } from './api';
 
@@ -35,12 +36,24 @@ interface SingleOrderProps {
   activeLang: string;
 }
 
+// Generic function to handle API responses
+const handleApiResponse = async <T>(
+  apiCall: Promise<T | IError>,
+): Promise<ApiResponse<T>> => {
+  try {
+    const result = await apiCall;
+    return result;
+  } catch (error) {
+    return error as IError;
+  }
+};
+
 /**
  * Creates basic redux logic.
  */
 export const RTKApi = createApi({
   reducerPath: 'api',
-  baseQuery: fakeBaseQuery(),
+  baseQuery: fakeBaseQuery<IError>(),
   endpoints: (build) => ({
     /**
      * Get all blocks by page url.
@@ -50,9 +63,11 @@ export const RTKApi = createApi({
      */
     getBlocksByPageUrl: build.query<IPositionBlock[], BlocksByPageUrlProps>({
       queryFn: async ({ pageUrl, activeLang }) => {
-        const result = await api.Pages.getBlocksByPageUrl(pageUrl, activeLang);
+        const result = await handleApiResponse(
+          api.Pages.getBlocksByPageUrl(pageUrl, activeLang),
+        );
         if (!result || (result as IError)?.statusCode) {
-          return { error: result };
+          return { error: result as IError };
         }
         return { data: result as IPositionBlock[] };
       },
@@ -65,11 +80,16 @@ export const RTKApi = createApi({
     getProductById: build.query<IProductsEntity, { id: number }>({
       queryFn: async ({ id }) => {
         if (!id) {
-          return { error: null };
+          return {
+            error: {
+              statusCode: 400,
+              message: 'Product ID is required',
+            } as IError,
+          };
         }
-        const result = await api.Products.getProductById(id);
+        const result = await handleApiResponse(api.Products.getProductById(id));
         if (!result || (result as IError)?.statusCode) {
-          return { error: result };
+          return { error: result as IError };
         }
         return { data: result as IProductsEntity };
       },
@@ -84,11 +104,13 @@ export const RTKApi = createApi({
         if (!items || items.length < 1) {
           return { data: [] };
         }
-        const products = await api.Products.getProductsByIds(items);
-        if (!products || (products as IError).statusCode >= 400) {
-          return { error: 'Data error' };
+        const result = await handleApiResponse(
+          api.Products.getProductsByIds(items),
+        );
+        if (!result || (result as IError).statusCode >= 400) {
+          return { error: result as IError };
         } else {
-          return { data: products as IProductsEntity[] };
+          return { data: result as IProductsEntity[] };
         }
       },
     }),
@@ -100,9 +122,11 @@ export const RTKApi = createApi({
      */
     getBlockByMarker: build.query<IBlockEntity, BlockByMarkerProps>({
       queryFn: async ({ marker, activeLang }) => {
-        const result = await api.Blocks.getBlockByMarker(marker, activeLang);
+        const result = await handleApiResponse(
+          api.Blocks.getBlockByMarker(marker, activeLang),
+        );
         if (!result || (result as IError)?.statusCode) {
-          return { error: result };
+          return { error: result as IError };
         }
         return { data: result as IBlockEntity };
       },
@@ -114,9 +138,11 @@ export const RTKApi = createApi({
      */
     getAuthProviders: build.query<IAuthProvidersEntity[], string>({
       queryFn: async (langCode) => {
-        const result = await api.AuthProvider.getAuthProviders(langCode);
+        const result = await handleApiResponse(
+          api.AuthProvider.getAuthProviders(langCode),
+        );
         if (!result || (result as IError)?.statusCode) {
-          return { error: result };
+          return { error: result as IError };
         }
         return { data: result as IAuthProvidersEntity[] };
       },
@@ -131,9 +157,11 @@ export const RTKApi = createApi({
     getFormByMarker: build.query<IFormsEntity, { marker: string; lang: string }>({
       queryFn: async ({ marker, lang }) => {
         const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-        const result = await api.Forms.getFormByMarker(marker, langCode);
+        const result = await handleApiResponse(
+          api.Forms.getFormByMarker(marker, langCode),
+        );
         if (!result || (result as IError)?.statusCode) {
-          return { error: result };
+          return { error: result as IError };
         }
         return { data: result as IFormsEntity };
       },
@@ -146,15 +174,13 @@ export const RTKApi = createApi({
     getMe: build.query<IUserEntity, { langCode: string }>({
       queryFn: async ({ langCode }) => {
         try {
-          const result = await api.Users.getUser(langCode).catch(
-            (error) => error,
-          );
+          const result = await handleApiResponse(api.Users.getUser(langCode));
           if (!result || (result as IError)?.statusCode) {
-            return { error: result };
+            return { error: result as IError };
           }
           return { data: result as IUserEntity };
         } catch (error) {
-          return { error: error };
+          return { error: error as IError };
         }
       },
     }),
@@ -163,9 +189,9 @@ export const RTKApi = createApi({
      */
     getAccounts: build.query<IAccountsEntity[], object>({
       queryFn: async () => {
-        const result = await api.Payments.getAccounts();
+        const result = await handleApiResponse(api.Payments.getAccounts());
         if (!result || (result as IError)?.statusCode) {
-          return { error: result };
+          return { error: result as IError };
         }
         return { data: result as IAccountsEntity[] };
       },
@@ -177,9 +203,11 @@ export const RTKApi = createApi({
      */
     getOrderStorageByMarker: build.query<IOrdersEntity, { marker: string }>({
       queryFn: async ({ marker }) => {
-        const result = await api.Orders.getOrderByMarker(marker);
+        const result = await handleApiResponse(
+          api.Orders.getOrderByMarker(marker),
+        );
         if (!result || (result as IError)?.statusCode) {
-          return { error: result };
+          return { error: result as IError };
         }
         return { data: result as IOrdersEntity };
       },
@@ -191,9 +219,9 @@ export const RTKApi = createApi({
      */
     getPaymentSessionById: build.query<ISessionEntity, { id: number }>({
       queryFn: async ({ id }) => {
-        const result = await api.Payments.getSessionById(id);
+        const result = await handleApiResponse(api.Payments.getSessionById(id));
         if (!result || (result as IError)?.statusCode) {
-          return { error: result };
+          return { error: result as IError };
         }
         return { data: result as ISessionEntity };
       },
@@ -207,13 +235,11 @@ export const RTKApi = createApi({
      */
     getSingleOrder: build.query<IOrderByMarkerEntity, SingleOrderProps>({
       queryFn: async ({ id, marker, activeLang }) => {
-        const result = await api.Orders.getOrderByMarkerAndId(
-          marker,
-          id,
-          activeLang,
+        const result = await handleApiResponse(
+          api.Orders.getOrderByMarkerAndId(marker, id, activeLang),
         );
         if (!result || (result as IError)?.statusCode) {
-          return { error: result };
+          return { error: result as IError };
         }
         return { data: result as IOrderByMarkerEntity };
       },
