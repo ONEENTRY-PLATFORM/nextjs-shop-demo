@@ -121,7 +121,7 @@ const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
             >
               {imagesData.map((image, i: Key) => {
                 return (
-                  <div key={i} className="w-full items-center">
+                  <div key={i} className="w-full items-center cursor-pointer">
                     <Image
                       width={80}
                       height={80}

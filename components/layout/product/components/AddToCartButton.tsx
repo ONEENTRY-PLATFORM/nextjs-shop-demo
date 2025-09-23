@@ -58,10 +58,10 @@ const AddToCartButton: FC<AddToCartProps> = ({
   );
 
   // If not InStock show out_of_stock button
-  if (notInStock && out_of_stock_button) {
+  if (notInStock || units < 1) {
     return (
       <div className={'btn btn-o btn-o-gray ' + className}>
-        {out_of_stock_button?.value}
+        {out_of_stock_button?.value || 'Out of stock'}
       </div>
     );
   }

@@ -24,7 +24,7 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   // Handle the .get() call in a try/catch to prevent runtime errors
   let currentPage = 1;
   try {
-    currentPage = Number(searchParams?.get('page')) || 1;
+    currentPage = Number(searchParams?.get('page'));
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     // If accessing search params fails (e.g. during SSR), default to page 1
@@ -50,21 +50,18 @@ const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
   }, []);
 
   const goToNextPage = () => {
-    router.push(
-      pathname +
-        '?' +
-        createQueryString(
-          'page',
-          (nextPage <= totalPages ? nextPage : currentPage).toString(),
-        ),
-      { scroll: false },
-    );
+    const page = nextPage <= totalPages ? nextPage : currentPage;
+    router.push(pathname + '?' + createQueryString('page', page.toString()), {
+      scroll: false,
+    });
   };
 
   useGSAP(() => {
     if (nextPage > totalPages) {
       return;
     }
+    console.log('trigger');
+
     const trigger = ScrollTrigger.create({
       trigger: ref.current,
       start: 'top bottom',
