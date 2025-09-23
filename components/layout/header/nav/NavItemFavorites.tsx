@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
+import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { FC } from 'react';
 
 import FavoritesAltIcon from '@/components/icons/favorites';
@@ -15,7 +15,7 @@ import FavoritesAltIcon from '@/components/icons/favorites';
  * @returns JSX.Element
  */
 
-const NavItemFavorites: FC<{ item: IPagesEntity; lang: string }> = ({
+const NavItemFavorites: FC<{ item: IMenusPages; lang: string }> = ({
   item,
   lang,
 }) => {

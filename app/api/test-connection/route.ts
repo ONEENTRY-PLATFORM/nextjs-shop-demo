@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
+import { handleApiError } from '@/app/utils/errorHandler';
 
 export async function GET() {
   try {
@@ -20,9 +21,10 @@ export async function GET() {
       data: data ? 'Data received' : 'No data',
     });
   } catch (error) {
+    const apiError = handleApiError(error);
     return NextResponse.json({
       success: false,
-      error: error instanceof Error ? error.message : 'Unknown error',
+      error: apiError.message,
     });
   }
 }

@@ -1,6 +1,7 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 
 import { getBlockByMarker } from '@/app/api';
+import { handleApiError } from '@/app/utils/errorHandler';
 
 /**
  * Dictionary - get block by Marker with API Blocks
@@ -20,9 +21,10 @@ const dict = async (langCode: string): Promise<IAttributeValues> => {
     } else {
       return { ...block?.attributeValues };
     }
-  } catch (e) {
+  } catch (error) {
+    const apiError = handleApiError(error);
     // eslint-disable-next-line no-console
-    console.log(e);
+    console.error('Dictionary fetch error:', apiError.message);
     return {};
   }
 };
