@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 const CartAltIcon = (props?: { active?: boolean }) => {
   return (
     <svg
@@ -16,4 +18,4 @@ const CartAltIcon = (props?: { active?: boolean }) => {
   );
 };
 
-export default CartAltIcon;
+export default memo(CartAltIcon);

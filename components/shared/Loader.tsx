@@ -1,6 +1,7 @@
 'use client';
 
 import type { FC } from 'react';
+import { memo } from 'react';
 
 import type { LoaderProps } from '@/app/types/global';
 
@@ -19,4 +20,4 @@ const Loader: FC<LoaderProps> = () => {
   );
 };
 
-export default Loader;
+export default memo(Loader);

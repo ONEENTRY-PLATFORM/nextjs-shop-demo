@@ -45,18 +45,18 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
       if (p.id === 83) {
         return;
       }
-      const { isError, product } = await getProductById(Number(p.id), langCode);
-      if (isError || !product) {
+      const response = await getProductById(Number(p.id), langCode);
+      if (response.isError || !response.data?.product) {
         return;
       }
       dispatch(
         addProductToCart({
-          id: product.id,
+          id: response.data.product.id,
           selected: true,
           quantity: p.quantity || 0,
         }),
       );
-      return product;
+      return response.data.product;
     });
     router.push('/cart');
     return null;

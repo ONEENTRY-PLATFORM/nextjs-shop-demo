@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 const SearchIcon = () => {
   return (
     <svg
@@ -17,4 +19,4 @@ const SearchIcon = () => {
   );
 };
 
-export default SearchIcon;
+export default memo(SearchIcon);

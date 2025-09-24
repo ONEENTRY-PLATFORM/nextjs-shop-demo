@@ -10,6 +10,16 @@ import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 
+// Define the response type
+type ProductResponse = {
+  isError: boolean;
+  error?: {
+    statusCode: number;
+    message: string;
+  };
+  product?: IProductsEntity;
+};
+
 /**
  * Cart page
  * @async server component
@@ -23,7 +33,10 @@ const CartPageLayout: FC<PageProps> = async ({ params }) => {
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   // Get delivery(product) data by product id
-  const { product } = await getProductById(83, lang);
+  const response = await getProductById(83, lang);
+  const deliveryData = response.isError
+    ? undefined
+    : (response as ProductResponse).product;
 
   return (
     <section className="relative mx-auto box-border flex min-h-80 w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
@@ -32,7 +45,7 @@ const CartPageLayout: FC<PageProps> = async ({ params }) => {
           <CartPage
             lang={lang}
             dict={dict}
-            deliveryData={product as IProductsEntity}
+            deliveryData={deliveryData as IProductsEntity}
           />
         </WithSidebar>
       </div>

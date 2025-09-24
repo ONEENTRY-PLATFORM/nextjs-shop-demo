@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
@@ -31,7 +32,10 @@ const ProductPageLayout: FC<{
   const dict = await getDictionary(lang as Locale);
 
   // Get product by current Id
-  const { isError, product } = await getProductById(Number(handle), lang);
+  const result = await getProductById(Number(handle), lang);
+  const isError = result.isError;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const product = (result as any).product;
 
   if (isError || !product) {
     return notFound();
@@ -39,7 +43,7 @@ const ProductPageLayout: FC<{
 
   // extract data from product
   const { attributeValues, localizeInfos, additional, statusIdentifier } =
-    product;
+    product as IProductsEntity;
 
   /**
    * product Json liked data
@@ -71,7 +75,11 @@ const ProductPageLayout: FC<{
         }}
       />
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-col bg-white">
-        <ProductSingleServer lang={lang} product={product} dict={dict} />
+        <ProductSingleServer
+          lang={lang}
+          product={product as IProductsEntity}
+          dict={dict}
+        />
       </div>
     </>
   );
@@ -116,12 +124,16 @@ export async function generateMetadata({
   params: Promise<{ handle: string; lang: string }>;
 }): Promise<Metadata> {
   const { handle, lang } = await params;
-  const { isError, product } = await getProductById(Number(handle), lang);
+  const result = await getProductById(Number(handle), lang);
+  const isError = result.isError;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const product = (result as any).product;
 
   if (isError || !product) {
     return notFound();
   }
-  const { attributeValues, localizeInfos, isVisible } = product;
+  const { attributeValues, localizeInfos, isVisible } =
+    product as IProductsEntity;
 
   // Return metadata object
   return generatePageMetadata({

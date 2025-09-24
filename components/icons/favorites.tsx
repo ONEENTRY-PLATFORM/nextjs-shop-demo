@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 const FavoritesAltIcon = (props?: { active?: boolean }) => {
   return (
     <svg
@@ -16,4 +18,4 @@ const FavoritesAltIcon = (props?: { active?: boolean }) => {
   );
 };
 
-export default FavoritesAltIcon;
+export default memo(FavoritesAltIcon);

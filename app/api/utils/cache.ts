@@ -71,3 +71,14 @@ export function clearCachedData(key: string): void {
     console.error('Error clearing cached data:', e);
   }
 }
+
+// Function to clear all cache data
+export function clearAllCache(): void {
+  if (typeof window === 'undefined') return;
+
+  try {
+    localStorage.clear();
+  } catch (e) {
+    console.error('Error clearing all cached data:', e);
+  }
+}

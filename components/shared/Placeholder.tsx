@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { FC } from 'react';
+import { memo } from 'react';
 
 /**
  * Empty image placeholder
@@ -27,4 +28,4 @@ const Placeholder: FC<{ className?: string }> = ({ className }) => {
   );
 };
 
-export default Placeholder;
+export default memo(Placeholder);

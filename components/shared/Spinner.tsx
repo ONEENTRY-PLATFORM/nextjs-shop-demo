@@ -1,4 +1,5 @@
 import type { FC } from 'react';
+import { memo } from 'react';
 
 /**
  * Spinner
@@ -29,4 +30,4 @@ const Spinner: FC = () => {
   );
 };
 
-export default Spinner;
+export default memo(Spinner);
