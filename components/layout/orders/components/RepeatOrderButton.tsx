@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
@@ -19,6 +20,7 @@ interface RepeatOrderButtonProps {
 
 /**
  * RepeatOrder button
+ *
  * @param data
  * @param title
  * @param isLoading loading state
@@ -38,26 +40,40 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
 
   const { products } = data;
 
-  // repeatOrder - extract products from order and add to cart
-  const repeatOrderHandle = () => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    products.map(async (p: any) => {
-      if (p.id === 83) {
-        return;
-      }
-      const response = await getProductById(Number(p.id), langCode);
-      if (response.isError || !response.data?.product) {
-        return;
-      }
-      dispatch(
-        addProductToCart({
-          id: response.data.product.id,
-          selected: true,
-          quantity: p.quantity || 0,
-        }),
-      );
-      return response.data.product;
-    });
+  /**
+   * Repeat order handler - extract products from order and add to cart
+   *
+   * This function processes all products in an order (except product ID 83) by:
+   * 1. Fetching each product's details by its ID
+   * 2. Adding valid products to the shopping cart
+   * 3. Redirecting user to the cart page
+   *
+   * @returns Promise<void> - resolves when all products are processed and user is redirected
+   */
+  const repeatOrderHandle = async () => {
+    // Filter out product with ID 83 and create promises to fetch each product
+    const productPromises = products
+      .filter((p: any) => p.id !== 83)
+      .map(async (p: any) => {
+        // Fetch product details by ID
+        const response = await getProductById(Number(p.id), langCode);
+        if (response.isError || !response.data?.product) {
+          return;
+        }
+        // Add fetched product to cart with specified quantity
+        dispatch(
+          addProductToCart({
+            id: response.data.product.id,
+            selected: true,
+            quantity: p.quantity || 0,
+          }),
+        );
+        return response.data.product;
+      });
+
+    // Wait for all product fetching and adding operations to complete
+    await Promise.all(productPromises);
+    // Navigate to cart page
     router.push('/cart');
     return null;
   };

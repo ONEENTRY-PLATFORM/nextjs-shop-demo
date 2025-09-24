@@ -1,7 +1,7 @@
+/* eslint-disable no-console */
 import type {
   IOrderByMarkerEntity,
   IOrderData,
-  IOrderProductData,
 } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC } from 'react';
 
@@ -35,22 +35,31 @@ const CancelOrderButton: FC<CancelOrderButtonProps> = ({
   const cancelOrderHandle = async () => {
     const formData = {
       ...data,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      products: data.products.map((product: any) => ({
+      products: data.products.map((product) => ({
         productId: product.id,
         quantity: product.quantity,
-      })) as IOrderProductData[],
+      })),
       statusIdentifier: 'canceled',
     } as IOrderData;
 
-    const order = await updateOrderByMarkerAndId({
-      marker: 'order',
-      id: data.id,
-      data: formData,
-    });
+    try {
+      const order = await updateOrderByMarkerAndId({
+        marker: 'order',
+        id: data.id,
+        data: formData,
+      });
 
-    refetch();
-    return order;
+      if (order.isError) {
+        console.error('Failed to cancel order:', order.error);
+        return null;
+      }
+
+      refetch();
+      return order;
+    } catch (error) {
+      console.error('Error cancelling order:', error);
+      return null;
+    }
   };
 
   return (

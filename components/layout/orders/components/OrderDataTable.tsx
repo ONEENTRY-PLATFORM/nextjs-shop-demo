@@ -1,24 +1,42 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
+import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC, Key } from 'react';
 
 import Loader from '@/components/shared/Loader';
 import { UseDate, UsePrice } from '@/components/utils/utils';
 
+interface IOrderField {
+  marker: string;
+  value: any;
+}
+
+interface ISettings {
+  status_of_payment_title: { value: string };
+  payment_account_title: { value: string };
+  total_amount_title: { value: string };
+  address_title: { value: string };
+  delivery_date_title: { value: string };
+  delivery_time_title: { value: string };
+}
+
+interface IOrderDataTable {
+  settings: ISettings | undefined;
+  data: IOrderByMarkerEntity | undefined;
+  lang: string;
+}
+
 /**
  * OrderData table
+ *
  * @param settings
  * @param data
  * @param lang current language shortcode
  *
  * @returns JSX.Element
  */
-const OrderDataTable: FC<{
-  settings: Record<string, any> | undefined;
-  data: Record<string, any> | undefined;
-  lang: string;
-}> = ({ settings, data, lang }) => {
+const OrderDataTable: FC<IOrderDataTable> = ({ settings, data, lang }) => {
   if (!data || !settings) {
     return <Loader />;
   }
@@ -43,51 +61,41 @@ const OrderDataTable: FC<{
   return (
     <div className="flex flex-col gap-3">
       <hr className="mb-4 text-slate-400" />
-      {formData.map(
-        (
-          field: {
-            marker: string;
-            value: any;
-          },
-          i: Key,
-        ) => {
-          if (field.marker === 'order_address') {
-            return (
-              <div key={i} className="flex gap-2">
-                <b>{address_title.value}:</b> {field.value}
-              </div>
-            );
-          }
-          if (field.marker === 'date') {
-            const date = UseDate({
-              fullDate: field.value.fullDate,
-              format: 'en',
-            });
+      {formData.map((field: IOrderField, i: Key) => {
+        if (field.marker === 'order_address') {
+          return (
+            <div key={i} className="flex gap-2">
+              <b>{address_title.value}:</b> {field.value}
+            </div>
+          );
+        }
+        if (field.marker === 'date') {
+          const date = UseDate({
+            fullDate: field.value.fullDate,
+            format: lang,
+          });
 
-            return (
-              <div key={i} className="flex gap-2">
-                <b>{delivery_date_title.value}: </b> {date}
-              </div>
-            );
-          }
-          if (field.marker === 'time') {
-            return (
-              <div key={i} className="flex gap-2">
-                <b>{delivery_time_title.value}: </b> {field.value}
-              </div>
-            );
-          }
-          return;
-        },
-      )}
+          return (
+            <div key={i} className="flex gap-2">
+              <b>{delivery_date_title.value}: </b> {date}
+            </div>
+          );
+        }
+        if (field.marker === 'time') {
+          return (
+            <div key={i} className="flex gap-2">
+              <b>{delivery_time_title.value}: </b> {field.value}
+            </div>
+          );
+        }
+        return null;
+      })}
       <div className="flex gap-2">
         <b>{status_of_payment_title.value}:</b> {statusIdentifier}
       </div>
       <div className="flex gap-2">
-        <div>
-          <b>{payment_account_title.value}:</b>{' '}
-          {paymentAccountLocalizeInfos.title}
-        </div>
+        <b>{payment_account_title.value}:</b>{' '}
+        {paymentAccountLocalizeInfos?.title}
       </div>
       <div className="flex gap-2 text-lg">
         <b>{total_amount_title.value}: </b> {formattedTotal}
