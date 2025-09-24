@@ -32,7 +32,7 @@ const VariationsCarousel: FC<VariationsCarouselProps> = ({
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   if (!items || !total || total < 1) {
-    return;
+    return null;
   }
   const isCarousel = total > 2;
   const containerClass = isCarousel ? 'px-16 max-md:px-8' : '';
@@ -62,7 +62,7 @@ const VariationsCarousel: FC<VariationsCarouselProps> = ({
           containerProps={{
             style: {
               userSelect: 'none',
-              justifyContent: 'flexCenter',
+              justifyContent: 'center',
               overflow: 'hidden',
             },
             className:

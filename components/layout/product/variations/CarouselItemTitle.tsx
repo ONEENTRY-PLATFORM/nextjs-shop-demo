@@ -23,9 +23,11 @@ const CarouselItemTitle: FC<CarouselItemTitleProps> = ({
 
   return (
     <Link href={'/' + lang + '/shop/product/' + id} title={title}>
-      {colors.map((color: { title: string }, i: number) => {
-        return color.title + (i < colors.length - 1 ? ' + ' : '');
-      })}
+      {Array.isArray(colors)
+        ? colors.map((color: { title: string }, i: number) => {
+            return color.title + (i < colors.length - 1 ? ' + ' : '');
+          })
+        : ''}
     </Link>
   );
 };

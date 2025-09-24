@@ -29,7 +29,7 @@ interface ProductDetailsProps {
  */
 const ProductDetails: FC<ProductDetailsProps> = ({ product, lang, dict }) => {
   // Extract data using safe utility functions
-  const title = getProductTitle(product);
+  const title = getProductTitle(product) || '';
   const category = getProductCategory(product);
 
   // Extract other data from product
@@ -38,7 +38,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, lang, dict }) => {
     statusIdentifier,
     attributeValues: { sale, price, units_product },
   } = product;
-  const units = units_product?.value;
+  const units = units_product?.value || 0;
 
   return (
     <>

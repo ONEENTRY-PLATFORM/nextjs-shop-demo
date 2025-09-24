@@ -31,21 +31,15 @@ const CarouselItem: FC<VariationProps> = ({
   currentIndex,
   setCurrentIndex,
 }) => {
-  const isActive = index === currentIndex;
-
-  const onSelectHandle = () => {
-    setCurrentIndex(index);
-  };
-
   return (
     <button
-      onClick={onSelectHandle}
+      onClick={() => setCurrentIndex(index)}
       className={
-        'relative rounded-lg box-border flex w-[100px] min-h-[130px] shrink-0 flex-col hover:shadow-2xl shadow-none transition-shadow duration-500 ease-in-out ' +
+        'relative border border-solid rounded-lg box-border flex w-[100px] min-h-[130px] shrink-0 flex-col hover:shadow-2xl shadow-none transition-shadow duration-500 ease-in-out ' +
         clsx(
-          isActive
-            ? 'border border-solid border-slate-50 text-slate-700'
-            : 'border border-solid border-transparent text-slate-300',
+          index === currentIndex
+            ? 'border-slate-50 text-slate-700'
+            : 'border-transparent text-slate-300',
         )
       }
     >

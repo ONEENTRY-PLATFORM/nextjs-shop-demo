@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC } from 'react';
 
+import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
 interface CarouselItemImageProps {
@@ -19,10 +20,7 @@ interface CarouselItemImageProps {
  */
 const CarouselItemImage: FC<CarouselItemImageProps> = ({ item, lang }) => {
   const title = item.localizeInfos.title;
-  const picVal = item.attributeValues.pic?.value || '';
-  const imageSrc = Array.isArray(picVal)
-    ? picVal[0]?.downloadLink
-    : picVal.downloadLink;
+  const imageSrc = getImageUrl('pic', item.attributeValues);
 
   return (
     <Link href={'/' + lang + '/shop/product/' + item.id} title={title}>

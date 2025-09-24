@@ -20,8 +20,9 @@ const ProductDescription: FC<ProductDescriptionProps> = ({ description }) => {
   if (!description) {
     return;
   }
-  const descript =
-    description.value[0]?.htmlValue || description.value[0]?.plainValue;
+  const val = description.value;
+  const descript = val[0]?.htmlValue || val[0]?.plainValue;
+
   return (
     <div className="text-sm leading-5 text-neutral-600">
       {descript && parse(descript)}
