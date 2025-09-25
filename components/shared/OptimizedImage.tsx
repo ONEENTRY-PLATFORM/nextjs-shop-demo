@@ -4,10 +4,9 @@ import NextImage from 'next/image';
 import type { FC } from 'react';
 import { useRef, useState } from 'react';
 
-import { useOptimizedImage } from '@/components/hooks/useOptimizedImage';
-
+// import { useOptimizedImage } from '@/components/hooks/useOptimizedImage';
 import Image from './Image';
-import Placeholder from './Placeholder';
+// import Placeholder from './Placeholder';
 
 interface OptimizedImageProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
