@@ -56,19 +56,22 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
       .filter((p: any) => p.id !== 83)
       .map(async (p: any) => {
         // Fetch product details by ID
-        const response = await getProductById(Number(p.id), langCode);
-        if (response.isError || !response.data?.product) {
+        const { product, isError } = await getProductById(
+          Number(p.id),
+          langCode,
+        );
+        if (isError || !product) {
           return;
         }
         // Add fetched product to cart with specified quantity
         dispatch(
           addProductToCart({
-            id: response.data.product.id,
+            id: product.id,
             selected: true,
             quantity: p.quantity || 0,
           }),
         );
-        return response.data.product;
+        return product;
       });
 
     // Wait for all product fetching and adding operations to complete
