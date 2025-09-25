@@ -27,10 +27,10 @@ const ProductImage: FC<ProductImageProps> = ({
         <OptimizedImage
           fill
           sizes="(min-width: 300px) 66vw, 100vw"
-          src={imageSrc}
+          src={pic}
           alt={alt}
           loading="lazy"
-          className="size-40 shrink-0 object-cover transition-transform duration-500 group-hover:scale-125"
+          className="size-40 shrink-0 relative transition-transform duration-500 group-hover:scale-125"
         />
       )}
     </div>

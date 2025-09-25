@@ -18,6 +18,7 @@ interface OptimizedImageResult {
 
 /**
  * Hook for optimizing images with LQIP placeholders and lazy loading
+ *
  * @param src Image source URL
  * @param width Desired image width
  * @param height Desired image height
@@ -28,7 +29,7 @@ export const useOptimizedImage = ({
   src,
   width,
   height,
-  quality = 75,
+  quality = 85,
 }: UseOptimizedImageProps): OptimizedImageResult => {
   const [blurDataURL, setBlurDataURL] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);

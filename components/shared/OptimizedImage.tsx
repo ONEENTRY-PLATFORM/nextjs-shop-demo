@@ -10,7 +10,8 @@ import Image from './Image';
 import Placeholder from './Placeholder';
 
 interface OptimizedImageProps {
-  src: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  src: any;
   alt: string;
   width?: number;
   height?: number;
@@ -26,7 +27,7 @@ interface OptimizedImageProps {
 /**
  * Optimized image component with LQIP placeholder and lazy loading
  *
- * @param src Image source URL
+ * @param src Image source data
  * @param alt Image alt text
  * @param width Image width
  * @param height Image height
@@ -43,26 +44,28 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
   width,
   height,
   sizes,
-  priority = 'auto',
+  priority = '',
   className = '',
-  quality = 85,
-  type = '',
+  quality,
+  type = 'next',
   loading,
 }) => {
   const [isImageLoading, setImageLoading] = useState(true);
   const ref = useRef<HTMLImageElement>(null);
+  const optimizedSrc = src?.value?.downloadLink || src?.value[0]?.downloadLink;
+  const blurDataURL = src?.value?.previewLink?.default?.[0] || '';
 
   // Handle the exactOptionalPropertyTypes issue by explicitly building the props object
-  const { optimizedSrc, blurDataURL, isLoading, isError } = useOptimizedImage({
-    src,
-    quality,
-    ...(width !== undefined && { width }),
-    ...(height !== undefined && { height }),
-  });
+  // const { optimizedSrc, blurDataURL, isLoading, isError } = useOptimizedImage({
+  //   src,
+  //   quality,
+  //   ...(width !== undefined && { width }),
+  //   ...(height !== undefined && { height }),
+  // });
 
-  if (isError || !src) {
-    return <Placeholder />;
-  }
+  // if (isError || !src) {
+  //   return <Placeholder />;
+  // }
 
   // Prepare props for Next.js Image component
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -77,8 +80,8 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
     loading,
     className: `
       duration-300 ease-in-out
-      ${isImageLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0'}
-      ${isLoading ? 'opacity-0' : 'opacity-100'}
+      ${isImageLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0 object-cover'}
+      ${isImageLoading ? 'opacity-0' : 'opacity-100'}
     `,
     ref,
     onLoadingComplete: () => setImageLoading(false),

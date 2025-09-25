@@ -76,7 +76,7 @@ const ProductCard: FC<ProductCardProps> = ({
             loading="lazy"
             src={imgSrc}
             alt={title}
-            quality={85}
+            quality={75}
             className="size-full shrink-0 self-start object-cover"
           />
         </div>

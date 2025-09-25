@@ -29,7 +29,7 @@ const CarouselItemImage: FC<CarouselItemImageProps> = ({ item, lang }) => {
         height={80}
         src={imageSrc}
         alt={title}
-        quality={85}
+        quality={75}
         className="aspect-auto size-full h-auto min-w-full shrink-0 rounded-lg object-cover"
         type="image"
       />

@@ -16,14 +16,12 @@ const BlocksGridImage: FC<{ attributeValues: any }> = async ({
   // extract data from block attributeValues
   const { title = '', bg_web } = attributeValues;
 
-  const imageSrc = bg_web?.value[0]?.downloadLink;
-
   return (
     <OptimizedImage
-      src={imageSrc}
+      src={bg_web}
       alt={title.value}
       priority={'high'}
-      quality={85}
+      quality={75}
       sizes="(min-width: 1024px) 66vw, 100vw"
       className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-transform duration-500 group-hover:scale-125"
     />

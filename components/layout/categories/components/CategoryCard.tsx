@@ -42,7 +42,7 @@ const CategoryCard: FC<CategoryCardProps> = ({
           sizes="(min-width: 1024px) 66vw, 100vw"
           src={imgSrc ? imgSrc : '/images/card.svg'}
           alt={title}
-          quality={85}
+          quality={75}
           className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-all duration-500 group-hover:scale-125"
         />
         <div className="radial-hover"></div>
