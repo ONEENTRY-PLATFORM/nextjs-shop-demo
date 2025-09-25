@@ -1,13 +1,10 @@
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FC, Key } from 'react';
-
-import { LanguageEnum } from '@/app/types/enum';
 
 import Sticker from './Sticker';
 
 interface StickersProps {
-  product: IProductsEntity;
-  lang: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  attributeValues: any;
 }
 
 /**
@@ -18,16 +15,8 @@ interface StickersProps {
  *
  * @returns Stickers array
  */
-const Stickers: FC<StickersProps> = ({
-  product: { attributeValues },
-  lang,
-}) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-
-  // extract attributes from attributeValues field of product
-  const attributes = attributeValues[langCode] || attributeValues;
-
-  return [attributes?.stickers || []].map(
+const Stickers: FC<StickersProps> = ({ attributeValues }) => {
+  return [attributeValues?.stickers || []].map(
     (
       sticker: {
         value: {

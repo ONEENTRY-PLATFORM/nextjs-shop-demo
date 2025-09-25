@@ -17,8 +17,8 @@ interface StickerProps {
 
 /**
  * Sticker
- * @param sticker
  *
+ * @param sticker Sticker object
  * @returns Sticker
  */
 const Sticker: FC<StickerProps> = ({ sticker }) => {

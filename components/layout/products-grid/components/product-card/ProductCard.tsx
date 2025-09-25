@@ -1,9 +1,8 @@
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { type FC, useMemo } from 'react';
+import type { FC } from 'react';
 
-import { LanguageEnum } from '@/app/types/enum';
 import AddToCartButton from '@/components/layout/product/components/AddToCartButton';
 import FavoritesButton from '@/components/shared/FavoritesButton';
 
@@ -23,12 +22,11 @@ interface ProductCardProps {
 /**
  * Product card
  *
- * @param product product entity object
- * @param lang Current language shortcode
- * @param dict dictionary from server api
- * @param index Index of element for animations stagger
- * @param pagesLimit used for animations
- *
+ * @param {IProductsEntity} props.product - product entity object
+ * @param {string} props.lang - Current language shortcode
+ * @param {number} props.dict - dictionary from server api
+ * @param {IAttributeValues} props.index - Index of element for animations stagger
+ * @param {number} props.pagesLimit - used for animations
  * @returns Product card
  */
 const ProductCard: FC<ProductCardProps> = ({
@@ -38,17 +36,9 @@ const ProductCard: FC<ProductCardProps> = ({
   index,
   pagesLimit,
 }) => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { id, statusIdentifier, attributeValues, localizeInfos } = product;
 
-  const attributes = useMemo(
-    () => attributeValues?.[langCode] || attributeValues,
-    [attributeValues, langCode],
-  );
-  const title = useMemo(
-    () => localizeInfos?.[langCode]?.title || localizeInfos?.title || '',
-    [localizeInfos, langCode],
-  );
+  const title = localizeInfos?.title || '';
   return (
     <CardAnimations
       className="product-card group"
@@ -56,12 +46,12 @@ const ProductCard: FC<ProductCardProps> = ({
       pagesLimit={pagesLimit}
     >
       <div className="z-10 flex justify-between gap-5 self-stretch">
-        <Stickers product={product} lang={lang} />
+        <Stickers attributeValues={attributeValues} />
         <FavoritesButton {...product} />
       </div>
 
       {/* ProductImage */}
-      <ProductImage attributes={attributes} alt={title} />
+      <ProductImage attributeValues={attributeValues} alt={title} />
 
       {/* Product Data */}
       <div className="z-10 mb-5 mt-auto flex w-full max-w-[160px] flex-col gap-2.5">
@@ -69,7 +59,7 @@ const ProductCard: FC<ProductCardProps> = ({
           {title}
         </h2>
 
-        <PriceDisplay attributes={attributes} lang={lang} />
+        <PriceDisplay attributeValues={attributeValues} lang={lang} />
 
         <AddToCartButton
           id={id}

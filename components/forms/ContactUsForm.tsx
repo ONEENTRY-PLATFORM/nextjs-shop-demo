@@ -45,6 +45,8 @@ const ContactUsForm: FC<{ className?: string; lang: string }> = memo(
       .slice()
       .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
 
+    const moduleFormConfig = data?.moduleFormConfigs?.[0];
+
     // Submit form
     const onSubmitFormHandle = useCallback(
       async (e: FormEvent<HTMLFormElement>) => {
@@ -91,13 +93,18 @@ const ContactUsForm: FC<{ className?: string; lang: string }> = memo(
               newData = {
                 marker: marker,
                 type: 'list',
-                value: [
-                  {
-                    title: value,
-                    value: value,
-                  },
-                ],
+                value: [value],
               };
+              // newData = {
+              //   marker: marker,
+              //   type: 'list',
+              //   value: [
+              //     {
+              //       title: value,
+              //       value: value,
+              //     },
+              //   ],
+              // };
             }
             if (type === 'text') {
               newData = {
@@ -105,7 +112,7 @@ const ContactUsForm: FC<{ className?: string; lang: string }> = memo(
                 type: 'text',
                 value: [
                   {
-                    htmlValue: value,
+                    // htmlValue: value,
                     plainValue: value,
                   },
                 ],
@@ -122,12 +129,13 @@ const ContactUsForm: FC<{ className?: string; lang: string }> = memo(
           try {
             setLoading(true);
             await api.FormData.postFormsData({
-              formIdentifier: 'contact_us',
+              formIdentifier: data?.identifier || '',
               formData: transformedFormData,
-              formModuleConfigId: 0,
-              moduleEntityIdentifier: '',
+              formModuleConfigId: moduleFormConfig?.id || 0,
+              moduleEntityIdentifier:
+                moduleFormConfig?.entityIdentifiers?.[0]?.id || '',
               replayTo: null,
-              status: '',
+              status: 'sent',
             });
             setLoading(false);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -137,7 +145,7 @@ const ContactUsForm: FC<{ className?: string; lang: string }> = memo(
           }
         }
       },
-      [formFields, fieldsData],
+      [formFields, fieldsData, data, moduleFormConfig],
     );
 
     if (isLoading) {
