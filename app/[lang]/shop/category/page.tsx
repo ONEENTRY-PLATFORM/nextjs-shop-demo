@@ -25,19 +25,18 @@ const CategoryPage: FC<PageProps> = async ({ params }) => {
   // Get child pages by parent url
   const { pages, isError } = await getChildPagesByParentUrl('category', lang);
 
+  if (isError || !pages || !Array.isArray(pages)) {
+    return notFound();
+  }
+
   // extract categories data from pages
   const categories = pages?.map((page: IPagesEntity) => {
     return {
       title: page.localizeInfos.title,
       link: '/' + lang + '/shop/category/' + page.pageUrl,
       imgSrc: getImageUrl('opengraph_image', page.attributeValues),
-      // imgSrc: page.attributeValues.opengraph_image?.value[0]?.downloadLink,
     };
   });
-
-  if (isError || !pages || !Array.isArray(pages)) {
-    return notFound();
-  }
 
   // Breadcrumb structured data
   const breadcrumbStructuredData = {

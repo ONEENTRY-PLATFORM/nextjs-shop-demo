@@ -1,5 +1,5 @@
-import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
+import Loader from '@/components/shared/Loader';
 
 export default function Loading() {
-  return <ProductsGridLoader />;
+  return <Loader />;
 }

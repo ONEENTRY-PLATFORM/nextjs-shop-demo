@@ -17,12 +17,12 @@ import { i18n } from '@/i18n-config';
 
 /**
  * Product page
+ *
  * @async server component
  * @param params page params
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Product page layout JSX.Element
  */
-
 const ProductPageLayout: FC<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: Promise<{ handle: string; lang: any }>;
@@ -32,10 +32,8 @@ const ProductPageLayout: FC<{
   const dict = await getDictionary(lang as Locale);
 
   // Get product by current Id
-  const result = await getProductById(Number(handle), lang);
-  const isError = result.isError;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const product = (result as any).product;
+  const { data, isError } = await getProductById(Number(handle), lang);
+  const product = data?.product;
 
   if (isError || !product) {
     return notFound();
@@ -43,7 +41,7 @@ const ProductPageLayout: FC<{
 
   // extract data from product
   const { attributeValues, localizeInfos, additional, statusIdentifier } =
-    product as IProductsEntity;
+    product;
 
   /**
    * product Json liked data
@@ -125,15 +123,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { handle, lang } = await params;
   const result = await getProductById(Number(handle), lang);
-  const isError = result.isError;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const product = (result as any).product;
+  const { data, isError } = result;
+  const product = data?.product;
 
   if (isError || !product) {
     return notFound();
   }
-  const { attributeValues, localizeInfos, isVisible } =
-    product as IProductsEntity;
+  const { attributeValues, localizeInfos, isVisible } = product;
 
   // Return metadata object
   return generatePageMetadata({
