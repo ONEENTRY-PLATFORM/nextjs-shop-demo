@@ -24,8 +24,7 @@ import { i18n } from '@/i18n-config';
  * @returns Product page layout JSX.Element
  */
 const ProductPageLayout: FC<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params: Promise<{ handle: string; lang: any }>;
+  params: Promise<{ handle: string; lang: string }>;
 }> = async ({ params }) => {
   const { lang, handle } = await params;
   // Get the dictionary from the API and set the server provider.
