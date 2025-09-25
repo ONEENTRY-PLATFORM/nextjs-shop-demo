@@ -31,8 +31,7 @@ const ProductPageLayout: FC<{
   const dict = await getDictionary(lang as Locale);
 
   // Get product by current Id
-  const { data, isError } = await getProductById(Number(handle), lang);
-  const product = data?.product;
+  const { product, isError } = await getProductById(Number(handle), lang);
 
   if (isError || !product) {
     return notFound();
@@ -122,8 +121,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { handle, lang } = await params;
   const result = await getProductById(Number(handle), lang);
-  const { data, isError } = result;
-  const product = data?.product;
+  const { product, isError } = result;
 
   if (isError || !product) {
     return notFound();
