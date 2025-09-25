@@ -2,7 +2,6 @@
 import type {
   IOrderByMarkerEntity,
   IOrderData,
-  IOrderProducts,
 } from 'oneentry/dist/orders/ordersInterfaces';
 import type { FC } from 'react';
 
