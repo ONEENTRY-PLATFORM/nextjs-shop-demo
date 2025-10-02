@@ -14,13 +14,14 @@ interface TimeSlotsProps {
 }
 
 /**
- * Time slots grid
+ * Time slots grid.
  *
- * @param {object} props.timeSlots - Array of time slots. Each time slot is an object with time and isSelected properties.
+ * @param {object} props - Component props.
+ * @param {object[]} props.timeSlots - Array of time slots. Each time slot is an object with time and isSelected properties.
  * @param {string} props.currentTime - Current time. It is used to highlight the currently selected time slot.
  * @param {Dispatch<React.SetStateAction<string>>} props.setTime - Function to set the selected time.
  *
- * @returns Time slots grid
+ * @returns {JSX.Element} - Time slots grid component.
  */
 const TimeSlots = ({
   timeSlots,

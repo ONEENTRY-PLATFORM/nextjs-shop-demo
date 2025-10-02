@@ -10,7 +10,7 @@ type FormCaptchaProps = {
  *
  * @param {Dispatch<boolean>} props.setIsCaptcha - Set captcha.
  *
- * @returns FormCaptcha
+ * @returns {JSX.Element} - FormCaptcha component.
  */
 const FormCaptcha = ({ setIsCaptcha }: FormCaptchaProps): JSX.Element => {
   const testKey = '6LdF4HcqAAAAAD7Mia-zF5SMzY-XjHd_SU2xr0uQ';

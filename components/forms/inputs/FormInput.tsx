@@ -20,7 +20,7 @@ import EyeOpenIcon from '@/components/icons/eye-o';
  * @param {any} [field.listTitles] - List titles.
  * @param {any} [field.localizeInfos] - Localize info.
  *
- * @returns FormInput
+ * @returns JSX.Element - Form input.
  */
 const FormInput = (field: {
   marker: string;

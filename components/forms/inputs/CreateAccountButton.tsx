@@ -12,7 +12,9 @@ interface CreateAccountButtonProps {
 /**
  * Create account button
  *
+ * @param {object} props - Component props.
  * @param {string} props.title - Button title.
+ *
  * @returns JSX.Element - Create account button
  */
 const CreateAccountButton = ({

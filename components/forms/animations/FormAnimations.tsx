@@ -13,10 +13,10 @@ interface FormAnimationsProps {
 }
 
 /**
- * Form animations
+ * Form animations.
  *
- * @param {ReactNode} props.children - children ReactNode
- * @param {boolean} props.isLoading - loading state
+ * @param {ReactNode} props.children - children ReactNode.
+ * @param {boolean} props.isLoading - loading state.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  *
  * @returns A form component wrapper with animations applied

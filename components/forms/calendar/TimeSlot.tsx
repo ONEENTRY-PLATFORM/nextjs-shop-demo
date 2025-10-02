@@ -11,13 +11,14 @@ interface TimeSlotProps {
 }
 
 /**
- * Time slot button
+ * Time slot button.
  *
+ * @param {object} props - Time slot props.
  * @param {object} props.slot - Time slot object. It contains time and isDisabled properties.
  * @param {string} props.currentTime - Current time. It is used to determine which time slot is currently selected.
  * @param {Dispatch<React.SetStateAction<string>>} props.setTime - Set time. It is used to update the selected time.
  *
- * @returns Time slot button
+ * @returns {JSX.Element} - Time slot button.
  */
 const TimeSlot = ({
   slot,

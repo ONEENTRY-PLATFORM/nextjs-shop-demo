@@ -9,10 +9,20 @@ const getBaseUrl = () => {
   return envUrl.replace(/\/$/, '');
 };
 
+/**
+ * Generate sitemap data for the website, including all localized root pages and main section pages
+ *
+ * @returns Returns a Promise that resolves to a sitemap entry array in Next.js MetadataRoute.Sitemap format
+ * Each entry contains:
+ *   - url: Full URL of the page
+ *   - lastModified: Last modification time of the page
+ *   - changeFrequency: Page update frequency
+ *   - priority: Page priority (0-1)
+ */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getBaseUrl();
 
-  // Base pages by locales
+  // Generate sitemap entries for root pages of each locale with highest priority
   const localizedRoots = i18n.locales.map((loc) => ({
     url: `${baseUrl}/${loc}`,
     lastModified: new Date(),
@@ -20,8 +30,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 1,
   }));
 
-  // Known sections
+  // Known section paths
   const sections = ['shop', 'orders', 'favorites', 'cart'];
+  // Generate sitemap entries for sections of each locale
   const localizedSections = i18n.locales.flatMap((loc) =>
     sections.map((s) => ({
       url: `${baseUrl}/${loc}/${s}`,

@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 
 /**
  * Custom error class for API errors
+ * @property {number} statusCode - The HTTP status code of the error.
+ * @property {unknown} [originalError] - The original error object.
  */
 export class ApiError extends Error {
   statusCode: number;
@@ -20,7 +22,7 @@ export class ApiError extends Error {
 /**
  * Type guard to check if an object is of type IError
  *
- * @param error The error object to check
+ * @param {unknown} error - The error object to check
  * @returns True if the object is an IError, false otherwise
  */
 export function isIError(error: unknown): error is IError {
@@ -35,7 +37,7 @@ export function isIError(error: unknown): error is IError {
 /**
  * Centralized error handling function
  *
- * @param error The error to handle
+ * @param {unknown} error - The error to handle
  * @returns An ApiError with standardized format
  */
 export function handleApiError(error: unknown): ApiError {
@@ -93,13 +95,13 @@ export function useApiErrorHandler() {
  * Format error message for user display.
  *
  * @param {any} error - The error to format.
- * @param defaultMessage Default message to show if error is not recognized.
+ * @param {string} defaultMessage - Default message to show if error is not recognized.
  * @returns Formatted error message.
  */
 export function formatErrorMessage(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: any,
-  defaultMessage = 'An error occurred',
+  defaultMessage: string = 'An error occurred',
 ): string {
   if (isIError(error)) {
     switch (error.statusCode) {

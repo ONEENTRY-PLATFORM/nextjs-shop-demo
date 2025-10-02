@@ -15,11 +15,11 @@ interface FormFieldAnimationsProps {
 }
 
 /**
- * Form field animations
+ * Form field animations.
  *
- * @param {ReactNode} props.children children ReactNode
- * @param {string} props.className CSS className of ref element
- * @param {number} props.index Index of element for animations stagger
+ * @param {ReactNode} props.children - children ReactNode.
+ * @param {string} props.className - CSS className of ref element.
+ * @param {number} props.index - Index of element for animations stagger.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  *
  * @returns Form field animations

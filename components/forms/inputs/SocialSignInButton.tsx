@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import React from 'react';
 
 interface SocialSignInButtonProps {
@@ -8,13 +8,17 @@ interface SocialSignInButtonProps {
 }
 
 /**
- * Social SignIn button
- * @param imageSrc icon url
- * @param lang Current language shortcode
+ * Social SignIn button.
  *
- * @returns Social SignIn button
+ * @param {string} props.imageSrc - icon url.
+ * @param {string} props.lang - Current language shortcode.
+ *
+ * @returns Social SignIn button.
  */
-const SocialSignInButton: FC<SocialSignInButtonProps> = ({ imageSrc, alt }) => {
+const SocialSignInButton = ({
+  imageSrc,
+  alt,
+}: SocialSignInButtonProps): JSX.Element => {
   return (
     <button
       type="button"
