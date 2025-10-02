@@ -14,7 +14,6 @@ import { handleApiError } from '@/app/utils/errorHandler';
  */
 export const onSubscribeEvents = async (id: number): Promise<void> => {
   try {
-    // await api.Events.subscribeByMarker('catalog_event', id);
     const status = await api.Events.subscribeByMarker(
       'status_out_of_stock',
       id,

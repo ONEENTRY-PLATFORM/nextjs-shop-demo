@@ -4,8 +4,8 @@ import parse from 'html-react-parser';
 /**
  * Use String type
  *
- * @param name Attribute name
- * @param attributeValues The attribute values
+ * @param {string} name - Attribute name.
+ * @param {Record<string, any>} attributeValues - The attribute values.
  *
  * @returns String value or undefined
  */
@@ -27,9 +27,9 @@ export const getString = (
 /**
  * Use Text type
  *
- * @param {string} name The name of the attribute
- * @param {any} attributeValues The attribute values object
- * @param {string} type of the content
+ * @param {string} name - The name of the attribute.
+ * @param {any} attributeValues - The attribute values object.
+ * @param {string} type - Type of the content.
  *
  * @returns HTML content
  */
@@ -177,7 +177,7 @@ export const getText = (
  * @returns The image URL or undefined
  */
 export const getImageUrl = (
-  name: any,
+  name: string,
   attributeValues: any,
   type: 'image' | 'preview' = 'image',
 ): string => {

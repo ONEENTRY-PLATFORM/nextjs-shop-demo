@@ -7,15 +7,24 @@ type LogInProps = { login: string; password: string };
 
 /**
  * User authorization with API AuthProvider
+ *
  * @async
- * @param login
- * @param password
+ * @param {object} props - User authorization data.
+ * @param {string} props.login - User login.
+ * @param {string} props.password - User password.
  * @see {@link https://doc.oneentry.cloud/docs/users OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
- * @returns result
+ * @returns {object} - User authorization result.
  */
-export const logInUser = async ({ login, password }: LogInProps) => {
+export const logInUser = async ({
+  login,
+  password,
+}: LogInProps): Promise<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?: any;
+  error?: string;
+}> => {
   try {
     const preparedData: IAuthPostBody = {
       authData: [

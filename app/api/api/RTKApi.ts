@@ -58,7 +58,7 @@ export const RTKApi = createApi({
     /**
      * Get all blocks by page url.
      *
-     * @property {string} pageUrl - Marker of Block.
+     * @property {string} pageUrl - Page URL.
      * @property {string} activeLang - Language code. Default "en_US".
      */
     getBlocksByPageUrl: build.query<IPositionBlock[], BlocksByPageUrlProps>({
@@ -75,7 +75,7 @@ export const RTKApi = createApi({
     /**
      * Get Product By Id.
      *
-     * @property {string} item - IProductsEntity.
+     * @property {number} id - Product ID.
      */
     getProductById: build.query<IProductsEntity, { id: number }>({
       queryFn: async ({ id }) => {
@@ -97,7 +97,7 @@ export const RTKApi = createApi({
     /**
      * Get Products By Ids.
      *
-     * @property {string} items - Array of IProductsEntity.
+     * @property {string} items - Array of product IDs as string.
      */
     getProductsByIds: build.query<IProductsEntity[], { items: string }>({
       queryFn: async ({ items }) => {

@@ -6,14 +6,16 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Update user state with API Users
+ *
  * @async
- * @param favorites array of products ids
- * @param cart array of products
- * @param user any
+ * @param {object} props - object
+ * @param {number[]} props.favorites - array of products ids
+ * @param {IProducts[]} props.cart - array of products
+ * @param {any} props.user - user object
  * @see {@link https://doc.oneentry.cloud/docs/users OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
- * @returns bool
+ * @returns boolean
  */
 export const updateUserState = async ({
   favorites,

@@ -2,14 +2,16 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
+import type { JSX } from 'react';
 import { useRef } from 'react';
 
 /**
  * Intro animations
+ *
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @returns JSX.Element with animated ref
  */
-const IntroAnimations = () => {
+const IntroAnimations = (): JSX.Element => {
   const ref = useRef(null);
 
   // Intro animations

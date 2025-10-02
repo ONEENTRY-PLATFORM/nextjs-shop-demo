@@ -73,7 +73,7 @@ export const useCreateOrder = ({
    * @async
    * @returns void
    */
-  const onConfirmOrder = async () => {
+  const onConfirmOrder = async (): Promise<void> => {
     setIsLoading(true);
     if (order?.formIdentifier && order?.paymentAccountIdentifier) {
       // prepare order data

@@ -8,16 +8,18 @@ import { useLayoutEffect } from 'react';
 
 /**
  * Register GSAP plugins
+ *
  * @see {@link https://gsap.com/cheatsheet/#plugins- gsap cheatsheet}
+ *
  * @returns void
  */
-const RegisterGSAP = () => {
+const RegisterGSAP = (): void => {
   useLayoutEffect(() => {
     gsap.registerPlugin(useGSAP, ScrollTrigger);
     gsap.registerPlugin(ScrollToPlugin);
   }, []);
 
-  return null;
+  return;
 };
 
 export default RegisterGSAP;

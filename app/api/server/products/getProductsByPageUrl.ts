@@ -9,8 +9,20 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get all products with pagination for the selected category.
+ *
  * @async
- * @param props
+ * @param {object} props - Object containing the language, offset, limit, and parameters.
+ * @param {string} props.lang - Language shortcode.
+ * @param {number} props.offset - Offset for pagination.
+ * @param {number} props.limit - Limit for pagination.
+ * @param {object} props.params - Parameters for filtering products.
+ * @param {string} props.params.handle - Category handle.
+ * @param {object} props.params.searchParams - Search parameters.
+ * @param {string} props.params.searchParams.search - Search query.
+ * @param {string} props.params.searchParams.in_stock - Filter by in stock status.
+ * @param {string} props.params.searchParams.color - Filter by color.
+ * @param {string} props.params.searchParams.minPrice - Filter by minimum price.
+ * @param {string} props.params.searchParams.maxPrice - Filter by maximum price.
  * @see {@link https://doc.oneentry.cloud/docs/catalog OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
