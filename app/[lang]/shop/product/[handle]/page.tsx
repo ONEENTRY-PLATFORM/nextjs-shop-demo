@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { FC, JSX } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById, getProducts } from '@/app/api';
@@ -19,13 +19,16 @@ import { i18n } from '@/i18n-config';
  * Product page
  *
  * @async server component
- * @param params page params
+ * @param {object} params - page params
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ *
  * @returns Product page layout JSX.Element
  */
-const ProductPageLayout: FC<{
+const ProductPageLayout = async ({
+  params,
+}: {
   params: Promise<{ handle: string; lang: string }>;
-}> = async ({ params }) => {
+}): Promise<JSX.Element> => {
   const { lang, handle } = await params;
   // Get the dictionary from the API and set the server provider.
   const dict = await getDictionary(lang as Locale);

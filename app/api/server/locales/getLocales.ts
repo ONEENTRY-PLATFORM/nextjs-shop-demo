@@ -7,6 +7,7 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get all active language localization objects.
+ *
  * @async
  * @see {@link https://doc.oneentry.cloud/docs/languages OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}

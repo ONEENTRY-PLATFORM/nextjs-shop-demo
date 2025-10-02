@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
-import type { FC } from 'react';
+import type { FC, JSX } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api';
@@ -15,12 +15,13 @@ import { i18n } from '@/i18n-config';
  * Category page
  *
  * @async server component
- * @param params page params
+ * @param {PageProps} params - page params
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ *
  * @returns Category page layout JSX.Element
  */
-const CategoryPage: FC<PageProps> = async ({ params }) => {
+const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
   const { lang } = await params;
   // Get child pages by parent url
   const { pages, isError } = await getChildPagesByParentUrl('category', lang);

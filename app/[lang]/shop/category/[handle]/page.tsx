@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { type FC, memo, Suspense } from 'react';
+import { type JSX, memo, Suspense } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getChildPagesByParentUrl, getPageByUrl } from '@/app/api';
@@ -15,20 +15,22 @@ import { i18n } from '@/i18n-config';
 
 /**
  * Shop category page layout
+ *
  * @async server component
- * @param params page params
- * @param searchParams dynamic search params
+ * @param {any} props.params - page params
+ * @param {any} props.searchParams - dynamic search params
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ *
  * @returns Shop page layout JSX.Element
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ShopCategoryLayout: FC<any> = async (props: any) => {
+const ShopCategoryLayout = async (props: any): Promise<JSX.Element> => {
   // Access searchParams without await to keep page static
   const searchParams = await props.searchParams;
-
   const params = await props.params;
   const { lang, handle } = await params;
+
   // Get the dictionary from the API and set the server provider.
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 

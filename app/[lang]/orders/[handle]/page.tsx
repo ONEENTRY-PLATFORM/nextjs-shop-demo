@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
 import OrderPage from '@/components/layout/orders/components/OrderPage';
@@ -16,7 +16,7 @@ const OrderPageLayout = async (
   props: Promise<{
     params: { handle: string; lang: string };
   }>,
-) => {
+): Promise<JSX.Element> => {
   const p = await props;
   const { handle, lang } = p.params;
 

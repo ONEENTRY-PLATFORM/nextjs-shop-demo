@@ -10,8 +10,8 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
  * Get all blocks by page url.
  *
  * @async
- * @param {string} props.lang Current language shortcode
- * @param {string} props.pageUrl Page URL
+ * @param {string} props.lang - Current language shortcode
+ * @param {string} props.pageUrl - Page URL
  * @see {@link https://doc.oneentry.cloud/docs/blocks OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *

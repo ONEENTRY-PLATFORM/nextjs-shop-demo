@@ -1,5 +1,5 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
 import { getProductById } from '@/app/api';
@@ -21,13 +21,18 @@ type ProductResponse = {
 };
 
 /**
- * Cart page
+ * Cart page layout component that renders the shopping cart page
+ *
+ * This async server component fetches dictionary data for internationalization
+ * and delivery product data, then renders the cart page with sidebar layout.
+ *
  * @async server component
- * @param params
+ * @param {PageProps} params - page params containing route parameters
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ *
  * @returns Cart page layout JSX.Element
  */
-const CartPageLayout: FC<PageProps> = async ({ params }) => {
+const CartPageLayout = async ({ params }: PageProps): Promise<JSX.Element> => {
   const { lang } = await params;
   // Get dictionary and set to server provider
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));

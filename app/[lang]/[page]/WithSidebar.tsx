@@ -7,14 +7,17 @@ import SidebarMenu from '@/components/layout/sidebar';
  * Sidebar layout
  *
  * @async server component
- * @param lang Current language shortcode
- * @param children children ReactNode
+ * @param {string} props.lang Current language shortcode
+ * @param {React.ReactNode} props.children children ReactNode
  * @returns Sidebar layout JSX.Element
  */
-const WithSidebar: FC<{
+const WithSidebar = async ({
+  lang,
+  children,
+}: {
   lang: string;
   children: React.ReactNode;
-}> = async ({ lang, children }) => {
+}) => {
   return (
     <div className="flex w-full flex-col items-center">
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-row max-md:flex-row max-md:flex-wrap">

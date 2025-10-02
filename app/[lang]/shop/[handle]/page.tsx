@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { memo, Suspense } from 'react';
 
 import { getChildPagesByParentUrl, getPageByUrl } from '@/app/api';
@@ -19,15 +19,16 @@ import { getDictionary } from '../../dictionaries';
  * Shop catalog page
  *
  * @async server component
+ * @param {Promise<object>} props.params - page params
+ * @param {Promise<any>} props.searchParams - search params
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- * @param params page params
- * @param searchParams
+ *
  * @returns Shop page layout JSX.Element
  */
-const ShopCatalogPage: FC<any> = async (props: {
+const ShopCatalogPage = async (props: {
   params: Promise<{ handle: any; lang: any }>;
   searchParams: Promise<any>;
-}) => {
+}): Promise<JSX.Element> => {
   const searchParams = await props.searchParams;
   const params = await props.params;
 

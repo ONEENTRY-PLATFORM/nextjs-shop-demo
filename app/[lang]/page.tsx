@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { Suspense } from 'react';
 
 // Import custom API function and components
@@ -25,14 +25,17 @@ interface IndexPageLayoutProps {
 
 /**
  * Home(index) page component
- * @async server component
  *
- * @param params - Page parameters including language
+ * @async server component
+ * @param {IndexPageLayoutProps} params - Page parameters including language
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ *
  * @returns JSX.Element representing the page layout
  */
-const IndexPageLayout: FC<IndexPageLayoutProps> = async ({ params }) => {
+const IndexPageLayout = async ({
+  params,
+}: IndexPageLayoutProps): Promise<JSX.Element> => {
   // Destructure language parameter from params
   const { lang } = await params;
 

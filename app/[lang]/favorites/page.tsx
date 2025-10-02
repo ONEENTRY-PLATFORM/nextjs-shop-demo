@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
@@ -11,12 +11,16 @@ import { getDictionary } from '../dictionaries';
 
 /**
  * Favorites page
+ *
  * @async server component
- * @param params page params
+ * @param {PageProps} params - page params
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ *
  * @returns Favorites page layout JSX.Element
  */
-const FavoritesPageLayout: FC<PageProps> = async ({ params }) => {
+const FavoritesPageLayout = async ({
+  params,
+}: PageProps): Promise<JSX.Element> => {
   const { lang } = await params;
   // Get dictionary and set to server provider
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));

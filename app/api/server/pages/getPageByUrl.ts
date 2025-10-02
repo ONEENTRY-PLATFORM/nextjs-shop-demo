@@ -8,9 +8,10 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get page object with information about forms, blocks, menus, linked to the page by URL.
+ *
  * @async
- * @param {string} [url] - Page URL
- * @param {string} [lang] - Current language shortcode
+ * @param {string} [url] - Page URL.
+ * @param {string} [lang] - Current language shortcode.
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  *

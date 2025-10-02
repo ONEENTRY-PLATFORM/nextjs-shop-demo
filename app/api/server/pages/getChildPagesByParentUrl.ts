@@ -8,9 +8,10 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get child pages object with information as an array.
+ *
  * @async
- * @param url Page URL
- * @param lang Current language shortcode
+ * @param {string} url - Page URL.
+ * @param {string} lang - Current language shortcode.
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { FC } from 'react';
+import type { FC, JSX } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
@@ -25,12 +25,14 @@ import WithSidebar from './WithSidebar';
  * @param params page params
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ *
  * @returns page layout JSX.Element
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PageLayout: FC<{ params: Promise<{ page: any; lang: any }> }> = async ({
+const PageLayout = async ({
   params,
-}) => {
+}: {
+  params: Promise<{ page: string; lang: string }>;
+}): Promise<JSX.Element> => {
   const { page: p, lang } = await params;
   // Get dictionary and set to server provider
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
@@ -149,10 +151,11 @@ export async function generateStaticParams() {
  * Generate page metadata
  *
  * @async server component
- * @param params page params
+ * @param {object} params - Page params.
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- * @returns metadata
+ *
+ * @returns page metadata
  */
 export async function generateMetadata({
   params,
