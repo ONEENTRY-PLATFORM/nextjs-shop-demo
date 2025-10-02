@@ -7,6 +7,8 @@ import FilterModal from '@/components/layout/filter/FilterModal';
 interface GridLayoutProps {
   lang: string;
   dict: IAttributeValues;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  error: any;
 }
 
 /**
@@ -17,7 +19,7 @@ interface GridLayoutProps {
  *
  * @returns ProductsNotFound
  */
-const ProductsNotFound: FC<GridLayoutProps> = async ({ lang, dict }) => {
+const ProductsNotFound: FC<GridLayoutProps> = async ({ lang, dict, error }) => {
   return (
     <div className="text-center">
       <Image

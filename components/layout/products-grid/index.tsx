@@ -49,7 +49,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
   const combinedParams = { ...params, searchParams };
 
   // Get all products from api or get products byPageUrl
-  const { isError, products, total } = !isCategory
+  const { error, isError, products, total } = !isCategory
     ? await getProducts({
         lang: lang,
         offset: 0,
@@ -64,7 +64,7 @@ const ProductsGridLayout: FC<GridLayoutProps> = async ({
       });
 
   if (!products || total < 1 || isError) {
-    return <ProductsNotFound lang={lang} dict={dict} />;
+    return <ProductsNotFound lang={lang} dict={dict} error={error} />;
   }
 
   const totalPages = Math.ceil(total / pagesLimit);

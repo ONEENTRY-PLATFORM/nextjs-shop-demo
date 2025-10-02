@@ -86,7 +86,7 @@ const getSearchParams = (
   }
 
   // Return undefined if no filters are applied to avoid empty filter blocking results
-  return expandedFilters.length > 0 ? expandedFilters : undefined;
+  return expandedFilters.length > 0 ? expandedFilters : [];
 };
 
 export default getSearchParams;

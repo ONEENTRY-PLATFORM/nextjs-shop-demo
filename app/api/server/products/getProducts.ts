@@ -68,7 +68,7 @@ export const getProducts = async (props: {
   }
 
   try {
-    const data = await api.Products.getProducts(body || undefined, langCode, {
+    const data = await api.Products.getProducts(body || [], langCode, {
       limit,
       offset,
       sortOrder: 'ASC',
