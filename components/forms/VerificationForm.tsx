@@ -2,7 +2,7 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
-import type { FC, FormEvent } from 'react';
+import type { FormEvent, JSX } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 
@@ -18,12 +18,13 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
- * VerificationForm
- * @param dict dictionary from server api
+ * VerificationForm.
  *
- * @returns VerificationForm
+ * @param {IAttributeValues} dict - dictionary from server api.
+ *
+ * @returns JSX.Element - VerificationForm.
  */
-const VerificationForm: FC<FormProps> = ({ dict }) => {
+const VerificationForm = ({ dict }: FormProps): JSX.Element => {
   const router = useTransitionRouter();
   const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);

@@ -10,6 +10,7 @@ interface SocialSignInButtonProps {
 /**
  * Social SignIn button.
  *
+ * @param {object} props - Component props.
  * @param {string} props.imageSrc - icon url.
  * @param {string} props.lang - Current language shortcode.
  *

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC, FormEvent, Key } from 'react';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { FormEvent, JSX, Key } from 'react';
 import { useContext, useState } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
@@ -21,16 +21,18 @@ interface ForgotPasswordFormProps {
 }
 
 /**
- * ForgotPassword form
- * @param lang Current language shortcode
- * @param dict dictionary from server api
+ * ForgotPassword form.
  *
- * @returns ForgotPassword form
+ * @param {object} props - Component props.
+ * @param {string} props.lang - Current language shortcode.
+ * @param {IAttributeValues} props.dict - dictionary from server api.
+ *
+ * @returns JSX.Element - ForgotPassword form.
  */
-export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({
+export const ForgotPasswordForm = ({
   lang,
   dict,
-}) => {
+}: ForgotPasswordFormProps): JSX.Element => {
   const { setComponent, setAction } = useContext(OpenDrawerContext);
   const [isError, setError] = useState<string>('');
 
@@ -44,7 +46,12 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({
 
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
-  // Submit form
+  /**
+   * Submit form.
+   *
+   * @param e - Form event
+   * @returns void
+   */
   const onSubmitFormHandle = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -64,7 +71,6 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({
       // open Verification form
       setComponent('VerificationForm');
       setAction('checkCode');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       setError(e.message);
       if (e.statusCode === 400) {

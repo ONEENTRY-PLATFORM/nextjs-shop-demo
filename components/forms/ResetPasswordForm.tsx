@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FC, FormEvent } from 'react';
 import React, { useContext, useState } from 'react';
 
 import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
-import type { FormProps } from '@/app/types/global';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import { resetPasswordFormFields } from '../data';
@@ -16,13 +16,14 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
- * Reset password form
- * @param lang Current language shortcode
- * @param dict dictionary from server api
+ * Reset password form.
  *
- * @returns Reset password form
+ * @param {object} props - Component props.
+ * @param {IAttributeValues} props.dict - dictionary from server api.
+ *
+ * @returns Reset password form.
  */
-const ResetPasswordForm: FC<FormProps> = ({ dict }) => {
+const ResetPasswordForm = ({ dict }: { dict: IAttributeValues }) => {
   const { email_reg, password_reg, password_confirm, otp_code } =
     useAppSelector((state) => state.formFieldsReducer.fields);
   const { setComponent, setAction } = useContext(OpenDrawerContext);
@@ -32,10 +33,14 @@ const ResetPasswordForm: FC<FormProps> = ({ dict }) => {
   const { reset_password_text, new_password_desc, change_password_text } = dict;
 
   /**
-   * Change password with API AuthProvider
-   * @param e FormEvent
+   * Change password with API AuthProvider.
+   *
+   * @param {FormEvent<HTMLFormElement>} e - FormEvent.
+   * @returns {Promise<void>} - Promise that resolves when the form submission is complete.
    */
-  const onResetSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const onResetSubmit = async (
+    e: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault();
 
     // Add null checks for form fields

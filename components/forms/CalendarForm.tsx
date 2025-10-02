@@ -2,7 +2,7 @@
 
 import '@/app/styles/calendar.css';
 
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import React, { useContext, useState } from 'react';
 import Calendar from 'react-calendar';
 
@@ -18,12 +18,14 @@ import CalendarAnimations from './animations/CalendarAnimations';
 import TimeSlots from './calendar/TimeSlots';
 
 /**
- * Calendar form
- * @param lang Current language shortcode
+ * Calendar form.
  *
- * @returns Calendar form
+ * @param {object} props - Component props
+ * @param {string} props.lang - Current language shortcode
+ *
+ * @returns JSX.Element - Calendar form.
  */
-const CalendarForm: FC<{ lang: string }> = ({ lang }) => {
+const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
   const dispatch = useAppDispatch();
   const { setTransition } = useContext(OpenDrawerContext);
   const deliveryData = useAppSelector(selectDeliveryData);

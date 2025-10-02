@@ -1,7 +1,7 @@
 'use client';
 
-import type { IAttributes } from 'oneentry/dist/base/utils';
-import type { FC, FormEvent, Key } from 'react';
+import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
+import type { FormEvent, JSX, Key } from 'react';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -19,11 +19,15 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 
+/**
+ * SignInForm component Props.
+ *
+ * @param {string} lang - Current language shortcode.
+ * @param {IAttributeValues} dict - Dictionary of localized strings from server API.
+ */
 interface SignInFormProps extends FormProps {
-  /** Current language shortcode (e.g., 'en', 'fr') */
   lang: string;
-  /** Dictionary of localized strings from server API */
-  dict: IAttributes;
+  dict: IAttributeValues;
 }
 
 /**
@@ -35,12 +39,13 @@ interface SignInFormProps extends FormProps {
  * The form includes animations, error handling, and links to related actions
  * such as password reset and account creation.
  *
- * @param props - Component properties
- * @param props.lang - Current language shortcode
- * @param props.dict - Dictionary of localized strings from server API
+ * @param {object} props - Component properties.
+ * @param {string} props.lang - Current language shortcode.
+ * @param {IAttributeValues} props.dict - Dictionary of localized strings from server API.
+ *
  * @returns Sign-in form with email/phone and password fields
  */
-const SignInForm: FC<SignInFormProps> = ({ lang, dict }) => {
+const SignInForm = ({ lang, dict }: SignInFormProps): JSX.Element => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
 
@@ -156,13 +161,34 @@ const SignInForm: FC<SignInFormProps> = ({ lang, dict }) => {
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {formFields?.map((field: IAttributes, index: Key | number) => {
             if (field.marker === 'email_reg' && tab === 'email') {
-              return <FormInput key={index} index={2} {...field} />;
+              return (
+                <FormInput
+                  key={index}
+                  index={2}
+                  {...field}
+                  value={field.value}
+                />
+              );
             }
             if (field.marker === 'phone_reg' && tab === 'phone') {
-              return <FormInput key={index} index={3} {...field} />;
+              return (
+                <FormInput
+                  key={index}
+                  index={3}
+                  {...field}
+                  value={field.value}
+                />
+              );
             }
             if (field.marker === 'password_reg') {
-              return <FormInput key={index} index={4} {...field} />;
+              return (
+                <FormInput
+                  key={index}
+                  index={4}
+                  {...field}
+                  value={field.value}
+                />
+              );
             }
             return;
           })}

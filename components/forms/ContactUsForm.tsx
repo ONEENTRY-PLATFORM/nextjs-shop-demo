@@ -1,7 +1,7 @@
 'use client';
 
 import type { IAttributes } from 'oneentry/dist/base/utils';
-import type { FC, FormEvent, Key } from 'react';
+import type { FormEvent, JSX, Key } from 'react';
 import { memo, useCallback, useState } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
@@ -15,15 +15,15 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
- * ContactUs form
- * @param className CSS className of ref element
- * @param lang Current language shortcode
+ * ContactUs form.
+ *
+ * @param {string} [props.className] - CSS className of ref element
+ * @param {string} props.lang - Current language shortcode
  *
  * @returns ContactUs form
  */
-const ContactUsForm: FC<{ className?: string; lang: string }> = memo(
-  // eslint-disable-next-line react/prop-types
-  ({ className, lang }) => {
+const ContactUsForm = memo(
+  ({ className, lang }: { className?: string; lang: string }): JSX.Element => {
     // const [token, setToken] = useState<string | null>();
     // const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -188,7 +188,16 @@ const ContactUsForm: FC<{ className?: string; lang: string }> = memo(
               );
             } else {
               return (
-                <FormInput key={index} index={index as number} {...field} />
+                <FormInput
+                  key={index}
+                  index={index as number}
+                  value={field.value}
+                  marker={field.marker}
+                  type={field.type}
+                  localizeInfos={field.localizeInfos}
+                  validators={field.validators}
+                  listTitles={field.listTitles}
+                />
               );
             }
           })}
