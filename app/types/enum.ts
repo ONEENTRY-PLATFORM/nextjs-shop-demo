@@ -2,6 +2,7 @@ export enum LanguageEnum {
   en = 'en_US',
   fr = 'fr_FR',
 }
+
 export enum IntlEnum {
   en = 'en-US',
   fr = 'fr-FR',

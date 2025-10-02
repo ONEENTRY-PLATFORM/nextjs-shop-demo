@@ -3,6 +3,22 @@ import type { Metadata } from 'next';
 
 import { i18n } from '@/i18n-config';
 
+/**
+ * Options for generating page metadata.
+ *
+ * @interface PageMetadataOptions
+ *
+ * @property {string} handle - The handle of the page.
+ * @property {string} title - The title of the page.
+ * @property {string} description - The description of the page.
+ * @property {boolean} isVisible - Whether the page is visible or not.
+ * @property {string} [imageUrl] - The URL of the image associated with the page.
+ * @property {number} [imageWidth] - The width of the image associated with the page. Defaults to 300.
+ * @property {number} [imageHeight] - The height of the image associated with the page. Defaults to 300.
+ * @property {string} [imageAlt] - The alt text of the image associated with the page. Defaults to the page title.
+ * @property {string} lang - The language code of the page.
+ * @property {string} baseUrl - The base URL of the page.
+ */
 interface PageMetadataOptions {
   handle: string;
   title: string;
@@ -17,9 +33,21 @@ interface PageMetadataOptions {
 }
 
 /**
- * Generate standardized page metadata
- * @param options - Metadata generation options
- * @returns Next.js Metadata object
+ * Generate standardized page metadata.
+ *
+ * @param {PageMetadataOptions} props - Metadata generation options.
+ * @param {string} props.handle - The handle of the page.
+ * @param {string} props.title - The title of the page.
+ * @param {string} props.description - The description of the page.
+ * @param {boolean} props.isVisible - Whether the page is visible or not.
+ * @param {string} [props.imageUrl] - The URL of the image associated with the page.
+ * @param {number} [props.imageWidth] - The width of the image associated with the page. Defaults to 300.
+ * @param {number} [props.imageHeight] - The height of the image associated with the page. Defaults to 300.
+ * @param {string} [props.imageAlt] - The alt text of the image associated with the page. Defaults to the page title.
+ * @param {string} props.lang - The language code of the page.
+ * @param {string} [props.baseUrl] - The base URL of the page. Defaults to an empty string.
+ *
+ * @returns Metadata object.
  */
 export const generatePageMetadata = ({
   handle = '',
