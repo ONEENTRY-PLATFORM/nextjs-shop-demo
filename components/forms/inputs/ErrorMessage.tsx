@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 /**
  * Error message
@@ -6,7 +6,7 @@ import type { FC } from 'react';
  *
  * @returns Error message
  */
-const ErrorMessage: FC<{ error: string }> = ({ error }) => {
+const ErrorMessage = ({ error }: { error: string }): JSX.Element => {
   return <div className="text-center text-sm text-red-500">{error}</div>;
 };
 

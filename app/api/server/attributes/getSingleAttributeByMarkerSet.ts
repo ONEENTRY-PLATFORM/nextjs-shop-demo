@@ -7,16 +7,18 @@ import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 interface HandleProps {
-  attributeMarker: string;
   setMarker: string;
+  attributeMarker: string;
   lang: string;
 }
 /**
  * Get a single attribute with data from the attribute sets with API AttributesSets.
+ *
  * @async
- * @param attributeMarker Text identifier (marker) of the attribute in the set.
- * @param setMarker Text identifier (marker) of the attribute set.
- * @param lang Current language shortcode
+ * @param {string} props.setMarker - Text identifier (marker) of the attribute set.
+ * @param {string} props.attributeMarker - Text identifier (marker) of the attribute in the set.
+ * @param {string} props.lang - Current language shortcode
+ *
  * @see {@link https://doc.oneentry.cloud/docs/attributes OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *

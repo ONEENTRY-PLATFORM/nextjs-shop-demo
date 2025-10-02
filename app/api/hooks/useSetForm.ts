@@ -7,10 +7,15 @@ import { api } from '@/app/api';
 
 /**
  * Post forms data with FormData API
+ *
  * @see {@link https://doc.oneentry.cloud/docs/forms OneEntry CMS docs}
  * @returns object
  */
-export const useSetForm = () => {
+export const useSetForm = (): {
+  loading: boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  sendData: any;
+} => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const sendData = (data: IBodyPostFormData) => {

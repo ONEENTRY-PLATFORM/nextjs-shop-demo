@@ -2,7 +2,7 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import type { FC, ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -15,12 +15,16 @@ interface FormAnimationsProps {
 /**
  * Form animations
  *
- * @param children children ReactNode
- * @param isLoading loading state
+ * @param {ReactNode} props.children - children ReactNode
+ * @param {boolean} props.isLoading - loading state
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
+ *
  * @returns A form component wrapper with animations applied
  */
-const FormAnimations: FC<FormAnimationsProps> = ({ children, isLoading }) => {
+const FormAnimations = ({
+  children,
+  isLoading,
+}: FormAnimationsProps): JSX.Element => {
   const { open, transition, setTransition } = useContext(OpenDrawerContext); // Get open, transition states, and setter from context
   const ref = useRef(null); // Reference to the DOM element for animations
 

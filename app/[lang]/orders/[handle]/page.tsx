@@ -11,11 +11,14 @@ import OrderPage from '@/components/layout/orders/components/OrderPage';
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns Order page layout JSX.Element
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const OrderPageLayout: FC<any> = async (props) => {
-  const params = await props.params;
 
-  const { handle, lang } = params;
+const OrderPageLayout = async (
+  props: Promise<{
+    params: { handle: string; lang: string };
+  }>,
+) => {
+  const p = await props;
+  const { handle, lang } = p.params;
 
   return (
     <section className="relative mx-auto box-border flex min-h-80 w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">

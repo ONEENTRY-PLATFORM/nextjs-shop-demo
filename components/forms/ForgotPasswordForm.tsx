@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
@@ -94,7 +95,7 @@ export const ForgotPasswordForm: FC<ForgotPasswordFormProps> = ({
         </div>
 
         <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
-          {data?.attributes.map((field: IAttributes, index: Key | number) => {
+          {data?.attributes.map((field: any, index: Key | number) => {
             if (field.marker === 'email_reg') {
               return (
                 <FormInput key={index} index={index as number} {...field} />

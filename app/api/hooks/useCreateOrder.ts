@@ -16,7 +16,16 @@ import { handleApiError } from '@/app/utils/errorHandler';
  * @param langCode current language code
  * @returns useCreateOrder object
  */
-export const useCreateOrder = ({ langCode }: { langCode: string }) => {
+export const useCreateOrder = ({
+  langCode,
+}: {
+  langCode: string;
+}): {
+  onConfirmOrder: any;
+  isLoading: any;
+  error: any;
+  setError: any;
+} => {
   const router = useTransitionRouter();
   const dispatch = useAppDispatch();
   const order = useAppSelector((state) => state.orderReducer.order);
@@ -26,13 +35,16 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
 
   /**
    * Create payment session with Payments API
+   *
    * @async
+   * @param {number} id - order id
    * @see {@link https://doc.oneentry.cloud/docs/payments OneEntry CMS docs}
-   * @returns payment state marker
+   *
+   * @returns {Promise<string>} - payment status
    */
-  const createSession = async (id: number) => {
+  const createSession = async (id: number): Promise<string> => {
     if (!id) {
-      return;
+      return 'error';
     }
     setIsLoading(true);
 
@@ -47,12 +59,12 @@ export const useCreateOrder = ({ langCode }: { langCode: string }) => {
         return 'payment_method';
       }
       setIsLoading(false);
-      return; // Add explicit return to fix TS7030
+      return '';
     } catch (error) {
       const apiError = handleApiError(error);
       setError(apiError.message);
       setIsLoading(false);
-      return; // Add explicit return to fix TS7030
+      return '';
     }
   };
 

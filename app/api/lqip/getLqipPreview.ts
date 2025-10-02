@@ -19,7 +19,7 @@ const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
  * base64-encoded preview image that can be used as a placeholder while the full
  * quality image is loading. This improves perceived performance and user experience.
  *
- * @param imageUrl - The URL of the image to generate a placeholder for
+ * @param {string} imageUrl - The URL of the image to generate a placeholder for
  * @returns A promise that resolves to a base64-encoded data URI of the low-quality placeholder
  *
  * @example

@@ -6,16 +6,12 @@ import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
-interface HandleProps {
-  lang: string;
-  pageUrl: string;
-}
-
 /**
  * Get all blocks by page url.
+ *
  * @async
- * @param lang Current language shortcode
- * @param pageUrl Page URL
+ * @param {string} props.lang Current language shortcode
+ * @param {string} props.pageUrl Page URL
  * @see {@link https://doc.oneentry.cloud/docs/blocks OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  *
@@ -24,7 +20,10 @@ interface HandleProps {
 export const getBlocksByPageUrl = async ({
   lang,
   pageUrl,
-}: HandleProps): Promise<{
+}: {
+  lang: string;
+  pageUrl: string;
+}): Promise<{
   isError: boolean;
   error?: IError;
   blocks?: IPositionBlock[];

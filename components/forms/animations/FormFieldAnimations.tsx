@@ -3,7 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { FC, ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { useContext, useRef, useState } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -16,17 +16,19 @@ interface FormFieldAnimationsProps {
 
 /**
  * Form field animations
- * @param children children ReactNode
- * @param className CSS className of ref element
- * @param index Index of element for animations stagger
+ *
+ * @param {ReactNode} props.children children ReactNode
+ * @param {string} props.className CSS className of ref element
+ * @param {number} props.index Index of element for animations stagger
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
+ *
  * @returns Form field animations
  */
-const FormFieldAnimations: FC<FormFieldAnimationsProps> = ({
+const FormFieldAnimations = ({
   children,
   className,
   index,
-}) => {
+}: FormFieldAnimationsProps): JSX.Element => {
   const { stage } = useTransitionState(); // Get the current transition stage
   const [prevStage, setPrevStage] = useState<string>(''); // State to track the previous stage
   const { open, transition } = useContext(OpenDrawerContext); // Get open and transition states from context

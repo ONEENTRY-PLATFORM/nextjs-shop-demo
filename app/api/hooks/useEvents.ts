@@ -5,12 +5,14 @@ import { handleApiError } from '@/app/utils/errorHandler';
 
 /**
  * Subscribe events with Events API
+ *
  * @async
- * @param id product id
+ * @param {number} id - product id
  * @see {@link https://doc.oneentry.cloud/docs/events OneEntry CMS docs}
- * @returns void
+ *
+ * @returns Promise<void>
  */
-export const onSubscribeEvents = async (id: number) => {
+export const onSubscribeEvents = async (id: number): Promise<void> => {
   try {
     // await api.Events.subscribeByMarker('catalog_event', id);
     const status = await api.Events.subscribeByMarker(
@@ -33,12 +35,14 @@ export const onSubscribeEvents = async (id: number) => {
 
 /**
  * Unsubscribe events with Events API
+ *
  * @async
- * @param id product id
+ * @param {number} id - product id
  * @see {@link https://doc.oneentry.cloud/docs/events OneEntry CMS docs}
- * @returns void
+ *
+ * @returns Promise<void>
  */
-export const onUnsubscribeEvents = async (id: number) => {
+export const onUnsubscribeEvents = async (id: number): Promise<void> => {
   try {
     // await api.Events.unsubscribeByMarker('catalog_event', id);
     const status = await api.Events.unsubscribeByMarker(

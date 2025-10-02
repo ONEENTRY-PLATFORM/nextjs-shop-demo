@@ -16,9 +16,10 @@ interface HandleProps {
 
 /**
  * Get blocks by parameters.
+ *
  * @async
- * @param type Available values : forCatalogProducts, forBasketPage, forErrorPage, forCatalogPages, forProductPreview, forProductPage, forSimilarProductBlock, forStatisticProductBlock, forProductBlock, forForm, forFormField, forNewsPage, forNewsBlock, forNewsPreview, forOneNewsPage, forUsualPage, forTextBlock, forSlider, forOrder, service
- * @param lang Current language shortcode
+ * @param {BlockType} props.type Available values : forCatalogProducts, forBasketPage, forErrorPage, forCatalogPages, forProductPreview, forProductPage, forSimilarProductBlock, forStatisticProductBlock, forProductBlock, forForm, forFormField, forNewsPage, forNewsBlock, forNewsPreview, forOneNewsPage, forUsualPage, forTextBlock, forSlider, forOrder, service
+ * @param {string} props.lang Current language shortcode
  * @see {@link https://doc.oneentry.cloud/docs/blocks OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
  *
