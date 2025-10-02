@@ -2,6 +2,13 @@
 
 import { useEffect, useState } from 'react';
 
+/**
+ * Interface for useOptimizedImage function parameters.
+ * @property {string} src - Image source URL.
+ * @property {number} [width] - Desired image width.
+ * @property {number} [height] - Desired image height.
+ * @property {number} [quality] - Image quality (1-100).
+ */
 interface UseOptimizedImageProps {
   src: string;
   width?: number;
@@ -9,6 +16,14 @@ interface UseOptimizedImageProps {
   quality?: number;
 }
 
+/**
+ * Interface for optimized image data and loading states.
+ *
+ * @property {string} optimizedSrc - Optimized image URL with parameters.
+ * @property {string | undefined} blurDataURL - Base64-encoded LQIP placeholder image.
+ * @property {boolean} isLoading - Indicates whether the image is currently loading.
+ * @property {boolean} isError - Indicates whether an error occurred while loading the image.
+ */
 interface OptimizedImageResult {
   optimizedSrc: string;
   blurDataURL?: string | undefined;
@@ -19,11 +34,12 @@ interface OptimizedImageResult {
 /**
  * Hook for optimizing images with LQIP placeholders and lazy loading
  *
- * @param src Image source URL
- * @param width Desired image width
- * @param height Desired image height
- * @param quality Image quality (1-100)
- * @returns Optimized image data and loading states
+ * @param {string} props.src - Image source URL.
+ * @param {number} [props.width] - Desired image width.
+ * @param {number} [props.height] - Desired image height.
+ * @param {number} [props.quality] - Image quality (1-100).
+ *
+ * @returns Optimized image data and loading states.
  */
 export const useOptimizedImage = ({
   src,

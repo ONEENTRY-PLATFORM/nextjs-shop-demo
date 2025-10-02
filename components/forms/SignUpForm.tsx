@@ -2,7 +2,7 @@
 
 import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
-import type { FC, FormEvent, JSX, Key } from 'react';
+import type { FormEvent, JSX, Key } from 'react';
 import { useContext, useState } from 'react';
 
 import { useGetFormByMarkerQuery } from '@/app/api';

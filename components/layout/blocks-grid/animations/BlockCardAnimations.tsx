@@ -4,9 +4,16 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { FC, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
+/**
+ * Block card animations props.
+ *
+ * @param children - children ReactNode.
+ * @param className - card wrapper className.
+ * @param index - index of element in array for stagger.
+ */
 interface BlockCardAnimationsProps {
   children: ReactNode;
   className: string;
@@ -14,18 +21,20 @@ interface BlockCardAnimationsProps {
 }
 
 /**
- * Blocks card animations
- * @param children children ReactNode
- * @param className card wrapper className
- * @param index index of element in array for stagger
+ * Blocks card animations.
+ *
+ * @param {ReactNode} props.children - children ReactNode.
+ * @param {string} props.className - card wrapper className.
+ * @param {number} props.index - index of element in array for stagger.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns card with animations
+ *
+ * @returns card with animations.
  */
-const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
+const BlockCardAnimations = ({
   children,
   className,
   index,
-}) => {
+}: BlockCardAnimationsProps) => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef<any>(null);
@@ -35,15 +44,6 @@ const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
     const tl = gsap.timeline({
       paused: true,
     });
-    // img
-    // tl.set((ref.current as any)?.getElementsByTagName('img'), {
-    //   scale: 0,
-    //   autoAlpha: 0,
-    // }).to((ref.current as any)?.getElementsByTagName('img'), {
-    //   scale: 1,
-    //   autoAlpha: 1,
-    //   delay: index / 10,
-    // });
 
     if (stage === 'none' && prevStage === '') {
       tl.set(ref.current, {
@@ -79,10 +79,8 @@ const BlockCardAnimations: FC<BlockCardAnimationsProps> = ({
 
     if (stage === 'none' && prevStage === 'entering') {
       tl.set(ref.current?.querySelectorAll('img'), {
-        // scale: 0,
         autoAlpha: 0,
       }).to(ref.current?.querySelectorAll('img'), {
-        // scale: 1,
         autoAlpha: 1,
         duration: 0.35,
         delay: index / 10,

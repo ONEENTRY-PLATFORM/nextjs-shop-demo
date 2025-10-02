@@ -1,25 +1,37 @@
 import Image from 'next/image';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import { type FC } from 'react';
+import type { IAttributeValues, IError } from 'oneentry/dist/base/utils';
+import type { JSX } from 'react';
 
 import FilterModal from '@/components/layout/filter/FilterModal';
 
+/**
+ * GridLayoutProps.
+ *
+ * @param {string} props.lang - Current language shortcode.
+ * @param {IAttributeValues} props.dict - dictionary from server api.
+ * @param {IError | undefined} props.error - error object.
+ */
 interface GridLayoutProps {
   lang: string;
   dict: IAttributeValues;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  error: any;
+  error?: IError;
 }
 
 /**
- * ProductsNotFound
+ * ProductsNotFound.
  *
- * @param lang Current language shortcode
- * @param dict dictionary from server api
+ * @param {object} props - GridLayoutProps.
+ * @param {string} props.lang - Current language shortcode.
+ * @param {IAttributeValues} props.dict - dictionary from server api.
+ * @param {IError | undefined} props.error - error object.
  *
- * @returns ProductsNotFound
+ * @returns Promise<JSX.Element> - ProductsNotFound.
  */
-const ProductsNotFound: FC<GridLayoutProps> = async ({ lang, dict, error }) => {
+const ProductsNotFound = async ({
+  lang,
+  dict,
+  error,
+}: GridLayoutProps): Promise<JSX.Element> => {
   return (
     <div className="text-center">
       <Image

@@ -2,7 +2,6 @@ import { Baloo_2 as Baloo } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
 import type React from 'react';
-import type { FC } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
@@ -16,6 +15,15 @@ const baloo = Baloo({
   weight: ['400', '800'],
 });
 
+/**
+ * Blocks grid card component.
+ *
+ * @param {string} marker - text marker of block.
+ * @param {string} bgColor - background color of card.
+ * @param {string} lang - current language shortcode.
+ * @param {object} className - className of card.
+ * @param {number} index - index of element in array for stagger.
+ */
 interface BlocksGridCardProps {
   marker: string;
   bgColor: string;
@@ -28,23 +36,24 @@ interface BlocksGridCardProps {
 }
 
 /**
- * Blocks grid card
+ * Blocks grid card.
  *
- * @param marker text marker of block
- * @param bgColor card background color
- * @param lang current language shortcode
- * @param className card className
- * @param index index of element in array for stagger
+ * @param {object} props - props.
+ * @param {string} props.marker - text marker of block.
+ * @param {string} props.bgColor - card background color.
+ * @param {string} props.lang - current language shortcode.
+ * @param {object} props.className - card className.
+ * @param {number} props.index - index of element in array for stagger.
  *
- * @returns block card with animations
+ * @returns block card with animations.
  */
-const BlocksGridCard: FC<BlocksGridCardProps> = async ({
+const BlocksGridCard = async ({
   marker,
   bgColor,
   lang,
   className,
   index,
-}) => {
+}: BlocksGridCardProps): Promise<React.ReactElement> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   // Get block by marker from the API.
   const { block, isError } = await getBlockByMarker(marker, lang);
@@ -54,7 +63,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
     block?.attributeValues[langCode] || block?.attributeValues;
 
   if (!attributeValues) {
-    return 'Block error';
+    return <>Block error</>;
   }
 
   // extract data from block attributeValues
@@ -64,7 +73,7 @@ const BlocksGridCard: FC<BlocksGridCardProps> = async ({
   // const quoteValue = quote?.value;
 
   if (!block || isError) {
-    return 'Block error';
+    return <>Block error</>;
   }
 
   return (

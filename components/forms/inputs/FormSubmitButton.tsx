@@ -1,4 +1,4 @@
-import type { FC, JSX } from 'react';
+import type { JSX } from 'react';
 
 import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimations';
 import Spinner from '@/components/shared/Spinner';

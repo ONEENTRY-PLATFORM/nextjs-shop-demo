@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
-import type { FC, JSX } from 'react';
+import type { JSX } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api';

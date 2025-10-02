@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC, JSX } from 'react';
+import type { JSX } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
 import { getProductById, getProducts } from '@/app/api';

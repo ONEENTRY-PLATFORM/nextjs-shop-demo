@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import type { FC, JSX } from 'react';
+import type { JSX } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
@@ -19,10 +19,10 @@ import { getDictionary } from '../dictionaries';
 import WithSidebar from './WithSidebar';
 
 /**
- * Simple page
+ * Simple page layout
  *
  * @async server component
- * @param params page params
+ * @param params - page params
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  *

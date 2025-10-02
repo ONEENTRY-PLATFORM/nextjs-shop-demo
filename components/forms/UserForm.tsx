@@ -19,6 +19,13 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
+/**
+ * Input value type.
+ * @interface InputValue
+ * @property {string} value - Input value.
+ * @property {boolean} valid - Input validation status.
+ * @property {unknown} [key] - Input key.
+ */
 export type InputValue = {
   value: string;
   valid: boolean;
@@ -28,6 +35,7 @@ export type InputValue = {
 /**
  * User form.
  *
+ * @param {FormProps} props - Component props.
  * @param {string} props.lang - Current language shortcode.
  * @param {IAttributeValues} props.dict - dictionary from server api.
  *

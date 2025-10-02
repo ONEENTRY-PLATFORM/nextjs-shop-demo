@@ -1,5 +1,3 @@
-import type { FC } from 'react';
-
 import FadeTransition from '@/app/animations/FadeTransition';
 import SidebarMenu from '@/components/layout/sidebar';
 

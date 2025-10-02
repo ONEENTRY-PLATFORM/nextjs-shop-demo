@@ -2,7 +2,7 @@
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC, FormEvent } from 'react';
+import type { FormEvent } from 'react';
 import React, { useContext, useState } from 'react';
 
 import { api } from '@/app/api';
