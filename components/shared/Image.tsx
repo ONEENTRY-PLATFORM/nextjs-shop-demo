@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import type { ImageProps } from '@/app/types/global';
 
-const Image: FC<ImageProps> = ({
+const Image = ({
   src,
   alt = '',
   fill,
@@ -18,7 +18,7 @@ const Image: FC<ImageProps> = ({
   loading,
   ref,
   onLoadingComplete,
-}) => {
+}: ImageProps): JSX.Element => {
   return (
     <div
       className={`relative overflow-hidden ${fill ? 'size-full' : ''} ${className}`}

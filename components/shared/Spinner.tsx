@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { memo } from 'react';
 
 /**
@@ -6,7 +6,7 @@ import { memo } from 'react';
  *
  * @returns Animated Spinner
  */
-const Spinner: FC = () => {
+const Spinner = (): JSX.Element => {
   return (
     <div className="absolute aspect-square size-full translate-x-[calc(50%-12px)] translate-y-[calc(50%-12px)] overflow-hidden">
       <svg

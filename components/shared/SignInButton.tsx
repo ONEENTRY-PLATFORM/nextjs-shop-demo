@@ -1,18 +1,20 @@
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
- * SignIn button - open SignIn form
- * @param dict dictionary from server api
+ * SignIn button - open SignIn form.
  *
- * @returns SignIn button
+ * @param {object} props - component props.
+ * @param {IAttributeValues} props.dict - dictionary from server api.
+ *
+ * @returns SignIn button.
  */
-const SignInButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
+const SignInButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
   const { log_in_text } = dict;
 
