@@ -1,3 +1,5 @@
+[Back to README](../README.md)
+
 # Error Handling in OneEntry Next.js Shop
 
 This document describes the error handling approach used in the OneEntry Next.js Shop project.
@@ -41,6 +43,29 @@ A React hook that provides error handling with toast notifications.
 
 Formats error messages for user display based on error type and status code.
 
+## Error Handling in API Services
+
+The project uses a standardized approach for handling errors in API service functions:
+
+### handleApiResponse Function
+
+A generic function that wraps API calls and handles responses:
+
+```typescript
+const handleApiResponse = async <T>(
+  apiCall: Promise<T | IError>,
+): Promise<ApiResponse<T>> => {
+  try {
+    const result = await apiCall;
+    return result;
+  } catch (error) {
+    return error as IError;
+  }
+};
+```
+
+This function is used throughout the RTK Query endpoints to ensure consistent error handling.
+
 ## Usage Examples
 
 ### In API Service Functions
@@ -60,6 +85,31 @@ try {
   const apiError = handleApiError(error);
   return { isError: true, error: apiError };
 }
+```
+
+### In RTK Query Endpoints
+
+```typescript
+// In RTKApi.ts
+const apiEndpoints = RTKApi.injectEndpoints({
+  endpoints: (build) => ({
+    getProducts: build.query({
+      query: (params) => ({
+        url: 'products',
+        params
+      }),
+      transformResponse: (response: IProductsEntity[] | IError) => {
+        if (isIError(response)) {
+          throw response;
+        }
+        return response;
+      },
+      transformErrorResponse: (error) => {
+        return handleApiError(error);
+      }
+    })
+  })
+});
 ```
 
 ### In React Components
@@ -99,6 +149,7 @@ try {
 ## Error Logging
 
 All errors are automatically logged to the console with relevant information including:
+
 - Error message
 - Status code (for API errors)
 - Stack trace (for JavaScript errors)
@@ -113,3 +164,5 @@ In production, you might want to integrate with a proper error tracking service 
 3. Provide user-friendly error messages using `formatErrorMessage`
 4. Log errors appropriately for debugging
 5. Handle errors at the appropriate level (component or service)
+6. Use transformErrorResponse in RTK Query endpoints for consistent error transformation
+7. Use transformResponse to check for IError in API responses

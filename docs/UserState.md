@@ -4,13 +4,11 @@
 
 ## What is the User State?
 
-The **user state** is an object associated with each user. It allows you to store custom data for a user, and you can update it using the `updateUser` API endpoint. For more information about users: [Users Documentation](http://doc.oneentry.cloud/docs/category/users).
-
----
+The **user state** refers to the combination of client-side Redux state and server-side user data. It includes user preferences like favorites and cart items, which are synchronized with the server. For more information about users: [Users Documentation](http://doc.oneentry.cloud/docs/category/users).
 
 ## Structure of the User State
 
-In our application, the user state contains two main fields:
+In our application, the user state contains several key pieces of data:
 
 1. **Favorites**
     - A simple array of IDs representing the user's favorite items.
@@ -27,28 +25,47 @@ In our application, the user state contains two main fields:
       ]
       ```
 
----
+3. **Order Data**
+    - Form data collected during the order creation process
+    - Selected payment method
+    - Products to be ordered
+
+4. **Form Validation State**
+    - Validation status of form fields
+    - Current values of form fields
 
 ## Managing the User State in the Application
 
-To manage the user state within the application, we use the **[userStateSlice]** in Redux. This slice provides:
+To manage the user state within the application, we use Redux slices in combination with RTK Query:
 
-- **Actions**: Functions to modify the cart and favorites.
-- **Selectors**: Helper functions to extract specific parts of the state from the Redux store.
+- **CartSlice**: Manages cart items and delivery information
+- **FavoritesSlice**: Manages user's favorite products
+- **OrderSlice**: Manages order creation process data
+- **FormFieldsSlice**: Manages form validation state
+- **RTK Query**: Manages server state and API interactions
 
----
+Each slice provides:
+
+- **Actions**: Functions to modify the state
+- **Reducers**: Functions that handle state changes
+- **Selectors**: Helper functions to extract specific parts of the state from the Redux store
 
 ## Synchronizing the User State with the Server
 
-While the Redux state manages the user state locally within the application, it does not automatically synchronize with the server.
-To ensure that changes in the local state are reflected on the server look at **[useSyncUserState]** hook.
+The Redux state manages the user state locally within the application, but it needs to be synchronized with the server to persist changes across sessions.
 
 ### How It Works
 
-1. The [useSyncUserState] hook is called inside the **[AuthContext]**.
-2. Whenever there is a change in the Redux state (e.g., adding/removing favorites or modifying the cart), the hook triggers an API call to update the user's state on the server.
-3. This ensures that the local state and the server state are always in sync.
+1. The synchronization logic is implemented in the **[AuthContext]** using useEffect hooks.
+2. Whenever there is a change in the Redux state (e.g., adding/removing favorites or modifying the cart), the system triggers an API call to update the user's state on the server.
+3. This is done by tracking version numbers in the Redux slices and comparing them with server versions.
+4. When discrepancies are detected, the client state is synchronized with the server.
 
-[useSyncUserState]: ../src/hooks/shared/useSyncUserState.ts
-[userStateSlice]: ../src/state/reducers/userStateSlice.ts
+### Key Implementation Details
+
+- Uses localStorage to persist state between sessions via redux-persist
+- Tracks version numbers to detect when synchronization is needed
+- Automatically syncs when the user data is refreshed
+- Handles both uploading client changes to the server and downloading server changes to the client
+
 [AuthContext]: ../app/store/providers/AuthContext.tsx

@@ -4,8 +4,6 @@
 
 Authorization is a critical component of the system. Without it, many features are inaccessible because they require a **JWT session token**.
 
----
-
 ## How It Works
 
 1. **JWT Tokens**
@@ -13,7 +11,7 @@ Authorization is a critical component of the system. Without it, many features a
       - Used for API requests.
       - Short-lived and frequently refreshed.
     - **`refreshToken`**:
-        - Stored securely (e.g., in `AsyncStorage`).
+        - Stored securely (e.g., in `localStorage`).
         - Changes every 30 days or upon re-authentication.
 
 2. **SDK Handles Tokens**
@@ -21,14 +19,12 @@ Authorization is a critical component of the system. Without it, many features a
     - You only need to pass the `refreshToken` during SDK initialization:
 
       ```typescript
-      defineOneEntry({ token: '123' });
+      reDefine(refreshToken, langCode);
       ```
 
----
+## AuthContext
 
-## [AuthContext]
-
-All authorization logic, including login and registration, is located in the **[AuthContext]**. This is a React context that centralizes authentication workflows.
+All authorization logic, including login and registration, is located in the **AuthContext**. This is a React context that centralizes authentication workflows.
 
 - **Usage**:
   - The `AuthContext` wraps the entire application in `layout.tsx`:
@@ -41,4 +37,20 @@ All authorization logic, including login and registration, is located in the **[
 
   - Components outside the context cannot use its features.
 
-[AuthContext]: ../app/store/providers/AuthContext.tsx
+### Key Features
+
+- User session management
+- Token refresh handling
+- User data synchronization with server
+- Authentication state tracking
+- Integration with Redux for user-related state
+
+### Implementation Details
+
+The AuthProvider component:
+
+1. Manages authentication state (isAuth, isLoading, user)
+2. Handles token initialization from localStorage
+3. Provides authentication functions (authenticate, refreshUser)
+4. Synchronizes user data (cart, favorites) with the server
+5. Uses polling to keep user session alive
