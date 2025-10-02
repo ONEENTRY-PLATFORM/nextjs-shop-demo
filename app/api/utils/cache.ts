@@ -35,7 +35,7 @@ export function getCachedData<T>(key: string): T | null {
 
     return parsed.data;
   } catch (e) {
-    console.error('Error getting cached data:', e);
+    console.log('Error getting cached data:', e);
     return null;
   }
 }
@@ -57,7 +57,7 @@ export function setCachedData<T>(
 
     localStorage.setItem(key, JSON.stringify(cacheItem));
   } catch (e) {
-    console.error('Error setting cached data:', e);
+    console.log('Error setting cached data:', e);
   }
 }
 
@@ -68,7 +68,7 @@ export function clearCachedData(key: string): void {
   try {
     localStorage.removeItem(key);
   } catch (e) {
-    console.error('Error clearing cached data:', e);
+    console.log('Error clearing cached data:', e);
   }
 }
 
@@ -79,6 +79,6 @@ export function clearAllCache(): void {
   try {
     localStorage.clear();
   } catch (e) {
-    console.error('Error clearing all cached data:', e);
+    console.log('Error clearing all cached data:', e);
   }
 }

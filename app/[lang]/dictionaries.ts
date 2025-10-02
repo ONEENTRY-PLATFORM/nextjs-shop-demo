@@ -65,7 +65,7 @@ export const getDictionary = async (
     return dictionary || {};
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Error loading dictionary for locale:', locale, error);
+    console.log('Error loading dictionary for locale:', locale, error);
     // Ensure we always return an object, even if empty
     return {};
   }

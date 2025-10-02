@@ -12,6 +12,7 @@ import { api } from '@/app/api';
  */
 export const useSetForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
+
   const sendData = (data: IBodyPostFormData) => {
     setLoading(true);
     const result = async () => {
@@ -25,6 +26,7 @@ export const useSetForm = () => {
     setLoading(false);
     return result;
   };
+
   return {
     loading,
     sendData,

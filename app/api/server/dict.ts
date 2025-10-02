@@ -24,7 +24,7 @@ const dict = async (langCode: string): Promise<IAttributeValues> => {
   } catch (error) {
     const apiError = handleApiError(error);
     // eslint-disable-next-line no-console
-    console.error('Dictionary fetch error:', apiError.message);
+    console.log('Dictionary fetch error:', apiError.message);
     return {};
   }
 };

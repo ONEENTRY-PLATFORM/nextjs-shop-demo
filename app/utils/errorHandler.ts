@@ -41,7 +41,7 @@ export function isIError(error: unknown): error is IError {
 export function handleApiError(error: unknown): ApiError {
   if (isIError(error)) {
     // Log the error for debugging purposes
-    console.error('API Error:', {
+    console.log('API Error:', {
       message: error.message,
       statusCode: error.statusCode,
       timestamp: new Date().toISOString(),
@@ -56,7 +56,7 @@ export function handleApiError(error: unknown): ApiError {
 
   if (error instanceof Error) {
     // Log the error for debugging purposes
-    console.error('Generic Error:', {
+    console.log('Generic Error:', {
       message: error.message,
       stack: error.stack,
       timestamp: new Date().toISOString(),
@@ -66,7 +66,7 @@ export function handleApiError(error: unknown): ApiError {
   }
 
   // Log unknown errors
-  console.error('Unknown Error:', {
+  console.log('Unknown Error:', {
     error,
     timestamp: new Date().toISOString(),
   });

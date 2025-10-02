@@ -18,12 +18,9 @@ interface PriceDisplayProps {
  * @param lang Current language shortcode
  * @returns Price display with current/old prices
  */
-const PriceDisplay: FC<PriceDisplayProps> = ({
-  attributeValues: { sale, price },
-  lang,
-}) => {
-  const currentPrice = sale?.value || 0;
-  const originalPrice = price?.value || 0;
+const PriceDisplay: FC<PriceDisplayProps> = ({ attributeValues, lang }) => {
+  const currentPrice = attributeValues?.sale?.value || 0;
+  const originalPrice = attributeValues?.price?.value || 0;
   if (!currentPrice && !originalPrice) {
     return null;
   }

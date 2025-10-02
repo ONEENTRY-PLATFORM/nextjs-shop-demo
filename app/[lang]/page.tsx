@@ -47,7 +47,7 @@ const IndexPageLayout: FC<IndexPageLayoutProps> = async ({ params }) => {
   // If there's an error, render a "not found" page
   if (isError || !page) {
     // eslint-disable-next-line no-console
-    console.error('Failed to load home page:', isError);
+    console.log('Failed to load home page:', isError);
     return notFound();
   }
 

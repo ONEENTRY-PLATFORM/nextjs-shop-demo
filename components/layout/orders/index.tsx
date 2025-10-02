@@ -106,7 +106,7 @@ const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
 
         if (isError) {
           // eslint-disable-next-line no-console
-          console.error('Failed to fetch orders:', error);
+          console.log('Failed to fetch orders:', error);
           setOrderState((prev) => ({
             ...prev,
             loading: false,
@@ -115,7 +115,7 @@ const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
         }
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error('Unexpected error fetching orders:', error);
+        console.log('Unexpected error fetching orders:', error);
         setOrderState((prev) => ({
           ...prev,
           loading: false,

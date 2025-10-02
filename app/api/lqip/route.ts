@@ -27,7 +27,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ preview });
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Error generating LQIP:', error);
+    console.log('Error generating LQIP:', error);
     return NextResponse.json(
       { error: 'Failed to generate LQIP' },
       { status: 500 },

@@ -51,14 +51,14 @@ const CancelOrderButton: FC<CancelOrderButtonProps> = ({
       });
 
       if (order.isError) {
-        console.error('Failed to cancel order:', order.error);
+        console.log('Failed to cancel order:', order.error);
         return null;
       }
 
       refetch();
       return order;
     } catch (error) {
-      console.error('Error cancelling order:', error);
+      console.log('Error cancelling order:', error);
       return null;
     }
   };

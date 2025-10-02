@@ -17,7 +17,7 @@ export default function ApiTestPage() {
         times.push(endTime - startTime);
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error('API test failed:', error);
+        console.log('API test failed:', error);
         times.push(-1);
       }
     }

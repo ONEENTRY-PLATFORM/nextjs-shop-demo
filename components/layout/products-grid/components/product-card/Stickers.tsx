@@ -1,17 +1,17 @@
+import type { AttributeType } from 'oneentry/dist/base/utils';
 import type { FC, Key } from 'react';
 
 import Sticker from './Sticker';
 
 interface StickersProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  attributeValues: any;
+  attributeValues: AttributeType;
 }
 
 /**
  * Stickers
  *
- * @param product product entity object.
- * @param lang Current language shortcode
+ * @param product - Product entity object.
+ * @param lang - Current language shortcode
  *
  * @returns Stickers array
  */

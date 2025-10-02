@@ -64,7 +64,7 @@ export const useOptimizedImage = ({
         if (isMounted) {
           setIsError(true);
           // eslint-disable-next-line no-console
-          console.error('Error optimizing image:', error);
+          console.log('Error optimizing image:', error);
         }
       } finally {
         if (isMounted) {
