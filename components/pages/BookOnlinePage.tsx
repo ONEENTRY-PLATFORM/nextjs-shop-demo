@@ -1,17 +1,19 @@
 import parse from 'html-react-parser';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import type { SimplePageProps } from '@/app/types/global';
 
 /**
- * BookOnlinePage page
- * @param page
- * @param lang Current language shortcode
+ * BookOnlinePage page.
  *
- * @returns BookOnlinePage page
+ * @param {IPagesEntity} props.page - Page entity.
+ * @param {string} props.lang - Current language shortcode.
+ *
+ * @returns Promise<JSX.Element> - BookOnlinePage page.
  */
-const BookOnlinePage: FC<SimplePageProps> = async ({ page }) => {
-  // Более надежная проверка на наличие страницы
+const BookOnlinePage = async ({
+  page,
+}: SimplePageProps): Promise<JSX.Element> => {
   if (!page || !page.localizeInfos) {
     return (
       <div className="flex flex-col pb-5 max-md:max-w-full">

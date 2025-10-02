@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { IAttributeValues, IError } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
 
 import FilterModal from '@/components/layout/filter/FilterModal';
@@ -9,12 +9,10 @@ import FilterModal from '@/components/layout/filter/FilterModal';
  *
  * @param {string} props.lang - Current language shortcode.
  * @param {IAttributeValues} props.dict - dictionary from server api.
- * @param {IError | undefined} props.error - error object.
  */
 interface GridLayoutProps {
   lang: string;
   dict: IAttributeValues;
-  error?: IError;
 }
 
 /**
@@ -23,14 +21,12 @@ interface GridLayoutProps {
  * @param {object} props - GridLayoutProps.
  * @param {string} props.lang - Current language shortcode.
  * @param {IAttributeValues} props.dict - dictionary from server api.
- * @param {IError | undefined} props.error - error object.
  *
  * @returns Promise<JSX.Element> - ProductsNotFound.
  */
 const ProductsNotFound = async ({
   lang,
   dict,
-  error,
 }: GridLayoutProps): Promise<JSX.Element> => {
   return (
     <div className="text-center">

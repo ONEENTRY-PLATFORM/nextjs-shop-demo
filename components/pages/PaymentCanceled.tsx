@@ -1,15 +1,20 @@
 import parse from 'html-react-parser';
-import type { FC } from 'react';
-
-import type { SimplePageProps } from '@/app/types/global';
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
+import type { JSX } from 'react';
 
 /**
- * PaymentCanceled page
- * @param page
+ * PaymentCanceled page.
  *
- * @returns PaymentCanceled page
+ * @param {object} props - Page props.
+ * @param {IPagesEntity} props.page - Page entity.
+ *
+ * @returns Promise<JSX.Element> - PaymentCanceled page.
  */
-const PaymentCanceled: FC<SimplePageProps> = async ({ page }) => {
+const PaymentCanceled = async ({
+  page,
+}: {
+  page: IPagesEntity;
+}): Promise<JSX.Element> => {
   if (!page || !page.localizeInfos) {
     return (
       <div className="flex flex-col pb-5 max-md:max-w-full">

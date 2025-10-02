@@ -1,16 +1,20 @@
 import parse from 'html-react-parser';
-import type { FC } from 'react';
-
-import type { SimplePageProps } from '@/app/types/global';
+import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
+import type { JSX } from 'react';
 
 /**
- * PaymentSuccess page
- * @param page
+ * PaymentSuccess page.
  *
- * @returns PaymentSuccess page
+ * @param {object} props - Page props.
+ * @param {IPagesEntity} props.page - Page entity.
+ *
+ * @returns Promise<JSX.Element> - PaymentSuccess page.
  */
-const PaymentSuccess: FC<SimplePageProps> = async ({ page }) => {
-  // Более надежная проверка на наличие страницы
+const PaymentSuccess = async ({
+  page,
+}: {
+  page: IPagesEntity;
+}): Promise<JSX.Element> => {
   if (!page || !page.localizeInfos) {
     return (
       <div className="flex flex-col pb-5 max-md:max-w-full">

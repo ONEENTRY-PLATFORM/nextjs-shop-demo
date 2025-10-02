@@ -1,16 +1,20 @@
 import parse from 'html-react-parser';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import type { SimplePageProps } from '@/app/types/global';
 
 /**
- * DeliveryPage page
- * @param page
- * @param lang Current language shortcode
+ * DeliveryPage page.
  *
- * @returns DeliveryPage page
+ * @param {SimplePageProps} props - Props for DeliveryPage.
+ * @param {IPagesEntity} props.page - Page entity.
+ * @param {string} props.lang - Current language shortcode.
+ *
+ * @returns Promise<JSX.Element> - DeliveryPage page.
  */
-const DeliveryPage: FC<SimplePageProps> = async ({ page }) => {
+const DeliveryPage = async ({
+  page,
+}: SimplePageProps): Promise<JSX.Element> => {
   // Более надежная проверка на наличие страницы
   if (!page || !page.localizeInfos) {
     return (

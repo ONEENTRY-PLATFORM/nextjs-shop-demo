@@ -1,4 +1,5 @@
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
+import type { JSX } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
 
@@ -8,13 +9,17 @@ import SidebarMenuItem from './components/SidebarMenuItem';
 import SidebarMenuLoader from './components/SidebarMenuLoader';
 
 /**
- * SidebarMenu
+ * Sidebar Menu.
  *
- * @param lang Current language shortcode
+ * @param {string} lang - Current language shortcode.
  *
- * @returns SidebarMenu
+ * @returns Promise<JSX.Element> - SidebarMenu.
  */
-const SidebarMenu = async ({ lang }: { lang: string }) => {
+const SidebarMenu = async ({
+  lang,
+}: {
+  lang: string;
+}): Promise<JSX.Element> => {
   const { isError, menu } = await getMenuByMarker('side_web', lang);
 
   if (isError || !menu) {

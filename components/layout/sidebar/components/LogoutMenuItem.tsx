@@ -1,7 +1,7 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { useContext } from 'react';
 
 import { logOutUser } from '@/app/api';
@@ -13,12 +13,12 @@ import Profile from '@/components/icons/profile';
  *
  * @returns JSX Logout menu item
  */
-const LogoutMenuItem: FC = () => {
+const LogoutMenuItem = (): JSX.Element => {
   const router = useTransitionRouter();
   const { authenticate, isAuth } = useContext(AuthContext);
 
   if (!isAuth) {
-    return;
+    return <></>;
   }
 
   /**

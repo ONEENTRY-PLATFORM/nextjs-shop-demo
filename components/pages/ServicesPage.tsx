@@ -1,16 +1,17 @@
 import parse from 'html-react-parser';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import type { SimplePageProps } from '@/app/types/global';
 
 /**
- * Services page
- * @param page
+ * Services page.
  *
- * @returns Services page
+ * @param {object} props - Page props.
+ * @param {IPagesEntity} props.page - Page entity.
+ *
+ * @returns Promise<JSX.Element> - Services page.
  */
-const ServicesPage: FC<SimplePageProps> = ({ page }) => {
-  // Более надежная проверка на наличие страницы
+const ServicesPage = ({ page }: SimplePageProps): JSX.Element => {
   if (!page || !page.localizeInfos) {
     return (
       <div className="flex flex-col pb-5 max-md:max-w-full">

@@ -3,7 +3,7 @@
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { memo, useCallback, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
@@ -22,11 +22,13 @@ import HeartIcon from '@/components/icons/heart';
 import HeartOpenIcon from '@/components/icons/heart-o';
 
 /**
- * Favorites button
+ * Favorites button.
+ *
  * @param product product entity object.
+ *
  * @returns Favorites button
  */
-const FavoritesButton: FC<IProductsEntity> = memo((product) => {
+const FavoritesButton = memo((product: IProductsEntity): JSX.Element => {
   const [isFav, setIsFav] = useState(false);
   const dispatch = useAppDispatch();
   const { user, isAuth } = useContext(AuthContext);
@@ -36,7 +38,19 @@ const FavoritesButton: FC<IProductsEntity> = memo((product) => {
   );
 
   /**
-   * Update favorites
+   * Update favorites state and display notification.
+   *
+   * This function toggles the favorite status of a product:
+   * - If the product is currently marked as favorite, it removes it from favorites
+   * - If the product is not currently marked as favorite, it adds it to favorites
+   *
+   * It also displays a toast notification confirming the action performed.
+   *
+   * Dependencies:
+   * - isFav: Current favorite status of the product
+   * - dispatch: Redux dispatch function to trigger add/remove favorite actions
+   * - id: Product identifier
+   * - localizeInfos?.title: Product title for the notification message
    */
   const onUpdateFavoritesHandle = useCallback(() => {
     if (isFav) {
@@ -49,7 +63,7 @@ const FavoritesButton: FC<IProductsEntity> = memo((product) => {
   }, [isFav, dispatch, id, localizeInfos?.title]);
 
   /**
-   * Update user data favorites
+   * Update user data favorites.
    * @async
    */
   const onUpdateUserFavoritesHandle = useCallback(async () => {
@@ -74,6 +88,9 @@ const FavoritesButton: FC<IProductsEntity> = memo((product) => {
     }
   }, [isFav, user, isAuth, dispatch, id, localizeInfos?.title]);
 
+  /**
+   * Handle click.
+   */
   const handleClick = useCallback(() => {
     if (user && isAuth && (user as IUserEntity).id) {
       onUpdateUserFavoritesHandle();
@@ -82,13 +99,15 @@ const FavoritesButton: FC<IProductsEntity> = memo((product) => {
     }
   }, [user, isAuth, onUpdateUserFavoritesHandle, onUpdateFavoritesHandle]);
 
-  // set Favorites on data change
+  /**
+   * set Favorites on data change
+   */
   useEffect(() => {
     setIsFav(isFavorites);
   }, [isFavorites]);
 
   if (!product) {
-    return;
+    return <></>;
   }
 
   return (

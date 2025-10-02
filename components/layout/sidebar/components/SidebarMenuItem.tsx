@@ -4,29 +4,38 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import * as icons from '../../../icons';
 
+/**
+ * SidebarMenu item props.
+ *
+ * @param {IMenusPages} props.menuItem - Menu item.
+ * @param {string} props.lang - Current language shortcode.
+ */
 interface SidebarMenuItemProps {
   menuItem: IMenusPages & { isActive: boolean };
   lang: string;
 }
 
 /**
- * SidebarMenu item
+ * Sidebar menu item.
  *
- * @param menuItem
- * @param lang Current language shortcode
+ * @param {IMenusPages & { isActive: boolean }} props.menuItem - Menu item.
+ * @param {string} props.lang - Current language shortcode.
  *
- * @returns SidebarMenu Item
+ * @returns JSX.Element - SidebarMenuItem.
  */
-const SidebarMenuItem: FC<SidebarMenuItemProps> = ({ menuItem, lang }) => {
+const SidebarMenuItem = ({
+  menuItem,
+  lang,
+}: SidebarMenuItemProps): JSX.Element => {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);
 
   if (!menuItem) {
-    return;
+    return <></>;
   }
   const { pageUrl, localizeInfos } = menuItem;
   const Icon = icons[pageUrl as keyof typeof icons];

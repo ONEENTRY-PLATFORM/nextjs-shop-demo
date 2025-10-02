@@ -1,17 +1,18 @@
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import SignInButton from '../shared/SignInButton';
 
 /**
- * AuthError page
- * @param dict
+ * AuthError page.
  *
- * @returns AuthError page
+ * @param {IAttributeValues} props.dict - Dictionary values.
+ *
+ * @returns AuthError page.
  */
-const AuthError: FC<{ dict: IAttributeValues }> = ({ dict }) => {
+const AuthError = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const { auth_required_text } = dict;
 
   return (

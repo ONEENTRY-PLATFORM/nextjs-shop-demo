@@ -1,7 +1,6 @@
-// import parse from 'html-react-parser';
 import Image from 'next/image';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
-import type { FC } from 'react';
+import type { FC, JSX } from 'react';
 
 import SlideUpTransition from '@/app/animations/SlideUpTransition';
 
@@ -12,12 +11,13 @@ import {
 } from '../../app/api/hooks/useAttributesData';
 
 /**
- * About page
- * @param page Represents a page entity object.
+ * About page.
  *
- * @returns About page
+ * @param {IPagesEntity} page - Represents a page entity object.
+ *
+ * @returns JSX.Element - About page.
  */
-const AboutPage: FC<{ page: IPagesEntity }> = ({ page }) => {
+const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
   // Safely check if page exists
   if (!page || !page.attributeValues) {
     return (
