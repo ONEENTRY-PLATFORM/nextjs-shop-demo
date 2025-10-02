@@ -30,7 +30,7 @@ const FavoritesButton: FC<IProductsEntity> = memo((product) => {
   const [isFav, setIsFav] = useState(false);
   const dispatch = useAppDispatch();
   const { user, isAuth } = useContext(AuthContext);
-  const { id } = product;
+  const { id, localizeInfos } = product;
   const isFavorites = useAppSelector((state) =>
     selectIsFavorites(state as any, id),
   );
@@ -40,15 +40,13 @@ const FavoritesButton: FC<IProductsEntity> = memo((product) => {
    */
   const onUpdateFavoritesHandle = useCallback(() => {
     if (isFav) {
-      dispatch(removeFavorites(product.id));
-      toast(
-        'Product ' + product.localizeInfos.title + ' removed from Favorites!',
-      );
+      dispatch(removeFavorites(id));
+      toast('Product ' + localizeInfos?.title + ' removed from Favorites!');
     } else {
-      dispatch(addFavorites(product.id));
-      toast('Product ' + product.localizeInfos.title + ' added to Favorites!');
+      dispatch(addFavorites(id));
+      toast('Product ' + localizeInfos?.title + ' added to Favorites!');
     }
-  }, [isFav, dispatch, product.id, product.localizeInfos.title]);
+  }, [isFav, dispatch, id, localizeInfos?.title]);
 
   /**
    * Update user data favorites
@@ -57,26 +55,24 @@ const FavoritesButton: FC<IProductsEntity> = memo((product) => {
   const onUpdateUserFavoritesHandle = useCallback(async () => {
     try {
       if (!isFav) {
-        dispatch(addFavorites(product.id));
+        dispatch(addFavorites(id));
         if (user && isAuth) {
-          await onSubscribeEvents(product.id);
+          await onSubscribeEvents(id);
         }
 
-        toast('Product ' + product.localizeInfos.title + ' add to Favorites!');
+        toast('Product ' + localizeInfos?.title + ' add to Favorites!');
       } else {
-        dispatch(removeFavorites(product.id));
+        dispatch(removeFavorites(id));
         if (user && isAuth) {
-          await onUnsubscribeEvents(product.id);
+          await onUnsubscribeEvents(id);
         }
 
-        toast(
-          'Product ' + product.localizeInfos.title + ' removed from Favorites!',
-        );
+        toast('Product ' + localizeInfos?.title + ' removed from Favorites!');
       }
     } catch (e: any) {
       toast('Auth error! ' + e?.message);
     }
-  }, [isFav, user, isAuth, dispatch, product.id, product.localizeInfos.title]);
+  }, [isFav, user, isAuth, dispatch, id, localizeInfos?.title]);
 
   const handleClick = useCallback(() => {
     if (user && isAuth && (user as IUserEntity).id) {

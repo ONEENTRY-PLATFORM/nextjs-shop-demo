@@ -15,11 +15,8 @@ interface ProductImageProps {
  * @param alt - alt text for image
  * @returns Product image/placeholder
  */
-const ProductImage: FC<ProductImageProps> = ({
-  attributeValues: { pic },
-  alt,
-}) => {
-  const imageSrc = pic?.value?.downloadLink;
+const ProductImage: FC<ProductImageProps> = ({ attributeValues, alt }) => {
+  const imageSrc = attributeValues?.pic?.value?.downloadLink;
 
   return (
     <div className="relative mb-3 size-40">
@@ -27,7 +24,7 @@ const ProductImage: FC<ProductImageProps> = ({
         <OptimizedImage
           fill
           sizes="(min-width: 300px) 66vw, 100vw"
-          src={pic}
+          src={imageSrc}
           alt={alt}
           loading="lazy"
           className="size-40 shrink-0 relative transition-transform duration-500 group-hover:scale-125"

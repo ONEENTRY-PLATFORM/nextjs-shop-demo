@@ -51,9 +51,13 @@ const OptimizedImage: FC<OptimizedImageProps> = ({
 }) => {
   const [isImageLoading, setImageLoading] = useState(true);
   const ref = useRef<HTMLImageElement>(null);
-  const optimizedSrc = src?.value?.downloadLink || src?.value[0]?.downloadLink;
+  const optimizedSrc =
+    src?.value?.downloadLink || src?.value?.[0]?.downloadLink;
   const blurDataURL = src?.value?.previewLink?.default?.[0] || '';
 
+  if (!optimizedSrc) {
+    return <></>;
+  }
   // Handle the exactOptionalPropertyTypes issue by explicitly building the props object
   // const { optimizedSrc, blurDataURL, isLoading, isError } = useOptimizedImage({
   //   src,

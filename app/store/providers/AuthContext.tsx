@@ -6,7 +6,7 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
-import { useLazyGetMeQuery } from '@/app/api';
+import { reDefine, useLazyGetMeQuery } from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import type { IProducts } from '@/app/types/global';
 
@@ -88,8 +88,8 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       setIsAuth(false);
       return;
     }
-    // await reDefine(refresh, langCode);
-    await checkToken();
+    await reDefine(refresh, langCode);
+    // await checkToken();
   };
 
   /**

@@ -32,6 +32,9 @@ export let api = defineOneEntry(PROJECT_URL, {
   auth: {
     saveFunction,
   },
+  errors: {
+    isShell: false,
+  },
 });
 
 /**
@@ -50,6 +53,9 @@ export async function reDefine(refreshToken: string, langCode: string) {
     auth: {
       saveFunction,
       refreshToken,
+    },
+    errors: {
+      isShell: false,
     },
   });
 }

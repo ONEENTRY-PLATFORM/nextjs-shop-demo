@@ -37,12 +37,12 @@ const ProductAnimations: FC<ProductAnimationsProps> = memo(
     const dispatch = useAppDispatch();
     const ref = useRef(null);
     const { transitionId } = useAppSelector(getTransition);
-
+    const { localizeInfos } = product;
     // Memoized callback for removing product
     const removeProductCallback = useCallback(() => {
       dispatch(removeProduct(product.id));
-      toast('Product ' + product.localizeInfos.title + ' removed from cart!');
-    }, [dispatch, product.id, product.localizeInfos.title]);
+      toast('Product ' + localizeInfos.title + ' removed from cart!');
+    }, [dispatch, product.id, localizeInfos.title]);
 
     // Memoized callback for setting transition
     const setCartTransitionCallback = useCallback(() => {
