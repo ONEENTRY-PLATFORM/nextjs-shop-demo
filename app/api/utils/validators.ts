@@ -1,6 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { compileRegex } from './compileRegex';
 
+/**
+ * Validators interface
+ *
+ * @property requiredValidator - Validates if a field is required
+ * @property emailInspectionValidator - Validates email format
+ * @property fieldMaskValidator - Validates field against a mask
+ * @property stringInspectionValidator - Validates string length
+ * @property correctPasswordValidator - Validates password confirmation
+ */
 export type Validators = {
   requiredValidator: (value: string, validator: any) => boolean;
   emailInspectionValidator: (value: string, validator: any) => boolean;
@@ -9,6 +18,9 @@ export type Validators = {
   correctPasswordValidator: (value: string, validator: any) => boolean;
 };
 
+/**
+ * Collection of form field validators
+ */
 export const validators: Validators = {
   requiredValidator: (value: string) => {
     return !!value.length;

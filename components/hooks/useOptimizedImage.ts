@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 
 /**
  * Interface for useOptimizedImage function parameters.
- * @property {string} src - Image source URL.
- * @property {number} [width] - Desired image width.
- * @property {number} [height] - Desired image height.
- * @property {number} [quality] - Image quality (1-100).
+ *
+ * @property src - Image source URL.
+ * @property width - Desired image width.
+ * @property height - Desired image height.
+ * @property quality - Image quality (1-100).
  */
 interface UseOptimizedImageProps {
   src: string;
@@ -19,10 +20,10 @@ interface UseOptimizedImageProps {
 /**
  * Interface for optimized image data and loading states.
  *
- * @property {string} optimizedSrc - Optimized image URL with parameters.
- * @property {string | undefined} blurDataURL - Base64-encoded LQIP placeholder image.
- * @property {boolean} isLoading - Indicates whether the image is currently loading.
- * @property {boolean} isError - Indicates whether an error occurred while loading the image.
+ * @property optimizedSrc - Optimized image URL with parameters.
+ * @property blurDataURL - Base64-encoded LQIP placeholder image.
+ * @property isLoading - Indicates whether the image is currently loading.
+ * @property isError - Indicates whether an error occurred while loading the image.
  */
 interface OptimizedImageResult {
   optimizedSrc: string;
@@ -32,12 +33,13 @@ interface OptimizedImageResult {
 }
 
 /**
- * Hook for optimizing images with LQIP placeholders and lazy loading
+ * Hook for optimizing images with LQIP placeholders and lazy loading.
  *
- * @param {string} props.src - Image source URL.
- * @param {number} [props.width] - Desired image width.
- * @param {number} [props.height] - Desired image height.
- * @param {number} [props.quality] - Image quality (1-100).
+ * @param props - Hook parameters.
+ * @param props.src - Image source URL.
+ * @param props.width - Desired image width.
+ * @param props.height - Desired image height.
+ * @param props.quality - Image quality (1-100).
  *
  * @returns Optimized image data and loading states.
  */

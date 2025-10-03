@@ -5,9 +5,8 @@ import { useEffect, useRef, useState } from 'react';
 /**
  * Custom hook for observing element visibility using Intersection Observer API.
  *
- * @param {IntersectionObserverInit} options - IntersectionObserver options.
- *
- * @returns ref and visibility state.
+ * @param options - IntersectionObserver options
+ * @returns Object containing ref and visibility state
  */
 export const useIntersectionObserver = (
   options: IntersectionObserverInit = {

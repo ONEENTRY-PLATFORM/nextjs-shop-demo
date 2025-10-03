@@ -9,14 +9,25 @@
 // Default cache duration (5 minutes)
 // const DEFAULT_CACHE_DURATION = 5 * 60 * 1000;
 
-// Generic cache functions with strict typing
+/**
+ * Cache item interface.
+ *
+ * @property data - The cached data.
+ * @property timestamp - The timestamp when the data was cached.
+ * @property ttl - Time to live in milliseconds.
+ */
 export interface CacheItem<T> {
   data: T;
   timestamp: number;
-  ttl: number; // Time to live in milliseconds
+  ttl: number; // Time to live in milliseconds.
 }
 
-// Generic function to get cached data
+/**
+ * Generic function to get cached data.
+ *
+ * @param key - The cache key.
+ * @returns The cached data or null if not found or expired.
+ */
 export function getCachedData<T>(key: string): T | null {
   if (typeof window === 'undefined') return null;
 
@@ -40,7 +51,13 @@ export function getCachedData<T>(key: string): T | null {
   }
 }
 
-// Generic function to set cached data
+/**
+ * Generic function to set cached data.
+ *
+ * @param key - The cache key.
+ * @param data - The data to cache.
+ * @param ttl - Time to live in milliseconds (default: 5 minutes).
+ */
 export function setCachedData<T>(
   key: string,
   data: T,
@@ -61,7 +78,11 @@ export function setCachedData<T>(
   }
 }
 
-// Generic function to clear cached data
+/**
+ * Generic function to clear cached data.
+ *
+ * @param key - The cache key to clear.
+ */
 export function clearCachedData(key: string): void {
   if (typeof window === 'undefined') return;
 
@@ -72,7 +93,9 @@ export function clearCachedData(key: string): void {
   }
 }
 
-// Function to clear all cache data
+/**
+ * Function to clear all cache data.
+ */
 export function clearAllCache(): void {
   if (typeof window === 'undefined') return;
 

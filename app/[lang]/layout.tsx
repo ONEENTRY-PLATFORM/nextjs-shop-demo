@@ -30,8 +30,6 @@ const lato = Lato({
 /**
  * Homepage static metadata.
  *
- * @param params - Page params.
- *
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata Next.js docs}
  */
 export const metadata: Metadata = {

@@ -1,24 +1,39 @@
+/**
+ * Language codes mapping
+ */
 export enum LanguageEnum {
   en = 'en_US',
   fr = 'fr_FR',
 }
 
+/**
+ * Internationalization codes mapping
+ */
 export enum IntlEnum {
   en = 'en-US',
   fr = 'fr-FR',
 }
 
+/**
+ * Currency codes mapping
+ */
 export enum CurrencyEnum {
   en = 'USD',
   fr = 'EUR',
 }
 
+/**
+ * Size options
+ */
 export enum Sizes {
   sm = 'sm',
   md = 'md',
   lg = 'lg',
 }
 
+/**
+ * Condition markers for filtering
+ */
 export enum ConditionMarkersEnum {
   IN = 'in',
   NIN = 'nin',
@@ -30,6 +45,9 @@ export enum ConditionMarkersEnum {
   NEXS = 'nexs',
 }
 
+/**
+ * Form field types mapping
+ */
 export enum FormFieldsEnum {
   string = 'text',
   email = 'email',
@@ -49,10 +67,16 @@ export enum FormFieldsEnum {
   card_cvc = password,
 }
 
+/**
+ * Minimum length constraints for fields
+ */
 export enum minLengthFieldsEnum {
   card_cvc = 3,
 }
 
+/**
+ * Maximum length constraints for fields
+ */
 export enum maxLengthFieldsEnum {
   card_cvc = 3,
 }
