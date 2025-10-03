@@ -10,7 +10,7 @@ import type { SimplePageProps } from '@/app/types/global';
  * @param props.page - Page entity.
  * @param props.lang - Current language shortcode.
  *
- * @returns BookOnlinePage page.
+ * @returns BookOnlinePage component.
  */
 const BookOnlinePage = async ({
   page,

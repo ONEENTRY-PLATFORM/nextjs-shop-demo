@@ -7,31 +7,13 @@ import ProductCard from '../products-grid/components/product-card/ProductCard';
 import ProductAnimations from './animations/ProductAnimations';
 
 /**
- * Related items props
- *
- * @property block - The block data containing similar products
- * @property lang - current language shortcode
- * @property dict - dictionary from server api
- * @property langCode - The language code for attribute values
- */
-interface RelatedItemsProps {
-  block: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    attributeValues: any;
-    similarProducts?: {
-      items?: IProductsEntity[];
-    };
-  };
-  lang: string;
-  dict: IAttributeValues;
-  langCode: string;
-}
-
-/**
  * RelatedItems.
  *
  * @param props - Related items props.
  * @param props.block - The block data containing similar products.
+ * @param props.block.attributeValues - The attribute values for the block.
+ * @param props.block.similarProducts - The similar products data.
+ * @param props.block.similarProducts.items - The array of similar products.
  * @param props.lang - current language shortcode.
  * @param props.dict - dictionary from server api.
  * @param props.langCode - The language code for attribute values.
@@ -43,7 +25,18 @@ const RelatedItems = ({
   lang,
   dict,
   langCode,
-}: RelatedItemsProps): JSX.Element => {
+}: {
+  block: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    attributeValues: any;
+    similarProducts?: {
+      items?: IProductsEntity[];
+    };
+  };
+  lang: string;
+  dict: IAttributeValues;
+  langCode: string;
+}): JSX.Element => {
   if (!block || !block.similarProducts) {
     return <></>;
   }

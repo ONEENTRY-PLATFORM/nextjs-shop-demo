@@ -12,23 +12,6 @@ import ProductImage from './ProductImage';
 import Stickers from './Stickers';
 
 /**
- * Product card props
- *
- * @property product - product entity object
- * @property lang - Current language shortcode
- * @property index - Index of element for animations stagger
- * @property dict - dictionary from server api
- * @property pagesLimit - used for animations
- */
-interface ProductCardProps {
-  product: IProductsEntity;
-  lang: string;
-  index: number;
-  dict: IAttributeValues;
-  pagesLimit: number;
-}
-
-/**
  * Product card
  *
  * @param props - Product card props
@@ -46,7 +29,13 @@ const ProductCard = ({
   dict,
   index,
   pagesLimit,
-}: ProductCardProps): JSX.Element => {
+}: {
+  product: IProductsEntity;
+  lang: string;
+  index: number;
+  dict: IAttributeValues;
+  pagesLimit: number;
+}): JSX.Element => {
   const { id, statusIdentifier, attributeValues, localizeInfos } = product;
 
   const title = localizeInfos?.title || '';

@@ -8,17 +8,6 @@ import type { JSX } from 'react';
 import { type ReactNode, useRef } from 'react';
 
 /**
- * Sidebar animations props.
- *
- * @property children - children ReactNode.
- * @property className - CSS className of ref element.
- */
-interface SidebarAnimationsProps {
-  children: ReactNode;
-  className: string;
-}
-
-/**
  * Sidebar animations.
  *
  * @param props - Sidebar animations props.
@@ -30,7 +19,10 @@ interface SidebarAnimationsProps {
 const SidebarAnimations = ({
   children,
   className,
-}: SidebarAnimationsProps): JSX.Element => {
+}: {
+  children: ReactNode;
+  className: string;
+}): JSX.Element => {
   const { stage } = useTransitionState();
   const ref = useRef(null);
   const paths = usePathname();

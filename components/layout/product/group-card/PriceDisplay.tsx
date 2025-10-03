@@ -3,19 +3,6 @@ import type { JSX } from 'react';
 import { UsePrice } from '../../../utils/utils';
 
 /**
- * Price display props.
- *
- * @property currentPrice - current price.
- * @property originalPrice - original price.
- * @property lang - current language shortcode.
- */
-interface PriceDisplayProps {
-  currentPrice: number;
-  originalPrice: number;
-  lang: string;
-}
-
-/**
  * Price display component.
  *
  * @param prop - component props.
@@ -29,7 +16,11 @@ const PriceDisplay = ({
   currentPrice,
   originalPrice,
   lang,
-}: PriceDisplayProps): JSX.Element => {
+}: {
+  currentPrice: number;
+  originalPrice: number;
+  lang: string;
+}): JSX.Element => {
   if (!currentPrice && !originalPrice) {
     return <></>;
   }

@@ -1,15 +1,6 @@
 import type { JSX } from 'react';
 
 /**
- * Star rating props
- *
- * @property rating - rating value
- */
-interface StarRatingProps {
-  rating: number;
-}
-
-/**
  * StarRating.
  *
  * @param props - Star rating props.
@@ -17,7 +8,7 @@ interface StarRatingProps {
  *
  * @returns StarRating component.
  */
-const StarRating = ({ rating }: StarRatingProps): JSX.Element => {
+const StarRating = ({ rating }: { rating: number }): JSX.Element => {
   return (
     <div className="flex shrink-0 flex-row items-center gap-1.5">
       {[...Array(5)].map((_, index) => (

@@ -6,33 +6,16 @@ import CarouselItemImage from './CarouselItemImage';
 import CarouselItemTitle from './CarouselItemTitle';
 
 /**
- * Carousel item props
+ * CarouselItem.
  *
- * @property index - index of slide
- * @property lang - current language shortcode
- * @property item - product object
- * @property currentIndex - index of current slide
- * @property setCurrentIndex - Set state action
- */
-interface VariationProps {
-  index: number;
-  lang: string;
-  item: IProductsEntity;
-  currentIndex: number;
-  setCurrentIndex: Dispatch<SetStateAction<number>>;
-}
-
-/**
- * CarouselItem
+ * @param props - Carousel item props.
+ * @param props.item - product object.
+ * @param props.lang - current language shortcode.
+ * @param props.index - index of slide.
+ * @param props.currentIndex - index of current slide.
+ * @param props.setCurrentIndex - Set state action.
  *
- * @param props - Carousel item props
- * @param props.item - product object
- * @param props.lang - current language shortcode
- * @param props.index - index of slide
- * @param props.currentIndex - index of current slide
- * @param props.setCurrentIndex - Set state action
- *
- * @returns Carousel card component
+ * @returns CarouselItem component.
  */
 const CarouselItem = ({
   item,
@@ -40,7 +23,13 @@ const CarouselItem = ({
   index,
   currentIndex,
   setCurrentIndex,
-}: VariationProps): JSX.Element => {
+}: {
+  item: IProductsEntity;
+  lang: string;
+  index: number;
+  currentIndex: number;
+  setCurrentIndex: Dispatch<SetStateAction<number>>;
+}): JSX.Element => {
   return (
     <button
       onClick={() => setCurrentIndex(index)}

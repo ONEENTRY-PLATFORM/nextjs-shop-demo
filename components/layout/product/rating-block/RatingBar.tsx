@@ -1,19 +1,20 @@
 import type { JSX } from 'react';
 
-interface RatingBarProps {
-  value: number;
-  maxWidth: string;
-}
-
 /**
- * RatingBar.
+ * Rating bar.
  *
  * @param value - rating value.
  * @param maxWidth - max width.
  *
- * @returns RatingBar.
+ * @returns rating bar component.
  */
-const RatingBar = ({ value, maxWidth }: RatingBarProps): JSX.Element => (
+const RatingBar = ({
+  value,
+  maxWidth,
+}: {
+  value: number;
+  maxWidth: string;
+}): JSX.Element => (
   <div
     className="my-auto flex flex-col justify-center"
     style={{ width: maxWidth }}

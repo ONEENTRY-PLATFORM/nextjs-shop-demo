@@ -5,45 +5,34 @@ import ReviewAnimations from '../animations/ReviewAnimations';
 import UserComment from './UserComment';
 
 /**
- * User comment object entity.
- *
- * @property name - Name of user.
- * @property content - Comment text.
- * @property likeCount - Count of likes.
- * @property commentCount - Count of comments.
- * @property rating - Rating of user.
- */
-interface UserCommentProps {
-  name: string;
-  content: string;
-  likeCount: number;
-  commentCount: number;
-  rating: number;
-}
-
-/**
- * Review card props.
- *
- * @property review - review object entity.
- * @property index - Index of element for animations stagger.
- * @property state - state of review card.
- */
-interface ReviewCardProps {
-  review: UserCommentProps;
-  index: number;
-  state: boolean;
-}
-
-/**
  * Review card.
  *
- * @param review - review object entity.
- * @param index - Index of element for animations stagger.
- * @param state - state of review card.
+ * @param props.review - review object entity.
+ * @param props.review.name - Name of user.
+ * @param props.review.content - Comment text.
+ * @param props.review.likeCount - Count of likes.
+ * @param props.review.commentCount - Count of comments.
+ * @param props.review.rating - Rating of user.
+ * @param props.index - Index of element for animations stagger.
+ * @param props.state - state of review card.
  *
- * @returns Review card.
+ * @returns Review card component.
  */
-const ReviewCard = ({ review, index, state }: ReviewCardProps): JSX.Element => {
+const ReviewCard = ({
+  review,
+  index,
+  state,
+}: {
+  review: {
+    name: string;
+    content: string;
+    likeCount: number;
+    commentCount: number;
+    rating: number;
+  };
+  index: number;
+  state: boolean;
+}): JSX.Element => {
   return (
     <ReviewAnimations
       className="relative box-border flex h-0 shrink-0 flex-col"

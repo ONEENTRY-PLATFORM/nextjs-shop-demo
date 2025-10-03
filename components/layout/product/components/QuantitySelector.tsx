@@ -1,6 +1,6 @@
 'use client';
 
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import React, { memo, useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
@@ -9,23 +9,6 @@ import { selectCartItemWithIdLength } from '@/app/store/reducers/CartSlice';
 import DecreaseButton from './DecreaseButton';
 import IncreaseButton from './IncreaseButton';
 import QuantityInput from './QuantityInput';
-
-/**
- * Quantity selector props
- *
- * @property id - product id
- * @property units - count of product in shop
- * @property title - product title
- * @property height - height of the selector component
- * @property className - CSS className of ref element
- */
-interface QuantitySelectorProps {
-  id: number;
-  units: number;
-  title: string;
-  className?: string;
-  height: number;
-}
 
 /**
  * Quantity selector
@@ -39,9 +22,20 @@ interface QuantitySelectorProps {
  *
  * @returns Quantity selector with increase decrease buttons
  */
-const QuantitySelector: FC<QuantitySelectorProps> = memo(
-  // eslint-disable-next-line react/prop-types
-  ({ id, units, title, height, className }) => {
+const QuantitySelector = memo(
+  ({
+    id,
+    units,
+    title,
+    height,
+    className,
+  }: {
+    id: number;
+    units: number;
+    title: string;
+    className?: string;
+    height: number;
+  }): JSX.Element => {
     const [qty, setQty] = useState(1);
 
     // extract data from cartSlice
@@ -57,7 +51,7 @@ const QuantitySelector: FC<QuantitySelectorProps> = memo(
 
     // Show the component whenever the product is added to the cart (quantity > 0)
     if (quantity <= 0) {
-      return null;
+      return <></>;
     }
 
     return (

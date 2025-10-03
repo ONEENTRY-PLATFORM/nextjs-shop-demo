@@ -11,19 +11,6 @@ import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 
 /**
- * Group card component interface.
- *
- * @property product - product entity object.
- * @property lang - current language shortcode.
- * @property dict - dictionary from server api.
- */
-interface GroupCardProps {
-  product: IProductsEntity;
-  lang: string;
-  dict: IAttributeValues;
-}
-
-/**
  * Products group card.
  *
  * @param product - product entity object.
@@ -32,7 +19,15 @@ interface GroupCardProps {
  *
  * @returns Products group card.
  */
-const GroupCard = ({ product, lang, dict }: GroupCardProps): JSX.Element => {
+const GroupCard = ({
+  product,
+  lang,
+  dict,
+}: {
+  product: IProductsEntity;
+  lang: string;
+  dict: IAttributeValues;
+}): JSX.Element => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const attributeValues =
     product.attributeValues[langCode] || product.attributeValues;

@@ -2,17 +2,22 @@ import Image from 'next/image';
 import type { JSX } from 'react';
 
 /**
- * Sticker props
+ * Sticker.
  *
- * @property sticker - Sticker object.
- * @property sticker.value - Sticker value object.
- * @property sticker.value.title - Sticker title.
- * @property sticker.value.value - Sticker value.
- * @property sticker.value.extended - Sticker extended object.
- * @property sticker.value.extended.value - Sticker extended value object.
- * @property sticker.value.extended.value.downloadLink - Sticker extended value download link.
+ * @param props - Sticker props.
+ * @param props.sticker - Sticker object.
+ * @param props.sticker.value - Sticker value object.
+ * @param props.sticker.value.title - Sticker title.
+ * @param props.sticker.value.value - Sticker value.
+ * @param props.sticker.value.extended - Sticker extended object.
+ * @param props.sticker.value.extended.value - Sticker extended value object.
+ * @param props.sticker.value.extended.value.downloadLink - Sticker extended value download link.
+ *
+ * @returns Sticker component.
  */
-interface StickerProps {
+const Sticker = ({
+  sticker,
+}: {
   sticker: {
     value: {
       title: string;
@@ -24,17 +29,7 @@ interface StickerProps {
       };
     };
   };
-}
-
-/**
- * Sticker.
- *
- * @param {StickerProps} props - Sticker props.
- * @param {StickerProps} props.sticker - Sticker object.
- *
- * @returns Sticker component.
- */
-const Sticker = ({ sticker }: StickerProps): JSX.Element => {
+}): JSX.Element => {
   if (!sticker?.value) {
     return <></>;
   }

@@ -7,34 +7,26 @@ import RatingRow from './RatingRow';
 import StarRating from './StarRating';
 
 /**
- * Rating block props
+ * Rating block.
  *
- * @property productRating - product rating data
- * @property productRating.rating - rating value
- * @property productRating.reviewCount - number of reviews
- * @property state - animation state
+ * @param props - Rating block props.
+ * @param props.productRating - product rating data.
+ * @param props.productRating.rating - rating value.
+ * @param props.productRating.reviewCount - number of reviews
+ * @param props.state - animation state
+ *
+ * @returns RatingBlock component.
  */
-interface RatingBlockProps {
+const RatingBlock = ({
+  productRating,
+  state,
+}: {
   productRating: {
     rating: number;
     reviewCount: number;
   };
   state: boolean;
-}
-
-/**
- * RatingBlock
- *
- * @param props - Rating block props
- * @param props.productRating - product rating data
- * @param props.state - animation state
- *
- * @returns RatingBlock component
- */
-const RatingBlock = ({
-  productRating,
-  state,
-}: RatingBlockProps): JSX.Element => {
+}): JSX.Element => {
   return (
     <ReviewAnimations
       className="flex max-w-[420px] flex-col px-5 max-md:max-w-full"

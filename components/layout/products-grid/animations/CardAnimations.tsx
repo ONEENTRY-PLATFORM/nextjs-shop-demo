@@ -16,7 +16,7 @@ import { useRef } from 'react';
  * @param props.index - Index of element for animations stagger.
  * @param props.pagesLimit - used for animations.
  *
- * @returns Card animations.
+ * @returns Card animations JSX.Element.
  *
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */

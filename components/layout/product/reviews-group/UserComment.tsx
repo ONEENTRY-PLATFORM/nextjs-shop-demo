@@ -30,10 +30,25 @@ interface UserCommentProps {
  *
  * @param props - UserCommentProps.
  * @param props.review - review object entity.
+ * @param props.review.name - user name.
+ * @param props.review.content - user comment.
+ * @param props.review.likeCount - user likes count.
+ * @param props.review.commentCount - user comments count.
+ * @param props.review.rating - user rating.
  *
- * @returns UserComment.
+ * @returns UserComment component.
  */
-const UserComment = ({ review }: UserCommentProps): JSX.Element => {
+const UserComment = ({
+  review,
+}: {
+  review: {
+    name: string;
+    content: string;
+    likeCount: number;
+    commentCount: number;
+    rating: number;
+  };
+}): JSX.Element => {
   return (
     <div className="flex flex-col rounded-3xl border border-solid border-slate-300 bg-white px-6 py-4 max-md:px-5">
       <header className="mb-4 flex justify-between gap-5 text-lg font-bold leading-8 text-neutral-600 max-md:max-w-full max-md:flex-wrap">

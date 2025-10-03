@@ -2,11 +2,6 @@ import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-interface CarouselItemTitleProps {
-  lang: string;
-  item: IProductsEntity;
-}
-
 /**
  * CarouselItem title.
  *
@@ -19,7 +14,10 @@ interface CarouselItemTitleProps {
 const CarouselItemTitle = ({
   item: { id, localizeInfos, attributeValues },
   lang,
-}: CarouselItemTitleProps): JSX.Element => {
+}: {
+  lang: string;
+  item: IProductsEntity;
+}): JSX.Element => {
   const title = localizeInfos.title;
   const colors = attributeValues?.color?.value;
 

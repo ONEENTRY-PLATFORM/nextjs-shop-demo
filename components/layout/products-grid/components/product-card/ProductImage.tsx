@@ -3,11 +3,6 @@ import type { JSX } from 'react';
 
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
-interface ProductImageProps {
-  attributeValues: AttributeType;
-  alt: string;
-}
-
 /**
  * Product image.
  *
@@ -20,7 +15,10 @@ interface ProductImageProps {
 const ProductImage = ({
   attributeValues,
   alt,
-}: ProductImageProps): JSX.Element => {
+}: {
+  attributeValues: AttributeType;
+  alt: string;
+}): JSX.Element => {
   const imageSrc = attributeValues?.pic?.value?.downloadLink;
 
   return (

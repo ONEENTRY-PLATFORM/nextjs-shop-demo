@@ -1,25 +1,10 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { getBlockByMarker, getRelatedProductsById } from '@/app/api';
 
 import ProductSingle from './index';
-
-/**
- * Product single server props
- *
- * @property product - product entity object
- * @property lang - current language shortcode
- * @property dict - dictionary from server api
- */
-interface ProductSingleServerProps {
-  product: IProductsEntity & {
-    blocks?: Array<string>;
-  };
-  lang: string;
-  dict: IAttributeValues;
-}
 
 /**
  * Server wrapper for ProductSingle that handles async data fetching
@@ -31,11 +16,17 @@ interface ProductSingleServerProps {
  *
  * @returns Product single wrapped in server component
  */
-const ProductSingleServer: FC<ProductSingleServerProps> = async ({
+const ProductSingleServer = async ({
   product,
   lang,
   dict,
-}) => {
+}: {
+  product: IProductsEntity & {
+    blocks?: Array<string>;
+  };
+  lang: string;
+  dict: IAttributeValues;
+}): Promise<JSX.Element> => {
   // Validate required props
   if (!product || !lang || !dict) {
     return (

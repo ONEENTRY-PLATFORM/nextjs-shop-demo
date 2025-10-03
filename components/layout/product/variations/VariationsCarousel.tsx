@@ -9,19 +9,6 @@ import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 
 /**
- * Variations carousel props
- *
- * @property items - array of products objects
- * @property total - total products count
- * @property lang - Current language shortcode
- */
-interface VariationsCarouselProps {
-  items: Array<IProductsEntity> | undefined;
-  total?: number;
-  lang: string;
-}
-
-/**
  * Variations carousel
  *
  * @param props - Variations carousel props
@@ -37,7 +24,11 @@ const VariationsCarousel = ({
   items,
   total,
   lang,
-}: VariationsCarouselProps): JSX.Element => {
+}: {
+  items: Array<IProductsEntity> | undefined;
+  total?: number;
+  lang: string;
+}): JSX.Element => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   if (!items || !total || total < 1) {

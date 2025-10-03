@@ -19,17 +19,6 @@ import FavoritesButton from '@/components/shared/FavoritesButton';
 import Placeholder from '@/components/shared/Placeholder';
 
 /**
- * Product image props
- *
- * @property product - product entity object
- * @property alt - alt text for image
- */
-interface ProductImageProps {
-  product: IProductsEntity;
-  alt?: string;
-}
-
-/**
  * Product images gallery/placeholder
  *
  * @param props - Product image props
@@ -41,7 +30,10 @@ interface ProductImageProps {
 const ProductImageGallery = ({
   product,
   alt,
-}: ProductImageProps): JSX.Element => {
+}: {
+  product: IProductsEntity;
+  alt?: string;
+}): JSX.Element => {
   const [nav1, setNav1] = useState<Slider>();
   const [nav2, setNav2] = useState<Slider>();
   let sliderRef1 = useRef<RefObject<Slider | null>>(null);

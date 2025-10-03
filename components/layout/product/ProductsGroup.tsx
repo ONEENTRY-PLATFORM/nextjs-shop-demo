@@ -6,27 +6,6 @@ import ProductAnimations from './animations/ProductAnimations';
 import GroupCard from './group-card/GroupCard';
 
 /**
- * ProductsGroup.
- *
- * @property block - The block data containing products and attributes.
- * @property block.attributeValues - The attribute values for the block.
- * @property block.products - The products data for the block.
- * @property lang - The current language shortcode.
- * @property dict - The dictionary data for the current language.
- * @property langCode - The language code for attribute values.
- */
-interface ProductsGroupProps {
-  block: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    attributeValues: any;
-    products?: IProductsEntity[];
-  };
-  lang: string;
-  dict: IAttributeValues;
-  langCode: string;
-}
-
-/**
  * ProductsGroup
  * @param block - The block data containing products and attributes
  * @param lang current language shortcode
@@ -35,11 +14,20 @@ interface ProductsGroupProps {
  *
  * @returns ProductsGroup
  */
-const ProductsGroup: FC<ProductsGroupProps> = ({
+const ProductsGroup = ({
   block,
   lang,
   dict,
   langCode,
+}: {
+  block: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    attributeValues: any;
+    products?: IProductsEntity[];
+  };
+  lang: string;
+  dict: IAttributeValues;
+  langCode: string;
 }) => {
   return (
     <ProductAnimations

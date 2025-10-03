@@ -1,25 +1,27 @@
 import parse from 'html-react-parser';
 import type { JSX } from 'react';
 
-interface ProductDescriptionProps {
+/**
+ * Product description.
+ *
+ * @param props - Product description props.
+ * @param props.description - Product description object.
+ * @param props.description.value - Product description.
+ * @param props.description.value[index].htmlValue - Product description (HTML).
+ * @param props.description.value[index].plainValue - Product description (plain text).
+ *
+ * @returns Product description.
+ */
+const ProductDescription = ({
+  description,
+}: {
   description: {
     value: {
       htmlValue: string;
       plainValue: string;
     }[];
   };
-}
-
-/**
- * Product description.
- *
- * @param description - Product description.
- *
- * @returns Product description.
- */
-const ProductDescription = ({
-  description,
-}: ProductDescriptionProps): JSX.Element => {
+}): JSX.Element => {
   if (!description) {
     return <></>;
   }

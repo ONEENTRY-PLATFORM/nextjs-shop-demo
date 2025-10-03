@@ -5,11 +5,6 @@ import type { JSX } from 'react';
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
-interface CarouselItemImageProps {
-  lang: string;
-  item: IProductsEntity;
-}
-
 /**
  * CarouselItem image
  *
@@ -22,7 +17,10 @@ interface CarouselItemImageProps {
 const CarouselItemImage = ({
   item,
   lang,
-}: CarouselItemImageProps): JSX.Element => {
+}: {
+  lang: string;
+  item: IProductsEntity;
+}): JSX.Element => {
   const title = item.localizeInfos.title;
   const imageSrc = getImageUrl('pic', item.attributeValues);
 

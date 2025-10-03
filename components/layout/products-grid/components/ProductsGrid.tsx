@@ -4,13 +4,6 @@ import type { JSX } from 'react';
 
 import ProductCard from './product-card/ProductCard';
 
-interface GridLayoutProps {
-  lang: string;
-  dict: IAttributeValues;
-  pagesLimit: number;
-  products: IProductsEntity[];
-}
-
 /**
  * Products grid.
  *
@@ -27,7 +20,12 @@ const ProductsGrid = ({
   dict,
   products,
   pagesLimit,
-}: GridLayoutProps): JSX.Element => {
+}: {
+  lang: string;
+  dict: IAttributeValues;
+  pagesLimit: number;
+  products: IProductsEntity[];
+}): JSX.Element => {
   return (
     <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
       {Array.isArray(products)

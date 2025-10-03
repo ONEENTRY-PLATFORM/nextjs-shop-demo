@@ -37,14 +37,17 @@ interface GridLayoutProps {
 /**
  * Products grid layout.
  *
- * @param props - Products GridLayout props
- * @param props.params - params from query string
- * @param props.searchParams - search params from query string
- * @param props.dict - dictionary from server api
- * @param props.pagesLimit - used for animations
- * @param props.isCategory - is category page
+ * @param props - Products GridLayout props.
+ * @param props.params - params from query string.
+ * @param props.searchParams - search params from query string.
+ * @param params.searchParams.search - search query.
+ * @param params.searchParams.page - page number.
+ * @param params.searchParams.filters - filters query.
+ * @param props.dict - dictionary from server api.
+ * @param props.pagesLimit - used for animations.
+ * @param props.isCategory - is category page.
  *
- * @returns ProductsGrid component
+ * @returns ProductsGrid component.
  */
 const ProductsGridLayout = async ({
   params,
@@ -52,7 +55,18 @@ const ProductsGridLayout = async ({
   dict,
   pagesLimit,
   isCategory,
-}: GridLayoutProps): Promise<JSX.Element> => {
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  params: any;
+  searchParams: {
+    search?: string;
+    page?: string;
+    filters?: IFilterParams[];
+  };
+  dict: IAttributeValues;
+  pagesLimit: number;
+  isCategory?: boolean;
+}): Promise<JSX.Element> => {
   const currentPage = Number(searchParams?.page) || 1;
   const { lang } = params;
   const limit =

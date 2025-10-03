@@ -5,36 +5,28 @@ import RatingBar from './RatingBar';
 import StarRating from './StarRating';
 
 /**
- * Rating row props.
+ * Rating row.
  *
- * @property rating - Rating object.
- * @property rating.value - Rating value.
- * @property rating.barValue - Rating bar value.
- * @property rating.starCount - Rating star count.
- * @property state - State of the rating.
+ * @param props - Rating row props.
+ * @param props.rating - Rating object with rating value, bar value and star count.
+ * @param props.rating.value - Rating value.
+ * @param props.rating.barValue - Rating bar value.
+ * @param props.rating.starCount - Rating star count.
+ * @param props.state - State of the rating.
+ *
+ * @returns Rating row component.
  */
-interface RatingRowProps {
+const RatingRow = ({
+  rating: { value, barValue, starCount },
+  state,
+}: {
   rating: {
     value: number;
     barValue: number;
     starCount: number;
   };
   state: boolean;
-}
-
-/**
- * Rating row.
- *
- * @param props - Rating row props.
- * @param props.rating - Rating object.
- * @param props.state - State of the rating.
- *
- * @returns Rating row.
- */
-const RatingRow = ({
-  rating: { value, barValue, starCount },
-  state,
-}: RatingRowProps): JSX.Element => (
+}): JSX.Element => (
   <ReviewAnimations
     className="flex h-0 w-full justify-start gap-2.5"
     index={4}

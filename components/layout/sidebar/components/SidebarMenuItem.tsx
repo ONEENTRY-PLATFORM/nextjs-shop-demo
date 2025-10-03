@@ -9,18 +9,6 @@ import type { JSX } from 'react';
 import * as icons from '../../../icons';
 
 /**
- * SidebarMenu item props.
- *
- * @property props - The props object.
- * @property props.menuItem - Menu item.
- * @property props.lang - Current language shortcode.
- */
-interface SidebarMenuItemProps {
-  menuItem: IMenusPages & { isActive: boolean };
-  lang: string;
-}
-
-/**
  * Sidebar menu item.
  *
  * @param props - The props object.
@@ -32,7 +20,10 @@ interface SidebarMenuItemProps {
 const SidebarMenuItem = ({
   menuItem,
   lang,
-}: SidebarMenuItemProps): JSX.Element => {
+}: {
+  menuItem: IMenusPages & { isActive: boolean };
+  lang: string;
+}): JSX.Element => {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);
 

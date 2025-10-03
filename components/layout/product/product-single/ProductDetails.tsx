@@ -13,19 +13,6 @@ import PriceDisplay from '../components/PriceDisplay';
 import ProductUnits from './ProductUnits';
 
 /**
- * Product details props.
- *
- * @property product - product entity object.
- * @property lang - current language shortcode.
- * @property dict - dictionary from server api.
- */
-interface ProductDetailsProps {
-  product: IProductsEntity;
-  lang: string;
-  dict: IAttributeValues;
-}
-
-/**
  * Product details.
  *
  * @param props - Product details props.
@@ -39,7 +26,11 @@ const ProductDetails = ({
   product,
   lang,
   dict,
-}: ProductDetailsProps): JSX.Element => {
+}: {
+  product: IProductsEntity;
+  lang: string;
+  dict: IAttributeValues;
+}): JSX.Element => {
   // Extract data using safe utility functions
   const title = getProductTitle(product) || '';
   const category = getProductCategory(product);

@@ -17,29 +17,6 @@ import ReviewsSection from './ReviewsSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 
 /**
- * Product single interface
- *
- * @property product - product entity object.
- * @property product.blocks - product blocks.
- * @property lang - current language shortcode.
- * @property dict - dictionary from server api.
- * @property relatedProducts - array of related products.
- * @property relatedProductsTotal - total number of related products
- * @property blocksData - pre-fetched block data
- */
-interface ProductSingleProps {
-  product: IProductsEntity & {
-    blocks?: Array<string>;
-  };
-  lang: string;
-  dict: IAttributeValues;
-  relatedProducts: IProductsEntity[];
-  relatedProductsTotal: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  blocksData?: Record<string, any>;
-}
-
-/**
  * Product single.
  *
  * @param props - Product single props.
@@ -60,7 +37,17 @@ const ProductSingle = ({
   relatedProducts,
   relatedProductsTotal,
   blocksData = {},
-}: ProductSingleProps): JSX.Element => {
+}: {
+  product: IProductsEntity & {
+    blocks?: Array<string>;
+  };
+  lang: string;
+  dict: IAttributeValues;
+  relatedProducts: IProductsEntity[];
+  relatedProductsTotal: number;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  blocksData?: Record<string, any>;
+}): JSX.Element => {
   // extract data from product
   const { attributeValues, blocks } = product;
   const productTitle = getProductTitle(product);

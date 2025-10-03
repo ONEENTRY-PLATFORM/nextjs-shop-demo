@@ -6,39 +6,29 @@ import { useEffect, useState } from 'react';
 import StarRating from './StarRating';
 
 /**
- * ReviewSectionProps.
- *
- * @property dict - Dictionary.
- * @property rating - Rating.
- * @property reviewCount - Review count.
- * @property state - State.
- * @property setState - Set state.
- */
-interface ReviewSectionProps {
-  dict: IAttributeValues;
-  rating: number;
-  reviewCount: number;
-  state: boolean;
-  setState: Dispatch<React.SetStateAction<boolean>>;
-}
-
-/**
  * RatingButton.
  *
- * @param rating - Rating.
- * @param reviewCount - Review count.
- * @param state - State.
- * @param setState - Set state.
+ * @param props - Props for RatingButton.
+ * @param props.rating - Rating value.
+ * @param props.reviewCount - Review count.
+ * @param props.state - State.
+ * @param props.setState - Set state.
  *
  * @returns RatingButton.
  */
 const RatingButton = ({
   dict,
-  state,
-  setState,
   rating,
   reviewCount,
-}: ReviewSectionProps): JSX.Element => {
+  state,
+  setState,
+}: {
+  dict: IAttributeValues;
+  rating: number;
+  reviewCount: number;
+  state: boolean;
+  setState: Dispatch<React.SetStateAction<boolean>>;
+}): JSX.Element => {
   const [reviewsTitle, setReviewsTitle] = useState('');
   const { reviews_title } = dict;
 
