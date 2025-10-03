@@ -1,28 +1,28 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
 
 /**
- * Contact Info
- * @async
- * @returns JSX.Element
+ * Contact Info.
+ *
+ * @returns JSX.Element.
  */
-const ContactInfo: FC = async () => {
+const ContactInfo = async (): Promise<JSX.Element> => {
   const [lang] = ServerProvider('lang');
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { block } = await getBlockByMarker('contact_info', lang);
 
   if (!block) {
-    return 'Block not found';
+    return <>Block not found</>;
   }
 
   const attributeValues =
     block.attributeValues?.[langCode] || block?.attributeValues;
 
   if (!attributeValues) {
-    return 'Attributes not found';
+    return <>Attributes not found</>;
   }
 
   const {

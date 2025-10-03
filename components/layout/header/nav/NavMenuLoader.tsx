@@ -3,10 +3,12 @@ import type { FC } from 'react';
 import type { LoaderProps } from '@/app/types/global';
 
 /**
- * Main NavMenu Loader
- * @param limit
+ * Main NavMenu Loader.
  *
- * @returns JSX.Element
+ * @param props - Component props.
+ * @param props.limit - Number of menu items to load.
+ *
+ * @returns JSX.Element.
  */
 export const NavMenuLoader: FC<LoaderProps> = ({ limit = 3 }) => {
   return (

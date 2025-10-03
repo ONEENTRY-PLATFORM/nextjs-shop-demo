@@ -1,14 +1,16 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import type { LoaderProps } from '@/app/types/global';
 
 /**
- * Vertical menu Loader
- * @param limit limit elements count
+ * Vertical menu Loader.
  *
- * @returns menu Loaders
+ * @param props - Loader props.
+ * @param props.limit - limit elements count.
+ *
+ * @returns menu Loaders.
  */
-export const VerticalMenuLoader: FC<LoaderProps> = ({ limit = 6 }) => {
+export const VerticalMenuLoader = ({ limit = 6 }: LoaderProps): JSX.Element => {
   return (
     <div className="flex w-[21%] flex-col max-lg:w-[21%] max-md:w-1/2 max-sm:w-[45%] max-xs:w-full">
       <div className="animate-loader mb-5 mr-5 h-5 w-full"></div>

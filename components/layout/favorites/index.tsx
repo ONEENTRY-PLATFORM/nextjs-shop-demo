@@ -2,14 +2,8 @@
 'use client';
 
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import {
-  type FC,
-  type Key,
-  memo,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import type { JSX, Key } from 'react';
+import { memo, useContext, useEffect, useState } from 'react';
 
 import { api, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -22,13 +16,15 @@ import ProductCard from '../products-grid/components/product-card/ProductCard';
 import ProductsGridLoader from '../products-grid/components/ProductsGridLoader';
 
 /**
- * Favorites page
- * @param lang Current language shortcode
- * @param dict dictionary from server api
+ * Favorites page.
  *
- * @returns favorites page with animations
+ * @param props - Page props.
+ * @param props.lang - Current language shortcode.
+ * @param props.dict - dictionary from server api.
+ *
+ * @returns favorites page with animations.
  */
-const FavoritesPage: FC<SimplePageProps> = ({ lang, dict }) => {
+const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   const { isAuth } = useContext(AuthContext);
   const [products, setProducts] = useState<IProductsEntity[]>([]);
   const favoritesIds = useAppSelector(

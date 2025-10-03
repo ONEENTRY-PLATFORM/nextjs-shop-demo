@@ -2,23 +2,27 @@
 
 import Link from 'next/link';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import FavoritesAltIcon from '@/components/icons/favorites';
 
 /**
- * Nav item favorites link
+ * Nav item favorites link.
  *
- * @param item
- * @param lang current language shortcode
+ * @param props - component props.
+ * @param props.item - menu item.
+ * @param props.lang - current language shortcode.
  *
- * @returns JSX.Element
+ * @returns JSX.Element.
  */
 
-const NavItemFavorites: FC<{ item: IMenusPages; lang: string }> = ({
+const NavItemFavorites = ({
   item,
   lang,
-}) => {
+}: {
+  item: IMenusPages;
+  lang: string;
+}): JSX.Element => {
   const { pageUrl, localizeInfos } = item;
   return (
     <Link

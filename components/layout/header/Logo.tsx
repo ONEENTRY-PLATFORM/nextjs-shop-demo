@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 /**
  * Logo.
@@ -9,7 +9,7 @@ import type { FC } from 'react';
  *
  * @returns Logo component.
  */
-const Logo: FC<{ lang: string }> = ({ lang }) => {
+const Logo = ({ lang }: { lang: string }): JSX.Element => {
   return (
     <Link
       href={'/' + lang}

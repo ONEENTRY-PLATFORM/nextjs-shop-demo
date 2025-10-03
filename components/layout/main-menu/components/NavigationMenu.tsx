@@ -1,27 +1,30 @@
 import Link from 'next/link';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-import type { FC, Key } from 'react';
+import type { JSX, Key } from 'react';
 
 import NavigationMenuItem from './NavigationMenuItem';
 
-interface MainMenuProps {
+/**
+ * Main navigation menu.
+ *
+ * @param props - Props.
+ * @param props.lang - Current language shortcode.
+ * @param props.menu - Represents a menu array of objects.
+ *
+ * @returns Main navigation menu.
+ */
+const NavigationMenu = async ({
+  lang,
+  menu,
+}: {
   lang: string;
   menu: IMenusPages[];
-}
-
-/**
- * Main navigation menu
- * @param lang Current language shortcode
- * @param menu Represents a menu array of objects.
- *
- * @returns Main navigation menu
- */
-const NavigationMenu: FC<MainMenuProps> = async ({ lang, menu }) => {
+}): Promise<JSX.Element> => {
   return (
     <nav className="fade-in relative z-20 items-center justify-center bg-white px-5 text-lg font-bold uppercase text-[#4C4D56] max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
       <div className="flex w-full max-w-(--breakpoint-xl) items-center justify-center py-5 max-md:px-5">
         <ul className="flex w-full justify-between gap-5 max-md:flex-wrap">
-          {menu.map((item: IMenusPages, index: Key) => (
+          {menu?.map((item: IMenusPages, index: Key) => (
             <li
               key={index}
               className="group my-auto flex justify-between gap-5 whitespace-nowrap py-1"

@@ -1,22 +1,25 @@
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
 
-interface EmptyFavoritesProps {
+/**
+ * Empty favorites.
+ *
+ * @param props - Props.
+ * @param props.lang - Current language shortcode.
+ * @param props.dict - dictionary from server api.
+ *
+ * @returns Empty favorites page with animations.
+ */
+const EmptyFavorites = ({
+  lang,
+  dict,
+}: {
   lang: string;
   dict: IAttributeValues;
-}
-
-/**
- * Empty favorites
- * @param lang Current language shortcode
- * @param dict dictionary from server api
- *
- * @returns Empty favorites page with animations
- */
-const EmptyFavorites: FC<EmptyFavoritesProps> = ({ lang, dict }) => {
+}): JSX.Element => {
   // extract data from dict
   const { empty_favorites_plug, go_to_shop } = dict;
 

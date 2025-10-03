@@ -1,21 +1,30 @@
 'use client';
 
 import Link from 'next/link';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import CartAltIcon from '@/components/icons/cart';
 
 /**
- * Nav item cart button
- * @param item
- * @param lang current language shortcode
+ * Nav item cart button.
  *
- * @returns JSX.Element
+ * @param props - component props.
+ * @param props.item - menu item.
+ * @param props.lang current language shortcode
+ *
+ * @returns JSX.Element.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const NavItemCart: FC<{ item: any; lang: string }> = ({ item, lang }) => {
+
+const NavItemCart = ({
+  item,
+  lang,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  item: any;
+  lang: string;
+}): JSX.Element => {
   const [count, setCount] = useState(0);
 
   // get count from cart reducer

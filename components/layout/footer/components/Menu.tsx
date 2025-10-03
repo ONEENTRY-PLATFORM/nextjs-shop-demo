@@ -2,7 +2,7 @@ import type {
   IMenusEntity,
   IMenusPages,
 } from 'oneentry/dist/menus/menusInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import { LanguageEnum } from '@/app/types/enum';
@@ -10,20 +10,20 @@ import { LanguageEnum } from '@/app/types/enum';
 import MenuItem from './MenuItem';
 
 /**
- * Footer menu
- * @param menu Represents a menu object.
+ * Footer menu.
  *
- * @returns footer menu
+ * @param props - Menu props.
+ * @param props.menu - Represents a menu object.
+ *
+ * @returns footer menu.
  */
-const Menu: FC<{
-  menu: IMenusEntity;
-}> = ({ menu }) => {
+const Menu = ({ menu }: { menu: IMenusEntity }): JSX.Element => {
   const [lang] = ServerProvider('lang');
   const pages = menu.pages as Array<IMenusPages>;
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
   if (!pages || (Array.isArray(pages) && pages.length < 1)) {
-    return;
+    return <></>;
   }
   const title = menu.localizeInfos[langCode]?.title || menu.localizeInfos.title;
 

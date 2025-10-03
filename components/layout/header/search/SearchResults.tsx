@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { Dispatch, FC, Key } from 'react';
+import type { Dispatch, JSX, Key } from 'react';
 import React from 'react';
 
 import { useSearchProducts } from '@/app/api/hooks/useSearchProducts';
@@ -16,20 +16,22 @@ interface SearchResultsProps {
 }
 
 /**
- * Search results
- * @param searchValue
- * @param state
- * @param setState
- * @param lang current language shortcode
+ * Search results.
  *
- * @returns JSX.Element
+ * @param props - SearchResultsProps.
+ * @param props.searchValue - search value.
+ * @param props.state - state.
+ * @param props.setState - set state.
+ * @param props.lang - current language shortcode.
+ *
+ * @returns JSX.Element.
  */
-const SearchResults: FC<SearchResultsProps> = ({
+const SearchResults = ({
   searchValue,
   state,
   setState,
   lang,
-}) => {
+}: SearchResultsProps): JSX.Element => {
   const { loading, products } = useSearchProducts({
     name: searchValue || '',
     lang: lang,
@@ -69,7 +71,9 @@ const SearchResults: FC<SearchResultsProps> = ({
           })
         : 'Not found'}
     </div>
-  ) : null;
+  ) : (
+    <></>
+  );
 };
 
 export default SearchResults;

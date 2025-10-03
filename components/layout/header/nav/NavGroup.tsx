@@ -2,7 +2,7 @@ import type {
   IMenusEntity,
   IMenusPages,
 } from 'oneentry/dist/menus/menusInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { type Key } from 'react';
 
 import { getLocales, getMenuByMarker } from '@/app/api';
@@ -15,20 +15,20 @@ import NavItemProfile from './NavItemProfile';
 import { NavMenuLoader } from './NavMenuLoader';
 
 /**
- * User navigation group
- * @param lang current language shortcode
+ * User navigation group.
+ *
+ * @param props - component props.
+ * @param props.lang - current language shortcode.
  *
  * @returns JSX.Element
  */
-const NavGroup: FC<{
-  lang: string;
-}> = async ({ lang }) => {
+const NavGroup = async ({ lang }: { lang: string }): Promise<JSX.Element> => {
   const { locales } = await getLocales();
   const { menu, isError } = await getMenuByMarker('user_web', lang);
   const userMenu = await getMenuByMarker('side_web', lang);
 
   if (isError || !userMenu) {
-    return;
+    return <></>;
   }
 
   return (

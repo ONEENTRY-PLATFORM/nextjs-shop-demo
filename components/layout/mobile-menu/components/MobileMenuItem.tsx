@@ -9,11 +9,13 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import MobileMenu from './MobileMenu';
 
 /**
- * Mobile menu list item
- * @param item Represents a menu item objects.
- * @param lang Current language shortcode
+ * Mobile menu list item.
  *
- * @returns Mobile menu list item
+ * @param props - Props for MobileMenuItem component.
+ * @param props.item - Represents a menu item objects.
+ * @param props.lang - Current language shortcode.
+ *
+ * @returns Mobile menu list item.
  */
 function MobileMenuItem({ item, lang }: { item: IMenusPages; lang: string }) {
   const { setOpen } = useContext(OpenDrawerContext);

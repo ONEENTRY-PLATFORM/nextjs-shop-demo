@@ -3,25 +3,27 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { FC, ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
-interface CategoriesGridAnimationsProps {
-  children: ReactNode;
-  className: string;
-}
-
 /**
- * Categories grid stage leaving animations
- * @param children children ReactNode
- * @param className categories grid wrapper className
+ * Categories grid stage leaving animations.
+ *
+ * @param props - categories grid props.
+ * @param props.children - children ReactNode.
+ * @param props.className - categories grid wrapper className.
+ *
+ * @returns categories grid wrapper with animations.
+ *
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns categories grid wrapper with animations
  */
-const CategoriesGridAnimations: FC<CategoriesGridAnimationsProps> = ({
+const CategoriesGridAnimations = ({
   children,
   className,
-}) => {
+}: {
+  children: ReactNode;
+  className: string;
+}): JSX.Element => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState<string>('');
   const ref = useRef(null);

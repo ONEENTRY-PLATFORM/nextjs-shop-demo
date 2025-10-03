@@ -13,28 +13,6 @@ import ProductsNotFound from './components/ProductsNotFound';
 export const dynamic = 'force-dynamic';
 
 /**
- * Grid layout props
- *
- * @property params - params from query string
- * @property searchParams - search params from query string
- * @property dict - dictionary from server api
- * @property pagesLimit - used for animations
- * @property isCategory - is category page
- */
-interface GridLayoutProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params: any;
-  searchParams: {
-    search?: string;
-    page?: string;
-    filters?: IFilterParams[];
-  };
-  dict: IAttributeValues;
-  pagesLimit: number;
-  isCategory?: boolean;
-}
-
-/**
  * Products grid layout.
  *
  * @param props - Products GridLayout props.

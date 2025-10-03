@@ -3,26 +3,29 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { LanguageEnum } from '@/app/types/enum';
 
-interface MenuItemProps {
+/**
+ * Footer menu item.
+ *
+ * @param props - Menu item props.
+ * @param props.page - Represents a page object.
+ * @param props.lang - Current language shortcode.
+ *
+ * @returns menu item.
+ */
+const MenuItem = ({
+  page,
+  lang,
+}: {
   page: IMenusPages;
   lang: string;
-}
-
-/**
- * Footer menu item
- * @param page Represents a page object.
- * @param lang Current language shortcode
- *
- * @returns menu item
- */
-const MenuItem: FC<MenuItemProps> = ({ page, lang }) => {
+}): JSX.Element => {
   const paths = usePathname();
   if (!page) {
-    return;
+    return <></>;
   }
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const isActive = paths === '/' + lang + '/' + page.pageUrl;

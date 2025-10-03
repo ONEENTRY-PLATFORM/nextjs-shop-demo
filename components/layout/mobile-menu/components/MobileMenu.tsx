@@ -1,7 +1,7 @@
 'use client';
 
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-import type { Key } from 'react';
+import type { JSX, Key } from 'react';
 
 import MobileMenuItem from './MobileMenuItem';
 
@@ -22,7 +22,7 @@ function MobileMenu({
   menu: IMenusPages[];
   className?: string;
   lang: string;
-}) {
+}): JSX.Element {
   return Array.isArray(menu) && menu.length > 1 ? (
     <ul className={'flex flex-col ' + className}>
       {menu.map((item: IMenusPages, index: Key) => (

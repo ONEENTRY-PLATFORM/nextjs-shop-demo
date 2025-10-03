@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
 /**
- * Footer section
+ * Footer section.
  *
- * @returns React component
+ * @returns React component.
  */
-const OEMenuSection: FC = () => {
+const OEMenuSection = (): JSX.Element => {
   const [dict] = ServerProvider('dict');
 
   const currentYear = new Date().getFullYear();

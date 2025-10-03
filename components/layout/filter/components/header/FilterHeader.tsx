@@ -1,20 +1,18 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import CloseModal from './CloseModal';
 import HistoryBack from './HistoryBack';
 
-interface FilterHeaderProps {
-  dict: IAttributeValues;
-}
-
 /**
- * Filter Header
- * @param dict dictionary from server api
+ * Filter Header.
  *
- * @returns Filter Header
+ * @param props - props.
+ * @param props.dict - dictionary from server api.
+ *
+ * @returns Filter Header.
  */
-const FilterHeader: FC<FilterHeaderProps> = ({ dict }) => {
+const FilterHeader = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const { open_filters_button } = dict;
 
   return (

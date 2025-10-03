@@ -2,24 +2,28 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
-import type { FC, Key } from 'react';
+import type { JSX, Key } from 'react';
 
 /**
- * Lang selector
- * @param locales
- * @param lang current language shortcode
+ * Lang selector.
  *
- * @returns Lang selector select
+ * @param locales - locales list.
+ * @param lang - current language shortcode.
+ *
+ * @returns Lang selector select.
  */
-const LangSelector: FC<{ locales: ILocalEntity[]; lang: string }> = ({
+const LangSelector = ({
   locales,
   lang,
-}) => {
+}: {
+  locales: ILocalEntity[];
+  lang: string;
+}): JSX.Element => {
   const pathname = usePathname();
   const { replace } = useRouter();
 
   if (!locales || !lang) {
-    return;
+    return <></>;
   }
 
   // redirect to locale on change

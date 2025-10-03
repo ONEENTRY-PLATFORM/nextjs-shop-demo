@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -7,7 +8,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
  *
  * @returns Close button
  */
-const CloseModal = () => {
+const CloseModal = (): JSX.Element => {
   const { setTransition } = useContext(OpenDrawerContext);
   return (
     <button

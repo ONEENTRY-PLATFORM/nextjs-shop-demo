@@ -1,5 +1,6 @@
 'use client';
 
+import type { JSX } from 'react';
 import React, { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -9,7 +10,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
  *
  * @returns Close modal button
  */
-const CloseModal = () => {
+const CloseModal = (): JSX.Element => {
   const { setTransition } = useContext(OpenDrawerContext);
 
   return (

@@ -5,7 +5,7 @@ import type {
   IMenusEntity,
   IMenusPages,
 } from 'oneentry/dist/menus/menusInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { useContext } from 'react';
 
 import { AuthContext } from '@/app/store/providers/AuthContext';
@@ -14,20 +14,25 @@ import ProfileAltIcon from '@/components/icons/profile';
 
 import UserProfileMenu from './user-menu/UserProfileMenu';
 
-interface NavItemProfileProps {
+/**
+ * Nav item profile link / SignInForm button.
+ *
+ * @param props - Props.
+ * @param props.item - menu item.
+ * @param props.lang - current language shortcode.
+ * @param props.userMenu - Represents a menu object.
+ *
+ * @returns JSX.Element.
+ */
+const NavItemProfile = ({
+  item,
+  lang,
+  userMenu,
+}: {
   item: IMenusPages;
   lang: string;
   userMenu?: IMenusEntity;
-}
-/**
- * Nav item profile link / SignInForm button
- * @param item
- * @param lang current language shortcode
- * @param userMenu Represents a menu object.
- *
- * @returns JSX.Element
- */
-const NavItemProfile: FC<NavItemProfileProps> = ({ item, lang, userMenu }) => {
+}): JSX.Element => {
   const { open, setOpen, setComponent } = useContext(OpenDrawerContext);
   const { isAuth } = useContext(AuthContext);
 

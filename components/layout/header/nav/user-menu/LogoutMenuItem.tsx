@@ -1,17 +1,18 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { useContext } from 'react';
 
 import { logOutUser } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
 /**
- * Logout menu item button
- * @returns JSX Logout menu item button
+ * Logout menu item button.
+ *
+ * @returns JSX Logout menu item button.
  */
-const LogoutMenuItem: FC = () => {
+const LogoutMenuItem = (): JSX.Element => {
   const { authenticate } = useContext(AuthContext);
   const router = useTransitionRouter();
 
@@ -19,7 +20,7 @@ const LogoutMenuItem: FC = () => {
    * logOut user
    * @async
    */
-  const onLogoutHandle = async () => {
+  const onLogoutHandle = async (): Promise<void> => {
     await logOutUser({ marker: 'email' });
     authenticate();
     router.push('/');

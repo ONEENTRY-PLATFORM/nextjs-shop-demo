@@ -2,30 +2,32 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import type { FC, ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-interface FilterAnimationsProps {
-  children: ReactNode;
-  className: string;
-  index: number;
-}
-
 /**
- * Filter wrapper animations
- * @param children children ReactNode
- * @param className Filter wrapper className
- * @param index index of element in array for stagger
+ * Filter wrapper animations.
+ *
+ * @param props - Filter wrapper props.
+ * @param props.children - children ReactNode.
+ * @param props.className - Filter wrapper className.
+ * @param props.index - index of element in array for stagger.
+ *
+ * @returns filter wrapper with animations.
+ *
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns filter wrapper with animations
  */
-const FilterAnimations: FC<FilterAnimationsProps> = ({
+const FilterAnimations = ({
   children,
   className,
   index,
-}) => {
+}: {
+  children: ReactNode;
+  className: string;
+  index: number;
+}): JSX.Element => {
   const { transition } = useContext(OpenDrawerContext);
   const ref = useRef(null);
 

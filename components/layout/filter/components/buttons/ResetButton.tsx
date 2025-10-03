@@ -2,15 +2,17 @@
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 /**
- * ResetButton
- * @param dict dictionary from server api
+ * ResetButton.
  *
- * @returns ResetButton
+ * @param props - props.
+ * @param props.dict - dictionary from server api.
+ *
+ * @returns ResetButton.
  */
-const ResetButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
+const ResetButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();

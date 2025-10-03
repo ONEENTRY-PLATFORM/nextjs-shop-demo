@@ -15,11 +15,12 @@ import CloseModal from './components/CloseModal';
 import MobileMenu from './components/MobileMenu';
 
 /**
- * Mobile menu offscreen modal
- * @param menu Represents a menu - array of objects.
- * @param lang Current language shortcode
+ * Mobile menu offscreen modal.
  *
- * @returns Mobile menu list item
+ * @param props.menu - Represents a menu - array of objects.
+ * @param props.lang - Current language shortcode.
+ *
+ * @returns Mobile menu list item.
  */
 const OffscreenModal: FC<{
   menu: IMenusPages[];

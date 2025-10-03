@@ -1,21 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import Link from 'next/link';
 import type { FC } from 'react';
 
 /**
- * User menu item
- * @param lang Current language shortcode
- * @param page
- * @param setState
+ * User menu item.
  *
- * @returns User menu item link
+ * @param props - Component properties.
+ * @param props.lang - Current language shortcode.
+ * @param props.page - Current page.
+ * @param props.setState - Set state function.
+ *
+ * @returns User menu item link.
  */
 const UserMenuItem: FC<{
   lang: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   page: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setState: any;
 }> = ({ lang, page, setState }) => {
   return (
