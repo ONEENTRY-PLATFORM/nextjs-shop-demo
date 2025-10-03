@@ -16,14 +16,23 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
+ * Reset password form props
+ *
+ * @property dict - dictionary from server api
+ */
+interface ResetPasswordFormProps {
+  dict: IAttributeValues;
+}
+
+/**
  * Reset password form.
  *
- * @param {object} props - Component props.
- * @param {IAttributeValues} props.dict - dictionary from server api.
+ * @param props - Component props
+ * @param props.dict - dictionary from server api
  *
- * @returns Reset password form.
+ * @returns Reset password form component
  */
-const ResetPasswordForm = ({ dict }: { dict: IAttributeValues }) => {
+const ResetPasswordForm = ({ dict }: ResetPasswordFormProps) => {
   const { email_reg, password_reg, password_confirm, otp_code } =
     useAppSelector((state) => state.formFieldsReducer.fields);
   const { setComponent, setAction } = useContext(OpenDrawerContext);
@@ -35,8 +44,9 @@ const ResetPasswordForm = ({ dict }: { dict: IAttributeValues }) => {
   /**
    * Change password with API AuthProvider.
    *
-   * @param {FormEvent<HTMLFormElement>} e - FormEvent.
-   * @returns {Promise<void>} - Promise that resolves when the form submission is complete.
+   * @param e - FormEvent
+   *
+   * @returns Promise that resolves when the form submission is complete
    */
   const onResetSubmit = async (
     e: FormEvent<HTMLFormElement>,

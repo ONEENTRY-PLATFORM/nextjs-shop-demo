@@ -8,6 +8,13 @@ import { UsePrice } from '@/components/utils/utils';
 
 import TableRowAnimations from '../animations/TableRowAnimations';
 
+/**
+ * Total amount props
+ *
+ * @property lang - Current language shortcode
+ * @property dict - dictionary from server api
+ * @property className - CSS className of ref elements
+ */
 interface TotalAmountProps {
   lang: string;
   dict: IAttributeValues;
@@ -16,11 +23,13 @@ interface TotalAmountProps {
 
 /**
  * Total amount price of all products in cart
- * @param lang Current language shortcode
- * @param dict dictionary from server api
- * @param className CSS className of ref elements
  *
- * @returns
+ * @param props - Total amount props
+ * @param props.lang - Current language shortcode
+ * @param props.dict - dictionary from server api
+ * @param props.className - CSS className of ref elements
+ *
+ * @returns Total amount component
  */
 const TotalAmount: FC<TotalAmountProps> = ({ lang, dict, className }) => {
   const [cartTotal, setCartTotal] = useState(0);

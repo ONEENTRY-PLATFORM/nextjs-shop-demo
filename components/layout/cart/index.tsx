@@ -26,7 +26,13 @@ import Loader from '@/components/shared/Loader';
 
 import DeliveryForm from './delivery-table/DeliveryForm';
 
-// Define the props interface for the CartPage component
+/**
+ * Cart page props
+ *
+ * @property lang - Current language shortcode
+ * @property dict - Dictionary from server API
+ * @property deliveryData - Represents a product entity object
+ */
 interface CartPageProps {
   lang: string; // Current language shortcode
   dict: IAttributeValues; // Dictionary from server API
@@ -36,11 +42,12 @@ interface CartPageProps {
 /**
  * Cart page component
  *
- * @param lang - Current language shortcode
- * @param dict - Dictionary from server API
- * @param deliveryData - Represents a product entity object
+ * @param props - Cart page props
+ * @param props.lang - Current language shortcode
+ * @param props.dict - Dictionary from server API
+ * @param props.deliveryData - Represents a product entity object
  *
- * @returns JSX.Element representing the cart page
+ * @returns Cart page component
  */
 const CartPage: FC<CartPageProps> = ({ lang, dict, deliveryData }) => {
   const dispatch = useAppDispatch(); // Initialize Redux dispatch function

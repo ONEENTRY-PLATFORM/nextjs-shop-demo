@@ -12,6 +12,14 @@ import ProductAnimations from '../animations/ProductAnimations';
 import DeleteButton from './DeleteButton';
 import PriceDisplay from './PriceDisplay';
 
+/**
+ * Product card props
+ *
+ * @property product - product entity object
+ * @property selected - product selected?
+ * @property lang - Current language shortcode
+ * @property index - index of element in array for stagger
+ */
 interface ProductCardProps {
   product: IProductsEntity;
   selected: boolean;
@@ -21,10 +29,12 @@ interface ProductCardProps {
 
 /**
  * Product card in cart
- * @param product product entity object.
- * @param selected product selected?
- * @param lang Current language shortcode
- * @param index index of element in array for stagger
+ *
+ * @param props - Product card props
+ * @param props.product - product entity object
+ * @param props.selected - product selected?
+ * @param props.lang - Current language shortcode
+ * @param props.index - index of element in array for stagger
  *
  * @returns ProductCard with animations
  */

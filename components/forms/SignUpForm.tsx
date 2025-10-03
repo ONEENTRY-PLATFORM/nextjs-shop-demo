@@ -27,7 +27,7 @@ import SubmitButton from './inputs/FormSubmitButton';
  * @param props.lang - Current language shortcode.
  * @param props.dict - dictionary from server api.
  *
- * @returns SignUp form.
+ * @returns SignUp form component
  */
 const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
   const [loading, setIsLoading] = useState<boolean>(false);
@@ -51,6 +51,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
    * SignUp form submit handler.
    *
    * @param e - Form event object.
+   *
    * @returns Promise that resolves when the form is submitted.
    */
   const onSignUp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {

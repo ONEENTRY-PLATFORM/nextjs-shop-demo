@@ -12,8 +12,9 @@ import { getDictionary } from '../dictionaries';
 /**
  * Favorites page
  *
- * @async server component
- * @param {PageProps} params - page params
+ * @param props - Page props
+ * @param props.params - page params
+ *
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  *
  * @returns Favorites page layout JSX.Element
@@ -40,6 +41,8 @@ export default FavoritesPageLayout;
 
 /**
  * Pre-generation page params
+ *
+ * @returns Static params for pre-generation
  */
 export async function generateStaticParams() {
   const params: Array<{ lang: string }> = [];
@@ -51,10 +54,13 @@ export async function generateStaticParams() {
 
 /**
  * Generate page metadata
- * @async server component
- * @param params page params
+ *
+ * @param metadataParams - Metadata params
+ * @param metadataParams.params - page params
+ *
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ *
  * @returns metadata
  */
 export async function generateMetadata({

@@ -22,8 +22,8 @@ import ResetPasswordButton from './inputs/ResetPasswordButton';
 /**
  * SignInForm component Props.
  *
- * @param {string} lang - Current language shortcode.
- * @param {IAttributeValues} dict - Dictionary of localized strings from server API.
+ * @property lang - Current language shortcode.
+ * @property dict - Dictionary of localized strings from server API.
  */
 interface SignInFormProps extends FormProps {
   lang: string;
@@ -39,9 +39,9 @@ interface SignInFormProps extends FormProps {
  * The form includes animations, error handling, and links to related actions
  * such as password reset and account creation.
  *
- * @param {object} props - Component properties.
- * @param {string} props.lang - Current language shortcode.
- * @param {IAttributeValues} props.dict - Dictionary of localized strings from server API.
+ * @param props - Component properties.
+ * @param props.lang - Current language shortcode.
+ * @param props.dict - Dictionary of localized strings from server API.
  *
  * @returns Sign-in form with email/phone and password fields
  */

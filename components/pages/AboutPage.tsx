@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
-import type { FC, JSX } from 'react';
+import type { JSX } from 'react';
 
 import SlideUpTransition from '@/app/animations/SlideUpTransition';
 

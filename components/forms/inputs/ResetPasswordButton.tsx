@@ -6,14 +6,25 @@ import { useContext } from 'react';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
+ * Reset password button props
+ *
+ * @property title - button title
+ */
+interface ResetPasswordButtonProps {
+  title: string;
+}
+
+/**
  * Reset password button.
  *
- * @param {object} props - Props for the component.
- * @param {string} props.title - button title.
+ * @param props - Props for the component
+ * @param props.title - button title
  *
- * @returns JSX.Element - Reset password button.
+ * @returns Reset password button component
  */
-const ResetPasswordButton = ({ title }: { title: string }): JSX.Element => {
+const ResetPasswordButton = ({
+  title,
+}: ResetPasswordButtonProps): JSX.Element => {
   const { setComponent } = useContext(OpenDrawerContext);
 
   return (

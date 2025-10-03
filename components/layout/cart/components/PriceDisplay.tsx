@@ -2,6 +2,13 @@ import React from 'react';
 
 import { UsePrice } from '@/components/utils/utils';
 
+/**
+ * Price display props
+ *
+ * @property currentPrice - Current price value
+ * @property originalPrice - Original price value
+ * @property lang - Current language shortcode
+ */
 interface PriceDisplayProps {
   currentPrice: number;
   originalPrice: number;
@@ -11,7 +18,12 @@ interface PriceDisplayProps {
 /**
  * PriceDisplay
  *
- * @returns
+ * @param props - Price display props
+ * @param props.currentPrice - Current price value
+ * @param props.originalPrice - Original price value
+ * @param props.lang - Current language shortcode
+ *
+ * @returns Price display component
  */
 const PriceDisplay: React.FC<PriceDisplayProps> = ({
   currentPrice,

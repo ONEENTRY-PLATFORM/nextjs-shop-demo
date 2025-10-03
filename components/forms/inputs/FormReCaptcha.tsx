@@ -2,6 +2,13 @@ import type { Dispatch, JSX } from 'react';
 import { useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha-enterprise';
 
+/**
+ * Form captcha props
+ *
+ * @property setToken - Function to set the token
+ * @property setIsCaptcha - Function to set captcha state
+ * @property captchaKey - Captcha key
+ */
 type FormCaptchaProps = {
   setToken: Dispatch<string>;
   setIsCaptcha: Dispatch<boolean>;
@@ -11,12 +18,12 @@ type FormCaptchaProps = {
 /**
  * FormReCaptcha
  *
- * @param {object} props - FormReCaptcha props.
- * @param {Function} props.setToken - setToken.
- * @param {Function} props.setIsCaptcha - setIsCaptcha.
- * @param {string} props.captchaKey - captchaKey.
+ * @param props - FormReCaptcha props
+ * @param props.setToken - Function to set the token
+ * @param props.setIsCaptcha - Function to set captcha state
+ * @param props.captchaKey - Captcha key
  *
- * @returns FormReCaptcha
+ * @returns FormReCaptcha component
  */
 const FormReCaptcha = ({
   setToken,

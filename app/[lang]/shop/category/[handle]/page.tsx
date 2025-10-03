@@ -16,9 +16,10 @@ import { i18n } from '@/i18n-config';
 /**
  * Shop category page layout
  *
- * @async server component
- * @param {any} props.params - page params
- * @param {any} props.searchParams - dynamic search params
+ * @param props - Page props
+ * @param props.params - page params
+ * @param props.searchParams - dynamic search params
+ *
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  *
@@ -102,6 +103,8 @@ export default ShopCategoryLayout;
 
 /**
  * Pre-generation pages for each locale
+ *
+ * @returns Static params for pre-generation
  */
 export async function generateStaticParams() {
   const params: Array<{ lang: string; handle: string }> = [];
@@ -119,10 +122,13 @@ export async function generateStaticParams() {
 
 /**
  * Generate page metadata
- * @async server component
- * @param params page params
+ *
+ * @param metadataParams - Metadata params
+ * @param metadataParams.params - page params
+ *
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
+ *
  * @returns metadata
  */
 export async function generateMetadata({

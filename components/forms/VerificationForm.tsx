@@ -18,13 +18,23 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
- * VerificationForm.
+ * VerificationForm props
  *
- * @param {IAttributeValues} dict - dictionary from server api.
- *
- * @returns JSX.Element - VerificationForm.
+ * @property dict - dictionary from server api
  */
-const VerificationForm = ({ dict }: FormProps): JSX.Element => {
+interface VerificationFormProps extends FormProps {
+  dict: any;
+}
+
+/**
+ * VerificationForm component for handling OTP verification
+ *
+ * @param props - VerificationForm props
+ * @param props.dict - dictionary from server api containing localized text
+ *
+ * @returns VerificationForm component
+ */
+const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
   const router = useTransitionRouter();
   const dispatch = useAppDispatch();
   const { authenticate } = useContext(AuthContext);
@@ -61,9 +71,10 @@ const VerificationForm = ({ dict }: FormProps): JSX.Element => {
 
   /**
    * Submit form handle for checkCode/activateUser
-   * @async
-   * @param e FormEvent
-   * @returns
+   *
+   * @param e - FormEvent from form submission
+   *
+   * @returns Promise that resolves when the form submission is complete
    */
   const onSubmitHandle = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -123,7 +134,6 @@ const VerificationForm = ({ dict }: FormProps): JSX.Element => {
 
   /**
    * Generate and resend verification code
-   * @async
    */
   const onResendHandle = async () => {
     try {

@@ -2,6 +2,12 @@ import Image from 'next/image';
 import type { JSX } from 'react';
 import React from 'react';
 
+/**
+ * Social sign in button props
+ *
+ * @property imageSrc - icon url
+ * @property alt - image alt text
+ */
 interface SocialSignInButtonProps {
   imageSrc: string;
   alt: string;
@@ -10,11 +16,11 @@ interface SocialSignInButtonProps {
 /**
  * Social SignIn button.
  *
- * @param {object} props - Component props.
- * @param {string} props.imageSrc - icon url.
- * @param {string} props.lang - Current language shortcode.
+ * @param props - Component props
+ * @param props.imageSrc - icon url
+ * @param props.alt - image alt text
  *
- * @returns Social SignIn button.
+ * @returns Social SignIn button component
  */
 const SocialSignInButton = ({
   imageSrc,

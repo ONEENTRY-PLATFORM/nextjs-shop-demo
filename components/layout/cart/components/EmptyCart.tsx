@@ -5,6 +5,12 @@ import type { FC } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
 
+/**
+ * Empty cart props
+ *
+ * @property lang - Current language shortcode
+ * @property dict - dictionary from server api
+ */
 interface EmptyCartProps {
   lang: string;
   dict: IAttributeValues;
@@ -12,10 +18,12 @@ interface EmptyCartProps {
 
 /**
  * Empty cart page
- * @param lang Current language shortcode
- * @param dict dictionary from server api
  *
- * @returns
+ * @param props - Empty cart props
+ * @param props.lang - Current language shortcode
+ * @param props.dict - dictionary from server api
+ *
+ * @returns Empty cart component
  */
 const EmptyCart: FC<EmptyCartProps> = ({ lang, dict }) => {
   const { empty_cart_plug, go_to_shop } = dict;
