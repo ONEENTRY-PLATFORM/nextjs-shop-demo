@@ -1,15 +1,16 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import React from 'react';
 
 import ReviewAnimations from '../animations/ReviewAnimations';
 
 /**
- * ViewAllButton
- * @param state
+ * ViewAllButton.
  *
- * @returns ViewAllButton
+ * @param state - Button state.
+ *
+ * @returns ViewAll Button.
  */
-const ViewAllButton: FC<{ state: boolean }> = ({ state }) => {
+const ViewAllButton = ({ state }: { state: boolean }): JSX.Element => {
   return (
     <ReviewAnimations
       className="flex flex-col gap-5 max-md:mb-10 max-md:max-w-full"

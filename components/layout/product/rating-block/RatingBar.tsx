@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 interface RatingBarProps {
   value: number;
@@ -6,13 +6,14 @@ interface RatingBarProps {
 }
 
 /**
- * RatingBar
- * @param value
- * @param maxWidth
+ * RatingBar.
  *
- * @returns RatingBar
+ * @param value - rating value.
+ * @param maxWidth - max width.
+ *
+ * @returns RatingBar.
  */
-const RatingBar: FC<RatingBarProps> = ({ value, maxWidth }) => (
+const RatingBar = ({ value, maxWidth }: RatingBarProps): JSX.Element => (
   <div
     className="my-auto flex flex-col justify-center"
     style={{ width: maxWidth }}

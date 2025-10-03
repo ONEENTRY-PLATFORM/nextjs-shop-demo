@@ -1,6 +1,6 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import React from 'react';
 
 import { LanguageEnum } from '@/app/types/enum';
@@ -10,6 +10,13 @@ import ApplyButton from './ApplyButton';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 
+/**
+ * Group card component interface.
+ *
+ * @property product - product entity object.
+ * @property lang - current language shortcode.
+ * @property dict - dictionary from server api.
+ */
 interface GroupCardProps {
   product: IProductsEntity;
   lang: string;
@@ -17,15 +24,15 @@ interface GroupCardProps {
 }
 
 /**
- * Products group card
+ * Products group card.
  *
- * @param product product entity object
- * @param lang current language shortcode
- * @param dict dictionary from server api
+ * @param product - product entity object.
+ * @param lang - current language shortcode.
+ * @param dict - dictionary from server api.
  *
- * @returns Products group card
+ * @returns Products group card.
  */
-const GroupCard: FC<GroupCardProps> = ({ product, lang, dict }) => {
+const GroupCard = ({ product, lang, dict }: GroupCardProps): JSX.Element => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const attributeValues =
     product.attributeValues[langCode] || product.attributeValues;

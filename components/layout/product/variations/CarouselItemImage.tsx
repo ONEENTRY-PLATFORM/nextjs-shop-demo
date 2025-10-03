@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import OptimizedImage from '@/components/shared/OptimizedImage';
@@ -13,12 +13,16 @@ interface CarouselItemImageProps {
 /**
  * CarouselItem image
  *
- * @param item product object
- * @param lang current language shortcode
+ * @param props - component props.
+ * @param props.item - product object.
+ * @param props.lang - current language shortcode.
  *
- * @returns
+ * @returns JSX.Element.
  */
-const CarouselItemImage: FC<CarouselItemImageProps> = ({ item, lang }) => {
+const CarouselItemImage = ({
+  item,
+  lang,
+}: CarouselItemImageProps): JSX.Element => {
   const title = item.localizeInfos.title;
   const imageSrc = getImageUrl('pic', item.attributeValues);
 

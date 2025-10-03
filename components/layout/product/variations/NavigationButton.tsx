@@ -12,7 +12,7 @@ interface NavigationButtonProps {
  *
  * @param direction - left|right.
  *
- * @returns icon for button.
+ * @returns Carousel navigation button.
  */
 
 const NavigationButton = ({

@@ -1,7 +1,7 @@
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -12,18 +12,22 @@ import {
 } from '@/app/store/reducers/CartSlice';
 
 /**
- * Apply button
+ * Apply button.
  *
- * @param product product entity object
- * @param dict dictionary from server api
+ * @param product - product entity object.
+ * @param dict - dictionary from server api.
  *
- * @returns Apply button adds group product to cart
+ * @returns Apply button adds group product to cart.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ApplyButton: FC<{ product: any; dict: IAttributeValues }> = ({
+
+const ApplyButton = ({
   product,
   dict,
-}) => {
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  product: any;
+  dict: IAttributeValues;
+}): JSX.Element => {
   const dispatch = useAppDispatch();
   const [productInCart, setInCart] = useState(false);
   const { apply_button_placeholder, cancel_text } = dict;

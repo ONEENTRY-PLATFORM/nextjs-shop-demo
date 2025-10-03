@@ -1,18 +1,15 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
-interface ProductImageProps {
-  imageSrc: string;
-}
-
 /**
- * Group product image
- * @param imageSrc
+ * Group product image.
  *
- * @returns Group product image
+ * @param imageSrc - Image source.
+ *
+ * @returns Group product image.
  */
-const ProductImage: FC<ProductImageProps> = ({ imageSrc }) => {
+const ProductImage = ({ imageSrc }: { imageSrc: string }): JSX.Element => {
   return (
     <div
       className="relative h-[130px] w-[110px] shrink-0"

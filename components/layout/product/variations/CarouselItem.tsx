@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { Dispatch, FC, SetStateAction } from 'react';
+import type { Dispatch, JSX, SetStateAction } from 'react';
 
 import CarouselItemImage from './CarouselItemImage';
 import CarouselItemTitle from './CarouselItemTitle';
@@ -34,13 +34,13 @@ interface VariationProps {
  *
  * @returns Carousel card component
  */
-const CarouselItem: FC<VariationProps> = ({
+const CarouselItem = ({
   item,
   lang,
   index,
   currentIndex,
   setCurrentIndex,
-}) => {
+}: VariationProps): JSX.Element => {
   return (
     <button
       onClick={() => setCurrentIndex(index)}

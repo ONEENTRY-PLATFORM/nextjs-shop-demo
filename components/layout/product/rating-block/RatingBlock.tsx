@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { ratingsData } from '@/components/data';
 
@@ -31,7 +31,10 @@ interface RatingBlockProps {
  *
  * @returns RatingBlock component
  */
-const RatingBlock: FC<RatingBlockProps> = ({ productRating, state }) => {
+const RatingBlock = ({
+  productRating,
+  state,
+}: RatingBlockProps): JSX.Element => {
   return (
     <ReviewAnimations
       className="flex max-w-[420px] flex-col px-5 max-md:max-w-full"

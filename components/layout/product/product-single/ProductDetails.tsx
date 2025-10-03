@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import {
   getProductCategory,
@@ -13,11 +13,11 @@ import PriceDisplay from '../components/PriceDisplay';
 import ProductUnits from './ProductUnits';
 
 /**
- * Product details props
+ * Product details props.
  *
- * @property product - product entity object
- * @property lang - current language shortcode
- * @property dict - dictionary from server api
+ * @property product - product entity object.
+ * @property lang - current language shortcode.
+ * @property dict - dictionary from server api.
  */
 interface ProductDetailsProps {
   product: IProductsEntity;
@@ -26,16 +26,20 @@ interface ProductDetailsProps {
 }
 
 /**
- * Product details
+ * Product details.
  *
- * @param props - Product details props
- * @param props.product - product entity object
- * @param props.lang - current language shortcode
- * @param props.dict - dictionary from server api
+ * @param props - Product details props.
+ * @param props.product - product entity object.
+ * @param props.lang - current language shortcode.
+ * @param props.dict - dictionary from server api.
  *
- * @returns Product details component
+ * @returns Product details component.
  */
-const ProductDetails: FC<ProductDetailsProps> = ({ product, lang, dict }) => {
+const ProductDetails = ({
+  product,
+  lang,
+  dict,
+}: ProductDetailsProps): JSX.Element => {
   // Extract data using safe utility functions
   const title = getProductTitle(product) || '';
   const category = getProductCategory(product);

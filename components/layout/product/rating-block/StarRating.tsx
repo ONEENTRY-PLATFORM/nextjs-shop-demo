@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 /**
  * Star rating props
@@ -10,14 +10,14 @@ interface StarRatingProps {
 }
 
 /**
- * StarRating
+ * StarRating.
  *
- * @param props - Star rating props
- * @param props.rating - rating value
+ * @param props - Star rating props.
+ * @param props.rating - rating value.
  *
- * @returns StarRating component
+ * @returns StarRating component.
  */
-const StarRating: FC<StarRatingProps> = ({ rating }) => {
+const StarRating = ({ rating }: StarRatingProps): JSX.Element => {
   return (
     <div className="flex shrink-0 flex-row items-center gap-1.5">
       {[...Array(5)].map((_, index) => (

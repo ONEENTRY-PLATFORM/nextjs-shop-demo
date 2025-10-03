@@ -1,12 +1,14 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 /**
- * Product units
- * @param units
+ * Product units.
  *
- * @returns Product units
+ * @param props - units props.
+ * @param props.units - units.
+ *
+ * @returns Product units component.
  */
-const ProductUnits: FC<{ units: number }> = ({ units }) => {
+const ProductUnits = ({ units }: { units: number }): JSX.Element => {
   const maxUnits = units < 50 ? 50 : units * 1.2;
   const width = (units / maxUnits) * 100;
 

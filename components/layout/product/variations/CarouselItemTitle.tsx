@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 interface CarouselItemTitleProps {
   lang: string;
@@ -8,16 +8,18 @@ interface CarouselItemTitleProps {
 }
 
 /**
- * CarouselItem title
+ * CarouselItem title.
  *
- * @param item product object
- * @param lang current language shortcode
- * @returns title with link to product
+ * @param props - component props.
+ * @param props.item - product object.
+ * @param props.lang - current language shortcode.
+ *
+ * @returns title with link to product.
  */
-const CarouselItemTitle: FC<CarouselItemTitleProps> = ({
+const CarouselItemTitle = ({
   item: { id, localizeInfos, attributeValues },
   lang,
-}) => {
+}: CarouselItemTitleProps): JSX.Element => {
   const title = localizeInfos.title;
   const colors = attributeValues?.color?.value;
 

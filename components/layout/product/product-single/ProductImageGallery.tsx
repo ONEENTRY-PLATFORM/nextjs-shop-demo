@@ -7,7 +7,7 @@ import '@/app/styles/slick-theme.css';
 
 import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC, Key, RefObject } from 'react';
+import type { JSX, Key, RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import Slider from 'react-slick';
 
@@ -38,7 +38,10 @@ interface ProductImageProps {
  *
  * @returns Product images gallery/placeholder component
  */
-const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
+const ProductImageGallery = ({
+  product,
+  alt,
+}: ProductImageProps): JSX.Element => {
   const [nav1, setNav1] = useState<Slider>();
   const [nav2, setNav2] = useState<Slider>();
   let sliderRef1 = useRef<RefObject<Slider | null>>(null);

@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 interface ProductDescriptionProps {
   description: {
@@ -11,15 +11,19 @@ interface ProductDescriptionProps {
 }
 
 /**
- * Product description
- * @param description
+ * Product description.
  *
- * @returns Product description
+ * @param description - Product description.
+ *
+ * @returns Product description.
  */
-const ProductDescription: FC<ProductDescriptionProps> = ({ description }) => {
+const ProductDescription = ({
+  description,
+}: ProductDescriptionProps): JSX.Element => {
   if (!description) {
-    return;
+    return <></>;
   }
+
   const val = description.value;
   const descript = val[0]?.htmlValue || val[0]?.plainValue;
 

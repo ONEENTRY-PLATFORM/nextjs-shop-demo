@@ -1,10 +1,19 @@
 'use client';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { Dispatch, FC } from 'react';
+import type { Dispatch, JSX } from 'react';
 import { useEffect, useState } from 'react';
 
 import StarRating from './StarRating';
 
+/**
+ * ReviewSectionProps.
+ *
+ * @property dict - Dictionary.
+ * @property rating - Rating.
+ * @property reviewCount - Review count.
+ * @property state - State.
+ * @property setState - Set state.
+ */
 interface ReviewSectionProps {
   dict: IAttributeValues;
   rating: number;
@@ -14,21 +23,22 @@ interface ReviewSectionProps {
 }
 
 /**
- * RatingButton
- * @param rating
- * @param reviewCount
- * @param state
- * @param setState
+ * RatingButton.
  *
- * @returns RatingButton
+ * @param rating - Rating.
+ * @param reviewCount - Review count.
+ * @param state - State.
+ * @param setState - Set state.
+ *
+ * @returns RatingButton.
  */
-const RatingButton: FC<ReviewSectionProps> = ({
+const RatingButton = ({
   dict,
   state,
   setState,
   rating,
   reviewCount,
-}) => {
+}: ReviewSectionProps): JSX.Element => {
   const [reviewsTitle, setReviewsTitle] = useState('');
   const { reviews_title } = dict;
 

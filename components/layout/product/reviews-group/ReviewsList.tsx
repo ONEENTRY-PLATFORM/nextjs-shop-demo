@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import React from 'react';
 
 import { reviewsData } from '@/components/data';
@@ -7,12 +7,13 @@ import ReviewCard from './ReviewCard';
 import ViewAllButton from './ViewAllButton';
 
 /**
- * Reviews list section
- * @param state open/closed list state
+ * Reviews list section.
  *
- * @returns ReviewsList
+ * @param state - open/closed list state.
+ *
+ * @returns ReviewsList.
  */
-const ReviewsList: FC<{ state: boolean }> = ({ state }) => {
+const ReviewsList = ({ state }: { state: boolean }): JSX.Element => {
   return (
     <>
       <section
