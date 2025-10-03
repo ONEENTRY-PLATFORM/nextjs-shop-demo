@@ -5,6 +5,16 @@ import type { FC } from 'react';
 import ProductAnimations from './animations/ProductAnimations';
 import GroupCard from './group-card/GroupCard';
 
+/**
+ * ProductsGroup.
+ *
+ * @property block - The block data containing products and attributes.
+ * @property block.attributeValues - The attribute values for the block.
+ * @property block.products - The products data for the block.
+ * @property lang - The current language shortcode.
+ * @property dict - The dictionary data for the current language.
+ * @property langCode - The language code for attribute values.
+ */
 interface ProductsGroupProps {
   block: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

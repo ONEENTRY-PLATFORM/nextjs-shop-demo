@@ -1,21 +1,22 @@
 import type { AttributeType } from 'oneentry/dist/base/utils';
-import type { FC, Key } from 'react';
+import type { JSX, Key } from 'react';
 
 import Sticker from './Sticker';
 
-interface StickersProps {
-  attributeValues: AttributeType;
-}
-
 /**
- * Stickers
+ * Stickers.
  *
- * @param product - Product entity object.
- * @param lang - Current language shortcode
+ * @param props - Component props.
+ * @param props.product - Product entity object.
+ * @param props.lang - Current language shortcode.
  *
- * @returns Stickers array
+ * @returns Stickers array.
  */
-const Stickers: FC<StickersProps> = ({ attributeValues }) => {
+const Stickers = ({
+  attributeValues,
+}: {
+  attributeValues: AttributeType;
+}): JSX.Element[] => {
   return [attributeValues?.stickers || []].map(
     (
       sticker: {

@@ -11,17 +11,17 @@ import Image from './Image';
 /**
  * Props for the OptimizedImage component.
  *
- * @param {string} src - Image source data.
- * @param {string} alt - Image alt text.
- * @param {number} [width] - Image width.
- * @param {number} [height] - Image height.
- * @param {string} [sizes] - Image sizes.
- * @param {boolean} [fill] - Fill parent container.
- * @param {string} [priority] - Priority loading flag.
- * @param {string} [className] - Additional CSS classes.
- * @param {number} [quality] - Image quality.
- * @param {string} [type] - Image type.
- * @param {string} [loading] - Image loading behavior.
+ * @param src - Image source data.
+ * @param alt - Image alt text.
+ * @param width - Image width.
+ * @param height - Image height.
+ * @param sizes - Image sizes.
+ * @param fill - Fill parent container.
+ * @param priority - Priority loading flag.
+ * @param className - Additional CSS classes.
+ * @param quality - Image quality.
+ * @param type - Image type.
+ * @param loading - Image loading behavior.
  */
 interface OptimizedImageProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -42,17 +42,17 @@ interface OptimizedImageProps {
  * Optimized image component with LQIP placeholder and lazy loading.
  *
  * @param {OptimizedImageProps} props - OptimizedImage component props.
- * @param {object} props.src - Image source data.
- * @param {string} props.alt - Image alt text.
- * @param {number} [props.width] - Image width.
- * @param {number} [props.height] - Image height.
- * @param {string} [props.sizes] - Image sizes.
- * @param {boolean} [props.fill] - Fill parent container.
- * @param {string} [props.priority] - Priority loading flag.
- * @param {string} [props.className] - Additional CSS classes.
- * @param {number} [props.quality] - Image quality (1-100).
- * @param {string} [props.type] - Image type ("next" | "custom").
- * @param {string} [props.loading] - Image loading behavior ("eager" | "lazy").
+ * @param props.src - Image source data.
+ * @param props.alt - Image alt text.
+ * @param props.width - Image width.
+ * @param props.height - Image height.
+ * @param props.sizes - Image sizes.
+ * @param props.fill - Fill parent container.
+ * @param props.priority - Priority loading flag.
+ * @param props.className - Additional CSS classes.
+ * @param props.quality - Image quality (1-100).
+ * @param props.type - Image type ("next" | "custom").
+ * @param props.loading - Image loading behavior ("eager" | "lazy").
  *
  * @returns JSX.Element - Optimized image.
  */

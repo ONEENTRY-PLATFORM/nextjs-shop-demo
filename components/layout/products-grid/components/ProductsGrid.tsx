@@ -1,32 +1,33 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { type FC } from 'react';
+import type { JSX } from 'react';
 
 import ProductCard from './product-card/ProductCard';
 
 interface GridLayoutProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  lang: any;
+  lang: string;
   dict: IAttributeValues;
   pagesLimit: number;
   products: IProductsEntity[];
 }
 
 /**
- * Products grid
- * @param lang
- * @param dict dictionary from server api
- * @param products Represents a product entity array of objects.
- * @param pagesLimit used for animations
+ * Products grid.
  *
- * @returns Products grid
+ * @param props - Products grid props.
+ * @param props.lang - language code.
+ * @param props.dict - dictionary from server api.
+ * @param props.products - Represents a product entity array of objects.
+ * @param props.pagesLimit - used for animations.
+ *
+ * @returns Products grid.
  */
-const ProductsGrid: FC<GridLayoutProps> = ({
+const ProductsGrid = ({
   lang,
   dict,
   products,
   pagesLimit,
-}) => {
+}: GridLayoutProps): JSX.Element => {
   return (
     <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
       {Array.isArray(products)

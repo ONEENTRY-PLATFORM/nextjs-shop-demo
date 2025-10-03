@@ -9,8 +9,8 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 /**
  * SignIn button - open SignIn form.
  *
- * @param {object} props - component props.
- * @param {IAttributeValues} props.dict - dictionary from server api.
+ * @param props - component props.
+ * @param props.dict - dictionary from server api.
  *
  * @returns SignIn button.
  */

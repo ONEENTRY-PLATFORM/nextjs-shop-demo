@@ -8,7 +8,8 @@ import SignInButton from '../shared/SignInButton';
 /**
  * AuthError page.
  *
- * @param {IAttributeValues} props.dict - Dictionary values.
+ * @param props - Props.
+ * @param props.dict - Dictionary values.
  *
  * @returns AuthError page.
  */

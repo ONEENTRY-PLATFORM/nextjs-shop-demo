@@ -4,24 +4,33 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useSearchParams } from 'next/navigation';
-import type { FC, ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { useRef } from 'react';
 
 /**
- * Card animations
- * @param children children ReactNode
- * @param className CSS className of ref element
- * @param index Index of element for animations stagger
- * @param pagesLimit used for animations
+ * Card animations.
+ *
+ * @param props - Card animations props.
+ * @param props.children - children ReactNode.
+ * @param props.className - CSS className of ref element.
+ * @param props.index - Index of element for animations stagger.
+ * @param props.pagesLimit - used for animations.
+ *
+ * @returns Card animations.
+ *
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns Card animations
  */
-const CardAnimations: FC<{
+const CardAnimations = ({
+  children,
+  className,
+  index,
+  pagesLimit,
+}: {
   children: ReactNode;
   className: string;
   index: number;
   pagesLimit: number;
-}> = ({ children, className, index, pagesLimit }) => {
+}): JSX.Element => {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 

@@ -6,10 +6,11 @@ import type { SimplePageProps } from '@/app/types/global';
 /**
  * BookOnlinePage page.
  *
- * @param {IPagesEntity} props.page - Page entity.
- * @param {string} props.lang - Current language shortcode.
+ * @param props - Page props.
+ * @param props.page - Page entity.
+ * @param props.lang - Current language shortcode.
  *
- * @returns Promise<JSX.Element> - BookOnlinePage page.
+ * @returns BookOnlinePage page.
  */
 const BookOnlinePage = async ({
   page,

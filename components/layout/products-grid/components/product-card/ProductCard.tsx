@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import AddToCartButton from '@/components/layout/product/components/AddToCartButton';
 import FavoritesButton from '@/components/shared/FavoritesButton';
@@ -40,13 +40,13 @@ interface ProductCardProps {
  *
  * @returns Product card component
  */
-const ProductCard: FC<ProductCardProps> = ({
+const ProductCard = ({
   product,
   lang,
   dict,
   index,
   pagesLimit,
-}) => {
+}: ProductCardProps): JSX.Element => {
   const { id, statusIdentifier, attributeValues, localizeInfos } = product;
 
   const title = localizeInfos?.title || '';

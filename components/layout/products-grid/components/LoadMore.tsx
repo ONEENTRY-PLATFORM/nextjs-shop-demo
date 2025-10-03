@@ -4,20 +4,11 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { useLayoutEffect, useRef } from 'react';
 import { useCallback } from 'react';
 
 import Spinner from '@/components/shared/Spinner';
-
-/**
- * Load more props
- *
- * @property totalPages - total number of pages
- */
-interface LoadMoreProps {
-  totalPages: number;
-}
 
 /**
  * LoadMore
@@ -27,7 +18,7 @@ interface LoadMoreProps {
  *
  * @returns LoadMore button component
  */
-const LoadMore: FC<LoadMoreProps> = ({ totalPages }) => {
+const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();

@@ -5,10 +5,10 @@ import type { JSX } from 'react';
 /**
  * PaymentSuccess page.
  *
- * @param {object} props - Page props.
- * @param {IPagesEntity} props.page - Page entity.
+ * @param props - Page props.
+ * @param props.page - Page entity.
  *
- * @returns Promise<JSX.Element> - PaymentSuccess page.
+ * @returns PaymentSuccess page.
  */
 const PaymentSuccess = async ({
   page,

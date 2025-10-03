@@ -7,8 +7,9 @@ import ContactUsForm from '@/components/forms/ContactUsForm';
 /**
  * Contacts page.
  *
- * @param {IPagesEntity} props.page - Page entity.
- * @param {string} props.lang - Current language shortcode.
+ * @param props - Page props.
+ * @param props.page - Page entity.
+ * @param props.lang - Current language shortcode.
  *
  * @returns Contacts page.
  */

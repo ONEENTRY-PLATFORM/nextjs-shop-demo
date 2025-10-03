@@ -11,11 +11,14 @@ interface CardsGridAnimationsProps {
   className: string;
 }
 /**
- * CardsGrid animations
- * @param children children ReactNode
- * @param className CSS className of ref element
+ * CardsGrid animations.
+ *
+ * @param children - children ReactNode.
+ * @param className - CSS className of ref element.
+ *
+ * @returns CardsGrid animations.
+ *
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns CardsGrid animations
  */
 const CardsGridAnimations: FC<CardsGridAnimationsProps> = ({
   children,

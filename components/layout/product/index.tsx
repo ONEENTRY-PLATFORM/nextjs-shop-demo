@@ -2,7 +2,7 @@
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { getProductTitle } from '@/app/api/hooks/useProductsData';
 import { LanguageEnum } from '@/app/types/enum';
@@ -16,6 +16,17 @@ import RelatedItems from './RelatedItems';
 import ReviewsSection from './ReviewsSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 
+/**
+ * Product single interface
+ *
+ * @property product - product entity object.
+ * @property product.blocks - product blocks.
+ * @property lang - current language shortcode.
+ * @property dict - dictionary from server api.
+ * @property relatedProducts - array of related products.
+ * @property relatedProductsTotal - total number of related products
+ * @property blocksData - pre-fetched block data
+ */
 interface ProductSingleProps {
   product: IProductsEntity & {
     blocks?: Array<string>;
@@ -29,25 +40,27 @@ interface ProductSingleProps {
 }
 
 /**
- * Product single
+ * Product single.
  *
- * @param product product entity object
- * @param lang current language shortcode
- * @param dict dictionary from server api
- * @param relatedProducts array of related products
- * @param relatedProductsTotal total number of related products
- * @param blocksData pre-fetched block data
+ * @param props - Product single props.
+ * @param props.product - product entity object.
+ * @param product.blocks - product blocks.
+ * @param props.lang - current language shortcode.
+ * @param props.dict - dictionary from server api.
+ * @param props.relatedProducts - array of related products.
+ * @param props.relatedProductsTotal - total number of related products.
+ * @param props.blocksData - pre-fetched block data.
  *
- * @returns Product single
+ * @returns Product single.
  */
-const ProductSingle: FC<ProductSingleProps> = ({
+const ProductSingle = ({
   product,
   lang,
   dict,
   relatedProducts,
   relatedProductsTotal,
   blocksData = {},
-}) => {
+}: ProductSingleProps): JSX.Element => {
   // extract data from product
   const { attributeValues, blocks } = product;
   const productTitle = getProductTitle(product);

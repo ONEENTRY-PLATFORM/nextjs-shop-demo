@@ -1,6 +1,17 @@
 import Image from 'next/image';
 import type { JSX } from 'react';
 
+/**
+ * Sticker props
+ *
+ * @property sticker - Sticker object.
+ * @property sticker.value - Sticker value object.
+ * @property sticker.value.title - Sticker title.
+ * @property sticker.value.value - Sticker value.
+ * @property sticker.value.extended - Sticker extended object.
+ * @property sticker.value.extended.value - Sticker extended value object.
+ * @property sticker.value.extended.value.downloadLink - Sticker extended value download link.
+ */
 interface StickerProps {
   sticker: {
     value: {
@@ -16,10 +27,12 @@ interface StickerProps {
 }
 
 /**
- * Sticker
+ * Sticker.
  *
- * @param {StickerProps} props.sticker - Sticker object
- * @returns Sticker component
+ * @param {StickerProps} props - Sticker props.
+ * @param {StickerProps} props.sticker - Sticker object.
+ *
+ * @returns Sticker component.
  */
 const Sticker = ({ sticker }: StickerProps): JSX.Element => {
   if (!sticker?.value) {

@@ -11,8 +11,9 @@ import * as icons from '../../../icons';
 /**
  * SidebarMenu item props.
  *
- * @param {IMenusPages} props.menuItem - Menu item.
- * @param {string} props.lang - Current language shortcode.
+ * @property props - The props object.
+ * @property props.menuItem - Menu item.
+ * @property props.lang - Current language shortcode.
  */
 interface SidebarMenuItemProps {
   menuItem: IMenusPages & { isActive: boolean };
@@ -22,10 +23,11 @@ interface SidebarMenuItemProps {
 /**
  * Sidebar menu item.
  *
- * @param {IMenusPages & { isActive: boolean }} props.menuItem - Menu item.
- * @param {string} props.lang - Current language shortcode.
+ * @param props - The props object.
+ * @param props.menuItem - Menu item.
+ * @param props.lang - Current language shortcode.
  *
- * @returns JSX.Element - SidebarMenuItem.
+ * @returns SidebarMenuItem.
  */
 const SidebarMenuItem = ({
   menuItem,

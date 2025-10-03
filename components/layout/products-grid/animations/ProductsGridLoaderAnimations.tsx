@@ -8,11 +8,14 @@ import type { ReactNode } from 'react';
 import { useRef } from 'react';
 
 /**
- * ProductsGrid loader animations
- * @param children children ReactNode
- * @param className CSS className of ref element
+ * ProductsGrid loader animations.
+ *
+ * @param children - children ReactNode.
+ * @param className - CSS className of ref element.
+ *
+ * @returns loader with animations.
+ *
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns loader with animations
  */
 const ProductsGridLoaderAnimations: FC<{
   children: ReactNode;

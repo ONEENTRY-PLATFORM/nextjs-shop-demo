@@ -1,7 +1,7 @@
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import React, { useState } from 'react';
 
 import { productRating } from '@/components/data';
@@ -11,12 +11,13 @@ import RatingButton from './rating-block/RatingButton';
 import ReviewsList from './reviews-group/ReviewsList';
 
 /**
- * ReviewsSection
- * @param dict dictionary from server api
+ * ReviewsSection.
  *
- * @returns ReviewsSection
+ * @param dict - dictionary from server api.
+ *
+ * @returns Reviews section.
  */
-const ReviewsSection: FC<{ dict: IAttributeValues }> = ({ dict }) => {
+const ReviewsSection = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const [state, setState] = useState(false);
   return (
     <div className="flex justify-between overflow-hidden max-md:flex-wrap">

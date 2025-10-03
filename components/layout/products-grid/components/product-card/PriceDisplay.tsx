@@ -1,5 +1,4 @@
-import type { FC } from 'react';
-import React from 'react';
+import type { JSX } from 'react';
 
 import { UsePrice } from '@/components/utils/utils';
 
@@ -26,11 +25,14 @@ interface PriceDisplayProps {
  *
  * @returns Price display with current/old prices
  */
-const PriceDisplay: FC<PriceDisplayProps> = ({ attributeValues, lang }) => {
+const PriceDisplay = ({
+  attributeValues,
+  lang,
+}: PriceDisplayProps): JSX.Element => {
   const currentPrice = attributeValues?.sale?.value || 0;
   const originalPrice = attributeValues?.price?.value || 0;
   if (!currentPrice && !originalPrice) {
-    return null;
+    return <></>;
   }
 
   // Format price with Intl.NumberFormat

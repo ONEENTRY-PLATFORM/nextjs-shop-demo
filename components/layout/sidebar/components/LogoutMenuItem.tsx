@@ -9,9 +9,9 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import Profile from '@/components/icons/profile';
 
 /**
- * Logout menu item
+ * Logout menu item.
  *
- * @returns JSX Logout menu item
+ * @returns Logout menu item.
  */
 const LogoutMenuItem = (): JSX.Element => {
   const router = useTransitionRouter();

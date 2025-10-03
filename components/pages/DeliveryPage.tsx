@@ -6,11 +6,11 @@ import type { SimplePageProps } from '@/app/types/global';
 /**
  * DeliveryPage page.
  *
- * @param {SimplePageProps} props - Props for DeliveryPage.
- * @param {IPagesEntity} props.page - Page entity.
- * @param {string} props.lang - Current language shortcode.
+ * @param props - Props for DeliveryPage.
+ * @param props.page - Page entity.
+ * @param props.lang - Current language shortcode.
  *
- * @returns Promise<JSX.Element> - DeliveryPage page.
+ * @returns DeliveryPage page.
  */
 const DeliveryPage = async ({
   page,

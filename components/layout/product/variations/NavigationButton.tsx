@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 import ArrowLeftIcon from '@/components/icons/arrow-left';
 import ArrowRightIcon from '@/components/icons/arrow-right';
 
@@ -6,13 +8,16 @@ interface NavigationButtonProps {
 }
 
 /**
- * Carousel navigation button
+ * Carousel navigation button.
  *
- * @param direction - left|right
- * @returns icon for button
+ * @param direction - left|right.
+ *
+ * @returns icon for button.
  */
-// eslint-disable-next-line react/prop-types
-const NavigationButton: React.FC<NavigationButtonProps> = ({ direction }) => {
+
+const NavigationButton = ({
+  direction,
+}: NavigationButtonProps): JSX.Element => {
   return direction === 'left' ? <ArrowLeftIcon /> : <ArrowRightIcon />;
 };
 

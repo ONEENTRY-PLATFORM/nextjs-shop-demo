@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import type { ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { Suspense } from 'react';
 
 /**
@@ -61,7 +61,9 @@ interface ClientProvidersProps {
  * @param {ReactNode} props.children - Child components to be wrapped.
  * @returns JSX element with all client-side providers and components.
  */
-export default function ClientProviders({ children }: ClientProvidersProps) {
+export default function ClientProviders({
+  children,
+}: ClientProvidersProps): JSX.Element {
   return (
     <>
       <div className="grow p-5 pb-16 transition-transform duration-500">

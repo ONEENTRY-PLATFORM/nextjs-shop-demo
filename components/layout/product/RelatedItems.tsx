@@ -1,6 +1,6 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC, Key } from 'react';
+import type { JSX, Key } from 'react';
 
 import CardsGridAnimations from '../products-grid/animations/CardsGridAnimations';
 import ProductCard from '../products-grid/components/product-card/ProductCard';
@@ -28,24 +28,24 @@ interface RelatedItemsProps {
 }
 
 /**
- * RelatedItems
+ * RelatedItems.
  *
- * @param props - Related items props
- * @param props.block - The block data containing similar products
- * @param props.lang - current language shortcode
- * @param props.dict - dictionary from server api
- * @param props.langCode - The language code for attribute values
+ * @param props - Related items props.
+ * @param props.block - The block data containing similar products.
+ * @param props.lang - current language shortcode.
+ * @param props.dict - dictionary from server api.
+ * @param props.langCode - The language code for attribute values.
  *
- * @returns RelatedItems component
+ * @returns RelatedItems component.
  */
-const RelatedItems: FC<RelatedItemsProps> = ({
+const RelatedItems = ({
   block,
   lang,
   dict,
   langCode,
-}) => {
+}: RelatedItemsProps): JSX.Element => {
   if (!block || !block.similarProducts) {
-    return null;
+    return <></>;
   }
 
   return (

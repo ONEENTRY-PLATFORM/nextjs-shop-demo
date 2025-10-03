@@ -25,6 +25,7 @@ import HeartOpenIcon from '@/components/icons/heart-o';
  * Favorites button.
  *
  * @param product - product entity object.
+ *
  * @returns Favorites button.
  */
 const FavoritesButton = memo((product: IProductsEntity): JSX.Element => {

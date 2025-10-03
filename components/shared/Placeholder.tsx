@@ -5,8 +5,8 @@ import { memo } from 'react';
 /**
  * Empty image placeholder.
  *
- * @param {string} props - Placeholder props.
- * @param {string} [props.className] - wrapper className.
+ * @param props - Placeholder props.
+ * @param props.className - wrapper className.
  *
  * @returns JSX.Element - Placeholder.
  */

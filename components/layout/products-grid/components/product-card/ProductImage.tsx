@@ -1,5 +1,5 @@
 import type { AttributeType } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
@@ -9,13 +9,18 @@ interface ProductImageProps {
 }
 
 /**
- * Product image
+ * Product image.
  *
- * @param attributes - product attributes
- * @param alt - alt text for image
- * @returns Product image/placeholder
+ * @param props - Component props.
+ * @param props.attributes - product attributes.
+ * @param props.alt - alt text for image.
+ *
+ * @returns Product image/placeholder.
  */
-const ProductImage: FC<ProductImageProps> = ({ attributeValues, alt }) => {
+const ProductImage = ({
+  attributeValues,
+  alt,
+}: ProductImageProps): JSX.Element => {
   const imageSrc = attributeValues?.pic?.value?.downloadLink;
 
   return (
