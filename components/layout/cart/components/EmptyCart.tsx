@@ -1,20 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
-
-/**
- * Empty cart props
- *
- * @property lang - Current language shortcode
- * @property dict - dictionary from server api
- */
-interface EmptyCartProps {
-  lang: string;
-  dict: IAttributeValues;
-}
 
 /**
  * Empty cart page
@@ -25,7 +14,13 @@ interface EmptyCartProps {
  *
  * @returns Empty cart component
  */
-const EmptyCart: FC<EmptyCartProps> = ({ lang, dict }) => {
+const EmptyCart = ({
+  lang,
+  dict,
+}: {
+  lang: string;
+  dict: IAttributeValues;
+}): JSX.Element => {
   const { empty_cart_plug, go_to_shop } = dict;
 
   return (

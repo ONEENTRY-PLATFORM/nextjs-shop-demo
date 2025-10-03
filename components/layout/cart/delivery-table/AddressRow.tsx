@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import React, { useContext, useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -12,12 +12,14 @@ import { addData } from '@/app/store/reducers/OrderSlice';
 import TableRowAnimations from '../animations/TableRowAnimations';
 
 /**
- * Address row
- * @param placeholder
+ * Address row.
  *
- * @returns
+ * @param props - Props.
+ * @param props.placeholder - Placeholder.
+ *
+ * @returns JSX.Element
  */
-const AddressRow: FC<{ placeholder: string }> = ({ placeholder }) => {
+const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
   const dispatch = useAppDispatch();
   const { user } = useContext(AuthContext);
   const deliveryData = useAppSelector(selectDeliveryData);

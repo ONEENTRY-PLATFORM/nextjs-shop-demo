@@ -1,14 +1,14 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 /**
- * History back button
+ * History back button.
  *
  * @returns JSX.Element
  */
-const BackButton: FC = () => {
+const BackButton = (): JSX.Element => {
   const router = useRouter();
   return (
     <button

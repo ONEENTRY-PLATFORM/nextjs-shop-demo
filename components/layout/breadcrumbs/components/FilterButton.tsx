@@ -2,19 +2,21 @@
 
 import { usePathname } from 'next/navigation';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FilterIcon from '@/components/icons/filter';
 
 /**
- * Filter button in breadcrumbs section
- * @param dict dictionary from server api
+ * Filter button in breadcrumbs section.
  *
- * @returns JSX.Element
+ * @param props - props.
+ * @param props.dict - dictionary from server api.
+ *
+ * @returns JSX.Element.
  */
-const FilterButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
+const FilterButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const path = usePathname();
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
@@ -25,7 +27,7 @@ const FilterButton: FC<{ dict: IAttributeValues }> = ({ dict }) => {
     path.indexOf('product') !== -1 ||
     path.indexOf('category') !== -1
   ) {
-    return;
+    return <></>;
   }
 
   return (

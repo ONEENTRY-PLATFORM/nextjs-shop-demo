@@ -1,10 +1,9 @@
-/* eslint-disable react/prop-types */
 'use client';
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC, ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { memo, useCallback, useRef } from 'react';
 import { toast } from 'react-toastify';
 
@@ -15,25 +14,31 @@ import {
   setCartTransition,
 } from '@/app/store/reducers/CartSlice';
 
-interface ProductAnimationsProps {
-  children: ReactNode;
-  className: string;
-  index: number;
-  product: IProductsEntity;
-}
-
 /**
  * Product animations
  *
- * @param children children ReactNode
- * @param className CSS className of ref element
- * @param product product entity object
- * @param index index of element in array for stagger
+ * @param props - ProductAnimationsProps.
+ * @param props.children - children ReactNode.
+ * @param props.className - CSS className of ref element.
+ * @param props.product - product entity object.
+ * @param props.index - index of element in array for stagger.
+ *
+ * @returns JSX.Element.
+ *
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns
  */
-const ProductAnimations: FC<ProductAnimationsProps> = memo(
-  ({ children, className, product, index }) => {
+const ProductAnimations = memo(
+  ({
+    children,
+    className,
+    product,
+    index,
+  }: {
+    children: ReactNode;
+    className: string;
+    index: number;
+    product: IProductsEntity;
+  }): JSX.Element => {
     const dispatch = useAppDispatch();
     const ref = useRef(null);
     const { transitionId } = useAppSelector(getTransition);

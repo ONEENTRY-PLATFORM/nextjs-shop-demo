@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { memo } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
@@ -13,37 +13,27 @@ import DeleteButton from './DeleteButton';
 import PriceDisplay from './PriceDisplay';
 
 /**
- * Product card props
+ * Product card in cart.
  *
- * @property product - product entity object
- * @property selected - product selected?
- * @property lang - Current language shortcode
- * @property index - index of element in array for stagger
+ * @param props - Product card props.
+ * @param props.product - product entity object.
+ * @param props.selected - product selected.
+ * @param props.lang - Current language shortcode.
+ * @param props.index - index of element in array for stagger.
+ *
+ * @returns ProductCard with animations.
  */
-interface ProductCardProps {
-  product: IProductsEntity;
-  selected: boolean;
-  lang: string;
-  index: number;
-}
-
-/**
- * Product card in cart
- *
- * @param props - Product card props
- * @param props.product - product entity object
- * @param props.selected - product selected?
- * @param props.lang - Current language shortcode
- * @param props.index - index of element in array for stagger
- *
- * @returns ProductCard with animations
- */
-const ProductCard: FC<ProductCardProps> = ({
+const ProductCard = ({
   product,
   selected,
   lang,
   index,
-}) => {
+}: {
+  product: IProductsEntity;
+  selected: boolean;
+  lang: string;
+  index: number;
+}): JSX.Element => {
   const dispatch = useAppDispatch();
   // extract data from product
   const {

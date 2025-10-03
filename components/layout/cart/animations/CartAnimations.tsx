@@ -3,19 +3,26 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { useRef, useState } from 'react';
 
 import type { AnimationsProps } from '@/app/types/global';
 
 /**
- * Cart wrapper stage leaving animations
- * @param children children ReactNode
- * @param className cart wrapper className
+ * Cart wrapper stage leaving animations.
+ *
+ * @param props - Cart wrapper props.
+ * @param props.children - children ReactNode.
+ * @param props.className - cart wrapper className.
+ *
+ * @returns cart wrapper with animations.
+ *
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns cart wrapper with animations
  */
-const CartAnimations: FC<AnimationsProps> = ({ children, className }) => {
+const CartAnimations = ({
+  children,
+  className,
+}: AnimationsProps): JSX.Element => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState<string>('');
   const ref = useRef(null);

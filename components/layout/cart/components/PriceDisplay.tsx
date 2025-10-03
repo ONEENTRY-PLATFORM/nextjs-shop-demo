@@ -1,37 +1,29 @@
-import React from 'react';
+import type { JSX } from 'react';
 
 import { UsePrice } from '@/components/utils/utils';
 
 /**
- * Price display props
+ * PriceDisplay.
  *
- * @property currentPrice - Current price value
- * @property originalPrice - Original price value
- * @property lang - Current language shortcode
+ * @param props - Price display props.
+ * @param props.currentPrice - Current price value.
+ * @param props.originalPrice - Original price value.
+ * @param props.lang - Current language shortcode.
+ *
+ * @returns Price display component.
  */
-interface PriceDisplayProps {
-  currentPrice: number;
-  originalPrice: number;
-  lang: string;
-}
-
-/**
- * PriceDisplay
- *
- * @param props - Price display props
- * @param props.currentPrice - Current price value
- * @param props.originalPrice - Original price value
- * @param props.lang - Current language shortcode
- *
- * @returns Price display component
- */
-const PriceDisplay: React.FC<PriceDisplayProps> = ({
+const PriceDisplay = ({
   currentPrice,
   originalPrice,
   lang,
-}) => {
+}: {
+  currentPrice: number;
+  originalPrice: number;
+  lang: string;
+}): JSX.Element => {
+  // if no price return nothing
   if (!currentPrice && !originalPrice) {
-    return;
+    return <></>;
   }
   const price = UsePrice({ amount: currentPrice, lang });
   const oldPrice = UsePrice({

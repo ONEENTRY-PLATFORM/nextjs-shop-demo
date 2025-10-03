@@ -1,20 +1,16 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { useGetProductByIdQuery } from '@/app/api/api/RTKApi';
 
-interface BreadcrumbItemProps {
-  link: string;
-  lang: string;
-}
-
 /**
- * Breadcrumb ProductItem
+ * Breadcrumb ProductItem.
  *
- * @param link Product link
+ * @param props - BreadcrumbProductItem props.
+ * @param props.link - Product link.
  *
- * @returns JSX.Element
+ * @returns JSX.Element.
  */
-const BreadcrumbProductItem: FC<BreadcrumbItemProps> = ({ link }) => {
+const BreadcrumbProductItem = ({ link }: { link: string }): JSX.Element => {
   const productData = useGetProductByIdQuery({ id: Number(link) });
 
   return (

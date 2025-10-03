@@ -3,27 +3,31 @@
 import { useTransitionRouter } from 'next-transition-router';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import PaymentButton from '@/components/layout/cart/components/PaymentButton';
 import TotalAmount from '@/components/layout/cart/components/TotalAmount';
 import DeliveryTable from '@/components/layout/cart/delivery-table/DeliveryTable';
 
-interface DeliveryFormProps {
+/**
+ * Delivery form.
+ *
+ * @param props - Component props.
+ * @param props.lang - Current language shortcode.
+ * @param props.dict - dictionary from server api.
+ * @param props.deliveryData - Represents a delivery product entity object.
+ *
+ * @returns delivery form.
+ */
+const DeliveryForm = ({
+  lang,
+  dict,
+  deliveryData,
+}: {
   lang: string;
   dict: IAttributeValues;
   deliveryData: IProductsEntity;
-}
-
-/**
- * Delivery form
- * @param lang Current language shortcode
- * @param dict dictionary from server api
- * @param deliveryData Represents a delivery product entity object.
- *
- * @returns delivery form
- */
-const DeliveryForm: FC<DeliveryFormProps> = ({ lang, dict, deliveryData }) => {
+}): JSX.Element => {
   const router = useTransitionRouter();
 
   return (

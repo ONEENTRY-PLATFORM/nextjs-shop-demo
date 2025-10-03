@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
@@ -10,10 +10,9 @@ import FilterButton from './components/FilterButton';
 /**
  * Breadcrumbs
  *
- * @componentType Server component
  * @returns JSX.Element
  */
-const Breadcrumbs: FC = () => {
+const Breadcrumbs = (): JSX.Element => {
   // get lang, dict from server provider
   const [lang] = ServerProvider('lang');
   const [dict] = ServerProvider('dict');
