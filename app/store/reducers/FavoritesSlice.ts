@@ -1,6 +1,11 @@
 import type { PayloadAction } from '@reduxjs/toolkit'; // Importing the PayloadAction type from Redux Toolkit for type-safe actions.
 import { createSlice } from '@reduxjs/toolkit'; // Importing the createSlice function from Redux Toolkit to create a slice of the Redux state.
 
+/**
+ * The initial state for the favorites slice.
+ * @property products - An array of product IDs representing favorite items.
+ * @property version - A version number to track changes in the favorites list.
+ */
 type InitialStateType = {
   products: number[]; // An array of product IDs representing favorite items.
   version: number; // A version number to track changes in the favorites list.
@@ -8,18 +13,25 @@ type InitialStateType = {
 
 /**
  * Define the initial state for the favorites slice.
+ *
+ * @property products - An array of product IDs representing favorite items.
+ * @property version - A version number to track changes in the favorites list.
  */
 const initialState: InitialStateType = {
-  products: [], // Start with an empty list of favorite products.
-  version: 0, // Initial version set to 0.
+  products: [],
+  version: 0,
 };
 
 /**
  * Create a slice for managing favorite products.
+ *
+ * @param name - Name of the slice.
+ * @param initialState - The initial state for the slice.
+ * @param reducers - An object containing the reducer functions for managing the favorites slice.
  */
 export const favoritesSlice = createSlice({
-  name: 'favorites-slice', // Name of the slice.
-  initialState, // The initial state defined above.
+  name: 'favorites-slice',
+  initialState,
   reducers: {
     /**
      * Add a product to the favorites list.
@@ -81,6 +93,7 @@ export const {
  * Selector to get the list of favorite product IDs.
  *
  * @param state - The global state object.
+ *
  * @returns An array of product IDs that are marked as favorites.
  */
 export const selectFavoritesItems = (state: {
@@ -92,6 +105,7 @@ export const selectFavoritesItems = (state: {
  *
  * @param state - The global state object.
  * @param id - The product ID to check.
+ *
  * @returns A boolean indicating whether the product ID is in the favorites list.
  */
 export const selectIsFavorites = (
@@ -108,6 +122,7 @@ export const selectIsFavorites = (
  * Selector to get the current version of the favorites list.
  *
  * @param state - The global state object.
+ *
  * @returns The version number of the favorites list.
  */
 export const selectFavoritesVersion = (state: {

@@ -1,52 +1,74 @@
 'use client';
 
-// Importing necessary types and functions from Redux Toolkit
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-// Importing product entity interface
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-// Importing custom product type
 import type { IProducts } from '@/app/types/global';
 
 /**
  * Defining the shape of the initial state for the cart slice
+ * @property products - Array of product entities.
+ * @property productsData - Array of product data with additional properties like quantity.
+ * @property currency - Currency type.
+ * @property delivery - Delivery product entity.
+ * @property deliveryData - Details about delivery.
+ * @property transitionId - ID used for transitions/animations.
+ * @property total - Total cost of items in the cart.
+ * @property version - Version of the cart, useful for updates.
+ * @property transitionId - ID used for transitions/animations.
+ * @property total - Total cost of items in the cart.
+ * @property version - Version of the cart, useful for updates.
  */
 type InitialStateType = {
-  products: IProductsEntity[]; // Array to store product entities
-  productsData: IProducts[]; // Array to store product data with additional properties like quantity
-  currency?: string; // Optional currency type
-  delivery: IProductsEntity; // Delivery product entity
-  // Details about delivery
+  products: IProductsEntity[];
+  productsData: IProducts[];
+  currency?: string;
+  delivery: IProductsEntity;
   deliveryData: {
-    date: number; // Delivery date as a timestamp
-    time: string; // Delivery time
-    address: string; // Delivery address
+    date: number;
+    time: string;
+    address: string;
   };
-  transitionId: number; // ID used for transitions/animations
-  total: number; // Total cost of items in the cart
-  version: number; // Version of the cart, useful for updates
+  transitionId: number;
+  total: number;
+  version: number;
 };
 
 /**
- * Initial state setup for the cart slice
+ * Initial state setup for the cart slice.
+ *
+ * @property products - Array of product entities.
+ * @property productsData - Array of product data with additional properties like quantity.
+ * @property currency - Currency type.
+ * @property delivery - Delivery product entity.
+ * @property deliveryData - Details about delivery.
+ * @property transitionId - ID used for transitions/animations.
+ * @property total - Total cost of items in the cart.
+ * @property version - Version of the cart, useful for updates.
+ * @property transitionId - ID used for transitions/animations.
+ * @property total - Total cost of items in the cart.
+ * @property version - Version of the cart, useful for updates.
  */
 const initialState: InitialStateType = {
-  products: [], // Initialize empty array for products
-  productsData: [], // Initialize empty array for product data
-  delivery: {} as IProductsEntity, // Initialize delivery as an empty object casted to IProductsEntity
+  products: [],
+  productsData: [],
+  delivery: {} as IProductsEntity,
   deliveryData: {
-    date: new Date().getTime(), // Current timestamp for delivery date
-    time: '', // Empty string for delivery time
-    address: '', // Empty string for delivery address
+    date: new Date().getTime(),
+    time: '',
+    address: '',
   },
-  transitionId: 0, // Default transition ID
-  total: 0, // Default total cost
-  version: 0, // Default version
+  transitionId: 0,
+  total: 0,
+  version: 0,
 };
 
 /**
- * Creating a Redux slice for cart management
+ * Creating a Redux slice for cart management.
+ * @param name - Name of the slice.
+ * @param initialState - Initial state for the cart slice.
+ * @param reducers - Reducers for the cart slice.
  */
 export const cartSlice = createSlice({
   name: 'cart-slice', // Name of the slice
@@ -295,20 +317,22 @@ export const cartSlice = createSlice({
 });
 
 /**
- * Select cart version
+ * Select cart version.
  *
- * @param state - The current state of the Redux store
- * @returns Cart version number
+ * @param state - The current state of the Redux store.
+ *
+ * @returns Cart version number.
  */
 export const selectCartVersion = (state: {
   cartReducer: { version: number };
 }) => state.cartReducer.version;
 
 /**
- * Get cart transition
+ * Get cart transition.
  *
- * @param state - The current state of the Redux store
- * @returns Object containing transitionId
+ * @param state - The current state of the Redux store.
+ *
+ * @returns Object containing transitionId.
  */
 export const getTransition = createSelector(
   (state: { cartReducer: { transitionId: number } }) =>
@@ -317,21 +341,23 @@ export const getTransition = createSelector(
 );
 
 /**
- * Select cart data
+ * Select cart data.
  *
- * @param state - The current state of the Redux store
- * @returns Cart products data
+ * @param state - The current state of the Redux store.
+ *
+ * @returns Cart products data.
  */
 export const selectCartData = (state: {
   cartReducer: { productsData: IProducts[] };
 }) => state.cartReducer.productsData;
 
 /**
- * Select if product is in cart
+ * Select if product is in cart.
  *
- * @param state - The current state of the Redux store
- * @param productId - The ID of the product to check
- * @returns Boolean indicating if product is in cart
+ * @param state - The current state of the Redux store.
+ * @param productId - The ID of the product to check.
+ *
+ * @returns Boolean indicating if product is in cart.
  */
 export const selectIsInCart = (
   state: {
@@ -344,10 +370,11 @@ export const selectIsInCart = (
   );
 
 /**
- * Select delivery data
+ * Select delivery data.
  *
- * @param state - The current state of the Redux store
- * @returns Delivery data object containing date, time and address
+ * @param state - The current state of the Redux store.
+ *
+ * @returns Delivery data object containing date, time and address.
  */
 export const selectDeliveryData = (state: {
   cartReducer: {
@@ -356,10 +383,11 @@ export const selectDeliveryData = (state: {
 }) => state.cartReducer.deliveryData;
 
 /**
- * Select cart total
+ * Select cart total.
  *
- * @param state - The current state of the Redux store
- * @returns Total cost of selected products in the cart
+ * @param state - The current state of the Redux store.
+ *
+ * @returns Total cost of selected products in the cart.
  */
 export const selectCartTotal = (state: {
   cartReducer: {
@@ -384,21 +412,23 @@ export const selectCartTotal = (state: {
 };
 
 /**
- * Select cart items
+ * Select cart items.
  *
- * @param state - The current state of the Redux store
- * @returns Cart products
+ * @param state - The current state of the Redux store.
+ *
+ * @returns Cart products.
  */
 export const selectCartItems = (state: {
   cartReducer: { products: IProductsEntity[] };
 }) => state.cartReducer.products;
 
 /**
- * Select cart item by ID length
+ * Select cart item by ID length.
  *
- * @param state - The current state of the Redux store
- * @param id - The ID of the product to check
- * @returns Quantity of the product in the cart
+ * @param state - The current state of the Redux store.
+ * @param id - The ID of the product to check.
+ *
+ * @returns Quantity of the product in the cart.
  */
 export const selectCartItemWithIdLength = (
   state: {

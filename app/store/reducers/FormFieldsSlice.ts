@@ -1,30 +1,40 @@
 import type { PayloadAction } from '@reduxjs/toolkit'; // Importing the PayloadAction type for defining action payloads.
 import { createSlice } from '@reduxjs/toolkit'; // Importing createSlice from Redux Toolkit to create a slice of the Redux state.
 
-// Define a type for individual form fields, including their value and validity status.
+/**
+ * Define a type for individual form fields, including their value and validity status.
+ * @property value - The value of the form field as a string.
+ * @property valid - A boolean indicating whether the field's value is considered valid.
+ */
 type FieldType = {
-  value: string; // The value of the form field as a string.
-  valid: boolean; // A boolean indicating whether the field's value is considered valid.
+  value: string;
+  valid: boolean;
 };
 
-// Define a type for the initial state structure.
+/**
+ * Define a type for the initial state structure.
+ * @property fields - An object where each key is a field name and the value is a FieldType.
+ * @property fields[key] - The FieldType for the field with the given key.
+ */
 type InitialStateType = {
   fields: {
-    [key: string]: FieldType; // An object where each key is a field name and the value is a FieldType.
+    [key: string]: FieldType;
   };
 };
 
 /**
  * Initialize the state with an empty fields object.
+ * @property fields -
  */
 const initialState: InitialStateType = {
-  fields: {}, // Start with no fields defined.
+  fields: {},
 };
 
 /**
  * Utility function to get the first key of an object.
  *
- * @param obj - Object to get the first key from
+ * @param obj - Object to get the first key from.
+ *
  * @returns The first key if it exists, otherwise returns undefined.
  */
 function getFirstKey(obj: Record<string, FieldType>): string | undefined {
@@ -34,6 +44,10 @@ function getFirstKey(obj: Record<string, FieldType>): string | undefined {
 
 /**
  * Create a slice for managing form fields.
+ *
+ * @param name - Name of the slice.
+ * @param initialState - The initial state for the slice.
+ * @param reducers - An object containing the reducer functions for managing the favorites slice.
  */
 const formFieldsSlice = createSlice({
   name: 'form-fields', // Name of the slice.

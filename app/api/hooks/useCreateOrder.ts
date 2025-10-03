@@ -15,7 +15,7 @@ import { handleApiError } from '@/app/utils/errorHandler';
  * Create order function
  *
  * @param langCode - Current language code
- * @returns useCreateOrder object
+ * @returns useCreateOrder object with onConfirmOrder function, loading state and error state
  */
 export const useCreateOrder = ({
   langCode,
@@ -71,7 +71,7 @@ export const useCreateOrder = ({
   /**
    * On confirm order Create order with Orders API
    *
-   * @returns void
+   * @returns Promise that resolves when order is confirmed
    */
   const onConfirmOrder = async (): Promise<void> => {
     setIsLoading(true);

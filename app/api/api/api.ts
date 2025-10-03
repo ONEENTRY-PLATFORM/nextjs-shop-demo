@@ -8,8 +8,7 @@ const APP_TOKEN = process.env.NEXT_PUBLIC_APP_TOKEN as string;
  *
  * @param refreshToken - Refresh token from API
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
- *
- * @returns void
+ * @returns Promise that resolves when token is saved
  */
 const saveFunction = async (refreshToken: string) => {
   if (!refreshToken) {
@@ -24,8 +23,7 @@ const saveFunction = async (refreshToken: string) => {
  * @param PROJECT_URL - Project url from .env
  * @param APP_TOKEN - Token from .env
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
- *
- * @returns api
+ * @returns api instance
  */
 export let api = defineOneEntry(PROJECT_URL, {
   token: APP_TOKEN,
@@ -43,8 +41,7 @@ export let api = defineOneEntry(PROJECT_URL, {
  * @param refreshToken - Refresh token from localStorage
  * @param langCode - Current language code
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
- *
- * @returns void
+ * @returns Promise that resolves when api is redefined
  */
 export async function reDefine(refreshToken: string, langCode: string) {
   api = defineOneEntry(PROJECT_URL, {

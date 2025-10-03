@@ -9,6 +9,7 @@ import { LanguageEnum } from '@/app/types/enum';
 /**
  * Search products with Products API
  *
+ * @param props - Search parameters
  * @param props.name - Product name
  * @param props.lang - Current language shortcode
  * @see {@link https://doc.oneentry.cloud/docs/catalog OneEntry CMS docs}

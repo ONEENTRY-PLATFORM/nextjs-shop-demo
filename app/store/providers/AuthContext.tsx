@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
@@ -152,6 +151,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       return;
     }
     updateUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, user, productsInCart, favoritesIds]);
 
   // Load cart from user state
@@ -165,6 +165,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       );
     });
     dispatch(setCartVersion(1));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, user]);
 
   // Load favorites from user state
@@ -176,6 +177,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
       dispatch(addFavorites(element));
     });
     dispatch(setFavoritesVersion(1));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, user]);
 
   // Refetch
@@ -184,6 +186,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     onInit().then(() => {
       setIsLoading(false);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, langCode]);
 
   // Refetch if error and has refresh-token
@@ -201,7 +204,8 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
     if (isAuth) {
       checkToken();
     }
-  }, [refetch, refetchUser]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refetch, refetchUser, isAuth]);
 
   const value = {
     isAuth,

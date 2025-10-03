@@ -2,10 +2,11 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 
 /**
  * Get search params for filter
- * @param searchParams
- * @param handle
  *
- * @returns expandedFilters object
+ * @param searchParams - Search parameters
+ * @param handle - Category handle
+ *
+ * @returns Expanded filters object
  */
 const getSearchParams = (
   searchParams?: {

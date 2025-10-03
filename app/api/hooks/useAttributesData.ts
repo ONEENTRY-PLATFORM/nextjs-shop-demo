@@ -27,10 +27,9 @@ export const getString = (
 /**
  * Use Text type.
  *
- * @param {string} name - The name of the attribute.
- * @param {any} attributeValues - The attribute values object.
- * @param {string} type - Type of the content.
- *
+ * @param name - The name of the attribute.
+ * @param attributeValues - The attribute values object.
+ * @param type - Type of the content.
  * @returns HTML content.
  */
 export const getText = (
@@ -170,11 +169,10 @@ export const getText = (
 /**
  * Use image type - extract image URL from attribute values
  *
- * @param name The name of the attribute
- * @param attributeValues The attribute values
- * @param type The type of the image
- *
- * @returns The image URL or undefined
+ * @param name - The name of the attribute
+ * @param attributeValues - The attribute values
+ * @param type - The type of the image
+ * @returns The image URL or empty string
  */
 export const getImageUrl = (
   name: string,

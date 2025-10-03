@@ -25,6 +25,7 @@ export interface CacheItem<T> {
 /**
  * Generic function to get cached data.
  *
+ * @template T - The type of the cached data
  * @param key - The cache key.
  * @returns The cached data or null if not found or expired.
  */
@@ -54,6 +55,7 @@ export function getCachedData<T>(key: string): T | null {
 /**
  * Generic function to set cached data.
  *
+ * @template T - The type of the data to cache
  * @param key - The cache key.
  * @param data - The data to cache.
  * @param ttl - Time to live in milliseconds (default: 5 minutes).

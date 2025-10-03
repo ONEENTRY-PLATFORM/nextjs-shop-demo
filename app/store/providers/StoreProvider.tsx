@@ -10,7 +10,8 @@ import { setupStore } from '../store';
 
 /**
  * Store provider
- * @param children children ReactNode
+ *
+ * @param children - children ReactNode
  *
  * @returns Redux provider
  */

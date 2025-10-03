@@ -58,8 +58,9 @@ export const RTKApi = createApi({
     /**
      * Get all blocks by page url.
      *
-     * @property {string} pageUrl - Page URL.
-     * @property {string} activeLang - Language code. Default "en_US".
+     * @param pageUrl - Page URL.
+     * @param activeLang - Language code. Default "en_US".
+     * @returns Query result with position blocks
      */
     getBlocksByPageUrl: build.query<IPositionBlock[], BlocksByPageUrlProps>({
       queryFn: async ({ pageUrl, activeLang }) => {
@@ -75,7 +76,8 @@ export const RTKApi = createApi({
     /**
      * Get Product By Id.
      *
-     * @property {number} id - Product ID.
+     * @param id - Product ID.
+     * @returns Query result with product
      */
     getProductById: build.query<IProductsEntity, { id: number }>({
       queryFn: async ({ id }) => {
@@ -97,7 +99,8 @@ export const RTKApi = createApi({
     /**
      * Get Products By Ids.
      *
-     * @property {string} items - Array of product IDs as string.
+     * @param items - Array of product IDs as string.
+     * @returns Query result with products
      */
     getProductsByIds: build.query<IProductsEntity[], { items: string }>({
       queryFn: async ({ items }) => {
@@ -117,8 +120,9 @@ export const RTKApi = createApi({
     /**
      * Get block by Marker.
      *
-     * @property {string} marker - Marker of Block.
-     * @property {string} activeLang - Language code. Default "en_US".
+     * @param marker - Marker of Block.
+     * @param activeLang - Language code. Default "en_US".
+     * @returns Query result with block
      */
     getBlockByMarker: build.query<IBlockEntity, BlockByMarkerProps>({
       queryFn: async ({ marker, activeLang }) => {
@@ -134,7 +138,8 @@ export const RTKApi = createApi({
     /**
      * Get all auth providers objects.
      *
-     * @property {string} langCode - Language code. Default "en_US".
+     * @param langCode - Language code. Default "en_US".
+     * @returns Query result with auth providers
      */
     getAuthProviders: build.query<IAuthProvidersEntity[], string>({
       queryFn: async (langCode) => {
@@ -150,8 +155,9 @@ export const RTKApi = createApi({
     /**
      * Get form by marker.
      *
-     * @property {string} marker - Marker of form.
-     * @property {string} lang - Language code. Default "en_US"
+     * @param marker - Marker of form.
+     * @param lang - Language code. Default "en_US"
+     * @returns Query result with form
      */
     // eslint-disable-next-line prettier/prettier
     getFormByMarker: build.query<IFormsEntity, { marker: string; lang: string }>({
@@ -169,7 +175,8 @@ export const RTKApi = createApi({
     /**
      * Getting the data of an authorized user.
      *
-     * @property {string} langCode - Required parameter lang code.
+     * @param langCode - Required parameter lang code.
+     * @returns Query result with user data
      */
     getMe: build.query<IUserEntity, { langCode: string }>({
       queryFn: async ({ langCode }) => {
@@ -186,6 +193,8 @@ export const RTKApi = createApi({
     }),
     /**
      * Get all payment accounts as an array.
+     *
+     * @returns Query result with payment accounts
      */
     getAccounts: build.query<IAccountsEntity[], object>({
       queryFn: async () => {
@@ -199,7 +208,8 @@ export const RTKApi = createApi({
     /**
      * Retrieve one order storage object by marker.
      *
-     * @property {string} marker - Marker of the order object.
+     * @param marker - Marker of the order object.
+     * @returns Query result with order storage
      */
     getOrderStorageByMarker: build.query<IOrdersEntity, { marker: string }>({
       queryFn: async ({ marker }) => {
@@ -215,7 +225,8 @@ export const RTKApi = createApi({
     /**
      * Get a single payment session object by its identifier.
      *
-     * @property {number} id - Identifier of the retrieved payment session object.
+     * @param id - Identifier of the retrieved payment session object.
+     * @returns Query result with payment session
      */
     getPaymentSessionById: build.query<ISessionEntity, { id: number }>({
       queryFn: async ({ id }) => {
@@ -229,9 +240,10 @@ export const RTKApi = createApi({
     /**
      * Getting a single order from the order storage object created by the user
      *
-     * @property {number} id - ID of the order object.
-     * @property {string} marker - The text identifier of the order storage object.
-     * @property {string} activeLang - Optional language field.
+     * @param id - ID of the order object.
+     * @param marker - The text identifier of the order storage object.
+     * @param activeLang - Optional language field.
+     * @returns Query result with single order
      */
     getSingleOrder: build.query<IOrderByMarkerEntity, SingleOrderProps>({
       queryFn: async ({ id, marker, activeLang }) => {
