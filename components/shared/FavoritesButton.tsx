@@ -24,9 +24,8 @@ import HeartOpenIcon from '@/components/icons/heart-o';
 /**
  * Favorites button.
  *
- * @param product product entity object.
- *
- * @returns Favorites button
+ * @param product - product entity object.
+ * @returns Favorites button.
  */
 const FavoritesButton = memo((product: IProductsEntity): JSX.Element => {
   const [isFav, setIsFav] = useState(false);
@@ -64,7 +63,6 @@ const FavoritesButton = memo((product: IProductsEntity): JSX.Element => {
 
   /**
    * Update user data favorites.
-   * @async
    */
   const onUpdateUserFavoritesHandle = useCallback(async () => {
     try {
@@ -100,7 +98,7 @@ const FavoritesButton = memo((product: IProductsEntity): JSX.Element => {
   }, [user, isAuth, onUpdateUserFavoritesHandle, onUpdateFavoritesHandle]);
 
   /**
-   * set Favorites on data change
+   * Set favorites on data change.
    */
   useEffect(() => {
     setIsFav(isFavorites);

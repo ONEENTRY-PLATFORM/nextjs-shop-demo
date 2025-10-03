@@ -1,14 +1,21 @@
 import type { FC } from 'react';
 
+/**
+ * Star rating props
+ *
+ * @property rating - rating value
+ */
 interface StarRatingProps {
   rating: number;
 }
 
 /**
  * StarRating
- * @param rating
  *
- * @returns StarRating
+ * @param props - Star rating props
+ * @param props.rating - rating value
+ *
+ * @returns StarRating component
  */
 const StarRating: FC<StarRatingProps> = ({ rating }) => {
   return (

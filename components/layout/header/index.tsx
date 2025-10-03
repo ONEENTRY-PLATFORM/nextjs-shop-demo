@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
@@ -7,11 +7,11 @@ import NavGroup from './nav/NavGroup';
 import SearchBar from './search/SearchBar';
 
 /**
- * Header section
+ * Header section.
  *
- * @returns React component
+ * @returns Header component.
  */
-const Header: FC = () => {
+const Header = (): JSX.Element => {
   // get props from server provider
   const [lang] = ServerProvider('lang');
   const [dict] = ServerProvider('dict');

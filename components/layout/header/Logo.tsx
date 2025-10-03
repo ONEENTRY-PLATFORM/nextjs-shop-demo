@@ -2,10 +2,12 @@ import Link from 'next/link';
 import type { FC } from 'react';
 
 /**
- * Logo
- * @param lang current language shortcode
+ * Logo.
  *
- * @returns JSX.Element
+ * @param props - Logo props.
+ * @param props.lang - current language shortcode.
+ *
+ * @returns Logo component.
  */
 const Logo: FC<{ lang: string }> = ({ lang }) => {
   return (

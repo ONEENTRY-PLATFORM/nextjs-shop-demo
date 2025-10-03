@@ -12,6 +12,15 @@ import ProductsNotFound from './components/ProductsNotFound';
 
 export const dynamic = 'force-dynamic';
 
+/**
+ * Grid layout props
+ *
+ * @property params - params from query string
+ * @property searchParams - search params from query string
+ * @property dict - dictionary from server api
+ * @property pagesLimit - used for animations
+ * @property isCategory - is category page
+ */
 interface GridLayoutProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: any;
@@ -28,14 +37,14 @@ interface GridLayoutProps {
 /**
  * Products grid layout.
  *
- * @param {object} props - Products GridLayout props.
- * @param {object} props.params - params from query string.
- * @param {object} props.searchParams - search params from query string.
- * @param {IAttributeValues} props.dict - dictionary from server api.
- * @param {number} props.pagesLimit - used for animations.
- * @param {boolean | undefined} props.isCategory - is category page.
+ * @param props - Products GridLayout props
+ * @param props.params - params from query string
+ * @param props.searchParams - search params from query string
+ * @param props.dict - dictionary from server api
+ * @param props.pagesLimit - used for animations
+ * @param props.isCategory - is category page
  *
- * @returns ProductsGrid
+ * @returns ProductsGrid component
  */
 const ProductsGridLayout = async ({
   params,

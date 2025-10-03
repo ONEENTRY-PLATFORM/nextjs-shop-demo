@@ -10,6 +10,15 @@ import DecreaseButton from './DecreaseButton';
 import IncreaseButton from './IncreaseButton';
 import QuantityInput from './QuantityInput';
 
+/**
+ * Quantity selector props
+ *
+ * @property id - product id
+ * @property units - count of product in shop
+ * @property title - product title
+ * @property height - height of the selector component
+ * @property className - CSS className of ref element
+ */
 interface QuantitySelectorProps {
   id: number;
   units: number;
@@ -20,11 +29,13 @@ interface QuantitySelectorProps {
 
 /**
  * Quantity selector
- * @param id - product id
- * @param units - count of product in shop
- * @param title - product title
- * @param height - height of the selector component
- * @param className - CSS className of ref element
+ *
+ * @param props - Quantity selector props
+ * @param props.id - product id
+ * @param props.units - count of product in shop
+ * @param props.title - product title
+ * @param props.height - height of the selector component
+ * @param props.className - CSS className of ref element
  *
  * @returns Quantity selector with increase decrease buttons
  */

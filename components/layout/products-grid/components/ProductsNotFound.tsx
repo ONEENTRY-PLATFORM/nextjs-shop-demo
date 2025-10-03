@@ -5,10 +5,10 @@ import type { JSX } from 'react';
 import FilterModal from '@/components/layout/filter/FilterModal';
 
 /**
- * GridLayoutProps.
+ * Grid layout props
  *
- * @param {string} props.lang - Current language shortcode.
- * @param {IAttributeValues} props.dict - dictionary from server api.
+ * @property lang - Current language shortcode
+ * @property dict - dictionary from server api
  */
 interface GridLayoutProps {
   lang: string;
@@ -16,13 +16,13 @@ interface GridLayoutProps {
 }
 
 /**
- * ProductsNotFound.
+ * ProductsNotFound
  *
- * @param {object} props - GridLayoutProps.
- * @param {string} props.lang - Current language shortcode.
- * @param {IAttributeValues} props.dict - dictionary from server api.
+ * @param props - Grid layout props
+ * @param props.lang - Current language shortcode
+ * @param props.dict - dictionary from server api
  *
- * @returns Promise<JSX.Element> - ProductsNotFound.
+ * @returns ProductsNotFound component
  */
 const ProductsNotFound = async ({
   lang,

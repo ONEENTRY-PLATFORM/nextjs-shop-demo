@@ -18,6 +18,12 @@ import {
 import FavoritesButton from '@/components/shared/FavoritesButton';
 import Placeholder from '@/components/shared/Placeholder';
 
+/**
+ * Product image props
+ *
+ * @property product - product entity object
+ * @property alt - alt text for image
+ */
 interface ProductImageProps {
   product: IProductsEntity;
   alt?: string;
@@ -25,10 +31,12 @@ interface ProductImageProps {
 
 /**
  * Product images gallery/placeholder
- * @param product product entity object.
- * @param alt alt text for image
  *
- * @returns Product images gallery/placeholder
+ * @param props - Product image props
+ * @param props.product - product entity object
+ * @param props.alt - alt text for image
+ *
+ * @returns Product images gallery/placeholder component
  */
 const ProductImageGallery: FC<ProductImageProps> = ({ product, alt }) => {
   const [nav1, setNav1] = useState<Slider>();

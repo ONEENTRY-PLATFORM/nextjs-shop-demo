@@ -5,6 +5,15 @@ import type { Dispatch, FC, SetStateAction } from 'react';
 import CarouselItemImage from './CarouselItemImage';
 import CarouselItemTitle from './CarouselItemTitle';
 
+/**
+ * Carousel item props
+ *
+ * @property index - index of slide
+ * @property lang - current language shortcode
+ * @property item - product object
+ * @property currentIndex - index of current slide
+ * @property setCurrentIndex - Set state action
+ */
 interface VariationProps {
   index: number;
   lang: string;
@@ -16,13 +25,14 @@ interface VariationProps {
 /**
  * CarouselItem
  *
- * @param item product object
- * @param lang current language shortcode
- * @param index index of slide
- * @param currentIndex index of current slide
- * @param setCurrentIndex Set state action
+ * @param props - Carousel item props
+ * @param props.item - product object
+ * @param props.lang - current language shortcode
+ * @param props.index - index of slide
+ * @param props.currentIndex - index of current slide
+ * @param props.setCurrentIndex - Set state action
  *
- * @returns Carousel card
+ * @returns Carousel card component
  */
 const CarouselItem: FC<VariationProps> = ({
   item,

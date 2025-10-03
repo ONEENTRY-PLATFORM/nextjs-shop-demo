@@ -11,6 +11,15 @@ import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 import Stickers from './Stickers';
 
+/**
+ * Product card props
+ *
+ * @property product - product entity object
+ * @property lang - Current language shortcode
+ * @property index - Index of element for animations stagger
+ * @property dict - dictionary from server api
+ * @property pagesLimit - used for animations
+ */
 interface ProductCardProps {
   product: IProductsEntity;
   lang: string;
@@ -22,12 +31,14 @@ interface ProductCardProps {
 /**
  * Product card
  *
- * @param {IProductsEntity} props.product - product entity object
- * @param {string} props.lang - Current language shortcode
- * @param {number} props.dict - dictionary from server api
- * @param {IAttributeValues} props.index - Index of element for animations stagger
- * @param {number} props.pagesLimit - used for animations
- * @returns Product card
+ * @param props - Product card props
+ * @param props.product - product entity object
+ * @param props.lang - Current language shortcode
+ * @param props.index - Index of element for animations stagger
+ * @param props.dict - dictionary from server api
+ * @param props.pagesLimit - used for animations
+ *
+ * @returns Product card component
  */
 const ProductCard: FC<ProductCardProps> = ({
   product,

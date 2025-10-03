@@ -8,21 +8,30 @@ import Carousel from 'react-simply-carousel';
 import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 
+/**
+ * Variations carousel props
+ *
+ * @property items - array of products objects
+ * @property total - total products count
+ * @property lang - Current language shortcode
+ */
 interface VariationsCarouselProps {
   items: Array<IProductsEntity> | undefined;
   total?: number;
   lang: string;
 }
+
 /**
  * Variations carousel
  *
- * @param items array of products objects
- * @param total total products count
- * @param lang Current language shortcode
+ * @param props - Variations carousel props
+ * @param props.items - array of products objects
+ * @param props.total - total products count
+ * @param props.lang - Current language shortcode
  *
  * @see {@link https://github.com/vadymshymko/react-simply-carousel?tab=readme-ov-file#usage Carousel docs}
  *
- * @returns Product variations carousel
+ * @returns Product variations carousel component
  */
 const VariationsCarousel: FC<VariationsCarouselProps> = ({
   items,

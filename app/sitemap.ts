@@ -2,6 +2,11 @@ import type { MetadataRoute } from 'next';
 
 import { i18n } from '@/i18n-config';
 
+/**
+ * Get base URL for the website
+ *
+ * @returns Base URL string
+ */
 const getBaseUrl = () => {
   const envUrl =
     process.env.NEXT_PUBLIC_PROJECT_URL || process.env.NEXT_PUBLIC_VERCEL_URL;

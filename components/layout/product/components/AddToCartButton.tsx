@@ -17,6 +17,17 @@ import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 
 import QuantitySelector from './QuantitySelector';
 
+/**
+ * Add to cart props
+ *
+ * @property id - product id
+ * @property units - product units qty
+ * @property productTitle - product title
+ * @property statusIdentifier - product status identifier
+ * @property className - CSS class name
+ * @property height - component height
+ * @property dict - dictionary from server api
+ */
 interface AddToCartProps {
   id: number;
   units: number;
@@ -29,8 +40,15 @@ interface AddToCartProps {
 
 /**
  * AddToCart button with qty selector
- * @param id product id
- * @param units product units qty
+ *
+ * @param props - Add to cart props
+ * @param props.id - product id
+ * @param props.units - product units qty
+ * @param props.productTitle - product title
+ * @param props.statusIdentifier - product status identifier
+ * @param props.className - CSS class name
+ * @param props.height - component height
+ * @param props.dict - dictionary from server api
  *
  * @returns Button | Qty selector
  */

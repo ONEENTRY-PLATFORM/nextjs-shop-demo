@@ -6,6 +6,14 @@ import CardsGridAnimations from '../products-grid/animations/CardsGridAnimations
 import ProductCard from '../products-grid/components/product-card/ProductCard';
 import ProductAnimations from './animations/ProductAnimations';
 
+/**
+ * Related items props
+ *
+ * @property block - The block data containing similar products
+ * @property lang - current language shortcode
+ * @property dict - dictionary from server api
+ * @property langCode - The language code for attribute values
+ */
 interface RelatedItemsProps {
   block: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -22,12 +30,13 @@ interface RelatedItemsProps {
 /**
  * RelatedItems
  *
- * @param block - The block data containing similar products
- * @param lang current language shortcode
- * @param dict dictionary from server api
- * @param langCode - The language code for attribute values
+ * @param props - Related items props
+ * @param props.block - The block data containing similar products
+ * @param props.lang - current language shortcode
+ * @param props.dict - dictionary from server api
+ * @param props.langCode - The language code for attribute values
  *
- * @returns RelatedItems
+ * @returns RelatedItems component
  */
 const RelatedItems: FC<RelatedItemsProps> = ({
   block,

@@ -12,6 +12,13 @@ import AddToCartButton from '../components/AddToCartButton';
 import PriceDisplay from '../components/PriceDisplay';
 import ProductUnits from './ProductUnits';
 
+/**
+ * Product details props
+ *
+ * @property product - product entity object
+ * @property lang - current language shortcode
+ * @property dict - dictionary from server api
+ */
 interface ProductDetailsProps {
   product: IProductsEntity;
   lang: string;
@@ -21,11 +28,12 @@ interface ProductDetailsProps {
 /**
  * Product details
  *
- * @param product product entity object
- * @param lang current language shortcode
- * @param dict dictionary from server api
+ * @param props - Product details props
+ * @param props.product - product entity object
+ * @param props.lang - current language shortcode
+ * @param props.dict - dictionary from server api
  *
- * @returns Product details
+ * @returns Product details component
  */
 const ProductDetails: FC<ProductDetailsProps> = ({ product, lang, dict }) => {
   // Extract data using safe utility functions

@@ -11,12 +11,23 @@ import { useCallback } from 'react';
 import Spinner from '@/components/shared/Spinner';
 
 /**
- * LoadMore
- * @param totalPages
+ * Load more props
  *
- * @returns LoadMore button
+ * @property totalPages - total number of pages
  */
-const LoadMore: FC<{ totalPages: number }> = ({ totalPages }) => {
+interface LoadMoreProps {
+  totalPages: number;
+}
+
+/**
+ * LoadMore
+ *
+ * @param props - Load more props
+ * @param props.totalPages - total number of pages
+ *
+ * @returns LoadMore button component
+ */
+const LoadMore: FC<LoadMoreProps> = ({ totalPages }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();

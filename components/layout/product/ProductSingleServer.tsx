@@ -6,6 +6,13 @@ import { getBlockByMarker, getRelatedProductsById } from '@/app/api';
 
 import ProductSingle from './index';
 
+/**
+ * Product single server props
+ *
+ * @property product - product entity object
+ * @property lang - current language shortcode
+ * @property dict - dictionary from server api
+ */
 interface ProductSingleServerProps {
   product: IProductsEntity & {
     blocks?: Array<string>;
@@ -17,9 +24,10 @@ interface ProductSingleServerProps {
 /**
  * Server wrapper for ProductSingle that handles async data fetching
  *
- * @param product product entity object
- * @param lang current language shortcode
- * @param dict dictionary from server api
+ * @param props - Product single server props
+ * @param props.product - product entity object
+ * @param props.lang - current language shortcode
+ * @param props.dict - dictionary from server api
  *
  * @returns Product single wrapped in server component
  */

@@ -6,6 +6,14 @@ import ReviewAnimations from '../animations/ReviewAnimations';
 import RatingRow from './RatingRow';
 import StarRating from './StarRating';
 
+/**
+ * Rating block props
+ *
+ * @property productRating - product rating data
+ * @property productRating.rating - rating value
+ * @property productRating.reviewCount - number of reviews
+ * @property state - animation state
+ */
 interface RatingBlockProps {
   productRating: {
     rating: number;
@@ -16,10 +24,12 @@ interface RatingBlockProps {
 
 /**
  * RatingBlock
- * @param productRating
- * @param state
  *
- * @returns RatingBlock
+ * @param props - Rating block props
+ * @param props.productRating - product rating data
+ * @param props.state - animation state
+ *
+ * @returns RatingBlock component
  */
 const RatingBlock: FC<RatingBlockProps> = ({ productRating, state }) => {
   return (
