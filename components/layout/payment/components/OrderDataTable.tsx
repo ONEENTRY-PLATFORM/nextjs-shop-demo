@@ -1,25 +1,27 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
-import type { FC, Key } from 'react';
+import type { JSX, Key } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { UseDate } from '@/components/utils/utils';
 
-type OrderDataTableProps = {
+/**
+ * Order data table.
+ *
+ * @param props - Component properties.
+ * @param props.dict - Dictionary data.
+ * @param props.account - Account data.
+ *
+ * @returns JSX.Element.
+ */
+const OrderDataTable = ({
+  dict,
+  account,
+}: {
   dict: IAttributeValues;
   account: IAccountsEntity;
-};
-
-/**
- * Order data table
- *
- * @param dict
- * @param account
- *
- * @returns JSX.Element
- */
-const OrderDataTable: FC<OrderDataTableProps> = ({ dict, account }) => {
+}): JSX.Element => {
   const orderData = useAppSelector((state) => state.orderReducer.order);
   const {
     order_info_address_placeholder,

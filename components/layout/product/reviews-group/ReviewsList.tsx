@@ -9,7 +9,8 @@ import ViewAllButton from './ViewAllButton';
 /**
  * Reviews list section.
  *
- * @param state - open/closed list state.
+ * @param props - Component props.
+ * @param props.state - open/closed list state.
  *
  * @returns ReviewsList.
  */

@@ -24,7 +24,8 @@ import HeartOpenIcon from '@/components/icons/heart-o';
 /**
  * Favorites button.
  *
- * @param product - product entity object.
+ * @param props - Favorites button properties.
+ * @param props.product - product entity object.
  *
  * @returns Favorites button.
  */

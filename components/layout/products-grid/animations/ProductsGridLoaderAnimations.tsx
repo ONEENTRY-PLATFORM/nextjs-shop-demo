@@ -10,8 +10,9 @@ import { useRef } from 'react';
 /**
  * ProductsGrid loader animations.
  *
- * @param children - children ReactNode.
- * @param className - CSS className of ref element.
+ * @param props - ProductsGrid loader props.
+ * @param props.children - children ReactNode.
+ * @param props.className - CSS className of ref element.
  *
  * @returns loader with animations.
  *

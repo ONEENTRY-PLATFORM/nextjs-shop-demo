@@ -8,7 +8,8 @@ import { useCallback } from 'react';
 /**
  * Pagination
  *
- * @param totalPages - Total pages.
+ * @param props - Pagination props.
+ * @param props.totalPages - Total pages.
  *
  * @returns Pagination
  */

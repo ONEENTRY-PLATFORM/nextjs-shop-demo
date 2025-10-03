@@ -9,7 +9,8 @@ import ProductsGridLoaderAnimations from '../animations/ProductsGridLoaderAnimat
 /**
  * ProductsGridLoader
  *
- * @param limit - number of cards to load.
+ * @param props - Loader props.
+ * @param props.limit - number of cards to load.
  *
  * @returns Products GridLoader.
  */

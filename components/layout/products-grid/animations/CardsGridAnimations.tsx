@@ -9,8 +9,9 @@ import { useRef, useState } from 'react';
 /**
  * CardsGrid animations.
  *
- * @param children - children ReactNode.
- * @param className - CSS className of ref element.
+ * @param props - Card animations props.
+ * @param props.children - children ReactNode.
+ * @param props.className - CSS className of ref element.
  *
  * @returns CardsGrid animations.
  *

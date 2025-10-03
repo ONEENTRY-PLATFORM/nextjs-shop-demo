@@ -3,7 +3,6 @@
 import { useSearchParams } from 'next/navigation';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
-import type { FC } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
@@ -18,7 +17,25 @@ import EmptyOrders from './components/EmptyOrders';
 import Order from './components/OrderRow';
 import OrdersTableLoader from './components/OrdersTableLoader';
 
-interface OrdersPageProps {
+/**
+ * Orders page component.
+ *
+ * @param props - Props for the component.
+ * @param props.lang - current language shortcode.
+ * @param props.dict - dictionary from server api.
+ * @param props.settings - settings from server api.
+ * @param props.settings.orders_limit - orders limit.
+ * @param props.settings.date_title - date title.
+ * @param props.settings.total_title - total title.
+ * @param props.settings.status_title - status title.
+ *
+ * @returns JSX.Element
+ */
+const OrdersPage = ({
+  lang,
+  dict,
+  settings,
+}: {
   lang: string;
   dict: IAttributeValues;
   settings: {
@@ -35,24 +52,7 @@ interface OrdersPageProps {
       value: string;
     };
   };
-}
-
-interface OrderState {
-  orders?: IOrderByMarkerEntity[] | undefined;
-  total: number;
-  loading: boolean;
-  error?: string | undefined;
-}
-
-/**
- * Orders page
- * @param lang current language shortcode
- * * @param dict dictionary from server api
- * @param settings
- *
- * @returns JSX.Element
- */
-const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
+}) => {
   // Handle useSearchParams in a try/catch to prevent build errors
   let currentPage = 1;
   try {
@@ -66,7 +66,12 @@ const OrdersPage: FC<OrdersPageProps> = ({ lang, dict, settings }) => {
 
   const { isAuth } = useContext(AuthContext);
 
-  const [orderState, setOrderState] = useState<OrderState>({
+  const [orderState, setOrderState] = useState<{
+    orders?: IOrderByMarkerEntity[] | undefined;
+    total: number;
+    loading: boolean;
+    error?: string | undefined;
+  }>({
     orders: undefined,
     total: 0,
     loading: true,

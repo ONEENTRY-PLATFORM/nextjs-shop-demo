@@ -7,6 +7,7 @@ import UserComment from './UserComment';
 /**
  * Review card.
  *
+ * @param props - Props for component.
  * @param props.review - review object entity.
  * @param props.review.name - Name of user.
  * @param props.review.content - Comment text.

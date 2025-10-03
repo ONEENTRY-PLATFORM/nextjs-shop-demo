@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -16,35 +16,33 @@ import EditOrderButton from './EditOrderButton';
 import OrderDataTable from './OrderDataTable';
 import OrderProductsTable from './OrderProductsTable';
 
-type PaymentMethodProps = {
-  account: IAccountsEntity;
-  lang: string;
-  dict: IAttributeValues;
-  index: number;
-  products?: IProductsEntity[];
-  delivery?: IProductsEntity;
-};
-
 /**
- * Payment method
+ * Payment method.
  *
- * @param account
- * @param lang - current language shortcode
- * @param dict dictionary from server api
- * @param index Index of element for animations stagger
- * @param products Products data
- * @param delivery Delivery data
+ * @param account - Account data.
+ * @param lang - current language shortcode.
+ * @param dict - dictionary from server api.
+ * @param index - Index of element for animations stagger.
+ * @param products - Products data.
+ * @param delivery - Delivery data.
  *
- * @returns JSX.Element
+ * @returns JSX.Element.
  */
-const PaymentMethod: FC<PaymentMethodProps> = ({
+const PaymentMethod = ({
   account,
   lang,
   dict,
   index,
   products,
   delivery,
-}) => {
+}: {
+  account: IAccountsEntity;
+  lang: string;
+  dict: IAttributeValues;
+  index: number;
+  products?: IProductsEntity[];
+  delivery?: IProductsEntity;
+}): JSX.Element => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const dispatch = useAppDispatch();
   const { isLoading, onConfirmOrder } = useCreateOrder({ langCode });

@@ -3,22 +3,30 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { FC, ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
 /**
- * Order row animations
- * @param children children ReactNode
- * @param className CSS className of ref element
- * @param index Index of element for animations stagger
- * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
+ * Order row animations.
+ *
+ * @param props - Props.
+ * @param props.children - children ReactNode.
+ * @param props.className - CSS className of ref element.
+ * @param props.index - Index of element for animations stagger.
+ *
  * @returns JSX.Element
+ *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
-const OrderRowAnimations: FC<{
+const OrderRowAnimations = ({
+  children,
+  className,
+  index,
+}: {
   children: ReactNode;
   className: string;
   index: number;
-}> = ({ children, className, index }) => {
+}): JSX.Element => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);

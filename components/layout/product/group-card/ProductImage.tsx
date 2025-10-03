@@ -5,7 +5,8 @@ import OptimizedImage from '@/components/shared/OptimizedImage';
 /**
  * Group product image.
  *
- * @param imageSrc - Image source.
+ * @param props - Component props.
+ * @param props.imageSrc - Image source.
  *
  * @returns Group product image.
  */

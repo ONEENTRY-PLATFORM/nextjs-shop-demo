@@ -13,7 +13,8 @@ import ReviewsList from './reviews-group/ReviewsList';
 /**
  * ReviewsSection.
  *
- * @param dict - dictionary from server api.
+ * @param props - component props.
+ * @param props.dict - dictionary from server api.
  *
  * @returns Reviews section.
  */

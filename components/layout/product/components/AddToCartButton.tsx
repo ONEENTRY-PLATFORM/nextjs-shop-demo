@@ -1,7 +1,7 @@
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { useContext, useMemo } from 'react';
 import { toast } from 'react-toastify';
 
@@ -18,27 +18,6 @@ import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 import QuantitySelector from './QuantitySelector';
 
 /**
- * Add to cart props
- *
- * @property id - product id
- * @property units - product units qty
- * @property productTitle - product title
- * @property statusIdentifier - product status identifier
- * @property className - CSS class name
- * @property height - component height
- * @property dict - dictionary from server api
- */
-interface AddToCartProps {
-  id: number;
-  units: number;
-  productTitle: string;
-  statusIdentifier: string;
-  className: string;
-  height: number;
-  dict: IAttributeValues;
-}
-
-/**
  * AddToCart button with qty selector
  *
  * @param props - Add to cart props
@@ -52,7 +31,7 @@ interface AddToCartProps {
  *
  * @returns Button | Qty selector
  */
-const AddToCartButton: FC<AddToCartProps> = ({
+const AddToCartButton = ({
   id,
   units,
   productTitle,
@@ -60,7 +39,15 @@ const AddToCartButton: FC<AddToCartProps> = ({
   className,
   height,
   dict,
-}) => {
+}: {
+  id: number;
+  units: number;
+  productTitle: string;
+  statusIdentifier: string;
+  className: string;
+  height: number;
+  dict: IAttributeValues;
+}): JSX.Element => {
   const dispatch = useAppDispatch();
   const inCart = useAppSelector((state) => selectIsInCart(state, id));
   const items = useAppSelector((state) => state.cartReducer.productsData);

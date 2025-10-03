@@ -7,14 +7,14 @@ import { getBlockByMarker, getRelatedProductsById } from '@/app/api';
 import ProductSingle from './index';
 
 /**
- * Server wrapper for ProductSingle that handles async data fetching
+ * Server wrapper for ProductSingle that handles async data fetching.
  *
- * @param props - Product single server props
- * @param props.product - product entity object
- * @param props.lang - current language shortcode
- * @param props.dict - dictionary from server api
+ * @param props - Product props.
+ * @param props.product - product entity object.
+ * @param props.lang - current language shortcode.
+ * @param props.dict - dictionary from server api.
  *
- * @returns Product single wrapped in server component
+ * @returns Product single wrapped in server component.
  */
 const ProductSingleServer = async ({
   product,

@@ -1,6 +1,5 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC } from 'react';
 
 import ProductAnimations from './animations/ProductAnimations';
 import GroupCard from './group-card/GroupCard';

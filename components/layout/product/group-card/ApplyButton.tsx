@@ -14,8 +14,9 @@ import {
 /**
  * Apply button.
  *
- * @param product - product entity object.
- * @param dict - dictionary from server api.
+ * @param props - component props.
+ * @param props.product - product entity object.
+ * @param props.dict - dictionary from server api.
  *
  * @returns Apply button adds group product to cart.
  */

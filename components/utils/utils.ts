@@ -10,9 +10,9 @@ import { CurrencyEnum, IntlEnum } from '@/app/types/enum';
  * string using Intl.NumberFormat. It determines the appropriate currency and
  * locale settings based on the provided language code.
  *
- * @param {object} options - Configuration options.
- * @param {number | string} options.amount - The numeric amount to format.
- * @param {string} options.lang - The language code to determine currency and formatting.
+ * @param options - Configuration options.
+ * @param options.amount - The numeric amount to format.
+ * @param options.lang - The language code to determine currency and formatting.
  *
  * @returns Formatted currency string (e.g., "$123.45", "€123,45").
  *
@@ -45,9 +45,9 @@ export const UsePrice = ({
  * This function takes a date and formats it as a localized string with
  * day, month, and year components. The format varies based on the locale.
  *
- * @param {object} options - Configuration options.
- * @param {number | string | Date} options.fullDate - The date to format (as Date, string, or timestamp).
- * @param {string} options.format - The locale identifier for formatting (default: 'en').
+ * @param options - Configuration options.
+ * @param options.fullDate - The date to format (as Date, string, or timestamp).
+ * @param options.format - The locale identifier for formatting (default: 'en').
  * @returns Formatted date string (e.g., "01-Jan-2023").
  *
  * @example
@@ -86,7 +86,7 @@ export const UseDate = ({
  * position property of each value. The result is a new object with
  * the same keys but ordered by position.
  *
- * @param {Record<any, any>} obj - The object to sort.
+ * @param obj - The object to sort.
  *
  * @returns A new object with entries sorted by position.
  *
@@ -118,8 +118,8 @@ export const sortObjectFieldsByPosition = (obj: Record<any, any>) => {
  * This function takes a flat array of menu items and converts it into
  * a hierarchical tree structure based on parent-child relationships.
  *
- * @param {[] | Array<IMenusPages>} data - Array of menu items.
- * @param {number | null} pid - Parent ID to start from (null for root level).
+ * @param data - Array of menu items.
+ * @param pid - Parent ID to start from (null for root level).
  *
  * @returns Nested array of menu items with children.
  *
@@ -155,7 +155,7 @@ export const flatMenuToNested = (
  * This function checks if the provided value has the properties of an
  * IError object, specifically checking for the presence of a statusCode.
  *
- * @param {IError | unknown} res - The value to check.
+ * @param res - The value to check.
  *
  * @returns True if the value is an IError object, false otherwise.
  *

@@ -2,22 +2,30 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import type { FC, ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { useRef } from 'react';
 
 /**
- * Order animations
- * @param children children ReactNode
- * @param className CSS className of ref element
- * @param isActive current state of order block
+ * Order animations.
+ *
+ * @param props - Order animations props.
+ * @param props.children - children ReactNode.
+ * @param props.className - CSS className of ref element.
+ * @param props.isActive - current state of order block.
+ *
+ * @returns JSX.Element.
+ *
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns JSX.Element
  */
-const OrderAnimations: FC<{
+const OrderAnimations = ({
+  children,
+  className,
+  isActive,
+}: {
   children: ReactNode;
   className: string;
   isActive: boolean;
-}> = ({ children, className, isActive }) => {
+}): JSX.Element => {
   const ref = useRef(null);
 
   // open order animations

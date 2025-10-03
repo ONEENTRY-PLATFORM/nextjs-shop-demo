@@ -8,7 +8,6 @@ import type { SimplePageProps } from '@/app/types/global';
  *
  * @param props - Props for DeliveryPage.
  * @param props.page - Page entity.
- * @param props.lang - Current language shortcode.
  *
  * @returns DeliveryPage page.
  */

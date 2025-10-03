@@ -11,7 +11,8 @@ import SidebarMenuLoader from './components/SidebarMenuLoader';
 /**
  * Sidebar Menu.
  *
- * @param lang - Current language shortcode.
+ * @param props - Component props.
+ * @param props.lang - Current language shortcode.
  *
  * @returns Sidebar menu.
  */

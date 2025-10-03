@@ -6,26 +6,6 @@ import LikeIcon from '@/components/icons/like';
 import StarRating from '../rating-block/StarRating';
 
 /**
- * UserComment component props.
- *
- * @property review - review object entity.
- * @property review.name - user name.
- * @property review.content - user comment.
- * @property review.likeCount - user likes count.
- * @property review.commentCount - user comments count.
- * @property review.rating - user rating.
- */
-interface UserCommentProps {
-  review: {
-    name: string;
-    content: string;
-    likeCount: number;
-    commentCount: number;
-    rating: number;
-  };
-}
-
-/**
  * UserComment component.
  *
  * @param props - UserCommentProps.

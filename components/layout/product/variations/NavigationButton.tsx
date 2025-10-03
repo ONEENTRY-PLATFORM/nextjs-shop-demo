@@ -6,7 +6,8 @@ import ArrowRightIcon from '@/components/icons/arrow-right';
 /**
  * Carousel navigation button.
  *
- * @param direction - left|right.
+ * @param props - Component props.
+ * @param props.direction - left|right.
  *
  * @returns Carousel navigation button.
  */

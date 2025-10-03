@@ -9,39 +9,9 @@ import Image from './Image';
 // import Placeholder from './Placeholder';
 
 /**
- * Props for the OptimizedImage component.
- *
- * @param src - Image source data.
- * @param alt - Image alt text.
- * @param width - Image width.
- * @param height - Image height.
- * @param sizes - Image sizes.
- * @param fill - Fill parent container.
- * @param priority - Priority loading flag.
- * @param className - Additional CSS classes.
- * @param quality - Image quality.
- * @param type - Image type.
- * @param loading - Image loading behavior.
- */
-interface OptimizedImageProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  src: any;
-  alt: string;
-  width?: number;
-  height?: number;
-  sizes?: string;
-  fill?: boolean;
-  priority?: string;
-  className?: string;
-  quality?: number;
-  type?: string;
-  loading?: string;
-}
-
-/**
  * Optimized image component with LQIP placeholder and lazy loading.
  *
- * @param {OptimizedImageProps} props - OptimizedImage component props.
+ * @param props - OptimizedImage component props.
  * @param props.src - Image source data.
  * @param props.alt - Image alt text.
  * @param props.width - Image width.
@@ -67,7 +37,20 @@ const OptimizedImage = ({
   quality,
   type = 'next',
   loading,
-}: OptimizedImageProps): JSX.Element => {
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  src: any;
+  alt: string;
+  width?: number;
+  height?: number;
+  sizes?: string;
+  fill?: boolean;
+  priority?: string;
+  className?: string;
+  quality?: number;
+  type?: string;
+  loading?: string;
+}): JSX.Element => {
   const [isImageLoading, setImageLoading] = useState(true);
   const ref = useRef<HTMLImageElement>(null);
   const optimizedSrc =
