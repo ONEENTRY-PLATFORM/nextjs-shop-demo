@@ -12,13 +12,14 @@ import EyeOpenIcon from '@/components/icons/eye-o';
 /**
  * FormInput
  *
- * @param {string} field.value - Field value.
- * @param {string} field.marker - Field marker.
- * @param {string} field.type - Field type.
- * @param {object} [field.validators] - Field validators.
- * @param {number} [field.index] - Field index.
- * @param {any} [field.listTitles] - List titles.
- * @param {any} [field.localizeInfos] - Localize info.
+ * @param field - Field.
+ * @param field.value - Field value.
+ * @param field.marker - Field marker.
+ * @param field.type - Field type.
+ * @param field.validators - Field validators.
+ * @param field.index - Field index.
+ * @param field.listTitles - List titles.
+ * @param field.localizeInfos - Localize info.
  *
  * @returns JSX.Element - Form input.
  */

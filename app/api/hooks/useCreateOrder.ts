@@ -13,7 +13,8 @@ import { handleApiError } from '@/app/utils/errorHandler';
 
 /**
  * Create order function
- * @param langCode current language code
+ *
+ * @param langCode - Current language code
  * @returns useCreateOrder object
  */
 export const useCreateOrder = ({
@@ -36,11 +37,10 @@ export const useCreateOrder = ({
   /**
    * Create payment session with Payments API
    *
-   * @async
-   * @param {number} id - order id
+   * @param id - Order id
    * @see {@link https://doc.oneentry.cloud/docs/payments OneEntry CMS docs}
    *
-   * @returns {Promise<string>} - payment status
+   * @returns Payment status
    */
   const createSession = async (id: number): Promise<string> => {
     if (!id) {
@@ -70,7 +70,7 @@ export const useCreateOrder = ({
 
   /**
    * On confirm order Create order with Orders API
-   * @async
+   *
    * @returns void
    */
   const onConfirmOrder = async (): Promise<void> => {

@@ -24,7 +24,8 @@ const initialState: InitialStateType = {
 /**
  * Utility function to get the first key of an object.
  *
- * Returns the first key if it exists, otherwise returns undefined.
+ * @param obj - Object to get the first key from
+ * @returns The first key if it exists, otherwise returns undefined.
  */
 function getFirstKey(obj: Record<string, FieldType>): string | undefined {
   const keys = Object.keys(obj); // Get all keys of the object.
@@ -38,7 +39,12 @@ const formFieldsSlice = createSlice({
   name: 'form-fields', // Name of the slice.
   initialState, // The initial state defined above.
   reducers: {
-    // add a new field to the form.
+    /**
+     * Add a new field to the form.
+     *
+     * @param state - Current state
+     * @param action - Payload with field data
+     */
     addField(state, action: PayloadAction<{ [key: string]: FieldType }>) {
       const key = getFirstKey(action.payload); // Get the first key from the action payload.
       if (key) {

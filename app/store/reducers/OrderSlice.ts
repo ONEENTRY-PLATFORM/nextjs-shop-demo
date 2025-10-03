@@ -15,53 +15,77 @@ export type IAppOrder = {
   products: Array<IOrderProductData>; // Array of order product data
 };
 
-// Defining the shape of the initial state for the order slice
+/**
+ * Defining the shape of the initial state for the order slice.
+ *
+ * @property {IAppOrder} order - The current order.
+ * @property {string | undefined} currency - Optional currency type for the order.
+ * @property {Array<{ identifier: string }> | undefined} paymentMethods - Optional array of payment methods.
+ */
 type InitialStateType = {
-  // The current order
   order: IAppOrder;
-  // Optional currency type for the order
   currency?: string;
-  // Optional array of payment methods
   paymentMethods?: Array<{
-    // Identifier for each payment method
     identifier: string;
   }>;
 };
 
-// Initial state setup for the order slice
+/**
+ * Initial state for the order slice.
+ *
+ * @property {IAppOrder} order - The current order.
+ * @property {Array} order.formData - Array of form data.
+ * @property {Array} order.products - Array of products.
+ */
 const initialState: InitialStateType = {
   order: {
-    // Initialize empty array for form data
     formData: [],
-    // Initialize empty array for products
     products: [],
   },
 };
 
-// Creating a Redux slice for order management
+/**
+ * Creating a Redux slice for order management.
+ */
 const orderReducer = createSlice({
-  initialState, // Initial state defined above
-  name: 'order', // Name of the slice
+  initialState,
+  name: 'order',
   reducers: {
-    // create or update an order
+    /**
+     * Create or update an order.
+     *
+     * @param state - Current state.
+     * @param action - Payload with order data.
+     */
     create(state, action: PayloadAction<IAppOrder>) {
       if (!state.order) {
-        state.order = action.payload; // If no order exists, set the new order
+        // If no order exists, set the new order
+        state.order = action.payload;
       } else {
+        // Merge the new order data with the existing order
         state.order = {
-          ...action.payload, // Merge the new order data with the existing order
+          ...action.payload,
           ...state.order,
         };
       }
     },
-    // remove an order by resetting it to its initial state
+    /**
+     * Remove an order by resetting it to its initial state.
+     *
+     * @param state - Current state.
+     */
     remove(state) {
       state.order = {
         formData: [], // Reset form data
         products: [], // Reset products
       };
     },
-    // add or update form data in the order
+    /**
+     * Add or update form data in the order.
+     *
+     * @param state - Current state.
+     * @param action - Payload with form data.
+     */
     addData(
       state,
       action: PayloadAction<IOrdersFormData & { valid?: boolean }>,
@@ -79,14 +103,24 @@ const orderReducer = createSlice({
         state.order.formData.push(action.payload); // Add new form data
       }
     },
-    // add products to the order
+    /**
+     * Add products to the order
+     *
+     * @param state - Current state
+     * @param action - Payload with array of products
+     */
     addProducts(state, action: PayloadAction<IOrderProductData[]>) {
       if (!state.order) {
         return; // If no order exists, do nothing
       }
       state.order.products = action.payload; // Set the products in the order
     },
-    // add payment methods to the order
+    /**
+     * Add payment methods to the order
+     *
+     * @param state - Current state
+     * @param action - Payload with array of payment methods
+     */
     addPaymentMethods(
       state,
       action: PayloadAction<
@@ -99,14 +133,24 @@ const orderReducer = createSlice({
         state.paymentMethods = action.payload; // Set the payment methods if they don't exist
       }
     },
-    // set the payment account identifier for the order
+    /**
+     * Set the payment account identifier for the order
+     *
+     * @param state - Current state
+     * @param action - Payload with payment method identifier
+     */
     addPaymentMethod(state, action: PayloadAction<string>) {
       if (!state.order) {
         return; // If no order exists, do nothing
       }
       state.order.paymentAccountIdentifier = action.payload; // Set the payment account identifier
     },
-    // set the currency for the order
+    /**
+     * Set the currency for the order
+     *
+     * @param state - Current state
+     * @param action - Payload with currency
+     */
     addOrderCurrency(state, action: PayloadAction<string>) {
       if (!state.order) {
         return; // If no order exists, do nothing

@@ -35,19 +35,19 @@ interface PageMetadataOptions {
 /**
  * Generate standardized page metadata.
  *
- * @param {PageMetadataOptions} props - Metadata generation options.
- * @param {string} props.handle - The handle of the page.
- * @param {string} props.title - The title of the page.
- * @param {string} props.description - The description of the page.
- * @param {boolean} props.isVisible - Whether the page is visible or not.
- * @param {string} [props.imageUrl] - The URL of the image associated with the page.
- * @param {number} [props.imageWidth] - The width of the image associated with the page. Defaults to 300.
- * @param {number} [props.imageHeight] - The height of the image associated with the page. Defaults to 300.
- * @param {string} [props.imageAlt] - The alt text of the image associated with the page. Defaults to the page title.
- * @param {string} props.lang - The language code of the page.
- * @param {string} [props.baseUrl] - The base URL of the page. Defaults to an empty string.
+ * @param props - Metadata generation options
+ * @param props.handle - The handle of the page
+ * @param props.title - The title of the page
+ * @param props.description - The description of the page
+ * @param props.isVisible - Whether the page is visible or not
+ * @param props.imageUrl - The URL of the image associated with the page
+ * @param props.imageWidth - The width of the image associated with the page. Defaults to 300
+ * @param props.imageHeight - The height of the image associated with the page. Defaults to 300
+ * @param props.imageAlt - The alt text of the image associated with the page. Defaults to the page title
+ * @param props.lang - The language code of the page
+ * @param props.baseUrl - The base URL of the page. Defaults to an empty string
  *
- * @returns Metadata object.
+ * @returns Metadata object
  */
 export const generatePageMetadata = ({
   handle = '',

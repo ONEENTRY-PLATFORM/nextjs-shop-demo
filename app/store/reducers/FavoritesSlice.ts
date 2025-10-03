@@ -22,7 +22,10 @@ export const favoritesSlice = createSlice({
   initialState, // The initial state defined above.
   reducers: {
     /**
-     * add a product to the favorites list.
+     * Add a product to the favorites list.
+     *
+     * @param state - Current state
+     * @param action - Payload with product ID
      */
     addFavorites(state, action: PayloadAction<number>) {
       // Check if the product ID is already in the favorites list.
@@ -35,7 +38,10 @@ export const favoritesSlice = createSlice({
       }
     },
     /**
-     * remove a product from the favorites list.
+     * Remove a product from the favorites list.
+     *
+     * @param state - Current state
+     * @param action - Payload with product ID
      */
     removeFavorites(state, action: PayloadAction<number>) {
       // Filter out the product ID to be removed.
@@ -44,13 +50,18 @@ export const favoritesSlice = createSlice({
       );
     },
     /**
-     * remove all products from the favorites list.
+     * Remove all products from the favorites list.
+     *
+     * @param state - Current state
      */
     removeAllFavorites(state) {
       state.products = initialState.products; // Reset to initial empty state.
     },
     /**
-     * set the version of the favorites list.
+     * Set the version of the favorites list.
+     *
+     * @param state - Current state
+     * @param action - Payload with version number
      */
     setFavoritesVersion(state, action: PayloadAction<number>) {
       state.version = action.payload; // Update the version number.

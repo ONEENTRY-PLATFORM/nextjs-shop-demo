@@ -25,13 +25,13 @@ export const getString = (
 };
 
 /**
- * Use Text type
+ * Use Text type.
  *
  * @param {string} name - The name of the attribute.
  * @param {any} attributeValues - The attribute values object.
  * @param {string} type - Type of the content.
  *
- * @returns HTML content
+ * @returns HTML content.
  */
 export const getText = (
   name: string,

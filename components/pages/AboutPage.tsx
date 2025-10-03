@@ -13,9 +13,8 @@ import {
 /**
  * About page.
  *
- * @param {IPagesEntity} page - Represents a page entity object.
- *
- * @returns JSX.Element - About page.
+ * @param page - Represents a page entity object
+ * @returns JSX.Element - About page
  */
 const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
   // Safely check if page exists

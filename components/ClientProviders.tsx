@@ -4,7 +4,9 @@ import dynamic from 'next/dynamic';
 import type { ReactNode } from 'react';
 import { Suspense } from 'react';
 
-// Lazy loading of heavy client components
+/**
+ * Lazy loading of heavy client components.
+ */
 const ToastContainer = dynamic(
   () => import('react-toastify').then((mod) => mod.ToastContainer),
   {
@@ -34,28 +36,30 @@ const TransitionProvider = dynamic(
   },
 );
 
+/**
+ * Child components to be wrapped by the client providers.
+ */
 interface ClientProvidersProps {
-  /** Child components to be wrapped by the client providers */
   children: ReactNode;
 }
 
 /**
- * ClientProviders component that wraps the application with client-side providers
+ * ClientProviders component that wraps the application with client-side providers.
  *
  * This component serves as a wrapper for all client-side functionality in the application.
- * It uses dynamic imports with lazy loading to optimize performance by only loading
+ * It uses dynamic imports with lazy loading to optimize performance by only loading.
  * heavy client components when needed. The component handles:
- * - Toast notifications
- * - GSAP animation registration
- * - Intro animations
- * - Page transition animations
+ * - Toast notifications.
+ * - GSAP animation registration.
+ * - Intro animations.
+ * - Page transition animations.
  *
  * All client-side effects and animations are managed here to separate them from
  * server-side rendering concerns.
  *
- * @param props - Component properties
- * @param props.children - Child components to be wrapped
- * @returns JSX element with all client-side providers and components
+ * @param {object} props - Component properties.
+ * @param {ReactNode} props.children - Child components to be wrapped.
+ * @returns JSX element with all client-side providers and components.
  */
 export default function ClientProviders({ children }: ClientProvidersProps) {
   return (

@@ -28,9 +28,11 @@ const lato = Lato({
 });
 
 /**
- * Homepage static metadata
+ * Homepage static metadata.
+ *
+ * @param params - Page params.
+ *
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata Next.js docs}
- * @param params page params
  */
 export const metadata: Metadata = {
   title: {
@@ -52,11 +54,13 @@ export const metadata: Metadata = {
 };
 
 /**
- * Root layout
- * @async server component
+ * Root layout.
+ *
+ * @param children - Child components.
+ * @param params - Page params with language.
+ * @returns JSX.Element - Root layout.
+ *
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/layout Next.js docs}
- * @param params page params
- * @returns Root layout JSX.Element
  */
 export default async function RootLayout({
   children,

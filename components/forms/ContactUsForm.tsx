@@ -17,8 +17,8 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 /**
  * ContactUs form.
  *
- * @param {string} [props.className] - CSS className of ref element
- * @param {string} props.lang - Current language shortcode
+ * @param props.className - CSS className of ref element
+ * @param props.lang - Current language shortcode
  *
  * @returns ContactUs form
  */

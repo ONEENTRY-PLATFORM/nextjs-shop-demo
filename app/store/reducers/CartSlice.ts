@@ -53,7 +53,10 @@ export const cartSlice = createSlice({
   initialState, // Initial state defined above
   reducers: {
     /**
-     * add a product to the cart
+     * Add a product to the cart
+     *
+     * @param state - Current state
+     * @param action - Payload with product id, selection status and quantity
      */
     addProductToCart(
       state,
@@ -87,13 +90,19 @@ export const cartSlice = createSlice({
       }
     },
     /**
-     * add multiple products to the cart
+     * Add multiple products to the cart
+     *
+     * @param state - Current state
+     * @param action - Payload with array of product entities
      */
     addProductsToCart(state, action: PayloadAction<IProductsEntity[]>) {
       state.products = action.payload;
     },
     /**
-     * increase the quantity of a product in the cart
+     * Increase the quantity of a product in the cart
+     *
+     * @param state - Current state
+     * @param action - Payload with units, id and quantity
      */
     increaseProductQty(
       state,
@@ -126,7 +135,10 @@ export const cartSlice = createSlice({
       };
     },
     /**
-     * decrease the quantity of a product in the cart
+     * Decrease the quantity of a product in the cart
+     *
+     * @param state - Current state
+     * @param action - Payload with id and quantity
      */
     decreaseProductQty(
       state,
@@ -158,7 +170,10 @@ export const cartSlice = createSlice({
       };
     },
     /**
-     * set the quantity of a product in the cart
+     * Set the quantity of a product in the cart
+     *
+     * @param state - Current state
+     * @param action - Payload with units, id and quantity
      */
     setProductQty(
       state,
@@ -197,7 +212,10 @@ export const cartSlice = createSlice({
       }
     },
     /**
-     * remove a product from the cart
+     * Remove a product from the cart
+     *
+     * @param state - Current state
+     * @param action - Payload with product id
      */
     removeProduct(state, action: PayloadAction<number>) {
       state.productsData = state.productsData.filter(
@@ -205,7 +223,10 @@ export const cartSlice = createSlice({
       );
     },
     /**
-     * toggle the selection status of a product in the cart
+     * Toggle the selection status of a product in the cart
+     *
+     * @param state - Current state
+     * @param action - Payload with product id
      */
     deselectProduct(state, action: PayloadAction<number>) {
       state.productsData = state.productsData.map((product) => {
@@ -219,20 +240,28 @@ export const cartSlice = createSlice({
       });
     },
     /**
-     * remove all products from the cart
+     * Remove all products from the cart
+     *
+     * @param state - Current state
      */
     removeAllProducts(state) {
       state.productsData = initialState.productsData;
       state.products = initialState.products;
     },
     /**
-     * add delivery information to the cart
+     * Add delivery information to the cart
+     *
+     * @param state - Current state
+     * @param action - Payload with delivery entity
      */
     addDeliveryToCart(state, action: PayloadAction<IProductsEntity>) {
       state.delivery = action.payload;
     },
     /**
-     * set delivery data
+     * Set delivery data
+     *
+     * @param state - Current state
+     * @param action - Payload with delivery data
      */
     setDeliveryData(
       state,
@@ -245,13 +274,19 @@ export const cartSlice = createSlice({
       };
     },
     /**
-     * set the transition ID for animations
+     * Set the transition ID for animations
+     *
+     * @param state - Current state
+     * @param action - Payload with product ID
      */
     setCartTransition(state, action: PayloadAction<{ productId: number }>) {
       state.transitionId = action.payload.productId;
     },
     /**
-     * set the cart version
+     * Set the cart version
+     *
+     * @param state - Current state
+     * @param action - Payload with version number
      */
     setCartVersion(state, action: PayloadAction<number>) {
       state.version = action.payload;
@@ -262,7 +297,7 @@ export const cartSlice = createSlice({
 /**
  * Select cart version
  *
- * @param state The current state of the Redux store
+ * @param state - The current state of the Redux store
  * @returns Cart version number
  */
 export const selectCartVersion = (state: {
@@ -272,7 +307,7 @@ export const selectCartVersion = (state: {
 /**
  * Get cart transition
  *
- * @param state The current state of the Redux store
+ * @param state - The current state of the Redux store
  * @returns Object containing transitionId
  */
 export const getTransition = createSelector(
@@ -284,7 +319,7 @@ export const getTransition = createSelector(
 /**
  * Select cart data
  *
- * @param state The current state of the Redux store
+ * @param state - The current state of the Redux store
  * @returns Cart products data
  */
 export const selectCartData = (state: {
@@ -294,8 +329,8 @@ export const selectCartData = (state: {
 /**
  * Select if product is in cart
  *
- * @param state The current state of the Redux store
- * @param productId The ID of the product to check
+ * @param state - The current state of the Redux store
+ * @param productId - The ID of the product to check
  * @returns Boolean indicating if product is in cart
  */
 export const selectIsInCart = (
@@ -311,7 +346,7 @@ export const selectIsInCart = (
 /**
  * Select delivery data
  *
- * @param state The current state of the Redux store
+ * @param state - The current state of the Redux store
  * @returns Delivery data object containing date, time and address
  */
 export const selectDeliveryData = (state: {
@@ -323,7 +358,7 @@ export const selectDeliveryData = (state: {
 /**
  * Select cart total
  *
- * @param state The current state of the Redux store
+ * @param state - The current state of the Redux store
  * @returns Total cost of selected products in the cart
  */
 export const selectCartTotal = (state: {
@@ -351,7 +386,7 @@ export const selectCartTotal = (state: {
 /**
  * Select cart items
  *
- * @param state The current state of the Redux store
+ * @param state - The current state of the Redux store
  * @returns Cart products
  */
 export const selectCartItems = (state: {
@@ -361,8 +396,8 @@ export const selectCartItems = (state: {
 /**
  * Select cart item by ID length
  *
- * @param state The current state of the Redux store
- * @param id The ID of the product to check
+ * @param state - The current state of the Redux store
+ * @param id - The ID of the product to check
  * @returns Quantity of the product in the cart
  */
 export const selectCartItemWithIdLength = (

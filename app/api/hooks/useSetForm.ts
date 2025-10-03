@@ -9,7 +9,7 @@ import { api } from '@/app/api';
  * Post forms data with FormData API
  *
  * @see {@link https://doc.oneentry.cloud/docs/forms OneEntry CMS docs}
- * @returns object
+ * @returns Object with loading state and sendData function
  */
 export const useSetForm = (): {
   loading: boolean;

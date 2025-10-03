@@ -26,8 +26,7 @@ interface IndexPageLayoutProps {
 /**
  * Home(index) page component
  *
- * @async server component
- * @param {IndexPageLayoutProps} params - Page parameters including language
+ * @param params - Page parameters including language
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  *
