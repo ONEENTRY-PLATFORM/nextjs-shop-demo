@@ -6,9 +6,9 @@ import Spinner from '@/components/shared/Spinner';
 /**
  * Form submit button props.
  *
- * @param {string} title - Button title.
- * @param {boolean} isLoading - Loading state.
- * @param {number} index - Index of element for animations stagger.
+ * @property title - Button title
+ * @property isLoading - Loading state
+ * @property index - Index of element for animations stagger
  */
 interface FormSubmitButtonProps {
   title: string;
@@ -19,12 +19,12 @@ interface FormSubmitButtonProps {
 /**
  * Form submit button.
  *
- * @param {FormSubmitButtonProps} props - Form submit button props.
- * @param {string} props.title - button title.
- * @param {boolean} props.isLoading - loading state.
- * @param {number} props.index - Index of element for animations stagger.
+ * @param props - Form submit button props
+ * @param props.title - button title
+ * @param props.isLoading - loading state
+ * @param props.index - Index of element for animations stagger
  *
- * @returns Form submit button.
+ * @returns Form submit button
  */
 const FormSubmitButton = ({
   title,

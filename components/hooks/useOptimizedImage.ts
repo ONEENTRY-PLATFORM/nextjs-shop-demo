@@ -35,7 +35,7 @@ interface OptimizedImageResult {
 /**
  * Hook for optimizing images with LQIP placeholders and lazy loading.
  *
- * @param props - Hook parameters.
+ * @param props - Hook parameters object.
  * @param props.src - Image source URL.
  * @param props.width - Desired image width.
  * @param props.height - Desired image height.

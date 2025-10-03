@@ -4,6 +4,18 @@
 import type { Dispatch, ReactNode } from 'react';
 import React, { createContext, useState } from 'react';
 
+/**
+ * Open drawer context type
+ *
+ * @property component - Component name
+ * @property open - Open state
+ * @property action - Action type
+ * @property transition - Transition type
+ * @property setComponent - Component setter
+ * @property setOpen - Open state setter
+ * @property setAction - Action setter
+ * @property setTransition - Transition setter
+ */
 type OpenDrawerContextType = {
   component: string;
   open: boolean;
@@ -15,6 +27,9 @@ type OpenDrawerContextType = {
   setTransition: Dispatch<string>;
 };
 
+/**
+ * Open drawer context
+ */
 export const OpenDrawerContext = createContext<OpenDrawerContextType>({
   open: false,
   component: '',
@@ -28,7 +43,9 @@ export const OpenDrawerContext = createContext<OpenDrawerContextType>({
 
 /**
  * Context provider for modals
- * @param children children ReactNode
+ *
+ * @param props - Provider props
+ * @param props.children - Children ReactNode
  * @returns Drawer context provider
  */
 export const OpenDrawerProvider = ({ children }: { children: ReactNode }) => {

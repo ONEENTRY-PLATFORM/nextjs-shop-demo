@@ -5,6 +5,11 @@ import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
+/**
+ * Create account button props
+ *
+ * @property title - Button title
+ */
 interface CreateAccountButtonProps {
   title: string;
 }
@@ -12,10 +17,10 @@ interface CreateAccountButtonProps {
 /**
  * Create account button
  *
- * @param {object} props - Component props.
- * @param {string} props.title - Button title.
+ * @param props - Component props
+ * @param props.title - Button title
  *
- * @returns JSX.Element - Create account button
+ * @returns Create account button
  */
 const CreateAccountButton = ({
   title,

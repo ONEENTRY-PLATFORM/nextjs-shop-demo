@@ -24,6 +24,16 @@ import {
   setFavoritesVersion,
 } from '../reducers/FavoritesSlice';
 
+/**
+ * Authentication context properties
+ *
+ * @property isAuth - Authentication status
+ * @property isLoading - Loading status
+ * @property userToken - User token
+ * @property user - User entity
+ * @property authenticate - Authentication function
+ * @property refreshUser - User refresh function
+ */
 type ContextProps = {
   isAuth: boolean;
   isLoading: boolean;
@@ -33,11 +43,20 @@ type ContextProps = {
   refreshUser: () => void;
 };
 
+/**
+ * Auth provider properties
+ *
+ * @property children - Children ReactNode
+ * @property langCode - Current language code
+ */
 type AuthProviderProps = {
   children: ReactNode;
   langCode: string;
 };
 
+/**
+ * Authentication context
+ */
 export const AuthContext = createContext<ContextProps>({
   isAuth: false,
   isLoading: false,
@@ -47,8 +66,10 @@ export const AuthContext = createContext<ContextProps>({
 
 /**
  * Auth provider
- * @param children children ReactNode
- * @param langCode current language code
+ *
+ * @param props - Auth provider properties
+ * @param props.children - Children ReactNode
+ * @param props.langCode - Current language code
  *
  * @returns AuthContext Provider
  */
@@ -59,6 +80,7 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
   const [user, setUser] = useState<IUserEntity | undefined>();
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
+
   /**
    * Get user data from redux AppSelector
    */
@@ -79,7 +101,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
 
   /**
    * Initialize authorization
-   * @async
    */
   const onInit = async () => {
     const refresh = localStorage.getItem('refresh-token');
@@ -94,7 +115,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
 
   /**
    * Check refresh token
-   * @async
    */
   const checkToken = async () => {
     trigger({
@@ -117,7 +137,6 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
 
   /**
    * Update user state on server
-   * @async
    */
   const updateUserData = async () => {
     await updateUserState({

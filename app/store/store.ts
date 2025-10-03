@@ -47,6 +47,7 @@ const cartReducer = persistReducer(
   },
   cartSlice,
 );
+
 /**
  * Persist favoritesReducer
  */
@@ -59,6 +60,7 @@ const favoritesReducer = persistReducer(
   },
   favoritesSlice,
 );
+
 /**
  * Persist formFieldsReducer
  */
@@ -71,6 +73,7 @@ const formFieldsReducer = persistReducer(
   },
   formFieldsSlice,
 );
+
 /**
  * Persist orderReducer
  */
@@ -98,6 +101,8 @@ const rootReducer = combineReducers({
 /**
  * Setup redux store with persistence - save redux state in storage
  *
+ * @returns Configured store
+ *
  * @see {@link https://github.com/rt2zz/redux-persist?tab=readme-ov-file#nested-persists}
  */
 export const setupStore = () => {
@@ -110,8 +115,19 @@ export const setupStore = () => {
   });
 };
 
+/**
+ * Root state type
+ */
 export type RootState = ReturnType<typeof rootReducer>;
+
+/**
+ * App store type
+ */
 export type AppStore = ReturnType<typeof setupStore>;
+
+/**
+ * App dispatch type
+ */
 export type AppDispatch = AppStore['dispatch'];
 
 export const wrapper = createWrapper<AppStore>(setupStore, { debug: false });

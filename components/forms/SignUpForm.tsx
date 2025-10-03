@@ -23,10 +23,11 @@ import SubmitButton from './inputs/FormSubmitButton';
 /**
  * SignUp form.
  *
- * @param {string} props.lang - Current language shortcode.
- * @param {IAttributeValues} props.dict - dictionary from server api.
+ * @param props - Form properties.
+ * @param props.lang - Current language shortcode.
+ * @param props.dict - dictionary from server api.
  *
- * @returns JSX.Element - SignUp form.
+ * @returns SignUp form.
  */
 const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
   const [loading, setIsLoading] = useState<boolean>(false);
@@ -49,8 +50,8 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
   /**
    * SignUp form submit handler.
    *
-   * @param {FormEvent<HTMLFormElement>} e - Form event object.
-   * @returns {Promise<void>} - Promise that resolves when the form is submitted.
+   * @param e - Form event object.
+   * @returns Promise that resolves when the form is submitted.
    */
   const onSignUp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
