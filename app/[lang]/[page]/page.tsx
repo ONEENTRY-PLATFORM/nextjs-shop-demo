@@ -13,7 +13,7 @@ import DeliveryPage from '@/components/pages/DeliveryPage';
 import PaymentCanceled from '@/components/pages/PaymentCanceled';
 import PaymentSuccess from '@/components/pages/PaymentSuccess';
 import ServicesPage from '@/components/pages/ServicesPage';
-import { i18n, type Locale } from '@/i18n-config';
+import type { Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 import WithSidebar from './WithSidebar';
@@ -121,31 +121,31 @@ const PageLayout = async ({
 
 export default PageLayout;
 
-/**
- * Pre-generation of pages for static export
- */
-export async function generateStaticParams() {
-  // array of pages components with additional settings for next router
-  const pages = [
-    'profile',
-    'payment',
-    'about_us',
-    'services',
-    'contact_us',
-    'payment_success',
-    'payment_canceled',
-    'book_online',
-    'delivery',
-  ];
+// /**
+//  * Pre-generation of pages for static export
+//  */
+// export async function generateStaticParams() {
+//   // array of pages components with additional settings for next router
+//   const pages = [
+//     'profile',
+//     'payment',
+//     'about_us',
+//     'services',
+//     'contact_us',
+//     'payment_success',
+//     'payment_canceled',
+//     'book_online',
+//     'delivery',
+//   ];
 
-  const params: Array<{ lang: string; page: string }> = [];
-  for (const page of pages) {
-    for (const lang of i18n.locales) {
-      params.push({ lang, page });
-    }
-  }
-  return params;
-}
+//   const params: Array<{ lang: string; page: string }> = [];
+//   for (const page of pages) {
+//     for (const lang of i18n.locales) {
+//       params.push({ lang, page });
+//     }
+//   }
+//   return params;
+// }
 
 /**
  * Generate page metadata
