@@ -16,29 +16,21 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
- * ForgotPassword form props
- *
- * @property lang - Current language shortcode
- * @property dict - dictionary from server api
- */
-interface ForgotPasswordFormProps {
-  lang: string;
-  dict: IAttributeValues;
-}
-
-/**
  * ForgotPassword form.
  *
- * @param props - Component props
- * @param props.lang - Current language shortcode
- * @param props.dict - dictionary from server api
+ * @param props - Component props.
+ * @param props.lang - Current language shortcode.
+ * @param props.dict - dictionary from server api.
  *
- * @returns ForgotPassword form component
+ * @returns ForgotPassword form component.
  */
 export const ForgotPasswordForm = ({
   lang,
   dict,
-}: ForgotPasswordFormProps): JSX.Element => {
+}: {
+  lang: string;
+  dict: IAttributeValues;
+}): JSX.Element => {
   const { setComponent, setAction } = useContext(OpenDrawerContext);
   const [isError, setError] = useState<string>('');
 

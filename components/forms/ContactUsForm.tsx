@@ -15,17 +15,6 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
- * ContactUs form props
- *
- * @property className - CSS className of ref element
- * @property lang - Current language shortcode
- */
-interface ContactUsFormProps {
-  className?: string;
-  lang: string;
-}
-
-/**
  * ContactUs form.
  *
  * @param props - ContactUs form props
@@ -35,7 +24,7 @@ interface ContactUsFormProps {
  * @returns ContactUs form component
  */
 const ContactUsForm = memo(
-  ({ className, lang }: ContactUsFormProps): JSX.Element => {
+  ({ className, lang }: { className?: string; lang: string }): JSX.Element => {
     // const [token, setToken] = useState<string | null>();
     // const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);

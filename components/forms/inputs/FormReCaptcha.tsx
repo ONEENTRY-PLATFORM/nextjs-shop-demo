@@ -3,33 +3,24 @@ import { useEffect } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha-enterprise';
 
 /**
- * Form captcha props
+ * FormReCaptcha.
  *
- * @property setToken - Function to set the token
- * @property setIsCaptcha - Function to set captcha state
- * @property captchaKey - Captcha key
- */
-type FormCaptchaProps = {
-  setToken: Dispatch<string>;
-  setIsCaptcha: Dispatch<boolean>;
-  captchaKey: string;
-};
-
-/**
- * FormReCaptcha
+ * @param props - FormReCaptcha props.
+ * @param props.setToken - Function to set the token.
+ * @param props.setIsCaptcha - Function to set captcha state.
+ * @param props.captchaKey - Captcha key.
  *
- * @param props - FormReCaptcha props
- * @param props.setToken - Function to set the token
- * @param props.setIsCaptcha - Function to set captcha state
- * @param props.captchaKey - Captcha key
- *
- * @returns FormReCaptcha component
+ * @returns FormReCaptcha component.
  */
 const FormReCaptcha = ({
   setToken,
   setIsCaptcha,
   captchaKey,
-}: FormCaptchaProps): JSX.Element => {
+}: {
+  setToken: Dispatch<string>;
+  setIsCaptcha: Dispatch<boolean>;
+  captchaKey: string;
+}): JSX.Element => {
   useEffect(() => {
     setIsCaptcha(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps

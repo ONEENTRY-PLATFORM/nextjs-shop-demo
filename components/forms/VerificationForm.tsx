@@ -27,12 +27,12 @@ interface VerificationFormProps extends FormProps {
 }
 
 /**
- * VerificationForm component for handling OTP verification
+ * VerificationForm component for handling OTP verification.
  *
- * @param props - VerificationForm props
- * @param props.dict - dictionary from server api containing localized text
+ * @param props - VerificationForm props.
+ * @param props.dict - dictionary from server api containing localized text.
  *
- * @returns VerificationForm component
+ * @returns VerificationForm component.
  */
 const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
   const router = useTransitionRouter();

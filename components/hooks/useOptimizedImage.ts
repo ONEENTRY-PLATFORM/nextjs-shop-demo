@@ -3,21 +3,6 @@
 import { useEffect, useState } from 'react';
 
 /**
- * Interface for useOptimizedImage function parameters.
- *
- * @property src - Image source URL.
- * @property width - Desired image width.
- * @property height - Desired image height.
- * @property quality - Image quality (1-100).
- */
-interface UseOptimizedImageProps {
-  src: string;
-  width?: number;
-  height?: number;
-  quality?: number;
-}
-
-/**
  * Interface for optimized image data and loading states.
  *
  * @property optimizedSrc - Optimized image URL with parameters.
@@ -48,7 +33,12 @@ export const useOptimizedImage = ({
   width,
   height,
   quality = 85,
-}: UseOptimizedImageProps): OptimizedImageResult => {
+}: {
+  src: string;
+  width?: number;
+  height?: number;
+  quality?: number;
+}): OptimizedImageResult => {
   const [blurDataURL, setBlurDataURL] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isError, setIsError] = useState<boolean>(false);

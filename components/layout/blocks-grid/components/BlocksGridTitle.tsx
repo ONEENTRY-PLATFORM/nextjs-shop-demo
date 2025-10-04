@@ -1,17 +1,5 @@
 import type React from 'react';
-import type { FC } from 'react';
-
-/**
- * Blocks grid card
- *
- * @param marker text marker of block
- * @param bgColor card background color
- * @param lang current language shortcode
- * @param className card className
- * @param index index of element in array for stagger
- *
- * @returns block card with animations
- */
+import type { JSX } from 'react';
 
 const YT = () => (
   <svg
@@ -40,8 +28,25 @@ const YT = () => (
     />
   </svg>
 );
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const BlocksGridTitle: FC<any> = ({ identifier, title }) => {
+
+/**
+ * BlocksGridTitle.
+ *
+ * @param props - component props.
+ * @param props.identifier - identifier of component.
+ * @param props.title - title of component.
+ *
+ * @returns BlocksGridTitle with animations.
+ */
+const BlocksGridTitle = ({
+  identifier,
+  title,
+}: {
+  identifier: string;
+  title?: {
+    value?: string;
+  };
+}): JSX.Element => {
   return identifier === 'offer_youtube' ? (
     <YT />
   ) : (

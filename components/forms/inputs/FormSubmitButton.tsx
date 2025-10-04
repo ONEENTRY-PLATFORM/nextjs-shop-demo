@@ -4,33 +4,24 @@ import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimatio
 import Spinner from '@/components/shared/Spinner';
 
 /**
- * Form submit button props.
- *
- * @property title - Button title
- * @property isLoading - Loading state
- * @property index - Index of element for animations stagger
- */
-interface FormSubmitButtonProps {
-  title: string;
-  isLoading: boolean;
-  index: number;
-}
-
-/**
  * Form submit button.
  *
- * @param props - Form submit button props
- * @param props.title - button title
- * @param props.isLoading - loading state
- * @param props.index - Index of element for animations stagger
+ * @param props - Form submit button props.
+ * @param props.title - button title.
+ * @param props.isLoading - loading state.
+ * @param props.index - Index of element for animations stagger.
  *
- * @returns Form submit button
+ * @returns Form submit button.
  */
 const FormSubmitButton = ({
   title,
   isLoading,
   index,
-}: FormSubmitButtonProps): JSX.Element => {
+}: {
+  title: string;
+  isLoading: boolean;
+  index: number;
+}): JSX.Element => {
   return (
     <FormFieldAnimations index={index} className="">
       <button

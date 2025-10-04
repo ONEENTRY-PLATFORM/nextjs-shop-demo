@@ -39,7 +39,7 @@ export type InputValue = {
  * @param props.lang - Current language shortcode.
  * @param props.dict - dictionary from server api.
  *
- * @returns User form component
+ * @returns User form component.
  */
 const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
   const { isAuth, refreshUser, user } = useContext(AuthContext);

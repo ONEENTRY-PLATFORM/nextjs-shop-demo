@@ -27,7 +27,7 @@ import SubmitButton from './inputs/FormSubmitButton';
  * @param props.lang - Current language shortcode.
  * @param props.dict - dictionary from server api.
  *
- * @returns SignUp form component
+ * @returns SignUp form component.
  */
 const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
   const [loading, setIsLoading] = useState<boolean>(false);

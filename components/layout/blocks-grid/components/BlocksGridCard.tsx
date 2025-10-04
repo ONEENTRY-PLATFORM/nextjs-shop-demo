@@ -16,26 +16,6 @@ const baloo = Baloo({
 });
 
 /**
- * Blocks grid card component.
- *
- * @param {string} marker - text marker of block.
- * @param {string} bgColor - background color of card.
- * @param {string} lang - current language shortcode.
- * @param {object} className - className of card.
- * @param {number} index - index of element in array for stagger.
- */
-interface BlocksGridCardProps {
-  marker: string;
-  bgColor: string;
-  lang: string;
-  className: {
-    width: string;
-    height: string;
-  };
-  index: number;
-}
-
-/**
  * Blocks grid card.
  *
  * @param {object} props - props.
@@ -53,7 +33,16 @@ const BlocksGridCard = async ({
   lang,
   className,
   index,
-}: BlocksGridCardProps): Promise<React.ReactElement> => {
+}: {
+  marker: string;
+  bgColor: string;
+  lang: string;
+  className: {
+    width: string;
+    height: string;
+  };
+  index: number;
+}): Promise<React.ReactElement> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   // Get block by marker from the API.
   const { block, isError } = await getBlockByMarker(marker, lang);

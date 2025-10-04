@@ -3,7 +3,21 @@ import React from 'react';
 
 import TimeSlot from './TimeSlot';
 
-interface TimeSlotsProps {
+/**
+ * Time slots grid.
+ *
+ * @param props - Component props.
+ * @param props.timeSlots - Array of time slots. Each time slot is an object with time and isSelected properties.
+ * @param props.currentTime - Current time. It is used to highlight the currently selected time slot.
+ * @param props.setTime - Function to set the selected time.
+ *
+ * @returns Time slots grid component.
+ */
+const TimeSlots = ({
+  timeSlots,
+  currentTime,
+  setTime,
+}: {
   timeSlots: Array<{
     time: string;
     isSelected?: boolean | undefined;
@@ -11,23 +25,7 @@ interface TimeSlotsProps {
   }>;
   currentTime: string;
   setTime: Dispatch<React.SetStateAction<string>>;
-}
-
-/**
- * Time slots grid.
- *
- * @param {object} props - Component props.
- * @param {object[]} props.timeSlots - Array of time slots. Each time slot is an object with time and isSelected properties.
- * @param {string} props.currentTime - Current time. It is used to highlight the currently selected time slot.
- * @param {Dispatch<React.SetStateAction<string>>} props.setTime - Function to set the selected time.
- *
- * @returns {JSX.Element} - Time slots grid component.
- */
-const TimeSlots = ({
-  timeSlots,
-  currentTime,
-  setTime,
-}: TimeSlotsProps): JSX.Element => {
+}): JSX.Element => {
   return (
     <div className="mx-auto mb-5 grid max-w-[320px] grid-cols-4 grid-rows-4 gap-2.5 rounded-3xl bg-white text-base font-bold tracking-wide text-orange-500">
       {timeSlots.map((slot, index) => (

@@ -2,7 +2,7 @@
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { FormEvent } from 'react';
+import type { FormEvent, JSX } from 'react';
 import React, { useContext, useState } from 'react';
 
 import { api } from '@/app/api';
@@ -16,23 +16,18 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
- * Reset password form props
- *
- * @property dict - dictionary from server api
- */
-interface ResetPasswordFormProps {
-  dict: IAttributeValues;
-}
-
-/**
  * Reset password form.
  *
- * @param props - Component props
- * @param props.dict - dictionary from server api
+ * @param props - Component props.
+ * @param props.dict - dictionary from server api.
  *
- * @returns Reset password form component
+ * @returns Reset password form component.
  */
-const ResetPasswordForm = ({ dict }: ResetPasswordFormProps) => {
+const ResetPasswordForm = ({
+  dict,
+}: {
+  dict: IAttributeValues;
+}): JSX.Element => {
   const { email_reg, password_reg, password_confirm, otp_code } =
     useAppSelector((state) => state.formFieldsReducer.fields);
   const { setComponent, setAction } = useContext(OpenDrawerContext);

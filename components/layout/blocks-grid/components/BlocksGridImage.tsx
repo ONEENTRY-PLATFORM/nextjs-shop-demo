@@ -1,18 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import Image from 'next/image';
 import type React from 'react';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
 /**
- * Blocks grid image
+ * Blocks grid image.
  *
- * @returns block card with animations
+ * @param props - block props.
+ * @param props.attributeValues - block attributeValues.
+ *
+ * @returns block card with animations.
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const BlocksGridImage: FC<{ attributeValues: any }> = async ({
+const BlocksGridImage = async ({
   attributeValues,
-}) => {
+}: {
+  attributeValues: any;
+}): Promise<JSX.Element> => {
   // extract data from block attributeValues
   const { title = '', bg_web } = attributeValues;
 

@@ -7,26 +7,28 @@ import { useContext, useRef } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-interface FormAnimationsProps {
-  children: ReactNode;
-  isLoading: boolean;
-}
-
 /**
  * Form animations.
  *
- * @param {ReactNode} props.children - children ReactNode.
- * @param {boolean} props.isLoading - loading state.
- * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
+ * @param props - FormAnimations Props.
+ * @param props.children - children ReactNode.
+ * @param props.isLoading - loading state.
  *
- * @returns A form component wrapper with animations applied
+ * @returns A form component wrapper with animations applied.
+ *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const FormAnimations = ({
   children,
   isLoading,
-}: FormAnimationsProps): JSX.Element => {
-  const { open, transition, setTransition } = useContext(OpenDrawerContext); // Get open, transition states, and setter from context
-  const ref = useRef(null); // Reference to the DOM element for animations
+}: {
+  children: ReactNode;
+  isLoading: boolean;
+}): JSX.Element => {
+  // Get open, transition states, and setter from context
+  const { open, transition, setTransition } = useContext(OpenDrawerContext);
+  // Reference to the DOM element for animations
+  const ref = useRef(null);
 
   // Form transition animations
   useGSAP(() => {
@@ -35,13 +37,16 @@ const FormAnimations = ({
       return;
     }
 
+    // Create a new GSAP timeline and pause it initially
     const tl = gsap.timeline({
-      paused: true, // Create a new GSAP timeline and pause it initially
+      paused: true,
       onComplete: () => {
-        setTransition(''); // Reset transition state when animation completes
+        // Reset transition state when animation completes
+        setTransition('');
       },
       onReverseComplete: () => {
-        setTransition(''); // Reset transition state when reverse animation completes
+        // Reset transition state when reverse animation completes
+        setTransition('');
       },
     });
 

@@ -4,37 +4,30 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { useRef, useState } from 'react';
-
-/**
- * Block card animations props.
- *
- * @param children - children ReactNode.
- * @param className - card wrapper className.
- * @param index - index of element in array for stagger.
- */
-interface BlockCardAnimationsProps {
-  children: ReactNode;
-  className: string;
-  index: number;
-}
 
 /**
  * Blocks card animations.
  *
- * @param {ReactNode} props.children - children ReactNode.
- * @param {string} props.className - card wrapper className.
- * @param {number} props.index - index of element in array for stagger.
- * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
+ * @param props - props.
+ * @param props.children - children ReactNode.
+ * @param props.className - card wrapper className.
+ * @param props.index - index of element in array for stagger.
  *
  * @returns card with animations.
+ *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const BlockCardAnimations = ({
   children,
   className,
   index,
-}: BlockCardAnimationsProps) => {
+}: {
+  children: ReactNode;
+  className: string;
+  index: number;
+}): JSX.Element => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef<any>(null);

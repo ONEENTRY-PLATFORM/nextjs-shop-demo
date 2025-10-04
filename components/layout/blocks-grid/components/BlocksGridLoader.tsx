@@ -2,16 +2,15 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
-import type { LoaderProps } from '@/app/types/global';
 import { blocksColors, blocksData } from '@/components/data';
 
 /**
  * Blocks grid loader
  * @returns Loader
  */
-const BlocksGridLoader: FC<LoaderProps> = () => {
+const BlocksGridLoader = (): JSX.Element => {
   // array of blocks names
   const blocks = [
     'home_banner',

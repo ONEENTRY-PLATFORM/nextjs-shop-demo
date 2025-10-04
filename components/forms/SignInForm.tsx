@@ -9,7 +9,6 @@ import { logInUser, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
-import type { FormProps } from '@/app/types/global';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimations';
 
@@ -18,17 +17,6 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
-
-/**
- * SignInForm component Props.
- *
- * @property lang - Current language shortcode.
- * @property dict - Dictionary of localized strings from server API.
- */
-interface SignInFormProps extends FormProps {
-  lang: string;
-  dict: IAttributeValues;
-}
 
 /**
  * SignInForm component that handles user authentication
@@ -45,7 +33,13 @@ interface SignInFormProps extends FormProps {
  *
  * @returns Sign-in form with email/phone and password fields
  */
-const SignInForm = ({ lang, dict }: SignInFormProps): JSX.Element => {
+const SignInForm = ({
+  lang,
+  dict,
+}: {
+  lang: string;
+  dict: IAttributeValues;
+}): JSX.Element => {
   const { authenticate } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
 

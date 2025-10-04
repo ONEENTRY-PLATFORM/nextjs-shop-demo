@@ -3,29 +3,21 @@ import type { JSX } from 'react';
 import React from 'react';
 
 /**
- * Social sign in button props
- *
- * @property imageSrc - icon url
- * @property alt - image alt text
- */
-interface SocialSignInButtonProps {
-  imageSrc: string;
-  alt: string;
-}
-
-/**
  * Social SignIn button.
  *
- * @param props - Component props
- * @param props.imageSrc - icon url
- * @param props.alt - image alt text
+ * @param props - Component props.
+ * @param props.imageSrc - icon url.
+ * @param props.alt - image alt text.
  *
- * @returns Social SignIn button component
+ * @returns Social SignIn button component.
  */
 const SocialSignInButton = ({
   imageSrc,
   alt,
-}: SocialSignInButtonProps): JSX.Element => {
+}: {
+  imageSrc: string;
+  alt: string;
+}): JSX.Element => {
   return (
     <button
       type="button"

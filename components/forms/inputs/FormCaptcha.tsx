@@ -2,23 +2,18 @@ import type { Dispatch, JSX } from 'react';
 import { useEffect } from 'react';
 
 /**
- * Form captcha props
+ * FormCaptcha.
  *
- * @property setIsCaptcha - Set captcha
+ * @param props - Form captcha props.
+ * @param props.setIsCaptcha - Set captcha.
+ *
+ * @returns FormCaptcha component.
  */
-type FormCaptchaProps = {
+const FormCaptcha = ({
+  setIsCaptcha,
+}: {
   setIsCaptcha: Dispatch<boolean>;
-};
-
-/**
- * FormCaptcha
- *
- * @param props - Form captcha props
- * @param props.setIsCaptcha - Set captcha
- *
- * @returns FormCaptcha component
- */
-const FormCaptcha = ({ setIsCaptcha }: FormCaptchaProps): JSX.Element => {
+}): JSX.Element => {
   const testKey = '6LdF4HcqAAAAAD7Mia-zF5SMzY-XjHd_SU2xr0uQ';
   const siteKey = 'AIzaSyBC4rSjMl4SspgQ2J046ZyRv1IX44v3jgc';
 

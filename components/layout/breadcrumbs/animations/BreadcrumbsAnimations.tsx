@@ -3,25 +3,27 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { usePathname } from 'next/navigation';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 import { type ReactNode, useRef } from 'react';
 
-interface BreadcrumbsAnimationsProps {
-  children: ReactNode;
-  className: string;
-}
-
 /**
- * Breadcrumbs animations
- * @param children children ReactNode
- * @param className CSS className of ref element
+ * Breadcrumbs animations.
+ *
+ * @param props - Breadcrumbs animations props.
+ * @param props.children - children ReactNode.
+ * @param props.className - CSS className of ref element.
+ *
+ * @returns JSX.Element with gsap animations.
+ *
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns JSX.Element with gsap animations
  */
-const BreadcrumbsAnimations: FC<BreadcrumbsAnimationsProps> = ({
+const BreadcrumbsAnimations = ({
   children,
   className,
-}) => {
+}: {
+  children: ReactNode;
+  className: string;
+}): JSX.Element => {
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);
   const ref = useRef(null);

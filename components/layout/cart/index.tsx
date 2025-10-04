@@ -2,7 +2,7 @@
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FC, JSX } from 'react';
+import type { JSX } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
 import { api, useGetProductsByIdsQuery } from '@/app/api';

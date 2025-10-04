@@ -6,33 +6,24 @@ import { useTransitionState } from 'next-transition-router';
 import type { JSX, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
-// Interface defining the props expected by the BlocksGridAnimations component
-/**
- * Blocks grid animations component props.
- *
- * @interface BlocksGridAnimationsProps
- *
- * @property {ReactNode} children - The child elements to be rendered inside the component.
- * @property {string} className - CSS class name for styling the grid.
- */
-interface BlocksGridAnimationsProps {
-  children: ReactNode; // The child elements to be rendered inside the component
-  className: string; // CSS class name for styling the grid
-}
-
 /**
  * Blocks grid animations.
  *
- * @param {ReactNode} props.children - Children ReactNode to be rendered inside the component.
- * @param {string} props.className - CSS className of ref element for styling.
- * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
+ * @param props - Props for the component.
+ * @param props.children - Children ReactNode to be rendered inside the component.
+ * @param props.className - CSS className of ref element for styling.
  *
  * @returns JSX.Element - A blocks grid component with animations applied.
+ *
+ * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const BlocksGridAnimations = ({
   children,
   className,
-}: BlocksGridAnimationsProps): JSX.Element => {
+}: {
+  children: ReactNode;
+  className: string;
+}): JSX.Element => {
   // Get current transition stage
   const { stage } = useTransitionState();
   // State to track the previous transition stage
