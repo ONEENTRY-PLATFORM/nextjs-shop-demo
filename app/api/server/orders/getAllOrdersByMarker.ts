@@ -74,7 +74,7 @@ export const getAllOrdersByMarker = async ({
       return { isError: false, orders: data.items, total: data.total };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getAllOrdersByMarker', error);
     return {
       isError: true,
       error: {

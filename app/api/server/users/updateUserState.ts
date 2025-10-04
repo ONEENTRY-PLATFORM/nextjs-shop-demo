@@ -102,7 +102,7 @@ export const updateUserState = async ({
     }
     return false;
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('updateUser', error);
     // eslint-disable-next-line no-console
     console.log('Error updating user state:', apiError.message);
     return false;

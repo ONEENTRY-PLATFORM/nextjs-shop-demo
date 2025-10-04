@@ -25,7 +25,7 @@ export const onSubscribeEvents = async (id: number): Promise<void> => {
       toast('You unsubscribed from price updates for this product');
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('onSubscribeEvents', error);
     // eslint-disable-next-line no-console
     console.log('Error subscribing to events:', apiError.message);
   }
@@ -54,7 +54,7 @@ export const onUnsubscribeEvents = async (id: number): Promise<void> => {
       toast('You unsubscribed from price updates for this product');
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('onUnsubscribeEvents', error);
     // eslint-disable-next-line no-console
     console.log('Error unsubscribing from events:', apiError.message);
   }

@@ -59,7 +59,7 @@ export const updateOrderByMarkerAndId = async ({
       return { isError: false, order: orderData };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('updateOrderByMarkerAndId', error);
     return {
       isError: true,
       error: {

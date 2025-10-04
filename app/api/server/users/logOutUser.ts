@@ -29,7 +29,7 @@ export const logOutUser = async ({
     const result = await api.AuthProvider.logout(marker, token);
     return { data: result };
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('logout', error);
     return { error: apiError.message };
   }
 };

@@ -77,7 +77,7 @@ export const getProductById = async (
       return { isError: false, product: data };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getProductById', error);
     return {
       isError: true,
       error: {

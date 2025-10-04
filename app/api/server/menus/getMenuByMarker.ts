@@ -45,7 +45,7 @@ export const getMenuByMarker = async (
       return { isError: false, menu: data };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getMenusByMarker', error);
     return {
       isError: true,
       error: {

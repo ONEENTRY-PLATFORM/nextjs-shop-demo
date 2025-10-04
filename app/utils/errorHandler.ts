@@ -38,13 +38,16 @@ export function isIError(error: unknown): error is IError {
 /**
  * Centralized error handling function
  *
+ * @param handle - The function to handle the error
  * @param error - The error to handle
+ *
  * @returns An ApiError with standardized format
  */
-export function handleApiError(error: unknown): ApiError {
+export function handleApiError(handle: string, error: unknown): ApiError {
   if (isIError(error)) {
     // Log the error for debugging purposes
     console.log('API Error:', {
+      handle: handle,
       message: error.message,
       statusCode: error.statusCode,
       timestamp: new Date().toISOString(),
@@ -85,7 +88,7 @@ export function handleApiError(error: unknown): ApiError {
 export function useApiErrorHandler() {
   // This would typically integrate with a notification system like toast
   return function handleApiErrorWithNotification(error: unknown): ApiError {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('useApiErrorHandler', error);
     toast.error(apiError.message);
 
     return apiError;

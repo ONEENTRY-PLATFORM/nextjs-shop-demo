@@ -45,7 +45,7 @@ export const getChildPagesByParentUrl = async (
       return { isError: false, pages: data };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getChildPagesByParentUrl', error);
     return {
       isError: true,
       error: {

@@ -44,7 +44,7 @@ export const logInUser = async ({
     // Handle case where result exists but doesn't have required tokens
     return { error: 'Authentication failed' };
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('auth', error);
     return { error: apiError.message };
   }
 };

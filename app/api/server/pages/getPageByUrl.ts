@@ -45,7 +45,7 @@ export const getPageByUrl = async (
       return { isError: false, page: data };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getPageByUrl', error);
     return {
       isError: true,
       error: {

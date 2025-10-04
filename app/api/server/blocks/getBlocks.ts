@@ -53,7 +53,7 @@ export const getBlocks = async ({
       return { isError: false, blocks: data };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getBlocks', error);
     return {
       isError: true,
       error: {

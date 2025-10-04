@@ -38,7 +38,7 @@ export const getLocales = async (): Promise<{
       return { isError: false, locales: data };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getLocales', error);
     return {
       isError: true,
       error: {

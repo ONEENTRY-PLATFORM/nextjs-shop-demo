@@ -93,7 +93,7 @@ export const getProducts = async (props: {
       };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getProducts', error);
     return {
       isError: true,
       error: {

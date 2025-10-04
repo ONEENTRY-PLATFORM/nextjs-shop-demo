@@ -44,7 +44,7 @@ export const getBlockByMarker = async (
       return { isError: false, block: data };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getBlockByMarker', error);
     return {
       isError: true,
       error: {

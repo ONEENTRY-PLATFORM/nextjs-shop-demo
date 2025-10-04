@@ -97,7 +97,7 @@ export const getProductsByPageUrl = async (props: {
       };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getProductsByPageUrl', error);
     return {
       isError: true,
       error: {

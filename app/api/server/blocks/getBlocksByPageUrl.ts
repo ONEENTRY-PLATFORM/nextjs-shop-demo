@@ -48,7 +48,7 @@ export const getBlocksByPageUrl = async ({
       return { isError: false, blocks: data };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getBlocksByPageUrl', error);
     return {
       isError: true,
       error: {

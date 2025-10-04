@@ -82,7 +82,7 @@ try {
   
   return { isError: false, data };
 } catch (error) {
-  const apiError = handleApiError(error);
+  const apiError = handleApiError('getProducts', error);
   return { isError: true, error: apiError };
 }
 ```
@@ -105,7 +105,7 @@ const apiEndpoints = RTKApi.injectEndpoints({
         return response;
       },
       transformErrorResponse: (error) => {
-        return handleApiError(error);
+        return handleApiError('', error);
       }
     })
   })
@@ -125,7 +125,7 @@ const MyComponent = () => {
       const result = await apiCall();
       // Handle success
     } catch (error) {
-      handleApiError(error);
+      handleApiError('', error);
     }
   };
   

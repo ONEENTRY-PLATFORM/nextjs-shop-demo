@@ -48,7 +48,7 @@ export async function exampleApiCall(params: any): Promise<{
     };
   } catch (error) {
     // Handle all other errors with our centralized handler
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('exampleApiCall', error);
     return {
       isError: true,
       error: {

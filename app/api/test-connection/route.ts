@@ -21,7 +21,7 @@ export async function GET() {
       data: data ? 'Data received' : 'No data',
     });
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('function GET', error);
     return NextResponse.json({
       success: false,
       error: apiError.message,

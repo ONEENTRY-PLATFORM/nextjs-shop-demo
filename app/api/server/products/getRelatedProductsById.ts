@@ -105,7 +105,7 @@ export const getRelatedProductsById = async (
       };
     }
   } catch (error) {
-    const apiError = handleApiError(error);
+    const apiError = handleApiError('getRelatedProductsById', error);
     return {
       isError: true,
       error: {

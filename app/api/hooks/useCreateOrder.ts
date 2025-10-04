@@ -61,7 +61,7 @@ export const useCreateOrder = ({
       setIsLoading(false);
       return '';
     } catch (error) {
-      const apiError = handleApiError(error);
+      const apiError = handleApiError('createSession', error);
       setError(apiError.message);
       setIsLoading(false);
       return '';
@@ -116,7 +116,7 @@ export const useCreateOrder = ({
           router.push('/orders');
         }
       } catch (error) {
-        const apiError = handleApiError(error);
+        const apiError = handleApiError('onConfirmOrder', error);
         setError(apiError.message);
         setIsLoading(false);
       }
