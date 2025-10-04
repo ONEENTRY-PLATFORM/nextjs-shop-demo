@@ -19,7 +19,7 @@ const ProductImage = ({
   attributeValues: AttributeType;
   alt: string;
 }): JSX.Element => {
-  const imageSrc = attributeValues?.pic?.value?.downloadLink;
+  const imageSrc = attributeValues?.pic;
 
   return (
     <div className="relative mb-3 size-40">

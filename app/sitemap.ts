@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // Known section paths
-  const sections = ['shop', 'orders', 'favorites', 'cart'];
+  const sections = ['shop'];
   // Generate sitemap entries for sections of each locale
   const localizedSections = i18n.locales.flatMap((loc) =>
     sections.map((s) => ({

@@ -4,8 +4,8 @@ import NextImage from 'next/image';
 import type { JSX } from 'react';
 import { useRef, useState } from 'react';
 
-// import { useOptimizedImage } from '@/components/hooks/useOptimizedImage';
 import Image from './Image';
+import Placeholder from './Placeholder';
 // import Placeholder from './Placeholder';
 
 /**
@@ -58,19 +58,8 @@ const OptimizedImage = ({
   const blurDataURL = src?.value?.previewLink?.default?.[0] || '';
 
   if (!optimizedSrc) {
-    return <></>;
+    return <Placeholder />;
   }
-  // Handle the exactOptionalPropertyTypes issue by explicitly building the props object
-  // const { optimizedSrc, blurDataURL, isLoading, isError } = useOptimizedImage({
-  //   src,
-  //   quality,
-  //   ...(width !== undefined && { width }),
-  //   ...(height !== undefined && { height }),
-  // });
-
-  // if (isError || !src) {
-  //   return <Placeholder />;
-  // }
 
   // Prepare props for Next.js Image component
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
