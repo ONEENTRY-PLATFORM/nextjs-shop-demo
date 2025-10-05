@@ -10,11 +10,11 @@ import NavigationButton from './NavigationButton';
 
 /**
  * Variations carousel
- * @param props       - Variations carousel props
- * @param props.items - array of products objects
- * @param props.total - total products count
- * @param props.lang  - Current language shortcode
- * @returns           Product variations carousel component
+ * @param   {object}                 props       - Variations carousel props
+ * @param   {Array<IProductsEntity>} props.items - array of products objects
+ * @param   {number}                 props.total - total products count
+ * @param   {string}                 props.lang  - Current language shortcode
+ * @returns {JSX.Element}                        Product variations carousel component
  * @see {@link https://github.com/vadymshymko/react-simply-carousel?tab=readme-ov-file#usage Carousel docs}
  */
 const VariationsCarousel = ({

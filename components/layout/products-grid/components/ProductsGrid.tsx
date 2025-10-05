@@ -6,12 +6,12 @@ import ProductCard from './product-card/ProductCard';
 
 /**
  * Products grid.
- * @param props            - Products grid props.
- * @param props.lang       - language code.
- * @param props.dict       - dictionary from server api.
- * @param props.products   - Represents a product entity array of objects.
- * @param props.pagesLimit - used for animations.
- * @returns                Products grid.
+ * @param   {object}            props            - Products grid props.
+ * @param   {string}            props.lang       - language code.
+ * @param   {IAttributeValues}  props.dict       - dictionary from server api.
+ * @param   {IProductsEntity[]} props.products   - Represents a product entity array of objects.
+ * @param   {number}            props.pagesLimit - used for animations.
+ * @returns {JSX.Element}                        Products grid.
  */
 const ProductsGrid = ({
   lang,

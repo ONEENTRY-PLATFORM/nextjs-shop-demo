@@ -13,7 +13,7 @@ import { CurrencyEnum, IntlEnum } from '@/app/types/enum';
  * @param   {object}          options        - Configuration options.
  * @param   {number | string} options.amount - The numeric amount to format.
  * @param   {string}          options.lang   - The language code to determine currency and formatting.
- * @returns {}                               Formatted currency string (e.g., "$123.45", "€123,45").
+ * @returns {string}                         Formatted currency string (e.g., "$123.45", "€123,45").
  * @example
  * ```typescript
  * const price = UsePrice({ amount: 123.45, lang: 'en' });

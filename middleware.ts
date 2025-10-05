@@ -9,8 +9,8 @@ const PUBLIC_FILE = /\.(.*)$/;
 
 /**
  * Get the preferred locale, similar to Negotiator but without bundled locales
- * @param request - The incoming HTTP request
- * @returns       The preferred locale
+ * @param   {NextRequest}        request - The incoming HTTP request
+ * @returns {string | undefined}         The preferred locale
  */
 function getLocale(request: NextRequest): string | undefined {
   const negotiatorHeaders: Record<string, string> = {};
@@ -30,13 +30,13 @@ function getLocale(request: NextRequest): string | undefined {
 
 /**
  * Middleware
- * @param request - The incoming HTTP request
- * @returns       The response
+ * @param   {NextRequest}           request - The incoming HTTP request
+ * @returns {Promise<NextResponse>}         The response
  */
-export async function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest): Promise<NextResponse> {
   const pathname = request.nextUrl.pathname;
   if (PUBLIC_FILE.test(pathname)) {
-    return;
+    return NextResponse.next();
   }
 
   const pathnameIsMissingLocale = i18n.locales.every(

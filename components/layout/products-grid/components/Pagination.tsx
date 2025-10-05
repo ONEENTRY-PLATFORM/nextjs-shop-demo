@@ -7,9 +7,9 @@ import { useCallback } from 'react';
 
 /**
  * Pagination
- * @param props            - Pagination props.
- * @param props.totalPages - Total pages.
- * @returns                Pagination
+ * @param   {object}      props            - Pagination props.
+ * @param   {number}      props.totalPages - Total pages.
+ * @returns {JSX.Element}                  Pagination
  */
 const Pagination = ({ totalPages }: { totalPages: number }): JSX.Element => {
   const pathname = usePathname();

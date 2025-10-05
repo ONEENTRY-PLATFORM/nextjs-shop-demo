@@ -7,10 +7,10 @@ import OptimizedImage from '@/components/shared/OptimizedImage';
 
 /**
  * CarouselItem image
- * @param props      - component props.
- * @param props.item - product object.
- * @param props.lang - current language shortcode.
- * @returns          JSX.Element.
+ * @param   {object}          props      - component props.
+ * @param   {IProductsEntity} props.item - product object.
+ * @param   {string}          props.lang - current language shortcode.
+ * @returns {JSX.Element}                JSX.Element.
  */
 const CarouselItemImage = ({
   item,

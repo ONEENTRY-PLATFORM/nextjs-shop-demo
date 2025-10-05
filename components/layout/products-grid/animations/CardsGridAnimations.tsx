@@ -8,10 +8,10 @@ import { useRef, useState } from 'react';
 
 /**
  * CardsGrid animations.
- * @param props           - Card animations props.
- * @param props.children  - children ReactNode.
- * @param props.className - CSS className of ref element.
- * @returns               CardsGrid animations.
+ * @param   {object}      props           - Card animations props.
+ * @param   {ReactNode}   props.children  - children ReactNode.
+ * @param   {string}      props.className - CSS className of ref element.
+ * @returns {JSX.Element}                 CardsGrid animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const CardsGridAnimations = ({
