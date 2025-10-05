@@ -1,10 +1,10 @@
-import type { PayloadAction } from '@reduxjs/toolkit'; // Importing the PayloadAction type from Redux Toolkit for type-safe actions.
+import type { PayloadAction, WritableDraft } from '@reduxjs/toolkit'; // Importing the PayloadAction type from Redux Toolkit for type-safe actions.
 import { createSlice } from '@reduxjs/toolkit'; // Importing the createSlice function from Redux Toolkit to create a slice of the Redux state.
 
 /**
  * The initial state for the favorites slice.
- * @property products - An array of product IDs representing favorite items.
- * @property version  - A version number to track changes in the favorites list.
+ * @property {number[]} products - An array of product IDs representing favorite items.
+ * @property {number}   version  - A version number to track changes in the favorites list.
  */
 type InitialStateType = {
   products: number[]; // An array of product IDs representing favorite items.
@@ -13,8 +13,8 @@ type InitialStateType = {
 
 /**
  * Define the initial state for the favorites slice.
- * @property products - An array of product IDs representing favorite items.
- * @property version  - A version number to track changes in the favorites list.
+ * @property {Array}  products - An array of product IDs representing favorite items.
+ * @property {number} version  - A version number to track changes in the favorites list.
  */
 const initialState: InitialStateType = {
   products: [],
@@ -33,10 +33,13 @@ export const favoritesSlice = createSlice({
   reducers: {
     /**
      * Add a product to the favorites list.
-     * @param state  - Current state
-     * @param action - Payload with product ID
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with product ID
      */
-    addFavorites(state, action: PayloadAction<number>) {
+    addFavorites(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<number>,
+    ) {
       // Check if the product ID is already in the favorites list.
       const isUnique = state.products.findIndex((productId: number) => {
         return productId === action.payload;
@@ -48,10 +51,13 @@ export const favoritesSlice = createSlice({
     },
     /**
      * Remove a product from the favorites list.
-     * @param state  - Current state
-     * @param action - Payload with product ID
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with product ID
      */
-    removeFavorites(state, action: PayloadAction<number>) {
+    removeFavorites(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<number>,
+    ) {
       // Filter out the product ID to be removed.
       state.products = state.products.filter(
         (product: number) => product !== action.payload,
@@ -59,17 +65,20 @@ export const favoritesSlice = createSlice({
     },
     /**
      * Remove all products from the favorites list.
-     * @param state - Current state
+     * @param {WritableDraft<InitialStateType>} state - Current state
      */
-    removeAllFavorites(state) {
+    removeAllFavorites(state: WritableDraft<InitialStateType>) {
       state.products = initialState.products; // Reset to initial empty state.
     },
     /**
      * Set the version of the favorites list.
-     * @param state  - Current state
-     * @param action - Payload with version number
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with version number
      */
-    setFavoritesVersion(state, action: PayloadAction<number>) {
+    setFavoritesVersion(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<number>,
+    ) {
       state.version = action.payload; // Update the version number.
     },
   },
@@ -85,10 +94,10 @@ export const {
 
 /**
  * Selector to get the list of favorite product IDs.
- * @param state                           - The global state object.
- * @param state.favoritesReducer
- * @param state.favoritesReducer.products
- * @returns                               An array of product IDs that are marked as favorites.
+ * @param   {object}   state                           - The global state object.
+ * @param   {object}   state.favoritesReducer          - The favorites reducer slice.
+ * @param   {number[]} state.favoritesReducer.products - The array of product IDs that are marked as favorites.
+ * @returns {number}                                   An array of product IDs that are marked as favorites.
  */
 export const selectFavoritesItems = (state: {
   favoritesReducer: { products: number[] };
@@ -96,11 +105,11 @@ export const selectFavoritesItems = (state: {
 
 /**
  * Selector to check if a specific product ID is in the favorites list.
- * @param state                           - The global state object.
- * @param state.favoritesReducer
- * @param id                              - The product ID to check.
- * @param state.favoritesReducer.products
- * @returns                               A boolean indicating whether the product ID is in the favorites list.
+ * @param   {object}   state                           - The global state object.
+ * @param   {object}   state.favoritesReducer          - The favorites reducer slice.
+ * @param   {number[]} state.favoritesReducer.products - The array of product IDs that are marked as favorites.
+ * @param   {number}   id                              - The product ID to check.
+ * @returns {boolean}                                  A boolean indicating whether the product ID is in the favorites list.
  */
 export const selectIsFavorites = (
   state: { favoritesReducer: { products: number[] } },
@@ -114,14 +123,14 @@ export const selectIsFavorites = (
 
 /**
  * Selector to get the current version of the favorites list.
- * @param state                          - The global state object.
- * @param state.favoritesReducer
- * @param state.favoritesReducer.version
- * @returns                              The version number of the favorites list.
+ * @param   {object} state                          - The global state object.
+ * @param   {object} state.favoritesReducer         - The favorites reducer slice.
+ * @param   {number} state.favoritesReducer.version - The version number of the favorites list.
+ * @returns {number}                                The version number of the favorites list.
  */
 export const selectFavoritesVersion = (state: {
   favoritesReducer: { version: number };
-}) => state.favoritesReducer.version;
+}): number => state.favoritesReducer.version;
 
 // Export the be used in the store configuration.
 export default favoritesSlice.reducer;

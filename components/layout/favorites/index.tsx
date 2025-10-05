@@ -99,6 +99,10 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   // Memoize the loader component
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
+  if (!dict) {
+    return <></>;
+  }
+
   // Handle empty favorites state - show empty favorites component or loading spinner
   if (!products || products.length < 1) {
     // If data has finished loading but there are no products, show empty state

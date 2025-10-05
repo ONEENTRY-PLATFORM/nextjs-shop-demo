@@ -21,9 +21,9 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
  * @param   {string} props.params.searchParams.color    - Filter by color.
  * @param   {string} props.params.searchParams.minPrice - Filter by minimum price.
  * @param   {string} props.params.searchParams.maxPrice - Filter by maximum price.
+ * @returns                                             Array with ProductEntity objects
  * @see {@link https://doc.oneentry.cloud/docs/catalog OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
- * @returns                                             Array with ProductEntity objects
  */
 export const getProductsByPageUrl = async (props: {
   lang: string;

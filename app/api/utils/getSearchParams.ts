@@ -4,11 +4,11 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
  * Get search params for filter
  * @param searchParams          - Search parameters
  * @param searchParams.search
- * @param handle                - Category handle
  * @param searchParams.in_stock
  * @param searchParams.color
  * @param searchParams.minPrice
  * @param searchParams.maxPrice
+ * @param handle                - Category handle
  * @returns                     Expanded filters object
  */
 const getSearchParams = (

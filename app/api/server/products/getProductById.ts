@@ -9,9 +9,9 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
  * Get product by id.
  * @param id   - Product id.
  * @param lang - Current language shortcode.
+ * @returns    ProductEntity object
  * @see {@link https://doc.oneentry.cloud/docs/catalog OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
- * @returns    ProductEntity object
  */
 export const getProductById = async (
   id: number,

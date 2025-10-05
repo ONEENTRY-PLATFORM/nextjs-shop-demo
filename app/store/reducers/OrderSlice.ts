@@ -1,4 +1,4 @@
-import type { PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction, WritableDraft } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type {
   IOrderProductData,
@@ -7,10 +7,10 @@ import type {
 
 /**
  * Defining the application-specific order type.
- * @property formIdentifier           - Optional identifier for the form.
- * @property paymentAccountIdentifier - Optional identifier for the payment account.
- * @property formData                 - Array of form data with an optional validity flag.
- * @property products                 - Array of order product data.
+ * @property {string}                                       [formIdentifier]           - Optional identifier for the form.
+ * @property {string}                                       [paymentAccountIdentifier] - Optional identifier for the payment account.
+ * @property {Array<IOrdersFormData & { valid?: boolean }>} formData                   - Array of form data with an optional validity flag.
+ * @property {Array<IOrderProductData>}                     products                   - Array of order product data.
  */
 export type IAppOrder = {
   formIdentifier?: string;
@@ -21,9 +21,9 @@ export type IAppOrder = {
 
 /**
  * Defining the shape of the initial state for the order slice.
- * @property order          - The current order.
- * @property currency       - Optional currency type for the order.
- * @property paymentMethods - Optional array of payment methods.
+ * @property {IAppOrder}                    order          - The current order.
+ * @property {string}                       currency       - Optional currency type for the order.
+ * @property {Array<{identifier: string;}>} paymentMethods - Optional array of payment methods.
  */
 type InitialStateType = {
   order: IAppOrder;
@@ -58,10 +58,13 @@ const orderReducer = createSlice({
   reducers: {
     /**
      * Create or update an order.
-     * @param state  - Current state.
-     * @param action - Payload with order data.
+     * @param {WritableDraft<InitialStateType>} state  - Current state.
+     * @param {PayloadAction<string>}           action - Payload with order data.
      */
-    create(state, action: PayloadAction<IAppOrder>) {
+    create(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<IAppOrder>,
+    ) {
       if (!state.order) {
         // If no order exists, set the new order
         state.order = action.payload;
@@ -75,9 +78,9 @@ const orderReducer = createSlice({
     },
     /**
      * Remove an order by resetting it to its initial state.
-     * @param state - Current state.
+     * @param {WritableDraft<InitialStateType>} state - Current state.
      */
-    remove(state) {
+    remove(state: WritableDraft<InitialStateType>) {
       state.order = {
         formData: [], // Reset form data
         products: [], // Reset products
@@ -85,11 +88,11 @@ const orderReducer = createSlice({
     },
     /**
      * Add or update form data in the order.
-     * @param state  - Current state.
-     * @param action - Payload with form data.
+     * @param {WritableDraft<InitialStateType>} state  - Current state.
+     * @param {PayloadAction<string>}           action - Payload with form data.
      */
     addData(
-      state,
+      state: WritableDraft<InitialStateType>,
       action: PayloadAction<IOrdersFormData & { valid?: boolean }>,
     ) {
       if (!state.order) {
@@ -110,10 +113,13 @@ const orderReducer = createSlice({
     },
     /**
      * Add products to the order
-     * @param state  - Current state
-     * @param action - Payload with array of products
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with array of products
      */
-    addProducts(state, action: PayloadAction<IOrderProductData[]>) {
+    addProducts(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<IOrderProductData[]>,
+    ) {
       if (!state.order) {
         // If no order exists, do nothing
         return;
@@ -123,11 +129,11 @@ const orderReducer = createSlice({
     },
     /**
      * Add payment methods to the order
-     * @param state  - Current state
-     * @param action - Payload with array of payment methods
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with array of payment methods
      */
     addPaymentMethods(
-      state,
+      state: WritableDraft<InitialStateType>,
       action: PayloadAction<
         Array<{
           identifier: string;
@@ -141,10 +147,13 @@ const orderReducer = createSlice({
     },
     /**
      * Set the payment account identifier for the order
-     * @param state  - Current state
-     * @param action - Payload with payment method identifier
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with payment method identifier
      */
-    addPaymentMethod(state, action: PayloadAction<string>) {
+    addPaymentMethod(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<string>,
+    ) {
       if (!state.order) {
         // If no order exists, do nothing
         return;
@@ -154,10 +163,13 @@ const orderReducer = createSlice({
     },
     /**
      * Set the currency for the order
-     * @param state  - Current state
-     * @param action - Payload with currency
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with currency
      */
-    addOrderCurrency(state, action: PayloadAction<string>) {
+    addOrderCurrency(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<string>,
+    ) {
       if (!state.order) {
         // If no order exists, do nothing
         return;
@@ -170,13 +182,20 @@ const orderReducer = createSlice({
 
 // Exporting actions generated by createSlice
 export const {
-  remove: removeOrder, // Action to remove an order
-  create: createOrder, // Action to create an order
-  addData, // Action to add or update form data
-  addProducts, // Action to add products
-  addPaymentMethods, // Action to add payment methods
-  addPaymentMethod, // Action to set payment account identifier
-  addOrderCurrency, // Action to set currency
+  // Action to remove an order
+  remove: removeOrder,
+  // Action to create an order
+  create: createOrder,
+  // Action to add or update form data
+  addData,
+  // Action to add products
+  addProducts,
+  // Action to add payment methods
+  addPaymentMethods,
+  // Action to set payment account identifier
+  addPaymentMethod,
+  // Action to set currency
+  addOrderCurrency,
 } = orderReducer.actions;
 
 // Exporting the reducer generated by createSlice

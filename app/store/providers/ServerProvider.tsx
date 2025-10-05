@@ -6,9 +6,9 @@ const serverContext = cache(() => new Map());
 
 /**
  * Simple server provider
+ * @componentType Server component
  * @param         key          - key
  * @param         defaultValue - defaultValue
- * @componentType Server component
  * @returns                    Provider getter/setter
  */
 export const ServerProvider = <T,>(key: string, defaultValue?: T) => {

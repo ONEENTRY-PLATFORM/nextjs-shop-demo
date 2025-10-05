@@ -1,10 +1,10 @@
-import type { PayloadAction } from '@reduxjs/toolkit'; // Importing the PayloadAction type for defining action payloads.
+import type { PayloadAction, WritableDraft } from '@reduxjs/toolkit'; // Importing the PayloadAction type for defining action payloads.
 import { createSlice } from '@reduxjs/toolkit'; // Importing createSlice from Redux Toolkit to create a slice of the Redux state.
 
 /**
  * Define a type for individual form fields, including their value and validity status.
- * @property value - The value of the form field as a string.
- * @property valid - A boolean indicating whether the field's value is considered valid.
+ * @property {string}  value - The value of the form field as a string.
+ * @property {boolean} valid - A boolean indicating whether the field's value is considered valid.
  */
 type FieldType = {
   value: string;
@@ -13,8 +13,8 @@ type FieldType = {
 
 /**
  * Define a type for the initial state structure.
- * @property fields      - An object where each key is a field name and the value is a FieldType.
- * @property fields[key] - The FieldType for the field with the given key.
+ * @property {object}    fields      - An object where each key is a field name and the value is a FieldType.
+ * @property {FieldType} fields[key] - The FieldType for the field with the given key.
  */
 type InitialStateType = {
   fields: {
@@ -24,7 +24,7 @@ type InitialStateType = {
 
 /**
  * Initialize the state with an empty fields object.
- * @property fields -
+ * @property {object} fields - An empty object for storing form fields.
  */
 const initialState: InitialStateType = {
   fields: {},
@@ -32,8 +32,8 @@ const initialState: InitialStateType = {
 
 /**
  * Utility function to get the first key of an object.
- * @param obj - Object to get the first key from.
- * @returns   The first key if it exists, otherwise returns undefined.
+ * @param   {Record<string, FieldType>} obj - Object to get the first key from.
+ * @returns {string | undefined}            The first key if it exists, otherwise returns undefined.
  */
 function getFirstKey(obj: Record<string, FieldType>): string | undefined {
   const keys = Object.keys(obj); // Get all keys of the object.
@@ -52,10 +52,13 @@ const formFieldsSlice = createSlice({
   reducers: {
     /**
      * Add a new field to the form.
-     * @param state  - Current state
-     * @param action - Payload with field data
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with field data
      */
-    addField(state, action: PayloadAction<{ [key: string]: FieldType }>) {
+    addField(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<{ [key: string]: FieldType }>,
+    ) {
       const key = getFirstKey(action.payload); // Get the first key from the action payload.
       if (key) {
         const field = action.payload[key];

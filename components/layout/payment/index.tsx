@@ -152,6 +152,10 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productsInOrder]);
 
+  if (!dict) {
+    return <></>;
+  }
+
   // Auth Error
   if (!isAuth || error) {
     return <AuthError dict={dict} />;

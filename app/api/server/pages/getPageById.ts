@@ -8,11 +8,11 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 /**
  * Get page object with information about forms, blocks, menus, linked to the page.
  * @async
- * @param   {number} id   - Page id.
- * @param   {string} lang - Current language shortcode.
+ * @param   {number}          id   - Page id.
+ * @param   {string}          lang - Current language shortcode.
+ * @returns {Promise<object>}      Returns PageEntity object
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
- * @returns               Returns PageEntity object
  */
 export const getPageById = async (
   id: number,

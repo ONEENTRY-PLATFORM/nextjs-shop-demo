@@ -16,6 +16,9 @@ const ProfilePage = async ({
   lang,
   dict,
 }: SimplePageProps): Promise<JSX.Element> => {
+  if (!dict) {
+    return <Loader />;
+  }
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <Suspense fallback={<Loader />}>

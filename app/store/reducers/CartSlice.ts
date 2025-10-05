@@ -1,6 +1,6 @@
 'use client';
 
-import type { PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction, WritableDraft } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
@@ -8,17 +8,14 @@ import type { IProducts } from '@/app/types/global';
 
 /**
  * Defining the shape of the initial state for the cart slice
- * @property products     - Array of product entities.
- * @property productsData - Array of product data with additional properties like quantity.
- * @property currency     - Currency type.
- * @property delivery     - Delivery product entity.
- * @property deliveryData - Details about delivery.
- * @property transitionId - ID used for transitions/animations.
- * @property total        - Total cost of items in the cart.
- * @property version      - Version of the cart, useful for updates.
- * @property transitionId - ID used for transitions/animations.
- * @property total        - Total cost of items in the cart.
- * @property version      - Version of the cart, useful for updates.
+ * @property {IProductsEntity[]} products     - Array of product entities.
+ * @property {IProducts[]}       productsData - Array of product data with additional properties like quantity.
+ * @property {string}            [currency]   - Currency type.
+ * @property {IProductsEntity}   delivery     - Delivery product entity.
+ * @property {object}            deliveryData - Details about delivery.
+ * @property {number}            transitionId - ID used for transitions/animations.
+ * @property {number}            total        - Total cost of items in the cart.
+ * @property {number}            version      - Version of the cart, useful for updates.
  */
 type InitialStateType = {
   products: IProductsEntity[];
@@ -37,17 +34,13 @@ type InitialStateType = {
 
 /**
  * Initial state setup for the cart slice.
- * @property products     - Array of product entities.
- * @property productsData - Array of product data with additional properties like quantity.
- * @property currency     - Currency type.
- * @property delivery     - Delivery product entity.
- * @property deliveryData - Details about delivery.
- * @property transitionId - ID used for transitions/animations.
- * @property total        - Total cost of items in the cart.
- * @property version      - Version of the cart, useful for updates.
- * @property transitionId - ID used for transitions/animations.
- * @property total        - Total cost of items in the cart.
- * @property version      - Version of the cart, useful for updates.
+ * @property {[]}     products     - Array of product entities.
+ * @property {[]}     productsData - Array of product data with additional properties like quantity.
+ * @property {object} delivery     - Delivery product entity.
+ * @property {object} deliveryData - Details about delivery.
+ * @property {number} transitionId - ID used for transitions/animations.
+ * @property {number} total        - Total cost of items in the cart.
+ * @property {number} version      - Version of the cart, useful for updates.
  */
 const initialState: InitialStateType = {
   products: [],
@@ -75,11 +68,11 @@ export const cartSlice = createSlice({
   reducers: {
     /**
      * Add a product to the cart
-     * @param state  - Current state
-     * @param action - Payload with product id, selection status and quantity
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with product id, selection status and quantity
      */
     addProductToCart(
-      state,
+      state: WritableDraft<InitialStateType>,
       action: PayloadAction<{
         id: number;
         selected: boolean;
@@ -111,19 +104,22 @@ export const cartSlice = createSlice({
     },
     /**
      * Add multiple products to the cart
-     * @param state  - Current state
-     * @param action - Payload with array of product entities
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with array of product entities
      */
-    addProductsToCart(state, action: PayloadAction<IProductsEntity[]>) {
+    addProductsToCart(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<IProductsEntity[]>,
+    ) {
       state.products = action.payload;
     },
     /**
      * Increase the quantity of a product in the cart
-     * @param state  - Current state
-     * @param action - Payload with units, id and quantity
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with units, id and quantity
      */
     increaseProductQty(
-      state,
+      state: WritableDraft<InitialStateType>,
       action: PayloadAction<{ units: number; id: number; quantity: number }>,
     ) {
       const index = state.productsData.findIndex(
@@ -154,11 +150,11 @@ export const cartSlice = createSlice({
     },
     /**
      * Decrease the quantity of a product in the cart
-     * @param state  - Current state
-     * @param action - Payload with id and quantity
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with id and quantity
      */
     decreaseProductQty(
-      state,
+      state: WritableDraft<InitialStateType>,
       action: PayloadAction<{ id: number; quantity: number }>,
     ) {
       const index = state.productsData.findIndex(
@@ -188,11 +184,11 @@ export const cartSlice = createSlice({
     },
     /**
      * Set the quantity of a product in the cart
-     * @param state  - Current state
-     * @param action - Payload with units, id and quantity
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with units, id and quantity
      */
     setProductQty(
-      state,
+      state: WritableDraft<InitialStateType>,
       action: PayloadAction<{ units: number; id: number; quantity: number }>,
     ) {
       const index = state.productsData.findIndex(
@@ -229,20 +225,26 @@ export const cartSlice = createSlice({
     },
     /**
      * Remove a product from the cart
-     * @param state  - Current state
-     * @param action - Payload with product id
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with product id
      */
-    removeProduct(state, action: PayloadAction<number>) {
+    removeProduct(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<number>,
+    ) {
       state.productsData = state.productsData.filter(
         (item: IProducts) => item.id !== action.payload,
       );
     },
     /**
      * Toggle the selection status of a product in the cart
-     * @param state  - Current state
-     * @param action - Payload with product id
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with product id
      */
-    deselectProduct(state, action: PayloadAction<number>) {
+    deselectProduct(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<number>,
+    ) {
       state.productsData = state.productsData.map((product) => {
         if (product.id === action.payload) {
           return {
@@ -255,27 +257,30 @@ export const cartSlice = createSlice({
     },
     /**
      * Remove all products from the cart
-     * @param state - Current state
+     * @param {WritableDraft<InitialStateType>} state - Current state
      */
-    removeAllProducts(state) {
+    removeAllProducts(state: WritableDraft<InitialStateType>) {
       state.productsData = initialState.productsData;
       state.products = initialState.products;
     },
     /**
      * Add delivery information to the cart
-     * @param state  - Current state
-     * @param action - Payload with delivery entity
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with delivery entity
      */
-    addDeliveryToCart(state, action: PayloadAction<IProductsEntity>) {
+    addDeliveryToCart(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<IProductsEntity>,
+    ) {
       state.delivery = action.payload;
     },
     /**
      * Set delivery data
-     * @param state  - Current state
-     * @param action - Payload with delivery data
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with delivery data
      */
     setDeliveryData(
-      state,
+      state: WritableDraft<InitialStateType>,
       action: PayloadAction<{ date: number; time: string; address: string }>,
     ) {
       state.deliveryData = {
@@ -286,18 +291,24 @@ export const cartSlice = createSlice({
     },
     /**
      * Set the transition ID for animations
-     * @param state  - Current state
-     * @param action - Payload with product ID
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with product ID
      */
-    setCartTransition(state, action: PayloadAction<{ productId: number }>) {
+    setCartTransition(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<{ productId: number }>,
+    ) {
       state.transitionId = action.payload.productId;
     },
     /**
      * Set the cart version
-     * @param state  - Current state
-     * @param action - Payload with version number
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<string>}           action - Payload with version number
      */
-    setCartVersion(state, action: PayloadAction<number>) {
+    setCartVersion(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<number>,
+    ) {
       state.version = action.payload;
     },
   },
@@ -305,19 +316,21 @@ export const cartSlice = createSlice({
 
 /**
  * Select cart version.
- * @param state                     - The current state of the Redux store.
- * @param state.cartReducer
- * @param state.cartReducer.version
- * @returns                         Cart version number.
+ * @param   {object} state                     - The current state of the Redux store.
+ * @param   {object} state.cartReducer         - The cart reducer state.
+ * @param   {number} state.cartReducer.version - Cart version number.
+ * @returns {number}                           Cart version number.
  */
 export const selectCartVersion = (state: {
   cartReducer: { version: number };
-}) => state.cartReducer.version;
+}): number => state.cartReducer.version;
 
 /**
  * Get cart transition.
- * @param state - The current state of the Redux store.
- * @returns     Object containing transitionId.
+ * @param   {object}  state                          - The current state of the Redux store.
+ * @param   {object}  state.cartReducer              - The cart reducer state.
+ * @param   {number}  state.cartReducer.transitionId - Cart transition ID.
+ * @returns {unknown}                                Object containing transitionId.
  */
 export const getTransition = createSelector(
   (state: { cartReducer: { transitionId: number } }) =>
@@ -327,63 +340,63 @@ export const getTransition = createSelector(
 
 /**
  * Select cart data.
- * @param state                          - The current state of the Redux store.
- * @param state.cartReducer
- * @param state.cartReducer.productsData
- * @returns                              Cart products data.
+ * @param   {object}      state                          - The current state of the Redux store.
+ * @param   {object}      state.cartReducer              - Cart reducer state.
+ * @param   {IProducts[]} state.cartReducer.productsData - Cart products data.
+ * @returns {IProducts[]}                                Cart products data.
  */
 export const selectCartData = (state: {
   cartReducer: { productsData: IProducts[] };
-}) => state.cartReducer.productsData;
+}): IProducts[] => state.cartReducer.productsData;
 
 /**
  * Select if product is in cart.
- * @param state                          - The current state of the Redux store.
- * @param state.cartReducer
- * @param productId                      - The ID of the product to check.
- * @param state.cartReducer.productsData
- * @returns                              Boolean indicating if product is in cart.
+ * @param   {object}      state                          - The current state of the Redux store.
+ * @param   {object}      state.cartReducer              - Cart reducer state.
+ * @param   {IProducts[]} state.cartReducer.productsData - Cart products data.
+ * @param   {number}      productId                      - The ID of the product to check.
+ * @returns {boolean}                                    Boolean indicating if product is in cart.
  */
 export const selectIsInCart = (
   state: {
     cartReducer: { productsData: IProducts[] };
   },
   productId: number,
-) =>
+): boolean =>
   state.cartReducer.productsData.some(
     (product: IProducts) => product.id === productId,
   );
 
 /**
  * Select delivery data.
- * @param state                                  - The current state of the Redux store.
- * @param state.cartReducer
- * @param state.cartReducer.deliveryData
- * @param state.cartReducer.deliveryData.date
- * @param state.cartReducer.deliveryData.time
- * @param state.cartReducer.deliveryData.address
- * @returns                                      Delivery data object containing date, time and address.
+ * @param   {object}  state                                  - The current state of the Redux store.
+ * @param   {object}  state.cartReducer                      - Cart reducer state.
+ * @param   {object}  state.cartReducer.deliveryData         - Delivery data object.
+ * @param   {number}  state.cartReducer.deliveryData.date    - Delivery date.
+ * @param   {string}  state.cartReducer.deliveryData.time    - Delivery time.
+ * @param   {string}  state.cartReducer.deliveryData.address - Delivery address.
+ * @returns {unknown}                                        Delivery data object containing date, time and address.
  */
 export const selectDeliveryData = (state: {
   cartReducer: {
     deliveryData: { date: number; time: string; address: string };
   };
-}) => state.cartReducer.deliveryData;
+}): unknown => state.cartReducer.deliveryData;
 
 /**
  * Select cart total.
- * @param state                          - The current state of the Redux store.
- * @param state.cartReducer
- * @param state.cartReducer.productsData
- * @param state.cartReducer.products
- * @returns                              Total cost of selected products in the cart.
+ * @param   {object}            state                          - The current state of the Redux store.
+ * @param   {object}            state.cartReducer              - Cart reducer state.
+ * @param   {IProducts[]}       state.cartReducer.productsData - Cart products data.
+ * @param   {IProductsEntity[]} state.cartReducer.products     - Cart products.
+ * @returns {number}                                           Total cost of selected products in the cart.
  */
 export const selectCartTotal = (state: {
   cartReducer: {
     productsData: IProducts[];
     products: IProductsEntity[];
   };
-}) => {
+}): number => {
   return state.cartReducer.productsData.reduce((total, product) => {
     if (product.selected) {
       // Find product by ID instead of using index
@@ -402,29 +415,29 @@ export const selectCartTotal = (state: {
 
 /**
  * Select cart items.
- * @param state                      - The current state of the Redux store.
- * @param state.cartReducer
- * @param state.cartReducer.products
- * @returns                          Cart products.
+ * @param   {object}            state                      - The current state of the Redux store.
+ * @param   {object}            state.cartReducer          - Cart reducer state.
+ * @param   {IProductsEntity[]} state.cartReducer.products - Cart products.
+ * @returns {IProductsEntity[]}                            Cart products.
  */
 export const selectCartItems = (state: {
   cartReducer: { products: IProductsEntity[] };
-}) => state.cartReducer.products;
+}): IProductsEntity[] => state.cartReducer.products;
 
 /**
  * Select cart item by ID length.
- * @param state                          - The current state of the Redux store.
- * @param state.cartReducer
- * @param id                             - The ID of the product to check.
- * @param state.cartReducer.productsData
- * @returns                              Quantity of the product in the cart.
+ * @param   {object}      state                          - The current state of the Redux store.
+ * @param   {object}      state.cartReducer              - Cart reducer state.
+ * @param   {IProducts[]} state.cartReducer.productsData - Cart products data.
+ * @param   {number}      id                             - The ID of the product to check.
+ * @returns {number}                                     Quantity of the product in the cart.
  */
 export const selectCartItemWithIdLength = (
   state: {
     cartReducer: { productsData: IProducts[] };
   },
   id: number,
-) => {
+): number => {
   const product = state.cartReducer.productsData.find(
     (product: IProducts) => product.id === id,
   );
