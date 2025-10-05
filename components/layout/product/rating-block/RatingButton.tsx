@@ -1,19 +1,19 @@
 'use client';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { Dispatch, JSX } from 'react';
+import type { Dispatch, JSX, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 
 import StarRating from './StarRating';
 
 /**
  * RatingButton.
- * @param props             - Props for RatingButton.
- * @param props.rating      - Rating value.
- * @param props.reviewCount - Review count.
- * @param props.state       - State.
- * @param props.setState    - Set state.
- * @param props.dict
- * @returns                 RatingButton.
+ * @param   {object}                            props             - Props for RatingButton.
+ * @param   {number}                            props.rating      - Rating value.
+ * @param   {number}                            props.reviewCount - Review count.
+ * @param   {boolean}                           props.state       - State.
+ * @param   {Dispatch<SetStateAction<boolean>>} props.setState    - Set state.
+ * @param   {IAttributeValues}                  props.dict        - Dictionary
+ * @returns {JSX.Element}                                         RatingButton.
  */
 const RatingButton = ({
   dict,
@@ -26,7 +26,7 @@ const RatingButton = ({
   rating: number;
   reviewCount: number;
   state: boolean;
-  setState: Dispatch<React.SetStateAction<boolean>>;
+  setState: Dispatch<SetStateAction<boolean>>;
 }): JSX.Element => {
   const [reviewsTitle, setReviewsTitle] = useState('');
   const { reviews_title } = dict;

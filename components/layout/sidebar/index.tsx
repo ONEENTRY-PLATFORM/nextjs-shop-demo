@@ -10,9 +10,9 @@ import SidebarMenuLoader from './components/SidebarMenuLoader';
 
 /**
  * Sidebar Menu.
- * @param props      - Component props.
- * @param props.lang - Current language shortcode.
- * @returns          Sidebar menu.
+ * @param   {object}               props      - Component props.
+ * @param   {string}               props.lang - Current language shortcode.
+ * @returns {Promise<JSX.Element>}            Sidebar menu.
  */
 const SidebarMenu = async ({
   lang,

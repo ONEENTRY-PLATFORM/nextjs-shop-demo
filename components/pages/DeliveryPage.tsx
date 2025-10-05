@@ -5,9 +5,9 @@ import type { SimplePageProps } from '@/app/types/global';
 
 /**
  * DeliveryPage page.
- * @param props      - Props for DeliveryPage.
- * @param props.page - Page entity.
- * @returns          DeliveryPage page.
+ * @param   {object}               props      - Props for DeliveryPage.
+ * @param   {IPagesEntity}         props.page - Page entity.
+ * @returns {Promise<JSX.Element>}            DeliveryPage page.
  */
 const DeliveryPage = async ({
   page,

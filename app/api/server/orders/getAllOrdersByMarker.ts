@@ -6,16 +6,16 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Getting all orders from the orders storage object created by the user.
+ * @description This method requires user authorization. For more information about configuring the authorization module, see the documentation in the configuration settings section of the SDK.
  * @async
- * @param   {object} props        - The object containing the parameters.
- * @param   {string} props.marker - The text identifier of the order storage object.
- * @param   {number} props.lang   - Current language shortcode.
- * @param   {number} props.offset - Offset parameter. Default 0.
- * @param   {string} props.limit  - Limit parameter. Default 30.
+ * @param   {object}          props        - The object containing the parameters.
+ * @param   {string}          props.marker - The text identifier of the order storage object.
+ * @param   {number}          props.lang   - Current language shortcode.
+ * @param   {number}          props.offset - Offset parameter. Default 0.
+ * @param   {string}          props.limit  - Limit parameter. Default 30.
+ * @returns {Promise<object>}              All user orders.
  * @see {@link https://doc.oneentry.cloud/docs/orders OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
- * @description This method requires user authorization. For more information about configuring the authorization module, see the documentation in the configuration settings section of the SDK.
- * @returns                       All user orders.
  */
 export const getAllOrdersByMarker = async ({
   marker,

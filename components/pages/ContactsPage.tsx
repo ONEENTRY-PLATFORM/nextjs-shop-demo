@@ -6,10 +6,10 @@ import ContactUsForm from '@/components/forms/ContactUsForm';
 
 /**
  * Contacts page.
- * @param props      - Page props.
- * @param props.page - Page entity.
- * @param props.lang - Current language shortcode.
- * @returns          Contacts page.
+ * @param   {object}               props      - Page props.
+ * @param   {IPagesEntity}         props.page - Page entity.
+ * @param   {string}               props.lang - Current language shortcode.
+ * @returns {Promise<JSX.Element>}            Contacts page.
  */
 const ContactsPage = async ({
   page,

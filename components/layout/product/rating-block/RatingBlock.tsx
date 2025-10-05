@@ -8,12 +8,12 @@ import StarRating from './StarRating';
 
 /**
  * Rating block.
- * @param props                           - Rating block props.
- * @param props.productRating             - product rating data.
- * @param props.productRating.rating      - rating value.
- * @param props.productRating.reviewCount - number of reviews
- * @param props.state                     - animation state
- * @returns                               RatingBlock component.
+ * @param   {object}      props                           - Rating block props.
+ * @param   {object}      props.productRating             - product rating data.
+ * @param   {number}      props.productRating.rating      - rating value.
+ * @param   {number}      props.productRating.reviewCount - number of reviews
+ * @param   {boolean}     props.state                     - animation state
+ * @returns {JSX.Element}                                 RatingBlock component.
  */
 const RatingBlock = ({
   productRating,

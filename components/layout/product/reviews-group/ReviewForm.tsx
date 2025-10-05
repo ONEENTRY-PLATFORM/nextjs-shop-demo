@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 
 /**
  * Review form
- * @returns ReviewForm
+ * @returns {JSX.Element} ReviewForm
  */
 const ReviewForm = (): JSX.Element => {
   return (

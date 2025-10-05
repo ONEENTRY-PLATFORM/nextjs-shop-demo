@@ -14,19 +14,16 @@ export const dynamic = 'force-dynamic';
 
 /**
  * Products grid layout.
- * @param props                       - Products GridLayout props.
- * @param props.params                - params from query string.
- * @param props.searchParams          - search params from query string.
- * @param params.searchParams.search  - search query.
- * @param params.searchParams.page    - page number.
- * @param params.searchParams.filters - filters query.
- * @param props.dict                  - dictionary from server api.
- * @param props.pagesLimit            - used for animations.
- * @param props.isCategory            - is category page.
- * @param props.searchParams.search
- * @param props.searchParams.page
- * @param props.searchParams.filters
- * @returns                           ProductsGrid component.
+ * @param   {object}               props                      - Products GridLayout props.
+ * @param   {object}               props.params               - params from query string.
+ * @param   {object}               props.searchParams         - search params from query string.
+ * @param   {string}               props.searchParams.search  - search query.
+ * @param   {string}               props.searchParams.page    - current page number.
+ * @param   {string}               props.searchParams.filters - filters query.
+ * @param   {IAttributeValues}     props.dict                 - dictionary from server api.
+ * @param   {number}               props.pagesLimit           - used for animations.
+ * @param   {boolean}              props.isCategory           - is category page.
+ * @returns {Promise<JSX.Element>}                            ProductsGrid component.
  */
 const ProductsGridLayout = async ({
   params,

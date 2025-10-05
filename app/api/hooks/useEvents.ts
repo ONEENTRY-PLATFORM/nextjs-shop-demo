@@ -33,9 +33,9 @@ export const onSubscribeEvents = async (id: number): Promise<void> => {
 /**
  * Unsubscribe events with Events API
  * @async
- * @param id - product id
+ * @param   {number}        id - product id
+ * @returns {Promise<void>}    Promise that resolves when unsubscription is complete
  * @see {@link https://doc.oneentry.cloud/docs/events OneEntry CMS docs}
- * @returns  Promise that resolves when unsubscription is complete
  */
 export const onUnsubscribeEvents = async (id: number): Promise<void> => {
   try {

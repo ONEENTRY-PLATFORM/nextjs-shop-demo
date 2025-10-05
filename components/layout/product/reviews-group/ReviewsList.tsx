@@ -8,9 +8,9 @@ import ViewAllButton from './ViewAllButton';
 
 /**
  * Reviews list section.
- * @param props       - Component props.
- * @param props.state - open/closed list state.
- * @returns           ReviewsList.
+ * @param   {object}      props       - Component props.
+ * @param   {boolean}     props.state - open/closed list state.
+ * @returns {JSX.Element}             ReviewsList.
  */
 const ReviewsList = ({ state }: { state: boolean }): JSX.Element => {
   return (

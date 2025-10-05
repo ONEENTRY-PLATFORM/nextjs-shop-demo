@@ -2,9 +2,9 @@ import type { JSX } from 'react';
 
 /**
  * StarRating.
- * @param props        - Star rating props.
- * @param props.rating - rating value.
- * @returns            StarRating component.
+ * @param   {object}      props        - Star rating props.
+ * @param   {number}      props.rating - rating value.
+ * @returns {JSX.Element}              StarRating component.
  */
 const StarRating = ({ rating }: { rating: number }): JSX.Element => {
   return (

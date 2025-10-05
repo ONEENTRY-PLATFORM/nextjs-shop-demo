@@ -5,9 +5,9 @@ import ReviewAnimations from '../animations/ReviewAnimations';
 
 /**
  * ViewAllButton.
- * @param state.state
- * @param state       - Button state.
- * @returns           ViewAll Button.
+ * @param   {object}      props       - Button props.
+ * @param   {boolean}     props.state - Button state.
+ * @returns {JSX.Element}             ViewAll Button.
  */
 const ViewAllButton = ({ state }: { state: boolean }): JSX.Element => {
   return (
