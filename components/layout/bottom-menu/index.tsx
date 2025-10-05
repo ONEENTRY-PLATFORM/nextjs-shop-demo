@@ -35,7 +35,7 @@ const BottomMobileMenu = async (): Promise<JSX.Element> => {
                 <NavItemCatalog item={item} lang={lang} />
               )}
               {item.pageUrl === 'profile' && (
-                <NavItemProfile item={item} lang={lang} />
+                <NavItemProfile item={item} lang={lang} userMenu={menu} />
               )}
               {item.pageUrl === 'favorites' && (
                 <NavItemFavorites item={item} lang={lang} />

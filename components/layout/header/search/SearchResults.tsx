@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { Dispatch, JSX, Key } from 'react';
+import type { Dispatch, JSX, Key, SetStateAction } from 'react';
 import React from 'react';
 
 import { useSearchProducts } from '@/app/api/hooks/useSearchProducts';
@@ -24,8 +24,8 @@ const SearchResults = ({
   lang,
 }: {
   searchValue: string | undefined;
-  state: unknown;
-  setState: Dispatch<unknown>;
+  state: boolean;
+  setState: Dispatch<SetStateAction<boolean>>;
   lang: string;
 }): JSX.Element => {
   const { loading, products } = useSearchProducts({

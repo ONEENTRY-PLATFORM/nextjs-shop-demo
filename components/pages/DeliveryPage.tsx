@@ -1,5 +1,4 @@
 import parse from 'html-react-parser';
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { JSX } from 'react';
 
 import type { SimplePageProps } from '@/app/types/global';

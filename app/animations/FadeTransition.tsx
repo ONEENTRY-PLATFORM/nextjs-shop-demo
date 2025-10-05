@@ -2,7 +2,7 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import type { JSX, ReactNode } from 'react';
+import type { JSX } from 'react';
 import { useRef } from 'react';
 
 import type { AnimationsProps } from '../types/global';
