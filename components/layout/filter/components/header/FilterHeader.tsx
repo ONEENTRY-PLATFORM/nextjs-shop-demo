@@ -6,9 +6,9 @@ import HistoryBack from './HistoryBack';
 
 /**
  * Filter Header.
- * @param props      - props.
- * @param props.dict - dictionary from server api.
- * @returns          Filter Header.
+ * @param   {object}           props      - props.
+ * @param   {IAttributeValues} props.dict - dictionary from server api.
+ * @returns {JSX.Element}                 Filter Header.
  */
 const FilterHeader = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const { open_filters_button } = dict;

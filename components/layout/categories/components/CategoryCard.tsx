@@ -13,19 +13,24 @@ const baloo = Baloo({
 
 /**
  * Category card.
- * @param props                 - props.
- * @param props.category        - category object.
- * @param props.index           - index of element in array for stagger.
- * @param props.category.title
- * @param props.category.link
- * @param props.category.imgSrc
- * @returns                     category card with animations.
+ * @param   {object}      props                 - props.
+ * @param   {object}      props.category        - category object.
+ * @param   {string}      props.category.title  - category title.
+ * @param   {string}      props.category.link   - category link.
+ * @param   {any}         props.category.imgSrc - category image source.
+ * @param   {number}      props.index           - index of element in array for stagger.
+ * @returns {JSX.Element}                       category card with animations.
  */
 const CategoryCard = ({
   category: { imgSrc, title, link },
   index,
 }: {
-  category: { title: string; link: string; imgSrc: string };
+  category: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    imgSrc: any;
+    title: string;
+    link: string;
+  };
   index: number;
 }): JSX.Element => {
   return (

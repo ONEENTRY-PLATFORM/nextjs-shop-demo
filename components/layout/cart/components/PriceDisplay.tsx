@@ -4,11 +4,11 @@ import { UsePrice } from '@/components/utils/utils';
 
 /**
  * PriceDisplay.
- * @param props               - Price display props.
- * @param props.currentPrice  - Current price value.
- * @param props.originalPrice - Original price value.
- * @param props.lang          - Current language shortcode.
- * @returns                   Price display component.
+ * @param   {object}      props               - Price display props.
+ * @param   {number}      props.currentPrice  - Current price value.
+ * @param   {number}      props.originalPrice - Original price value.
+ * @param   {string}      props.lang          - Current language shortcode.
+ * @returns {JSX.Element}                     Price display component.
  */
 const PriceDisplay = ({
   currentPrice,

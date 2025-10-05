@@ -5,7 +5,7 @@ import type { JSX } from 'react';
 
 /**
  * History back button.
- * @returns History back button.
+ * @returns {JSX.Element} History back button.
  */
 const HistoryBack = (): JSX.Element => {
   const router = useRouter();

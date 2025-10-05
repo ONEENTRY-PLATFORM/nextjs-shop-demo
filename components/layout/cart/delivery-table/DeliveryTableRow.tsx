@@ -8,12 +8,12 @@ import TableRowAnimations from '../animations/TableRowAnimations';
 
 /**
  * Delivery table row.
- * @param props             - component props.
- * @param props.label       - label text.
- * @param props.value       - value text.
- * @param props.icon        - icon url.
- * @param props.placeholder - placeholder text in table row input.
- * @returns                 JSX.Element
+ * @param   {object}      props             - component props.
+ * @param   {string}      props.label       - label text.
+ * @param   {string}      props.value       - value text.
+ * @param   {string}      props.icon        - icon url.
+ * @param   {string}      props.placeholder - placeholder text in table row input.
+ * @returns {JSX.Element}                   JSX.Element
  */
 const DeliveryTableRow = ({
   label,
@@ -23,7 +23,7 @@ const DeliveryTableRow = ({
 }: {
   label: string;
   value: string;
-  icon?: string;
+  icon: string;
   placeholder: string;
 }): JSX.Element => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);

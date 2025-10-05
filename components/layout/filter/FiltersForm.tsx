@@ -18,18 +18,18 @@ import PricePickerFilter from './components/price/PricePickerFilter';
 
 /**
  * Products filters form.
- * @param props        - Props.
- * @param props.prices - prices fromTo extracted from one product.
- * @param props.lang   - Current language shortcode.
- * @param props.dict   - dictionary from server api.
- * @returns            Filters form.
+ * @param   {object}               props        - Props.
+ * @param   {any}                  props.prices - prices fromTo extracted from one product.
+ * @param   {string}               props.lang   - Current language shortcode.
+ * @param   {IAttributeValues}     props.dict   - dictionary from server api.
+ * @returns {Promise<JSX.Element>}              Filters form.
  */
 const FiltersForm = async ({
   prices,
   lang,
   dict,
 }: {
-  prices: any;
+  prices: any | undefined;
   lang: string;
   dict: IAttributeValues;
 }): Promise<JSX.Element> => {

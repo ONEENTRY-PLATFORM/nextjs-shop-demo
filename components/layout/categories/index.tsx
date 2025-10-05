@@ -12,9 +12,9 @@ interface CategoryCardProps {
 
 /**
  * Categories grid.
- * @param props            - categories grid props.
- * @param props.categories - categories array.
- * @returns                categories grid with animations.
+ * @param   {object}              props            - categories grid props.
+ * @param   {CategoryCardProps[]} props.categories - categories array.
+ * @returns {JSX.Element}                          categories grid with animations.
  */
 const CategoriesGrid = ({
   categories,

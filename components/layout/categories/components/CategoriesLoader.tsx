@@ -4,9 +4,9 @@ import type { LoaderProps } from '@/app/types/global';
 
 /**
  * Categories loader animations.
- * @param props       - props.
- * @param props.limit - number of categories to load.
- * @returns           Categories loader with animations.
+ * @param   {LoaderProps} props       - props.
+ * @param   {number}      props.limit - number of categories to load.
+ * @returns {JSX.Element}             Categories loader with animations.
  */
 export const CategoriesLoader = ({ limit = 4 }: LoaderProps): JSX.Element => {
   return (

@@ -13,14 +13,15 @@ import TableRowAnimations from '../animations/TableRowAnimations';
 
 /**
  * Address row.
- * @param props             - Props.
- * @param props.placeholder - Placeholder.
- * @returns                 JSX.Element
+ * @param   {object}      props             - Props.
+ * @param   {string}      props.placeholder - Placeholder.
+ * @returns {JSX.Element}                   JSX.Element
  */
 const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
   const dispatch = useAppDispatch();
   const { user } = useContext(AuthContext);
-  const deliveryData = useAppSelector(selectDeliveryData);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const deliveryData: any = useAppSelector(selectDeliveryData);
 
   // get address from user formData
   const addressReg =
@@ -28,7 +29,7 @@ const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
 
   // set address on change deliveryData
   useEffect(() => {
-    const address = deliveryData.address || addressReg || '';
+    const address = deliveryData?.address || addressReg || '';
     dispatch(
       addData({
         marker: 'order_address',

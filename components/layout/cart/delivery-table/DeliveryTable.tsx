@@ -17,11 +17,11 @@ import DeliveryTableRow from './DeliveryTableRow';
 
 /**
  * Delivery table.
- * @param props          - DeliveryTable props.
- * @param props.delivery - Represents a product entity object.
- * @param props.lang     - Current language shortcode.
- * @param props.dict     - dictionary from server api.
- * @returns              JSX.Element
+ * @param   {object}           props          - DeliveryTable props.
+ * @param   {IProductsEntity}  props.delivery - Represents a product entity object.
+ * @param   {string}           props.lang     - Current language shortcode.
+ * @param   {IAttributeValues} props.dict     - dictionary from server api.
+ * @returns {JSX.Element}                     JSX.Element
  */
 const DeliveryTable = ({
   delivery,
@@ -34,7 +34,8 @@ const DeliveryTable = ({
 }): JSX.Element => {
   const dispatch = useAppDispatch();
   const { user } = useContext(AuthContext);
-  const deliveryData = useAppSelector(selectDeliveryData);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const deliveryData: any = useAppSelector(selectDeliveryData);
 
   // get form by marker with RTK
   const { data } = useGetFormByMarkerQuery({
@@ -56,6 +57,9 @@ const DeliveryTable = ({
 
   // set delivery data onChange
   useEffect(() => {
+    if (!deliveryData) {
+      return;
+    }
     const date = deliveryData.date;
     const time = deliveryData.time;
     const address = deliveryData.address || addressReg || '';

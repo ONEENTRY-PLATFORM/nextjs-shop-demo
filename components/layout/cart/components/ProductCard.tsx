@@ -14,12 +14,12 @@ import PriceDisplay from './PriceDisplay';
 
 /**
  * Product card in cart.
- * @param props          - Product card props.
- * @param props.product  - product entity object.
- * @param props.selected - product selected.
- * @param props.lang     - Current language shortcode.
- * @param props.index    - index of element in array for stagger.
- * @returns              ProductCard with animations.
+ * @param   {object}          props          - Product card props.
+ * @param   {IProductsEntity} props.product  - product entity object.
+ * @param   {boolean}         props.selected - product selected.
+ * @param   {string}          props.lang     - Current language shortcode.
+ * @param   {number}          props.index    - index of element in array for stagger.
+ * @returns {JSX.Element}                    ProductCard with animations.
  */
 const ProductCard = ({
   product,
@@ -106,14 +106,4 @@ const ProductCard = ({
   );
 };
 
-// Memoize component to prevent unnecessary re-renders
-const MemoizedProductCard = memo(ProductCard, (prevProps, nextProps) => {
-  return (
-    prevProps.selected === nextProps.selected &&
-    prevProps.lang === nextProps.lang &&
-    prevProps.index === nextProps.index &&
-    prevProps.product.id === nextProps.product.id
-  );
-});
-
-export default MemoizedProductCard;
+export default memo(ProductCard);

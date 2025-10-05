@@ -23,11 +23,11 @@ import DeliveryForm from './delivery-table/DeliveryForm';
 
 /**
  * Cart page component.
- * @param props              - Cart page props.
- * @param props.lang         - Current language shortcode.
- * @param props.dict         - Dictionary from server API.
- * @param props.deliveryData - Represents a product entity object.
- * @returns                  Cart page component.
+ * @param   {object}           props              - Cart page props.
+ * @param   {string}           props.lang         - Current language shortcode.
+ * @param   {IAttributeValues} props.dict         - Dictionary from server API.
+ * @param   {IProductsEntity}  props.deliveryData - Represents a product entity object.
+ * @returns {JSX.Element}                         Cart page component.
  */
 const CartPage = ({
   lang,

@@ -17,10 +17,10 @@ import ProductsGridLoader from '../products-grid/components/ProductsGridLoader';
 
 /**
  * Favorites page.
- * @param props      - Page props.
- * @param props.lang - Current language shortcode.
- * @param props.dict - dictionary from server api.
- * @returns          favorites page with animations.
+ * @param   {SimplePageProps} props      - Page props.
+ * @param   {string}          props.lang - Current language shortcode.
+ * @param   {any}             props.dict - dictionary from server api.
+ * @returns {JSX.Element}                favorites page with animations.
  */
 const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   const { isAuth } = useContext(AuthContext);

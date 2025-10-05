@@ -8,11 +8,11 @@ import { useRef } from 'react';
 
 /**
  * Category card stage entering/leaving animations.
- * @param props           - CategoryAnimations props.
- * @param props.children  - children ReactNode.
- * @param props.className - category card wrapper className.
- * @param props.index     - index of element in array for stagger.
- * @returns               category card wrapper with animations.
+ * @param   {object}      props           - CategoryAnimations props.
+ * @param   {ReactNode}   props.children  - children ReactNode.
+ * @param   {string}      props.className - category card wrapper className.
+ * @param   {number}      props.index     - index of element in array for stagger.
+ * @returns {JSX.Element}                 category card wrapper with animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const CategoryAnimations = ({

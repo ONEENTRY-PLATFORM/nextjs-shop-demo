@@ -6,10 +6,10 @@ import FadeTransition from '@/app/animations/FadeTransition';
 
 /**
  * Empty favorites.
- * @param props      - Props.
- * @param props.lang - Current language shortcode.
- * @param props.dict - dictionary from server api.
- * @returns          Empty favorites page with animations.
+ * @param   {object}           props      - Props.
+ * @param   {string}           props.lang - Current language shortcode.
+ * @param   {IAttributeValues} props.dict - dictionary from server api.
+ * @returns {JSX.Element}                 Empty favorites page with animations.
  */
 const EmptyFavorites = ({
   lang,

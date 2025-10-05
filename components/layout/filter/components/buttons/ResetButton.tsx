@@ -6,9 +6,9 @@ import type { JSX } from 'react';
 
 /**
  * ResetButton.
- * @param props      - props.
- * @param props.dict - dictionary from server api.
- * @returns          ResetButton.
+ * @param   {object}           props      - props.
+ * @param   {IAttributeValues} props.dict - dictionary from server api.
+ * @returns {JSX.Element}                 ResetButton.
  */
 const ResetButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const pathname = usePathname();

@@ -8,10 +8,10 @@ import TableRowAnimations from '../animations/TableRowAnimations';
 
 /**
  * Delivery form row.
- * @param props          - DeliveryRow props.
- * @param props.lang     - Current language shortcode.
- * @param props.delivery - Represents a product entity object.
- * @returns              JSX.Element
+ * @param   {object}          props          - DeliveryRow props.
+ * @param   {string}          props.lang     - Current language shortcode.
+ * @param   {IProductsEntity} props.delivery - Represents a product entity object.
+ * @returns {JSX.Element}                    JSX.Element
  */
 const DeliveryRow = ({
   lang,
