@@ -3,7 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
-import type { ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 
 import { AuthProvider } from '@/app/store/providers/AuthContext';
 import { OpenDrawerProvider } from '@/app/store/providers/OpenDrawerContext';
@@ -52,17 +52,19 @@ export const metadata: Metadata = {
 
 /**
  * Root layout.
- * @param children.children
- * @param children          - Child components.
- * @param params            - Page params with language.
- * @param children.params
- * @returns                 JSX.Element - Root layout.
+ * @param   {object}                   props          - Layout props.
+ * @param   {ReactNode}                props.children - Child components.
+ * @param   {Promise<{lang: string;}>} props.params   - Page params with language.
+ * @returns {Promise<JSX.Element>}                    JSX.Element - Root layout.
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/layout Next.js docs}
  */
 export default async function RootLayout({
   children,
   params,
-}: Readonly<{ children: ReactNode; params: Promise<{ lang: string }> }>) {
+}: Readonly<{
+  children: ReactNode;
+  params: Promise<{ lang: string }>;
+}>): Promise<JSX.Element> {
   const { lang } = await params;
   // set current lang to server provider
   ServerProvider('lang', lang);

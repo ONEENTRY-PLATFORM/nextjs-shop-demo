@@ -1,15 +1,16 @@
 import Link from 'next/link';
+import type { JSX } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 
 /**
  * 404 page layout
  * @async
+ * @returns {Promise<JSX.Element>} page layout JSX.Element
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/not-found Next.js docs}
- * @returns page layout JSX.Element
  */
-const NotFound = async () => {
+const NotFound = async (): Promise<JSX.Element> => {
   const lang = 'en';
   // get page by url from the API.
   const { page, isError } = await getPageByUrl('404', lang);

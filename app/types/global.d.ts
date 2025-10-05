@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
+import type React from 'react';
 
 /**
  * Localize info.
@@ -76,12 +78,12 @@ export type CartState = {
 
 /**
  * Animations props.
- * @property {ReactNode} children  - Children of the component.
- * @property {string}    className - Class name of the component.
- * @property {number}    index     - Index of the component.
+ * @property {React.ReactNode} children  - Children of the component.
+ * @property {string}          className - Class name of the component.
+ * @property {number}          index     - Index of the component.
  */
 export type AnimationsProps = {
-  children: ReactNode;
+  children: React.ReactNode;
   className: string;
   index: number;
 };
@@ -145,7 +147,7 @@ interface IPageMetadata {
  * @property {number}        quantity     - Quantity of the product.
  * @property {string}        title        - Title of the product.
  * @property {string | null} sku          - SKU of the product.
- * @property {any}           previewImage - Preview image of the product.
+ * @property {string | null} previewImage - Preview image of the product.
  * @property {number}        price        - Price of the product.
  */
 export type IOrderProducts = {
@@ -153,25 +155,25 @@ export type IOrderProducts = {
   quantity: number;
   title: string;
   sku: string | null;
-  previewImage: any;
+  previewImage: string | null;
   price: number;
 };
 
 /**
  * Image props.
- * @property {string}              src                 - Source of the image.
- * @property {string}              alt                 - Alt text of the image.
- * @property {boolean}             fill                - Whether the image should fill the available space.
- * @property {number}              [width]             - Width of the image.
- * @property {number}              [height]            - Height of the image.
- * @property {boolean}             [isImageLoading]    - Whether the image is loading.
- * @property {string}              [className]         - Class name of the image.
- * @property {React.CSSProperties} [style]             - Style of the image.
- * @property {string}              [objectFit]         - Object fit of the image.
- * @property {string}              [priority]          - Priority of the image.
- * @property {Function}            [onLoadingComplete] - Callback function when the image loading is complete.
- * @property {any}                 ref                 - Reference of the image.
- * @property {Function}            [onClick]           - Callback function when the image is clicked.
+ * @property {string}                                              src                 - Source of the image.
+ * @property {string}                                              alt                 - Alt text of the image.
+ * @property {boolean}                                             fill                - Whether the image should fill the available space.
+ * @property {number}                                              [width]             - Width of the image.
+ * @property {number}                                              [height]            - Height of the image.
+ * @property {boolean}                                             [isImageLoading]    - Whether the image is loading.
+ * @property {string}                                              [className]         - Class name of the image.
+ * @property {React.CSSProperties}                                 [style]             - Style of the image.
+ * @property {string}                                              [objectFit]         - Object fit of the image.
+ * @property {string}                                              [priority]          - Priority of the image.
+ * @property {(result?: unknown) => void}                          [onLoadingComplete] - Callback function when the image loading is complete.
+ * @property {React.Ref<unknown>}                                  ref                 - Reference of the image.
+ * @property {(event: React.MouseEvent<HTMLImageElement>) => void} [onClick]           - Callback function when the image is clicked.
  */
 export type ImageProps = {
   src: string;
@@ -188,7 +190,7 @@ export type ImageProps = {
   objectFit?: string;
   priority?: 'auto' | 'low' | 'high' | undefined;
   onLoadingComplete?: any;
-  ref: any;
+  ref: React.Ref<any>;
   onClick?: any;
   // decoding?: 'async' | 'sync' | 'auto';
 };

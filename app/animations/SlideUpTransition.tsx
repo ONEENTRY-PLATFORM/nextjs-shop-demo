@@ -3,17 +3,17 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
 /**
  * SlideUp transition
- * @param props           - SlideUp transition properties
- * @param props.children  - children ReactNode
- * @param props.className - CSS className of ref element
- * @param props.index     - Index of element for animations stagger
+ * @param   {object}      props           - SlideUp transition properties
+ * @param   {ReactNode}   props.children  - children ReactNode
+ * @param   {string}      props.className - CSS className of ref element
+ * @param   {number}      props.index     - Index of element for animations stagger
+ * @returns {JSX.Element}                 JSX.Element with animated ref
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns               JSX.Element with animated ref
  */
 const SlideUpTransition = ({
   children,
@@ -23,7 +23,7 @@ const SlideUpTransition = ({
   children: ReactNode;
   className: string;
   index: number;
-}) => {
+}): JSX.Element => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
