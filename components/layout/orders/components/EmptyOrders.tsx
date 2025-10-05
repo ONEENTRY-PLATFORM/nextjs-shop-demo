@@ -1,15 +1,16 @@
 import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { JSX } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
 import EmptyCartIcon from '@/components/icons/empty-cart';
 
 /**
  * Empty orders page
- * @param props      - current language shortcode
- * @param props.lang - current language
- * @param props.dict - dictionary
- * @returns          JSX.Element
+ * @param   {object}           props      - Empty orders props
+ * @param   {string}           props.lang - current language shortcode
+ * @param   {IAttributeValues} props.dict - dictionary
+ * @returns {JSX.Element}                 JSX.Element
  */
 const EmptyOrders = ({
   lang,
@@ -17,7 +18,7 @@ const EmptyOrders = ({
 }: {
   lang: string;
   dict: IAttributeValues;
-}) => {
+}): JSX.Element => {
   const { empty_cart_plug, go_to_shop } = dict;
 
   return (

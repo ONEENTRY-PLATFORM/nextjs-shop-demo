@@ -10,7 +10,7 @@ import FilterButton from './components/FilterButton';
 
 /**
  * Breadcrumbs
- * @returns JSX.Element
+ * @returns {JSX.Element} Breadcrumbs component.
  */
 const Breadcrumbs = (): JSX.Element => {
   // get lang, dict from server provider

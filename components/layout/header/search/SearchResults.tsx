@@ -10,12 +10,12 @@ import Spinner from '@/components/shared/Spinner';
 
 /**
  * Search results.
- * @param props             - SearchResultsProps.
- * @param props.searchValue - search value.
- * @param props.state       - state.
- * @param props.setState    - set state.
- * @param props.lang        - current language shortcode.
- * @returns                 JSX.Element.
+ * @param   {object}             props             - SearchResultsProps.
+ * @param   {string | undefined} props.searchValue - search value.
+ * @param   {any}                props.state       - state.
+ * @param   {Dispatch<any>}      props.setState    - set state.
+ * @param   {string}             props.lang        - current language shortcode.
+ * @returns {JSX.Element}                          JSX.Element.
  */
 const SearchResults = ({
   searchValue,
@@ -24,8 +24,10 @@ const SearchResults = ({
   lang,
 }: {
   searchValue: string | undefined;
-  state: boolean;
-  setState: Dispatch<React.SetStateAction<boolean>>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  state: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  setState: Dispatch<any>;
   lang: string;
 }): JSX.Element => {
   const { loading, products } = useSearchProducts({

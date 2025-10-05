@@ -6,7 +6,7 @@ import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
 /**
  * Footer section.
- * @returns React component.
+ * @returns {JSX.Element} React component.
  */
 const OEMenuSection = (): JSX.Element => {
   const [dict] = ServerProvider('dict');

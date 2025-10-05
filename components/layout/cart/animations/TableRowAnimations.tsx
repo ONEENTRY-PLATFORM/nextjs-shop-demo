@@ -9,11 +9,11 @@ import type { AnimationsProps } from '@/app/types/global';
 
 /**
  * Table row animations.
- * @param props           - props.
- * @param props.children  - children ReactNode.
- * @param props.className - CSS className of ref element.
- * @param props.index     - index of element in array for stagger.
- * @returns               Table row animations component.
+ * @param   {AnimationsProps} props           - props.
+ * @param   {ReactNode}       props.children  - children ReactNode.
+ * @param   {string}          props.className - CSS className of ref element.
+ * @param   {number}          props.index     - index of element in array for stagger.
+ * @returns {JSX.Element}                     Table row animations component.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const TableRowAnimations = ({
@@ -45,7 +45,7 @@ const TableRowAnimations = ({
     return () => {
       tl.kill();
     };
-  }, [ref]);
+  }, []);
 
   return (
     <div ref={ref} className={className}>

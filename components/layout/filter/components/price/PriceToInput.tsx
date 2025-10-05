@@ -3,11 +3,10 @@ import { memo } from 'react';
 
 /**
  * PriceToInput.
- * @param props          - props.
- * @param props.dict     - dictionary from server api.
- * @param props.setPrice - set price.
- * @param props.price
- * @returns              PriceToInput component.
+ * @param   {object}                           props          - props.
+ * @param   {number}                           props.price    - price value.
+ * @param   {Dispatch<SetStateAction<number>>} props.setPrice - set price.
+ * @returns {JSX.Element}                                     PriceToInput component.
  */
 const PriceToInput = ({
   price,

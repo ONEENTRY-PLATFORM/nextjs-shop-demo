@@ -4,7 +4,7 @@ import FooterMenuSection from './components/FooterMenu';
 
 /**
  * Footer section
- * @returns React component
+ * @returns {JSX.Element} React component
  */
 const Footer = (): JSX.Element => {
   return (

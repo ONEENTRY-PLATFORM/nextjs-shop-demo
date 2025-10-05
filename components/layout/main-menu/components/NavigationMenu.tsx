@@ -6,10 +6,10 @@ import NavigationMenuItem from './NavigationMenuItem';
 
 /**
  * Main navigation menu.
- * @param props      - Props.
- * @param props.lang - Current language shortcode.
- * @param props.menu - Represents a menu array of objects.
- * @returns          Main navigation menu.
+ * @param   {object}               props      - Props.
+ * @param   {string}               props.lang - Current language shortcode.
+ * @param   {IMenusPages[]}        props.menu - Represents a menu array of objects.
+ * @returns {Promise<JSX.Element>}            Main navigation menu.
  */
 const NavigationMenu = async ({
   lang,

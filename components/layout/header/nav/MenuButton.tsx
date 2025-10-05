@@ -1,14 +1,15 @@
 'use client';
 
+import type { JSX } from 'react';
 import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Mobile menu trigger button
- * @returns Mobile menu trigger button
+ * @returns {JSX.Element} Mobile menu trigger button
  */
-const MobileMenuTrigger = () => {
+const MobileMenuTrigger = (): JSX.Element => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   return (

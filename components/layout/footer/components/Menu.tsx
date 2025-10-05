@@ -11,9 +11,9 @@ import MenuItem from './MenuItem';
 
 /**
  * Footer menu.
- * @param props      - Menu props.
- * @param props.menu - Represents a menu object.
- * @returns          footer menu.
+ * @param   {object}       props      - Menu props.
+ * @param   {IMenusEntity} props.menu - Represents a menu object.
+ * @returns {JSX.Element}             footer menu.
  */
 const Menu = ({ menu }: { menu: IMenusEntity }): JSX.Element => {
   const [lang] = ServerProvider('lang');

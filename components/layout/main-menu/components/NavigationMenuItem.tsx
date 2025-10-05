@@ -7,11 +7,11 @@ import type { JSX } from 'react';
 
 /**
  * Main navigation menu item.
- * @param props             - Menu item props.
- * @param props.label       - Menu item label.
- * @param props.href        - Menu item link.
- * @param props.hasDropdown - If true, menu item has dropdown.
- * @returns                 Main navigation menu item.
+ * @param   {object}      props             - Menu item props.
+ * @param   {string}      props.label       - Menu item label.
+ * @param   {string}      props.href        - Menu item link.
+ * @param   {boolean}     props.hasDropdown - If true, menu item has dropdown.
+ * @returns {JSX.Element}                   Main navigation menu item.
  */
 const NavigationMenuItem = ({
   label,

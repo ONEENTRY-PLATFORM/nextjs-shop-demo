@@ -9,7 +9,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 
 /**
  * Logout menu item button.
- * @returns JSX Logout menu item button.
+ * @returns {JSX.Element} JSX Logout menu item button.
  */
 const LogoutMenuItem = (): JSX.Element => {
   const { authenticate } = useContext(AuthContext);

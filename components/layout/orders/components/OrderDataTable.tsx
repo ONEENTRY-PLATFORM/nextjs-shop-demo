@@ -23,19 +23,19 @@ interface ISettings {
 
 /**
  * OrderData table
- * @param props
- * @param props.settings
- * @param props.data
- * @param props.lang
- * @returns              JSX.Element
+ * @param   {object}               props          - Component props
+ * @param   {ISettings}            props.settings - Settings object
+ * @param   {IOrderByMarkerEntity} props.data     - Order data
+ * @param   {string}               props.lang     - Current language
+ * @returns {JSX.Element}                         JSX.Element
  */
 const OrderDataTable = ({
   settings,
   data,
   lang,
 }: {
-  settings: ISettings | undefined;
-  data: IOrderByMarkerEntity | undefined;
+  settings: ISettings;
+  data: IOrderByMarkerEntity;
   lang: string;
 }): JSX.Element => {
   if (!data || !settings) {

@@ -16,11 +16,11 @@ import UserProfileMenu from './user-menu/UserProfileMenu';
 
 /**
  * Nav item profile link / SignInForm button.
- * @param props          - Props.
- * @param props.item     - menu item.
- * @param props.lang     - current language shortcode.
- * @param props.userMenu - Represents a menu object.
- * @returns              JSX.Element.
+ * @param   {object}       props          - Props.
+ * @param   {IMenusPages}  props.item     - menu item.
+ * @param   {string}       props.lang     - current language shortcode.
+ * @param   {IMenusEntity} props.userMenu - Represents a menu object.
+ * @returns {JSX.Element}                 JSX.Element.
  */
 const NavItemProfile = ({
   item,
@@ -29,7 +29,7 @@ const NavItemProfile = ({
 }: {
   item: IMenusPages;
   lang: string;
-  userMenu?: IMenusEntity;
+  userMenu: IMenusEntity;
 }): JSX.Element => {
   const { open, setOpen, setComponent } = useContext(OpenDrawerContext);
   const { isAuth } = useContext(AuthContext);

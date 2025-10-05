@@ -8,11 +8,11 @@ import { useRef, useState } from 'react';
 
 /**
  * Order row animations.
- * @param props           - Props.
- * @param props.children  - children ReactNode.
- * @param props.className - CSS className of ref element.
- * @param props.index     - Index of element for animations stagger.
- * @returns               JSX.Element
+ * @param   {object}      props           - Props.
+ * @param   {ReactNode}   props.children  - children ReactNode.
+ * @param   {string}      props.className - CSS className of ref element.
+ * @param   {number}      props.index     - Index of element for animations stagger.
+ * @returns {JSX.Element}                 JSX.Element
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const OrderRowAnimations = ({

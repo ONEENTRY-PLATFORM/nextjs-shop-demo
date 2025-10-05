@@ -6,10 +6,10 @@ import type { JSX, Key } from 'react';
 
 /**
  * Lang selector.
- * @param props
- * @param props.locales - locales list.
- * @param props.lang    - current language shortcode.
- * @returns             Lang selector select.
+ * @param   {object}         props         - Lang selector props.
+ * @param   {ILocalEntity[]} props.locales - locales list.
+ * @param   {string}         props.lang    - current language shortcode.
+ * @returns {JSX.Element}                  Lang selector select.
  */
 const LangSelector = ({
   locales,

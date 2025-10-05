@@ -16,12 +16,12 @@ import RepeatOrderButton from './RepeatOrderButton';
 
 /**
  * Order page
- * @param props          - Order page props
- * @param props.id       - Order id
- * @param props.settings - Settings
- * @param props.lang     - Language
- * @param props.isActive - Is active
- * @returns              JSX.Element
+ * @param   {object}      props          - Order page props
+ * @param   {number}      props.id       - Order id
+ * @param   {object}      props.settings - Settings
+ * @param   {string}      props.lang     - Language
+ * @param   {boolean}     props.isActive - Is active
+ * @returns {JSX.Element}                JSX.Element
  */
 const OrderPage = ({
   id,
@@ -30,7 +30,7 @@ const OrderPage = ({
   isActive,
 }: {
   id: number;
-  settings: Record<string, any> | any;
+  settings: any;
   lang: string;
   isActive: boolean;
 }): JSX.Element => {
