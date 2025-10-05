@@ -19,7 +19,6 @@ const baloo = Baloo({
 
 /**
  * Footer menu section.
- *
  * @returns Footer menu section.
  */
 const FooterMenuSection = async (): Promise<JSX.Element> => {

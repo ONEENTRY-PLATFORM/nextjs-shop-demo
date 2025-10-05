@@ -8,14 +8,12 @@ import { useRef, useState } from 'react';
 
 /**
  * SlideUp transition
- *
- * @param props - SlideUp transition properties
- * @param props.children - children ReactNode
+ * @param props           - SlideUp transition properties
+ * @param props.children  - children ReactNode
  * @param props.className - CSS className of ref element
- * @param props.index - Index of element for animations stagger
+ * @param props.index     - Index of element for animations stagger
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- *
- * @returns JSX.Element with animated ref
+ * @returns               JSX.Element with animated ref
  */
 const SlideUpTransition = ({
   children,

@@ -10,21 +10,19 @@ import Placeholder from './Placeholder';
 
 /**
  * Optimized image component with LQIP placeholder and lazy loading.
- *
- * @param props - OptimizedImage component props.
- * @param props.src - Image source data.
- * @param props.alt - Image alt text.
- * @param props.width - Image width.
- * @param props.height - Image height.
- * @param props.sizes - Image sizes.
- * @param props.fill - Fill parent container.
- * @param props.priority - Priority loading flag.
+ * @param props           - OptimizedImage component props.
+ * @param props.src       - Image source data.
+ * @param props.alt       - Image alt text.
+ * @param props.width     - Image width.
+ * @param props.height    - Image height.
+ * @param props.sizes     - Image sizes.
+ * @param props.fill      - Fill parent container.
+ * @param props.priority  - Priority loading flag.
  * @param props.className - Additional CSS classes.
- * @param props.quality - Image quality (1-100).
- * @param props.type - Image type ("next" | "custom").
- * @param props.loading - Image loading behavior ("eager" | "lazy").
- *
- * @returns JSX.Element - Optimized image.
+ * @param props.quality   - Image quality (1-100).
+ * @param props.type      - Image type ("next" | "custom").
+ * @param props.loading   - Image loading behavior ("eager" | "lazy").
+ * @returns               JSX.Element - Optimized image.
  */
 const OptimizedImage = ({
   src,

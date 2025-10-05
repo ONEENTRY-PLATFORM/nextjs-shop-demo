@@ -18,11 +18,9 @@ export const dynamic = 'force-dynamic';
 
 /**
  * Shop page
- *
  * @param props - Page props containing params and searchParams
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- *
- * @returns Shop page layout JSX.Element
+ * @returns     Shop page layout JSX.Element
  */
 const ShopPageLayout = async (props: PageProps): Promise<JSX.Element> => {
   const searchParams = await props.searchParams;
@@ -95,7 +93,6 @@ export default ShopPageLayout;
 
 /**
  * Pre-generation of shop page
- *
  * @returns Array of parameters for static generation
  */
 export async function generateStaticParams() {
@@ -108,12 +105,11 @@ export async function generateStaticParams() {
 
 /**
  * Generate page metadata
- *
- * @param params - Page params
+ * @param params.params
+ * @param params        - Page params
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- *
- * @returns Metadata object
+ * @returns             Metadata object
  */
 export async function generateMetadata({
   params,

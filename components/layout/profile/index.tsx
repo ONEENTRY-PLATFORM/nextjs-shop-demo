@@ -7,12 +7,10 @@ import Loader from '@/components/shared/Loader';
 
 /**
  * Profile page
- *
- * @param props - Profile page props
+ * @param props      - Profile page props
  * @param props.lang - Current language shortcode
  * @param props.dict - dictionary from server api
- *
- * @returns Profile page component
+ * @returns          Profile page component
  */
 const ProfilePage = async ({
   lang,

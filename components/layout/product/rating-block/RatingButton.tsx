@@ -7,14 +7,13 @@ import StarRating from './StarRating';
 
 /**
  * RatingButton.
- *
- * @param props - Props for RatingButton.
- * @param props.rating - Rating value.
+ * @param props             - Props for RatingButton.
+ * @param props.rating      - Rating value.
  * @param props.reviewCount - Review count.
- * @param props.state - State.
- * @param props.setState - Set state.
- *
- * @returns RatingButton.
+ * @param props.state       - State.
+ * @param props.setState    - Set state.
+ * @param props.dict
+ * @returns                 RatingButton.
  */
 const RatingButton = ({
   dict,

@@ -7,14 +7,12 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get pages includes in menu by marker.
- *
  * @async
- * @param {string} marker - Menu marker.
- * @param {string} lang - Language code.
+ * @param   {string} marker - Menu marker.
+ * @param   {string} lang   - Language code.
  * @see {@link https://doc.oneentry.cloud/docs/menu OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
- *
- * @returns a single menu object as a ContentMenu object with included pages
+ * @returns                 a single menu object as a ContentMenu object with included pages
  */
 export const getMenuByMarker = async (
   marker: string,

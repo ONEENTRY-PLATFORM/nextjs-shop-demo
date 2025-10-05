@@ -11,7 +11,7 @@ import nextPlugin from '@next/eslint-plugin-next';
 import prettierPlugin from 'eslint-plugin-prettier';
 import tailwindcssPlugin from 'eslint-plugin-tailwindcss';
 import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort';
-
+import jsdocPlugin from 'eslint-plugin-jsdoc';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -90,6 +90,7 @@ const eslintConfig = [
       'react-hooks': reactHooksPlugin,
       tailwindcss: tailwindcssPlugin,
       'simple-import-sort': simpleImportSortPlugin,
+      jsdoc: jsdocPlugin,
     },
     rules: {
       // bring in recommended configs as base
@@ -99,6 +100,7 @@ const eslintConfig = [
       ...reactPlugin.configs.flat.rules,
       ...reactHooksPlugin.configs['recommended-latest'].rules,
       ...tailwindcssPlugin.configs['flat/recommended'].rules,
+      ...jsdocPlugin.configs['flat/recommended'].rules,
 
       // Prettier
       'prettier/prettier': [
@@ -144,6 +146,9 @@ const eslintConfig = [
       ],
 
       'no-console': 'warn',
+      
+      // JSDoc rules
+      'jsdoc/check-line-alignment': ['warn', 'always'],
     },
   }
 ];

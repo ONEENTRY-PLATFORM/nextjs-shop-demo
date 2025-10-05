@@ -14,12 +14,9 @@ import { getDictionary } from '../dictionaries';
 
 /**
  * Orders page
- *
- * @param props - Page props
+ * @param props        - Page props
  * @param props.params - page params
- *
- * @returns Orders page layout JSX.Element
- *
+ * @returns            Orders page layout JSX.Element
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  */
 const OrdersPageLayout = async ({
@@ -58,7 +55,6 @@ export default OrdersPageLayout;
 
 /**
  * Pre-generation page params
- *
  * @returns Static params for pre-generation
  */
 export async function generateStaticParams() {
@@ -71,11 +67,9 @@ export async function generateStaticParams() {
 
 /**
  * Generates metadata for the orders page, including title, description, OpenGraph tags and canonical URL
- *
- * @param metadataParams - Metadata params
+ * @param metadataParams        - Metadata params
  * @param metadataParams.params - An object containing the language parameter
- *
- * @returns Promise resolving to Metadata object with page metadata information
+ * @returns                     Promise resolving to Metadata object with page metadata information
  */
 export async function generateMetadata({
   params,

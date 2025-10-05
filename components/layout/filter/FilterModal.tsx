@@ -12,13 +12,11 @@ import FiltersForm from './FiltersForm';
 
 /**
  * FilterModal.
- *
- * @param props - FilterModal props.
+ * @param props        - FilterModal props.
  * @param props.prices - prices fromTo extracted from one product.
- * @param props.lang - Current language shortcode.
- * @param props.dict - dictionary from server api.
- *
- * @returns FilterModal.
+ * @param props.lang   - Current language shortcode.
+ * @param props.dict   - dictionary from server api.
+ * @returns            FilterModal.
  */
 const FilterModal = ({
   prices,

@@ -13,12 +13,10 @@ import ModalBackdrop from './components/ModalBackdrop';
 
 /**
  * Forms modal component.
- *
- * @param props - Component props.
+ * @param props      - Component props.
  * @param props.lang - Current language shortcode.
  * @param props.dict - dictionary from server api.
- *
- * @returns Modal with form component.
+ * @returns          Modal with form component.
  */
 const Modal = ({
   lang,

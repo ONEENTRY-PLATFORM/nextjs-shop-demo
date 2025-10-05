@@ -14,14 +14,12 @@ import PriceDisplay from './PriceDisplay';
 
 /**
  * Product card in cart.
- *
- * @param props - Product card props.
- * @param props.product - product entity object.
+ * @param props          - Product card props.
+ * @param props.product  - product entity object.
  * @param props.selected - product selected.
- * @param props.lang - Current language shortcode.
- * @param props.index - index of element in array for stagger.
- *
- * @returns ProductCard with animations.
+ * @param props.lang     - Current language shortcode.
+ * @param props.index    - index of element in array for stagger.
+ * @returns              ProductCard with animations.
  */
 const ProductCard = ({
   product,

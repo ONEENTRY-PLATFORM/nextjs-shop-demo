@@ -7,14 +7,12 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get child pages object with information as an array.
- *
  * @async
- * @param {string} url - Page URL.
- * @param {string} lang - Current language shortcode.
+ * @param   {string} url  - Page URL.
+ * @param   {string} lang - Current language shortcode.
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
- *
- * @returns Returns all created pages as an array of PageEntity objects or an empty array [] (if there is no data) for the selected parent
+ * @returns               Returns all created pages as an array of PageEntity objects or an empty array [] (if there is no data) for the selected parent
  */
 export const getChildPagesByParentUrl = async (
   url: string,

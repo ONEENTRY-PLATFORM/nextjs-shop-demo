@@ -5,11 +5,9 @@ import type { SimplePageProps } from '@/app/types/global';
 
 /**
  * BookOnlinePage page.
- *
- * @param props - Page props.
+ * @param props      - Page props.
  * @param props.page - Page entity.
- *
- * @returns BookOnlinePage component.
+ * @returns          BookOnlinePage component.
  */
 const BookOnlinePage = async ({
   page,

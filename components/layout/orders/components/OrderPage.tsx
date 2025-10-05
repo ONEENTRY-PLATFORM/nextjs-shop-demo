@@ -16,12 +16,15 @@ import RepeatOrderButton from './RepeatOrderButton';
 
 /**
  * Order page
+ * @param id.id
  * @param id
  * @param settings
- * @param lang current language shortcode
+ * @param lang        current language shortcode
  * @param isActive
- *
- * @returns JSX.Element
+ * @param id.settings
+ * @param id.lang
+ * @param id.isActive
+ * @returns           JSX.Element
  */
 const OrderPage: FC<{
   id: number;

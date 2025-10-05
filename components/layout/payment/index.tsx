@@ -23,12 +23,10 @@ import EmptyCart from '../cart/components/EmptyCart';
 
 /**
  * Payment page.
- *
- * @param props - SimplePageProps.
+ * @param props      - SimplePageProps.
  * @param props.lang - current language shortcode.
  * @param props.dict - dictionary from server api.
- *
- * @returns JSX.Element.
+ * @returns          JSX.Element.
  */
 const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   const dispatch = useAppDispatch();

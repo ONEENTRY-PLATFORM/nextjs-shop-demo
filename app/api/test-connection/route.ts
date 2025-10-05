@@ -4,6 +4,9 @@ import { api } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError } from '@/app/utils/errorHandler';
 
+/**
+ *
+ */
 export async function GET() {
   try {
     const startTime = Date.now();

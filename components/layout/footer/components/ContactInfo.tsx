@@ -6,7 +6,6 @@ import { LanguageEnum } from '@/app/types/enum';
 
 /**
  * Contact Info.
- *
  * @returns JSX.Element.
  */
 const ContactInfo = async (): Promise<JSX.Element> => {

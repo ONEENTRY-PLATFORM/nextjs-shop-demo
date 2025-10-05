@@ -9,13 +9,10 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Form animations.
- *
- * @param props - FormAnimations Props.
- * @param props.children - children ReactNode.
+ * @param props           - FormAnimations Props.
+ * @param props.children  - children ReactNode.
  * @param props.isLoading - loading state.
- *
- * @returns A form component wrapper with animations applied.
- *
+ * @returns               A form component wrapper with animations applied.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const FormAnimations = ({

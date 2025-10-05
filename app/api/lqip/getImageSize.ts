@@ -8,11 +8,9 @@ import url from 'url';
  * This function fetches an image from the provided URL and determines its dimensions
  * without downloading the entire image. It uses the image-size library to parse
  * the image header and extract width and height information.
- *
  * @param imgUrl - The URL of the image to analyze
- * @returns A promise that resolves to an object containing width and height properties
+ * @returns      A promise that resolves to an object containing width and height properties
  * @throws Error if the image cannot be fetched or dimensions cannot be determined
- *
  * @example
  * ```typescript
  * const { width, height } = await getImageSize('https://example.com/image.jpg');

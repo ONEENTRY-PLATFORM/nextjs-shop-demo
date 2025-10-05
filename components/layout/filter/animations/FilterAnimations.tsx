@@ -9,14 +9,11 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Filter wrapper animations.
- *
- * @param props - Filter wrapper props.
- * @param props.children - children ReactNode.
+ * @param props           - Filter wrapper props.
+ * @param props.children  - children ReactNode.
  * @param props.className - Filter wrapper className.
- * @param props.index - index of element in array for stagger.
- *
- * @returns filter wrapper with animations.
- *
+ * @param props.index     - index of element in array for stagger.
+ * @returns               filter wrapper with animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const FilterAnimations = ({

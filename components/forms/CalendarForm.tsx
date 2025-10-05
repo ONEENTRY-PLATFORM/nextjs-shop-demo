@@ -19,11 +19,9 @@ import TimeSlots from './calendar/TimeSlots';
 
 /**
  * Calendar form.
- *
- * @param props - Component props.
+ * @param props      - Component props.
  * @param props.lang - Current language shortcode.
- *
- * @returns Calendar form.
+ * @returns          Calendar form.
  */
 const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
   const dispatch = useAppDispatch();

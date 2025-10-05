@@ -19,7 +19,6 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
  * VerificationForm props
- *
  * @property dict - dictionary from server api
  */
 interface VerificationFormProps extends FormProps {
@@ -28,11 +27,9 @@ interface VerificationFormProps extends FormProps {
 
 /**
  * VerificationForm component for handling OTP verification.
- *
- * @param props - VerificationForm props.
+ * @param props      - VerificationForm props.
  * @param props.dict - dictionary from server api containing localized text.
- *
- * @returns VerificationForm component.
+ * @returns          VerificationForm component.
  */
 const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
   const router = useTransitionRouter();
@@ -71,9 +68,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
 
   /**
    * Submit form handle for checkCode/activateUser
-   *
    * @param e - FormEvent from form submission
-   *
    * @returns Promise that resolves when the form submission is complete
    */
   const onSubmitHandle = async (e: FormEvent<HTMLFormElement>) => {

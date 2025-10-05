@@ -8,11 +8,9 @@ import ProductsGridLoaderAnimations from '../animations/ProductsGridLoaderAnimat
 
 /**
  * ProductsGridLoader
- *
- * @param props - Loader props.
+ * @param props       - Loader props.
  * @param props.limit - number of cards to load.
- *
- * @returns Products GridLoader.
+ * @returns           Products GridLoader.
  */
 const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
   return (

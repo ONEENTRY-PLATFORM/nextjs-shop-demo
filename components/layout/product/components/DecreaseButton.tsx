@@ -11,13 +11,11 @@ import {
 
 /**
  * Decrease quantity button component.
- *
- * @param props - The component props.
- * @param props.id - The product ID.
- * @param props.qty - The current cart count for the product.
+ * @param props       - The component props.
+ * @param props.id    - The product ID.
+ * @param props.qty   - The current cart count for the product.
  * @param props.title - The name of the product.
- *
- * @returns A button that decreases the product quantity in the cart.
+ * @returns           A button that decreases the product quantity in the cart.
  */
 const DecreaseButton = memo(
   ({

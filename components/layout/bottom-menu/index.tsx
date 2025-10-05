@@ -14,7 +14,6 @@ import NavItemHome from './components/NavItemHome';
 
 /**
  * Bottom menu for mobile devices.
- *
  * @returns bottom mobile menu JSX.Element.
  */
 const BottomMobileMenu = async (): Promise<JSX.Element> => {

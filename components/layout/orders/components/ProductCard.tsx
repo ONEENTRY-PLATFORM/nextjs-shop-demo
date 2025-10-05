@@ -23,11 +23,10 @@ interface ProductCardProps {
 
 /**
  * Order product card
- * @param product - product entity object
- * @param lang - current language shortcode
+ * @param product  - product entity object
+ * @param lang     - current language shortcode
  * @param settings - settings object with localized titles
- *
- * @returns JSX.Element
+ * @returns        JSX.Element
  */
 const ProductCard: FC<ProductCardProps> = memo(
   ({ product, lang, settings }: ProductCardProps) => {

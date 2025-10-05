@@ -3,12 +3,10 @@ import { memo } from 'react';
 
 /**
  * PriceFrom Input.
- *
- * @param props - Input props.
- * @param props.price - Price.
+ * @param props          - Input props.
+ * @param props.price    - Price.
  * @param props.setPrice - Set price.
- *
- * @returns JSX.Element
+ * @returns              JSX.Element
  */
 const PriceFromInput = ({
   price,

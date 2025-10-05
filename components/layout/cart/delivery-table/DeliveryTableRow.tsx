@@ -8,14 +8,12 @@ import TableRowAnimations from '../animations/TableRowAnimations';
 
 /**
  * Delivery table row.
- *
- * @param props - component props.
- * @param props.label - label text.
- * @param props.value - value text.
- * @param props.icon - icon url.
+ * @param props             - component props.
+ * @param props.label       - label text.
+ * @param props.value       - value text.
+ * @param props.icon        - icon url.
  * @param props.placeholder - placeholder text in table row input.
- *
- * @returns JSX.Element
+ * @returns                 JSX.Element
  */
 const DeliveryTableRow = ({
   label,

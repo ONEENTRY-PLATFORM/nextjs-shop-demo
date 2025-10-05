@@ -12,13 +12,11 @@ import ProductImage from './ProductImage';
 
 /**
  * Products group card.
- *
- * @param props - component props.
+ * @param props         - component props.
  * @param props.product - product entity object.
- * @param props.lang - current language shortcode.
- * @param props.dict - dictionary from server api.
- *
- * @returns Products group card.
+ * @param props.lang    - current language shortcode.
+ * @param props.dict    - dictionary from server api.
+ * @returns             Products group card.
  */
 const GroupCard = ({
   product,

@@ -19,17 +19,19 @@ import OrdersTableLoader from './components/OrdersTableLoader';
 
 /**
  * Orders page component.
- *
- * @param props - Props for the component.
- * @param props.lang - current language shortcode.
- * @param props.dict - dictionary from server api.
- * @param props.settings - settings from server api.
- * @param props.settings.orders_limit - orders limit.
- * @param props.settings.date_title - date title.
- * @param props.settings.total_title - total title.
- * @param props.settings.status_title - status title.
- *
- * @returns JSX.Element
+ * @param props                             - Props for the component.
+ * @param props.lang                        - current language shortcode.
+ * @param props.dict                        - dictionary from server api.
+ * @param props.settings                    - settings from server api.
+ * @param props.settings.orders_limit       - orders limit.
+ * @param props.settings.date_title         - date title.
+ * @param props.settings.total_title        - total title.
+ * @param props.settings.status_title       - status title.
+ * @param props.settings.orders_limit.value
+ * @param props.settings.date_title.value
+ * @param props.settings.total_title.value
+ * @param props.settings.status_title.value
+ * @returns                                 JSX.Element
  */
 const OrdersPage = ({
   lang,

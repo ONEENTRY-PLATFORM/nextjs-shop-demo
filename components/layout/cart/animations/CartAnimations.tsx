@@ -10,13 +10,10 @@ import type { AnimationsProps } from '@/app/types/global';
 
 /**
  * Cart wrapper stage leaving animations.
- *
- * @param props - Cart wrapper props.
- * @param props.children - children ReactNode.
+ * @param props           - Cart wrapper props.
+ * @param props.children  - children ReactNode.
  * @param props.className - cart wrapper className.
- *
- * @returns cart wrapper with animations.
- *
+ * @returns               cart wrapper with animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const CartAnimations = ({

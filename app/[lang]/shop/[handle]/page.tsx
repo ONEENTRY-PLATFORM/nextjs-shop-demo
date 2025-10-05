@@ -17,14 +17,12 @@ import { getDictionary } from '../../dictionaries';
 
 /**
  * Shop catalog page
- *
- * @async server component
- * @param {Promise<object>} props.params - page params
- * @param {Promise<any>} props.searchParams - search params
- *
+ * @async
+ * @param   {Promise<object>} props.params       - page params
+ * @param   {Promise<any>}    props.searchParams - search params
+ * @param                     props
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- *
- * @returns Shop page layout JSX.Element
+ * @returns                                      Shop page layout JSX.Element
  */
 const ShopCatalogPage = async (props: {
   params: Promise<{ handle: any; lang: any }>;
@@ -86,10 +84,11 @@ export async function generateStaticParams() {
 
 /**
  * Generate page metadata
- * @async server component
- * @param params page params
+ * @async
+ * @param params.params
+ * @param params        page params
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns metadata
+ * @returns             metadata
  */
 export async function generateMetadata({
   params,

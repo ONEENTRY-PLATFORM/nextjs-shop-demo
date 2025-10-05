@@ -9,7 +9,6 @@ import FilterButton from './components/FilterButton';
 
 /**
  * Breadcrumbs
- *
  * @returns JSX.Element
  */
 const Breadcrumbs = (): JSX.Element => {

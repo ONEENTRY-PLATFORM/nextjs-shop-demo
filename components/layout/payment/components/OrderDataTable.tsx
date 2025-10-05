@@ -8,12 +8,10 @@ import { UseDate } from '@/components/utils/utils';
 
 /**
  * Order data table.
- *
- * @param props - Component properties.
- * @param props.dict - Dictionary data.
+ * @param props         - Component properties.
+ * @param props.dict    - Dictionary data.
  * @param props.account - Account data.
- *
- * @returns JSX.Element.
+ * @returns             JSX.Element.
  */
 const OrderDataTable = ({
   dict,

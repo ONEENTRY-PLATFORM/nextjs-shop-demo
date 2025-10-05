@@ -7,7 +7,6 @@ import { api } from '@/app/api';
 
 /**
  * Custom hook for submitting form data to OneEntry CMS
- *
  * @example
  * const { loading, sendData } = useSetForm();
  *
@@ -17,12 +16,10 @@ import { api } from '@/app/api';
  *     console.log('Form submitted successfully');
  *   }
  * };
- *
  * @see {@link https://doc.oneentry.cloud/docs/forms OneEntry CMS forms documentation}
- *
  * @returns An object containing:
- * - loading: boolean indicating submission status
- * - sendData: function to submit form data, returns Promise<any>
+ *  - loading: boolean indicating submission status
+ *  - sendData: function to submit form data, returns Promise<any>
  */
 export const useSetForm = (): {
   loading: boolean;

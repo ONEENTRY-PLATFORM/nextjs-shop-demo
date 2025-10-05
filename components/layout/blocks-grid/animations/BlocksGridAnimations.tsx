@@ -8,13 +8,10 @@ import { useRef, useState } from 'react';
 
 /**
  * Blocks grid animations.
- *
- * @param props - Props for the component.
- * @param props.children - Children ReactNode to be rendered inside the component.
+ * @param props           - Props for the component.
+ * @param props.children  - Children ReactNode to be rendered inside the component.
  * @param props.className - CSS className of ref element for styling.
- *
- * @returns JSX.Element - A blocks grid component with animations applied.
- *
+ * @returns               JSX.Element - A blocks grid component with animations applied.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const BlocksGridAnimations = ({

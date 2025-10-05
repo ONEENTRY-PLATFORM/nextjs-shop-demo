@@ -6,7 +6,6 @@ import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
 /**
  * Footer section.
- *
  * @returns React component.
  */
 const OEMenuSection = (): JSX.Element => {

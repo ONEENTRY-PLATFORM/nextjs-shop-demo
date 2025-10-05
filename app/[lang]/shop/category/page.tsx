@@ -13,13 +13,11 @@ import { i18n } from '@/i18n-config';
 
 /**
  * Category page
- *
- * @async server component
- * @param {PageProps} params - page params
+ * @async
+ * @param   {PageProps} params - page params
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- *
- * @returns Category page layout JSX.Element
+ * @returns                    Category page layout JSX.Element
  */
 const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
   const { lang } = await params;
@@ -99,11 +97,12 @@ export async function generateStaticParams() {
 
 /**
  * Generate page metadata
- * @async server component
- * @param params page params
+ * @async
+ * @param params.params
+ * @param params        page params
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns metadata
+ * @returns             metadata
  */
 export async function generateMetadata({
   params,

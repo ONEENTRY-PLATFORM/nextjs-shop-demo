@@ -12,11 +12,9 @@ import Spinner from '@/components/shared/Spinner';
 
 /**
  * LoadMore
- *
- * @param props - Load more props
+ * @param props            - Load more props
  * @param props.totalPages - total number of pages
- *
- * @returns LoadMore button component
+ * @returns                LoadMore button component
  */
 const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
   const pathname = usePathname();

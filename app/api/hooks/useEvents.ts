@@ -5,11 +5,10 @@ import { handleApiError } from '@/app/utils/errorHandler';
 
 /**
  * Subscribe events with Events API
- *
  * @async
  * @param id - product id
  * @see {@link https://doc.oneentry.cloud/docs/events OneEntry CMS docs}
- * @returns Promise that resolves when subscription is complete
+ * @returns  Promise that resolves when subscription is complete
  */
 export const onSubscribeEvents = async (id: number): Promise<void> => {
   try {
@@ -33,11 +32,10 @@ export const onSubscribeEvents = async (id: number): Promise<void> => {
 
 /**
  * Unsubscribe events with Events API
- *
  * @async
  * @param id - product id
  * @see {@link https://doc.oneentry.cloud/docs/events OneEntry CMS docs}
- * @returns Promise that resolves when unsubscription is complete
+ * @returns  Promise that resolves when unsubscription is complete
  */
 export const onUnsubscribeEvents = async (id: number): Promise<void> => {
   try {

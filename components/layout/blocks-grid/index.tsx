@@ -7,12 +7,10 @@ import BlocksGridCard from './components/BlocksGridCard';
 
 /**
  * Blocks grid.
- *
- * @param props - component props.
+ * @param props        - component props.
  * @param props.blocks - array of blocks names.
- * @param props.lang - current language shortcode.
- *
- * @returns blocks grid with animations.
+ * @param props.lang   - current language shortcode.
+ * @returns            blocks grid with animations.
  */
 const BlocksGrid = async ({
   blocks,

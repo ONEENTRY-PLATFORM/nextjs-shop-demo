@@ -7,15 +7,13 @@ import CarouselItemTitle from './CarouselItemTitle';
 
 /**
  * CarouselItem.
- *
- * @param props - Carousel item props.
- * @param props.item - product object.
- * @param props.lang - current language shortcode.
- * @param props.index - index of slide.
- * @param props.currentIndex - index of current slide.
+ * @param props                 - Carousel item props.
+ * @param props.item            - product object.
+ * @param props.lang            - current language shortcode.
+ * @param props.index           - index of slide.
+ * @param props.currentIndex    - index of current slide.
  * @param props.setCurrentIndex - Set state action.
- *
- * @returns CarouselItem component.
+ * @returns                     CarouselItem component.
  */
 const CarouselItem = ({
   item,

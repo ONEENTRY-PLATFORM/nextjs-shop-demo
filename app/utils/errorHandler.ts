@@ -4,8 +4,7 @@ import { toast } from 'react-toastify';
 
 /**
  * Custom error class for API errors
- *
- * @property {number} statusCode - The HTTP status code of the error
+ * @property {number}  statusCode    - The HTTP status code of the error
  * @property {unknown} originalError - The original error object
  */
 export class ApiError extends Error {
@@ -22,9 +21,8 @@ export class ApiError extends Error {
 
 /**
  * Type guard to check if an object is of type IError
- *
  * @param error - The error object to check
- * @returns True if the object is an IError, false otherwise
+ * @returns     True if the object is an IError, false otherwise
  */
 export function isIError(error: unknown): error is IError {
   return (
@@ -37,11 +35,9 @@ export function isIError(error: unknown): error is IError {
 
 /**
  * Centralized error handling function
- *
  * @param handle - The function to handle the error
- * @param error - The error to handle
- *
- * @returns An ApiError with standardized format
+ * @param error  - The error to handle
+ * @returns      An ApiError with standardized format
  */
 export function handleApiError(handle: string, error: unknown): ApiError {
   if (isIError(error)) {
@@ -82,7 +78,6 @@ export function handleApiError(handle: string, error: unknown): ApiError {
 
 /**
  * Custom hook for handling API errors in React components
- *
  * @returns A function to handle API errors with toast notifications
  */
 export function useApiErrorHandler() {
@@ -97,10 +92,9 @@ export function useApiErrorHandler() {
 
 /**
  * Format error message for user display.
- *
- * @param error - The error to format
+ * @param error          - The error to format
  * @param defaultMessage - Default message to show if error is not recognized
- * @returns Formatted error message
+ * @returns              Formatted error message
  */
 export function formatErrorMessage(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

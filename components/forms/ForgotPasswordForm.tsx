@@ -17,12 +17,10 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
  * ForgotPassword form.
- *
- * @param props - Component props.
+ * @param props      - Component props.
  * @param props.lang - Current language shortcode.
  * @param props.dict - dictionary from server api.
- *
- * @returns ForgotPassword form component.
+ * @returns          ForgotPassword form component.
  */
 export const ForgotPasswordForm = ({
   lang,
@@ -46,9 +44,7 @@ export const ForgotPasswordForm = ({
 
   /**
    * Submit form.
-   *
    * @param e - Form event
-   *
    * @returns Promise that resolves when the form is submitted
    */
   const onSubmitFormHandle = async (e: FormEvent<HTMLFormElement>) => {

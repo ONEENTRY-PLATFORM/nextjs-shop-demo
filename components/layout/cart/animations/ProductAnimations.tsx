@@ -16,15 +16,12 @@ import {
 
 /**
  * Product animations
- *
- * @param props - ProductAnimationsProps.
- * @param props.children - children ReactNode.
+ * @param props           - ProductAnimationsProps.
+ * @param props.children  - children ReactNode.
  * @param props.className - CSS className of ref element.
- * @param props.product - product entity object.
- * @param props.index - index of element in array for stagger.
- *
- * @returns JSX.Element.
- *
+ * @param props.product   - product entity object.
+ * @param props.index     - index of element in array for stagger.
+ * @returns               JSX.Element.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const ProductAnimations = memo(

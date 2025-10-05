@@ -11,13 +11,11 @@ import DeliveryTable from '@/components/layout/cart/delivery-table/DeliveryTable
 
 /**
  * Delivery form.
- *
- * @param props - Component props.
- * @param props.lang - Current language shortcode.
- * @param props.dict - dictionary from server api.
+ * @param props              - Component props.
+ * @param props.lang         - Current language shortcode.
+ * @param props.dict         - dictionary from server api.
  * @param props.deliveryData - Represents a delivery product entity object.
- *
- * @returns delivery form.
+ * @returns                  delivery form.
  */
 const DeliveryForm = ({
   lang,

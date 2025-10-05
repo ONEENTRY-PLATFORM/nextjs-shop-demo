@@ -17,17 +17,20 @@ interface HandleProps {
 
 /**
  * Getting all orders from the orders storage object created by the user
- *
  * @async
- * @param {string} props.marker - The text identifier of the order storage object.
- * @param {number} props.id - ID of the order object.
- * @param {IOrderData} props.data - Object for updating an order.
- * @param {string} props.lang - Current language shortcode.
+ * @param   {string}     props.marker - The text identifier of the order storage object.
+ * @param   {number}     props.id     - ID of the order object.
+ * @param   {IOrderData} props.data   - Object for updating an order.
+ * @param   {string}     props.lang   - Current language shortcode.
+ * @param                root0
+ * @param                root0.marker
+ * @param                root0.id
+ * @param                root0.data
+ * @param                root0.lang
  * @see {@link https://doc.oneentry.cloud/docs/orders OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
- *
  * @description This method requires user authorization. For more information about configuring the authorization module, see the documentation in the configuration settings section of the SDK.
- * @returns Promise
+ * @returns                           Promise
  */
 export const updateOrderByMarkerAndId = async ({
   marker,

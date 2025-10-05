@@ -25,13 +25,12 @@ import {
 
 /**
  * Authentication context properties
- *
- * @property isAuth - Authentication status
- * @property isLoading - Loading status
- * @property userToken - User token
- * @property user - User entity
+ * @property isAuth       - Authentication status
+ * @property isLoading    - Loading status
+ * @property userToken    - User token
+ * @property user         - User entity
  * @property authenticate - Authentication function
- * @property refreshUser - User refresh function
+ * @property refreshUser  - User refresh function
  */
 type ContextProps = {
   isAuth: boolean;
@@ -44,7 +43,6 @@ type ContextProps = {
 
 /**
  * Auth provider properties
- *
  * @property children - Children ReactNode
  * @property langCode - Current language code
  */
@@ -65,12 +63,10 @@ export const AuthContext = createContext<ContextProps>({
 
 /**
  * Auth provider
- *
- * @param props - Auth provider properties
+ * @param props          - Auth provider properties
  * @param props.children - Children ReactNode
  * @param props.langCode - Current language code
- *
- * @returns AuthContext Provider
+ * @returns              AuthContext Provider
  */
 export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
   const dispatch = useAppDispatch();

@@ -6,11 +6,9 @@ import type { LoaderProps } from '@/app/types/global';
 
 /**
  * MainMenu Loader.
- *
- * @param props - Props limit.
+ * @param props       - Props limit.
  * @param props.limit - Limit.
- *
- * @returns MainMenu Loader.
+ * @returns           MainMenu Loader.
  */
 const MainMenuLoader = ({ limit = 4 }: LoaderProps): JSX.Element => {
   return (

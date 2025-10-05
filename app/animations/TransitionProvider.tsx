@@ -7,12 +7,12 @@ import { useRef } from 'react';
 
 /**
  * Transition provider - main 'stage' transition provider
- *
- * @param {ReactNode} props.children - children ReactNode
+ * @param   {ReactNode} props.children - children ReactNode
+ * @param               root0
+ * @param               root0.children
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  * @see {@link https://github.com/ismamz/next-transition-router next-transition-router}
- *
- * @returns TransitionRouter
+ * @returns                            TransitionRouter
  */
 export default function TransitionProvider({
   children,

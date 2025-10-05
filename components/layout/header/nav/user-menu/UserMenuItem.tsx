@@ -6,13 +6,11 @@ import type { FC } from 'react';
 
 /**
  * User menu item.
- *
- * @param props - Component properties.
- * @param props.lang - Current language shortcode.
- * @param props.page - Current page.
+ * @param props          - Component properties.
+ * @param props.lang     - Current language shortcode.
+ * @param props.page     - Current page.
  * @param props.setState - Set state function.
- *
- * @returns User menu item link.
+ * @returns              User menu item link.
  */
 const UserMenuItem: FC<{
   lang: string;

@@ -20,12 +20,10 @@ import Placeholder from '@/components/shared/Placeholder';
 
 /**
  * Product images gallery/placeholder
- *
- * @param props - Product image props
+ * @param props         - Product image props
  * @param props.product - product entity object
- * @param props.alt - alt text for image
- *
- * @returns Product images gallery/placeholder component
+ * @param props.alt     - alt text for image
+ * @returns             Product images gallery/placeholder component
  */
 const ProductImageGallery = ({
   product,

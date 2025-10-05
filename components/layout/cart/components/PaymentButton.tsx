@@ -4,12 +4,10 @@ import TableRowAnimations from '../animations/TableRowAnimations';
 
 /**
  * Payment button
- *
- * @param props - Payment button props
+ * @param props           - Payment button props
  * @param props.className - CSS className of ref element
- * @param props.text - Button text
- *
- * @returns Payment button component
+ * @param props.text      - Button text
+ * @returns               Payment button component
  */
 const PaymentButton = ({
   className,

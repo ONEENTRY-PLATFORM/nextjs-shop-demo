@@ -7,11 +7,9 @@ import SignInButton from '../shared/SignInButton';
 
 /**
  * AuthError page.
- *
- * @param props - Props.
+ * @param props      - Props.
  * @param props.dict - Dictionary values.
- *
- * @returns AuthError page.
+ * @returns          AuthError page.
  */
 const AuthError = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const { auth_required_text } = dict;

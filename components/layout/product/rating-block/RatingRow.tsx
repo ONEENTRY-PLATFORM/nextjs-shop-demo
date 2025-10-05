@@ -6,15 +6,13 @@ import StarRating from './StarRating';
 
 /**
  * Rating row.
- *
- * @param props - Rating row props.
- * @param props.rating - Rating object with rating value, bar value and star count.
- * @param props.rating.value - Rating value.
- * @param props.rating.barValue - Rating bar value.
+ * @param props                  - Rating row props.
+ * @param props.rating           - Rating object with rating value, bar value and star count.
+ * @param props.rating.value     - Rating value.
+ * @param props.rating.barValue  - Rating bar value.
  * @param props.rating.starCount - Rating star count.
- * @param props.state - State of the rating.
- *
- * @returns Rating row component.
+ * @param props.state            - State of the rating.
+ * @returns                      Rating row component.
  */
 const RatingRow = ({
   rating: { value, barValue, starCount },

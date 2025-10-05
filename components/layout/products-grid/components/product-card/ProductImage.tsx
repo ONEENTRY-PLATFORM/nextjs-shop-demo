@@ -5,12 +5,11 @@ import OptimizedImage from '@/components/shared/OptimizedImage';
 
 /**
  * Product image.
- *
- * @param props - Component props.
- * @param props.attributes - product attributes.
- * @param props.alt - alt text for image.
- *
- * @returns Product image/placeholder.
+ * @param props                 - Component props.
+ * @param props.attributes      - product attributes.
+ * @param props.alt             - alt text for image.
+ * @param props.attributeValues
+ * @returns                     Product image/placeholder.
  */
 const ProductImage = ({
   attributeValues,

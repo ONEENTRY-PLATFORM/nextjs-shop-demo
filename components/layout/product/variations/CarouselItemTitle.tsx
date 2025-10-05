@@ -4,12 +4,10 @@ import type { JSX } from 'react';
 
 /**
  * CarouselItem title.
- *
- * @param props - component props.
+ * @param props      - component props.
  * @param props.item - product object.
  * @param props.lang - current language shortcode.
- *
- * @returns title with link to product.
+ * @returns          title with link to product.
  */
 const CarouselItemTitle = ({
   item: { id, localizeInfos, attributeValues },

@@ -10,14 +10,11 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Form field animations.
- *
- * @param props - Props for the FormFieldAnimations component.
- * @param props.children - children ReactNode.
+ * @param props           - Props for the FormFieldAnimations component.
+ * @param props.children  - children ReactNode.
  * @param props.className - CSS className of ref element.
- * @param props.index - Index of element for animations stagger.
- *
- * @returns Form field animations.
- *
+ * @param props.index     - Index of element for animations stagger.
+ * @returns               Form field animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const FormFieldAnimations = ({

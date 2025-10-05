@@ -8,14 +8,16 @@ import { useRef, useState } from 'react';
 
 /**
  * Payment method animations.
- *
- * @param children - children ReactNode.
- * @param className - CSS className of ref element.
- * @param index - Index of element for animations stagger.
- * @param isActive - Is active element.
+ * @param children.children
+ * @param children           - children ReactNode.
+ * @param className          - CSS className of ref element.
+ * @param index              - Index of element for animations stagger.
+ * @param isActive           - Is active element.
+ * @param children.className
+ * @param children.isActive
+ * @param children.index
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- *
- * @returns Payment method animations.
+ * @returns                  Payment method animations.
  */
 const PaymentMethodAnimations: FC<{
   children: ReactNode;

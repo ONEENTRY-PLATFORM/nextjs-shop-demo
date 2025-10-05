@@ -6,12 +6,17 @@ import GroupCard from './group-card/GroupCard';
 
 /**
  * ProductsGroup
- * @param block - The block data containing products and attributes
- * @param lang current language shortcode
- * @param dict dictionary from server api
- * @param langCode - The language code for attribute values
- *
- * @returns ProductsGroup
+ * @param block.block
+ * @param block                       - The block data containing products and attributes
+ * @param lang                        current language shortcode
+ * @param dict                        dictionary from server api
+ * @param langCode                    - The language code for attribute values
+ * @param block.block.attributeValues
+ * @param block.block.products
+ * @param block.lang
+ * @param block.dict
+ * @param block.langCode
+ * @returns                           ProductsGroup
  */
 const ProductsGroup = ({
   block,

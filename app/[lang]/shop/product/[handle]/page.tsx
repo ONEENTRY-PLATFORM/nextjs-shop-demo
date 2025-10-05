@@ -17,12 +17,9 @@ import { i18n } from '@/i18n-config';
 
 /**
  * Product page.
- *
- * @param props - Page props.
+ * @param props        - Page props.
  * @param props.params - Page params with handle and lang.
- *
- * @returns Promise<JSX.Element> - Product page layout.
- *
+ * @returns            Promise<JSX.Element> - Product page layout.
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  */
 const ProductPageLayout = async ({
@@ -90,7 +87,6 @@ export default ProductPageLayout;
 
 /**
  * Pre-generation of a portion of product cards for each locale.
- *
  * @returns Array of parameters for static generation.
  */
 export async function generateStaticParams() {
@@ -120,11 +116,10 @@ export async function generateStaticParams() {
 
 /**
  * Generate page metadata.
- *
- * @param params - Page params with handle and lang.
+ * @param params.params
+ * @param params        - Page params with handle and lang.
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- *
- * @returns Metadata object.
+ * @returns             Metadata object.
  */
 export async function generateMetadata({
   params,

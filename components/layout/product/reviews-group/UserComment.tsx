@@ -7,16 +7,14 @@ import StarRating from '../rating-block/StarRating';
 
 /**
  * UserComment component.
- *
- * @param props - UserCommentProps.
- * @param props.review - review object entity.
- * @param props.review.name - user name.
- * @param props.review.content - user comment.
- * @param props.review.likeCount - user likes count.
+ * @param props                     - UserCommentProps.
+ * @param props.review              - review object entity.
+ * @param props.review.name         - user name.
+ * @param props.review.content      - user comment.
+ * @param props.review.likeCount    - user likes count.
  * @param props.review.commentCount - user comments count.
- * @param props.review.rating - user rating.
- *
- * @returns UserComment component.
+ * @param props.review.rating       - user rating.
+ * @returns                         UserComment component.
  */
 const UserComment = ({
   review,

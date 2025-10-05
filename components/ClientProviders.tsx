@@ -56,10 +56,9 @@ interface ClientProvidersProps {
  *
  * All client-side effects and animations are managed here to separate them from
  * server-side rendering concerns.
- *
- * @param props - Component properties.
+ * @param props          - Component properties.
  * @param props.children - Child components to be wrapped.
- * @returns JSX element with all client-side providers and components.
+ * @returns              JSX element with all client-side providers and components.
  */
 export default function ClientProviders({
   children,

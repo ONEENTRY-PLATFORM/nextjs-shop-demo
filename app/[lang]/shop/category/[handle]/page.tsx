@@ -15,15 +15,12 @@ import { i18n } from '@/i18n-config';
 
 /**
  * Shop category page layout
- *
- * @param props - Page props
- * @param props.params - page params
+ * @param props              - Page props
+ * @param props.params       - page params
  * @param props.searchParams - dynamic search params
- *
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- *
- * @returns Shop page layout JSX.Element
+ * @returns                  Shop page layout JSX.Element
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ShopCategoryLayout = async (props: any): Promise<JSX.Element> => {
@@ -105,7 +102,6 @@ export default ShopCategoryLayout;
 
 /**
  * Pre-generation pages for each locale
- *
  * @returns Static params for pre-generation
  */
 export async function generateStaticParams() {
@@ -124,14 +120,11 @@ export async function generateStaticParams() {
 
 /**
  * Generate page metadata
- *
- * @param metadataParams - Metadata params
+ * @param metadataParams        - Metadata params
  * @param metadataParams.params - page params
- *
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- *
- * @returns metadata
+ * @returns                     metadata
  */
 export async function generateMetadata({
   params,

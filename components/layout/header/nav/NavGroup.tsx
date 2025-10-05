@@ -16,11 +16,9 @@ import { NavMenuLoader } from './NavMenuLoader';
 
 /**
  * User navigation group.
- *
- * @param props - component props.
+ * @param props      - component props.
  * @param props.lang - current language shortcode.
- *
- * @returns JSX.Element
+ * @returns          JSX.Element
  */
 const NavGroup = async ({ lang }: { lang: string }): Promise<JSX.Element> => {
   const { locales } = await getLocales();

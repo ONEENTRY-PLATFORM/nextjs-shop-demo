@@ -7,11 +7,10 @@ import type {
 
 /**
  * Defining the application-specific order type.
- *
- * @property formIdentifier - Optional identifier for the form.
+ * @property formIdentifier           - Optional identifier for the form.
  * @property paymentAccountIdentifier - Optional identifier for the payment account.
- * @property formData - Array of form data with an optional validity flag.
- * @property products - Array of order product data.
+ * @property formData                 - Array of form data with an optional validity flag.
+ * @property products                 - Array of order product data.
  */
 export type IAppOrder = {
   formIdentifier?: string;
@@ -22,9 +21,8 @@ export type IAppOrder = {
 
 /**
  * Defining the shape of the initial state for the order slice.
- *
- * @property order - The current order.
- * @property currency - Optional currency type for the order.
+ * @property order          - The current order.
+ * @property currency       - Optional currency type for the order.
  * @property paymentMethods - Optional array of payment methods.
  */
 type InitialStateType = {
@@ -37,10 +35,9 @@ type InitialStateType = {
 
 /**
  * Initial state for the order slice.
- *
- * @property {IAppOrder} order - The current order.
- * @property {Array} order.formData - Array of form data.
- * @property {Array} order.products - Array of products.
+ * @property {IAppOrder} order          - The current order.
+ * @property {Array}     order.formData - Array of form data.
+ * @property {Array}     order.products - Array of products.
  */
 const initialState: InitialStateType = {
   order: {
@@ -51,10 +48,9 @@ const initialState: InitialStateType = {
 
 /**
  * Creating a Redux slice for order management.
- *
- * @param name - Name of the slice.
+ * @param name         - Name of the slice.
  * @param initialState - The initial state for the slice.
- * @param reducers - An object containing the reducer functions for managing the favorites slice.
+ * @param reducers     - An object containing the reducer functions for managing the favorites slice.
  */
 const orderReducer = createSlice({
   name: 'order',
@@ -62,8 +58,7 @@ const orderReducer = createSlice({
   reducers: {
     /**
      * Create or update an order.
-     *
-     * @param state - Current state.
+     * @param state  - Current state.
      * @param action - Payload with order data.
      */
     create(state, action: PayloadAction<IAppOrder>) {
@@ -80,7 +75,6 @@ const orderReducer = createSlice({
     },
     /**
      * Remove an order by resetting it to its initial state.
-     *
      * @param state - Current state.
      */
     remove(state) {
@@ -91,8 +85,7 @@ const orderReducer = createSlice({
     },
     /**
      * Add or update form data in the order.
-     *
-     * @param state - Current state.
+     * @param state  - Current state.
      * @param action - Payload with form data.
      */
     addData(
@@ -117,8 +110,7 @@ const orderReducer = createSlice({
     },
     /**
      * Add products to the order
-     *
-     * @param state - Current state
+     * @param state  - Current state
      * @param action - Payload with array of products
      */
     addProducts(state, action: PayloadAction<IOrderProductData[]>) {
@@ -131,8 +123,7 @@ const orderReducer = createSlice({
     },
     /**
      * Add payment methods to the order
-     *
-     * @param state - Current state
+     * @param state  - Current state
      * @param action - Payload with array of payment methods
      */
     addPaymentMethods(
@@ -150,8 +141,7 @@ const orderReducer = createSlice({
     },
     /**
      * Set the payment account identifier for the order
-     *
-     * @param state - Current state
+     * @param state  - Current state
      * @param action - Payload with payment method identifier
      */
     addPaymentMethod(state, action: PayloadAction<string>) {
@@ -164,8 +154,7 @@ const orderReducer = createSlice({
     },
     /**
      * Set the currency for the order
-     *
-     * @param state - Current state
+     * @param state  - Current state
      * @param action - Payload with currency
      */
     addOrderCurrency(state, action: PayloadAction<string>) {

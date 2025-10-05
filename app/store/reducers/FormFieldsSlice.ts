@@ -13,7 +13,7 @@ type FieldType = {
 
 /**
  * Define a type for the initial state structure.
- * @property fields - An object where each key is a field name and the value is a FieldType.
+ * @property fields      - An object where each key is a field name and the value is a FieldType.
  * @property fields[key] - The FieldType for the field with the given key.
  */
 type InitialStateType = {
@@ -32,10 +32,8 @@ const initialState: InitialStateType = {
 
 /**
  * Utility function to get the first key of an object.
- *
  * @param obj - Object to get the first key from.
- *
- * @returns The first key if it exists, otherwise returns undefined.
+ * @returns   The first key if it exists, otherwise returns undefined.
  */
 function getFirstKey(obj: Record<string, FieldType>): string | undefined {
   const keys = Object.keys(obj); // Get all keys of the object.
@@ -44,10 +42,9 @@ function getFirstKey(obj: Record<string, FieldType>): string | undefined {
 
 /**
  * Create a slice for managing form fields.
- *
- * @param name - Name of the slice.
+ * @param name         - Name of the slice.
  * @param initialState - The initial state for the slice.
- * @param reducers - An object containing the reducer functions for managing the favorites slice.
+ * @param reducers     - An object containing the reducer functions for managing the favorites slice.
  */
 const formFieldsSlice = createSlice({
   name: 'form-fields', // Name of the slice.
@@ -55,8 +52,7 @@ const formFieldsSlice = createSlice({
   reducers: {
     /**
      * Add a new field to the form.
-     *
-     * @param state - Current state
+     * @param state  - Current state
      * @param action - Payload with field data
      */
     addField(state, action: PayloadAction<{ [key: string]: FieldType }>) {

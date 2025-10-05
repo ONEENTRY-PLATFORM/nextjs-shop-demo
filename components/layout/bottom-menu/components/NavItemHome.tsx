@@ -8,12 +8,10 @@ import HomeIcon from '@/components/icons/home';
 
 /**
  * Home navItem menu element.
- *
- * @param props - menu element props.
+ * @param props      - menu element props.
  * @param props.item - menu element object.
  * @param props.lang - current language shortcode.
- *
- * @returns home navItem menu element.
+ * @returns          home navItem menu element.
  */
 const NavItemHome = ({
   item: { pageUrl, localizeInfos },

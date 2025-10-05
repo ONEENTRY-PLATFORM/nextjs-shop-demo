@@ -10,12 +10,10 @@ import * as icons from '../../../icons';
 
 /**
  * Sidebar menu item.
- *
- * @param props - The props object.
+ * @param props          - The props object.
  * @param props.menuItem - Menu item.
- * @param props.lang - Current language shortcode.
- *
- * @returns SidebarMenuItem.
+ * @param props.lang     - Current language shortcode.
+ * @returns              SidebarMenuItem.
  */
 const SidebarMenuItem = ({
   menuItem,

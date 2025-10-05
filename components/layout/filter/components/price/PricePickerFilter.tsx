@@ -14,12 +14,10 @@ import PriceToInput from './PriceToInput';
 
 /**
  * Price filter.
- *
- * @param props - props.
+ * @param props        - props.
  * @param props.prices - prices fromTo extracted from one product.
- * @param props.dict - dictionary from server api.
- *
- * @returns JSX.Element.
+ * @param props.dict   - dictionary from server api.
+ * @returns            JSX.Element.
  */
 const PriceFilter = memo(
   ({ prices, dict }: { prices: any; dict: IAttributeValues }): JSX.Element => {

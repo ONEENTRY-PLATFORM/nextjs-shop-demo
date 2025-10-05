@@ -18,13 +18,11 @@ import PricePickerFilter from './components/price/PricePickerFilter';
 
 /**
  * Products filters form.
- *
- * @param props - Props.
+ * @param props        - Props.
  * @param props.prices - prices fromTo extracted from one product.
- * @param props.lang - Current language shortcode.
- * @param props.dict - dictionary from server api.
- *
- * @returns Filters form.
+ * @param props.lang   - Current language shortcode.
+ * @param props.dict   - dictionary from server api.
+ * @returns            Filters form.
  */
 const FiltersForm = async ({
   prices,

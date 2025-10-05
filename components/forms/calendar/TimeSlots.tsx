@@ -5,13 +5,11 @@ import TimeSlot from './TimeSlot';
 
 /**
  * Time slots grid.
- *
- * @param props - Component props.
- * @param props.timeSlots - Array of time slots. Each time slot is an object with time and isSelected properties.
+ * @param props             - Component props.
+ * @param props.timeSlots   - Array of time slots. Each time slot is an object with time and isSelected properties.
  * @param props.currentTime - Current time. It is used to highlight the currently selected time slot.
- * @param props.setTime - Function to set the selected time.
- *
- * @returns Time slots grid component.
+ * @param props.setTime     - Function to set the selected time.
+ * @returns                 Time slots grid component.
  */
 const TimeSlots = ({
   timeSlots,

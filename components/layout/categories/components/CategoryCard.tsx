@@ -13,12 +13,13 @@ const baloo = Baloo({
 
 /**
  * Category card.
- *
- * @param props - props.
- * @param props.category - category object.
- * @param props.index - index of element in array for stagger.
- *
- * @returns category card with animations.
+ * @param props                 - props.
+ * @param props.category        - category object.
+ * @param props.index           - index of element in array for stagger.
+ * @param props.category.title
+ * @param props.category.link
+ * @param props.category.imgSrc
+ * @returns                     category card with animations.
  */
 const CategoryCard = ({
   category: { imgSrc, title, link },

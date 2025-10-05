@@ -6,14 +6,12 @@ import Loader from '@/components/shared/Loader';
 
 /**
  * Confirm order button.
- *
- * @param props - button props object.
- * @param props.dict - dictionary values.
- * @param props.account - account.
- * @param props.isLoading - loading state.
+ * @param props                - button props object.
+ * @param props.dict           - dictionary values.
+ * @param props.account        - account.
+ * @param props.isLoading      - loading state.
  * @param props.onConfirmOrder - Confirm order handle.
- *
- * @returns JSX.Element - Confirm order button.
+ * @returns                    JSX.Element - Confirm order button.
  */
 const ConfirmOrderButton = ({
   dict,

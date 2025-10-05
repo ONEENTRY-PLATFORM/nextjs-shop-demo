@@ -13,12 +13,10 @@ import {
 
 /**
  * Apply button.
- *
- * @param props - component props.
+ * @param props         - component props.
  * @param props.product - product entity object.
- * @param props.dict - dictionary from server api.
- *
- * @returns Apply button adds group product to cart.
+ * @param props.dict    - dictionary from server api.
+ * @returns             Apply button adds group product to cart.
  */
 
 const ApplyButton = ({

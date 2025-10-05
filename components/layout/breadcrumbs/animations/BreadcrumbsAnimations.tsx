@@ -8,13 +8,10 @@ import { type ReactNode, useRef } from 'react';
 
 /**
  * Breadcrumbs animations.
- *
- * @param props - Breadcrumbs animations props.
- * @param props.children - children ReactNode.
+ * @param props           - Breadcrumbs animations props.
+ * @param props.children  - children ReactNode.
  * @param props.className - CSS className of ref element.
- *
- * @returns JSX.Element with gsap animations.
- *
+ * @returns               JSX.Element with gsap animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const BreadcrumbsAnimations = ({

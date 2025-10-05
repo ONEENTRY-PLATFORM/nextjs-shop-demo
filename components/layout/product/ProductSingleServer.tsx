@@ -8,13 +8,11 @@ import ProductSingle from './index';
 
 /**
  * Server wrapper for ProductSingle that handles async data fetching.
- *
- * @param props - Product props.
+ * @param props         - Product props.
  * @param props.product - product entity object.
- * @param props.lang - current language shortcode.
- * @param props.dict - dictionary from server api.
- *
- * @returns Product single wrapped in server component.
+ * @param props.lang    - current language shortcode.
+ * @param props.dict    - dictionary from server api.
+ * @returns             Product single wrapped in server component.
  */
 const ProductSingleServer = async ({
   product,

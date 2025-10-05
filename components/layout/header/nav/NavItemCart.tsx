@@ -9,12 +9,10 @@ import CartAltIcon from '@/components/icons/cart';
 
 /**
  * Nav item cart button.
- *
- * @param props - component props.
+ * @param props      - component props.
  * @param props.item - menu item.
  * @param props.lang current language shortcode
- *
- * @returns JSX.Element.
+ * @returns          JSX.Element.
  */
 
 const NavItemCart = ({

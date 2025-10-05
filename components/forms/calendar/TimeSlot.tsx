@@ -3,13 +3,13 @@ import React from 'react';
 
 /**
  * Time slot button.
- *
- * @param props - Time slot props.
- * @param props.slot - Time slot object. It contains time and isDisabled properties.
- * @param props.currentTime - Current time. It is used to determine which time slot is currently selected.
- * @param props.setTime - Set time. It is used to update the selected time.
- *
- * @returns Time slot button.
+ * @param props                 - Time slot props.
+ * @param props.slot            - Time slot object. It contains time and isDisabled properties.
+ * @param props.currentTime     - Current time. It is used to determine which time slot is currently selected.
+ * @param props.setTime         - Set time. It is used to update the selected time.
+ * @param props.slot.time
+ * @param props.slot.isDisabled
+ * @returns                     Time slot button.
  */
 const TimeSlot = ({
   slot,

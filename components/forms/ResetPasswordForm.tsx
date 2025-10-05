@@ -17,11 +17,9 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
  * Reset password form.
- *
- * @param props - Component props.
+ * @param props      - Component props.
  * @param props.dict - dictionary from server api.
- *
- * @returns Reset password form component.
+ * @returns          Reset password form component.
  */
 const ResetPasswordForm = ({
   dict,
@@ -38,9 +36,7 @@ const ResetPasswordForm = ({
 
   /**
    * Change password with API AuthProvider.
-   *
    * @param e - FormEvent
-   *
    * @returns Promise that resolves when the form submission is complete
    */
   const onResetSubmit = async (

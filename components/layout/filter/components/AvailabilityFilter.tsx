@@ -6,11 +6,9 @@ import { memo, useCallback, useEffect, useState } from 'react';
 
 /**
  * Availability filter component for products.
- *
- * @param props - Component props.
+ * @param props       - Component props.
  * @param props.title - Filter title.
- *
- * @returns JSX Element.
+ * @returns           JSX Element.
  */
 const AvailabilityFilter = memo(
   ({ title }: { title?: string }): JSX.Element => {

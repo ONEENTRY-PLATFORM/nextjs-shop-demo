@@ -16,12 +16,10 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
  * ContactUs form.
- *
- * @param props - ContactUs form props
+ * @param props           - ContactUs form props
  * @param props.className - CSS className of ref element
- * @param props.lang - Current language shortcode
- *
- * @returns ContactUs form component
+ * @param props.lang      - Current language shortcode
+ * @returns               ContactUs form component
  */
 const ContactUsForm = memo(
   ({ className, lang }: { className?: string; lang: string }): JSX.Element => {

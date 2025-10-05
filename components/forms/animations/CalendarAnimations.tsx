@@ -9,13 +9,10 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Calendar animations.
- *
- * @param props - Props for CalendarAnimations.
- * @param props.children - children ReactNode.
+ * @param props           - Props for CalendarAnimations.
+ * @param props.children  - children ReactNode.
  * @param props.className - CSS className of ref element.
- *
- * @returns Calendar animations.
- *
+ * @returns               Calendar animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const CalendarAnimations = ({

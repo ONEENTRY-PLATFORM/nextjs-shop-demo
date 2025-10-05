@@ -6,10 +6,11 @@ import EmptyCartIcon from '@/components/icons/empty-cart';
 
 /**
  * Empty orders page
- * @param lang current language shortcode
- * @param dict dictionary from server api
- *
- * @returns JSX.Element
+ * @param lang.lang
+ * @param lang      current language shortcode
+ * @param dict      dictionary from server api
+ * @param lang.dict
+ * @returns         JSX.Element
  */
 const EmptyOrders = ({
   lang,

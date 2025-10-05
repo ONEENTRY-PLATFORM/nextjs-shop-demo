@@ -29,12 +29,13 @@ interface IOrderDataTable {
 
 /**
  * OrderData table
- *
+ * @param settings.settings
  * @param settings
  * @param data
- * @param lang current language shortcode
- *
- * @returns JSX.Element
+ * @param lang              current language shortcode
+ * @param settings.data
+ * @param settings.lang
+ * @returns                 JSX.Element
  */
 const OrderDataTable: FC<IOrderDataTable> = ({ settings, data, lang }) => {
   if (!data || !settings) {

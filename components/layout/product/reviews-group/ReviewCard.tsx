@@ -6,18 +6,16 @@ import UserComment from './UserComment';
 
 /**
  * Review card.
- *
- * @param props - Props for component.
- * @param props.review - review object entity.
- * @param props.review.name - Name of user.
- * @param props.review.content - Comment text.
- * @param props.review.likeCount - Count of likes.
+ * @param props                     - Props for component.
+ * @param props.review              - review object entity.
+ * @param props.review.name         - Name of user.
+ * @param props.review.content      - Comment text.
+ * @param props.review.likeCount    - Count of likes.
  * @param props.review.commentCount - Count of comments.
- * @param props.review.rating - Rating of user.
- * @param props.index - Index of element for animations stagger.
- * @param props.state - state of review card.
- *
- * @returns Review card component.
+ * @param props.review.rating       - Rating of user.
+ * @param props.index               - Index of element for animations stagger.
+ * @param props.state               - state of review card.
+ * @returns                         Review card component.
  */
 const ReviewCard = ({
   review,

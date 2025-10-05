@@ -6,13 +6,11 @@ import { increaseProductQty } from '@/app/store/reducers/CartSlice';
 
 /**
  * Increase button component.
- *
- * @param props - The component props.
- * @param props.id - The product ID.
- * @param props.qty - The current cart count for the product.
+ * @param props       - The component props.
+ * @param props.id    - The product ID.
+ * @param props.qty   - The current cart count for the product.
  * @param props.units - The total available units of the product in the shop.
- *
- * @returns A button that increases the product quantity in the cart.
+ * @returns           A button that increases the product quantity in the cart.
  */
 const IncreaseButton = memo(
   ({

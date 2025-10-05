@@ -8,11 +8,9 @@ import BreadcrumbItem from './BreadcrumbItem';
 
 /**
  * Breadcrumbs trail.
- *
- * @param props - component props.
+ * @param props      - component props.
  * @param props.lang - current language shortcode.
- *
- * @returns JSX.Element.
+ * @returns          JSX.Element.
  */
 const BreadcrumbsTrail = ({ lang }: { lang: string }): JSX.Element => {
   const paths = usePathname();

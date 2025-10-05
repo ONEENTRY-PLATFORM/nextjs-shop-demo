@@ -8,7 +8,6 @@ import SearchBar from './search/SearchBar';
 
 /**
  * Header section.
- *
  * @returns Header component.
  */
 const Header = (): JSX.Element => {

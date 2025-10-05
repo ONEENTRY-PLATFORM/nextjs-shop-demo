@@ -12,12 +12,10 @@ import SearchResults from './SearchResults';
 
 /**
  * SearchBar component.
- *
- * @param props - Component properties.
+ * @param props      - Component properties.
  * @param props.lang - current language shortcode.
  * @param props.dict - dictionary from server api.
- *
- * @returns JSX.Element.
+ * @returns          JSX.Element.
  */
 const SearchBar = ({
   lang,

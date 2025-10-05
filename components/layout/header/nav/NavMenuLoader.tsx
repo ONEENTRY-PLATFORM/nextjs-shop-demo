@@ -4,11 +4,9 @@ import type { LoaderProps } from '@/app/types/global';
 
 /**
  * Main NavMenu Loader.
- *
- * @param props - Component props.
+ * @param props       - Component props.
  * @param props.limit - Number of menu items to load.
- *
- * @returns JSX.Element.
+ * @returns           JSX.Element.
  */
 export const NavMenuLoader: FC<LoaderProps> = ({ limit = 3 }) => {
   return (

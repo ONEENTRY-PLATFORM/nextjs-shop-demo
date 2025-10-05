@@ -3,11 +3,9 @@ import type { JSX } from 'react';
 
 /**
  * Logo.
- *
- * @param props - Logo props.
+ * @param props      - Logo props.
  * @param props.lang - current language shortcode.
- *
- * @returns Logo component.
+ * @returns          Logo component.
  */
 const Logo = ({ lang }: { lang: string }): JSX.Element => {
   return (

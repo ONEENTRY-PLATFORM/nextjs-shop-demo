@@ -4,12 +4,10 @@ import React from 'react';
 
 /**
  * Social SignIn button.
- *
- * @param props - Component props.
+ * @param props          - Component props.
  * @param props.imageSrc - icon url.
- * @param props.alt - image alt text.
- *
- * @returns Social SignIn button component.
+ * @param props.alt      - image alt text.
+ * @returns              Social SignIn button component.
  */
 const SocialSignInButton = ({
   imageSrc,

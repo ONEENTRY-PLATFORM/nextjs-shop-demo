@@ -8,15 +8,12 @@ import { useRef } from 'react';
 
 /**
  * Profile menu animations on state change.
- *
- * @param props - Profile menu animations props.
- * @param props.children - children ReactNode.
+ * @param props           - Profile menu animations props.
+ * @param props.children  - children ReactNode.
  * @param props.className - CSS className of ref element.
- * @param props.state - state of component.
- * @param props.setState - setState of component function.
- *
- * @returns Profile menu wrapper with animations.
- *
+ * @param props.state     - state of component.
+ * @param props.setState  - setState of component function.
+ * @returns               Profile menu wrapper with animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const ProfileMenuAnimations = ({

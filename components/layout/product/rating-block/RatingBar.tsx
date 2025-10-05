@@ -2,11 +2,11 @@ import type { JSX } from 'react';
 
 /**
  * Rating bar.
- *
- * @param value - rating value.
- * @param maxWidth - max width.
- *
- * @returns rating bar component.
+ * @param value.value
+ * @param value          - rating value.
+ * @param maxWidth       - max width.
+ * @param value.maxWidth
+ * @returns              rating bar component.
  */
 const RatingBar = ({
   value,

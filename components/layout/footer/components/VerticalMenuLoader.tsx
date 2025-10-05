@@ -4,11 +4,9 @@ import type { LoaderProps } from '@/app/types/global';
 
 /**
  * Vertical menu Loader.
- *
- * @param props - Loader props.
+ * @param props       - Loader props.
  * @param props.limit - limit elements count.
- *
- * @returns menu Loaders.
+ * @returns           menu Loaders.
  */
 export const VerticalMenuLoader = ({ limit = 6 }: LoaderProps): JSX.Element => {
   return (

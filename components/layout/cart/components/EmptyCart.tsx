@@ -7,12 +7,10 @@ import FadeTransition from '@/app/animations/FadeTransition';
 
 /**
  * Empty cart page
- *
- * @param props - Empty cart props
+ * @param props      - Empty cart props
  * @param props.lang - Current language shortcode
  * @param props.dict - dictionary from server api
- *
- * @returns Empty cart component
+ * @returns          Empty cart component
  */
 const EmptyCart = ({
   lang,

@@ -3,7 +3,6 @@ import { memo } from 'react';
 
 /**
  * Spinner
- *
  * @returns Animated Spinner
  */
 const Spinner = (): JSX.Element => {

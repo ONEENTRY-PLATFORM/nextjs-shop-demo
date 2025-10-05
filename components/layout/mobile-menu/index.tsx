@@ -16,11 +16,12 @@ import MobileMenu from './components/MobileMenu';
 
 /**
  * Mobile menu offscreen modal.
- *
  * @param props.menu - Represents a menu - array of objects.
  * @param props.lang - Current language shortcode.
- *
- * @returns Mobile menu list item.
+ * @param root0
+ * @param root0.menu
+ * @param root0.lang
+ * @returns          Mobile menu list item.
  */
 const OffscreenModal: FC<{
   menu: IMenusPages[];

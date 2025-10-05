@@ -6,11 +6,9 @@ import type { LoaderProps } from '@/app/types/global';
 
 /**
  * SidebarMenuLoader.
- *
- * @param props - SidebarMenu props object.
+ * @param props       - SidebarMenu props object.
  * @param props.limit - The number of menu items to display.
- *
- * @returns Sidebar menu loader.
+ * @returns           Sidebar menu loader.
  */
 const SidebarMenuLoader = ({ limit = 5 }: LoaderProps): JSX.Element => {
   return (

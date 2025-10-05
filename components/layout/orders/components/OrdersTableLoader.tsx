@@ -46,9 +46,9 @@ const TableAnimations = ({
 
 /**
  * Orders table loader
+ * @param limit.limit
  * @param limit
- *
- * @returns JSX.Element
+ * @returns           JSX.Element
  */
 const OrdersTableLoader: FC<LoaderProps> = ({ limit }) => {
   return (

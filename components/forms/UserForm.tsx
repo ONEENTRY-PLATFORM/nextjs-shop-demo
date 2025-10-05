@@ -21,7 +21,6 @@ import SubmitButton from './inputs/FormSubmitButton';
 
 /**
  * Input value type.
- *
  * @property value - Input value.
  * @property valid - Input validation status.
  * @property [key] - Input key.
@@ -34,12 +33,10 @@ export type InputValue = {
 
 /**
  * User form.
- *
- * @param props - Component props.
+ * @param props      - Component props.
  * @param props.lang - Current language shortcode.
  * @param props.dict - dictionary from server api.
- *
- * @returns User form component.
+ * @returns          User form component.
  */
 const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
   const { isAuth, refreshUser, user } = useContext(AuthContext);

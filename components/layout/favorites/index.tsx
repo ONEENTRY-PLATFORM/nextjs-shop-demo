@@ -17,12 +17,10 @@ import ProductsGridLoader from '../products-grid/components/ProductsGridLoader';
 
 /**
  * Favorites page.
- *
- * @param props - Page props.
+ * @param props      - Page props.
  * @param props.lang - Current language shortcode.
  * @param props.dict - dictionary from server api.
- *
- * @returns favorites page with animations.
+ * @returns          favorites page with animations.
  */
 const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   const { isAuth } = useContext(AuthContext);
@@ -44,9 +42,8 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
    * 2. If user is authenticated, establishes a WebSocket connection to listen for product updates
    * 3. Processes real-time notifications about product changes (price, status, etc.)
    * 4. Cleans up the WebSocket connection on component unmount
-   *
    * @param isAuth - Authentication status of the user
-   * @param data - Product data fetched from the API
+   * @param data   - Product data fetched from the API
    */
   useEffect(() => {
     // Update products state when new data is available

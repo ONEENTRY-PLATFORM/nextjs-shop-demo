@@ -15,13 +15,11 @@ import UserMenuItem from './UserMenuItem';
 
 /**
  * User Profile menu.
- *
- * @param props - UserProfileMenu props.
- * @param props.lang - Current language shortcode.
+ * @param props          - UserProfileMenu props.
+ * @param props.lang     - Current language shortcode.
  * @param props.userMenu - Represents a menu object.
- * @param props.title - Menu title.
- *
- * @returns User Profile menu.
+ * @param props.title    - Menu title.
+ * @returns              User Profile menu.
  */
 const UserProfileMenu = ({
   lang,

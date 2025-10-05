@@ -20,13 +20,12 @@ import WithSidebar from './WithSidebar';
 
 /**
  * Simple page layout
- *
- * @async server component
- * @param params - page params
+ * @async
+ * @param   {object}                                  params        - Page parameters
+ * @param   {Promise<{ page: string; lang: string }>} params.params - The page and language parameters
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- *
- * @returns page layout JSX.Element
+ * @returns {Promise<JSX.Element>}                                  page layout JSX.Element
  */
 const PageLayout = async ({
   params,
@@ -152,13 +151,12 @@ export default PageLayout;
 
 /**
  * Generate page metadata
- *
- * @async server component
- * @param {object} params - Page params.
+ * @async
+ * @param   {object}                                  params        - Page params
+ * @param   {Promise<{ page: string; lang: string }>} params.params - The page and language parameters
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- *
- * @returns page metadata
+ * @returns {Promise<Metadata>}                                     page metadata
  */
 export async function generateMetadata({
   params,

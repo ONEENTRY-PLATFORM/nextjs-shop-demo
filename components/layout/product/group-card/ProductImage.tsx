@@ -4,11 +4,9 @@ import OptimizedImage from '@/components/shared/OptimizedImage';
 
 /**
  * Group product image.
- *
- * @param props - Component props.
+ * @param props          - Component props.
  * @param props.imageSrc - Image source.
- *
- * @returns Group product image.
+ * @returns              Group product image.
  */
 const ProductImage = ({ imageSrc }: { imageSrc: string }): JSX.Element => {
   return (

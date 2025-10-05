@@ -5,13 +5,11 @@ import BreadcrumbProductItem from './BreadcrumbProductItem';
 
 /**
  * Breadcrumb item.
- *
- * @param props - Breadcrumb item props.
- * @param props.link - current link.
+ * @param props        - Breadcrumb item props.
+ * @param props.link   - current link.
  * @param props.isLast - current link is last.
- * @param props.lang - Current language shortcode.
- *
- * @returns JSX.Element.
+ * @param props.lang   - Current language shortcode.
+ * @returns            JSX.Element.
  */
 const BreadcrumbItem = ({
   link,

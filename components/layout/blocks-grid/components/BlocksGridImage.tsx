@@ -7,11 +7,9 @@ import OptimizedImage from '@/components/shared/OptimizedImage';
 
 /**
  * Blocks grid image.
- *
- * @param props - block props.
+ * @param props                 - block props.
  * @param props.attributeValues - block attributeValues.
- *
- * @returns block card with animations.
+ * @returns                     block card with animations.
  */
 const BlocksGridImage = async ({
   attributeValues,

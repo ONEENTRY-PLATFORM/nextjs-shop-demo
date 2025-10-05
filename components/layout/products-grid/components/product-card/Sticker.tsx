@@ -3,17 +3,15 @@ import type { JSX } from 'react';
 
 /**
  * Sticker.
- *
- * @param props - Sticker props.
- * @param props.sticker - Sticker object.
- * @param props.sticker.value - Sticker value object.
- * @param props.sticker.value.title - Sticker title.
- * @param props.sticker.value.value - Sticker value.
- * @param props.sticker.value.extended - Sticker extended object.
- * @param props.sticker.value.extended.value - Sticker extended value object.
+ * @param props                                           - Sticker props.
+ * @param props.sticker                                   - Sticker object.
+ * @param props.sticker.value                             - Sticker value object.
+ * @param props.sticker.value.title                       - Sticker title.
+ * @param props.sticker.value.value                       - Sticker value.
+ * @param props.sticker.value.extended                    - Sticker extended object.
+ * @param props.sticker.value.extended.value              - Sticker extended value object.
  * @param props.sticker.value.extended.value.downloadLink - Sticker extended value download link.
- *
- * @returns Sticker component.
+ * @returns                                               Sticker component.
  */
 const Sticker = ({
   sticker,

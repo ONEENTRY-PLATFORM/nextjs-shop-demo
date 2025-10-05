@@ -6,12 +6,15 @@ import Loader from '@/components/shared/Loader';
 
 /**
  * PayOrder button
+ * @param id.id
  * @param id
- * @param lang current language shortcode
+ * @param lang       current language shortcode
  * @param loading
  * @param title
- *
- * @returns JSX.Element
+ * @param id.lang
+ * @param id.loading
+ * @param id.title
+ * @returns          JSX.Element
  */
 const PayOrderButton: FC<{
   id: number;

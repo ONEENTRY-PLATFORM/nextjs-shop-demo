@@ -18,15 +18,19 @@ import OrderProductsTable from './OrderProductsTable';
 
 /**
  * Payment method.
- *
- * @param account - Account data.
- * @param lang - current language shortcode.
- * @param dict - dictionary from server api.
- * @param index - Index of element for animations stagger.
- * @param products - Products data.
- * @param delivery - Delivery data.
- *
- * @returns JSX.Element.
+ * @param account.account
+ * @param account          - Account data.
+ * @param lang             - current language shortcode.
+ * @param dict             - dictionary from server api.
+ * @param index            - Index of element for animations stagger.
+ * @param products         - Products data.
+ * @param delivery         - Delivery data.
+ * @param account.lang
+ * @param account.dict
+ * @param account.index
+ * @param account.products
+ * @param account.delivery
+ * @returns                JSX.Element.
  */
 const PaymentMethod = ({
   account,

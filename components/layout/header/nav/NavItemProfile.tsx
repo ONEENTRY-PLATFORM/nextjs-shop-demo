@@ -16,13 +16,11 @@ import UserProfileMenu from './user-menu/UserProfileMenu';
 
 /**
  * Nav item profile link / SignInForm button.
- *
- * @param props - Props.
- * @param props.item - menu item.
- * @param props.lang - current language shortcode.
+ * @param props          - Props.
+ * @param props.item     - menu item.
+ * @param props.lang     - current language shortcode.
  * @param props.userMenu - Represents a menu object.
- *
- * @returns JSX.Element.
+ * @returns              JSX.Element.
  */
 const NavItemProfile = ({
   item,

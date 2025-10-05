@@ -8,15 +8,12 @@ import { useRef, useState } from 'react';
 
 /**
  * Review animations.
- *
- * @param props - Props for ReviewAnimations.
- * @param props.children - children ReactNode.
+ * @param props           - Props for ReviewAnimations.
+ * @param props.children  - children ReactNode.
  * @param props.className - CSS className of ref element.
- * @param props.index - Index of element for animations stagger.
- * @param props.state - current state of review.
- *
- * @returns Review animations.
- *
+ * @param props.index     - Index of element for animations stagger.
+ * @param props.state     - current state of review.
+ * @returns               Review animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const ReviewAnimations = ({

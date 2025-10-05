@@ -9,15 +9,12 @@ import { useRef } from 'react';
 
 /**
  * Card animations.
- *
- * @param props - Card animations props.
- * @param props.children - children ReactNode.
- * @param props.className - CSS className of ref element.
- * @param props.index - Index of element for animations stagger.
+ * @param props            - Card animations props.
+ * @param props.children   - children ReactNode.
+ * @param props.className  - CSS className of ref element.
+ * @param props.index      - Index of element for animations stagger.
  * @param props.pagesLimit - used for animations.
- *
- * @returns Card animations JSX.Element.
- *
+ * @returns                Card animations JSX.Element.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const CardAnimations = ({

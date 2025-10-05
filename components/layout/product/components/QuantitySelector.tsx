@@ -12,15 +12,13 @@ import QuantityInput from './QuantityInput';
 
 /**
  * Quantity selector
- *
- * @param props - Quantity selector props
- * @param props.id - product id
- * @param props.units - count of product in shop
- * @param props.title - product title
- * @param props.height - height of the selector component
+ * @param props           - Quantity selector props
+ * @param props.id        - product id
+ * @param props.units     - count of product in shop
+ * @param props.title     - product title
+ * @param props.height    - height of the selector component
  * @param props.className - CSS className of ref element
- *
- * @returns Quantity selector with increase decrease buttons
+ * @returns               Quantity selector with increase decrease buttons
  */
 const QuantitySelector = memo(
   ({

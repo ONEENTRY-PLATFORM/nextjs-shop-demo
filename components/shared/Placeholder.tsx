@@ -4,11 +4,9 @@ import { memo } from 'react';
 
 /**
  * Empty image placeholder.
- *
- * @param props - Placeholder props.
+ * @param props           - Placeholder props.
  * @param props.className - wrapper className.
- *
- * @returns JSX.Element - Placeholder.
+ * @returns               JSX.Element - Placeholder.
  */
 const Placeholder = ({ className }: { className?: string }): JSX.Element => {
   return (

@@ -17,12 +17,15 @@ interface OrderRowProps {
 
 /**
  * Order row
+ * @param order.order
  * @param order
  * @param settings
- * @param lang current language shortcode
- * @param index Index of element for animations stagger
- *
- * @returns JSX.Element
+ * @param lang           current language shortcode
+ * @param index          Index of element for animations stagger
+ * @param order.settings
+ * @param order.lang
+ * @param order.index
+ * @returns              JSX.Element
  */
 const OrderRow: FC<OrderRowProps> = ({ order, settings, lang, index }) => {
   const { id, createdDate, statusIdentifier, totalSum } = order;

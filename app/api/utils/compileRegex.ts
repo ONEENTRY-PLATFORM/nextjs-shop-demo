@@ -1,8 +1,7 @@
 /**
  * Convert mask string to regex pattern
- *
  * @param mask - The mask string to convert
- * @returns The regex pattern string
+ * @returns    The regex pattern string
  */
 function maskToRegex(mask: string) {
   const maskRules: { [key: string]: string } = {
@@ -29,9 +28,8 @@ function maskToRegex(mask: string) {
 
 /**
  * Compile mask string to RegExp object
- *
  * @param mask - The mask string to compile
- * @returns The compiled RegExp object
+ * @returns    The compiled RegExp object
  */
 export function compileRegex(mask: string) {
   const regexPattern = maskToRegex(mask);

@@ -9,13 +9,10 @@ import { useRef } from 'react';
 
 /**
  * ProductsGrid loader animations.
- *
- * @param props - ProductsGrid loader props.
- * @param props.children - children ReactNode.
+ * @param props           - ProductsGrid loader props.
+ * @param props.children  - children ReactNode.
  * @param props.className - CSS className of ref element.
- *
- * @returns loader with animations.
- *
+ * @returns               loader with animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const ProductsGridLoaderAnimations = ({

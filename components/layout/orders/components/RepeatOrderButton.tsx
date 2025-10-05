@@ -20,13 +20,15 @@ interface RepeatOrderButtonProps {
 
 /**
  * RepeatOrder button
- *
+ * @param data.data
  * @param data
  * @param title
- * @param isLoading loading state
- * @param lang current language shortcode
- *
- * @returns JSX.Element
+ * @param isLoading      loading state
+ * @param lang           current language shortcode
+ * @param data.isLoading
+ * @param data.title
+ * @param data.lang
+ * @returns              JSX.Element
  */
 const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
   data,
@@ -47,7 +49,6 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
    * 1. Fetching each product's details by its ID
    * 2. Adding valid products to the shopping cart
    * 3. Redirecting user to the cart page
-   *
    * @returns Promise<void> - resolves when all products are processed and user is redirected
    */
   const repeatOrderHandle = async () => {

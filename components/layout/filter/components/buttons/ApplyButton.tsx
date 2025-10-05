@@ -8,11 +8,9 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Apply filter button.
- *
- * @param props - component props.
+ * @param props      - component props.
  * @param props.dict - dictionary from server api.
- *
- * @returns ApplyButton component.
+ * @returns          ApplyButton component.
  */
 const ApplyButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const { setTransition } = useContext(OpenDrawerContext);

@@ -6,7 +6,6 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Mobile menu trigger button
- *
  * @returns Mobile menu trigger button
  */
 const MobileMenuTrigger = () => {

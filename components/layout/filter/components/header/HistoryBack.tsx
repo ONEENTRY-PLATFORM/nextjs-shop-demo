@@ -5,7 +5,6 @@ import type { JSX } from 'react';
 
 /**
  * History back button.
- *
  * @returns History back button.
  */
 const HistoryBack = (): JSX.Element => {

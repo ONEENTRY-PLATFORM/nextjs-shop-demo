@@ -12,7 +12,6 @@ import VerificationForm from '@/components/forms/VerificationForm';
  *
  * This file exports all form components used throughout the application,
  * providing a centralized import point for forms.
- *
  * @module Forms
  */
 export {

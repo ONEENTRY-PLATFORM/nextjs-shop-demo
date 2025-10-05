@@ -9,14 +9,11 @@ import type { AnimationsProps } from '@/app/types/global';
 
 /**
  * Table row animations.
- *
- * @param props - props.
- * @param props.children - children ReactNode.
+ * @param props           - props.
+ * @param props.children  - children ReactNode.
  * @param props.className - CSS className of ref element.
- * @param props.index - index of element in array for stagger.
- *
- * @returns Table row animations component.
- *
+ * @param props.index     - index of element in array for stagger.
+ * @returns               Table row animations component.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const TableRowAnimations = ({

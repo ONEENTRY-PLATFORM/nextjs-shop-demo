@@ -1,16 +1,16 @@
 'use client';
 
+import type { JSX } from 'react';
+
 /**
  * Error boundary component for handling errors in the orders section.
  *
  * This component is automatically rendered by Next.js when an error occurs
  * during rendering of the orders page or its child components.
- *
- * @param props - The error component props
- * @param props.error - The error object containing information about the error that occurred
- * @param props.reset - A function to retry rendering the segment by resetting the error boundary
- *
- * @returns The error display component with retry option
+ * @param   {object}                      props       - The error component props
+ * @param   {Error & { digest?: string }} props.error - The error object containing information about the error that occurred
+ * @param   {void}                        props.reset - A function to retry rendering the segment by resetting the error boundary
+ * @returns {JSX.Element}                             The error display component with retry option
  */
 export default function Error({
   error,
@@ -18,7 +18,7 @@ export default function Error({
 }: {
   error: Error & { digest?: string };
   reset: () => void;
-}) {
+}): JSX.Element {
   return (
     <div className="flex flex-col items-center gap-3 p-8 text-center">
       <h2 className="text-lg font-semibold">Error loading orders</h2>

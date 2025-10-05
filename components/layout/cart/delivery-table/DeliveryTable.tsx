@@ -17,13 +17,11 @@ import DeliveryTableRow from './DeliveryTableRow';
 
 /**
  * Delivery table.
- *
- * @param props - DeliveryTable props.
+ * @param props          - DeliveryTable props.
  * @param props.delivery - Represents a product entity object.
- * @param props.lang - Current language shortcode.
- * @param props.dict - dictionary from server api.
- *
- * @returns JSX.Element
+ * @param props.lang     - Current language shortcode.
+ * @param props.dict     - dictionary from server api.
+ * @returns              JSX.Element
  */
 const DeliveryTable = ({
   delivery,

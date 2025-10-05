@@ -18,12 +18,15 @@ interface CancelOrderButtonProps {
 
 /**
  * Cancel order button
+ * @param data.data
  * @param data
- * @param isLoading loading state
+ * @param isLoading      loading state
  * @param refetch
  * @param title
- *
- * @returns JSX.Element
+ * @param data.isLoading
+ * @param data.refetch
+ * @param data.title
+ * @returns              JSX.Element
  */
 const CancelOrderButton: FC<CancelOrderButtonProps> = ({
   data,

@@ -7,14 +7,11 @@ import { useRef } from 'react';
 
 /**
  * Order animations.
- *
- * @param props - Order animations props.
- * @param props.children - children ReactNode.
+ * @param props           - Order animations props.
+ * @param props.children  - children ReactNode.
  * @param props.className - CSS className of ref element.
- * @param props.isActive - current state of order block.
- *
- * @returns JSX.Element.
- *
+ * @param props.isActive  - current state of order block.
+ * @returns               JSX.Element.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const OrderAnimations = ({

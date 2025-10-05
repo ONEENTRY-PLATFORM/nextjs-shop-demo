@@ -5,10 +5,9 @@ const APP_TOKEN = process.env.NEXT_PUBLIC_APP_TOKEN as string;
 
 /**
  * This function used to update user JWT token and save to localStorage
- *
  * @param refreshToken - Refresh token from API
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
- * @returns Promise that resolves when token is saved
+ * @returns            Promise that resolves when token is saved
  */
 const saveFunction = async (refreshToken: string) => {
   if (!refreshToken) {
@@ -19,11 +18,10 @@ const saveFunction = async (refreshToken: string) => {
 
 /**
  * Initial api definition
- *
  * @param PROJECT_URL - Project url from .env
- * @param APP_TOKEN - Token from .env
+ * @param APP_TOKEN   - Token from .env
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
- * @returns api instance
+ * @returns           api instance
  */
 export let api = defineOneEntry(PROJECT_URL, {
   token: APP_TOKEN,
@@ -37,11 +35,10 @@ export let api = defineOneEntry(PROJECT_URL, {
 
 /**
  * This function used to update api config
- *
  * @param refreshToken - Refresh token from localStorage
- * @param langCode - Current language code
+ * @param langCode     - Current language code
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
- * @returns Promise that resolves when api is redefined
+ * @returns            Promise that resolves when api is redefined
  */
 export async function reDefine(refreshToken: string, langCode: string) {
   api = defineOneEntry(PROJECT_URL, {

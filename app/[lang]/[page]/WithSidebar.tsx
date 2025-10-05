@@ -1,3 +1,5 @@
+import type { JSX, ReactNode } from 'react';
+
 import FadeTransition from '@/app/animations/FadeTransition';
 import SidebarMenu from '@/components/layout/sidebar';
 
@@ -5,19 +7,19 @@ import SidebarMenu from '@/components/layout/sidebar';
  * Sidebar layout component that provides a responsive layout with a sidebar menu
  * and main content area. This is an async server component that supports
  * internationalization through the lang parameter.
- *
- * @async server component
- * @param {string} props.lang - Current language shortcode for internationalization
- * @param {React.ReactNode} props.children - Child components to be rendered in the main content area
- * @returns Sidebar layout JSX.Element with responsive sidebar and main content area
+ * @async
+ * @param   {object}               props          - Props for the component
+ * @param   {string}               props.lang     - Current language shortcode for internationalization
+ * @param   {ReactNode}            props.children - Child components to be rendered in the main content area
+ * @returns {Promise<JSX.Element>}                Sidebar layout JSX.Element with responsive sidebar and main content area
  */
 const WithSidebar = async ({
   lang,
   children,
 }: {
   lang: string;
-  children: React.ReactNode;
-}) => {
+  children: ReactNode;
+}): Promise<JSX.Element> => {
   return (
     <div className="flex w-full flex-col items-center">
       {/*

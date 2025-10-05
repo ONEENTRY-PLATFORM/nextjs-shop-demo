@@ -7,7 +7,6 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Close modal button
- *
  * @returns close modal button
  */
 const CloseModal = (): JSX.Element => {

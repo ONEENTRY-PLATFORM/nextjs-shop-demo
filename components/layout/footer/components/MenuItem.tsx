@@ -9,12 +9,10 @@ import { LanguageEnum } from '@/app/types/enum';
 
 /**
  * Footer menu item.
- *
- * @param props - Menu item props.
+ * @param props      - Menu item props.
  * @param props.page - Represents a page object.
  * @param props.lang - Current language shortcode.
- *
- * @returns menu item.
+ * @returns          menu item.
  */
 const MenuItem = ({
   page,

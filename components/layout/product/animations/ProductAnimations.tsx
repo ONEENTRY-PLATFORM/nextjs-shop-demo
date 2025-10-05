@@ -8,14 +8,11 @@ import { useRef, useState } from 'react';
 
 /**
  * Product animations.
- *
- * @param props - Props for component.
- * @param props.children - children ReactNode.
+ * @param props           - Props for component.
+ * @param props.children  - children ReactNode.
  * @param props.className - CSS className of ref element.
- * @param props.index - Index of element for animations stagger.
- *
- * @returns JSX.Element
- *
+ * @param props.index     - Index of element for animations stagger.
+ * @returns               JSX.Element
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const ProductAnimations = ({

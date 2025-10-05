@@ -10,13 +10,11 @@ import TableRowAnimations from '../animations/TableRowAnimations';
 
 /**
  * Total amount price of all products in cart
- *
- * @param props - Total amount props
- * @param props.lang - Current language shortcode
- * @param props.dict - dictionary from server api
+ * @param props           - Total amount props
+ * @param props.lang      - Current language shortcode
+ * @param props.dict      - dictionary from server api
  * @param props.className - CSS className of ref elements
- *
- * @returns Total amount component
+ * @returns               Total amount component
  */
 const TotalAmount = ({
   lang,

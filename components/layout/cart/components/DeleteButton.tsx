@@ -11,11 +11,9 @@ import DeleteIcon from '@/components/icons/delete';
 
 /**
  * Delete product from cart button.
- *
- * @param props - Delete button props.
+ * @param props           - Delete button props.
  * @param props.productId - product Id.
- *
- * @returns Delete button component.
+ * @returns               Delete button component.
  */
 
 const DeleteButton = memo(

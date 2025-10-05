@@ -8,13 +8,10 @@ import { useRef, useState } from 'react';
 
 /**
  * Categories grid stage leaving animations.
- *
- * @param props - categories grid props.
- * @param props.children - children ReactNode.
+ * @param props           - categories grid props.
+ * @param props.children  - children ReactNode.
  * @param props.className - categories grid wrapper className.
- *
- * @returns categories grid wrapper with animations.
- *
+ * @returns               categories grid wrapper with animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const CategoriesGridAnimations = ({

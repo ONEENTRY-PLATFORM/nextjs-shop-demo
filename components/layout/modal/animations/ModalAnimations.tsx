@@ -9,12 +9,10 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Modal open/close animations.
- *
- * @param props - props.
- * @param props.children - children ReactNode.
+ * @param props           - props.
+ * @param props.children  - children ReactNode.
  * @param props.component - component name.
- *
- * @returns Modal wrapper with open/close animations.
+ * @returns               Modal wrapper with open/close animations.
  */
 const ModalAnimations = ({
   children,

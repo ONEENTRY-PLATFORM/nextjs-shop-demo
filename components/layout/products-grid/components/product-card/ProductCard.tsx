@@ -13,15 +13,13 @@ import Stickers from './Stickers';
 
 /**
  * Product card
- *
- * @param props - Product card props
- * @param props.product - product entity object
- * @param props.lang - Current language shortcode
- * @param props.index - Index of element for animations stagger
- * @param props.dict - dictionary from server api
+ * @param props            - Product card props
+ * @param props.product    - product entity object
+ * @param props.lang       - Current language shortcode
+ * @param props.index      - Index of element for animations stagger
+ * @param props.dict       - dictionary from server api
  * @param props.pagesLimit - used for animations
- *
- * @returns Product card component
+ * @returns                Product card component
  */
 const ProductCard = ({
   product,

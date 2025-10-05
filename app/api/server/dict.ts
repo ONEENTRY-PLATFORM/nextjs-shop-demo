@@ -5,9 +5,8 @@ import { handleApiError } from '@/app/utils/errorHandler';
 
 /**
  * Dictionary - get block by Marker with API Blocks.
- *
  * @param langCode - Current language code.
- * @returns Current language dictionary.
+ * @returns        Current language dictionary.
  */
 const dict = async (langCode: string): Promise<IAttributeValues> => {
   try {

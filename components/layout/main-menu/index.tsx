@@ -10,7 +10,6 @@ import NavigationMenu from './components/NavigationMenu';
 
 /**
  * Main menu.
- *
  * @returns JSX.Element.
  */
 const MainMenu = async (): Promise<JSX.Element> => {

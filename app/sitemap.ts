@@ -4,7 +4,6 @@ import { i18n } from '@/i18n-config';
 
 /**
  * Get base URL for the website
- *
  * @returns Base URL string
  */
 const getBaseUrl = () => {
@@ -16,13 +15,12 @@ const getBaseUrl = () => {
 
 /**
  * Generate sitemap data for the website, including all localized root pages and main section pages
- *
  * @returns Returns a Promise that resolves to a sitemap entry array in Next.js MetadataRoute.Sitemap format
- * Each entry contains:
- *   - url: Full URL of the page
- *   - lastModified: Last modification time of the page
- *   - changeFrequency: Page update frequency
- *   - priority: Page priority (0-1)
+ *  Each entry contains:
+ *  - url: Full URL of the page
+ *  - lastModified: Last modification time of the page
+ *  - changeFrequency: Page update frequency
+ *  - priority: Page priority (0-1)
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getBaseUrl();

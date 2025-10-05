@@ -4,13 +4,14 @@ import { UsePrice } from '../../../utils/utils';
 
 /**
  * Price display component.
- *
- * @param prop - component props.
- * @param props.currentPrice - current price.
+ * @param prop                - component props.
+ * @param props.currentPrice  - current price.
  * @param props.originalPrice - original price.
- * @param props.lang - current language shortcode.
- *
- * @returns Price display with current/old prices.
+ * @param props.lang          - current language shortcode.
+ * @param prop.currentPrice
+ * @param prop.originalPrice
+ * @param prop.lang
+ * @returns                   Price display with current/old prices.
  */
 const PriceDisplay = ({
   currentPrice,

@@ -13,11 +13,9 @@ import TableRowAnimations from '../animations/TableRowAnimations';
 
 /**
  * Address row.
- *
- * @param props - Props.
+ * @param props             - Props.
  * @param props.placeholder - Placeholder.
- *
- * @returns JSX.Element
+ * @returns                 JSX.Element
  */
 const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
   const dispatch = useAppDispatch();

@@ -17,14 +17,12 @@ interface SearchResultsProps {
 
 /**
  * Search results.
- *
- * @param props - SearchResultsProps.
+ * @param props             - SearchResultsProps.
  * @param props.searchValue - search value.
- * @param props.state - state.
- * @param props.setState - set state.
- * @param props.lang - current language shortcode.
- *
- * @returns JSX.Element.
+ * @param props.state       - state.
+ * @param props.setState    - set state.
+ * @param props.lang        - current language shortcode.
+ * @returns                 JSX.Element.
  */
 const SearchResults = ({
   searchValue,

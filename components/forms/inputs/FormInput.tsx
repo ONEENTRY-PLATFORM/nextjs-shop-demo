@@ -11,17 +11,15 @@ import EyeOpenIcon from '@/components/icons/eye-o';
 
 /**
  * FormInput.
- *
- * @param field - Field properties.
- * @param field.value - Field value.
- * @param field.marker - Field marker.
- * @param field.type - Field type.
- * @param field.validators - Field validators.
- * @param field.index - Field index.
- * @param field.listTitles - List titles.
+ * @param field               - Field properties.
+ * @param field.value         - Field value.
+ * @param field.marker        - Field marker.
+ * @param field.type          - Field type.
+ * @param field.validators    - Field validators.
+ * @param field.index         - Field index.
+ * @param field.listTitles    - List titles.
  * @param field.localizeInfos - Localize info.
- *
- * @returns Form input.
+ * @returns                   Form input.
  */
 const FormInput = (field: {
   marker: string;

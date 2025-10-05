@@ -1,8 +1,13 @@
 'use client';
 
+import type { JSX } from 'react';
 import { useEffect, useState } from 'react';
 
-export default function ApiTestPage() {
+/**
+ * The API test page component for testing API performance
+ * @returns {JSX.Element} The API test page component
+ */
+export default function ApiTestPage(): JSX.Element {
   const [loadingTimes, setLoadingTimes] = useState<number[]>([]);
   const [averageTime, setAverageTime] = useState<number>(0);
 

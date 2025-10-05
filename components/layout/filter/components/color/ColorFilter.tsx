@@ -16,12 +16,10 @@ type Color = {
 
 /**
  * Color filter.
- *
- * @param props - Filter title.
- * @param props.title - Filter title.
+ * @param props            - Filter title.
+ * @param props.title      - Filter title.
  * @param props.attributes - Represents a template entity object.
- *
- * @returns Color filter.
+ * @returns                Color filter.
  */
 const ColorFilter = memo(
   ({

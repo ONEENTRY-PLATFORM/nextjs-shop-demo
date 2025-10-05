@@ -5,12 +5,10 @@
  *
  * This component is automatically rendered by Next.js when an error occurs
  * during rendering of the category catalog page or its child components.
- *
- * @param props - The error component props
+ * @param props       - The error component props
  * @param props.error - The error object containing information about the error that occurred
  * @param props.reset - A function to retry rendering the segment by resetting the error boundary
- *
- * @returns The error display component with retry option
+ * @returns           The error display component with retry option
  */
 export default function Error({
   error,

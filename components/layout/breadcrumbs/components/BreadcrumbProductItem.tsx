@@ -4,11 +4,9 @@ import { useGetProductByIdQuery } from '@/app/api/api/RTKApi';
 
 /**
  * Breadcrumb ProductItem.
- *
- * @param props - BreadcrumbProductItem props.
+ * @param props      - BreadcrumbProductItem props.
  * @param props.link - Product link.
- *
- * @returns JSX.Element.
+ * @returns          JSX.Element.
  */
 const BreadcrumbProductItem = ({ link }: { link: string }): JSX.Element => {
   const productData = useGetProductByIdQuery({ id: Number(link) });

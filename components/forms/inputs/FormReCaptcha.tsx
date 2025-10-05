@@ -4,13 +4,11 @@ import ReCAPTCHA from 'react-google-recaptcha-enterprise';
 
 /**
  * FormReCaptcha.
- *
- * @param props - FormReCaptcha props.
- * @param props.setToken - Function to set the token.
+ * @param props              - FormReCaptcha props.
+ * @param props.setToken     - Function to set the token.
  * @param props.setIsCaptcha - Function to set captcha state.
- * @param props.captchaKey - Captcha key.
- *
- * @returns FormReCaptcha component.
+ * @param props.captchaKey   - Captcha key.
+ * @returns                  FormReCaptcha component.
  */
 const FormReCaptcha = ({
   setToken,

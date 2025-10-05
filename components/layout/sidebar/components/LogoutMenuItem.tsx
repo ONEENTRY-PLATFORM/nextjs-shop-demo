@@ -10,7 +10,6 @@ import Profile from '@/components/icons/profile';
 
 /**
  * Logout menu item.
- *
  * @returns Logout menu item.
  */
 const LogoutMenuItem = (): JSX.Element => {

@@ -9,12 +9,9 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Filter modal animations.
- *
- * @param props - props.
+ * @param props          - props.
  * @param props.children - children ReactNode.
- *
- * @returns filter modal with animations.
- *
+ * @returns              filter modal with animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const FilterModalAnimations = ({

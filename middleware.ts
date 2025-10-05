@@ -7,6 +7,10 @@ import { i18n } from './i18n-config';
 
 const PUBLIC_FILE = /\.(.*)$/;
 
+/**
+ *
+ * @param request
+ */
 function getLocale(request: NextRequest): string | undefined {
   const negotiatorHeaders: Record<string, string> = {};
   request.headers.forEach((value, key) => (negotiatorHeaders[key] = value));
@@ -23,6 +27,10 @@ function getLocale(request: NextRequest): string | undefined {
   return locale;
 }
 
+/**
+ *
+ * @param request
+ */
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   if (PUBLIC_FILE.test(pathname)) {

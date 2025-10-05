@@ -18,17 +18,15 @@ import VariationsCarousel from './variations/VariationsCarousel';
 
 /**
  * Product single.
- *
- * @param props - Product single props.
- * @param props.product - product entity object.
- * @param product.blocks - product blocks.
- * @param props.lang - current language shortcode.
- * @param props.dict - dictionary from server api.
- * @param props.relatedProducts - array of related products.
+ * @param props                      - Product single props.
+ * @param props.product              - product entity object.
+ * @param product.blocks             - product blocks.
+ * @param props.lang                 - current language shortcode.
+ * @param props.dict                 - dictionary from server api.
+ * @param props.relatedProducts      - array of related products.
  * @param props.relatedProductsTotal - total number of related products.
- * @param props.blocksData - pre-fetched block data.
- *
- * @returns Product single.
+ * @param props.blocksData           - pre-fetched block data.
+ * @returns                          Product single.
  */
 const ProductSingle = ({
   product,

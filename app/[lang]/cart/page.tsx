@@ -25,13 +25,10 @@ type ProductResponse = {
  *
  * This async server component fetches dictionary data for internationalization
  * and delivery product data, then renders the cart page with sidebar layout.
- *
- * @param props - Page props
- * @param props.params - page params containing route parameters
- *
+ * @param   {object}               props        - Page props
+ * @param   {PageProps}            props.params - page params containing route parameters
+ * @returns {Promise<JSX.Element>}              Cart page layout JSX.Element
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- *
- * @returns Cart page layout JSX.Element
  */
 const CartPageLayout = async ({ params }: PageProps): Promise<JSX.Element> => {
   const { lang } = await params;
@@ -63,10 +60,9 @@ export default CartPageLayout;
 
 /**
  * Pre-generation page params
- *
- * @returns Static params for pre-generation
+ * @returns {Promise<object>} Static params for pre-generation
  */
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<object> {
   const params: Array<{ lang: string }> = [];
   for (const lang of i18n.locales) {
     params.push({ lang });

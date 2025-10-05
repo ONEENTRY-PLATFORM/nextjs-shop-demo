@@ -25,12 +25,11 @@ interface IndexPageLayoutProps {
 
 /**
  * Home(index) page component
- *
- * @param params - Page parameters including language
+ * @param params.params
+ * @param params        - Page parameters including language
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- *
- * @returns JSX.Element representing the page layout
+ * @returns             JSX.Element representing the page layout
  */
 const IndexPageLayout = async ({
   params,
@@ -122,9 +121,9 @@ export async function generateStaticParams() {
 
 /**
  * Generate metadata for the page
- *
- * @param params - Page parameters including language
- * @returns Promise resolving to metadata object
+ * @param params.params
+ * @param params        - Page parameters including language
+ * @returns             Promise resolving to metadata object
  */
 export async function generateMetadata({
   params,

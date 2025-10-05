@@ -23,11 +23,9 @@ import HeartOpenIcon from '@/components/icons/heart-o';
 
 /**
  * Favorites button.
- *
- * @param props - Favorites button properties.
+ * @param props         - Favorites button properties.
  * @param props.product - product entity object.
- *
- * @returns Favorites button.
+ * @returns             Favorites button.
  */
 const FavoritesButton = memo((product: IProductsEntity): JSX.Element => {
   const [isFav, setIsFav] = useState(false);

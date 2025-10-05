@@ -10,10 +10,9 @@ import { setupStore } from '../store';
 
 /**
  * Store provider
- *
- * @param children - children ReactNode
- *
- * @returns Redux provider
+ * @param children.children
+ * @param children          - children ReactNode
+ * @returns                 Redux provider
  */
 export default function StoreProvider({ children }: { children: ReactNode }) {
   const storeRef = useRef<AppStore>(undefined);

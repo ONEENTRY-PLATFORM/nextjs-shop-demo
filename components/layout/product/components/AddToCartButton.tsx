@@ -19,17 +19,15 @@ import QuantitySelector from './QuantitySelector';
 
 /**
  * AddToCart button with qty selector
- *
- * @param props - Add to cart props
- * @param props.id - product id
- * @param props.units - product units qty
- * @param props.productTitle - product title
+ * @param props                  - Add to cart props
+ * @param props.id               - product id
+ * @param props.units            - product units qty
+ * @param props.productTitle     - product title
  * @param props.statusIdentifier - product status identifier
- * @param props.className - CSS class name
- * @param props.height - component height
- * @param props.dict - dictionary from server api
- *
- * @returns Button | Qty selector
+ * @param props.className        - CSS class name
+ * @param props.height           - component height
+ * @param props.dict             - dictionary from server api
+ * @returns                      Button | Qty selector
  */
 const AddToCartButton = ({
   id,

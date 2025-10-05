@@ -5,11 +5,9 @@ import type { SimplePageProps } from '@/app/types/global';
 
 /**
  * DeliveryPage page.
- *
- * @param props - Props for DeliveryPage.
+ * @param props      - Props for DeliveryPage.
  * @param props.page - Page entity.
- *
- * @returns DeliveryPage page.
+ * @returns          DeliveryPage page.
  */
 const DeliveryPage = async ({
   page,
