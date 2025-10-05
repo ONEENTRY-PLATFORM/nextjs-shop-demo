@@ -18,8 +18,8 @@ const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
  * This function fetches an image from the provided URL and generates a low-quality
  * base64-encoded preview image that can be used as a placeholder while the full
  * quality image is loading. This improves perceived performance and user experience.
- * @param imageUrl - The URL of the image to generate a placeholder for
- * @returns        A promise that resolves to a base64-encoded data URI of the low-quality placeholder
+ * @param   {string}          imageUrl - The URL of the image to generate a placeholder for
+ * @returns {Promise<string>}          A promise that resolves to a base64-encoded data URI of the low-quality placeholder
  * @example
  * ```typescript
  * const preview = await getLqipPreview('https://example.com/image.jpg');

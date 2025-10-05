@@ -7,10 +7,10 @@ import getLqipPreview from '@/app/api/lqip/getLqipPreview';
  *
  * This endpoint generates a low-quality base64-encoded preview image that can be
  * used as a placeholder while the full quality image is loading.
- * @param request - The incoming request with image URL in query parameters
- * @returns       A JSON response with the base64-encoded LQIP data URI
+ * @param   {Request}               request - The incoming request with image URL in query parameters
+ * @returns {Promise<NextResponse>}         A JSON response with the base64-encoded LQIP data URI
  */
-export async function GET(request: Request) {
+export async function GET(request: Request): Promise<NextResponse> {
   const { searchParams } = new URL(request.url);
   const imageUrl = searchParams.get('url');
 

@@ -20,10 +20,10 @@ const FONT_TYPES: Record<string, string> = {
 
 /**
  * GET endpoint for serving font files with caching support
- * @param request - The incoming HTTP request
- * @returns       NextResponse with font file data or error
+ * @param   {Request}               request - The incoming HTTP request
+ * @returns {Promise<NextResponse>}         NextResponse with font file data or error
  */
-export async function GET(request: Request) {
+export async function GET(request: Request): Promise<NextResponse> {
   // Extract font filename from the URL path
   const { pathname } = new URL(request.url);
   const fontFile = pathname.split('/').pop();
@@ -73,9 +73,9 @@ export async function GET(request: Request) {
 
 /**
  * OPTIONS endpoint for handling CORS preflight requests
- * @returns NextResponse with CORS headers
+ * @returns {Promise<NextResponse>} NextResponse with CORS headers
  */
-export async function OPTIONS() {
+export async function OPTIONS(): Promise<NextResponse> {
   return new NextResponse(null, {
     headers: {
       'Access-Control-Allow-Origin': '*',

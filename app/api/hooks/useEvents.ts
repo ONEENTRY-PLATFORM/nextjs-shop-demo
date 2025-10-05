@@ -6,9 +6,9 @@ import { handleApiError } from '@/app/utils/errorHandler';
 /**
  * Subscribe events with Events API
  * @async
- * @param id - product id
+ * @param   {number}        id - product id
+ * @returns {Promise<void>}    Promise that resolves when subscription is complete
  * @see {@link https://doc.oneentry.cloud/docs/events OneEntry CMS docs}
- * @returns  Promise that resolves when subscription is complete
  */
 export const onSubscribeEvents = async (id: number): Promise<void> => {
   try {

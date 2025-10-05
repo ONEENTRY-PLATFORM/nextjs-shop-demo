@@ -17,14 +17,13 @@ import { api } from '@/app/api';
  *   }
  * };
  * @see {@link https://doc.oneentry.cloud/docs/forms OneEntry CMS forms documentation}
- * @returns An object containing:
- *  - loading: boolean indicating submission status
- *  - sendData: function to submit form data, returns Promise<any>
+ * @returns {loading: boolean; sendData: (data: IBodyPostFormData) => Promise<unknown>;} An object containing:
+ *                                                                                       - loading: boolean indicating submission status
+ *                                                                                       - sendData: function to submit form data, returns Promise<any>
  */
 export const useSetForm = (): {
   loading: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  sendData: (data: IBodyPostFormData) => Promise<any>;
+  sendData: (data: IBodyPostFormData) => Promise<unknown>;
 } => {
   const [loading, setLoading] = useState<boolean>(false);
 
