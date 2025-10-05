@@ -11,24 +11,24 @@ import EyeOpenIcon from '@/components/icons/eye-o';
 
 /**
  * FormInput.
- * @param   {object}      field               - Field properties.
- * @param   {string}      field.value         - Field value.
- * @param   {string}      field.marker        - Field marker.
- * @param   {string}      field.type          - Field type.
- * @param   {any}         field.validators    - Field validators.
- * @param   {any}         field.index         - Field index.
- * @param   {any}         field.listTitles    - List titles.
- * @param   {any}         field.localizeInfos - Localize info.
- * @returns {JSX.Element}                     Form input.
+ * @param   {object}              field               - Field properties.
+ * @param   {string}              field.value         - Field value.
+ * @param   {string}              field.marker        - Field marker.
+ * @param   {string}              field.type          - Field type.
+ * @param   {Record<string, any>} field.validators    - Field validators.
+ * @param   {number}              field.index         - Field index.
+ * @param   {Record<string, any>} field.listTitles    - List titles.
+ * @param   {Record<string, any>} field.localizeInfos - Localize info.
+ * @returns {JSX.Element}                             Form input.
  */
 const FormInput = (field: {
   marker: string;
   type: string;
   value: string;
-  validators?: any;
-  index?: any;
-  listTitles?: any;
-  localizeInfos?: any;
+  validators?: Record<string, any>;
+  index?: number;
+  listTitles?: Record<string, any>;
+  localizeInfos?: Record<string, any>;
 }): JSX.Element => {
   const { localizeInfos } = field;
   const [value, setValue] = useState<string>(field.value || '');
@@ -67,7 +67,7 @@ const FormInput = (field: {
   }
 
   return (
-    <FormFieldAnimations index={field.index} className="input-group">
+    <FormFieldAnimations index={field.index as number} className="input-group">
       <label htmlFor={field.marker} className="text-gray-400">
         {localizeInfos?.title}{' '}
         {required && <span className="text-red-500">*</span>}
@@ -81,7 +81,7 @@ const FormInput = (field: {
           value={value}
           onChange={(val) => setValue(val.currentTarget.value)}
         >
-          {field.listTitles.map(
+          {field.listTitles?.map(
             (
               option: {
                 value: string;
@@ -90,26 +90,9 @@ const FormInput = (field: {
                   | number
                   | bigint
                   | boolean
-                  | React.ReactElement<
-                      unknown,
-                      string | React.JSXElementConstructor<any>
-                    >
                   | Iterable<React.ReactNode>
                   | React.ReactPortal
-                  | Promise<
-                      | string
-                      | number
-                      | bigint
-                      | boolean
-                      | React.ReactPortal
-                      | React.ReactElement<
-                          unknown,
-                          string | React.JSXElementConstructor<any>
-                        >
-                      | Iterable<React.ReactNode>
-                      | null
-                      | undefined
-                    >
+                  | Promise<unknown>
                   | null
                   | undefined;
               },
@@ -117,7 +100,7 @@ const FormInput = (field: {
             ) => {
               return (
                 <option key={i} value={option.value as string}>
-                  {option.title}
+                  {option.title as string}
                 </option>
               );
             },
@@ -145,8 +128,8 @@ const FormInput = (field: {
           required={required}
           onChange={(val) => setValue(val.currentTarget.value)}
           autoComplete={fieldType === 'password' ? 'password' : ''}
-          minLength={field.validators['stringInspectionValidator']?.stringMin}
-          maxLength={field.validators['stringInspectionValidator']?.stringMax}
+          minLength={field.validators?.['stringInspectionValidator']?.stringMin}
+          maxLength={field.validators?.['stringInspectionValidator']?.stringMax}
           value={value}
         />
       )}

@@ -17,7 +17,7 @@ const baloo = Baloo({
  * @param   {object}      props.category        - category object.
  * @param   {string}      props.category.title  - category title.
  * @param   {string}      props.category.link   - category link.
- * @param   {any}         props.category.imgSrc - category image source.
+ * @param   {unknown}     props.category.imgSrc - category image source.
  * @param   {number}      props.index           - index of element in array for stagger.
  * @returns {JSX.Element}                       category card with animations.
  */
@@ -26,8 +26,7 @@ const CategoryCard = ({
   index,
 }: {
   category: {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    imgSrc: any;
+    imgSrc: unknown;
     title: string;
     link: string;
   };

@@ -13,7 +13,7 @@ import Loader from '@/components/shared/Loader';
  * @param   {object}               props           - order data
  * @param   {IOrderByMarkerEntity} props.data      - order data
  * @param   {boolean}              props.isLoading - loading state
- * @param   {any}                  props.refetch   - refetch orders
+ * @param   {unknown}              props.refetch   - refetch orders
  * @param   {string}               props.title     - button title
  * @returns {JSX.Element}                          JSX.Element
  */

@@ -45,7 +45,6 @@ export const blocksData = [
  * This object maps block identifiers to their corresponding background color
  * classes and additional styling. Used to apply consistent color schemes
  * across different sections of the application.
- * @type {Object.<string, string>}
  */
 export const blocksColors = {
   home_banner: 'bg-purple-200 w-full max-sm:flex-col',

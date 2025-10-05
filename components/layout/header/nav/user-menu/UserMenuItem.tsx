@@ -2,7 +2,7 @@
 'use client';
 
 import Link from 'next/link';
-import type { FC } from 'react';
+import type { FC, JSX } from 'react';
 
 /**
  * User menu item.
@@ -16,7 +16,15 @@ const UserMenuItem: FC<{
   lang: string;
   page: any;
   setState: any;
-}> = ({ lang, page, setState }) => {
+}> = ({
+  lang,
+  page,
+  setState,
+}: {
+  lang: string;
+  page: any;
+  setState: any;
+}): JSX.Element => {
   return (
     <Link
       href={'/' + lang + '/' + page.pageUrl}

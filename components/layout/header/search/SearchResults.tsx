@@ -12,8 +12,8 @@ import Spinner from '@/components/shared/Spinner';
  * Search results.
  * @param   {object}             props             - SearchResultsProps.
  * @param   {string | undefined} props.searchValue - search value.
- * @param   {any}                props.state       - state.
- * @param   {Dispatch<any>}      props.setState    - set state.
+ * @param   {unknown}            props.state       - state.
+ * @param   {Dispatch<unknown>}  props.setState    - set state.
  * @param   {string}             props.lang        - current language shortcode.
  * @returns {JSX.Element}                          JSX.Element.
  */
@@ -24,10 +24,8 @@ const SearchResults = ({
   lang,
 }: {
   searchValue: string | undefined;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  state: any;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setState: Dispatch<any>;
+  state: unknown;
+  setState: Dispatch<unknown>;
   lang: string;
 }): JSX.Element => {
   const { loading, products } = useSearchProducts({

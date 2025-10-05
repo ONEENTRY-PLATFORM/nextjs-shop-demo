@@ -1,5 +1,5 @@
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
-import type { FC, JSX } from 'react';
+import type { JSX } from 'react';
 import { useState } from 'react';
 
 import { UsePrice } from '@/components/utils/utils';
@@ -17,12 +17,12 @@ interface OrderRowProps {
 
 /**
  * Order row
- * @param   {OrderRowProps}                   order          - Order entity
- * @param   {IOrderByMarkerEntity}            order.order    -Entity
- * @param   {Record<string, any> | undefined} order.settings - Settings
- * @param   {string}                          order.lang     - Language
- * @param   {number}                          order.index    - Index
- * @returns {JSX.Element}                                    - Order row
+ * @param   {OrderRowProps}                       order          - Order entity
+ * @param   {IOrderByMarkerEntity}                order.order    -Entity
+ * @param   {Record<string, unknown> | undefined} order.settings - Settings
+ * @param   {string}                              order.lang     - Language
+ * @param   {number}                              order.index    - Index
+ * @returns {JSX.Element}                                        - Order row
  */
 const OrderRow = ({
   order,

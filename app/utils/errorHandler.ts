@@ -92,13 +92,12 @@ export function useApiErrorHandler(): unknown {
 
 /**
  * Format error message for user display.
- * @param   {any}    error          - The error to format
- * @param   {string} defaultMessage - Default message to show if error is not recognized
- * @returns {string}                Formatted error message
+ * @param   {unknown} error          - The error to format
+ * @param   {string}  defaultMessage - Default message to show if error is not recognized
+ * @returns {string}                 Formatted error message
  */
 export function formatErrorMessage(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  error: any,
+  error: unknown,
   defaultMessage: string = 'An error occurred',
 ): string {
   if (isIError(error)) {

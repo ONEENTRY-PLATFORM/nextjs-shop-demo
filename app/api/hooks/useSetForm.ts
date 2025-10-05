@@ -6,20 +6,25 @@ import { useState } from 'react';
 import { api } from '@/app/api';
 
 /**
- * Custom hook for submitting form data to OneEntry CMS
+ * Custom hook for handling form submissions to the OneEntry CMS
+ *
+ * This hook provides functionality to submit form data with loading state management.
+ * It's designed to work with OneEntry CMS form endpoints.
  * @example
  * const { loading, sendData } = useSetForm();
  *
- * const handleSubmit = async () => {
+ * const handleSubmit = async (formData) => {
  *   const result = await sendData(formData);
- *   if (result.success) {
+ *   if (result?.error) {
+ *     console.error('Form submission failed:', result.error);
+ *   } else {
  *     console.log('Form submitted successfully');
  *   }
  * };
  * @see {@link https://doc.oneentry.cloud/docs/forms OneEntry CMS forms documentation}
- * @returns {loading: boolean; sendData: (data: IBodyPostFormData) => Promise<unknown>;} An object containing:
- *                                                                                       - loading: boolean indicating submission status
- *                                                                                       - sendData: function to submit form data, returns Promise<any>
+ * @returns {object} An object containing:
+ *                   - loading: boolean indicating submission status
+ *                   - sendData: function to submit form data, returns Promise<unknown>
  */
 export const useSetForm = (): {
   loading: boolean;

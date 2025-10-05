@@ -41,8 +41,17 @@ const FiltersForm = async ({
   });
   const { isError, error, attribute } = data;
 
-  const sortedAttributes: Record<any, any> = sortObjectFieldsByPosition(
-    (pageInfo.page as IPagesEntity).attributeValues,
+  // Fixing the type error by properly casting and checking the attributeValues structure
+  const attributeValues = (pageInfo.page as IPagesEntity).attributeValues;
+  const sortedAttributes: Record<string, any> = sortObjectFieldsByPosition(
+    attributeValues && typeof attributeValues === 'object'
+      ? (Object.fromEntries(
+          Object.entries(attributeValues).filter(
+            ([, value]) =>
+              value && typeof value === 'object' && 'position' in value,
+          ),
+        ) as Record<string, { position: number }>)
+      : {},
   );
 
   if (isError) {
@@ -106,4 +115,5 @@ const FiltersForm = async ({
     </div>
   );
 };
+
 export default FiltersForm;

@@ -8,13 +8,13 @@ import OptimizedImage from '@/components/shared/OptimizedImage';
 /**
  * Blocks grid image.
  * @param   {object}               props                 - block props.
- * @param   {any}                  props.attributeValues - block attributeValues.
+ * @param   {Record<string, any>}  props.attributeValues - block attributeValues.
  * @returns {Promise<JSX.Element>}                       block card with animations.
  */
 const BlocksGridImage = async ({
   attributeValues,
 }: {
-  attributeValues: any;
+  attributeValues: Record<string, any>;
 }): Promise<JSX.Element> => {
   // extract data from block attributeValues
   const { title = '', bg_web } = attributeValues;
