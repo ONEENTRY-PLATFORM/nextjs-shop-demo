@@ -8,13 +8,6 @@ import React from 'react';
 import { useSearchProducts } from '@/app/api/hooks/useSearchProducts';
 import Spinner from '@/components/shared/Spinner';
 
-interface SearchResultsProps {
-  searchValue: string | undefined;
-  state: boolean;
-  setState: Dispatch<React.SetStateAction<boolean>>;
-  lang: string;
-}
-
 /**
  * Search results.
  * @param props             - SearchResultsProps.
@@ -29,7 +22,12 @@ const SearchResults = ({
   state,
   setState,
   lang,
-}: SearchResultsProps): JSX.Element => {
+}: {
+  searchValue: string | undefined;
+  state: boolean;
+  setState: Dispatch<React.SetStateAction<boolean>>;
+  lang: string;
+}): JSX.Element => {
   const { loading, products } = useSearchProducts({
     name: searchValue || '',
     lang: lang,

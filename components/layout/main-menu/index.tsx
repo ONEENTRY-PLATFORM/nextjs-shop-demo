@@ -10,14 +10,14 @@ import NavigationMenu from './components/NavigationMenu';
 
 /**
  * Main menu.
- * @returns JSX.Element.
+ * @returns {Promise<JSX.Element>} JSX.Element.
  */
 const MainMenu = async (): Promise<JSX.Element> => {
   // Get props from server provider
   const [lang] = ServerProvider('lang');
 
   // Get menu by marker from api
-  const { isError, menu } = await getMenuByMarker('main_web', lang);
+  const { isError, menu } = await getMenuByMarker('main_web', lang as string);
 
   if (isError) {
     return <></>;
@@ -35,8 +35,8 @@ const MainMenu = async (): Promise<JSX.Element> => {
 
   return (
     <>
-      <NavigationMenu menu={mainMenu} lang={lang} />
-      <OffscreenModal menu={mainMenu} lang={lang} />
+      <NavigationMenu menu={mainMenu} lang={lang as string} />
+      <OffscreenModal menu={mainMenu} lang={lang as string} />
     </>
   );
 };

@@ -2,7 +2,7 @@
 'use client';
 
 // import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
-import type { FC, Key } from 'react';
+import type { JSX, Key } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
@@ -16,22 +16,24 @@ import RepeatOrderButton from './RepeatOrderButton';
 
 /**
  * Order page
- * @param id.id
- * @param id
- * @param settings
- * @param lang        current language shortcode
- * @param isActive
- * @param id.settings
- * @param id.lang
- * @param id.isActive
- * @returns           JSX.Element
+ * @param props          - Order page props
+ * @param props.id       - Order id
+ * @param props.settings - Settings
+ * @param props.lang     - Language
+ * @param props.isActive - Is active
+ * @returns              JSX.Element
  */
-const OrderPage: FC<{
+const OrderPage = ({
+  id,
+  settings,
+  lang,
+  isActive,
+}: {
   id: number;
   settings: Record<string, any> | any;
   lang: string;
   isActive: boolean;
-}> = ({ id, settings, lang, isActive }) => {
+}): JSX.Element => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const { data, isLoading, refetch } = useGetSingleOrderQuery({
     marker: 'order',
@@ -40,7 +42,7 @@ const OrderPage: FC<{
   });
 
   if (!data || !settings) {
-    return;
+    return <></>;
   }
 
   const { products, statusIdentifier, paymentAccountIdentifier } = data;
