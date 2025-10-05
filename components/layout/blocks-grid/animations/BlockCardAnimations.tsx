@@ -9,11 +9,11 @@ import { useRef, useState } from 'react';
 
 /**
  * Blocks card animations.
- * @param props           - props.
- * @param props.children  - children ReactNode.
- * @param props.className - card wrapper className.
- * @param props.index     - index of element in array for stagger.
- * @returns               card with animations.
+ * @param   {object}      props           - props.
+ * @param   {ReactNode}   props.children  - children ReactNode.
+ * @param   {string}      props.className - card wrapper className.
+ * @param   {number}      props.index     - index of element in array for stagger.
+ * @returns {JSX.Element}                 card with animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const BlockCardAnimations = ({

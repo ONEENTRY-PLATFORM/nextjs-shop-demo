@@ -31,11 +31,11 @@ const YT = () => (
 
 /**
  * BlocksGridTitle.
- * @param props             - component props.
- * @param props.identifier  - identifier of component.
- * @param props.title       - title of component.
- * @param props.title.value
- * @returns                 BlocksGridTitle with animations.
+ * @param   {object}      props             - component props.
+ * @param   {string}      props.identifier  - identifier of component.
+ * @param   {object}      props.title       - title of component.
+ * @param   {string}      props.title.value - value of title.
+ * @returns {JSX.Element}                   BlocksGridTitle with animations.
  */
 const BlocksGridTitle = ({
   identifier,

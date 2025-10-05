@@ -6,10 +6,10 @@ import Loader from '@/components/shared/Loader';
 
 /**
  * Edit order button.
- * @param props           - Edit order button props.
- * @param props.dict      - dictionary values.
- * @param props.isLoading - loading state.
- * @returns               JSX.Element.
+ * @param   {object}           props           - Edit order button props.
+ * @param   {IAttributeValues} props.dict      - dictionary values.
+ * @param   {boolean}          props.isLoading - loading state.
+ * @returns {JSX.Element}                      JSX.Element.
  */
 const EditOrderButton = ({
   dict,

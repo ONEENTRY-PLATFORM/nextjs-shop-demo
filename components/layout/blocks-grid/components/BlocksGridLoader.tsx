@@ -8,7 +8,7 @@ import { blocksColors, blocksData } from '@/components/data';
 
 /**
  * Blocks grid loader
- * @returns Loader
+ * @returns {JSX.Element} Loader
  */
 const BlocksGridLoader = (): JSX.Element => {
   // array of blocks names

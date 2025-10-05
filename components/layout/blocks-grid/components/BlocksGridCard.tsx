@@ -17,15 +17,15 @@ const baloo = Baloo({
 
 /**
  * Blocks grid card.
- * @param   {object} props                  - props.
- * @param   {string} props.marker           - text marker of block.
- * @param   {string} props.bgColor          - card background color.
- * @param   {string} props.lang             - current language shortcode.
- * @param   {object} props.className        - card className.
- * @param   {number} props.index            - index of element in array for stagger.
- * @param            props.className.width
- * @param            props.className.height
- * @returns                                 block card with animations.
+ * @param   {object}                      props                  - props.
+ * @param   {string}                      props.marker           - text marker of block.
+ * @param   {string}                      props.bgColor          - card background color.
+ * @param   {string}                      props.lang             - current language shortcode.
+ * @param   {object}                      props.className        - card className.
+ * @param   {string}                      props.className.width  - card width.
+ * @param   {string}                      props.className.height - card height.
+ * @param   {number}                      props.index            - index of element in array for stagger.
+ * @returns {Promise<React.ReactElement>}                        block card with animations.
  */
 const BlocksGridCard = async ({
   marker,

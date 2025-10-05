@@ -14,10 +14,10 @@ import NavItemHome from './components/NavItemHome';
 
 /**
  * Bottom menu for mobile devices.
- * @returns bottom mobile menu JSX.Element.
+ * @returns {Promise<JSX.Element>} bottom mobile menu JSX.Element.
  */
 const BottomMobileMenu = async (): Promise<JSX.Element> => {
-  const [lang] = ServerProvider('lang');
+  const [lang = 'en'] = ServerProvider<string>('lang');
 
   // Get Menu by marker from api
   const { menu, isError } = await getMenuByMarker('bottom_web', lang);

@@ -8,12 +8,10 @@ import CatalogIcon from '@/components/icons/catalog';
 
 /**
  * Catalog navigation menu item.
- * @param props                    - menu item props.
- * @param props.item               - menu element object.
- * @param props.item.pageUrl       - page url.
- * @param props.item.localizeInfos - menu item localization info.
- * @param props.lang               - current language shortcode.
- * @returns                        menu item.
+ * @param   {object}      props      - menu item props.
+ * @param   {IMenusPages} props.item - menu element object.
+ * @param   {string}      props.lang - current language shortcode.
+ * @returns {JSX.Element}            menu item.
  */
 const NavItemCatalog = ({
   item: { pageUrl, localizeInfos },

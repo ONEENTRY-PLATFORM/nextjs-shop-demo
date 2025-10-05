@@ -3,28 +3,30 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import { useTransitionState } from 'next-transition-router';
-import type { FC, JSX, ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 
 /**
  * Payment method animations.
- * @param children.children
- * @param children           - children ReactNode.
- * @param className          - CSS className of ref element.
- * @param index              - Index of element for animations stagger.
- * @param isActive           - Is active element.
- * @param children.className
- * @param children.isActive
- * @param children.index
+ * @param   {object}      props           - children ReactNode.
+ * @param   {ReactNode}   props.children  - Children ReactNode.
+ * @param   {string}      props.className - CSS className of ref element.
+ * @param   {number}      props.index     - Index of element for animations stagger.
+ * @param   {boolean}     props.isActive  - Is active element.
+ * @returns {JSX.Element}                 Payment method animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
- * @returns                  Payment method animations.
  */
-const PaymentMethodAnimations: FC<{
+const PaymentMethodAnimations = ({
+  children,
+  className,
+  isActive,
+  index,
+}: {
   children: ReactNode;
   className: string;
   index: number;
   isActive: boolean;
-}> = ({ children, className, isActive, index }): JSX.Element => {
+}): JSX.Element => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);

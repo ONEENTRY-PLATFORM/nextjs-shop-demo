@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 
 /**
  * FormCaptcha.
- * @param props              - Form captcha props.
- * @param props.setIsCaptcha - Set captcha.
- * @returns                  FormCaptcha component.
+ * @param   {object}            props              - Form captcha props.
+ * @param   {Dispatch<boolean>} props.setIsCaptcha - Set captcha.
+ * @returns {JSX.Element}                          FormCaptcha component.
  */
 const FormCaptcha = ({
   setIsCaptcha,
@@ -43,10 +43,10 @@ const FormCaptcha = ({
 
   /**
    * Validates the reCAPTCHA response by sending the validation object to Google's reCAPTCHA Enterprise API
-   * @param validationObject               - Object containing the reCAPTCHA token and site key
-   * @param validationObject.event         - Event data containing token and siteKey
-   * @param validationObject.event.token   - The reCAPTCHA token generated after user verification
-   * @param validationObject.event.siteKey - The site key for the reCAPTCHA service
+   * @param {object} validationObject               - Object containing the reCAPTCHA token and site key
+   * @param {object} validationObject.event         - Event data containing token and siteKey
+   * @param {string} validationObject.event.token   - The reCAPTCHA token generated after user verification
+   * @param {string} validationObject.event.siteKey - The site key for the reCAPTCHA service
    */
   const validateRecaptcha = async (validationObject: {
     event: { token: string; siteKey: string };

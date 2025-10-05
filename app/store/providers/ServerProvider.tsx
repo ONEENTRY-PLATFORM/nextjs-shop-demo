@@ -10,7 +10,10 @@ const serverContext = cache(() => new Map());
  * @param   {unknown} defaultValue - defaultValue
  * @returns {unknown}              Provider getter/setter
  */
-export const ServerProvider = <T,>(key: string, defaultValue?: T): object => {
+export const ServerProvider = <T,>(
+  key: string,
+  defaultValue?: T,
+): [T | undefined, (value: T) => void] => {
   const global = serverContext();
 
   if (defaultValue !== undefined) {

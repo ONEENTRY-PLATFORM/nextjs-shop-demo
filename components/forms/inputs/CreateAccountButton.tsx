@@ -7,9 +7,9 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Create account button.
- * @param props       - Component props.
- * @param props.title - Button title.
- * @returns           Create account button.
+ * @param   {object}      props       - Component props.
+ * @param   {string}      props.title - Button title.
+ * @returns {JSX.Element}             Create account button.
  */
 const CreateAccountButton = ({ title }: { title: string }): JSX.Element => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
