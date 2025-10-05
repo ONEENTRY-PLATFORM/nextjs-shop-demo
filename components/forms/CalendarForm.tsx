@@ -19,17 +19,18 @@ import TimeSlots from './calendar/TimeSlots';
 
 /**
  * Calendar form.
- * @param props      - Component props.
- * @param props.lang - Current language shortcode.
- * @returns          Calendar form.
+ * @param   {object}      props      - Component props.
+ * @param   {string}      props.lang - Current language shortcode.
+ * @returns {JSX.Element}            Calendar form.
  */
 const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
   const dispatch = useAppDispatch();
   const { setTransition } = useContext(OpenDrawerContext);
-  const deliveryData = useAppSelector(selectDeliveryData);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const deliveryData: any = useAppSelector(selectDeliveryData);
 
-  const [date, setDate] = useState<Date>(new Date(deliveryData.date));
-  const [time, setTime] = useState<string>(deliveryData.time);
+  const [date, setDate] = useState<Date>(new Date(deliveryData?.date));
+  const [time, setTime] = useState<string>(deliveryData?.time);
 
   // Apply date to CartSlice
   const onApplyHandle = () => {

@@ -21,8 +21,8 @@ export class ApiError extends Error {
 
 /**
  * Type guard to check if an object is of type IError
- * @param error - The error object to check
- * @returns     True if the object is an IError, false otherwise
+ * @param   {unknown} error - The error object to check
+ * @returns {boolean}       True if the object is an IError, false otherwise
  */
 export function isIError(error: unknown): error is IError {
   return (
@@ -35,9 +35,9 @@ export function isIError(error: unknown): error is IError {
 
 /**
  * Centralized error handling function
- * @param handle - The function to handle the error
- * @param error  - The error to handle
- * @returns      An ApiError with standardized format
+ * @param   {string}   handle - The function to handle the error
+ * @param   {unknown}  error  - The error to handle
+ * @returns {ApiError}        An ApiError with standardized format
  */
 export function handleApiError(handle: string, error: unknown): ApiError {
   if (isIError(error)) {
@@ -78,9 +78,9 @@ export function handleApiError(handle: string, error: unknown): ApiError {
 
 /**
  * Custom hook for handling API errors in React components
- * @returns A function to handle API errors with toast notifications
+ * @returns {unknown} A function to handle API errors with toast notifications
  */
-export function useApiErrorHandler() {
+export function useApiErrorHandler(): unknown {
   // This would typically integrate with a notification system like toast
   return function handleApiErrorWithNotification(error: unknown): ApiError {
     const apiError = handleApiError('useApiErrorHandler', error);
@@ -92,9 +92,9 @@ export function useApiErrorHandler() {
 
 /**
  * Format error message for user display.
- * @param error          - The error to format
- * @param defaultMessage - Default message to show if error is not recognized
- * @returns              Formatted error message
+ * @param   {any}    error          - The error to format
+ * @param   {string} defaultMessage - Default message to show if error is not recognized
+ * @returns {string}                Formatted error message
  */
 export function formatErrorMessage(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

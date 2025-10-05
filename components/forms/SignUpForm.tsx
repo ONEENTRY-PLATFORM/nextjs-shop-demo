@@ -22,10 +22,10 @@ import SubmitButton from './inputs/FormSubmitButton';
 
 /**
  * SignUp form.
- * @param props      - Form properties.
- * @param props.lang - Current language shortcode.
- * @param props.dict - dictionary from server api.
- * @returns          SignUp form component.
+ * @param   {FormProps}        props      - Form properties.
+ * @param   {string}           props.lang - Current language shortcode.
+ * @param   {IAttributeValues} props.dict - dictionary from server api.
+ * @returns {JSX.Element}                 SignUp form component.
  */
 const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
   const [loading, setIsLoading] = useState<boolean>(false);
@@ -47,8 +47,8 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
 
   /**
    * SignUp form submit handler.
-   * @param e - Form event object.
-   * @returns Promise that resolves when the form is submitted.
+   * @param   {FormEvent<HTMLFormElement>} e - Form event object.
+   * @returns {Promise<void>}                Promise that resolves when the form is submitted.
    */
   const onSignUp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -65,7 +65,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
     // check if user can submit form
     const canSubmit = Object.keys(fields).reduce((isValid, field) => {
       if (!isValid || !field) {
-        return false;
+        return null;
       }
       const fieldData = fields[field as keyof typeof fields];
       return fieldData ? fieldData.valid : false;

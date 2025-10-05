@@ -20,17 +20,17 @@ import Placeholder from '@/components/shared/Placeholder';
 
 /**
  * Product images gallery/placeholder
- * @param props         - Product image props
- * @param props.product - product entity object
- * @param props.alt     - alt text for image
- * @returns             Product images gallery/placeholder component
+ * @param   {object}          props         - Product image props
+ * @param   {IProductsEntity} props.product - product entity object
+ * @param   {string}          props.alt     - alt text for image
+ * @returns {JSX.Element}                   Product images gallery/placeholder component
  */
 const ProductImageGallery = ({
   product,
   alt,
 }: {
   product: IProductsEntity;
-  alt?: string;
+  alt: string;
 }): JSX.Element => {
   const [nav1, setNav1] = useState<Slider>();
   const [nav2, setNav2] = useState<Slider>();

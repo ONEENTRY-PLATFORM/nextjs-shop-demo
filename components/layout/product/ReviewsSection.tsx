@@ -12,9 +12,9 @@ import ReviewsList from './reviews-group/ReviewsList';
 
 /**
  * ReviewsSection.
- * @param props      - component props.
- * @param props.dict - dictionary from server api.
- * @returns          Reviews section.
+ * @param   {object}           props      - component props.
+ * @param   {IAttributeValues} props.dict - dictionary from server api.
+ * @returns {JSX.Element}                 Reviews section.
  */
 const ReviewsSection = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const [state, setState] = useState(false);

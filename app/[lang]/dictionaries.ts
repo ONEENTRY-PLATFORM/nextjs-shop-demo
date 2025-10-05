@@ -40,8 +40,8 @@ const dict = async (lang: string): Promise<IAttributeValues> => {
 
 /**
  * Get dictionary
- * @param locale - Current locale
- * @returns      Current lang dictionary
+ * @param   {Locale}                    locale - Current locale
+ * @returns {Promise<IAttributeValues>}        Current lang dictionary
  */
 export const getDictionary = async (
   locale: Locale,

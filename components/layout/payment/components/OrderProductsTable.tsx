@@ -10,11 +10,11 @@ import { UsePrice } from '@/components/utils/utils';
 
 /**
  * Order products table.
- * @param props          - Component props.
- * @param props.lang     - current language shortcode.
- * @param props.products - Products data.
- * @param props.delivery - Delivery data.
- * @returns              JSX.Element.
+ * @param   {object}                        props          - Component props.
+ * @param   {string}                        props.lang     - current language shortcode.
+ * @param   {IProductsEntity[] | undefined} props.products - Products data.
+ * @param   {IProductsEntity | undefined}   props.delivery - Delivery data.
+ * @returns {JSX.Element}                                  JSX.Element.
  */
 const OrderProductsTable = ({
   lang,

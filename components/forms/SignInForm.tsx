@@ -26,10 +26,10 @@ import ResetPasswordButton from './inputs/ResetPasswordButton';
  * handles form submission, and integrates with the authentication context.
  * The form includes animations, error handling, and links to related actions
  * such as password reset and account creation.
- * @param props      - Component properties.
- * @param props.lang - Current language shortcode.
- * @param props.dict - Dictionary of localized strings from server API.
- * @returns          Sign-in form with email/phone and password fields
+ * @param   {object}           props      - Component properties.
+ * @param   {string}           props.lang - Current language shortcode.
+ * @param   {IAttributeValues} props.dict - Dictionary of localized strings from server API.
+ * @returns {JSX.Element}                 Sign-in form with email/phone and password fields
  */
 const SignInForm = ({
   lang,
@@ -78,9 +78,10 @@ const SignInForm = ({
    * This function validates the form data, sends authentication request to the API,
    * and handles success or error responses. On successful authentication, it updates
    * the authentication context and closes the modal.
-   * @param e - Form submission event
+   * @param   {FormEvent<HTMLFormElement>} e - Form submission event
+   * @returns {Promise<void>}                Promise that resolves when the form submission is complete.
    */
-  const onSignIn = async (e: FormEvent<HTMLFormElement>) => {
+  const onSignIn = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     if (!email_reg || !password_reg) {
       return;

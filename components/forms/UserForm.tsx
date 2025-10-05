@@ -21,9 +21,9 @@ import SubmitButton from './inputs/FormSubmitButton';
 
 /**
  * Input value type.
- * @property value - Input value.
- * @property valid - Input validation status.
- * @property [key] - Input key.
+ * @property {string}  value - Input value.
+ * @property {boolean} valid - Input validation status.
+ * @property {unknown} [key] - Input key.
  */
 export type InputValue = {
   value: string;
@@ -33,10 +33,10 @@ export type InputValue = {
 
 /**
  * User form.
- * @param props      - Component props.
- * @param props.lang - Current language shortcode.
- * @param props.dict - dictionary from server api.
- * @returns          User form component.
+ * @param   {FormProps}        props      - Component props.
+ * @param   {string}           props.lang - Current language shortcode.
+ * @param   {IAttributeValues} props.dict - dictionary from server api.
+ * @returns {JSX.Element}                 User form component.
  */
 const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
   const { isAuth, refreshUser, user } = useContext(AuthContext);

@@ -5,11 +5,11 @@ import { UsePrice } from '@/components/utils/utils';
 
 /**
  * Price display
- * @param props               - Price display props
- * @param props.currentPrice  - current price value
- * @param props.originalPrice - original price value
- * @param props.lang          - current language shortcode
- * @returns                   Price display with current/old prices
+ * @param   {object}      props               - Price display props
+ * @param   {number}      props.currentPrice  - current price value
+ * @param   {number}      props.originalPrice - original price value
+ * @param   {string}      props.lang          - current language shortcode
+ * @returns {JSX.Element}                     Price display with current/old prices
  */
 const PriceDisplay = ({
   currentPrice,

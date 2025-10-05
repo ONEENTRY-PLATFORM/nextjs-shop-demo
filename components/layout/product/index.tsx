@@ -18,15 +18,14 @@ import VariationsCarousel from './variations/VariationsCarousel';
 
 /**
  * Product single.
- * @param props                      - Product single props.
- * @param props.product              - product entity object.
- * @param product.blocks             - product blocks.
- * @param props.lang                 - current language shortcode.
- * @param props.dict                 - dictionary from server api.
- * @param props.relatedProducts      - array of related products.
- * @param props.relatedProductsTotal - total number of related products.
- * @param props.blocksData           - pre-fetched block data.
- * @returns                          Product single.
+ * @param   {object}            props                      - Product single props.
+ * @param   {IProductsEntity}   props.product              - product entity object.
+ * @param   {string}            props.lang                 - current language shortcode.
+ * @param   {IAttributeValues}  props.dict                 - dictionary from server api.
+ * @param   {IProductsEntity[]} props.relatedProducts      - array of related products.
+ * @param   {number}            props.relatedProductsTotal - total number of related products.
+ * @param   {object}            props.blocksData           - pre-fetched block data.
+ * @returns {JSX.Element}                                  Product single.
  */
 const ProductSingle = ({
   product,
@@ -34,7 +33,7 @@ const ProductSingle = ({
   dict,
   relatedProducts,
   relatedProductsTotal,
-  blocksData = {},
+  blocksData,
 }: {
   product: IProductsEntity & {
     blocks?: Array<string>;
@@ -104,7 +103,11 @@ const ProductSingle = ({
       {/* blocks */}
       {Array.isArray(blocks) &&
         blocks.map((block: string) => {
-          if (block === 'multiply_items_offer' && blocksData[block]) {
+          if (
+            block === 'multiply_items_offer' &&
+            blocksData &&
+            blocksData[block]
+          ) {
             return (
               <ProductsGroup
                 key={block}

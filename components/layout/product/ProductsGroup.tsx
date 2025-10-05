@@ -1,22 +1,20 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { JSX } from 'react';
 
 import ProductAnimations from './animations/ProductAnimations';
 import GroupCard from './group-card/GroupCard';
 
 /**
  * ProductsGroup
- * @param block.block
- * @param block                       - The block data containing products and attributes
- * @param lang                        current language shortcode
- * @param dict                        dictionary from server api
- * @param langCode                    - The language code for attribute values
- * @param block.block.attributeValues
- * @param block.block.products
- * @param block.lang
- * @param block.dict
- * @param block.langCode
- * @returns                           ProductsGroup
+ * @param   {object}            props                       - The component props
+ * @param   {object}            props.block                 - The block data containing products and attributes
+ * @param   {object}            props.block.attributeValues - The attribute values for the block
+ * @param   {IProductsEntity[]} props.block.products        - The products for the block
+ * @param   {string}            props.lang                  - current language shortcode
+ * @param   {IAttributeValues}  props.dict                  - dictionary from server api
+ * @param   {string}            props.langCode              - The language code for attribute values
+ * @returns {JSX.Element}                                   ProductsGroup
  */
 const ProductsGroup = ({
   block,
@@ -32,7 +30,7 @@ const ProductsGroup = ({
   lang: string;
   dict: IAttributeValues;
   langCode: string;
-}) => {
+}): JSX.Element => {
   return (
     <ProductAnimations
       className="mb-8 flex flex-col max-md:max-w-full"

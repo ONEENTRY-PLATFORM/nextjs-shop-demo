@@ -17,10 +17,10 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
  * ForgotPassword form.
- * @param props      - Component props.
- * @param props.lang - Current language shortcode.
- * @param props.dict - dictionary from server api.
- * @returns          ForgotPassword form component.
+ * @param   {object}           props      - Component props.
+ * @param   {string}           props.lang - Current language shortcode.
+ * @param   {IAttributeValues} props.dict - dictionary from server api.
+ * @returns {JSX.Element}                 ForgotPassword form component.
  */
 export const ForgotPasswordForm = ({
   lang,
@@ -44,10 +44,12 @@ export const ForgotPasswordForm = ({
 
   /**
    * Submit form.
-   * @param e - Form event
-   * @returns Promise that resolves when the form is submitted
+   * @param   {FormEvent<HTMLFormElement>} e - Form event
+   * @returns {Promise<void>}                Promise that resolves when the form is submitted
    */
-  const onSubmitFormHandle = async (e: FormEvent<HTMLFormElement>) => {
+  const onSubmitFormHandle = async (
+    e: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault();
 
     // Check if email field exists

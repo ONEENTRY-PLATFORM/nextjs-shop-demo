@@ -14,11 +14,11 @@ import ProductUnits from './ProductUnits';
 
 /**
  * Product details.
- * @param props         - Product details props.
- * @param props.product - product entity object.
- * @param props.lang    - current language shortcode.
- * @param props.dict    - dictionary from server api.
- * @returns             Product details component.
+ * @param   {object}           props         - Product details props.
+ * @param   {IProductsEntity}  props.product - product entity object.
+ * @param   {string}           props.lang    - current language shortcode.
+ * @param   {IAttributeValues} props.dict    - dictionary from server api.
+ * @returns {JSX.Element}                    Product details component.
  */
 const ProductDetails = ({
   product,

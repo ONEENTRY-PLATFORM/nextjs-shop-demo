@@ -2,9 +2,9 @@ import type { JSX } from 'react';
 
 /**
  * Product units.
- * @param props       - units props.
- * @param props.units - units.
- * @returns           Product units component.
+ * @param   {object}      props       - units props.
+ * @param   {number}      props.units - units.
+ * @returns {JSX.Element}             Product units component.
  */
 const ProductUnits = ({ units }: { units: number }): JSX.Element => {
   const maxUnits = units < 50 ? 50 : units * 1.2;

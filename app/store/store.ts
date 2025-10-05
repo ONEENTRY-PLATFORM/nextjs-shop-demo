@@ -13,7 +13,7 @@ import orderSlice from './reducers/OrderSlice';
  * Creates a no-operation storage object for server-side rendering compatibility
  * This storage object implements getItem, setItem and removeItem methods but performs no actual operations
  * It is primarily used to replace browser storage (like localStorage) in server environments
- * @returns An object containing no-operation storage methods
+ * @returns {object} An object containing no-operation storage methods
  */
 const createNoopStorage = () => {
   return {
@@ -111,7 +111,7 @@ const rootReducer = combineReducers({
 
 /**
  * Setup redux store with persistence - save redux state in storage
- * @returns Configured store
+ * @returns {ReturnType<typeof configureStore>} Configured store
  * @see {@link https://github.com/rt2zz/redux-persist?tab=readme-ov-file#nested-persists}
  */
 export const setupStore = () => {

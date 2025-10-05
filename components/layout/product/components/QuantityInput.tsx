@@ -7,13 +7,11 @@ import { setProductQty } from '@/app/store/reducers/CartSlice';
 
 /**
  * Product quantity input component.
- * @param id.id
- * @param id       - product id.
- * @param qty      - current cart count.
- * @param units    - count of product in shop.
- * @param id.qty
- * @param id.units
- * @returns        A JSX element representing the quantity input field.
+ * @param   {object}      props       - Component properties.
+ * @param   {number}      props.id    - product id.
+ * @param   {number}      props.qty   - current cart count.
+ * @param   {number}      props.units - count of product in shop.
+ * @returns {JSX.Element}             A JSX element representing the quantity input field.
  */
 const QuantityInput = ({
   id,

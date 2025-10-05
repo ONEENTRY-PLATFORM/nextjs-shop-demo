@@ -2,6 +2,7 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX } from 'react';
 import { useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
@@ -19,17 +20,17 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
  * VerificationForm props
- * @property dict - dictionary from server api
+ * @property {IAttributeValues} dict - dictionary from server api
  */
 interface VerificationFormProps extends FormProps {
-  dict: any;
+  dict: IAttributeValues;
 }
 
 /**
  * VerificationForm component for handling OTP verification.
- * @param props      - VerificationForm props.
- * @param props.dict - dictionary from server api containing localized text.
- * @returns          VerificationForm component.
+ * @param   {VerificationFormProps} props      - VerificationForm props.
+ * @param   {IAttributeValues}      props.dict - dictionary from server api containing localized text.
+ * @returns {JSX.Element}                      VerificationForm component.
  */
 const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
   const router = useTransitionRouter();
@@ -68,10 +69,12 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
 
   /**
    * Submit form handle for checkCode/activateUser
-   * @param e - FormEvent from form submission
-   * @returns Promise that resolves when the form submission is complete
+   * @param   {FormEvent<HTMLFormElement>} e - FormEvent from form submission
+   * @returns {Promise<void>}                Promise that resolves when the form submission is complete
    */
-  const onSubmitHandle = async (e: FormEvent<HTMLFormElement>) => {
+  const onSubmitHandle = async (
+    e: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault();
     if (otp.length < 6) {
       return;

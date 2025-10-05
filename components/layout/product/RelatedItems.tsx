@@ -8,15 +8,15 @@ import ProductAnimations from './animations/ProductAnimations';
 
 /**
  * RelatedItems.
- * @param props                             - Related items props.
- * @param props.block                       - The block data containing similar products.
- * @param props.block.attributeValues       - The attribute values for the block.
- * @param props.block.similarProducts       - The similar products data.
- * @param props.block.similarProducts.items - The array of similar products.
- * @param props.lang                        - current language shortcode.
- * @param props.dict                        - dictionary from server api.
- * @param props.langCode                    - The language code for attribute values.
- * @returns                                 RelatedItems component.
+ * @param   {object}            props                             - Related items props.
+ * @param   {object}            props.block                       - The block data containing similar products.
+ * @param   {IAttributeValues}  props.block.attributeValues       - The attribute values for the block.
+ * @param   {object}            props.block.similarProducts       - The similar products data.
+ * @param   {IProductsEntity[]} props.block.similarProducts.items - The array of similar products.
+ * @param   {string}            props.lang                        - current language shortcode.
+ * @param   {IAttributeValues}  props.dict                        - dictionary from server api.
+ * @param   {string}            props.langCode                    - The language code for attribute values.
+ * @returns {JSX.Element}                                         RelatedItems component.
  */
 const RelatedItems = ({
   block,
