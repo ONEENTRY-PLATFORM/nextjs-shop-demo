@@ -9,11 +9,11 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Mobile menu open/close animations.
- * @param props           - Mobile menu props.
- * @param props.children  - children ReactNode.
- * @param props.className - CSS className of ref element.
- * @param props.id        - CSS id of ref element.
- * @returns               Mobile menu wrapper with animations.
+ * @param   {object}      props           - Mobile menu props.
+ * @param   {ReactNode}   props.children  - children ReactNode.
+ * @param   {string}      props.className - CSS className of ref element.
+ * @param   {string}      props.id        - CSS id of ref element.
+ * @returns {JSX.Element}                 Mobile menu wrapper with animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const MobileMenuAnimations = ({

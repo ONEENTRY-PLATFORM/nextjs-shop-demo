@@ -5,7 +5,7 @@ import type { JSX } from 'react';
 
 /**
  * History back button.
- * @returns JSX.Element
+ * @returns {JSX.Element} JSX.Element
  */
 const BackButton = (): JSX.Element => {
   const router = useRouter();

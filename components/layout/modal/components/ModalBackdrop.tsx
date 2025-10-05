@@ -7,7 +7,7 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Modal Backdrop
- * @returns Modal Backdrop
+ * @returns {JSX.Element} Modal Backdrop
  */
 const ModalBackdrop = (): JSX.Element => {
   const { setTransition } = useContext(OpenDrawerContext);

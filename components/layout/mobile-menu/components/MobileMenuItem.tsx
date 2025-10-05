@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
+import type { JSX } from 'react';
 import { useContext, useState } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -10,12 +11,18 @@ import MobileMenu from './MobileMenu';
 
 /**
  * Mobile menu list item.
- * @param props      - Props for MobileMenuItem component.
- * @param props.item - Represents a menu item objects.
- * @param props.lang - Current language shortcode.
- * @returns          Mobile menu list item.
+ * @param   {object}      props      - Props for MobileMenuItem component.
+ * @param   {IMenusPages} props.item - Represents a menu item objects.
+ * @param   {string}      props.lang - Current language shortcode.
+ * @returns {JSX.Element}            Mobile menu list item.
  */
-function MobileMenuItem({ item, lang }: { item: IMenusPages; lang: string }) {
+function MobileMenuItem({
+  item,
+  lang,
+}: {
+  item: IMenusPages;
+  lang: string;
+}): JSX.Element {
   const { setOpen } = useContext(OpenDrawerContext);
   // check if item has child
   const hasChild = Array.isArray(item.children) && item.children.length > 0;

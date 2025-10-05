@@ -7,13 +7,11 @@ import MobileMenuItem from './MobileMenuItem';
 
 /**
  * Mobile menu list
- * @param menu.menu
- * @param menu           Represents a menu - array of objects.
- * @param className      CSS className of ref element
- * @param lang           Current language shortcode
- * @param menu.className
- * @param menu.lang
- * @returns              Mobile menu list
+ * @param   {object}        props             - Component props
+ * @param   {IMenusPages[]} props.menu        - Represents a menu - array of objects.
+ * @param   {string}        [props.className] - CSS className of ref element
+ * @param   {string}        props.lang        - Current language shortcode
+ * @returns {JSX.Element}                     Mobile menu list
  */
 function MobileMenu({
   menu,

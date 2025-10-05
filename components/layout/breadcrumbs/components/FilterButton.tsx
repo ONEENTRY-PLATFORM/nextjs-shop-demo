@@ -10,9 +10,9 @@ import FilterIcon from '@/components/icons/filter';
 
 /**
  * Filter button in breadcrumbs section.
- * @param props      - props.
- * @param props.dict - dictionary from server api.
- * @returns          JSX.Element.
+ * @param   {object}           props      - Component props.
+ * @param   {IAttributeValues} props.dict - Dictionary from server api containing translation strings.
+ * @returns {JSX.Element}                 The rendered filter button component.
  */
 const FilterButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const path = usePathname();

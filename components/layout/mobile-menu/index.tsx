@@ -16,12 +16,10 @@ import MobileMenu from './components/MobileMenu';
 
 /**
  * Mobile menu offscreen modal.
- * @param props.menu - Represents a menu - array of objects.
- * @param props.lang - Current language shortcode.
- * @param root0
- * @param root0.menu
- * @param root0.lang
- * @returns          Mobile menu list item.
+ * @param   {object}                         props      - Component properties
+ * @param   {IMenusPages[]}                  props.menu - Array of menu items
+ * @param   {string}                         props.lang - Current language shortcode
+ * @returns {JSX.Element | null | undefined}            The rendered mobile menu component or nothing if conditions aren't met
  */
 const OffscreenModal: FC<{
   menu: IMenusPages[];

@@ -2,10 +2,18 @@
 
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
-import { type FC, type ReactNode, useRef } from 'react';
+import type { JSX } from 'react';
+import { type ReactNode, useRef } from 'react';
 
 import type { LoaderProps } from '@/app/types/global';
 
+/**
+ * Table animations
+ * @param   {object}      props           - Props
+ * @param   {ReactNode}   props.children  - Children
+ * @param   {string}      props.className - Class name
+ * @returns {JSX.Element}                 JSX.Element
+ */
 const TableAnimations = ({
   children,
   className,
@@ -46,11 +54,11 @@ const TableAnimations = ({
 
 /**
  * Orders table loader
- * @param limit.limit
- * @param limit
- * @returns           JSX.Element
+ * @param   {LoaderProps} props       - Loader props
+ * @param   {number}      props.limit - Limit
+ * @returns {JSX.Element}             JSX.Element
  */
-const OrdersTableLoader: FC<LoaderProps> = ({ limit }) => {
+const OrdersTableLoader = ({ limit }: LoaderProps): JSX.Element => {
   return (
     <TableAnimations className="my-auto flex w-full max-w-[730px] flex-col max-md:max-w-full">
       {Array.from(Array(limit).keys()).map((item) => (

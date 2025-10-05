@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import type { JSX } from 'react';
+import React, { type JSX } from 'react';
 
 import type { ImageProps } from '@/app/types/global';
 
@@ -18,7 +18,7 @@ import type { ImageProps } from '@/app/types/global';
  * @param   {string}              props.blurDataURL       - URL of the blurred placeholder image.
  * @param   {boolean}             props.isImageLoading    - Whether the image is in loading state.
  * @param   {string}              props.loading           - Image loading strategy ("lazy" | "eager").
- * @param   {React.Ref<any>}      props.ref               - DOM reference.
+ * @param   {React.Ref<unknown>}  props.ref               - DOM reference.
  * @param   {() => void}          props.onLoadingComplete - Callback function when image loading completes.
  * @returns {JSX.Element}                                 JSX.Element - Returns a JSX element containing the image.
  */

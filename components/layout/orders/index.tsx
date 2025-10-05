@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
+import type { JSX } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
@@ -54,7 +55,7 @@ const OrdersPage = ({
       value: string;
     };
   };
-}) => {
+}): JSX.Element => {
   // Handle useSearchParams in a try/catch to prevent build errors
   let currentPage = 1;
   try {

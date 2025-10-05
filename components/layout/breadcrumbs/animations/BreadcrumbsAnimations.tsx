@@ -8,10 +8,10 @@ import { type ReactNode, useRef } from 'react';
 
 /**
  * Breadcrumbs animations.
- * @param props           - Breadcrumbs animations props.
- * @param props.children  - children ReactNode.
- * @param props.className - CSS className of ref element.
- * @returns               JSX.Element with gsap animations.
+ * @param   {object}      props           - Breadcrumbs animations props.
+ * @param   {ReactNode}   props.children  - children ReactNode.
+ * @param   {string}      props.className - CSS className of ref element.
+ * @returns {JSX.Element}                 JSX.Element with gsap animations.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const BreadcrumbsAnimations = ({
@@ -54,7 +54,7 @@ const BreadcrumbsAnimations = ({
     return () => {
       tl.kill();
     };
-  }, [hidden]);
+  }, [paths]);
 
   return (
     <div ref={ref} className={className}>
