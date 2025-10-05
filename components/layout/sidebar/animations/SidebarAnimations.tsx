@@ -9,10 +9,10 @@ import { type ReactNode, useRef } from 'react';
 
 /**
  * Sidebar animations.
- * @param props           - Sidebar animations props.
- * @param props.children  - children ReactNode.
- * @param props.className - CSS className of ref element.
- * @returns               Sidebar animations component.
+ * @param   {object}      props           - Sidebar animations props.
+ * @param   {ReactNode}   props.children  - children ReactNode.
+ * @param   {string}      props.className - CSS className of ref element.
+ * @returns {JSX.Element}                 Sidebar animations component.
  */
 const SidebarAnimations = ({
   children,

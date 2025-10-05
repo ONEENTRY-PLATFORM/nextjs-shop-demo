@@ -5,11 +5,9 @@ import Sticker from './Sticker';
 
 /**
  * Stickers.
- * @param props                 - Component props.
- * @param props.product         - Product entity object.
- * @param props.lang            - Current language shortcode.
- * @param props.attributeValues
- * @returns                     Stickers array.
+ * @param   {object}        props                 - Component props.
+ * @param   {AttributeType} props.attributeValues - Product attributes containing stickers.
+ * @returns {JSX.Element[]}                       - Stickers array.
  */
 const Stickers = ({
   attributeValues,

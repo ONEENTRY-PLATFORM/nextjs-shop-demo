@@ -10,10 +10,10 @@ import * as icons from '../../../icons';
 
 /**
  * Sidebar menu item.
- * @param props          - The props object.
- * @param props.menuItem - Menu item.
- * @param props.lang     - Current language shortcode.
- * @returns              SidebarMenuItem.
+ * @param   {object}                              props          - The props object.
+ * @param   {IMenusPages & { isActive: boolean }} props.menuItem - Menu item.
+ * @param   {string}                              props.lang     - Current language shortcode.
+ * @returns {JSX.Element}                                        - SidebarMenuItem.
  */
 const SidebarMenuItem = ({
   menuItem,

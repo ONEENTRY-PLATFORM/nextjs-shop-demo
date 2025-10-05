@@ -19,7 +19,7 @@ import { getDictionary } from '../../dictionaries';
  * Shop catalog page
  * @async
  * @param   {object}                                                    props              - page props
- * @param   {Promise<object>}                                           props.params       - page params
+ * @param   {Promise<{ handle: string; lang: string }>}                 props.params       - page params
  * @param   {Promise<{ [key: string]: string | string[] | undefined }>} props.searchParams - search params
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  * @returns {Promise<JSX.Element>}                                                         Shop page layout JSX.Element

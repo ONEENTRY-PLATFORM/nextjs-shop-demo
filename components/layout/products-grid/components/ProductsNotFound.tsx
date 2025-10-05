@@ -6,10 +6,10 @@ import FilterModal from '@/components/layout/filter/FilterModal';
 
 /**
  * ProductsNotFound
- * @param props      - Grid layout props
- * @param props.lang - Current language shortcode
- * @param props.dict - dictionary from server api
- * @returns          ProductsNotFound component
+ * @param   {object}               props      - Grid layout props
+ * @param   {string}               props.lang - Current language shortcode
+ * @param   {IAttributeValues}     props.dict - dictionary from server api
+ * @returns {Promise<JSX.Element>}            ProductsNotFound component
  */
 const ProductsNotFound = async ({
   lang,

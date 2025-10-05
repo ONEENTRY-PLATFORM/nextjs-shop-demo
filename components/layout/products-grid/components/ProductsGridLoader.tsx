@@ -1,6 +1,6 @@
 'use client';
 
-import type { FC } from 'react';
+import type { FC, JSX } from 'react';
 
 import type { LoaderProps } from '@/app/types/global';
 
@@ -8,11 +8,13 @@ import ProductsGridLoaderAnimations from '../animations/ProductsGridLoaderAnimat
 
 /**
  * ProductsGridLoader
- * @param props       - Loader props.
- * @param props.limit - number of cards to load.
- * @returns           Products GridLoader.
+ * @param   {LoaderProps} props       - Loader props.
+ * @param   {number}      props.limit - number of cards to load.
+ * @returns {JSX.Element}             Products GridLoader.
  */
-const ProductsGridLoader: FC<LoaderProps> = ({ limit = 10 }) => {
+const ProductsGridLoader: FC<LoaderProps> = ({
+  limit = 10,
+}: LoaderProps): JSX.Element => {
   return (
     <ProductsGridLoaderAnimations
       className={'relative box-border flex w-full shrink-0 flex-col'}
