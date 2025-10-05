@@ -17,9 +17,9 @@ import { i18n } from '@/i18n-config';
 
 /**
  * Product page.
- * @param props        - Page props.
- * @param props.params - Page params with handle and lang.
- * @returns            Promise<JSX.Element> - Product page layout.
+ * @param   {object}                                    props        - Page props.
+ * @param   {Promise<{ handle: string; lang: string }>} props.params - Page params with handle and lang.
+ * @returns {Promise<JSX.Element>}                                   Promise<JSX.Element> - Product page layout.
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  */
 const ProductPageLayout = async ({
@@ -87,9 +87,11 @@ export default ProductPageLayout;
 
 /**
  * Pre-generation of a portion of product cards for each locale.
- * @returns Array of parameters for static generation.
+ * @returns {Promise<Array<{ lang: string; handle: string }>>} Array of parameters for static generation.
  */
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<
+  Array<{ lang: string; handle: string }>
+> {
   const params: Array<{ lang: string; handle: string }> = [];
   // Iterate through each supported locale to generate params
   for (const lang of i18n.locales) {
@@ -116,10 +118,10 @@ export async function generateStaticParams() {
 
 /**
  * Generate page metadata.
- * @param params.params
- * @param params        - Page params with handle and lang.
+ * @param   {object}                                    props        - Page params with handle and lang.
+ * @param   {Promise<{ handle: string; lang: string }>} props.params - Page params with handle and lang.
+ * @returns {Promise<Metadata>}                                      Metadata object.
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns             Metadata object.
  */
 export async function generateMetadata({
   params,

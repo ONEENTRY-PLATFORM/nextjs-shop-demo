@@ -24,14 +24,14 @@ import { i18n } from '@/i18n-config';
  */
 
 const ShopCategoryLayout = async (props: {
-  params: { lang: string; handle: string };
+  params: Promise<{ lang: string; handle: string }>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   searchParams: any;
 }): Promise<JSX.Element> => {
+  const params = await props.params;
+  const { lang, handle } = params;
   // Access searchParams without await to keep page static
   const searchParams = await props.searchParams;
-  const params = await props.params;
-  const { lang, handle } = await params;
 
   // Get the dictionary from the API and set the server provider.
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));

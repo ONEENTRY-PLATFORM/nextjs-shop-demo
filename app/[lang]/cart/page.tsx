@@ -60,9 +60,9 @@ export default CartPageLayout;
 
 /**
  * Pre-generation page params
- * @returns {Promise<object>} Static params for pre-generation
+ * @returns {Promise<{ lang: string }[]>} Static params for pre-generation
  */
-export async function generateStaticParams(): Promise<object> {
+export async function generateStaticParams(): Promise<{ lang: string }[]> {
   const params: Array<{ lang: string }> = [];
   for (const lang of i18n.locales) {
     params.push({ lang });

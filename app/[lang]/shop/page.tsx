@@ -18,9 +18,9 @@ export const dynamic = 'force-dynamic';
 
 /**
  * Shop page
- * @param props - Page props containing params and searchParams
+ * @param   {PageProps}            props - Page props containing params and searchParams
+ * @returns {Promise<JSX.Element>}       Shop page layout JSX.Element
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- * @returns     Shop page layout JSX.Element
  */
 const ShopPageLayout = async (props: PageProps): Promise<JSX.Element> => {
   const searchParams = await props.searchParams;
@@ -93,9 +93,9 @@ export default ShopPageLayout;
 
 /**
  * Pre-generation of shop page
- * @returns Array of parameters for static generation
+ * @returns {Promise<Array<{ lang: string }>>} Array of parameters for static generation
  */
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<Array<{ lang: string }>> {
   const params: Array<{ lang: string }> = [];
   for (const lang of i18n.locales) {
     params.push({ lang });
@@ -105,11 +105,11 @@ export async function generateStaticParams() {
 
 /**
  * Generate page metadata
- * @param params.params
- * @param params        - Page params
+ * @param   {MetadataParams}                           props        - Metadata params
+ * @param   {Promise<{handle: string; lang: string;}>} props.params - Page params
+ * @returns {Promise<Metadata>}                                     Metadata object
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns             Metadata object
  */
 export async function generateMetadata({
   params,

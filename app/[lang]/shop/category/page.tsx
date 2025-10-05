@@ -14,8 +14,9 @@ import { i18n } from '@/i18n-config';
 /**
  * Category page
  * @async
- * @param   {PageProps}            params - page params
- * @returns {Promise<JSX.Element>}        Category page layout JSX.Element
+ * @param   {{params: Promise<{ lang: string }>}} params        - Page props with params promise containing lang
+ * @param   {Promise<{ lang: string }>}           params.params - Page params promise with lang property
+ * @returns {Promise<JSX.Element>}                              Category page layout JSX.Element
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  */
