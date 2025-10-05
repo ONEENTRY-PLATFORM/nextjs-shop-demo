@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
@@ -81,8 +80,8 @@ export const UseDate = ({
  * This function takes an object and sorts its entries based on the
  * position property of each value. The result is a new object with
  * the same keys but ordered by position.
- * @param   {Record<any, any>} obj - The object to sort.
- * @returns {Record<any, any>}     A new object with entries sorted by position.
+ * @param   {Record<string, { position: number }>} obj - The object to sort.
+ * @returns {Record<string, { position: number }>}     A new object with entries sorted by position.
  * @example
  * ```typescript
  * const sorted = sortObjectFieldsByPosition({
@@ -94,8 +93,8 @@ export const UseDate = ({
  */
 
 export const sortObjectFieldsByPosition = (
-  obj: Record<any, any>,
-): Record<any, any> => {
+  obj: Record<string, { position: number }>,
+): Record<string, { position: number }> => {
   const entries = Object.entries(obj);
   entries.sort((a, b) => a[1].position - b[1].position);
   const sortedObj = {};

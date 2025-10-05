@@ -132,8 +132,9 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
 
   /**
    * Generate and resend verification code
+   * @returns {Promise<void>} Promise that resolves when the resend operation is complete
    */
-  const onResendHandle = async () => {
+  const onResendHandle = async (): Promise<void> => {
     try {
       setLoading(true);
       setError('');

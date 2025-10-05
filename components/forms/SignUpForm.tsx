@@ -64,8 +64,8 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
 
     // check if user can submit form
     const canSubmit = Object.keys(fields).reduce((isValid, field) => {
-      if (!isValid || !field) {
-        return null;
+      if (!isValid) {
+        return false;
       }
       const fieldData = fields[field as keyof typeof fields];
       return fieldData ? fieldData.valid : false;
