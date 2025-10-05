@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { useCreateOrder } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
@@ -6,22 +6,24 @@ import Loader from '@/components/shared/Loader';
 
 /**
  * PayOrder button
- * @param id.id
- * @param id
- * @param lang       current language shortcode
- * @param loading
- * @param title
- * @param id.lang
- * @param id.loading
- * @param id.title
- * @returns          JSX.Element
+ * @param   {object}      props         - component props
+ * @param   {number}      props.id      - order id
+ * @param   {string}      props.lang    - current language shortcode
+ * @param   {boolean}     props.loading - loading state
+ * @param   {string}      props.title   - button title
+ * @returns {JSX.Element}               JSX.Element
  */
-const PayOrderButton: FC<{
+const PayOrderButton = ({
+  id,
+  lang,
+  loading,
+  title,
+}: {
   id: number;
   lang: string;
   loading: boolean;
   title: string;
-}> = ({ id, lang, loading, title }) => {
+}): JSX.Element => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { createSession, isLoading }: any = useCreateOrder({ langCode });

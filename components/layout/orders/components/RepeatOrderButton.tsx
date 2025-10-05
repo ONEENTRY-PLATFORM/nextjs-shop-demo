@@ -3,7 +3,7 @@
 
 import { useTransitionRouter } from 'next-transition-router';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
-import type { FC } from 'react';
+import type { FC, JSX } from 'react';
 
 import { getProductById } from '@/app/api';
 import { useAppDispatch } from '@/app/store/hooks';
@@ -20,22 +20,19 @@ interface RepeatOrderButtonProps {
 
 /**
  * RepeatOrder button
- * @param data.data
- * @param data
- * @param title
- * @param isLoading      loading state
- * @param lang           current language shortcode
- * @param data.isLoading
- * @param data.title
- * @param data.lang
- * @returns              JSX.Element
+ * @param   {RepeatOrderButtonProps} props           - component props
+ * @param   {IOrderByMarkerEntity}   props.data      - order data
+ * @param   {boolean}                props.isLoading - loading state
+ * @param   {string}                 props.title     - button title
+ * @param   {string}                 props.lang      - current language shortcode
+ * @returns {JSX.Element}                            JSX.Element
  */
 const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
   data,
   isLoading,
   title,
   lang,
-}) => {
+}: RepeatOrderButtonProps): JSX.Element => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   const router = useTransitionRouter();
   const dispatch = useAppDispatch();
@@ -49,9 +46,9 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
    * 1. Fetching each product's details by its ID
    * 2. Adding valid products to the shopping cart
    * 3. Redirecting user to the cart page
-   * @returns Promise<void> - resolves when all products are processed and user is redirected
+   * @returns {Promise<void>} resolves when all products are processed and user is redirected
    */
-  const repeatOrderHandle = async () => {
+  const repeatOrderHandle = async (): Promise<void> => {
     // Filter out product with ID 83 and create promises to fetch each product
     const productPromises = products
       .filter((p: any) => p.id !== 83)
@@ -79,7 +76,7 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
     await Promise.all(productPromises);
     // Navigate to cart page
     router.push('/cart');
-    return null;
+    return;
   };
 
   return (

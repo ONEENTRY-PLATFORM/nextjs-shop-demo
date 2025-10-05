@@ -19,19 +19,19 @@ import OrdersTableLoader from './components/OrdersTableLoader';
 
 /**
  * Orders page component.
- * @param props                             - Props for the component.
- * @param props.lang                        - current language shortcode.
- * @param props.dict                        - dictionary from server api.
- * @param props.settings                    - settings from server api.
- * @param props.settings.orders_limit       - orders limit.
- * @param props.settings.date_title         - date title.
- * @param props.settings.total_title        - total title.
- * @param props.settings.status_title       - status title.
- * @param props.settings.orders_limit.value
- * @param props.settings.date_title.value
- * @param props.settings.total_title.value
- * @param props.settings.status_title.value
- * @returns                                 JSX.Element
+ * @param   {object}           props                             - Props for the component.
+ * @param   {string}           props.lang                        - current language shortcode.
+ * @param   {IAttributeValues} props.dict                        - dictionary from server api.
+ * @param   {object}           props.settings                    - settings from server api.
+ * @param   {object}           props.settings.orders_limit       - orders limit.
+ * @param   {number}           props.settings.orders_limit.value - orders limit value.
+ * @param   {object}           props.settings.date_title         - date title.
+ * @param   {string}           props.settings.date_title.value   - date title value.
+ * @param   {object}           props.settings.total_title        - total title.
+ * @param   {string}           props.settings.total_title.value  - total title value.
+ * @param   {object}           props.settings.status_title       - status title.
+ * @param   {string}           props.settings.status_title.value - status title value.
+ * @returns {JSX.Element}                                        JSX.Element
  */
 const OrdersPage = ({
   lang,

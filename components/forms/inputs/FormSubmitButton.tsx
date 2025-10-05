@@ -5,11 +5,11 @@ import Spinner from '@/components/shared/Spinner';
 
 /**
  * Form submit button.
- * @param props           - Form submit button props.
- * @param props.title     - button title.
- * @param props.isLoading - loading state.
- * @param props.index     - Index of element for animations stagger.
- * @returns               Form submit button.
+ * @param   {object}      props           - Form submit button props.
+ * @param   {string}      props.title     - button title.
+ * @param   {boolean}     props.isLoading - loading state.
+ * @param   {number}      props.index     - Index of element for animations stagger.
+ * @returns {JSX.Element}                 Form submit button.
  */
 const FormSubmitButton = ({
   title,

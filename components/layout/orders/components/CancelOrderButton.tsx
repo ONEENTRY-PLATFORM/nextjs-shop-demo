@@ -3,37 +3,32 @@ import type {
   IOrderByMarkerEntity,
   IOrderData,
 } from 'oneentry/dist/orders/ordersInterfaces';
-import type { FC } from 'react';
+import type { JSX } from 'react';
 
 import { updateOrderByMarkerAndId } from '@/app/api';
 import Loader from '@/components/shared/Loader';
 
-interface CancelOrderButtonProps {
+/**
+ * Cancel order button
+ * @param   {object}               props           - order data
+ * @param   {IOrderByMarkerEntity} props.data      - order data
+ * @param   {boolean}              props.isLoading - loading state
+ * @param   {any}                  props.refetch   - refetch orders
+ * @param   {string}               props.title     - button title
+ * @returns {JSX.Element}                          JSX.Element
+ */
+const CancelOrderButton = ({
+  data,
+  isLoading,
+  refetch,
+  title,
+}: {
   data: IOrderByMarkerEntity;
   isLoading: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   refetch: any;
   title: string;
-}
-
-/**
- * Cancel order button
- * @param data.data
- * @param data
- * @param isLoading      loading state
- * @param refetch
- * @param title
- * @param data.isLoading
- * @param data.refetch
- * @param data.title
- * @returns              JSX.Element
- */
-const CancelOrderButton: FC<CancelOrderButtonProps> = ({
-  data,
-  isLoading,
-  refetch,
-  title,
-}) => {
+}): JSX.Element => {
   // cancel order handle - updateOrderByMarkerAndId on server
   const cancelOrderHandle = async () => {
     const formData = {

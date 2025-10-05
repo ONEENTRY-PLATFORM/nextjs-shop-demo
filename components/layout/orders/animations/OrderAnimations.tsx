@@ -7,11 +7,11 @@ import { useRef } from 'react';
 
 /**
  * Order animations.
- * @param props           - Order animations props.
- * @param props.children  - children ReactNode.
- * @param props.className - CSS className of ref element.
- * @param props.isActive  - current state of order block.
- * @returns               JSX.Element.
+ * @param   {object}      props           - Order animations props.
+ * @param   {ReactNode}   props.children  - children ReactNode.
+ * @param   {string}      props.className - CSS className of ref element.
+ * @param   {boolean}     props.isActive  - current state of order block.
+ * @returns {JSX.Element}                 JSX.Element.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const OrderAnimations = ({
@@ -53,7 +53,7 @@ const OrderAnimations = ({
   }, [isActive]);
 
   return (
-    <div className={className} ref={ref}>
+    <div ref={ref} className={className}>
       {children}
     </div>
   );
