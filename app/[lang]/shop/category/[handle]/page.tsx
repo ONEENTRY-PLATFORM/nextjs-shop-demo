@@ -15,15 +15,19 @@ import { i18n } from '@/i18n-config';
 
 /**
  * Shop category page layout
- * @param props              - Page props
- * @param props.params       - page params
- * @param props.searchParams - dynamic search params
+ * @param   {object}               props              - Page props
+ * @param   {object}               props.params       - page params
+ * @param   {object}               props.searchParams - dynamic search params
+ * @returns {Promise<JSX.Element>}                    Shop page layout JSX.Element
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- * @returns                  Shop page layout JSX.Element
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const ShopCategoryLayout = async (props: any): Promise<JSX.Element> => {
+
+const ShopCategoryLayout = async (props: {
+  params: { lang: string; handle: string };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  searchParams: any;
+}): Promise<JSX.Element> => {
   // Access searchParams without await to keep page static
   const searchParams = await props.searchParams;
   const params = await props.params;
@@ -102,9 +106,14 @@ export default ShopCategoryLayout;
 
 /**
  * Pre-generation pages for each locale
- * @returns Static params for pre-generation
+ * @returns {Promise<{lang: string; handle: string;}[]>} Static params for pre-generation
  */
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<
+  {
+    lang: string;
+    handle: string;
+  }[]
+> {
   const params: Array<{ lang: string; handle: string }> = [];
   for (const lang of i18n.locales) {
     const { pages } = await getChildPagesByParentUrl('shop', lang);
@@ -120,11 +129,11 @@ export async function generateStaticParams() {
 
 /**
  * Generate page metadata
- * @param metadataParams        - Metadata params
- * @param metadataParams.params - page params
+ * @param   {object}            metadataParams        - Metadata params
+ * @param   {MetadataParams}    metadataParams.params - page params
+ * @returns {Promise<Metadata>}                       metadata
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns                     metadata
  */
 export async function generateMetadata({
   params,

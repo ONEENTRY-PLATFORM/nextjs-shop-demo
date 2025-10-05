@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 import Loader from '@/components/shared/Loader';
 
 /**
@@ -5,6 +7,6 @@ import Loader from '@/components/shared/Loader';
  * This is a React functional component that renders a Loader component.
  * @returns {JSX.Element} A Loader component to indicate loading state
  */
-export default function Loading() {
+export default function Loading(): JSX.Element {
   return <Loader />;
 }

@@ -14,10 +14,10 @@ import { i18n } from '@/i18n-config';
 /**
  * Category page
  * @async
- * @param   {PageProps} params - page params
+ * @param   {PageProps}            params - page params
+ * @returns {Promise<JSX.Element>}        Category page layout JSX.Element
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- * @returns                    Category page layout JSX.Element
  */
 const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
   const { lang } = await params;
@@ -79,8 +79,11 @@ export default CategoryPage;
 
 /**
  * Pre-generation of category pages for each locale
+ * @returns {Promise<Array<{ lang: string; handle: string }>>} Array of static parameters
  */
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<
+  Array<{ lang: string; handle: string }>
+> {
   const params: Array<{ lang: string; handle: string }> = [];
   for (const lang of i18n.locales) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -98,11 +101,10 @@ export async function generateStaticParams() {
 /**
  * Generate page metadata
  * @async
- * @param params.params
- * @param params        page params
+ * @param   {{params: Promise<{ handle: string; lang: string }>}} params - page params
+ * @returns {Promise<Metadata>}                                          metadata
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns             metadata
  */
 export async function generateMetadata({
   params,

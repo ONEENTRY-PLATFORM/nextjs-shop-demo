@@ -18,15 +18,15 @@ import { getDictionary } from '../../dictionaries';
 /**
  * Shop catalog page
  * @async
- * @param   {Promise<object>} props.params       - page params
- * @param   {Promise<any>}    props.searchParams - search params
- * @param                     props
+ * @param   {object}                                                    props              - page props
+ * @param   {Promise<object>}                                           props.params       - page params
+ * @param   {Promise<{ [key: string]: string | string[] | undefined }>} props.searchParams - search params
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
- * @returns                                      Shop page layout JSX.Element
+ * @returns {Promise<JSX.Element>}                                                         Shop page layout JSX.Element
  */
 const ShopCatalogPage = async (props: {
-  params: Promise<{ handle: any; lang: any }>;
-  searchParams: Promise<any>;
+  params: Promise<{ handle: string; lang: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }): Promise<JSX.Element> => {
   const searchParams = await props.searchParams;
   const params = await props.params;
@@ -64,6 +64,7 @@ export default ShopCatalogPage;
 
 /**
  * Pre-generation of shop page
+ * @returns {Promise<Array<{ lang: string; handle: string }>>} - static paths
  */
 export async function generateStaticParams() {
   const params: Array<{ lang: string; handle: string }> = [];
@@ -85,10 +86,9 @@ export async function generateStaticParams() {
 /**
  * Generate page metadata
  * @async
- * @param params.params
- * @param params        page params
+ * @param   {MetadataParams}    params - page params
+ * @returns {Promise<Metadata>}        metadata
  * @see {@link https://nextjs.org/docs/app/building-your-application/optimizing/metadata#dynamic-metadata Next.js docs}
- * @returns             metadata
  */
 export async function generateMetadata({
   params,

@@ -14,9 +14,9 @@ import { getDictionary } from '../dictionaries';
 
 /**
  * Orders page
- * @param props        - Page props
- * @param props.params - page params
- * @returns            Orders page layout JSX.Element
+ * @param   {PageProps}                 props        - Page props
+ * @param   {Promise<{ lang: string }>} props.params - Page params
+ * @returns {Promise<JSX.Element>}                   Orders page layout JSX.Element
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  */
 const OrdersPageLayout = async ({
@@ -55,9 +55,9 @@ export default OrdersPageLayout;
 
 /**
  * Pre-generation page params
- * @returns Static params for pre-generation
+ * @returns {Promise<object[]>} Static params for pre-generation
  */
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<object[]> {
   const params: Array<{ lang: string }> = [];
   for (const lang of i18n.locales) {
     params.push({ lang });
@@ -67,9 +67,9 @@ export async function generateStaticParams() {
 
 /**
  * Generates metadata for the orders page, including title, description, OpenGraph tags and canonical URL
- * @param metadataParams        - Metadata params
- * @param metadataParams.params - An object containing the language parameter
- * @returns                     Promise resolving to Metadata object with page metadata information
+ * @param   {object}                    metadataParams        - Metadata params
+ * @param   {Promise<{ lang: string }>} metadataParams.params - An object containing the language parameter
+ * @returns {Promise<Metadata>}                               Promise resolving to Metadata object with page metadata information
  */
 export async function generateMetadata({
   params,
