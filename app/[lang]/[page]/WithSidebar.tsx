@@ -2,12 +2,14 @@ import FadeTransition from '@/app/animations/FadeTransition';
 import SidebarMenu from '@/components/layout/sidebar';
 
 /**
- * Sidebar layout
+ * Sidebar layout component that provides a responsive layout with a sidebar menu
+ * and main content area. This is an async server component that supports
+ * internationalization through the lang parameter.
  *
  * @async server component
- * @param {string} props.lang Current language shortcode
- * @param {React.ReactNode} props.children children ReactNode
- * @returns Sidebar layout JSX.Element
+ * @param {string} props.lang - Current language shortcode for internationalization
+ * @param {React.ReactNode} props.children - Child components to be rendered in the main content area
+ * @returns Sidebar layout JSX.Element with responsive sidebar and main content area
  */
 const WithSidebar = async ({
   lang,
@@ -18,10 +20,21 @@ const WithSidebar = async ({
 }) => {
   return (
     <div className="flex w-full flex-col items-center">
+      {/*
+       * Main container with max width constraint and responsive flex layout
+       * On mobile devices, elements wrap to separate rows
+       */}
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-row max-md:flex-row max-md:flex-wrap">
+        {/*
+         * Sidebar container with fixed width on desktop and full width on mobile
+         */}
         <aside className="w-[210px] pb-8 max-md:w-full">
           <SidebarMenu lang={lang} />
         </aside>
+        {/*
+         * Main content area with fade transition animation
+         * Takes remaining space after sidebar and has responsive width behavior
+         */}
         <FadeTransition
           className="flex w-[calc(100%-210px)] grow flex-col overflow-hidden max-md:w-full"
           index={0}

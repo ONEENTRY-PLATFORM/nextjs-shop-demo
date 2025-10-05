@@ -35,17 +35,19 @@ const ShopPageLayout = async (props: PageProps): Promise<JSX.Element> => {
   // Get current Page ByUrl from api
   const { page } = await getPageByUrl('shop', lang);
 
-  // !!! Get pages limit
+  // Set the number of products to display per page
+  // TODO: Extract products per page limit from global settings
   const pagesLimit = 10;
 
-  // Memoize the loader component
+  // Memoize the loader component to prevent unnecessary re-renders
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
+  // Return 404 page if shop page not found
   if (!page) {
     return notFound();
   }
 
-  // Breadcrumb structured data
+  // Generate structured data for breadcrumbs to improve SEO
   const breadcrumbStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -119,6 +121,7 @@ export async function generateMetadata({
   const { handle, lang } = await params;
   const { isError, page } = await getPageByUrl('shop', lang);
 
+  // Return 404 page if page not found or an error occurred
   if (isError || !page) {
     return notFound();
   }

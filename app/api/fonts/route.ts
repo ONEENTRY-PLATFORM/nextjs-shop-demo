@@ -20,7 +20,7 @@ const FONT_TYPES: Record<string, string> = {
 
 /**
  * GET endpoint for serving font files with caching support
- * 
+ *
  * @param request - The incoming HTTP request
  * @returns NextResponse with font file data or error
  */
@@ -74,7 +74,7 @@ export async function GET(request: Request) {
 
 /**
  * OPTIONS endpoint for handling CORS preflight requests
- * 
+ *
  * @returns NextResponse with CORS headers
  */
 export async function OPTIONS() {

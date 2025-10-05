@@ -33,11 +33,13 @@ const PageLayout = async ({
 }: {
   params: Promise<{ page: string; lang: string }>;
 }): Promise<JSX.Element> => {
+  // Extract page name and language from params
   const { page: p, lang } = await params;
-  // Get dictionary and set to server provider
+
+  // Get dictionary and set to server provider for internationalization
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
-  // Get page by current url
+  // Get page data by current url
   const { page, isError } = await getPageByUrl(p, lang);
 
   // if error return notFound
@@ -97,6 +99,7 @@ const PageLayout = async ({
     },
   ];
 
+  // Render the page component based on the page URL and template type
   return (
     <div className="mx-auto flex min-h-80 w-full max-w-(--breakpoint-xl) flex-col overflow-hidden">
       {Array.isArray(pages) ? (

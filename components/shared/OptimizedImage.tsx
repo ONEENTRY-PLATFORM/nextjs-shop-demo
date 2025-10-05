@@ -51,12 +51,18 @@ const OptimizedImage = ({
   type?: string;
   loading?: string;
 }): JSX.Element => {
+  // Track image loading state for animations
   const [isImageLoading, setImageLoading] = useState(true);
   const ref = useRef<HTMLImageElement>(null);
+
+  // Extract image URL from source data structure
   const optimizedSrc =
     src?.value?.downloadLink || src?.value?.[0]?.downloadLink;
+
+  // Extract low-quality placeholder image for blur effect
   const blurDataURL = src?.value?.previewLink?.default?.[0] || '';
 
+  // Show placeholder if no image source is available
   if (!optimizedSrc) {
     return <Placeholder />;
   }
@@ -78,7 +84,7 @@ const OptimizedImage = ({
       ${isImageLoading ? 'opacity-0' : 'opacity-100'}
     `,
     ref,
-    onLoadingComplete: () => setImageLoading(false),
+    onLoad: () => setImageLoading(false),
     onError: () => {
       setImageLoading(false);
     },

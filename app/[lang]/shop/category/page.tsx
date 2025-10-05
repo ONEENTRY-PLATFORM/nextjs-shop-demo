@@ -26,11 +26,12 @@ const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
   // Get child pages by parent url
   const { pages, isError } = await getChildPagesByParentUrl('category', lang);
 
+  // Return 404 page if there's an error or no pages found
   if (isError || !pages || !Array.isArray(pages)) {
     return notFound();
   }
 
-  // extract categories data from pages
+  // Extract categories data from pages for display in the grid
   const categories = pages?.map((page: IPagesEntity) => {
     return {
       title: page.localizeInfos.title,
@@ -39,7 +40,7 @@ const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
     };
   });
 
-  // Breadcrumb structured data
+  // Generate structured data for breadcrumbs to improve SEO
   const breadcrumbStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -112,6 +113,7 @@ export async function generateMetadata({
   const { handle, lang } = await params;
   const { isError, page } = await getPageByUrl('category', lang);
 
+  // Return 404 page if there's an error or page not found
   if (isError || !page) {
     return notFound();
   }

@@ -21,6 +21,7 @@ import { getDictionary } from '../../dictionaries';
  * @async server component
  * @param {Promise<object>} props.params - page params
  * @param {Promise<any>} props.searchParams - search params
+ *
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  *
  * @returns Shop page layout JSX.Element
@@ -38,10 +39,11 @@ const ShopCatalogPage = async (props: {
     await getDictionary(params.lang as Locale),
   );
 
-  // !!!extract products per page limit from global settings
+  // Set the number of products to display per page
+  // TODO: Extract products per page limit from global settings
   const pagesLimit = 10;
 
-  // Memoize the loader component
+  // Memoize the loader component to prevent unnecessary re-renders
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
   return (
@@ -95,14 +97,15 @@ export async function generateMetadata({
   const { handle, lang } = await params;
   const { isError, page } = await getPageByUrl(handle, lang);
 
+  // Handle case when page is not found or an error occurred
   if (isError || !page) {
     return notFound();
   }
 
-  // extract data from page
+  // Extract data from page object
   const { localizeInfos, isVisible, attributeValues } = page;
 
-  // Return metadata object
+  // Return metadata object with page information
   return generatePageMetadata({
     handle: handle,
     title: localizeInfos.title,

@@ -35,20 +35,22 @@ const ShopCategoryLayout = async (props: any): Promise<JSX.Element> => {
   // Get the dictionary from the API and set the server provider.
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
-  // get page by url from api
+  // Fetch category page data from the CMS
   const { page } = await getPageByUrl(handle, lang);
 
-  // !!!extract products per page limit from global settings
+  // Set products per page limit
+  // TODO: Extract products per page limit from global settings
   const pagesLimit = 10;
 
-  // Memoize the loader component
+  // Memoize the loader component to prevent unnecessary re-renders
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
+  // Show 404 page if category page not found
   if (!page) {
     return notFound();
   }
 
-  // Breadcrumb structured data
+  // Generate structured data for breadcrumbs to improve SEO
   const breadcrumbStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -137,6 +139,7 @@ export async function generateMetadata({
   const { handle, lang } = await params;
   const { isError, page } = await getPageByUrl(handle, lang);
 
+  // Return 404 page if page not found or an error occurred
   if (isError || !page) {
     return notFound();
   }

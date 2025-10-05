@@ -18,10 +18,12 @@ import { i18n } from '@/i18n-config';
 /**
  * Product page.
  *
- * @param params - Page params with handle and lang.
- * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
+ * @param props - Page props.
+ * @param props.params - Page params with handle and lang.
  *
  * @returns Promise<JSX.Element> - Product page layout.
+ *
+ * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  */
 const ProductPageLayout = async ({
   params,
@@ -35,16 +37,17 @@ const ProductPageLayout = async ({
   // Get product by current Id
   const { product, isError } = await getProductById(Number(handle), lang);
 
+  // Return 404 page if product not found or an error occurred
   if (isError || !product) {
     return notFound();
   }
 
-  // extract data from product
+  // Extract data from product for structured data generation
   const { attributeValues, localizeInfos, additional, statusIdentifier } =
     product;
 
   /**
-   * product Json liked data
+   * Product JSON-LD structured data for SEO
    * https://json-ld.org/
    */
   const productJsonLd = {
@@ -92,7 +95,9 @@ export default ProductPageLayout;
  */
 export async function generateStaticParams() {
   const params: Array<{ lang: string; handle: string }> = [];
+  // Iterate through each supported locale to generate params
   for (const lang of i18n.locales) {
+    // Fetch products for the current locale with a limit of 100
     const { products } = await getProducts({
       lang,
       params: {},
@@ -100,9 +105,11 @@ export async function generateStaticParams() {
       limit: 100,
     });
 
+    // Process products and add them to the params array
     if (products && Array.isArray(products)) {
       for (const product of products) {
         if (product) {
+          // Add product ID as handle parameter for static generation
           params.push({ lang, handle: String(product.id) });
         }
       }
@@ -125,15 +132,18 @@ export async function generateMetadata({
   params: Promise<{ handle: string; lang: string }>;
 }): Promise<Metadata> {
   const { handle, lang } = await params;
+  // Fetch product data by ID for the current locale
   const result = await getProductById(Number(handle), lang);
   const { product, isError } = result;
 
+  // Return 404 page if product not found or an error occurred
   if (isError || !product) {
     return notFound();
   }
+  // Extract required data from product for metadata generation
   const { attributeValues, localizeInfos, isVisible } = product;
 
-  // Return metadata object
+  // Generate and return metadata object using the extracted data
   return generatePageMetadata({
     handle: handle,
     title: localizeInfos.title,
