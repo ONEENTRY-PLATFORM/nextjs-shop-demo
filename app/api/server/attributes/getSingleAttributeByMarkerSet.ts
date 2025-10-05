@@ -7,11 +7,11 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get a single attribute with data from the attribute sets with API AttributesSets.
- * @param   {object} props                 - Object containing the parameters.
- * @param   {string} props.setMarker       - Text identifier (marker) of the attribute set.
- * @param   {string} props.attributeMarker - Text identifier (marker) of the attribute in the set.
- * @param   {string} props.lang            - Current language shortcode
- * @returns                                SingleAttribute|Error object.
+ * @param   {object}          props                 - Object containing the parameters.
+ * @param   {string}          props.setMarker       - Text identifier (marker) of the attribute set.
+ * @param   {string}          props.attributeMarker - Text identifier (marker) of the attribute in the set.
+ * @param   {string}          props.lang            - Current language shortcode
+ * @returns {Promise<object>}                       SingleAttribute|Error object.
  * @see {@link https://doc.oneentry.cloud/docs/attributes OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  */

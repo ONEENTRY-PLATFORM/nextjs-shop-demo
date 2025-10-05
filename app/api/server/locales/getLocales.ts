@@ -7,9 +7,9 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 /**
  * Get all active language localization objects.
  * @async
+ * @returns {Promise<object>} an array of LocaleEntity objects Promise
  * @see {@link https://doc.oneentry.cloud/docs/languages OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
- * @returns an array of LocaleEntity objects Promise
  */
 export const getLocales = async (): Promise<{
   isError: boolean;

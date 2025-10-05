@@ -8,14 +8,12 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 /**
  * Get all blocks by page url.
  * @async
- * @param   {string} props.lang    - Current language shortcode
- * @param   {string} props.pageUrl - Page URL
- * @param            root0
- * @param            root0.lang
- * @param            root0.pageUrl
+ * @param   {object}          props         - Handle props
+ * @param   {string}          props.lang    - Current language shortcode
+ * @param   {string}          props.pageUrl - Page URL
+ * @returns {Promise<object>}               all blocks as an array of PositionBlock objects or an empty array [] (if there is no data) for the selected parent
  * @see {@link https://doc.oneentry.cloud/docs/blocks OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
- * @returns                        all blocks as an array of PositionBlock objects or an empty array [] (if there is no data) for the selected parent
  */
 export const getBlocksByPageUrl = async ({
   lang,

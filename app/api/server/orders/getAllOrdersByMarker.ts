@@ -4,24 +4,14 @@ import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces
 import { api } from '@/app/api';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
-interface HandleProps {
-  marker: string;
-  offset: number;
-  limit: number;
-  lang: string;
-}
 /**
  * Getting all orders from the orders storage object created by the user.
  * @async
+ * @param   {object} props        - The object containing the parameters.
  * @param   {string} props.marker - The text identifier of the order storage object.
  * @param   {number} props.lang   - Current language shortcode.
  * @param   {number} props.offset - Offset parameter. Default 0.
  * @param   {string} props.limit  - Limit parameter. Default 30.
- * @param            root0
- * @param            root0.marker
- * @param            root0.offset
- * @param            root0.limit
- * @param            root0.lang
  * @see {@link https://doc.oneentry.cloud/docs/orders OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  * @description This method requires user authorization. For more information about configuring the authorization module, see the documentation in the configuration settings section of the SDK.
@@ -32,7 +22,12 @@ export const getAllOrdersByMarker = async ({
   offset,
   limit,
   lang,
-}: HandleProps): Promise<{
+}: {
+  marker: string;
+  offset: number;
+  limit: number;
+  lang: string;
+}): Promise<{
   isError: boolean;
   error?: IError;
   orders?: IOrderByMarkerEntity[];

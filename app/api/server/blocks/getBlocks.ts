@@ -16,14 +16,12 @@ interface HandleProps {
 /**
  * Get blocks by parameters.
  * @async
- * @param   {BlockType} props.type Available values : forCatalogProducts, forBasketPage, forErrorPage, forCatalogPages, forProductPreview, forProductPage, forSimilarProductBlock, forStatisticProductBlock, forProductBlock, forForm, forFormField, forNewsPage, forNewsBlock, forNewsPreview, forOneNewsPage, forUsualPage, forTextBlock, forSlider, forOrder, service
- * @param   {string}    props.lang Current language shortcode
- * @param               root0
- * @param               root0.type
- * @param               root0.lang
+ * @param   {HandleProps}     props      - Parameters
+ * @param   {BlockType}       props.type - Available values : forCatalogProducts, forBasketPage, forErrorPage, forCatalogPages, forProductPreview, forProductPage, forSimilarProductBlock, forStatisticProductBlock, forProductBlock, forForm, forFormField, forNewsPage, forNewsBlock, forNewsPreview, forOneNewsPage, forUsualPage, forTextBlock, forSlider, forOrder, service
+ * @param   {string}          props.lang - Current language shortcode
+ * @returns {Promise<object>}            Return array of BlocksEntity object Promise.
  * @see {@link https://doc.oneentry.cloud/docs/blocks OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
- * @returns                        Return array of BlocksEntity object Promise.
  */
 export const getBlocks = async ({
   type,

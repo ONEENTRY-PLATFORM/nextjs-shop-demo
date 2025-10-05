@@ -15,10 +15,20 @@ const ToastContainer = dynamic(
   },
 );
 
-const RegisterGSAP = dynamic(() => import('@/app/animations/RegisterGSAP'), {
-  ssr: false,
-  loading: () => null,
-});
+const RegisterGSAP = dynamic(
+  () =>
+    import('@/app/animations/RegisterGSAP').then((mod) => {
+      const RegisterGSAPWrapper = () => {
+        mod.default();
+        return null;
+      };
+      return Promise.resolve(RegisterGSAPWrapper);
+    }),
+  {
+    ssr: false,
+    loading: () => null,
+  },
+);
 
 const IntroAnimations = dynamic(
   () => import('@/app/animations/IntroAnimations'),
@@ -37,13 +47,6 @@ const TransitionProvider = dynamic(
 );
 
 /**
- * Child components to be wrapped by the client providers.
- */
-interface ClientProvidersProps {
-  children: ReactNode;
-}
-
-/**
  * ClientProviders component that wraps the application with client-side providers.
  *
  * This component serves as a wrapper for all client-side functionality in the application.
@@ -56,13 +59,15 @@ interface ClientProvidersProps {
  *
  * All client-side effects and animations are managed here to separate them from
  * server-side rendering concerns.
- * @param props          - Component properties.
- * @param props.children - Child components to be wrapped.
- * @returns              JSX element with all client-side providers and components.
+ * @param   {object}      props          - Component properties.
+ * @param   {ReactNode}   props.children - Child components to be wrapped.
+ * @returns {JSX.Element}                JSX element with all client-side providers and components.
  */
 export default function ClientProviders({
   children,
-}: ClientProvidersProps): JSX.Element {
+}: {
+  children: ReactNode;
+}): JSX.Element {
   return (
     <>
       <div className="grow p-5 pb-16 transition-transform duration-500">

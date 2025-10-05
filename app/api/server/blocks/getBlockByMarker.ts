@@ -7,11 +7,11 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get block by marker.
- * @param marker - Marker of Block.
- * @param lang   - Current language shortcode.
+ * @param                     marker - Marker of Block.
+ * @param                     lang   - Current language shortcode.
+ * @returns {Promise<object>}        Return array of BlocksEntity object Promise.
  * @see {@link https://doc.oneentry.cloud/docs/blocks OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
- * @returns      Return array of BlocksEntity object Promise.
  */
 export const getBlockByMarker = async (
   marker: string,
