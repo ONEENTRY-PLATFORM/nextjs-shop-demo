@@ -2,7 +2,7 @@
 'use client';
 
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
-import type { ReactNode } from 'react';
+import type { JSX, ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
 import { reDefine, useLazyGetMeQuery } from '@/app/api';
@@ -25,12 +25,12 @@ import {
 
 /**
  * Authentication context properties
- * @property isAuth       - Authentication status
- * @property isLoading    - Loading status
- * @property userToken    - User token
- * @property user         - User entity
- * @property authenticate - Authentication function
- * @property refreshUser  - User refresh function
+ * @property {boolean}     isAuth       - Authentication status
+ * @property {boolean}     isLoading    - Loading status
+ * @property {string}      userToken    - User token
+ * @property {IUserEntity} user         - User entity
+ * @property {void}        authenticate - Authentication function
+ * @property {void}        refreshUser  - User refresh function
  */
 type ContextProps = {
   isAuth: boolean;
@@ -43,8 +43,8 @@ type ContextProps = {
 
 /**
  * Auth provider properties
- * @property children - Children ReactNode
- * @property langCode - Current language code
+ * @property {ReactNode} children - Children ReactNode
+ * @property {string}    langCode - Current language code
  */
 type AuthProviderProps = {
   children: ReactNode;
@@ -63,12 +63,15 @@ export const AuthContext = createContext<ContextProps>({
 
 /**
  * Auth provider
- * @param props          - Auth provider properties
- * @param props.children - Children ReactNode
- * @param props.langCode - Current language code
- * @returns              AuthContext Provider
+ * @param   {object}      props          - Auth provider properties
+ * @param   {ReactNode}   props.children - Children ReactNode
+ * @param   {string}      props.langCode - Current language code
+ * @returns {JSX.Element}                AuthContext Provider
  */
-export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
+export const AuthProvider = ({
+  children,
+  langCode,
+}: AuthProviderProps): JSX.Element => {
   const dispatch = useAppDispatch();
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -134,6 +137,9 @@ export const AuthProvider = ({ children, langCode }: AuthProviderProps) => {
    * Update user state on server
    */
   const updateUserData = async () => {
+    if (!user) {
+      return;
+    }
     await updateUserState({
       cart: productsInCart,
       favorites: favoritesIds,

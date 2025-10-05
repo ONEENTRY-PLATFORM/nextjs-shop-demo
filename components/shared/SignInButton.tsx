@@ -8,9 +8,9 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * SignIn button - open SignIn form.
- * @param props      - component props.
- * @param props.dict - dictionary from server api.
- * @returns          SignIn button.
+ * @param   {object}           props      - component props.
+ * @param   {IAttributeValues} props.dict - dictionary from server api.
+ * @returns {JSX.Element}                 SignIn button.
  */
 const SignInButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const { setOpen, setComponent } = useContext(OpenDrawerContext);

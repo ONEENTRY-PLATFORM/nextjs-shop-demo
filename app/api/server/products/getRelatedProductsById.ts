@@ -18,9 +18,9 @@ interface RelatedProductsResult {
 /**
  * Get all related product page objects with API.Products
  * @async
- * @param   {number} id   - Product page identifier for which to find relationship.
- * @param   {string} lang - Current language shortcode.
- * @returns               Array with ProductEntity objects
+ * @param   {number}                         id   - Product page identifier for which to find relationship.
+ * @param   {string}                         lang - Current language shortcode.
+ * @returns {Promise<RelatedProductsResult>}      Array with ProductEntity objects
  * @see {@link https://doc.oneentry.cloud/docs/catalog OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  */

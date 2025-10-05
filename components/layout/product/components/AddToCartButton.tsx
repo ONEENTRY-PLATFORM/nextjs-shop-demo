@@ -19,15 +19,15 @@ import QuantitySelector from './QuantitySelector';
 
 /**
  * AddToCart button with qty selector
- * @param props                  - Add to cart props
- * @param props.id               - product id
- * @param props.units            - product units qty
- * @param props.productTitle     - product title
- * @param props.statusIdentifier - product status identifier
- * @param props.className        - CSS class name
- * @param props.height           - component height
- * @param props.dict             - dictionary from server api
- * @returns                      Button | Qty selector
+ * @param   {object}           props                  - Add to cart props
+ * @param   {number}           props.id               - product id
+ * @param   {number}           props.units            - product units qty
+ * @param   {string}           props.productTitle     - product title
+ * @param   {string}           props.statusIdentifier - product status identifier
+ * @param   {string}           props.className        - CSS class name
+ * @param   {number}           props.height           - component height
+ * @param   {IAttributeValues} props.dict             - dictionary from server api
+ * @returns {JSX.Element}                             Button | Qty selector
  */
 const AddToCartButton = ({
   id,
@@ -71,6 +71,9 @@ const AddToCartButton = ({
 
   // Update user state and subscribe to events
   const updateUserCartState = async () => {
+    if (!user) {
+      return;
+    }
     const updatedItems = items.some((product) => product.id === id)
       ? items.map((product) => ({
           id: product.id,

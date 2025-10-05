@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 
@@ -9,10 +10,10 @@ import { CurrencyEnum, IntlEnum } from '@/app/types/enum';
  * This function takes a numeric amount and formats it as a localized currency
  * string using Intl.NumberFormat. It determines the appropriate currency and
  * locale settings based on the provided language code.
- * @param options        - Configuration options.
- * @param options.amount - The numeric amount to format.
- * @param options.lang   - The language code to determine currency and formatting.
- * @returns              Formatted currency string (e.g., "$123.45", "€123,45").
+ * @param   {object}          options        - Configuration options.
+ * @param   {number | string} options.amount - The numeric amount to format.
+ * @param   {string}          options.lang   - The language code to determine currency and formatting.
+ * @returns {}                               Formatted currency string (e.g., "$123.45", "€123,45").
  * @example
  * ```typescript
  * const price = UsePrice({ amount: 123.45, lang: 'en' });
@@ -41,10 +42,10 @@ export const UsePrice = ({
  *
  * This function takes a date and formats it as a localized string with
  * day, month, and year components. The format varies based on the locale.
- * @param options          - Configuration options.
- * @param options.fullDate - The date to format (as Date, string, or timestamp).
- * @param options.format   - The locale identifier for formatting (default: 'en').
- * @returns                Formatted date string (e.g., "01-Jan-2023").
+ * @param   {object}                 options          - Configuration options.
+ * @param   {number | string | Date} options.fullDate - The date to format (as Date, string, or timestamp).
+ * @param   {string}                 options.format   - The locale identifier for formatting (default: 'en').
+ * @returns {string}                                  Formatted date string (e.g., "01-Jan-2023").
  * @example
  * ```typescript
  * const date = UseDate({ fullDate: new Date(), format: 'en' });
@@ -80,8 +81,8 @@ export const UseDate = ({
  * This function takes an object and sorts its entries based on the
  * position property of each value. The result is a new object with
  * the same keys but ordered by position.
- * @param obj - The object to sort.
- * @returns   A new object with entries sorted by position.
+ * @param   {Record<any, any>} obj - The object to sort.
+ * @returns {Record<any, any>}     A new object with entries sorted by position.
  * @example
  * ```typescript
  * const sorted = sortObjectFieldsByPosition({
@@ -91,8 +92,10 @@ export const UseDate = ({
  * // Returns { b: { position: 1 }, a: { position: 2 } }
  * ```
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const sortObjectFieldsByPosition = (obj: Record<any, any>) => {
+
+export const sortObjectFieldsByPosition = (
+  obj: Record<any, any>,
+): Record<any, any> => {
   const entries = Object.entries(obj);
   entries.sort((a, b) => a[1].position - b[1].position);
   const sortedObj = {};
@@ -109,9 +112,9 @@ export const sortObjectFieldsByPosition = (obj: Record<any, any>) => {
  *
  * This function takes a flat array of menu items and converts it into
  * a hierarchical tree structure based on parent-child relationships.
- * @param data - Array of menu items.
- * @param pid  - Parent ID to start from (null for root level).
- * @returns    Nested array of menu items with children.
+ * @param   {[] | Array<IMenusPages>} data - Array of menu items.
+ * @param   {number | null}           pid  - Parent ID to start from (null for root level).
+ * @returns {IMenusPages[]}                Nested array of menu items with children.
  * @example
  * ```typescript
  * const nested = flatMenuToNested([
@@ -143,8 +146,8 @@ export const flatMenuToNested = (
  *
  * This function checks if the provided value has the properties of an
  * IError object, specifically checking for the presence of a statusCode.
- * @param res - The value to check.
- * @returns   True if the value is an IError object, false otherwise.
+ * @param   {IError | unknown} res - The value to check.
+ * @returns {IError}               True if the value is an IError object, false otherwise.
  * @example
  * ```typescript
  * if (typeError(result)) {

@@ -5,9 +5,9 @@ import type { SimplePageProps } from '@/app/types/global';
 
 /**
  * Services page.
- * @param props      - Page props.
- * @param props.page - Page entity.
- * @returns          Services page.
+ * @param   {SimplePageProps} props        - Page props.
+ * @param   {IPagesEntity}    [props.page] - Page entity.
+ * @returns {JSX.Element}                  Services page.
  */
 const ServicesPage = ({ page }: SimplePageProps): JSX.Element => {
   if (!page || !page.localizeInfos) {

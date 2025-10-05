@@ -8,8 +8,9 @@ import { i18n } from './i18n-config';
 const PUBLIC_FILE = /\.(.*)$/;
 
 /**
- *
- * @param request
+ * Get the preferred locale, similar to Negotiator but without bundled locales
+ * @param request - The incoming HTTP request
+ * @returns       The preferred locale
  */
 function getLocale(request: NextRequest): string | undefined {
   const negotiatorHeaders: Record<string, string> = {};
@@ -28,8 +29,9 @@ function getLocale(request: NextRequest): string | undefined {
 }
 
 /**
- *
- * @param request
+ * Middleware
+ * @param request - The incoming HTTP request
+ * @returns       The response
  */
 export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;

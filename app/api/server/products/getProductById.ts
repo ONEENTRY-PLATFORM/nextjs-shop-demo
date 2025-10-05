@@ -7,9 +7,9 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get product by id.
- * @param id   - Product id.
- * @param lang - Current language shortcode.
- * @returns    ProductEntity object
+ * @param   {number}          id   - Product id.
+ * @param   {string}          lang - Current language shortcode.
+ * @returns {Promise<object>}      ProductEntity object
  * @see {@link https://doc.oneentry.cloud/docs/catalog OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  */

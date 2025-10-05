@@ -5,9 +5,10 @@ import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError } from '@/app/utils/errorHandler';
 
 /**
- *
+ * Test route for API calls
+ * @returns {Promise<NextResponse>} - Promise object that represents the result of the GET request.
  */
-export async function GET() {
+export async function GET(): Promise<NextResponse> {
   try {
     const startTime = Date.now();
 

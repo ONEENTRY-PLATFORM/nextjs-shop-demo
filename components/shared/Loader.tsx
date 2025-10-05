@@ -7,7 +7,7 @@ import Spinner from './Spinner';
 
 /**
  * Loader
- * @returns Loader
+ * @returns {JSX.Element} Loader
  */
 const Loader = (): JSX.Element => {
   return (

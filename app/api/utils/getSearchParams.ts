@@ -2,14 +2,14 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 
 /**
  * Get search params for filter
- * @param searchParams          - Search parameters
- * @param searchParams.search
- * @param searchParams.in_stock
- * @param searchParams.color
- * @param searchParams.minPrice
- * @param searchParams.maxPrice
- * @param handle                - Category handle
- * @returns                     Expanded filters object
+ * @param   {object}          searchParams          - Search parameters
+ * @param   {string}          searchParams.search   - Search query
+ * @param   {string}          searchParams.in_stock - In stock
+ * @param   {string}          searchParams.color    - Color
+ * @param   {string}          searchParams.minPrice - Min price
+ * @param   {string}          searchParams.maxPrice - Max price
+ * @param   {string}          handle                - Category handle
+ * @returns {IFilterParams[]}                       Expanded filters object
  */
 const getSearchParams = (
   searchParams?: {
@@ -20,7 +20,7 @@ const getSearchParams = (
     maxPrice?: string;
   },
   handle?: string,
-) => {
+): IFilterParams[] => {
   const expandedFilters: Array<IFilterParams & { statusMarker?: string }> = [];
 
   // check if product has SKU or this is service product

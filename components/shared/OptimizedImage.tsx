@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-any-type */
 'use client';
 
 import NextImage from 'next/image';
@@ -10,19 +11,19 @@ import Placeholder from './Placeholder';
 
 /**
  * Optimized image component with LQIP placeholder and lazy loading.
- * @param props           - OptimizedImage component props.
- * @param props.src       - Image source data.
- * @param props.alt       - Image alt text.
- * @param props.width     - Image width.
- * @param props.height    - Image height.
- * @param props.sizes     - Image sizes.
- * @param props.fill      - Fill parent container.
- * @param props.priority  - Priority loading flag.
- * @param props.className - Additional CSS classes.
- * @param props.quality   - Image quality (1-100).
- * @param props.type      - Image type ("next" | "custom").
- * @param props.loading   - Image loading behavior ("eager" | "lazy").
- * @returns               JSX.Element - Optimized image.
+ * @param   {object}      props           - OptimizedImage component props.
+ * @param   {any}         props.src       - Image source data.
+ * @param   {string}      props.alt       - Image alt text.
+ * @param   {number}      props.width     - Image width.
+ * @param   {number}      props.height    - Image height.
+ * @param   {string}      props.sizes     - Image sizes.
+ * @param   {boolean}     props.fill      - Fill parent container.
+ * @param   {string}      props.priority  - Priority loading flag.
+ * @param   {string}      props.className - Additional CSS classes.
+ * @param   {number}      props.quality   - Image quality (1-100).
+ * @param   {string}      props.type      - Image type ("next" | "custom").
+ * @param   {string}      props.loading   - Image loading behavior ("eager" | "lazy").
+ * @returns {JSX.Element}                 JSX.Element - Optimized image.
  */
 const OptimizedImage = ({
   src,

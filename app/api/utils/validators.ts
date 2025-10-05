@@ -3,11 +3,11 @@ import { compileRegex } from './compileRegex';
 
 /**
  * Validators interface
- * @property requiredValidator         - Validates if a field is required
- * @property emailInspectionValidator  - Validates email format
- * @property fieldMaskValidator        - Validates field against a mask
- * @property stringInspectionValidator - Validates string length
- * @property correctPasswordValidator  - Validates password confirmation
+ * @property {(value: string, validator: unknown) => boolean} requiredValidator         - Validates if a field is required
+ * @property {(value: string, validator: unknown) => boolean} emailInspectionValidator  - Validates email format
+ * @property {(value: string, validator: unknown) => boolean} fieldMaskValidator        - Validates field against a mask
+ * @property {(value: string, validator: unknown) => boolean} stringInspectionValidator - Validates string length
+ * @property {(value: string, validator: unknown) => boolean} correctPasswordValidator  - Validates password confirmation
  */
 export type Validators = {
   requiredValidator: (value: string, validator: any) => boolean;

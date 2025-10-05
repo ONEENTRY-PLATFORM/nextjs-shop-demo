@@ -5,11 +5,11 @@ type LogOutProps = { marker: string; token?: string };
 
 /**
  * User logOut with API AuthProvider
- * @async
- * @param                                             marker.marker
- * @param                                             marker        - The text identifier of the authorization provider. Example - email
  * @description This method requires user authorization. For more information about configuring the authorization module, see the documentation in the configuration settings section of the SDK.
- * @returns {Promise<{ data?: any; error?: string }>}               - Promise object that represents the result of the logOutUser function. If the logOutUser function is successful, the promise will resolve with an object containing the data returned from the API. If there is an error, the promise will resolve with an object containing the error message.
+ * @async
+ * @param   {LogOutProps}     props        - The token of the authorization provider.
+ * @param   {string}          props.marker - The text identifier of the authorization provider. Example - email
+ * @returns {Promise<object>}              Promise object that represents the result of the logOutUser function. If the logOutUser function is successful, the promise will resolve with an object containing the data returned from the API. If there is an error, the promise will resolve with an object containing the error message.
  * @see {@link https://doc.oneentry.cloud/docs/users OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  */

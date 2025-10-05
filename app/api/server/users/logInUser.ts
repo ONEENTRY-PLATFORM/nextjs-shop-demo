@@ -7,10 +7,10 @@ type LogInProps = { login: string; password: string };
 
 /**
  * User authorization with API AuthProvider
- * @param props          - User authorization data.
- * @param props.login    - User login.
- * @param props.password - User password.
- * @returns              User authorization result.
+ * @param   {LogInProps}      props          - User authorization data.
+ * @param   {string}          props.login    - User login.
+ * @param   {string}          props.password - User password.
+ * @returns {Promise<object>}                User authorization result.
  * @see {@link https://doc.oneentry.cloud/docs/users OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  */
