@@ -5,7 +5,6 @@ import type {
 } from 'oneentry/dist/products/productsInterfaces';
 
 import { api } from '@/app/api';
-import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -69,20 +68,6 @@ export const getRelatedProductsById = async (
     };
   }
 
-  const cacheKey = `related-products-${id}-${langCode}`;
-
-  // Check cache first
-  const cached = getCachedData<{ products: IProductsEntity[]; total: number }>(
-    cacheKey,
-  );
-  if (cached) {
-    return {
-      isError: false,
-      products: cached.products,
-      total: cached.total,
-    };
-  }
-
   try {
     const data = await api.Products.getRelatedProductsById(id, langCode);
 
@@ -91,12 +76,6 @@ export const getRelatedProductsById = async (
     } else {
       // Type assertion to ensure we're working with the correct type
       const productsResponse = data as IProductsResponse;
-
-      // Cache the result
-      setCachedData<{ products: IProductsEntity[]; total: number }>(cacheKey, {
-        products: productsResponse.items,
-        total: productsResponse.total,
-      });
 
       return {
         isError: false,

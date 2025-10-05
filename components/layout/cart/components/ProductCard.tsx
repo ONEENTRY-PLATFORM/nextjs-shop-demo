@@ -42,7 +42,6 @@ const ProductCard = ({
     localizeInfos,
   } = product;
 
-  const imgSrc = pic?.value.downloadLink;
   const title = localizeInfos?.title;
   // Handle checkbox toggle: when checked, it means the user wants to select the product
   const handleCheckboxChange = () => {
@@ -74,7 +73,7 @@ const ProductCard = ({
             width={130}
             height={150}
             loading="lazy"
-            src={imgSrc}
+            src={pic}
             alt={title}
             quality={75}
             className="size-full shrink-0 self-start object-cover"

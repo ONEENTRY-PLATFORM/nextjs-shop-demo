@@ -36,28 +36,46 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     items: favoritesIds.toString(),
   });
 
-  // set products on data change
+  /**
+   * Effect hook to update products data and handle real-time notifications.
+   *
+   * When the data or authentication status changes, this effect:
+   * 1. Updates the local products state with new data
+   * 2. If user is authenticated, establishes a WebSocket connection to listen for product updates
+   * 3. Processes real-time notifications about product changes (price, status, etc.)
+   * 4. Cleans up the WebSocket connection on component unmount
+   *
+   * @param isAuth - Authentication status of the user
+   * @param data - Product data fetched from the API
+   */
   useEffect(() => {
+    // Update products state when new data is available
     if (data) {
       setProducts(data);
+      // Only connect to WebSocket if user is authenticated
       if (isAuth) {
         const ws = api.WS.connect();
         if (ws) {
+          // Listen for product update notifications
           ws.on('notification', async (res) => {
+            // Process product data from notification
             if (res?.product) {
               const product = {
                 ...res.product,
                 attributeValues: res.product?.attributes,
               };
 
+              // Find the index of the updated product in the current list
               const index = data.findIndex(
                 (p: IProductsEntity) => p.id === product.id,
               );
+              // Extract and parse the new price from product attributes
               const newPrice = parseInt(
                 product?.attributeValues?.price?.value,
                 10,
               );
 
+              // Update the product in the state with new price and status
               setProducts((prevProducts) => {
                 const newProducts = [...prevProducts];
                 if (index !== -1 && products[index]) {
@@ -71,6 +89,7 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
               });
             }
           });
+          // Cleanup function to disconnect WebSocket on unmount
           return () => {
             ws.disconnect();
           };
@@ -83,11 +102,13 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   // Memoize the loader component
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
-  // Более надежная проверка на наличие продуктов
+  // Handle empty favorites state - show empty favorites component or loading spinner
   if (!products || products.length < 1) {
+    // If data has finished loading but there are no products, show empty state
     if (!isLoading) {
       return <EmptyFavorites lang={lang as string} dict={dict} />;
     } else {
+      // If data is still loading, show loading spinner
       return <MemoizedProductsGridLoader />;
     }
   }
@@ -97,7 +118,7 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
       <div className={'relative box-border flex w-full shrink-0 flex-col'}>
         <section className="relative mx-auto box-border flex min-h-[320px] w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
           <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-            {/* Убедимся, что products - это массив перед вызовом map */}
+            {/* Let's make sure products are an array before calling map */}
             {Array.isArray(products) && products.length > 0 ? (
               products.map((product: IProductsEntity, index: Key | number) => {
                 return (

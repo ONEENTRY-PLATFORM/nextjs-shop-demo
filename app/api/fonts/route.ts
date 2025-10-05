@@ -1,9 +1,15 @@
 import { NextResponse } from 'next/server';
 
-// Простой кэш для шрифтов
+/**
+ * Simple in-memory cache for font files to improve performance
+ * Maps font filenames to their buffer data and content types
+ */
 const fontCache = new Map();
 
-// Типы шрифтов и их MIME-типы
+/**
+ * Font file extensions mapped to their corresponding MIME types
+ * This ensures proper Content-Type headers when serving fonts
+ */
 const FONT_TYPES: Record<string, string> = {
   woff: 'font/woff',
   woff2: 'font/woff2',
@@ -12,11 +18,18 @@ const FONT_TYPES: Record<string, string> = {
   eot: 'application/vnd.ms-fontobject',
 };
 
+/**
+ * GET endpoint for serving font files with caching support
+ * 
+ * @param request - The incoming HTTP request
+ * @returns NextResponse with font file data or error
+ */
 export async function GET(request: Request) {
+  // Extract font filename from the URL path
   const { pathname } = new URL(request.url);
   const fontFile = pathname.split('/').pop();
 
-  // Проверка кэша
+  // Check if font is already cached to avoid unnecessary processing
   if (fontCache.has(fontFile)) {
     const cached = fontCache.get(fontFile);
     const response = new NextResponse(cached.buffer, {
@@ -30,17 +43,17 @@ export async function GET(request: Request) {
   }
 
   try {
-    // Здесь должна быть логика получения шрифта из файловой системы или CDN
-    // Временная заглушка для демонстрации
+    // Font retrieval logic would go here - from filesystem or CDN
+    // Currently using a placeholder implementation for demonstration
 
-    // Определение типа шрифта по расширению
+    // Determine font MIME type based on file extension
     const ext = fontFile?.split('.').pop() || '';
     const contentType = FONT_TYPES[ext] || 'font/woff2';
 
-    // Создание пустого буфера в качестве примера
+    // Create empty buffer as placeholder - real implementation would load actual font data
     const buffer = Buffer.from('');
 
-    // Сохранение в кэш
+    // Store font in cache for future requests
     fontCache.set(fontFile, { buffer, contentType });
 
     const response = new NextResponse(buffer, {
@@ -54,11 +67,16 @@ export async function GET(request: Request) {
     return response;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
+    // Return 404 error if font cannot be retrieved
     return new NextResponse('Font not found', { status: 404 });
   }
 }
 
-// Добавление CORS заголовков
+/**
+ * OPTIONS endpoint for handling CORS preflight requests
+ * 
+ * @returns NextResponse with CORS headers
+ */
 export async function OPTIONS() {
   return new NextResponse(null, {
     headers: {

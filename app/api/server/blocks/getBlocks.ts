@@ -5,7 +5,6 @@ import type {
 } from 'oneentry/dist/blocks/blocksInterfaces';
 
 import { api } from '@/app/api';
-import { getCachedData, setCachedData } from '@/app/api/utils/cache';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -34,13 +33,6 @@ export const getBlocks = async ({
   blocks?: IBlocksResponse;
 }> => {
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const cacheKey = `${type}-${langCode}`;
-
-  // Check cache first
-  const cached = getCachedData<IBlocksResponse>(cacheKey);
-  if (cached) {
-    return { isError: false, blocks: cached };
-  }
 
   try {
     const data = await api.Blocks.getBlocks(type, langCode);
@@ -48,8 +40,6 @@ export const getBlocks = async ({
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
-      // Cache the result
-      setCachedData<IBlocksResponse>(cacheKey, data);
       return { isError: false, blocks: data };
     }
   } catch (error) {
