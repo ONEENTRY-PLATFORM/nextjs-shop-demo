@@ -1,13 +1,15 @@
+/* eslint-disable jsdoc/reject-any-type */
+/* eslint-disable jsdoc/reject-function-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { compileRegex } from './compileRegex';
 
 /**
  * Validators interface
- * @property {(value: string, validator: unknown) => boolean} requiredValidator         - Validates if a field is required
- * @property {(value: string, validator: unknown) => boolean} emailInspectionValidator  - Validates email format
- * @property {(value: string, validator: unknown) => boolean} fieldMaskValidator        - Validates field against a mask
- * @property {(value: string, validator: unknown) => boolean} stringInspectionValidator - Validates string length
- * @property {(value: string, validator: unknown) => boolean} correctPasswordValidator  - Validates password confirmation
+ * @property {Function} requiredValidator         - Validates if a field is required
+ * @property {Function} emailInspectionValidator  - Validates email format
+ * @property {Function} fieldMaskValidator        - Validates field against a mask
+ * @property {Function} stringInspectionValidator - Validates string length
+ * @property {Function} correctPasswordValidator  - Validates password confirmation
  */
 export type Validators = {
   requiredValidator: (value: string, validator: any) => boolean;

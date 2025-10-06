@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { JSX, Key } from 'react';
 import React, { useEffect, useState } from 'react';
