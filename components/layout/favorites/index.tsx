@@ -1,6 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX, Key } from 'react';
 import { memo, useContext, useEffect, useState } from 'react';
@@ -17,10 +17,10 @@ import ProductsGridLoader from '../products-grid/components/ProductsGridLoader';
 
 /**
  * Favorites page.
- * @param   {SimplePageProps} props      - Page props.
- * @param   {string}          props.lang - Current language shortcode.
- * @param   {any}             props.dict - dictionary from server api.
- * @returns {JSX.Element}                favorites page with animations.
+ * @param   {SimplePageProps}  props      - Page props.
+ * @param   {string}           props.lang - Current language shortcode.
+ * @param   {IAttributeValues} props.dict - dictionary from server api.
+ * @returns {JSX.Element}                 favorites page with animations.
  */
 const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   const { isAuth } = useContext(AuthContext);
@@ -94,20 +94,18 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
       }
     }
     return;
-  }, [isAuth, data]);
+  }, [isAuth, data, products]);
 
   // Memoize the loader component
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
-
-  if (!dict) {
-    return <></>;
-  }
 
   // Handle empty favorites state - show empty favorites component or loading spinner
   if (!products || products.length < 1) {
     // If data has finished loading but there are no products, show empty state
     if (!isLoading) {
-      return <EmptyFavorites lang={lang as string} dict={dict} />;
+      return (
+        <EmptyFavorites lang={lang as string} dict={dict as IAttributeValues} />
+      );
     } else {
       // If data is still loading, show loading spinner
       return <MemoizedProductsGridLoader />;
@@ -128,13 +126,16 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
                     product={product}
                     index={index as number}
                     lang={lang as string}
-                    dict={dict}
+                    dict={dict as IAttributeValues}
                     pagesLimit={0}
                   />
                 );
               })
             ) : (
-              <EmptyFavorites lang={lang as string} dict={dict} />
+              <EmptyFavorites
+                lang={lang as string}
+                dict={dict as IAttributeValues}
+              />
             )}
           </div>
         </section>

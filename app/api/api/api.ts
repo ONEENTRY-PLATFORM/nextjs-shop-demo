@@ -28,9 +28,9 @@ export let api = defineOneEntry(PROJECT_URL, {
   auth: {
     saveFunction,
   },
-  errors: {
-    isShell: false,
-  },
+  // errors: {
+  //   isShell: false,
+  // },
 });
 
 /**
@@ -44,15 +44,18 @@ export async function reDefine(
   refreshToken: string,
   langCode: string,
 ): Promise<void> {
+  if (!refreshToken) {
+    return;
+  }
   api = defineOneEntry(PROJECT_URL, {
     langCode: langCode || 'en_US',
     token: APP_TOKEN,
     auth: {
-      saveFunction,
       refreshToken,
+      saveFunction,
     },
-    errors: {
-      isShell: false,
-    },
+    // errors: {
+    //   isShell: false,
+    // },
   });
 }

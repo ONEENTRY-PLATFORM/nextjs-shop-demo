@@ -88,21 +88,21 @@ export const AuthProvider = ({
   /**
    * Initialize authorization
    */
-  const onInit = async () => {
+  const onInit = async (): Promise<void> => {
     const refresh = localStorage.getItem('refresh-token');
 
     if (!refresh) {
       setIsAuth(false);
       return;
     }
-    await reDefine(refresh, langCode);
+    // await reDefine(refresh, langCode);
     await checkToken();
   };
 
   /**
    * Check refresh token
    */
-  const checkToken = async () => {
+  const checkToken = async (): Promise<void> => {
     trigger({
       langCode,
     })
@@ -184,8 +184,8 @@ export const AuthProvider = ({
     const refresh = localStorage.getItem('refresh-token');
     if (isError && refresh) {
       setRefetch(true);
-      localStorage.setItem('refresh-token', '');
-      setIsAuth(false);
+      // localStorage.setItem('refresh-token', '');
+      // setIsAuth(false);
     }
   }, [isError]);
 
