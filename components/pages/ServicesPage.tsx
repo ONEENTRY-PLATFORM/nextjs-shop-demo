@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/no-undefined-types */
 import parse from 'html-react-parser';
 import type { JSX } from 'react';
 

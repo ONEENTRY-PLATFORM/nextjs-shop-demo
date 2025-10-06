@@ -18,10 +18,10 @@ export const onSubscribeEvents = async (id: number): Promise<void> => {
     );
     const price = await api.Events.subscribeByMarker('product_price', id);
     if (status) {
-      toast('You unsubscribed from status updates for this product');
+      toast('You subscribed to status updates for this product');
     }
     if (price) {
-      toast('You unsubscribed from price updates for this product');
+      toast('You subscribed to price updates for this product');
     }
   } catch (error) {
     const apiError = handleApiError('onSubscribeEvents', error);

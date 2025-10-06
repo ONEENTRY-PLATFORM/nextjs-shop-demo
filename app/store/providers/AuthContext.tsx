@@ -5,7 +5,10 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { JSX, ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
-import { reDefine, useLazyGetMeQuery } from '@/app/api';
+import {
+  // reDefine,
+  useLazyGetMeQuery,
+} from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import type { IProducts } from '@/app/types/global';
 
@@ -81,9 +84,7 @@ export const AuthProvider = ({
   /**
    * Check user data loop
    */
-  const [trigger, { isError }] = useLazyGetMeQuery({
-    pollingInterval: isAuth ? 3000 : 0,
-  });
+  const [trigger, { isError }] = useLazyGetMeQuery();
 
   /**
    * Initialize authorization
@@ -103,6 +104,7 @@ export const AuthProvider = ({
    * Check refresh token
    */
   const checkToken = async (): Promise<void> => {
+    setIsLoading(true);
     trigger({
       langCode,
     })
@@ -114,10 +116,12 @@ export const AuthProvider = ({
           setUser(res.data);
           setIsAuth(true);
         }
+        setIsLoading(false);
       })
       .catch(async () => {
         localStorage.setItem('refresh-token', '');
         setIsAuth(false);
+        setIsLoading(false);
       });
   };
 

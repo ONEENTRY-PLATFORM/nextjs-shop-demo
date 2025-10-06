@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/check-param-names */
 import parse from 'html-react-parser';
 import type { JSX } from 'react';
 

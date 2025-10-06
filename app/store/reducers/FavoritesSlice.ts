@@ -101,7 +101,7 @@ export const {
  */
 export const selectFavoritesItems = (state: {
   favoritesReducer: { products: number[] };
-}) => state.favoritesReducer.products;
+}): number[] => state.favoritesReducer.products;
 
 /**
  * Selector to check if a specific product ID is in the favorites list.

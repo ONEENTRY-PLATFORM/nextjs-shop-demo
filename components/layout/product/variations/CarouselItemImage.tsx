@@ -2,7 +2,6 @@ import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
 /**
