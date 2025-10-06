@@ -24,7 +24,7 @@ import {
 } from '../reducers/FavoritesSlice';
 
 /**
- * Authentication context properties
+ * Authentication context
  * @property {boolean}     isAuth       - Authentication status
  * @property {boolean}     isLoading    - Loading status
  * @property {string}      userToken    - User token
@@ -32,29 +32,14 @@ import {
  * @property {void}        authenticate - Authentication function
  * @property {void}        refreshUser  - User refresh function
  */
-type ContextProps = {
+export const AuthContext = createContext<{
   isAuth: boolean;
   isLoading: boolean;
   userToken?: string;
   user?: IUserEntity;
   authenticate: () => void;
   refreshUser: () => void;
-};
-
-/**
- * Auth provider properties
- * @property {ReactNode} children - Children ReactNode
- * @property {string}    langCode - Current language code
- */
-type AuthProviderProps = {
-  children: ReactNode;
-  langCode: string;
-};
-
-/**
- * Authentication context
- */
-export const AuthContext = createContext<ContextProps>({
+}>({
   isAuth: false,
   isLoading: false,
   authenticate: () => {},
@@ -71,7 +56,10 @@ export const AuthContext = createContext<ContextProps>({
 export const AuthProvider = ({
   children,
   langCode,
-}: AuthProviderProps): JSX.Element => {
+}: {
+  children: ReactNode;
+  langCode: string;
+}): JSX.Element => {
   const dispatch = useAppDispatch();
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -108,7 +96,7 @@ export const AuthProvider = ({
       return;
     }
     await reDefine(refresh, langCode);
-    // await checkToken();
+    await checkToken();
   };
 
   /**
@@ -136,7 +124,7 @@ export const AuthProvider = ({
   /**
    * Update user state on server
    */
-  const updateUserData = async () => {
+  const updateUserData = async (): Promise<void> => {
     if (!user) {
       return;
     }

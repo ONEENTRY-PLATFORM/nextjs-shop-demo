@@ -15,7 +15,11 @@ import orderSlice from './reducers/OrderSlice';
  * It is primarily used to replace browser storage (like localStorage) in server environments
  * @returns {object} An object containing no-operation storage methods
  */
-const createNoopStorage = () => {
+const createNoopStorage = (): {
+  getItem: () => Promise<number | null>;
+  setItem: (key: string, value: number) => Promise<number>;
+  removeItem: () => Promise<void>;
+} => {
   return {
     getItem() {
       return Promise.resolve(null);

@@ -5,7 +5,7 @@ import type { Dispatch, JSX, ReactNode } from 'react';
 import React, { createContext, useState } from 'react';
 
 /**
- * Open drawer context type
+ * Open drawer context
  * @property {string}            component     - Component name
  * @property {boolean}           open          - Open state
  * @property {string}            action        - Action type
@@ -15,7 +15,7 @@ import React, { createContext, useState } from 'react';
  * @property {Dispatch<string>}  setAction     - Action setter
  * @property {Dispatch<string>}  setTransition - Transition setter
  */
-type OpenDrawerContextType = {
+export const OpenDrawerContext = createContext<{
   component: string;
   open: boolean;
   action: string;
@@ -24,12 +24,7 @@ type OpenDrawerContextType = {
   setOpen: Dispatch<boolean>;
   setAction: Dispatch<string>;
   setTransition: Dispatch<string>;
-};
-
-/**
- * Open drawer context
- */
-export const OpenDrawerContext = createContext<OpenDrawerContextType>({
+}>({
   open: false,
   component: '',
   action: '',

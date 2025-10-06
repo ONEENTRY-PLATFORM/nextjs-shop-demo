@@ -34,8 +34,8 @@ type InitialStateType = {
 
 /**
  * Initial state setup for the cart slice.
- * @property {[]}     products     - Array of product entities.
- * @property {[]}     productsData - Array of product data with additional properties like quantity.
+ * @property {Array}  products     - Array of product entities.
+ * @property {Array}  productsData - Array of product data with additional properties like quantity.
  * @property {object} delivery     - Delivery product entity.
  * @property {object} deliveryData - Details about delivery.
  * @property {number} transitionId - ID used for transitions/animations.
@@ -58,9 +58,9 @@ const initialState: InitialStateType = {
 
 /**
  * Creating a Redux slice for cart management.
- * @param name         - Name of the slice.
- * @param initialState - Initial state for the cart slice.
- * @param reducers     - Reducers for the cart slice.
+ * @param {string}  name         - Name of the slice.
+ * @param {unknown} initialState - Initial state for the cart slice.
+ * @param {unknown} reducers     - Reducers for the cart slice.
  */
 export const cartSlice = createSlice({
   name: 'cart-slice', // Name of the slice
