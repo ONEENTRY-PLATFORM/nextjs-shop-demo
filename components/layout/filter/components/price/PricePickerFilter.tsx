@@ -13,26 +13,40 @@ import PriceFromInput from './PriceFromInput';
 import PriceToInput from './PriceToInput';
 
 /**
- * Price filter.
- * @param props        - props.
- * @param props.prices - prices fromTo extracted from one product.
- * @param props.dict   - dictionary from server api.
- * @returns            JSX.Element.
+ * Price filter component
+ * @param props        - component props
+ * @param props.dict   - dictionary with localized values from API
+ * @param props.prices - object with minimum and maximum product prices
+ * @returns            JSX.Element
  */
 const PriceFilter = memo(
-  ({ prices, dict }: { prices: any; dict: IAttributeValues }): JSX.Element => {
+  ({
+    dict,
+    prices,
+  }: {
+    dict: IAttributeValues;
+    prices: {
+      min: number;
+      max: number;
+    };
+  }): JSX.Element => {
+    // Get current path and URL parameters
     const pathname = usePathname();
     const { replace } = useRouter();
     const searchParams = useSearchParams();
 
+    // Create a copy of URL parameters to work with filters
     const params = new URLSearchParams(searchParams?.toString() || '');
 
+    // Extract localized values from dictionary
     const { filter_price_title, price_from, price_to } = dict;
 
+    // Constants for working with price range
     const STEP = 10;
     const MIN = prices?.min || 0;
     const MAX = prices?.max || 100;
 
+    // States for storing "from" and "to" values of price range
     const [priceFrom, setPriceFrom] = useState(
       params.get('minPrice') ? Number(params.get('minPrice')) : MIN,
     );
@@ -40,12 +54,16 @@ const PriceFilter = memo(
       params.get('maxPrice') ? Number(params.get('maxPrice')) : MAX,
     );
 
-    const handlePriceChange = useCallback((values: number[]) => {
-      setPriceFrom(values[0]);
-      setPriceTo(values[1]);
+    /**
+     * Handler for changing price range values
+     * @param {number[]} values - array of values [from, to]
+     */
+    const handlePriceChange = useCallback((values: number[]): void => {
+      setPriceFrom(values[0] || 0);
+      setPriceTo(values[1] || 0);
     }, []);
 
-    // params minPrice
+    // Effect for updating minPrice parameter in URL when priceFrom changes
     useEffect(() => {
       if (priceFrom && priceFrom !== MIN) {
         params.set('minPrice', priceFrom.toString());
@@ -55,7 +73,7 @@ const PriceFilter = memo(
       replace(`${pathname}?${params.toString()}`);
     }, [priceFrom]);
 
-    // params maxPrice
+    // Effect for updating maxPrice parameter in URL when priceTo changes
     useEffect(() => {
       if (priceTo && priceTo !== MAX) {
         params.set('maxPrice', priceTo.toString());
@@ -65,20 +83,25 @@ const PriceFilter = memo(
       replace(`${pathname}?${params.toString()}`);
     }, [priceTo]);
 
-    // setPriceFrom
+    // Effect to reset priceFrom value when minPrice parameter is absent from URL
     useEffect(() => {
       if (!params.get('minPrice')) {
         setPriceFrom(MIN);
       }
     }, [params.get('minPrice')]);
 
-    // setPriceTo
+    // Effect to reset priceTo value when maxPrice parameter is absent from URL
     useEffect(() => {
       if (!params.get('maxPrice')) {
         setPriceTo(MAX);
       }
     }, [params.get('maxPrice')]);
 
+    /**
+     * Render markers on the range track
+     * @param props - element properties
+     * @param index - marker index
+     */
     const renderMark = useCallback(
       ({ props, index }: { props: any; index: number }) => (
         <div
@@ -100,6 +123,11 @@ const PriceFilter = memo(
       [priceFrom, priceTo, STEP],
     );
 
+    /**
+     * Render range track
+     * @param props    - element properties
+     * @param children - child elements
+     */
     const renderTrack = useCallback(
       ({ props, children }: { props: any; children: any }) => (
         <div
@@ -134,6 +162,11 @@ const PriceFilter = memo(
       [priceFrom, priceTo, MIN, MAX],
     );
 
+    /**
+     * Render range "thumbs"
+     * @param props     - element properties
+     * @param isDragged - dragging state
+     */
     const renderThumb = useCallback(
       ({ props }: { props: any; isDragged: boolean }) => (
         <div
@@ -154,10 +187,12 @@ const PriceFilter = memo(
 
     return (
       <div className="relative box-border flex shrink-0 flex-col">
+        {/* Price filter title */}
         <div className="mb-5 self-start text-lg font-medium leading-8 text-[#4C4D56]">
           {filter_price_title?.value}
         </div>
 
+        {/* Input fields for minimum and maximum price */}
         <div className="mb-6 flex w-full gap-5 self-center">
           <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-1.5">
             <span className="text-base leading-8 text-slate-300">
@@ -177,11 +212,14 @@ const PriceFilter = memo(
           </div>
         </div>
 
+        {/* Display price range values */}
         <div className="flex w-full justify-between gap-5 self-center text-base leading-8 text-slate-300">
           <span>{MIN}</span>
           <span>{(MAX - MIN) / 2}</span>
           <span>{MAX}</span>
         </div>
+
+        {/* Price range selection component */}
         <div className="mb-5 flex w-full px-2">
           <Range
             label="Select your price"

@@ -1,4 +1,3 @@
-/* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
@@ -19,20 +18,25 @@ import PricePickerFilter from './components/price/PricePickerFilter';
 
 /**
  * Products filters form.
- * @param   {object}               props        - Props.
- * @param   {any}                  props.prices - prices fromTo extracted from one product.
- * @param   {string}               props.lang   - Current language shortcode.
- * @param   {IAttributeValues}     props.dict   - dictionary from server api.
- * @returns {Promise<JSX.Element>}              Filters form.
+ * @param   {object}               props            - Props.
+ * @param   {object}               props.prices     - prices fromTo extracted from one product.
+ * @param   {number}               props.prices.min - price from extracted from one product.
+ * @param   {number}               props.prices.max - price To extracted from one product.
+ * @param   {string}               props.lang       - Current language shortcode.
+ * @param   {IAttributeValues}     props.dict       - dictionary from server api.
+ * @returns {Promise<JSX.Element>}                  Filters form.
  */
 const FiltersForm = async ({
-  prices,
   lang,
   dict,
+  prices,
 }: {
-  prices: any | undefined;
   lang: string;
   dict: IAttributeValues;
+  prices: {
+    min: number;
+    max: number;
+  };
 }): Promise<JSX.Element> => {
   const pageInfo = await getPageByUrl('catalog_filters', lang);
   const data = await getSingleAttributeByMarkerSet({

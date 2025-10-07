@@ -17,7 +17,7 @@ const FilterHeader = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
     <header className="flex w-full flex-col justify-center whitespace-nowrap bg-[#F6F7F9] p-8 text-2xl font-bold text-neutral-600 max-md:px-6 max-md:py-4">
       <div className="flex justify-between gap-5">
         <HistoryBack />
-        <div className="my-auto">{open_filters_button?.value}</div>
+        <div className="my-auto">{open_filters_button?.value || 'Filter'}</div>
         <CloseModal />
       </div>
     </header>

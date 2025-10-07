@@ -5,23 +5,33 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
 
 /**
- * ResetButton.
- * @param   {object}           props      - props.
- * @param   {IAttributeValues} props.dict - dictionary from server api.
- * @returns {JSX.Element}                 ResetButton.
+ * Reset button component for clearing all filter parameters
+ * @param   {object}           props      - component props
+ * @param   {IAttributeValues} props.dict - dictionary with localized values from server API
+ * @returns {JSX.Element}                 ResetButton component
  */
 const ResetButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
+  // Get current path and navigation functions
   const pathname = usePathname();
   const { replace } = useRouter();
   const searchParams = useSearchParams();
 
+  /**
+   * Handle click event to reset all filter parameters
+   * Removes all filter-related query parameters from URL
+   */
   const handleClick = () => {
+    // Create a copy of current URL search parameters
     const params = new URLSearchParams(searchParams?.toString() || '');
+
+    // Remove all filter parameters
     params.delete('in_stock');
     params.delete('color');
     params.delete('minPrice');
     params.delete('maxPrice');
     params.delete('search');
+
+    // Navigate to the same path with cleared parameters
     replace(`${pathname}?${params.toString()}`);
   };
 

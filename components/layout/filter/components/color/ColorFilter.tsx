@@ -9,6 +9,11 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { JSX, Key } from 'react';
 import { memo, useCallback, useEffect, useState } from 'react';
 
+/**
+ * Color filter interface.
+ * @param {string} code - Color code.
+ * @param {string} name - Color name.
+ */
 type Color = {
   code: string;
   name: string;
@@ -77,7 +82,7 @@ const ColorFilter = memo(
       <div>
         <div className="mb-5 text-lg text-[#4C4D56]">{title}</div>
         <div className="mb-9 flex flex-wrap gap-1 whitespace-nowrap text-sm leading-8 text-slate-400">
-          {colors.map((color: { code: string; name: string }, index: Key) => (
+          {colors.map((color: Color, index: Key) => (
             <button
               key={index}
               className={

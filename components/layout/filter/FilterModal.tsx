@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
 import { Suspense } from 'react';
@@ -12,20 +11,25 @@ import FiltersForm from './FiltersForm';
 
 /**
  * FilterModal.
- * @param   {object}           props        - FilterModal props.
- * @param   {any}              props.prices - prices fromTo extracted from one product.
- * @param   {string}           props.lang   - Current language shortcode.
- * @param   {IAttributeValues} props.dict   - dictionary from server api.
- * @returns {JSX.Element}                   FilterModal.
+ * @param   {object}           props            - FilterModal props.
+ * @param   {string}           props.lang       - Current language shortcode.
+ * @param   {IAttributeValues} props.dict       - dictionary from server api.
+ * @param   {object}           props.prices     - prices fromTo extracted from one product.
+ * @param   {number}           props.prices.min - min price.
+ * @param   {number}           props.prices.max - max price.
+ * @returns {JSX.Element}                       FilterModal.
  */
 const FilterModal = ({
-  prices,
   lang,
   dict,
+  prices,
 }: {
-  prices: any | undefined;
   lang: string;
   dict: IAttributeValues;
+  prices: {
+    min: number;
+    max: number;
+  };
 }): JSX.Element => {
   return (
     <FilterModalAnimations>

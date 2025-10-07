@@ -20,7 +20,7 @@ import type { ImageProps } from '@/app/types/global';
  * @param   {string}              props.loading        - Image loading strategy ("lazy" | "eager").
  * @param   {React.Ref<unknown>}  props.ref            - DOM reference.
  * @param   {() => void}          props.onLoad         - Callback function when image loading completes.
- * @returns {JSX.Element}                              JSX.Element - Returns a JSX element containing the image.
+ * @returns {JSX.Element}                              Returns a JSX element containing the image.
  */
 const Image = ({
   src,
