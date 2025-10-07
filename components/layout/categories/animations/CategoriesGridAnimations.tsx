@@ -8,10 +8,12 @@ import { useRef, useState } from 'react';
 
 /**
  * Categories grid stage leaving animations.
- * @param   {object}      props           - categories grid props.
- * @param   {ReactNode}   props.children  - children ReactNode.
- * @param   {string}      props.className - categories grid wrapper className.
- * @returns {JSX.Element}                 categories grid wrapper with animations.
+ * Uses GSAP library to animate the categories grid during page transitions
+ * Specifically handles the leaving animation when navigating away from the categories page
+ * @param   {object}      props           - categories grid props
+ * @param   {ReactNode}   props.children  - children ReactNode elements to be animated
+ * @param   {string}      props.className - CSS class names for styling the categories grid wrapper
+ * @returns {JSX.Element}                 categories grid wrapper with exit animations
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const CategoriesGridAnimations = ({
@@ -21,16 +23,27 @@ const CategoriesGridAnimations = ({
   children: ReactNode;
   className: string;
 }): JSX.Element => {
+  // Get current transition stage (entering, leaving, none) from next-transition-router
   const { stage } = useTransitionState();
+
+  // Track previous stage to determine transition direction
   const [prevStage, setPrevStage] = useState<string>('');
+
+  // Reference to the categories grid element for GSAP animations
   const ref = useRef(null);
 
-  // stage leaving animations
+  /**
+   * GSAP animation effect for categories grid leaving animation
+   * Handles fade-out animation when navigating away from the categories page
+   */
   useGSAP(() => {
+    // Create GSAP timeline for animations
     const tl = gsap.timeline({
       paused: true,
     });
 
+    // Execute leaving animation only when transitioning from 'none' to 'leaving'
+    // This ensures the animation plays when navigating away from the categories page
     if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {
         autoAlpha: 0,
@@ -38,8 +51,10 @@ const CategoriesGridAnimations = ({
       tl.play();
     }
 
+    // Update previous stage to current stage for next render
     setPrevStage(stage);
 
+    // Cleanup function to kill timeline on unmount
     return () => {
       tl.kill();
     };

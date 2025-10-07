@@ -16,12 +16,14 @@ import DeliveryRow from './DeliveryRow';
 import DeliveryTableRow from './DeliveryTableRow';
 
 /**
- * Delivery table.
- * @param   {object}           props          - DeliveryTable props.
- * @param   {IProductsEntity}  props.delivery - Represents a product entity object.
- * @param   {string}           props.lang     - Current language shortcode.
- * @param   {IAttributeValues} props.dict     - dictionary from server api.
- * @returns {JSX.Element}                     JSX.Element
+ * Delivery table component that displays delivery information form
+ * Contains date, time, address fields and delivery option details
+ * Manages synchronization of delivery data with order data in Redux store
+ * @param   {object}           props          - DeliveryTable props
+ * @param   {IProductsEntity}  props.delivery - Represents a product entity object with delivery information
+ * @param   {string}           props.lang     - Current language shortcode for localization
+ * @param   {IAttributeValues} props.dict     - Dictionary with localized values from server API
+ * @returns {JSX.Element}                     Delivery table with form fields and delivery information
  */
 const DeliveryTable = ({
   delivery,
@@ -32,38 +34,53 @@ const DeliveryTable = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
+  // Redux dispatch function for updating state
   const dispatch = useAppDispatch();
+
+  // Get user data from authentication context
   const { user } = useContext(AuthContext);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deliveryData: any = useAppSelector(selectDeliveryData);
 
-  // get form by marker with RTK
+  // Fetch order form data by marker using RTK Query
   const { data } = useGetFormByMarkerQuery({
     marker: 'order',
     lang,
   });
 
+  // Extract localized placeholders from dictionary
   const {
     order_info_date_placeholder,
     order_info_time_placeholder,
     order_info_address_placeholder,
   } = dict;
 
+  // Filter form attributes to exclude 'time2' marker
   const attrs = data?.attributes.filter(
     (attr: IAttributes) => attr.marker !== 'time2',
   );
+
+  // Get registered address from user form data if available
   const addressReg =
     user?.formData.find((el) => el.marker === 'address_reg')?.value || '';
 
-  // set delivery data onChange
+  /**
+   * Effect to synchronize delivery data with order data in Redux store
+   * Updates date, time, and address information when delivery data changes
+   */
   useEffect(() => {
+    // Exit early if no delivery data is available
     if (!deliveryData) {
       return;
     }
+
+    // Extract individual data fields
     const date = deliveryData.date;
     const time = deliveryData.time;
     const address = deliveryData.address || addressReg || '';
 
+    // Dispatch action to update date information in order data
     dispatch(
       addData({
         marker: 'date',
@@ -76,6 +93,8 @@ const DeliveryTable = ({
         valid: date ? true : false,
       }),
     );
+
+    // Dispatch action to update time information in order data
     dispatch(
       addData({
         marker: 'time',
@@ -84,6 +103,8 @@ const DeliveryTable = ({
         valid: time ? true : false,
       }),
     );
+
+    // Dispatch action to update address information in order data
     dispatch(
       addData({
         marker: 'order_address',
@@ -96,13 +117,17 @@ const DeliveryTable = ({
   }, [deliveryData]);
 
   return (
+    // Wrap table with animation component for staggered entrance effects
     <TableRowAnimations
       className="table w-full border-collapse text-neutral-600"
       index={5}
     >
       <div>
+        {/* Map through form attributes to render appropriate form rows */}
         {attrs?.map((attr: IAttributes, i: Key) => {
           const marker = attr.marker;
+
+          // Render date row with calendar icon
           if (marker === 'date') {
             return (
               <DeliveryTableRow
@@ -114,6 +139,8 @@ const DeliveryTable = ({
               />
             );
           }
+
+          // Render time row with clock icon
           if (marker === 'time') {
             return (
               <DeliveryTableRow
@@ -125,6 +152,8 @@ const DeliveryTable = ({
               />
             );
           }
+
+          // Render address row with input field
           if (marker === 'order_address') {
             return (
               <AddressRow
@@ -133,8 +162,12 @@ const DeliveryTable = ({
               />
             );
           }
+
+          // Return nothing for unhandled markers
           return;
         })}
+
+        {/* Render delivery information row with price */}
         <DeliveryRow lang={lang} delivery={delivery} />
       </div>
     </TableRowAnimations>
