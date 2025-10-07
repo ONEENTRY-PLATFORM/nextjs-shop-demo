@@ -42,13 +42,13 @@ const EmptyFavorites = ({
         />
       </svg>
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
-        {empty_favorites_plug?.value}
+        {empty_favorites_plug?.value || 'Your favorite list is empty'}
       </h1>
       <Link
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"
       >
-        {go_to_shop?.value}
+        {go_to_shop?.value || 'Go to shop'}
       </Link>
     </FadeTransition>
   );

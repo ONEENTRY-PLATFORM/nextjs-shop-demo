@@ -42,8 +42,8 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
    * 2. If user is authenticated, establishes a WebSocket connection to listen for product updates
    * 3. Processes real-time notifications about product changes (price, status, etc.)
    * 4. Cleans up the WebSocket connection on component unmount
-   * @param isAuth - Authentication status of the user
-   * @param data   - Product data fetched from the API
+   * @param {boolean}           isAuth - Authentication status of the user
+   * @param {IProductsEntity[]} data   - Product data fetched from the API
    */
   useEffect(() => {
     // Update products state when new data is available

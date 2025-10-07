@@ -4,6 +4,9 @@ import CategoriesGridAnimations from './animations/CategoriesGridAnimations';
 import { CategoriesLoader } from './components/CategoriesLoader';
 import CategoryCard from './components/CategoryCard';
 
+/**
+ * Category card props.
+ */
 interface CategoryCardProps {
   title: string;
   link: string;
