@@ -16,16 +16,19 @@ const baloo = Baloo({
 });
 
 /**
- * Blocks grid card.
- * @param   {object}                      props                  - props.
- * @param   {string}                      props.marker           - text marker of block.
- * @param   {string}                      props.bgColor          - card background color.
- * @param   {string}                      props.lang             - current language shortcode.
- * @param   {object}                      props.className        - card className.
- * @param   {string}                      props.className.width  - card width.
- * @param   {string}                      props.className.height - card height.
- * @param   {number}                      props.index            - index of element in array for stagger.
- * @returns {Promise<React.ReactElement>}                        block card with animations.
+ * Blocks grid card component that renders individual content blocks in a grid layout
+ * Fetches block data by marker from API and displays it with title, image, and optional sticker
+ * Supports external and internal links with appropriate target handling
+ * Wrapped with animation component for entrance effects with staggered timing
+ * @param   {object}                      props                  - Component props
+ * @param   {string}                      props.marker           - Text marker used to identify and fetch the specific block
+ * @param   {string}                      props.bgColor          - Background color CSS class for the card
+ * @param   {string}                      props.lang             - Current language shortcode for content localization
+ * @param   {object}                      props.className        - CSS classes object for styling the card
+ * @param   {string}                      props.className.width  - Width CSS class for the card
+ * @param   {string}                      props.className.height - Height CSS class for the card
+ * @param   {number}                      props.index            - Index of element in array for staggered animations
+ * @returns {Promise<React.ReactElement>}                        Block card component with content and animations
  */
 const BlocksGridCard = async ({
   marker,
@@ -43,33 +46,40 @@ const BlocksGridCard = async ({
   };
   index: number;
 }): Promise<React.ReactElement> => {
+  // Convert language shortcode to language code for API requests
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  // Get block by marker from the API.
+
+  // Fetch block data from API using the provided marker and language
   const { block, isError } = await getBlockByMarker(marker, lang);
 
-  // extract attributeValues from block
+  // Extract attribute values from block data, prioritizing language-specific values
   const attributeValues =
     block?.attributeValues[langCode] || block?.attributeValues;
 
+  // Return error message if no attribute values are found
   if (!attributeValues) {
     return <>Block error</>;
   }
 
-  // extract data from block attributeValues
+  // Extract content data from block attribute values
   const { title = '', link = '', stickers } = attributeValues;
 
+  // Extract sticker image URL if available
   const stickerImage = stickers?.value[0]?.extended?.value?.downloadLink;
   // const quoteValue = quote?.value;
 
+  // Return error message if block data is missing or API returned an error
   if (!block || isError) {
     return <>Block error</>;
   }
 
   return (
+    // Wrap card with animation component for entrance effects
     <BlockCardAnimations
       className={`${baloo.className} block-card group relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
       index={index}
     >
+      {/* Link wrapper with dynamic target and href based on link type */}
       <Link
         target={link.value?.indexOf('http') === -1 ? '' : '_blank'}
         href={
@@ -78,21 +88,24 @@ const BlocksGridCard = async ({
         }
         className={'size-full'}
       >
+        {/* Card content container with background color and rounded corners */}
         <div
           className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}
         >
-          {/* sticker */}
+          {/* Optional sticker image positioned at top-left corner */}
           {stickerImage && (
             <div className="absolute left-3 top-3 z-10">
               <Image width={30} height={30} src={stickerImage} alt={''} />
             </div>
           )}
 
-          {/* title */}
+          {/* Block title component that renders either YouTube icon or text title */}
           <BlocksGridTitle identifier={block.identifier} title={title} />
 
-          {/* Image/Placeholder */}
+          {/* Block image component that renders optimized background image */}
           <BlocksGridImage attributeValues={attributeValues} />
+
+          {/* Radial hover effect overlay */}
           <div className="radial-hover"></div>
         </div>
       </Link>

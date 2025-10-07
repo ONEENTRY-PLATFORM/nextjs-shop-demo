@@ -6,20 +6,23 @@ import type { JSX } from 'react';
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
 /**
- * Blocks grid image.
- * @param   {object}               props                 - block props.
- * @param   {Record<string, any>}  props.attributeValues - block attributeValues.
- * @returns {Promise<JSX.Element>}                       block card with animations.
+ * Blocks grid image component that renders an optimized image for block grid items
+ * Extracts image data from attribute values and renders it with responsive sizing and hover effects
+ * Uses OptimizedImage component for better performance with lazy loading and quality optimization
+ * @param   {object}               props                 - Component props
+ * @param   {Record<string, any>}  props.attributeValues - Block attribute values containing image data
+ * @returns {Promise<JSX.Element>}                       Optimized image component with styling
  */
 const BlocksGridImage = async ({
   attributeValues,
 }: {
   attributeValues: Record<string, any>;
 }): Promise<JSX.Element> => {
-  // extract data from block attributeValues
+  // Extract title and background image data from block attribute values
   const { title = '', bg_web } = attributeValues;
 
   return (
+    // Render optimized image with responsive sizes, high priority loading and hover zoom effect
     <OptimizedImage
       src={bg_web}
       alt={title.value}

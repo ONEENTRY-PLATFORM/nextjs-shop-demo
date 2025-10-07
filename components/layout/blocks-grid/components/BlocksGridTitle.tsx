@@ -1,6 +1,7 @@
 import type React from 'react';
 import type { JSX } from 'react';
 
+// YouTube SVG icon component
 const YT = () => (
   <svg
     width="175"
@@ -30,12 +31,14 @@ const YT = () => (
 );
 
 /**
- * BlocksGridTitle.
- * @param   {object}      props             - component props.
- * @param   {string}      props.identifier  - identifier of component.
- * @param   {object}      props.title       - title of component.
- * @param   {string}      props.title.value - value of title.
- * @returns {JSX.Element}                   BlocksGridTitle with animations.
+ * BlocksGridTitle component that renders either a YouTube SVG icon or a title text
+ * Conditionally renders based on the identifier prop - shows YouTube icon for 'offer_youtube'
+ * For other identifiers, displays the title with dynamic styling based on the identifier
+ * @param   {object}      props             - Component props
+ * @param   {string}      props.identifier  - Identifier to determine which element to render
+ * @param   {object}      props.title       - Title object containing the title value
+ * @param   {string}      props.title.value - Title text value to display
+ * @returns {JSX.Element}                   Either YouTube SVG icon or title heading element
  */
 const BlocksGridTitle = ({
   identifier,
@@ -47,8 +50,10 @@ const BlocksGridTitle = ({
   };
 }): JSX.Element => {
   return identifier === 'offer_youtube' ? (
+    // Render YouTube SVG icon for 'offer_youtube' identifier
     <YT />
   ) : (
+    // Render title heading with dynamic class names based on identifier
     <h2
       className={
         'z-10 mt-auto text-2xl font-black uppercase ' +
