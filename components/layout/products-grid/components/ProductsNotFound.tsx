@@ -28,7 +28,7 @@ const ProductsNotFound = async ({
         className="mx-auto mb-5 size-20"
       />
       <div className="text-center text-lg">Products not found</div>
-      <FilterModal prices={null} lang={lang} dict={dict} />
+      <FilterModal prices={{ min: 0, max: 1 }} lang={lang} dict={dict} />
     </div>
   );
 };

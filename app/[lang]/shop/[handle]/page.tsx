@@ -66,7 +66,9 @@ export default ShopCatalogPage;
  * Pre-generation of shop page
  * @returns {Promise<Array<{ lang: string; handle: string }>>} - static paths
  */
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<
+  Array<{ lang: string; handle: string }>
+> {
   const params: Array<{ lang: string; handle: string }> = [];
   for (const lang of i18n.locales) {
     const { pages }: any = await getChildPagesByParentUrl('shop', lang);

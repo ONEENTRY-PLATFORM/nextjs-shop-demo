@@ -71,7 +71,7 @@ const ProductsGridLayout = async ({
   }
 
   const totalPages = Math.ceil(total / pagesLimit);
-  const fromToPrices = products[0]?.additional.prices;
+  const fromToPrices = products[0]?.additional.prices || { min: 0, max: 1 };
 
   return (
     <>

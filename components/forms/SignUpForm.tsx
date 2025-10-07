@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/no-undefined-types */
 'use client';
 
 import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';

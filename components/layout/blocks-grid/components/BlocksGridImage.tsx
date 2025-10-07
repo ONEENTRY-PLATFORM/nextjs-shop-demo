@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // import Image from 'next/image';
 import type React from 'react';
