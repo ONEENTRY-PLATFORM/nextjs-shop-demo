@@ -1,7 +1,10 @@
 import type React from 'react';
 import type { JSX } from 'react';
 
-// YouTube SVG icon component
+/**
+ * YouTube SVG icon component
+ * @returns {JSX.Element} JSX.Element
+ */
 const YT = () => (
   <svg
     width="175"
@@ -50,10 +53,10 @@ const BlocksGridTitle = ({
   };
 }): JSX.Element => {
   return identifier === 'offer_youtube' ? (
-    // Render YouTube SVG icon for 'offer_youtube' identifier
+    /** Render YouTube SVG icon for 'offer_youtube' identifier */
     <YT />
   ) : (
-    // Render title heading with dynamic class names based on identifier
+    /** Render title heading with dynamic class names based on identifier */
     <h2
       className={
         'z-10 mt-auto text-2xl font-black uppercase ' +

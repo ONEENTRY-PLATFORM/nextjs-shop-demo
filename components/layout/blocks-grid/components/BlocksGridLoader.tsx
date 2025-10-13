@@ -70,13 +70,13 @@ const BlocksGridLoader = (): JSX.Element => {
          * Each loader has specific dimensions and colors based on block type
          */
         blocks.map((block, index) => {
-          /* Get CSS classes for width and height based on block index */
+          /** Get CSS classes for width and height based on block index */
           const className = blocksData[index as keyof typeof blocksData] as {
             width: string;
             height: string;
           };
 
-          /* Get background color class based on block name */
+          /** Get background color class based on block name */
           const bgColor = blocksColors[block as keyof typeof blocksColors];
 
           return (

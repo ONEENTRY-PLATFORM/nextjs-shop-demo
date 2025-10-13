@@ -39,16 +39,16 @@ const ProductAnimations = memo(
     index: number;
     product: IProductsEntity;
   }): JSX.Element => {
-    // Redux dispatch function for updating state
+    /** Redux dispatch function for updating state */
     const dispatch = useAppDispatch();
 
-    // Reference to the product wrapper element for GSAP animations
+    /** Reference to the product wrapper element for GSAP animations */
     const ref = useRef(null);
 
-    // Get transition ID from Redux store to determine if product should be removed
+    /** Get transition ID from Redux store to determine if product should be removed */
     const { transitionId } = useAppSelector(getTransition);
 
-    // Extract localized information from product
+    /** Extract localized information from product */
     const { localizeInfos } = product;
 
     /**
@@ -56,10 +56,10 @@ const ProductAnimations = memo(
      * Dispatches removeProduct action and shows toast notification
      */
     const removeProductCallback = useCallback(() => {
-      // Dispatch action to remove product from cart in Redux store
+      /** Dispatch action to remove product from cart in Redux store */
       dispatch(removeProduct(product.id));
 
-      // Show toast notification about product removal
+      /** Show toast notification about product removal */
       toast('Product ' + localizeInfos.title + ' removed from cart!');
     }, [dispatch, product.id, localizeInfos.title]);
 
@@ -68,7 +68,7 @@ const ProductAnimations = memo(
      * Dispatches setCartTransition action with default productId
      */
     const setCartTransitionCallback = useCallback(() => {
-      // Dispatch action to set cart transition state in Redux store
+      /** Dispatch action to set cart transition state in Redux store */
       dispatch(
         setCartTransition({
           productId: 0,
@@ -81,17 +81,17 @@ const ProductAnimations = memo(
      * Handles staggered fade-in and slide-up animation when product is added to cart
      */
     useGSAP(() => {
-      // Exit early if ref is not available
+      /** Exit early if ref is not available */
       if (!ref.current) {
         return;
       }
 
-      // Create GSAP timeline for entrance animation
+      /** Create GSAP timeline for entrance animation */
       const tl = gsap.timeline({
         paused: true,
       });
 
-      // Set initial state (hidden and shifted down) and animate to visible state
+      /** Set initial state (hidden and shifted down) and animate to visible state */
       tl.set(ref.current, {
         opacity: 0,
         yPercent: 100,
@@ -101,10 +101,10 @@ const ProductAnimations = memo(
         delay: index / 10, // Staggered delay based on index
       });
 
-      // Play the entrance animation
+      /** Play the entrance animation */
       tl.play();
 
-      // Cleanup function to kill timeline on unmount
+      /** Cleanup function to kill timeline on unmount */
       return () => {
         tl.kill();
       };
@@ -115,15 +115,15 @@ const ProductAnimations = memo(
      * Handles fade-out animation when product is removed from cart
      */
     useGSAP(() => {
-      // Exit early if ref is not available or product is not the one being removed
+      /** Exit early if ref is not available or product is not the one being removed */
       if (!ref.current || product.id !== transitionId) {
         return;
       }
 
-      // Create GSAP timeline for removal animation
+      /** Create GSAP timeline for removal animation */
       const tl = gsap.timeline();
 
-      // Animate element to fade out with callbacks for transition and removal
+      /** Animate element to fade out with callbacks for transition and removal */
       tl.to(ref.current, {
         autoAlpha: 0,
         duration: 0.5,
@@ -131,7 +131,7 @@ const ProductAnimations = memo(
         onComplete: removeProductCallback, // Remove product from cart when animation completes
       });
 
-      // Cleanup function to kill timeline on unmount
+      /** Cleanup function to kill timeline on unmount */
       return () => {
         tl.kill();
       };

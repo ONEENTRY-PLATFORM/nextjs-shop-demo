@@ -22,7 +22,7 @@ const DeliveryRow = ({
   delivery: IProductsEntity;
 }): JSX.Element => {
   return (
-    // Wrap delivery row with animation component for staggered entrance effects
+    /** Wrap delivery row with animation component for staggered entrance effects */
     <TableRowAnimations
       className="tr h-[100px] border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
       index={10}

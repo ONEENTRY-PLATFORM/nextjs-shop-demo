@@ -46,35 +46,35 @@ const BlocksGridCard = async ({
   };
   index: number;
 }): Promise<React.ReactElement> => {
-  // Convert language shortcode to language code for API requests
+  /** Convert language shortcode to language code for API requests */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  // Fetch block data from API using the provided marker and language
+  /** Fetch block data from API using the provided marker and language */
   const { block, isError } = await getBlockByMarker(marker, lang);
 
-  // Extract attribute values from block data, prioritizing language-specific values
+  /** Extract attribute values from block data, prioritizing language-specific values */
   const attributeValues =
     block?.attributeValues[langCode] || block?.attributeValues;
 
-  // Return error message if no attribute values are found
+  /** Return error message if no attribute values are found */
   if (!attributeValues) {
     return <>Block error</>;
   }
 
-  // Extract content data from block attribute values
+  /** Extract content data from block attribute values */
   const { title = '', link = '', stickers } = attributeValues;
 
-  // Extract sticker image URL if available
+  /** Extract sticker image URL if available */
   const stickerImage = stickers?.value[0]?.extended?.value?.downloadLink;
   // const quoteValue = quote?.value;
 
-  // Return error message if block data is missing or API returned an error
+  /** Return error message if block data is missing or API returned an error */
   if (!block || isError) {
     return <>Block error</>;
   }
 
   return (
-    // Wrap card with animation component for entrance effects
+    /** Wrap card with animation component for entrance effects */
     <BlockCardAnimations
       className={`${baloo.className} block-card group relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
       index={index}

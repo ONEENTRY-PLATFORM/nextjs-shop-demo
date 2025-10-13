@@ -32,17 +32,17 @@ const TableRowAnimations = ({
    * Handles fade-in and slide-up animation when table rows are loaded
    */
   useGSAP(() => {
-    // Exit early if ref is not available
+    /** Exit early if ref is not available */
     if (!ref.current) {
       return;
     }
 
-    // Create GSAP timeline for entrance animation
+    /** Create GSAP timeline for entrance animation */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Set initial state (hidden and shifted down) and animate to visible state
+    /** Set initial state (hidden and shifted down) and animate to visible state */
     tl.set(ref.current, {
       opacity: 0,
       yPercent: 200, // Start position below the viewport
@@ -52,10 +52,10 @@ const TableRowAnimations = ({
       delay: index / 10, // Staggered delay based on index for sequential animation
     });
 
-    // Play the entrance animation
+    /** Play the entrance animation */
     tl.play();
 
-    // Cleanup function to kill timeline on unmount
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };

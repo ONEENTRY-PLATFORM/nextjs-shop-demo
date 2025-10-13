@@ -28,17 +28,17 @@ const DeliveryForm = ({
   dict: IAttributeValues;
   deliveryData: IProductsEntity;
 }): JSX.Element => {
-  // Router with transition animations for smooth navigation
+  /** Router with transition animations for smooth navigation */
   const router = useTransitionRouter();
 
   return (
-    // Main form container with submit handler for payment navigation
+    /* Main form container with submit handler for payment navigation */
     <form
       className="flex max-w-full flex-col pb-5"
       onSubmit={(e) => {
-        // Prevent default form submission behavior
+        /** Prevent default form submission behavior */
         e.preventDefault();
-        // Navigate to payment page with transition animation
+        /** Navigate to payment page with transition animation */
         router.push('/payment');
       }}
     >

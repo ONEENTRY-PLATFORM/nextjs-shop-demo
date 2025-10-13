@@ -15,12 +15,12 @@ import FilterButton from './components/FilterButton';
  * @returns {JSX.Element} Breadcrumbs component with navigation controls
  */
 const Breadcrumbs = (): JSX.Element => {
-  // Get language and dictionary data from server provider for localization
+  /** Get language and dictionary data from server provider for localization */
   const [lang] = ServerProvider('lang');
   const [dict] = ServerProvider('dict');
 
   return (
-    // Wrap breadcrumbs with animation component for entrance effects
+    /** Wrap breadcrumbs with animation component for entrance effects */
     <BreadcrumbsAnimations className="z-10 mx-auto box-border hidden w-full grow flex-col justify-center self-stretch bg-white px-4 py-2">
       {/** Main breadcrumbs container with max width constraint */}
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-row justify-between gap-5">

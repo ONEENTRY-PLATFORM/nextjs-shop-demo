@@ -27,11 +27,11 @@ const DeliveryTableRow = ({
   icon: string;
   placeholder: string;
 }): JSX.Element => {
-  // Get functions to control the drawer state from context
+  /** Get functions to control the drawer state from context */
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
 
   return (
-    // Wrap row with animation component for staggered entrance effects
+    /** Wrap row with animation component for staggered entrance effects */
     <TableRowAnimations
       className="tr h-[50px] border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
       index={7}
@@ -53,7 +53,7 @@ const DeliveryTableRow = ({
           id={'label-' + placeholder}
           name={placeholder}
           onClick={() => {
-            // Open drawer and set component to CalendarForm when input is clicked
+            /** Open drawer and set component to CalendarForm when input is clicked */
             setOpen(true);
             setComponent('CalendarForm');
           }}
@@ -72,7 +72,7 @@ const DeliveryTableRow = ({
             alt={placeholder}
             className="aspect-square w-5 cursor-pointer"
             onClick={() => {
-              // Open drawer and set component to CalendarForm when icon is clicked
+              /** Open drawer and set component to CalendarForm when icon is clicked */
               setOpen(true);
               setComponent('CalendarForm');
             }}

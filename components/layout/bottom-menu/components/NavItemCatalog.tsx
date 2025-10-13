@@ -24,7 +24,7 @@ const NavItemCatalog = ({
   lang: string;
 }): JSX.Element => {
   return (
-    // Link to the catalog/shop page with localized title attribute for accessibility
+    /** Link to the catalog/shop page with localized title attribute for accessibility */
     <Link
       href={'/' + lang + '/' + pageUrl}
       title={localizeInfos.menuTitle}

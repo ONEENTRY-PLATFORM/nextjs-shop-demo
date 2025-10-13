@@ -10,11 +10,14 @@ import type { JSX } from 'react';
  * @returns {JSX.Element} Back button component with arrow icon
  */
 const BackButton = (): JSX.Element => {
-  // Get router instance from Next.js for navigation functionality
+  /** Get router instance from Next.js for navigation functionality */
   const router = useRouter();
 
+  /**
+   * Back button with click handler to navigate to previous page in history
+   * @returns {JSX.Element} Back button with arrow icon
+   */
   return (
-    // Back button with click handler to navigate to previous page in history
     <button
       type="button"
       className="group cursor-pointer flex size-9 items-center justify-center rounded-full border border-solid border-gray-400 bg-white p-2 transition-colors duration-300 hover:border-orange-500 md:size-[40px] lg:size-[50px] lg:p-3.5"

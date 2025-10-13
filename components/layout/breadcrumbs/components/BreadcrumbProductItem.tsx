@@ -11,11 +11,11 @@ import { useGetProductByIdQuery } from '@/app/api/api/RTKApi';
  * @returns {JSX.Element}            Breadcrumb item with product title or loading state
  */
 const BreadcrumbProductItem = ({ link }: { link: string }): JSX.Element => {
-  // Fetch product data by ID using RTK Query hook
+  /** Fetch product data by ID using RTK Query hook */
   const productData = useGetProductByIdQuery({ id: Number(link) });
 
   return (
-    // Breadcrumb item container with separator and product title
+    /** Breadcrumb item container with separator and product title */
     <div>
       /{' '}
       <span className="text-orange-500">

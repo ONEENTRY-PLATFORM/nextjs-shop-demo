@@ -34,34 +34,34 @@ const DeliveryTable = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
-  // Redux dispatch function for updating state
+  /** Redux dispatch function for updating state */
   const dispatch = useAppDispatch();
 
-  // Get user data from authentication context
+  /** Get user data from authentication context */
   const { user } = useContext(AuthContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deliveryData: any = useAppSelector(selectDeliveryData);
 
-  // Fetch order form data by marker using RTK Query
+  /** Fetch order form data by marker using RTK Query */
   const { data } = useGetFormByMarkerQuery({
     marker: 'order',
     lang,
   });
 
-  // Extract localized placeholders from dictionary
+  /** Extract localized placeholders from dictionary */
   const {
     order_info_date_placeholder,
     order_info_time_placeholder,
     order_info_address_placeholder,
   } = dict;
 
-  // Filter form attributes to exclude 'time2' marker
+  /** Filter form attributes to exclude 'time2' marker */
   const attrs = data?.attributes.filter(
     (attr: IAttributes) => attr.marker !== 'time2',
   );
 
-  // Get registered address from user form data if available
+  /** Get registered address from user form data if available */
   const addressReg =
     user?.formData.find((el) => el.marker === 'address_reg')?.value || '';
 
@@ -75,12 +75,12 @@ const DeliveryTable = ({
       return;
     }
 
-    // Extract individual data fields
+    /** Extract individual data fields */
     const date = deliveryData.date;
     const time = deliveryData.time;
     const address = deliveryData.address || addressReg || '';
 
-    // Dispatch action to update date information in order data
+    /** Dispatch action to update date information in order data */
     dispatch(
       addData({
         marker: 'date',
@@ -94,7 +94,7 @@ const DeliveryTable = ({
       }),
     );
 
-    // Dispatch action to update time information in order data
+    /** Dispatch action to update time information in order data */
     dispatch(
       addData({
         marker: 'time',
@@ -104,7 +104,7 @@ const DeliveryTable = ({
       }),
     );
 
-    // Dispatch action to update address information in order data
+    /** Dispatch action to update address information in order data */
     dispatch(
       addData({
         marker: 'order_address',
@@ -117,7 +117,7 @@ const DeliveryTable = ({
   }, [deliveryData]);
 
   return (
-    // Wrap table with animation component for staggered entrance effects
+    /** Wrap table with animation component for staggered entrance effects */
     <TableRowAnimations
       className="table w-full border-collapse text-neutral-600"
       index={5}
@@ -127,7 +127,7 @@ const DeliveryTable = ({
         {attrs?.map((attr: IAttributes, i: Key) => {
           const marker = attr.marker;
 
-          // Render date row with calendar icon
+          /** Render date row with calendar icon */
           if (marker === 'date') {
             return (
               <DeliveryTableRow
@@ -140,7 +140,7 @@ const DeliveryTable = ({
             );
           }
 
-          // Render time row with clock icon
+          /** Render time row with clock icon */
           if (marker === 'time') {
             return (
               <DeliveryTableRow
@@ -153,7 +153,7 @@ const DeliveryTable = ({
             );
           }
 
-          // Render address row with input field
+          /** Render address row with input field */
           if (marker === 'order_address') {
             return (
               <AddressRow
@@ -163,7 +163,7 @@ const DeliveryTable = ({
             );
           }
 
-          // Return nothing for unhandled markers
+          /** Return nothing for unhandled markers */
           return;
         })}
 

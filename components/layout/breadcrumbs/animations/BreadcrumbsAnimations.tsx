@@ -23,16 +23,16 @@ const BreadcrumbsAnimations = ({
   children: ReactNode;
   className: string;
 }): JSX.Element => {
-  // Get current pathname from Next.js router
+  /** Get current pathname from Next.js router */
   const paths = usePathname();
 
-  // Split pathname into segments and filter out empty segments
+  /** Split pathname into segments and filter out empty segments */
   const pathNames = paths.split('/').filter((path: unknown) => path);
 
-  // Reference to the breadcrumbs wrapper element for GSAP animations
+  /** Reference to the breadcrumbs wrapper element for GSAP animations */
   const ref = useRef(null);
 
-  // Determine if breadcrumbs should be hidden (when path depth is less than 2)
+  /** Determine if breadcrumbs should be hidden (when path depth is less than 2) */
   const hidden = pathNames.length < 2;
 
   /**
@@ -40,15 +40,15 @@ const BreadcrumbsAnimations = ({
    * Handles both entrance animation (showing breadcrumbs) and exit animation (hiding breadcrumbs)
    */
   useGSAP(() => {
-    // Exit early if ref is not available
+    /** Exit early if ref is not available */
     if (!ref.current) {
       return;
     }
 
-    // Create GSAP timeline for animations
+    /** Create GSAP timeline for animations */
     const tl = gsap.timeline();
 
-    // Hide breadcrumbs when on shallow routes (less than 2 path segments)
+    /** Hide breadcrumbs when on shallow routes (less than 2 path segments) */
     if (hidden) {
       tl.to(ref.current, {
         yPercent: -100, // Move element up by 100% of its height
@@ -57,7 +57,7 @@ const BreadcrumbsAnimations = ({
         duration: 0.15, // Quick animation duration
       });
     } else {
-      // Show breadcrumbs when on deeper routes (2 or more path segments)
+      /** Show breadcrumbs when on deeper routes (2 or more path segments) */
       tl.to(ref.current, {
         display: 'flex', // Ensure display is set to flex
         yPercent: 0, // Reset vertical position
@@ -67,7 +67,7 @@ const BreadcrumbsAnimations = ({
       });
     }
 
-    // Cleanup function to kill timeline on unmount
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };

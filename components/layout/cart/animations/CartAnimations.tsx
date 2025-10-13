@@ -23,13 +23,13 @@ const CartAnimations = ({
   children,
   className,
 }: AnimationsProps): JSX.Element => {
-  // Get current transition stage (entering, leaving, none) from next-transition-router
+  /** Get current transition stage (entering, leaving, none) from next-transition-router */
   const { stage } = useTransitionState();
 
-  // Track previous stage to determine transition direction
+  /** Track previous stage to determine transition direction */
   const [prevStage, setPrevStage] = useState<string>('');
 
-  // Reference to the cart wrapper element for GSAP animations
+  /** Reference to the cart wrapper element for GSAP animations */
   const ref = useRef(null);
 
   /**
@@ -38,11 +38,11 @@ const CartAnimations = ({
    * Animates product elements, table rows and total amount section
    */
   useGSAP(() => {
-    // Create GSAP timeline with reverse complete callback
+    /** Create GSAP timeline with reverse complete callback */
     const tl = gsap.timeline({
       paused: true,
       onReverseComplete: () => {
-        // Reset product elements to initial state after reverse animation completes
+        /** Reset product elements to initial state after reverse animation completes */
         gsap.set(productElements, {
           autoAlpha: 0,
           yPercent: 100,
@@ -50,57 +50,59 @@ const CartAnimations = ({
       },
     });
 
-    // Check if elements exist before creating animation
-    // Get product elements with 'product-in-cart' class
+    /**
+     * Check if elements exist before creating animation
+     * Get product elements with 'product-in-cart' class
+     */
     const productElements = ref.current
       ? (ref.current as HTMLElement).querySelectorAll('.product-in-cart')
       : [];
 
-    // Get table row elements with 'tr' class
+    /** Get table row elements with 'tr' class */
     const trElements = ref.current
       ? (ref.current as HTMLElement).querySelectorAll('.tr')
       : [];
 
-    // Get total amount element with 'total' id
+    /** Get total amount element with 'total' id */
     const totalElement = ref.current
       ? (ref.current as HTMLElement).querySelectorAll('#total')
       : [];
 
-    // Only create timeline if elements exist
+    /** Only create timeline if elements exist */
     if (
       productElements.length > 0 ||
       trElements.length > 0 ||
       totalElement.length > 0
     ) {
-      // Set initial state for all elements (hidden and shifted down)
+      /** Set initial state for all elements (hidden and shifted down) */
       tl.set([productElements, trElements, totalElement], {
         autoAlpha: 0,
         yPercent: 100,
       })
-        // Animate product elements with staggered delay
+        /** Animate product elements with staggered delay */
         .to(productElements, {
           autoAlpha: 1,
           yPercent: 0,
           stagger: 0.1,
           delay: 0.35,
         })
-        // Animate table rows and total element
+        /** Animate table rows and total element */
         .to([trElements, totalElement], {
           autoAlpha: 1,
           yPercent: 0,
           stagger: 0.1,
         });
 
-      // Execute leaving animation when transitioning from 'none' to 'leaving'
+      /** Execute leaving animation when transitioning from 'none' to 'leaving' */
       if (stage === 'leaving' && prevStage === 'none') {
         tl.reverse(1.2);
       }
 
-      // Update previous stage to current stage for next render
+      /** Update previous stage to current stage for next render */
       setPrevStage(stage);
     }
 
-    // Cleanup function to kill timeline on unmount
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };

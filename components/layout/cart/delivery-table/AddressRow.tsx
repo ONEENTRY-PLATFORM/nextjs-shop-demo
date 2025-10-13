@@ -20,16 +20,16 @@ import TableRowAnimations from '../animations/TableRowAnimations';
  * @returns {JSX.Element}                   Address row with input field and animations
  */
 const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
-  // Redux dispatch function for updating state
+  /** Redux dispatch function for updating state */
   const dispatch = useAppDispatch();
 
-  // Get user data from authentication context
+  /** Get user data from authentication context */
   const { user } = useContext(AuthContext);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deliveryData: any = useAppSelector(selectDeliveryData);
 
-  // Get registered address from user form data if available
+  /** Get registered address from user form data if available */
   const addressReg =
     user?.formData.find((el) => el.marker === 'address_reg')?.value || '';
 
@@ -38,10 +38,10 @@ const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
    * Updates the order address in Redux store when delivery data changes
    */
   useEffect(() => {
-    // Determine the address value to use (deliveryData.address, registered address, or empty string)
+    /** Determine the address value to use (deliveryData.address, registered address, or empty string) */
     const address = deliveryData?.address || addressReg || '';
 
-    // Dispatch action to update order address data in Redux store
+    /** Dispatch action to update order address data in Redux store */
     dispatch(
       addData({
         marker: 'order_address',
@@ -54,7 +54,7 @@ const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
   }, [deliveryData]);
 
   return (
-    // Wrap row with animation component for staggered entrance effects
+    /* Wrap row with animation component for staggered entrance effects */
     <TableRowAnimations
       className="tr h-[50px] -mb-[1px] border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
       index={7}

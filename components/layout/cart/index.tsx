@@ -38,22 +38,22 @@ const CartPage = ({
   dict: IAttributeValues;
   deliveryData: IProductsEntity;
 }): JSX.Element => {
-  // Initialize Redux dispatch function
+  /** Initialize Redux dispatch function */
   const dispatch = useAppDispatch();
-  // Get authentication status from context
+  /** Get authentication status from context */
   const { isAuth } = useContext(AuthContext);
-  // State to store products
+  /** State to store products */
   const [products, setProducts] = useState<IProductsEntity[]>([]);
 
-  // Get products data from Redux cart slice
+  /** Get products data from Redux cart slice */
   const productsCartData = useAppSelector(selectCartData) as IProducts[];
 
-  // Fetch products by IDs using a custom query hook
+  /** Fetch products by IDs using a custom query hook */
   const { data, isLoading } = useGetProductsByIdsQuery({
     items: productsCartData.map((p) => p.id.toString()).toString(),
   });
 
-  // Add delivery data to the cart
+  /** Add delivery data to the cart */
   useEffect(() => {
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
@@ -61,13 +61,13 @@ const CartPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryData]);
 
-  // Add fetched products to the cart slice
+  /** Add fetched products to the cart slice */
   useEffect(() => {
     if (data) {
       setProducts(data);
       dispatch(addProductsToCart(data));
       if (isAuth) {
-        // Connect to WebSocket if authenticated
+        /** Connect to WebSocket if authenticated */
         const ws = api.WS.connect();
         if (ws) {
           ws.on('notification', async (res) => {
@@ -85,7 +85,7 @@ const CartPage = ({
                 10,
               );
 
-              // Update product price and status on receiving a notification
+              /** Update product price and status on receiving a notification */
               setProducts((prevProducts) => {
                 const newProducts = [...prevProducts];
                 if (index !== -1 && prevProducts[index]) {

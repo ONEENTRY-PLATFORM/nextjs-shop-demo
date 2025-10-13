@@ -27,7 +27,7 @@ const BottomMobileMenu = async (): Promise<JSX.Element> => {
   const { menu, isError } = await getMenuByMarker('bottom_web', lang);
 
   return (
-    // Fixed position container at the bottom of the screen for mobile navigation
+    /** Fixed position container at the bottom of the screen for mobile navigation */
     <div className="fixed bottom-0 z-50 my-auto hidden h-[60px] w-full items-center justify-between gap-10 bg-white p-4 max-xs:flex">
       {/** Render navigation items if menu data is available and valid, otherwise show loader */}
       {!isError && menu && Array.isArray(menu.pages) ? (
