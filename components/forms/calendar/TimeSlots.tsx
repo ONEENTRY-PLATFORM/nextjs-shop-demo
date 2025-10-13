@@ -4,7 +4,8 @@ import React from 'react';
 import TimeSlot from './TimeSlot';
 
 /**
- * Time slots grid.
+ * Time slots grid component for displaying available time slots in a grid layout.
+ * Renders a grid of TimeSlot components based on the provided time slots data.
  * @param   {object}                                 props             - Component props.
  * @param   {Array<object>}                          props.timeSlots   - Array of time slots. Each time slot is an object with time and isSelected properties.
  * @param   {string}                                 props.currentTime - Current time. It is used to highlight the currently selected time slot.
@@ -25,15 +26,25 @@ const TimeSlots = ({
   setTime: Dispatch<React.SetStateAction<string>>;
 }): JSX.Element => {
   return (
+    /**
+     * Container for time slots grid
+     * Uses CSS Grid to arrange time slots in a 4x4 layout with specific styling
+     */
     <div className="mx-auto mb-5 grid max-w-[320px] grid-cols-4 grid-rows-4 gap-2.5 rounded-3xl bg-white text-base font-bold tracking-wide text-orange-500">
-      {timeSlots.map((slot, index) => (
-        <TimeSlot
-          key={index}
-          slot={slot}
-          currentTime={currentTime}
-          setTime={setTime}
-        />
-      ))}
+      {
+        /**
+         * Map through time slots and render TimeSlot component for each
+         * Passes down slot data, current time, and setTime function to each TimeSlot
+         */
+        timeSlots.map((slot, index) => (
+          <TimeSlot
+            key={index}
+            slot={slot}
+            currentTime={currentTime}
+            setTime={setTime}
+          />
+        ))
+      }
     </div>
   );
 };

@@ -11,7 +11,8 @@ import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
 
 /**
- * FormInput.
+ * FormInput component for rendering various types of form fields.
+ * Handles text inputs, textareas, select dropdowns, and password fields with show/hide functionality.
  * @param   {object}              field               - Field properties.
  * @param   {string}              field.value         - Field value.
  * @param   {string}              field.marker        - Field marker.
@@ -32,11 +33,23 @@ const FormInput = (field: {
   localizeInfos?: Record<string, any>;
 }): JSX.Element => {
   const { localizeInfos } = field;
+
+  /* State for storing the current value of the input field */
   const [value, setValue] = useState<string>(field.value || '');
+
+  /* State for storing the type of the input field (e.g., text, password) */
   const [type, setType] = useState<string>('');
+
+  /* Redux dispatch function for updating form field values in the store */
   const dispatch = useAppDispatch();
+
+  /* Validation state (currently always true) */
   const valid = true;
 
+  /**
+   * Determine the field type based on marker or provided type
+   * Special handling for email and password fields
+   */
   const fieldType = (FormFieldsEnum as unknown as FormFieldsEnum)[
     field?.marker?.indexOf('password') !== -1
       ? 'password'
@@ -45,8 +58,10 @@ const FormInput = (field: {
         : (field.type as any)
   ];
 
+  /* Check if the field is required based on validators */
   const required = field?.validators?.['requiredValidator']?.strict || false;
 
+  /* Effect to update the Redux store when field value or validation state changes */
   useEffect(() => {
     dispatch(
       addField({
@@ -59,21 +74,24 @@ const FormInput = (field: {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, valid]);
 
+  /* Effect to set the input type when fieldType changes */
   useEffect(() => {
     setType(fieldType || 'text');
   }, [fieldType]);
 
+  /* Return empty element if field or type is not defined */
   if (!field || !type) {
     return <></>;
   }
 
   return (
     <FormFieldAnimations index={field.index as number} className="input-group">
+      {/* Label for the form field * Shows an asterisk if the field is required */}
       <label htmlFor={field.marker} className="text-gray-400">
         {localizeInfos?.title}{' '}
         {required && <span className="text-red-500">*</span>}
       </label>
-      {/* inputType select */}
+      {/* Render select dropdown for list type fields */}
       {type === 'list' && (
         <select
           id={field.marker}
@@ -108,7 +126,7 @@ const FormInput = (field: {
           )}
         </select>
       )}
-      {/* inputType textarea */}
+      {/* Render textarea for textarea type fields */}
       {type === 'textarea' && (
         <textarea
           id={field.marker}
@@ -119,7 +137,7 @@ const FormInput = (field: {
           value={value}
         />
       )}
-      {/* inputType text/password/email... */}
+      {/* Render standard input for all other field types text/password/email... */}
       {type !== 'textarea' && type !== 'list' && (
         <input
           type={type}
@@ -134,7 +152,7 @@ const FormInput = (field: {
           value={value}
         />
       )}
-      {/* password button */}
+      {/* Render password visibility toggle button for password fields */}
       {fieldType === 'password' && (
         <button
           onClick={(e) => {

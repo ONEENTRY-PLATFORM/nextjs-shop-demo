@@ -18,21 +18,42 @@ import CalendarAnimations from './animations/CalendarAnimations';
 import TimeSlots from './calendar/TimeSlots';
 
 /**
- * Calendar form.
+ * Calendar form component for selecting delivery date and time.
  * @param   {object}      props      - Component props.
  * @param   {string}      props.lang - Current language shortcode.
  * @returns {JSX.Element}            Calendar form.
  */
 const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
+  /**
+   * Redux dispatch function for updating store
+   */
   const dispatch = useAppDispatch();
+
+  /**
+   * Context for controlling drawer transition animations
+   */
   const { setTransition } = useContext(OpenDrawerContext);
+
+  /**
+   * Delivery data from Redux store including current date and time selection
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deliveryData: any = useAppSelector(selectDeliveryData);
 
+  /**
+   * State for storing selected delivery date
+   */
   const [date, setDate] = useState<Date>(new Date(deliveryData?.date));
+
+  /**
+   * State for storing selected delivery time
+   */
   const [time, setTime] = useState<string>(deliveryData?.time);
 
-  // Apply date to CartSlice
+  /**
+   * Handler function for applying selected date and time
+   * Updates the delivery data in Redux store and closes the drawer
+   */
   const onApplyHandle = () => {
     dispatch(
       setDeliveryData({

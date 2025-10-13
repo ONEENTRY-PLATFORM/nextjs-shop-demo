@@ -3,10 +3,11 @@ import type { JSX } from 'react';
 import React from 'react';
 
 /**
- * Social SignIn button.
+ * Social SignIn button component for OAuth provider login options.
+ * Renders a button with an icon representing a social login provider.
  * @param   {object}      props          - Component props.
- * @param   {string}      props.imageSrc - icon url.
- * @param   {string}      props.alt      - image alt text.
+ * @param   {string}      props.imageSrc - Icon URL for the social provider.
+ * @param   {string}      props.alt      - Alt text for the icon image.
  * @returns {JSX.Element}                Social SignIn button component.
  */
 const SocialSignInButton = ({
@@ -17,6 +18,10 @@ const SocialSignInButton = ({
   alt: string;
 }): JSX.Element => {
   return (
+    /**
+     * Button element for social sign in
+     * Uses type="button" to prevent form submission
+     */
     <button
       type="button"
       className="relative box-border flex shrink-0 flex-col"

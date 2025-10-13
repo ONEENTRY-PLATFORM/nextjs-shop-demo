@@ -4,10 +4,11 @@ import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimatio
 import Spinner from '@/components/shared/Spinner';
 
 /**
- * Form submit button.
+ * Form submit button component.
+ * Renders a styled submit button with loading state indication.
  * @param   {object}      props           - Form submit button props.
- * @param   {string}      props.title     - button title.
- * @param   {boolean}     props.isLoading - loading state.
+ * @param   {string}      props.title     - Button title text.
+ * @param   {boolean}     props.isLoading - Loading state indicator.
  * @param   {number}      props.index     - Index of element for animations stagger.
  * @returns {JSX.Element}                 Form submit button.
  */
@@ -21,6 +22,12 @@ const FormSubmitButton = ({
   index: number;
 }): JSX.Element => {
   return (
+    /**
+     * Wrapper for form field animations
+     * Provides staggered animation effects based on the index prop
+     * Submit button element * Displays a spinner when isLoading is true,
+     * otherwise shows the title
+     */
     <FormFieldAnimations index={index} className="">
       <button
         // disabled={isLoading}

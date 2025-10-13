@@ -9,10 +9,10 @@ import { useAppSelector } from '@/app/store/hooks';
 
 import Loader from '../shared/Loader';
 import ErrorMessage from './inputs/ErrorMessage';
-// import FormCaptcha from './inputs/FormCaptcha';
 import FormInput from './inputs/FormInput';
-// import FormReCaptcha from './inputs/FormReCaptcha';
 import FormSubmitButton from './inputs/FormSubmitButton';
+// import FormCaptcha from './inputs/FormCaptcha';
+// import FormReCaptcha from './inputs/FormReCaptcha';
 
 /**
  * ContactUs form.
@@ -25,28 +25,52 @@ const ContactUsForm = memo(
   ({ className, lang }: { className?: string; lang: string }): JSX.Element => {
     // const [token, setToken] = useState<string | null>();
     // const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
+    /**
+     * Loading state for form submission
+     */
     const [loading, setLoading] = useState<boolean>(false);
+
+    /**
+     * Error state for form submission errors
+     */
     const [error, setError] = useState<string>('');
 
-    // Get form by marker with RTK
+    /**
+     * Fetch contact form data by marker using RTK Query
+     * This retrieves form configuration and fields from the OneEntry CMS
+     */
     const { data, isLoading } = useGetFormByMarkerQuery({
       marker: 'contact_us',
       lang,
     });
 
-    // get fields from formFieldsReducer
+    /**
+     * Get form field values from Redux store
+     * These values are updated as the user interacts with form inputs
+     */
     const fieldsData = useAppSelector(
       (state) => state.formFieldsReducer.fields,
     );
 
-    // sort fields by position
+    /**
+     * Sort form fields by position attribute
+     * This ensures fields are displayed in the correct order
+     */
     const formFields = data?.attributes
       .slice()
       .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
 
+    /**
+     * Get the first module form configuration
+     * This contains additional settings for the form submission
+     */
     const moduleFormConfig = data?.moduleFormConfigs?.[0];
 
-    // Submit form
+    /**
+     * Handle form submission
+     * Transforms form data and sends it to the OneEntry API
+     * @param {FormEvent<HTMLFormElement>} e - Form submission event
+     */
     const onSubmitFormHandle = useCallback(
       async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -58,8 +82,15 @@ const ContactUsForm = memo(
 
         // transform and send form data
         if (formFields) {
-          // transform form data
+          /**
+           * Get all form field property keys
+           */
           const propertiesArray = Object.keys(formFields);
+
+          /**
+           * Transform form data based on field types
+           * Each field is processed according to its type to create the correct data structure
+           */
           const transformedFormData = propertiesArray?.reduce((formData, i) => {
             const type = formFields[i].type;
             const marker = formFields[i].marker;
@@ -74,6 +105,9 @@ const ContactUsForm = memo(
               value: string | object;
             };
 
+            /**
+             * Handle special field types with specific data structures
+             */
             if (marker === 'spam') {
               newData = {
                 marker: marker,
@@ -124,16 +158,36 @@ const ContactUsForm = memo(
             return formData;
           }, emptyFormData);
 
-          // send form data to API
+          /**
+           * Send transformed form data to OneEntry API
+           */
           try {
             setLoading(true);
             await api.FormData.postFormsData({
+              /**
+               * Form identifier from CMS data
+               */
               formIdentifier: data?.identifier || '',
+              /**
+               * Transformed form data
+               */
               formData: transformedFormData,
+              /**
+               * Form module configuration ID
+               */
               formModuleConfigId: moduleFormConfig?.id || 0,
+              /**
+               * Module entity identifier
+               */
               moduleEntityIdentifier:
                 moduleFormConfig?.entityIdentifiers?.[0]?.id || '',
+              /**
+               * Reply-to email (not used in this form)
+               */
               replayTo: null,
+              /**
+               * Initial status of the form submission
+               */
               status: 'sent',
             });
             setLoading(false);
@@ -147,6 +201,9 @@ const ContactUsForm = memo(
       [formFields, fieldsData, data, moduleFormConfig],
     );
 
+    /**
+     * Show loader while form data is being fetched
+     */
     if (isLoading) {
       return <Loader />;
     }
@@ -161,6 +218,9 @@ const ContactUsForm = memo(
       >
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {formFields?.map((field: IAttributes, index: Key | number) => {
+            /**
+             * Render form fields based on their type
+             */
             if (field.type === 'button') {
               return (
                 <FormSubmitButton

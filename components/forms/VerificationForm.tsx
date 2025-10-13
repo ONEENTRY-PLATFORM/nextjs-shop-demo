@@ -28,20 +28,30 @@ interface VerificationFormProps extends FormProps {
 
 /**
  * VerificationForm component for handling OTP verification.
- * @param   {VerificationFormProps} props      - VerificationForm props.
- * @param   {IAttributeValues}      props.dict - dictionary from server api containing localized text.
- * @returns {JSX.Element}                      VerificationForm component.
+ * This component renders a form for users to enter a one-time password (OTP) for account verification
+ * during registration or password reset processes. It also provides functionality to resend the OTP.
+ * @param   {VerificationFormProps} props      - Component properties
+ * @param   {IAttributeValues}      props.dict - Dictionary with localized values from server API containing text for UI elements
+ * @returns {JSX.Element}                      VerificationForm component with OTP input and submission functionality
  */
 const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
+  // Router for navigation with transitions
   const router = useTransitionRouter();
+  // Redux dispatch function for updating state
   const dispatch = useAppDispatch();
+  // Authentication context for user authentication
   const { authenticate } = useContext(AuthContext);
+  // Modal context for controlling form modal state
   const { setOpen, setComponent, action } = useContext(OpenDrawerContext);
 
+  // State for managing loading status during API calls
   const [isLoading, setLoading] = useState(false);
+  // State for storing the OTP code entered by the user
   const [otp, setOtp] = useState('');
+  // State for storing error messages
   const [error, setError] = useState('');
 
+  // Extract localized text values from the dictionary
   const {
     verification,
     enter_otp_code,
@@ -50,10 +60,12 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
     verify_now_text,
   } = dict;
 
+  // Get form fields from Redux state
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
-  // set otp code to formFields reducer
+  // Set OTP code to formFields reducer when it changes
   useEffect(() => {
+    // Only dispatch if OTP has a value
     if (otp) {
       dispatch(
         addField({
@@ -69,50 +81,61 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
 
   /**
    * Submit form handle for checkCode/activateUser
+   * Processes the OTP based on the current action (registration verification or password reset)
    * @param   {FormEvent<HTMLFormElement>} e - FormEvent from form submission
    * @returns {Promise<void>}                Promise that resolves when the form submission is complete
    */
   const onSubmitHandle = async (
     e: FormEvent<HTMLFormElement>,
   ): Promise<void> => {
+    // Prevent default form submission behavior
     e.preventDefault();
+
+    // Validate OTP length before processing
     if (otp.length < 6) {
       return;
     }
 
     try {
+      // Set loading state and clear previous errors
       setLoading(true);
       setError('');
-      // check OTP code with API AuthProvider
+
+      // Check OTP code with API AuthProvider based on the current action
       if (action !== 'activateUser') {
-        // checkCode
+        // Handle password reset verification
         const result = await api.AuthProvider.checkCode(
           'email',
           fields.email_reg?.value || '',
-          'reg', // generate_code??
+          'reg', // Registration context
           otp,
         );
-        // if checkCode is ok show reset password form
+
+        // If verification is successful, show reset password form
         if (result) {
           setComponent('ResetPasswordForm');
         }
         setLoading(false);
       }
-      // activateUser with API AuthProvider
+      // Handle user activation for new registrations
       else {
-        // activateUser
+        // Activate user with the provided OTP
         const result = await api.AuthProvider.activateUser(
           'email',
           fields.email_reg?.value || '',
           otp,
         );
-        // if activate User logInUser and authenticate
+
+        // If user activation is successful, log in the user
         if (result) {
           try {
+            // Log in the user with their credentials
             await logInUser({
               login: fields.email_reg?.value || '',
               password: fields.password_reg?.value || '',
             });
+
+            // Authenticate the user and redirect to profile page
             authenticate();
             router.push('/profile');
             setOpen(false);
@@ -132,13 +155,17 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
 
   /**
    * Generate and resend verification code
+   * Requests a new OTP to be sent to the user's email
    * @returns {Promise<void>} Promise that resolves when the resend operation is complete
    */
   const onResendHandle = async (): Promise<void> => {
     try {
+      // Set loading state and clear previous errors
       setLoading(true);
       setError('');
+
       try {
+        // Request a new verification code from the API
         await api.AuthProvider.generateCode(
           'email',
           fields.email_reg?.value || '',
@@ -155,11 +182,14 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
   };
 
   return (
+    // Form animation wrapper with loading state
     <FormAnimations isLoading={isLoading}>
+      {/* OTP verification form */}
       <form
         className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
         onSubmit={(e) => onSubmitHandle(e)}
       >
+        {/* Form header with title and description */}
         <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
             {verification?.value}
@@ -169,7 +199,9 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
           </p>
         </div>
 
+        {/* OTP input section */}
         <div className="relative mb-8 box-border flex shrink-0 flex-col gap-6">
+          {/* OTP input fields component */}
           <OtpInput
             value={otp}
             onChange={setOtp}
@@ -182,8 +214,11 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
               'relative box-border flex h-[70px] min-w-[14%] flex-col rounded border border-solid border-neutral-100 bg-neutral-100 p-2.5 text-center text-2xl font-medium text-neutral-600'
             }
           />
+
+          {/* Resend code section */}
           <div className="self-end text-xs text-orange-500 max-md:mr-2.5">
             <span className="text-gray-400">{receive_otp_text?.value} </span>
+            {/* Resend button to request a new OTP */}
             <button
               className="font-bold text-orange-500"
               type="button"
@@ -194,11 +229,13 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
           </div>
         </div>
 
+        {/* Submit button for OTP verification */}
         <FormSubmitButton
           title={verify_now_text?.value}
           isLoading={isLoading}
           index={0}
         />
+        {/* Display error message if present */}
         {error && <ErrorMessage error={error} />}
       </form>
     </FormAnimations>

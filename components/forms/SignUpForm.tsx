@@ -22,38 +22,51 @@ import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
 
 /**
- * SignUp form.
- * @param   {FormProps}        props      - Form properties.
- * @param   {string}           props.lang - Current language shortcode.
- * @param   {IAttributeValues} props.dict - dictionary from server api.
- * @returns {JSX.Element}                 SignUp form component.
+ * SignUp form component that handles user registration.
+ * This component renders a registration form with fields for user information,
+ * processes form validation, and submits the data to create a new user account.
+ * It also handles post-registration flows such as automatic login for active users
+ * or OTP verification for new accounts.
+ * @param   {FormProps}        props      - Component properties
+ * @param   {string}           props.lang - Current language shortcode (e.g., 'en', 'ru')
+ * @param   {IAttributeValues} props.dict - Dictionary with localized values from server API
+ * @returns {JSX.Element}                 SignUp form component with validation and submission handling
  */
 const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
+  // State for managing loading status during form submission
   const [loading, setIsLoading] = useState<boolean>(false);
+  // State for storing error messages
   const [error, setError] = useState<string>('');
 
+  // Authentication context for user authentication
   const { authenticate } = useContext(AuthContext);
+  // Modal context for controlling form modal state
   const { setOpen, setComponent, setAction } = useContext(OpenDrawerContext);
 
+  // Extract localized text values from the dictionary
   const { sign_up_text, sign_in_text, create_account_desc } = dict;
 
-  // Get form by marker with RTK
+  // Get form by marker with RTK Query for dynamic form fields
   const { data, isLoading } = useGetFormByMarkerQuery({
     marker: 'reg',
     lang,
   });
 
-  // Get fields from formFieldsReducer
+  // Get form fields from Redux state
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
   /**
    * SignUp form submit handler.
-   * @param   {FormEvent<HTMLFormElement>} e - Form event object.
-   * @returns {Promise<void>}                Promise that resolves when the form is submitted.
+   * Validates form fields, prepares registration data, and submits to the API.
+   * Handles different post-registration flows based on user activation status.
+   * @param   {FormEvent<HTMLFormElement>} e - Form event object
+   * @returns {Promise<void>}                Promise that resolves when the form is submitted
    */
   const onSignUp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    // Prevent default form submission behavior
     e.preventDefault();
-    // Required form fields array for registration
+
+    // Required form fields array for registration validation
     const formFields = [
       'email_reg',
       'password_reg',
@@ -65,16 +78,18 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
 
     // Validate all form fields before submission
     const canSubmit = Object.keys(fields).reduce((isValid, field) => {
+      // If any field is invalid, return false
       if (!isValid) {
         return false;
       }
+      // Check if the current field is valid
       const fieldData = fields[field as keyof typeof fields];
       return fieldData ? fieldData.valid : false;
     }, true);
 
     // Process form submission only if all fields are valid
     if (canSubmit) {
-      // Prepare form data for API submission
+      // Prepare form data for API submission by mapping fields
       const formData = Object.keys(fields).reduce(
         (
           arr: Array<{
@@ -84,7 +99,9 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           }>,
           field,
         ) => {
+          // Get field value from Redux state
           const fieldValue = fields[field as keyof typeof fields];
+          // Create data structure for each field
           const candidate = {
             marker: field,
             type: 'string',
@@ -98,6 +115,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         },
         [],
       );
+
       // Add email notifications data to form
       formData.push({
         marker: 'email_notifications',
@@ -119,11 +137,15 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           phoneSMS: fields.phone_reg?.value || '',
         },
       };
+
+      // Set loading state to indicate form submission in progress
       setIsLoading(true);
 
       // Attempt to sign up user via API AuthProvider
       try {
+        // Get language code for API request
         const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+        // Submit registration data to the API
         const res = await api.AuthProvider.signUp('email', data, langCode);
 
         // Handle successful registration based on user activation status
@@ -137,11 +159,13 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         }
         // Handle inactive user requiring verification
         else if (res && !res.isActive && !typeError(res)) {
+          // Open verification form for new user activation
           setOpen(true);
           setComponent('VerificationForm');
           setAction('activateUser');
         }
 
+        // Clear previous errors
         setError('');
         // Handle API error responses
         if (typeError(res)) {
@@ -149,24 +173,30 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
+        // Set error message from exception
         setError(e.message);
       }
+      // Reset loading state after form submission
       setIsLoading(false);
     }
   };
 
   return (
+    // Form animation wrapper with loading state
     <FormAnimations isLoading={isLoading}>
+      {/* Registration form with onSubmit handler */}
       <form
         onSubmit={(e) => onSignUp(e)}
         className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
       >
+        {/* Form header with title and sign-in link */}
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="slide-up text-xl font-bold text-neutral-600 max-md:max-w-full">
             {sign_up_text?.value}
           </h2>
 
           <p className="slide-up text-xs text-gray-400 max-md:max-w-full">
+            {/* Sign-in link to switch to login form */}
             <button
               onClick={() => {
                 setComponent('SignInForm');
@@ -178,8 +208,12 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
             {create_account_desc?.value}
           </p>
         </div>
+
+        {/* Form input fields container */}
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
+          {/* Map through form attributes to render input fields */}
           {data?.attributes.map((field: IAttributes, index: Key | number) => {
+            // Exclude email notifications field from regular input rendering
             if (field.marker !== 'email_notifications') {
               return (
                 <FormInput
@@ -193,11 +227,14 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
             return;
           })}
         </div>
+
+        {/* Submit button for registration form */}
         <SubmitButton
           title={sign_up_text?.value}
           isLoading={loading || isLoading}
           index={10}
         />
+        {/* Display error message if present */}
         {error && <ErrorMessage error={error} />}
       </form>
     </FormAnimations>

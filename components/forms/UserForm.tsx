@@ -49,7 +49,7 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
     marker: 'reg',
     lang,
   });
-  console.log(data);
+  // console.log(data);
 
   // get fields from formFieldsReducer
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);

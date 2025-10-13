@@ -8,7 +8,8 @@ import { useContext, useRef } from 'react';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
- * Calendar animations.
+ * Calendar animations component for applying entrance and exit animations to calendar elements.
+ * Uses GSAP to animate calendar components as they appear or disappear in a drawer context.
  * @param   {object}      props           - Props for CalendarAnimations.
  * @param   {ReactNode}   props.children  - children ReactNode.
  * @param   {string}      props.className - CSS className of ref element.
@@ -22,24 +23,43 @@ const CalendarAnimations = ({
   children: ReactNode;
   className: string;
 }): JSX.Element => {
-  // Get open and transition states from context
+  /**
+   * Get open and transition states from the OpenDrawerContext
+   * These control the animation behavior of the calendar in the context of a drawer
+   */
   const { open, transition } = useContext(OpenDrawerContext);
-  // Reference to the DOM element for animations
+
+  /**
+   * Reference to the DOM element for animations
+   * This ref is used by GSAP to directly manipulate the DOM element
+   */
   const ref = useRef(null);
 
-  // Form transition animations
+  /**
+   * Calendar transition animations using GSAP
+   * Handles animations when the calendar is opened or closed in a drawer
+   */
   useGSAP(() => {
-    // If the reference is not set, exit early
+    /**
+     * If the reference is not set, exit early
+     * Prevents errors when the component is not yet mounted
+     */
     if (!ref.current) {
       return;
     }
 
-    // Create a new GSAP timeline and pause it initially
+    /**
+     * Create a new GSAP timeline for the calendar animations
+     * The timeline is paused initially to allow for precise control
+     */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Define animation for calendar weekdays and buttons
+    /**
+     * Define animation for calendar weekdays and buttons
+     * Targets specific calendar elements using CSS selectors for detailed animation control
+     */
     tl.fromTo(
       '.react-calendar__month-view__weekdays__weekday abbr, #modalBody > div button',
       {
@@ -54,19 +74,29 @@ const CalendarAnimations = ({
       },
     );
 
-    // Reverse or play the animation based on transition state
+    /**
+     * Reverse or play the animation based on transition state
+     * This provides different animations for opening and closing the calendar
+     */
     if (transition === 'close') {
       tl.reverse(2); // Reverse the animation over 2 seconds
     } else {
       tl.play(); // Play the animation
     }
 
+    /**
+     * Clean up function to kill the timeline
+     * Prevents memory leaks by ensuring animations are properly disposed
+     */
     return () => {
       tl.kill(); // Clean up the timeline on unmount or dependency change
     };
   }, [transition, open]); // Dependencies for re-running the animation
 
-  // Render the component with the provided className and children
+  /**
+   * Render the component with the provided className and children
+   * The ref is attached to allow GSAP to animate the element
+   */
   return (
     <div ref={ref} className={className}>
       {children}
