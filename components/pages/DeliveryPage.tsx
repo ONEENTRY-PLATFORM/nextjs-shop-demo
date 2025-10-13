@@ -5,16 +5,19 @@ import type { JSX } from 'react';
 import type { SimplePageProps } from '@/app/types/global';
 
 /**
- * DeliveryPage page.
- * @param   {object}               props      - Props for DeliveryPage.
- * @param   {IPagesEntity}         props.page - Page entity.
- * @returns {Promise<JSX.Element>}            DeliveryPage page.
+ * DeliveryPage component that displays delivery information content.
+ * This component renders the delivery information page with title and content from the CMS,
+ * providing users with details about shipping and delivery policies.
+ * @param   {object}               props      - Component properties
+ * @param   {IPagesEntity}         props.page - Page entity containing delivery information data from CMS
+ * @returns {Promise<JSX.Element>}            DeliveryPage component with title and content
  */
 const DeliveryPage = async ({
   page,
 }: SimplePageProps): Promise<JSX.Element> => {
-  // Более надежная проверка на наличие страницы
+  // More reliable check for page existence and localization information
   if (!page || !page.localizeInfos) {
+    // Fallback content if page data is not available
     return (
       <div className="flex flex-col pb-5 max-md:max-w-full">
         <h1>Delivery Information</h1>
@@ -23,14 +26,16 @@ const DeliveryPage = async ({
     );
   }
 
-  // Extract content from page localizeInfos
+  // Extract content from page localizeInfos for rendering
   const {
     localizeInfos: { title, htmlContent },
   } = page;
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
+      {/* Display page title from CMS or fallback to default */}
       <h1 className="mb-3">{title || 'Delivery Information'}</h1>
+      {/* Display page content from CMS or fallback to default text */}
       {htmlContent && htmlContent !== '' ? (
         <div className="mb-6">{parse(htmlContent)}</div>
       ) : (
