@@ -19,13 +19,13 @@ const AuthError = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
 
   return (
     <div className="flex w-full flex-col items-center">
-      {/* 401 error code display */}
+      {/** 401 error code display */}
       <h1 className="mb-6 text-6xl text-slate-700">401</h1>
-      {/* Authentication required message */}
+      {/** Authentication required message */}
       <p className="mb-6 text-2xl text-slate-700">
         {auth_required_text?.value}
       </p>
-      {/* Sign-in button to allow user authentication */}
+      {/** Sign-in button to allow user authentication */}
       <SignInButton dict={dict} />
     </div>
   );

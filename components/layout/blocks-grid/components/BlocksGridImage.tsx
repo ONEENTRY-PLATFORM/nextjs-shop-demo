@@ -1,5 +1,4 @@
 /* eslint-disable jsdoc/reject-any-type */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // import Image from 'next/image';
 import type React from 'react';
 import type { JSX } from 'react';
@@ -17,13 +16,14 @@ import OptimizedImage from '@/components/shared/OptimizedImage';
 const BlocksGridImage = async ({
   attributeValues,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   attributeValues: Record<string, any>;
 }): Promise<JSX.Element> => {
-  // Extract title and background image data from block attribute values
+  /** Extract title and background image data from block attribute values */
   const { title = '', bg_web } = attributeValues;
 
+  /** Render optimized image with responsive sizes, high priority loading and hover zoom effect */
   return (
-    // Render optimized image with responsive sizes, high priority loading and hover zoom effect
     <OptimizedImage
       src={bg_web}
       alt={title.value}

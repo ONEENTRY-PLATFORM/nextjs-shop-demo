@@ -21,7 +21,7 @@ const HistoryBack = (): JSX.Element => {
       aria-label="Go back"
       onClick={() => router.back()}
     >
-      {/* Back arrow SVG icon with hover effect */}
+      {/** Back arrow SVG icon with hover effect */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="26"

@@ -33,9 +33,9 @@ const DeliveryPage = async ({
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
-      {/* Display page title from CMS or fallback to default */}
+      {/** Display page title from CMS or fallback to default */}
       <h1 className="mb-3">{title || 'Delivery Information'}</h1>
-      {/* Display page content from CMS or fallback to default text */}
+      {/** Display page content from CMS or fallback to default text */}
       {htmlContent && htmlContent !== '' ? (
         <div className="mb-6">{parse(htmlContent)}</div>
       ) : (

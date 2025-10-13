@@ -76,7 +76,7 @@ export default function ClientProviders({
         </Suspense>
       </div>
 
-      {/* Lazy loading of animations and notifications */}
+      {/** Lazy loading of animations and notifications */}
       <Suspense fallback={null}>
         <RegisterGSAP />
         <IntroAnimations />

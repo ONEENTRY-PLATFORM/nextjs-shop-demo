@@ -184,12 +184,12 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
   return (
     // Form animation wrapper with loading state
     <FormAnimations isLoading={isLoading}>
-      {/* OTP verification form */}
+      {/** OTP verification form */}
       <form
         className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
         onSubmit={(e) => onSubmitHandle(e)}
       >
-        {/* Form header with title and description */}
+        {/** Form header with title and description */}
         <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
             {verification?.value}
@@ -199,9 +199,9 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
           </p>
         </div>
 
-        {/* OTP input section */}
+        {/** OTP input section */}
         <div className="relative mb-8 box-border flex shrink-0 flex-col gap-6">
-          {/* OTP input fields component */}
+          {/** OTP input fields component */}
           <OtpInput
             value={otp}
             onChange={setOtp}
@@ -215,10 +215,10 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
             }
           />
 
-          {/* Resend code section */}
+          {/** Resend code section */}
           <div className="self-end text-xs text-orange-500 max-md:mr-2.5">
             <span className="text-gray-400">{receive_otp_text?.value} </span>
-            {/* Resend button to request a new OTP */}
+            {/** Resend button to request a new OTP */}
             <button
               className="font-bold text-orange-500"
               type="button"
@@ -229,13 +229,13 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
           </div>
         </div>
 
-        {/* Submit button for OTP verification */}
+        {/** Submit button for OTP verification */}
         <FormSubmitButton
           title={verify_now_text?.value}
           isLoading={isLoading}
           index={0}
         />
-        {/* Display error message if present */}
+        {/** Display error message if present */}
         {error && <ErrorMessage error={error} />}
       </form>
     </FormAnimations>

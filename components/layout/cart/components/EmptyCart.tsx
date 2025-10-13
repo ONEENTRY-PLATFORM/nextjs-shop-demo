@@ -21,16 +21,16 @@ const EmptyCart = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
-  // Extract localized text values from dictionary
+  /** Extract localized text values from dictionary */
   const { empty_cart_plug, go_to_shop } = dict;
 
   return (
-    // Wrap component with fade transition animation for smooth entrance effects
+    /** Wrap component with fade transition animation for smooth entrance effects */
     <FadeTransition
       className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800"
       index={2}
     >
-      {/* Cart icon to visually represent empty cart state */}
+      {/** Cart icon to visually represent empty cart state */}
       <Image
         width={100}
         height={100}
@@ -39,12 +39,12 @@ const EmptyCart = ({
         className="mb-5 size-20 opacity-20"
       />
 
-      {/* Empty cart message from localized dictionary */}
+      {/** Empty cart message from localized dictionary */}
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
         {empty_cart_plug?.value}
       </h1>
 
-      {/* Link to continue shopping, directing user to the shop page */}
+      {/** Link to continue shopping, directing user to the shop page */}
       <Link
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"

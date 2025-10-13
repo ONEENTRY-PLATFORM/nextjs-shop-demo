@@ -184,19 +184,19 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
   return (
     // Form animation wrapper with loading state
     <FormAnimations isLoading={isLoading}>
-      {/* Registration form with onSubmit handler */}
+      {/** Registration form with onSubmit handler */}
       <form
         onSubmit={(e) => onSignUp(e)}
         className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
       >
-        {/* Form header with title and sign-in link */}
+        {/** Form header with title and sign-in link */}
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="slide-up text-xl font-bold text-neutral-600 max-md:max-w-full">
             {sign_up_text?.value}
           </h2>
 
           <p className="slide-up text-xs text-gray-400 max-md:max-w-full">
-            {/* Sign-in link to switch to login form */}
+            {/** Sign-in link to switch to login form */}
             <button
               onClick={() => {
                 setComponent('SignInForm');
@@ -209,9 +209,9 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           </p>
         </div>
 
-        {/* Form input fields container */}
+        {/** Form input fields container */}
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-          {/* Map through form attributes to render input fields */}
+          {/** Map through form attributes to render input fields */}
           {data?.attributes.map((field: IAttributes, index: Key | number) => {
             // Exclude email notifications field from regular input rendering
             if (field.marker !== 'email_notifications') {
@@ -228,13 +228,13 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           })}
         </div>
 
-        {/* Submit button for registration form */}
+        {/** Submit button for registration form */}
         <SubmitButton
           title={sign_up_text?.value}
           isLoading={loading || isLoading}
           index={10}
         />
-        {/* Display error message if present */}
+        {/** Display error message if present */}
         {error && <ErrorMessage error={error} />}
       </form>
     </FormAnimations>

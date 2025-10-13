@@ -26,7 +26,7 @@ const ApplyButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
       onClick={() => setTransition('close')}
       className="btn btn-xl btn-primary w-full"
     >
-      {/* Display localized apply button text or fallback to 'Apply' */}
+      {/** Display localized apply button text or fallback to 'Apply' */}
       {apply_button_placeholder?.value || 'Apply'}
     </button>
   );

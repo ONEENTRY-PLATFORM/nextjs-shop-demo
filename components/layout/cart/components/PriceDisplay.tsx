@@ -21,29 +21,29 @@ const PriceDisplay = ({
   originalPrice: number;
   lang: string;
 }): JSX.Element => {
-  // If neither current nor original price is available, return empty fragment
+  /** If neither current nor original price is available, return empty fragment */
   if (!currentPrice && !originalPrice) {
     return <></>;
   }
 
-  // Format current price according to the current language
+  /** Format current price according to the current language */
   const price = UsePrice({ amount: currentPrice, lang });
 
-  // Format original price according to the current language
+  /** Format original price according to the current language */
   const oldPrice = UsePrice({
     amount: originalPrice,
     lang,
   });
 
   return (
-    // Container for price display with gap between prices
+    /** Container for price display with gap between prices */
     <div className="flex gap-2.5 font-bold">
-      {/* Display current price if it's greater than 0 */}
+      {/** Display current price if it's greater than 0 */}
       {currentPrice > 0 && (
         <div className="text-lg leading-8 text-orange-500">{price}</div>
       )}
 
-      {/* Display original price with conditional styling */}
+      {/** Display original price with conditional styling */}
       <div
         className={
           'leading-8 ' +

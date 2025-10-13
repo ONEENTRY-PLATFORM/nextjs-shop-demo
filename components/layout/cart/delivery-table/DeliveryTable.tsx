@@ -123,7 +123,7 @@ const DeliveryTable = ({
       index={5}
     >
       <div>
-        {/* Map through form attributes to render appropriate form rows */}
+        {/** Map through form attributes to render appropriate form rows */}
         {attrs?.map((attr: IAttributes, i: Key) => {
           const marker = attr.marker;
 
@@ -167,7 +167,7 @@ const DeliveryTable = ({
           return;
         })}
 
-        {/* Render delivery information row with price */}
+        {/** Render delivery information row with price */}
         <DeliveryRow lang={lang} delivery={delivery} />
       </div>
     </TableRowAnimations>

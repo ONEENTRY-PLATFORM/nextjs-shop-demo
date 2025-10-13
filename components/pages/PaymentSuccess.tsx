@@ -36,9 +36,9 @@ const PaymentSuccess = async ({
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
-      {/* Display page title from CMS or fallback to default */}
+      {/** Display page title from CMS or fallback to default */}
       <h1 className="mb-3">{title || 'Payment Success'}</h1>
-      {/* Display page content from CMS if available */}
+      {/** Display page content from CMS if available */}
       {htmlContent && htmlContent !== '' && (
         <div className="mb-6">{parse(htmlContent)}</div>
       )}

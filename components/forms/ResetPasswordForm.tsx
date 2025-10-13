@@ -95,13 +95,13 @@ const ResetPasswordForm = ({
   return (
     // Form animation wrapper with loading state
     <FormAnimations isLoading={isLoading}>
-      {/* Reset password form with onSubmit handler */}
+      {/** Reset password form with onSubmit handler */}
       <form
         name="resetPasswordForm"
         className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
         onSubmit={onResetSubmit}
       >
-        {/* Form header with title and description */}
+        {/** Form header with title and description */}
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="max-w-full text-xl font-bold text-neutral-600">
             {reset_password_text?.value}
@@ -111,9 +111,9 @@ const ResetPasswordForm = ({
           </p>
         </div>
 
-        {/* Form input fields container */}
+        {/** Form input fields container */}
         <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
-          {/* Map through reset password form fields to render input components */}
+          {/** Map through reset password form fields to render input components */}
           {resetPasswordFormFields.map((field: any, index: any) => {
             return (
               <FormInput
@@ -132,13 +132,13 @@ const ResetPasswordForm = ({
           })}
         </div>
 
-        {/* Submit button for password reset form */}
+        {/** Submit button for password reset form */}
         <FormSubmitButton
           title={change_password_text?.value}
           isLoading={isLoading}
           index={10}
         />
-        {/* Display error message if present */}
+        {/** Display error message if present */}
         {isError && <ErrorMessage error={isError} />}
       </form>
     </FormAnimations>

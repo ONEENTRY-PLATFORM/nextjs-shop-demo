@@ -34,17 +34,17 @@ const ProductCard = ({
   lang: string;
   index: number;
 }): JSX.Element => {
-  // Redux dispatch function for updating state
+  /** Redux dispatch function for updating state */
   const dispatch = useAppDispatch();
 
-  // Extract data from product object for easier access
+  /** Extract data from product object for easier access */
   const {
     id,
     attributeValues: { pic, price, sale, units_product },
     localizeInfos,
   } = product;
 
-  // Get product title from localized information
+  /** Get product title from localized information */
   const title = localizeInfos?.title;
 
   /**
@@ -53,20 +53,20 @@ const ProductCard = ({
    * When unchecked, it means the user wants to exclude the product from the order
    */
   const handleCheckboxChange = () => {
-    // Dispatch action to toggle product selection state in Redux store
+    /** Dispatch action to toggle product selection state in Redux store */
     dispatch(deselectProduct(id));
   };
 
   return (
-    // Wrap product card with animation component for staggered entrance effects
+    /** Wrap product card with animation component for staggered entrance effects */
     <ProductAnimations
       className="product-in-cart"
       product={product}
       index={index}
     >
-      {/* Product information section */}
+      {/** Product information section */}
       <div className="relative flex justify-between gap-5">
-        {/* Checkbox for product selection */}
+        {/** Checkbox for product selection */}
         <div className="relative z-10 mb-auto box-border flex shrink-0 flex-row self-center overflow-hidden rounded-md">
           <input
             onChange={handleCheckboxChange}
@@ -79,7 +79,7 @@ const ProductCard = ({
           />
         </div>
 
-        {/* Product image */}
+        {/** Product image */}
         <div className="relative h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-50">
           <OptimizedImage
             width={130}
@@ -92,12 +92,12 @@ const ProductCard = ({
           />
         </div>
 
-        {/* Product details: title and price */}
+        {/** Product details: title and price */}
         <div className="flex flex-col gap-5 self-start text-neutral-600">
-          {/* Product title */}
+          {/** Product title */}
           <h2 className="text-base leading-8">{title}</h2>
 
-          {/* Price display with sale price if applicable */}
+          {/** Price display with sale price if applicable */}
           <PriceDisplay
             currentPrice={sale?.value}
             originalPrice={price?.value}
@@ -105,7 +105,7 @@ const ProductCard = ({
           />
         </div>
 
-        {/* Link to product details page */}
+        {/** Link to product details page */}
         <Link
           href={`/shop/product/` + id}
           className="absolute left-0 top-0 z-0 flex size-full"
@@ -113,9 +113,9 @@ const ProductCard = ({
         ></Link>
       </div>
 
-      {/* Product controls: quantity selector and delete button */}
+      {/** Product controls: quantity selector and delete button */}
       <div className="z-10 flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:ml-8 max-sm:flex">
-        {/* Component for selecting product quantity */}
+        {/** Component for selecting product quantity */}
         <QuantitySelector
           id={id}
           units={units_product?.value}
@@ -123,7 +123,7 @@ const ProductCard = ({
           height={42}
         />
 
-        {/* Button to remove product from cart */}
+        {/** Button to remove product from cart */}
         <DeleteButton productId={id} />
       </div>
     </ProductAnimations>

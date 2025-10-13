@@ -79,7 +79,7 @@ const BlocksGridCard = async ({
       className={`${baloo.className} block-card group relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
       index={index}
     >
-      {/* Link wrapper with dynamic target and href based on link type */}
+      {/** Link wrapper with dynamic target and href based on link type */}
       <Link
         target={link.value?.indexOf('http') === -1 ? '' : '_blank'}
         href={
@@ -88,24 +88,24 @@ const BlocksGridCard = async ({
         }
         className={'size-full'}
       >
-        {/* Card content container with background color and rounded corners */}
+        {/** Card content container with background color and rounded corners */}
         <div
           className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}
         >
-          {/* Optional sticker image positioned at top-left corner */}
+          {/** Optional sticker image positioned at top-left corner */}
           {stickerImage && (
             <div className="absolute left-3 top-3 z-10">
               <Image width={30} height={30} src={stickerImage} alt={''} />
             </div>
           )}
 
-          {/* Block title component that renders either YouTube icon or text title */}
+          {/** Block title component that renders either YouTube icon or text title */}
           <BlocksGridTitle identifier={block.identifier} title={title} />
 
-          {/* Block image component that renders optimized background image */}
+          {/** Block image component that renders optimized background image */}
           <BlocksGridImage attributeValues={attributeValues} />
 
-          {/* Radial hover effect overlay */}
+          {/** Radial hover effect overlay */}
           <div className="radial-hover"></div>
         </div>
       </Link>

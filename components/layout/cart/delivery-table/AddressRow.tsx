@@ -59,12 +59,12 @@ const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
       className="tr h-[50px] -mb-[1px] border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
       index={7}
     >
-      {/* Address label cell */}
+      {/** Address label cell */}
       <div className="td w-3/12 items-center self-stretch text-sm">
         <label htmlFor={'address'}>{placeholder}</label>
       </div>
 
-      {/* Address input field cell */}
+      {/** Address input field cell */}
       <div className="td w-8/12 px-5 text-base">
         <input
           size={40}
@@ -86,7 +86,7 @@ const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
         />
       </div>
 
-      {/* Empty cell for layout spacing */}
+      {/** Empty cell for layout spacing */}
       <div className="td w-1/12 pl-5 align-middle"></div>
     </TableRowAnimations>
   );

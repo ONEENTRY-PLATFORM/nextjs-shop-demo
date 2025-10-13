@@ -196,14 +196,14 @@ const PriceFilter = memo(
 
     return (
       <div className="relative box-border flex shrink-0 flex-col">
-        {/* Price filter title */}
+        {/** Price filter title */}
         <div className="mb-5 self-start text-lg font-medium leading-8 text-[#4C4D56]">
           {filter_price_title?.value}
         </div>
 
-        {/* Input fields for minimum and maximum price */}
+        {/** Input fields for minimum and maximum price */}
         <div className="mb-6 flex w-full gap-5 self-center">
-          {/* Minimum price input field */}
+          {/** Minimum price input field */}
           <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-1.5">
             <span className="text-base leading-8 text-slate-300">
               {price_from?.value}
@@ -212,7 +212,7 @@ const PriceFilter = memo(
               <PriceFromInput price={priceFrom} setPrice={setPriceFrom} />
             </span>
           </div>
-          {/* Maximum price input field */}
+          {/** Maximum price input field */}
           <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-1.5">
             <span className="self-start text-base leading-8 text-slate-300">
               {price_to?.value}
@@ -223,14 +223,14 @@ const PriceFilter = memo(
           </div>
         </div>
 
-        {/* Display price range values (min, mid, max) */}
+        {/** Display price range values (min, mid, max) */}
         <div className="flex w-full justify-between gap-5 self-center text-base leading-8 text-slate-300">
           <span>{MIN}</span>
           <span>{(MAX - MIN) / 2}</span>
           <span>{MAX}</span>
         </div>
 
-        {/* Price range selection component with slider */}
+        {/** Price range selection component with slider */}
         <div className="mb-5 flex w-full px-2">
           <Range
             label="Select your price"

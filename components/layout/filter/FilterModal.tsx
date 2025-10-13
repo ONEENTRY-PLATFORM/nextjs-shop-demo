@@ -40,14 +40,14 @@ const FilterModal = ({
         id="modalBody"
         className="fixed right-0 top-0 z-20 flex size-full max-h-[90vh] min-h-[90vh] flex-col overflow-auto bg-white shadow-xl md:top-[5vh] md:overflow-hidden md:rounded-l-3xl lg:h-auto lg:w-[380px]"
       >
-        {/* Display the filter header with title and close button */}
+        {/** Display the filter header with title and close button */}
         <FilterHeader dict={dict} />
-        {/* Load filter form with suspense fallback */}
+        {/** Load filter form with suspense fallback */}
         <Suspense fallback={<Loader />}>
           <FiltersForm prices={prices} lang={lang} dict={dict} />
         </Suspense>
       </div>
-      {/* Backdrop overlay for modal */}
+      {/** Backdrop overlay for modal */}
       <ModalBackdrop />
     </FilterModalAnimations>
   );

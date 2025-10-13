@@ -45,7 +45,7 @@ const ProductDetails = ({
     <>
       <h1 className="text-xl leading-6 text-neutral-600">{title}</h1>
 
-      {/* Category */}
+      {/** Category */}
       {category && (
         <p className="mt-3 text-sm leading-4 text-neutral-600">
           <Link href={'/shop/category/' + category.value}>

@@ -39,15 +39,15 @@ const CategoryCard = ({
       className={`${baloo.className} block-card group relative flex w-1/4 grow flex-col justify-center overflow-hidden rounded-3xl text-2xl font-bold text-white transition-shadow duration-500 hover:shadow-xl max-md:w-full`}
       index={index}
     >
-      {/* Link to category page with hover effects */}
+      {/** Link to category page with hover effects */}
       <Link
         href={link}
         className="relative flex size-full h-64 bg-slate-100 p-6"
       >
-        {/* Category title overlay on the image */}
+        {/** Category title overlay on the image */}
         <h2 className="z-10 mt-auto uppercase">{title}</h2>
 
-        {/* Category image with hover zoom effect */}
+        {/** Category image with hover zoom effect */}
         <OptimizedImage
           fill
           sizes="(min-width: 1024px) 66vw, 100vw"
@@ -57,7 +57,7 @@ const CategoryCard = ({
           className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-all duration-500 group-hover:scale-125"
         />
 
-        {/* Radial hover effect overlay */}
+        {/** Radial hover effect overlay */}
         <div className="radial-hover"></div>
       </Link>
     </CategoryAnimations>

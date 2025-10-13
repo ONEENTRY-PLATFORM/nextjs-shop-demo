@@ -50,14 +50,14 @@ const OrderProductsTable = ({
 
   return (
     <>
-      {/* head row */}
+      {/** head row */}
       <div className="flex border-b border-solid border-[#B0BCCE] p-2">
         <div className="w-1/2 font-bold">Product</div>
         <div className="w-1/4 font-bold">Price</div>
         <div className="w-1/4 font-bold">Quantity</div>
       </div>
 
-      {/* products row */}
+      {/** products row */}
       {actualProductsData.map((product, i) => {
         // Find the actual product by ID
         const actualProduct = actualProducts.find((p) => p.id === product.id);
@@ -89,7 +89,7 @@ const OrderProductsTable = ({
         );
       })}
 
-      {/* delivery row */}
+      {/** delivery row */}
       {hasDelivery && (
         <div className="-mt-px flex border-b border-solid border-[#B0BCCE] p-2">
           <div className="w-1/2">

@@ -21,7 +21,7 @@ const BackButton = (): JSX.Element => {
       aria-label="Go back"
       onClick={() => router.back()}
     >
-      {/* Custom SVG arrow icon pointing left with hover color transition */}
+      {/** Custom SVG arrow icon pointing left with hover color transition */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="26"

@@ -148,7 +148,7 @@ const OrdersPage = ({
     >
       <div className="orders-page">
         <div className="orders-table">
-          {/* head */}
+          {/** head */}
           <OrderRowAnimations className="w-full" index={0}>
             <div className="-mb-px flex w-full border-collapse gap-4 border-y border-[#B0BCCE] p-4 text-slate-700">
               <div className="w-1/2">

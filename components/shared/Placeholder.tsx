@@ -19,7 +19,7 @@ const Placeholder = ({ className }: { className?: string }): JSX.Element => {
         className
       }
     >
-      {/* Placeholder image - OneEntry logo */}
+      {/** Placeholder image - OneEntry logo */}
       <Image
         fill
         sizes="(min-width: 600px) 50vw, 100vw"

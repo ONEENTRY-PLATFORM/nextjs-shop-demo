@@ -117,7 +117,7 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
       <div className={'relative box-border flex w-full shrink-0 flex-col'}>
         <section className="relative mx-auto box-border flex min-h-[320px] w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
           <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
-            {/* Let's make sure products are an array before calling map */}
+            {/** Let's make sure products are an array before calling map */}
             {Array.isArray(products) && products.length > 0 ? (
               products.map((product: IProductsEntity, index: Key | number) => {
                 return (

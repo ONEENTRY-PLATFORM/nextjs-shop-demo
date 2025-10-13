@@ -99,12 +99,12 @@ export const ForgotPasswordForm = ({
   return (
     // Form animation wrapper with loading state
     <FormAnimations isLoading={isLoading}>
-      {/* Forgot password form with onSubmit handler */}
+      {/** Forgot password form with onSubmit handler */}
       <form
         className="mx-auto flex min-h-[480px] max-w-[350px] flex-col gap-4 text-xl leading-5"
         onSubmit={(e) => onSubmitFormHandle(e)}
       >
-        {/* Form header with title and description */}
+        {/** Form header with title and description */}
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
             {data.localizeInfos?.titleForSite}
@@ -114,9 +114,9 @@ export const ForgotPasswordForm = ({
           </p>
         </div>
 
-        {/* Form input fields container */}
+        {/** Form input fields container */}
         <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
-          {/* Map through form attributes to render only the email input field */}
+          {/** Map through form attributes to render only the email input field */}
           {data?.attributes.map((field: any, index: Key | number) => {
             // Only render the email registration field for password reset
             if (field.marker === 'email_reg') {
@@ -128,13 +128,13 @@ export const ForgotPasswordForm = ({
           })}
         </div>
 
-        {/* Submit button for forgot password form */}
+        {/** Submit button for forgot password form */}
         <FormSubmitButton
           index={10}
           title={send_text?.value}
           isLoading={isLoading}
         />
-        {/* Display error message if present */}
+        {/** Display error message if present */}
         {isError && <ErrorMessage error={isError} />}
       </form>
     </FormAnimations>

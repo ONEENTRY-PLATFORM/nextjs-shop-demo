@@ -45,9 +45,9 @@ const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
 
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
-      {/* Main content section with image and text */}
+      {/** Main content section with image and text */}
       <section className="flex w-full gap-5 max-md:flex-col">
-        {/* Animated image container */}
+        {/** Animated image container */}
         <SlideUpTransition
           index={3}
           className="relative w-1/5 max-lg:w-1/4 max-md:mx-auto max-md:w-full max-md:max-w-[200px]"
@@ -62,18 +62,18 @@ const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
           />
         </SlideUpTransition>
 
-        {/* Text content section */}
+        {/** Text content section */}
         <div className="ml-5 flex w-4/5 flex-col max-lg:w-3/4 max-md:ml-0 max-md:w-full">
-          {/* Main content text with animations */}
+          {/** Main content text with animations */}
           <section className="text-sm leading-5 text-neutral-600 max-md:mt-10 max-md:max-w-full">
-            {/* Page title with slide up animation */}
+            {/** Page title with slide up animation */}
             <SlideUpTransition index={4} className={''}>
               <h1 className="mb-5 text-xl font-bold leading-8 text-neutral-600">
                 {pageTitle}
               </h1>
             </SlideUpTransition>
 
-            {/* Main content data with slide up animation */}
+            {/** Main content data with slide up animation */}
             {contentData && (
               <SlideUpTransition index={5} className={''}>
                 <div className="max-md:max-w-full">{contentData}</div>
@@ -81,8 +81,8 @@ const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
             )}
           </section>
 
-          {/* List section with title and content */}
-          {/* List title with slide up animation */}
+          {/** List section with title and content */}
+          {/** List title with slide up animation */}
           {listTitle && (
             <SlideUpTransition index={6} className={''}>
               <h2 className="mt-5 text-base font-bold leading-6 text-neutral-600 max-md:mt-10">
@@ -91,7 +91,7 @@ const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
             </SlideUpTransition>
           )}
 
-          {/* List content with slide up animation */}
+          {/** List content with slide up animation */}
           {listData && (
             <SlideUpTransition index={7} className={'max-md:mt-10'}>
               <div className="mt-2.5 text-sm leading-5 text-neutral-600 max-md:max-w-full">

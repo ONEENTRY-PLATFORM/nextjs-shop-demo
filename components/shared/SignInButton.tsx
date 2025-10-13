@@ -31,7 +31,7 @@ const SignInButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
       type="button"
       className="btn btn-sm btn-o btn-o-primary mx-auto w-auto"
     >
-      {/* Display localized login text */}
+      {/** Display localized login text */}
       {log_in_text?.value}
     </button>
   );

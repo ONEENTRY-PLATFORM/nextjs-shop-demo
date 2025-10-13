@@ -19,9 +19,9 @@ const PaymentButton = ({
   text: string;
 }): JSX.Element => {
   return (
-    // Wrap button with animation component for entrance effects
+    /** Wrap button with animation component for entrance effects */
     <TableRowAnimations className={'mx-auto flex'} index={10}>
-      {/* Payment button with submit type for form submission */}
+      {/** Payment button with submit type for form submission */}
       <button
         type="submit"
         onClick={() => {}}

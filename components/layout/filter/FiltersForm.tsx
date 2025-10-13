@@ -119,11 +119,11 @@ const FiltersForm = async ({
         <Loader />
       )}
       <div className="relative mt-auto box-border flex shrink-0 flex-col gap-4">
-        {/* Render reset button */}
+        {/** Render reset button */}
         <FilterAnimations className="w-full" index={3}>
           <ResetButton dict={dict} />
         </FilterAnimations>
-        {/* Render apply button */}
+        {/** Render apply button */}
         <FilterAnimations className="w-full" index={4}>
           <ApplyButton dict={dict} />
         </FilterAnimations>

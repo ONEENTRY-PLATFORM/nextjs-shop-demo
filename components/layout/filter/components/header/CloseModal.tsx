@@ -24,7 +24,7 @@ const CloseModal = (): JSX.Element => {
         setTransition('close');
       }}
     >
-      {/* 'X' symbol for closing the modal */}
+      {/** 'X' symbol for closing the modal */}
       &#10005;
     </button>
   );

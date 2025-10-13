@@ -86,12 +86,12 @@ const FormInput = (field: {
 
   return (
     <FormFieldAnimations index={field.index as number} className="input-group">
-      {/* Label for the form field * Shows an asterisk if the field is required */}
+      {/** Label for the form field * Shows an asterisk if the field is required */}
       <label htmlFor={field.marker} className="text-gray-400">
         {localizeInfos?.title}{' '}
         {required && <span className="text-red-500">*</span>}
       </label>
-      {/* Render select dropdown for list type fields */}
+      {/** Render select dropdown for list type fields */}
       {type === 'list' && (
         <select
           id={field.marker}
@@ -126,7 +126,7 @@ const FormInput = (field: {
           )}
         </select>
       )}
-      {/* Render textarea for textarea type fields */}
+      {/** Render textarea for textarea type fields */}
       {type === 'textarea' && (
         <textarea
           id={field.marker}
@@ -137,7 +137,7 @@ const FormInput = (field: {
           value={value}
         />
       )}
-      {/* Render standard input for all other field types text/password/email... */}
+      {/** Render standard input for all other field types text/password/email... */}
       {type !== 'textarea' && type !== 'list' && (
         <input
           type={type}
@@ -152,7 +152,7 @@ const FormInput = (field: {
           value={value}
         />
       )}
-      {/* Render password visibility toggle button for password fields */}
+      {/** Render password visibility toggle button for password fields */}
       {fieldType === 'password' && (
         <button
           onClick={(e) => {

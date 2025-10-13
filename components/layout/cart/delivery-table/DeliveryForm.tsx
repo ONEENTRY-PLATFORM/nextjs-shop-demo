@@ -42,16 +42,16 @@ const DeliveryForm = ({
         router.push('/payment');
       }}
     >
-      {/* Delivery table with form fields for delivery information */}
+      {/** Delivery table with form fields for delivery information */}
       <DeliveryTable
         lang={lang}
         dict={dict}
         delivery={deliveryData as IProductsEntity}
       />
 
-      {/* Total amount and payment button section */}
+      {/** Total amount and payment button section */}
       <div id="total" className="mt-4 flex w-full flex-col">
-        {/* Display total order amount */}
+        {/** Display total order amount */}
         <TotalAmount
           lang={lang}
           dict={dict}
@@ -59,7 +59,7 @@ const DeliveryForm = ({
           className="flex self-center text-lg font-bold leading-6 text-slate-700 lg:self-end"
         />
 
-        {/* Payment button to proceed to payment page */}
+        {/** Payment button to proceed to payment page */}
         <PaymentButton
           text={dict.go_to_pay_placeholder?.value}
           className="self-end max-lg:self-center"

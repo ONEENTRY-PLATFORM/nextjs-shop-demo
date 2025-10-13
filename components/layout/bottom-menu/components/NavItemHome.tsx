@@ -24,13 +24,13 @@ const NavItemHome = ({
   lang: string;
 }): JSX.Element => {
   return (
-    // Link to the home page with localized title attribute for accessibility
+    /** Link to the home page with localized title attribute for accessibility */
     <Link
       href={'/' + lang + '/' + pageUrl}
       title={localizeInfos.menuTitle}
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
     >
-      {/* Home icon component */}
+      {/** Home icon component */}
       <HomeIcon />
     </Link>
   );

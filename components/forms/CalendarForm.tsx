@@ -86,7 +86,7 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
           type="button"
           className="btn btn-xl btn-primary mx-auto mt-auto w-[270px] max-md:mt-10"
         >
-          {/* !!! */}
+          {/** !!! */}
           Apply
         </button>
       </div>

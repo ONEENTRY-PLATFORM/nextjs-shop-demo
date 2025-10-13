@@ -15,25 +15,25 @@ import BreadcrumbItem from './BreadcrumbItem';
  * @returns {JSX.Element}            Breadcrumb trail navigation component
  */
 const BreadcrumbsTrail = ({ lang }: { lang: string }): JSX.Element => {
-  // Get current pathname from Next.js router
+  /** Get current pathname from Next.js router */
   const paths = usePathname();
 
-  // Split pathname into segments and filter out empty segments
+  /** Split pathname into segments and filter out empty segments */
   const pathNames = paths.split('/').filter((path: unknown) => path);
 
   return (
-    // Navigation container for breadcrumbs
+    /** Navigation container for breadcrumbs */
     <nav className="relative box-border flex">
-      {/* Unordered list of breadcrumb items */}
+      {/** Unordered list of breadcrumb items */}
       <ul className="flex w-full items-center gap-1.5 text-slate-300">
-        {/* Home link as the first breadcrumb item */}
+        {/** Home link as the first breadcrumb item */}
         <li>
           <Link href={'/' + lang + '/'} className=" hover:text-orange-500">
             Home
           </Link>
         </li>
 
-        {/* Map through path segments to create breadcrumb items */}
+        {/** Map through path segments to create breadcrumb items */}
         {pathNames?.map(
           (link: string, index: Key) =>
             link !== 'product' && // Exclude product path
@@ -41,7 +41,7 @@ const BreadcrumbsTrail = ({ lang }: { lang: string }): JSX.Element => {
             link !== 'fr' && // Exclude French language code
             link !== 'en' && ( // Exclude English language code
               <li key={index}>
-                {/* Breadcrumb item component with link, language and last item indicator */}
+                {/** Breadcrumb item component with link, language and last item indicator */}
                 <BreadcrumbItem
                   link={link}
                   lang={lang}

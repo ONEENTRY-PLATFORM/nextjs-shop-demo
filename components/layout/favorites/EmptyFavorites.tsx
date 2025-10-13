@@ -29,7 +29,7 @@ const EmptyFavorites = ({
       className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800"
       index={2}
     >
-      {/* Heart icon SVG to visually represent favorites */}
+      {/** Heart icon SVG to visually represent favorites */}
       <svg
         width="100"
         height="80"
@@ -45,11 +45,11 @@ const EmptyFavorites = ({
           fill="#f0f0f0"
         />
       </svg>
-      {/* Message indicating that the favorites list is empty */}
+      {/** Message indicating that the favorites list is empty */}
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
         {empty_favorites_plug?.value || 'Your favorite list is empty'}
       </h1>
-      {/* Link to shop page with localized text */}
+      {/** Link to shop page with localized text */}
       <Link
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"

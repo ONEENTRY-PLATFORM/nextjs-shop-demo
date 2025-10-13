@@ -34,7 +34,7 @@ const FooterMenuSection = async (): Promise<JSX.Element> => {
       }
     >
       <div className="relative mx-auto flex w-full max-w-(--breakpoint-xl) flex-row flex-wrap items-start justify-start gap-8 max-md:justify-start max-md:gap-8 max-sm:gap-6">
-        {/* Logo */}
+        {/** Logo */}
         <div className="max-md:w-full">
           <Link href={'/' + lang}>
             <LogoWhite />
@@ -49,13 +49,13 @@ const FooterMenuSection = async (): Promise<JSX.Element> => {
           />
         </div>
         <ContactInfo />
-        {/* quickLinks menu */}
+        {/** quickLinks menu */}
         {!quickLinks.isError && quickLinks.menu ? (
           <FooterMenu menu={quickLinks.menu as IMenusEntity} />
         ) : (
           <VerticalMenuLoader limit={6} />
         )}
-        {/* infoLinks menu */}
+        {/** infoLinks menu */}
         {!infoLinks.isError && infoLinks.menu ? (
           <FooterMenu menu={infoLinks.menu as IMenusEntity} />
         ) : (

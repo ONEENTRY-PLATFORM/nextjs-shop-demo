@@ -30,7 +30,7 @@ const NavItemCatalog = ({
       title={localizeInfos.menuTitle}
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
     >
-      {/* Catalog icon component */}
+      {/** Catalog icon component */}
       <CatalogIcon />
     </Link>
   );

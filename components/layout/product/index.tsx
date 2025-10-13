@@ -61,7 +61,7 @@ const ProductSingle = ({
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:gap-4 max-sm:flex-wrap">
-        {/* ProductImage - col-1 */}
+        {/** ProductImage - col-1 */}
         <ProductAnimations
           className="relative mb-10 flex min-h-[280px] w-[30%] grow flex-col max-md:mb-4 max-md:w-4/12 max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full"
           index={0}
@@ -69,7 +69,7 @@ const ProductSingle = ({
           <ProductImageGallery product={product} alt={productTitle} />
         </ProductAnimations>
 
-        {/* VariationsCarousel + ProductDescription - col-2 */}
+        {/** VariationsCarousel + ProductDescription - col-2 */}
         <ProductAnimations
           className="flex w-4/12 grow flex-col max-md:w-4/12 max-sm:w-full"
           index={1}
@@ -82,11 +82,11 @@ const ProductSingle = ({
             />
           </div>
 
-          {/* ProductDescription */}
+          {/** ProductDescription */}
           <ProductDescription description={attributeValues?.description} />
         </ProductAnimations>
 
-        {/* ProductDetails - col-3 */}
+        {/** ProductDetails - col-3 */}
         <ProductAnimations
           className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-4/12 max-sm:w-full"
           index={2}
@@ -95,12 +95,12 @@ const ProductSingle = ({
         </ProductAnimations>
       </div>
 
-      {/* Reviews */}
+      {/** Reviews */}
       <ProductAnimations className={''} index={3}>
         <ReviewsSection dict={dict} />
       </ProductAnimations>
 
-      {/* blocks */}
+      {/** blocks */}
       {Array.isArray(blocks) &&
         blocks.map((block: string) => {
           if (
@@ -120,7 +120,7 @@ const ProductSingle = ({
           return null;
         })}
 
-      {/* Related products */}
+      {/** Related products */}
       <ProductAnimations className={'mb-10'} index={4}>
         <RelatedItems
           block={relatedItemsBlock}

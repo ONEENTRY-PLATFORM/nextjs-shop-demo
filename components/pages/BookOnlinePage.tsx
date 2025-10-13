@@ -32,9 +32,9 @@ const BookOnlinePage = async ({
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       <div className="flex flex-col">
-        {/* Display page title from CMS or fallback to default */}
+        {/** Display page title from CMS or fallback to default */}
         <h1 className="mb-3">{localizeInfos?.title || 'Book Online'}</h1>
-        {/* Display page content from CMS or fallback to default text */}
+        {/** Display page content from CMS or fallback to default text */}
         {localizeInfos?.htmlContent ? (
           <div className="mb-6">{parse(localizeInfos.htmlContent)}</div>
         ) : (

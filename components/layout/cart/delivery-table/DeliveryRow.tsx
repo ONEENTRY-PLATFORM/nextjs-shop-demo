@@ -27,7 +27,7 @@ const DeliveryRow = ({
       className="tr h-[100px] border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
       index={10}
     >
-      {/* Delivery icon cell */}
+      {/** Delivery icon cell */}
       <div className="td w-3/12 align-middle">
         <Image
           loading="lazy"
@@ -39,15 +39,15 @@ const DeliveryRow = ({
         />
       </div>
 
-      {/* Delivery information cell with title and price */}
+      {/** Delivery information cell with title and price */}
       <div className="td w-8/12 px-5 align-middle">
         <div className="mt-2 flex flex-col self-start">
-          {/* Delivery title from localized information */}
+          {/** Delivery title from localized information */}
           <div className="mb-4 text-base max-sm:mb-2">
             {delivery?.localizeInfos?.title}
           </div>
 
-          {/* Delivery price formatted according to current language */}
+          {/** Delivery price formatted according to current language */}
           <div className="mb-2 text-xl font-bold leading-8">
             {UsePrice({
               amount: delivery?.price || 0,
@@ -57,7 +57,7 @@ const DeliveryRow = ({
         </div>
       </div>
 
-      {/* Empty cell for layout spacing */}
+      {/** Empty cell for layout spacing */}
       <div className="td w-1/12 pl-5 align-middle" />
     </TableRowAnimations>
   );

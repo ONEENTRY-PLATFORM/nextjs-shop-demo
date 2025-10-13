@@ -48,10 +48,10 @@ const ProductCard = ({
         <FavoritesButton {...product} />
       </div>
 
-      {/* ProductImage */}
+      {/** ProductImage */}
       <ProductImage attributeValues={attributeValues} alt={title} />
 
-      {/* Product Data */}
+      {/** Product Data */}
       <div className="z-10 mb-5 mt-auto flex w-full max-w-[160px] flex-col gap-2.5">
         <h2 className="text-center text-sm leading-4 text-neutral-600">
           {title}

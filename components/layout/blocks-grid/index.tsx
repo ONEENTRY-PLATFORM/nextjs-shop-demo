@@ -32,7 +32,7 @@ const BlocksGrid = async ({
     <BlocksGridAnimations
       className={'block-card relative box-border w-full shrink-0'}
     >
-      {/* Container for block cards with responsive flex layout */}
+      {/** Container for block cards with responsive flex layout */}
       <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
         {Array.isArray(blocks) ? (
           blocks.map((block, index) => {

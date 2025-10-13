@@ -22,18 +22,18 @@ const Breadcrumbs = (): JSX.Element => {
   return (
     // Wrap breadcrumbs with animation component for entrance effects
     <BreadcrumbsAnimations className="z-10 mx-auto box-border hidden w-full grow flex-col justify-center self-stretch bg-white px-4 py-2">
-      {/* Main breadcrumbs container with max width constraint */}
+      {/** Main breadcrumbs container with max width constraint */}
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-row justify-between gap-5">
-        {/* Left side navigation controls */}
+        {/** Left side navigation controls */}
         <div className="mr-auto flex gap-5">
-          {/* Back button for navigating to previous page */}
+          {/** Back button for navigating to previous page */}
           <BackButton />
 
-          {/* Breadcrumb trail showing current path */}
+          {/** Breadcrumb trail showing current path */}
           <BreadcrumbsTrail lang={lang as string} />
         </div>
 
-        {/* Right side filter toggle button */}
+        {/** Right side filter toggle button */}
         <FilterButton dict={dict as IAttributeValues} />
       </div>
     </BreadcrumbsAnimations>

@@ -20,10 +20,10 @@ import DeleteIcon from '@/components/icons/delete';
  */
 const DeleteButton = memo(
   ({ productId }: { productId: number }): JSX.Element => {
-    // Redux dispatch function for updating state
+    /** Redux dispatch function for updating state */
     const dispatch = useAppDispatch();
 
-    // Get user authentication data from context
+    /** Get user authentication data from context */
     const { user, isAuth } = useContext(AuthContext);
 
     /**
@@ -32,26 +32,26 @@ const DeleteButton = memo(
      * and unsubscribes from events for authenticated users
      */
     const handleDelete = useCallback(async () => {
-      // Set cart transition state to trigger animation
+      /** Set cart transition state to trigger animation */
       dispatch(setCartTransition({ productId: productId }));
 
-      // Remove product from cart in Redux store
+      /** Remove product from cart in Redux store */
       dispatch(removeProduct(productId));
 
-      // For authenticated users, unsubscribe from product events
+      /** For authenticated users, unsubscribe from product events */
       if (user && isAuth) {
         await onUnsubscribeEvents(productId);
       }
     }, [dispatch, productId, user, isAuth]);
 
     return (
-      // Button element with click handler to delete product
+      /** Button element with click handler to delete product */
       <button
         className="group cursor-pointer relative box-border flex size-5 shrink-0 flex-col items-center justify-center"
         aria-label="Delete item"
         onClick={handleDelete}
       >
-        {/* Delete icon component */}
+        {/** Delete icon component */}
         <DeleteIcon />
       </button>
     );

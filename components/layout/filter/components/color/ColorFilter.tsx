@@ -84,9 +84,9 @@ const ColorFilter = memo(
     if (!attributes || 'error' in attributes) {
       return (
         <div>
-          {/* Title skeleton */}
+          {/** Title skeleton */}
           <div className="mb-5 h-5 bg-slate-100">{title}</div>
-          {/* Color options skeleton */}
+          {/** Color options skeleton */}
           <div className="mb-9 flex h-5 flex-wrap gap-5 whitespace-nowrap bg-slate-100 text-sm leading-8"></div>
         </div>
       );
@@ -94,9 +94,9 @@ const ColorFilter = memo(
 
     return (
       <div>
-        {/* Filter title */}
+        {/** Filter title */}
         <div className="mb-5 text-lg text-[#4C4D56]">{title}</div>
-        {/* Color options list */}
+        {/** Color options list */}
         <div className="mb-9 flex flex-wrap gap-1 whitespace-nowrap text-sm leading-8 text-slate-400">
           {colors.map((color: Color, index: Key) => (
             // Color option button with dynamic styling based on selection state
@@ -110,14 +110,14 @@ const ColorFilter = memo(
               }
               onClick={() => handleColorChange(color.code)}
             >
-              {/* Color swatch display */}
+              {/** Color swatch display */}
               <div
                 className={'my-auto size-6 rounded-full '}
                 style={{
                   backgroundColor: color.code,
                 }}
               ></div>
-              {/* Color name label */}
+              {/** Color name label */}
               <span className="leading-6">{color.name}</span>
             </button>
           ))}
