@@ -17,14 +17,16 @@ import ColorFilter from './components/color/ColorFilter';
 import PricePickerFilter from './components/price/PricePickerFilter';
 
 /**
- * Products filters form.
- * @param   {object}               props            - Props.
- * @param   {object}               props.prices     - prices fromTo extracted from one product.
- * @param   {number}               props.prices.min - price from extracted from one product.
- * @param   {number}               props.prices.max - price To extracted from one product.
- * @param   {string}               props.lang       - Current language shortcode.
- * @param   {IAttributeValues}     props.dict       - dictionary from server api.
- * @returns {Promise<JSX.Element>}                  Filters form.
+ * Products filters form component that renders various filter options for products.
+ * This component fetches filter attributes and displays them in a sorted order
+ * based on their position settings from the CMS.
+ * @param   {object}               props            - Component properties
+ * @param   {object}               props.prices     - Price range object containing min and max values
+ * @param   {number}               props.prices.min - Minimum price extracted from products
+ * @param   {number}               props.prices.max - Maximum price extracted from products
+ * @param   {string}               props.lang       - Current language shortcode (e.g., 'en', 'ru')
+ * @param   {IAttributeValues}     props.dict       - Dictionary of attribute values from server API
+ * @returns {Promise<JSX.Element>}                  Filter form with price, color, and availability filters
  */
 const FiltersForm = async ({
   lang,
@@ -38,6 +40,7 @@ const FiltersForm = async ({
     max: number;
   };
 }): Promise<JSX.Element> => {
+  // Fetch page information for catalog filters and color attribute data
   const pageInfo = await getPageByUrl('catalog_filters', lang);
   const data = await getSingleAttributeByMarkerSet({
     setMarker: 'product',
@@ -46,7 +49,7 @@ const FiltersForm = async ({
   });
   const { isError, error, attribute } = data;
 
-  // Fixing the type error by properly casting and checking the attributeValues structure
+  // Extract and sort attribute values by position
   const attributeValues = (pageInfo.page as IPagesEntity).attributeValues;
   const sortedAttributes: Record<string, any> = sortObjectFieldsByPosition(
     attributeValues && typeof attributeValues === 'object'
@@ -59,14 +62,17 @@ const FiltersForm = async ({
       : {},
   );
 
+  // Handle error state
   if (isError) {
     return <>{error?.message}</>;
   }
 
+  // Show loader if no attributes found
   if (!sortedAttributes) {
     return <Loader />;
   }
 
+  // Get attribute keys for mapping filter components
   const attributeKeys = Object.keys(sortedAttributes);
 
   return (
@@ -76,6 +82,7 @@ const FiltersForm = async ({
     >
       {Array.isArray(attributeKeys) ? (
         attributeKeys.map((attr, index) => {
+          // Render price filter component
           if (attr === 'price_filter' && prices) {
             return (
               <FilterAnimations key={index} className="w-full" index={0}>
@@ -83,6 +90,7 @@ const FiltersForm = async ({
               </FilterAnimations>
             );
           }
+          // Render color filter component
           if (attr === 'color_filter') {
             return (
               <FilterAnimations key={index} className="w-full" index={1}>
@@ -94,6 +102,7 @@ const FiltersForm = async ({
               </FilterAnimations>
             );
           }
+          // Render availability filter component
           if (attr === 'availability_filter') {
             return (
               <FilterAnimations key={index} className="w-full" index={2}>
@@ -110,9 +119,11 @@ const FiltersForm = async ({
         <Loader />
       )}
       <div className="relative mt-auto box-border flex shrink-0 flex-col gap-4">
+        {/* Render reset button */}
         <FilterAnimations className="w-full" index={3}>
           <ResetButton dict={dict} />
         </FilterAnimations>
+        {/* Render apply button */}
         <FilterAnimations className="w-full" index={4}>
           <ApplyButton dict={dict} />
         </FilterAnimations>

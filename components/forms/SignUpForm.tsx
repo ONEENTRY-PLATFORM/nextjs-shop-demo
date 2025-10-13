@@ -53,7 +53,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
    */
   const onSignUp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    // required form fields array
+    // Required form fields array for registration
     const formFields = [
       'email_reg',
       'password_reg',
@@ -63,7 +63,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
       'email_notifications',
     ];
 
-    // check if user can submit form
+    // Validate all form fields before submission
     const canSubmit = Object.keys(fields).reduce((isValid, field) => {
       if (!isValid) {
         return false;
@@ -72,8 +72,9 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
       return fieldData ? fieldData.valid : false;
     }, true);
 
+    // Process form submission only if all fields are valid
     if (canSubmit) {
-      // prepare form data
+      // Prepare form data for API submission
       const formData = Object.keys(fields).reduce(
         (
           arr: Array<{
@@ -89,6 +90,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
             type: 'string',
             value: fieldValue ? fieldValue.value : '',
           };
+          // Include only required fields in form data
           if (formFields.includes(field)) {
             arr.push(candidate);
           }
@@ -96,11 +98,14 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         },
         [],
       );
+      // Add email notifications data to form
       formData.push({
         marker: 'email_notifications',
         type: 'string',
         value: fields.email_reg?.value || '',
       });
+
+      // Prepare sign up data structure for API call
       const data: ISignUpData = {
         formIdentifier: 'reg',
         authData: [
@@ -116,20 +121,21 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
       };
       setIsLoading(true);
 
-      // signUp with API AuthProvider
+      // Attempt to sign up user via API AuthProvider
       try {
         const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
         const res = await api.AuthProvider.signUp('email', data, langCode);
 
-        // if user active try login and authenticate
+        // Handle successful registration based on user activation status
         if (res && res.isActive) {
+          // Automatically log in and authenticate active user
           await logInUser({
             login: res.identifier,
             password: fields.password_reg?.value || '',
           });
           authenticate();
         }
-        // if user not active open Verification form with action activateUser
+        // Handle inactive user requiring verification
         else if (res && !res.isActive && !typeError(res)) {
           setOpen(true);
           setComponent('VerificationForm');
@@ -137,6 +143,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         }
 
         setError('');
+        // Handle API error responses
         if (typeError(res)) {
           setError('Error ' + res.status);
         }

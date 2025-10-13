@@ -49,6 +49,7 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
     marker: 'reg',
     lang,
   });
+  console.log(data);
 
   // get fields from formFieldsReducer
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);
@@ -130,6 +131,7 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
               (user.formData.find(
                 (item) => item.marker === field.marker,
               ) as FormDataType[]);
+
             if (field.marker !== 'email_notifications') {
               return (
                 <FormInput

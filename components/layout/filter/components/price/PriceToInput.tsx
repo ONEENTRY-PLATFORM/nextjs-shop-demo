@@ -2,11 +2,12 @@ import type { Dispatch, JSX, SetStateAction } from 'react';
 import { memo } from 'react';
 
 /**
- * PriceToInput.
- * @param   {object}                           props          - props.
- * @param   {number}                           props.price    - price value.
- * @param   {Dispatch<SetStateAction<number>>} props.setPrice - set price.
- * @returns {JSX.Element}                                     PriceToInput component.
+ * PriceToInput component that renders an input field for setting the maximum price filter.
+ * This component allows users to input a numeric value for the upper price limit in filtering.
+ * @param   {object}                           props          - Component properties
+ * @param   {number}                           props.price    - Current price value for the input
+ * @param   {Dispatch<SetStateAction<number>>} props.setPrice - State setter function to update the price value
+ * @returns {JSX.Element}                                     Input field for maximum price value
  */
 const PriceToInput = ({
   price,
@@ -16,6 +17,7 @@ const PriceToInput = ({
   setPrice: Dispatch<SetStateAction<number>>;
 }): JSX.Element => {
   return (
+    // Input field for maximum price with number type
     <input
       type="number"
       value={price}

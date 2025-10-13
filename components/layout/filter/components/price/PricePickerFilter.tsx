@@ -13,11 +13,14 @@ import PriceFromInput from './PriceFromInput';
 import PriceToInput from './PriceToInput';
 
 /**
- * Price filter component
- * @param props        - component props
- * @param props.dict   - dictionary with localized values from API
- * @param props.prices - object with minimum and maximum product prices
- * @returns            JSX.Element
+ * Price filter component that allows users to filter products by price range.
+ * This component includes a range slider and input fields for setting minimum and maximum prices.
+ * @param   {object}           props            - Component properties
+ * @param   {IAttributeValues} props.dict       - Dictionary with localized values from API
+ * @param   {object}           props.prices     - Object with minimum and maximum product prices
+ * @param   {number}           props.prices.min - Minimum price value
+ * @param   {number}           props.prices.max - Maximum price value
+ * @returns {JSX.Element}                       Price filter component with slider and input fields
  */
 const PriceFilter = memo(
   ({
@@ -30,7 +33,7 @@ const PriceFilter = memo(
       max: number;
     };
   }): JSX.Element => {
-    // Get current path and URL parameters
+    // Get current path and URL parameters for navigation
     const pathname = usePathname();
     const { replace } = useRouter();
     const searchParams = useSearchParams();
@@ -38,7 +41,7 @@ const PriceFilter = memo(
     // Create a copy of URL parameters to work with filters
     const params = new URLSearchParams(searchParams?.toString() || '');
 
-    // Extract localized values from dictionary
+    // Extract localized values from dictionary for UI labels
     const { filter_price_title, price_from, price_to } = dict;
 
     // Constants for working with price range
@@ -55,7 +58,7 @@ const PriceFilter = memo(
     );
 
     /**
-     * Handler for changing price range values
+     * Handler for changing price range values when slider is moved
      * @param {number[]} values - array of values [from, to]
      */
     const handlePriceChange = useCallback((values: number[]): void => {
@@ -65,9 +68,11 @@ const PriceFilter = memo(
 
     // Effect for updating minPrice parameter in URL when priceFrom changes
     useEffect(() => {
+      // Update URL with minPrice parameter if it differs from default minimum
       if (priceFrom && priceFrom !== MIN) {
         params.set('minPrice', priceFrom.toString());
       } else {
+        // Remove parameter if it matches default value
         params.delete('minPrice');
       }
       replace(`${pathname}?${params.toString()}`);
@@ -75,9 +80,11 @@ const PriceFilter = memo(
 
     // Effect for updating maxPrice parameter in URL when priceTo changes
     useEffect(() => {
+      // Update URL with maxPrice parameter if it differs from default maximum
       if (priceTo && priceTo !== MAX) {
         params.set('maxPrice', priceTo.toString());
       } else {
+        // Remove parameter if it matches default value
         params.delete('maxPrice');
       }
       replace(`${pathname}?${params.toString()}`);
@@ -98,9 +105,10 @@ const PriceFilter = memo(
     }, [params.get('maxPrice')]);
 
     /**
-     * Render markers on the range track
-     * @param props - element properties
-     * @param index - marker index
+     * Render markers on the range track to show price intervals
+     * @param   {object}      props - element properties
+     * @param   {number}      index - marker index
+     * @returns {JSX.Element}       Marker element with appropriate styling
      */
     const renderMark = useCallback(
       ({ props, index }: { props: any; index: number }) => (
@@ -124,9 +132,10 @@ const PriceFilter = memo(
     );
 
     /**
-     * Render range track
-     * @param props    - element properties
-     * @param children - child elements
+     * Render range track with gradient background showing selected range
+     * @param   {object}      props    - element properties
+     * @param   {any}         children - child elements
+     * @returns {JSX.Element}          Track element with background gradient
      */
     const renderTrack = useCallback(
       ({ props, children }: { props: any; children: any }) => (
@@ -163,9 +172,9 @@ const PriceFilter = memo(
     );
 
     /**
-     * Render range "thumbs"
-     * @param props     - element properties
-     * @param isDragged - dragging state
+     * Render range "thumbs" (draggable handles) for the slider
+     * @param   {object}      props - element properties
+     * @returns {JSX.Element}       Thumb element with styling
      */
     const renderThumb = useCallback(
       ({ props }: { props: any; isDragged: boolean }) => (
@@ -194,6 +203,7 @@ const PriceFilter = memo(
 
         {/* Input fields for minimum and maximum price */}
         <div className="mb-6 flex w-full gap-5 self-center">
+          {/* Minimum price input field */}
           <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-1.5">
             <span className="text-base leading-8 text-slate-300">
               {price_from?.value}
@@ -202,6 +212,7 @@ const PriceFilter = memo(
               <PriceFromInput price={priceFrom} setPrice={setPriceFrom} />
             </span>
           </div>
+          {/* Maximum price input field */}
           <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-1.5">
             <span className="self-start text-base leading-8 text-slate-300">
               {price_to?.value}
@@ -212,14 +223,14 @@ const PriceFilter = memo(
           </div>
         </div>
 
-        {/* Display price range values */}
+        {/* Display price range values (min, mid, max) */}
         <div className="flex w-full justify-between gap-5 self-center text-base leading-8 text-slate-300">
           <span>{MIN}</span>
           <span>{(MAX - MIN) / 2}</span>
           <span>{MAX}</span>
         </div>
 
-        {/* Price range selection component */}
+        {/* Price range selection component with slider */}
         <div className="mb-5 flex w-full px-2">
           <Range
             label="Select your price"

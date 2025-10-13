@@ -160,6 +160,7 @@ export const RTKApi = createApi({
         const result = await handleApiResponse(
           api.Forms.getFormByMarker(marker, langCode),
         );
+
         if (!result || (result as IError)?.statusCode) {
           return { error: result as IError };
         }
