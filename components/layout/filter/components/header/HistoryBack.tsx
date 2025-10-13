@@ -4,18 +4,24 @@ import { useRouter } from 'next/navigation';
 import type { JSX } from 'react';
 
 /**
- * History back button.
- * @returns {JSX.Element} History back button.
+ * History back button component that allows users to navigate to the previous page.
+ * This component renders a circular button with a back arrow icon that uses the router
+ * to go back in the browser history when clicked.
+ * @returns {JSX.Element} Back button with arrow icon
  */
 const HistoryBack = (): JSX.Element => {
+  // Get router instance for navigation
   const router = useRouter();
+
   return (
+    // Button wrapper with hover effects and responsive sizing
     <button
       type="button"
       className="group cursor-pointer flex size-12 items-center justify-center rounded-full border border-solid border-slate-200 bg-white transition-colors duration-200 hover:border-orange-500 max-sm:p-3 md:size-[40px] md:p-3 lg:size-[50px] lg:p-3.5"
       aria-label="Go back"
       onClick={() => router.back()}
     >
+      {/* Back arrow SVG icon with hover effect */}
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="26"

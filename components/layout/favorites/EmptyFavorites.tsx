@@ -5,11 +5,13 @@ import type { JSX } from 'react';
 import FadeTransition from '@/app/animations/FadeTransition';
 
 /**
- * Empty favorites.
- * @param   {object}           props      - Props.
- * @param   {string}           props.lang - Current language shortcode.
- * @param   {IAttributeValues} props.dict - dictionary from server api.
- * @returns {JSX.Element}                 Empty favorites page with animations.
+ * Empty favorites component that displays when a user has no favorite items.
+ * This component renders a friendly message with an icon, text, and a link to the shop
+ * to encourage users to add items to their favorites.
+ * @param   {object}           props      - Component properties
+ * @param   {string}           props.lang - Current language shortcode (e.g., 'en', 'ru')
+ * @param   {IAttributeValues} props.dict - Dictionary with localized values from server API
+ * @returns {JSX.Element}                 Empty favorites page with animations
  */
 const EmptyFavorites = ({
   lang,
@@ -18,14 +20,16 @@ const EmptyFavorites = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
-  // extract data from dict
+  // Extract localized text values from the dictionary
   const { empty_favorites_plug, go_to_shop } = dict;
 
   return (
+    // Fade transition wrapper for smooth animation when displaying the component
     <FadeTransition
       className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800"
       index={2}
     >
+      {/* Heart icon SVG to visually represent favorites */}
       <svg
         width="100"
         height="80"
@@ -41,9 +45,11 @@ const EmptyFavorites = ({
           fill="#f0f0f0"
         />
       </svg>
+      {/* Message indicating that the favorites list is empty */}
       <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
         {empty_favorites_plug?.value || 'Your favorite list is empty'}
       </h1>
+      {/* Link to shop page with localized text */}
       <Link
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"
