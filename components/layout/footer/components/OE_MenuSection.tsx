@@ -5,16 +5,27 @@ import type { JSX } from 'react';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
 /**
- * Footer section.
+ * Footer section component for displaying OneEntry information and social links.
+ * Renders social media icons, Trustpilot review section, and copyright information.
  * @returns {JSX.Element} React component.
  */
 const OEMenuSection = (): JSX.Element => {
+  /**
+   * Get dictionary data from server provider
+   * Used to display localized texts
+   */
   const [dict] = ServerProvider('dict');
 
+  /** Get current year for copyright information */
   const currentYear = new Date().getFullYear();
 
   return (
+    /**
+     * Main footer section container with black background and white text
+     * Responsive padding and full width layout
+     */
     <div className="w-full gap-3 bg-black px-5 py-11 text-center text-white max-md:max-w-full max-md:p-5">
+      {/** Social media links section. Displays Telegram, GitHub, and YouTube icons with links */}
       <div className="mx-auto mb-5 flex justify-center gap-4">
         <Link href="https://t.me/OneEntry_headlesscms" target="blank">
           <Image
@@ -47,7 +58,9 @@ const OEMenuSection = (): JSX.Element => {
           />
         </Link>
       </div>
+      {/** Main content section with three columns layout. Contains Trustpilot review, contact information, and empty column */}
       <div className="mx-auto flex max-w-(--breakpoint-xl) flex-row max-sm:flex-col">
+        {/** Trustpilot review section. Displays Trustpilot logo and 5-star rating with link to review page */}
         <div className="flex w-4/12 flex-col max-md:w-4/12 max-sm:w-full">
           <Link
             target="_blank"
@@ -72,6 +85,7 @@ const OEMenuSection = (): JSX.Element => {
             />
           </Link>
         </div>
+        {/** Contact information and copyright section. Displays CMS information, contact email, and copyright notice */}
         <div className="flex w-4/12 flex-col max-md:w-4/12 max-sm:w-full">
           <p className="mb-4 text-lg font-light">
             <b>Content management system</b> OneEntry
@@ -95,6 +109,7 @@ const OEMenuSection = (): JSX.Element => {
             </a>
           </p>
         </div>
+        {/** Empty column for layout balance. Reserved for future content or styling purposes */}
         <div className="flex w-4/12 flex-col max-md:w-4/12 max-sm:w-full"></div>
       </div>
     </div>

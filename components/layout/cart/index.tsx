@@ -22,7 +22,8 @@ import Loader from '@/components/shared/Loader';
 import DeliveryForm from './delivery-table/DeliveryForm';
 
 /**
- * Cart page component.
+ * Cart page component for displaying and managing shopping cart items.
+ * Fetches product data, handles real-time updates via WebSocket, and renders cart contents.
  * @param   {object}           props              - Cart page props.
  * @param   {string}           props.lang         - Current language shortcode.
  * @param   {IAttributeValues} props.dict         - Dictionary from server API.
@@ -38,22 +39,39 @@ const CartPage = ({
   dict: IAttributeValues;
   deliveryData: IProductsEntity;
 }): JSX.Element => {
-  /** Initialize Redux dispatch function */
+  /**
+   * Initialize Redux dispatch function for updating store
+   */
   const dispatch = useAppDispatch();
-  /** Get authentication status from context */
+
+  /**
+   * Get authentication status from context to enable WebSocket connection
+   */
   const { isAuth } = useContext(AuthContext);
-  /** State to store products */
+
+  /**
+   * State to store products in the cart with their current data
+   */
   const [products, setProducts] = useState<IProductsEntity[]>([]);
 
-  /** Get products data from Redux cart slice */
+  /**
+   * Get products data from Redux cart slice
+   * Contains product IDs and selected status for items in the cart
+   */
   const productsCartData = useAppSelector(selectCartData) as IProducts[];
 
-  /** Fetch products by IDs using a custom query hook */
+  /**
+   * Fetch products by IDs using RTK Query
+   * Retrieves full product information for items in the cart
+   */
   const { data, isLoading } = useGetProductsByIdsQuery({
     items: productsCartData.map((p) => p.id.toString()).toString(),
   });
 
-  /** Add delivery data to the cart */
+  /**
+   * Effect hook to add delivery data to the cart
+   * Runs when deliveryData prop changes
+   */
   useEffect(() => {
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
@@ -61,13 +79,19 @@ const CartPage = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryData]);
 
-  /** Add fetched products to the cart slice */
+  /**
+   * Effect hook to handle fetched products and WebSocket connection
+   * Adds products to cart and sets up real-time updates for authenticated users
+   */
   useEffect(() => {
     if (data) {
       setProducts(data);
       dispatch(addProductsToCart(data));
       if (isAuth) {
-        /** Connect to WebSocket if authenticated */
+        /**
+         * Connect to WebSocket if authenticated
+         * Enables real-time updates for product information
+         */
         const ws = api.WS.connect();
         if (ws) {
           ws.on('notification', async (res) => {
@@ -85,7 +109,10 @@ const CartPage = ({
                 10,
               );
 
-              /** Update product price and status on receiving a notification */
+              /**
+               * Update product price and status on receiving a notification
+               * Uses functional update to ensure we're working with the latest state
+               */
               setProducts((prevProducts) => {
                 const newProducts = [...prevProducts];
                 if (index !== -1 && prevProducts[index]) {
@@ -106,30 +133,40 @@ const CartPage = ({
   }, [data, isAuth]);
 
   return (
+    /**
+     * Wrapper for cart animations
+     * Provides entrance animations for the cart content
+     */
     <CartAnimations className={'w-[730px] max-w-full'} index={0}>
       <div className="cart">
         <div className="cart__container flex flex-col gap-4">
           <div className="cart__products flex flex-col gap-4">
-            {isLoading ? (
-              <Loader />
-            ) : Array.isArray(products) && products.length ? (
-              products.map((product, index) => {
-                const cartItem = productsCartData.find(
-                  (item) => item.id === product.id,
-                );
-                return (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    lang={lang}
-                    selected={cartItem?.selected ?? true}
-                    index={index}
-                  />
-                );
-              })
-            ) : (
-              <EmptyCart lang={lang} dict={dict} />
-            )}
+            {
+              /**
+               * Conditional rendering based on loading state and product availability
+               * Shows loader while fetching, product cards when available, or empty cart message
+               */
+              isLoading ? (
+                <Loader />
+              ) : Array.isArray(products) && products.length ? (
+                products.map((product, index) => {
+                  const cartItem = productsCartData.find(
+                    (item) => item.id === product.id,
+                  );
+                  return (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      lang={lang}
+                      selected={cartItem?.selected ?? true}
+                      index={index}
+                    />
+                  );
+                })
+              ) : (
+                <EmptyCart lang={lang} dict={dict} />
+              )
+            }
           </div>
           <div className="cart__delivery">
             <DeliveryForm lang={lang} dict={dict} deliveryData={deliveryData} />

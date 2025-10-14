@@ -25,13 +25,13 @@ const CategoriesGrid = ({
 }: {
   categories: CategoryCardProps[];
 }): JSX.Element => {
-  // Show loader if categories data is not available
+  /** Show loader if categories data is not available */
   if (!categories) {
     return <CategoriesLoader />;
   }
 
   return (
-    // Wrap categories grid with animation component for page transition effects
+    /** Wrap categories grid with animation component for page transition effects */
     <CategoriesGridAnimations className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
       {Array.isArray(categories) ? (
         // Render category cards with staggered animations if categories is an array
