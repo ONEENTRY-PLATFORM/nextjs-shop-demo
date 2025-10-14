@@ -3,15 +3,18 @@ import type { JSX } from 'react';
 import { UsePrice } from '@/components/utils/utils';
 
 /**
- * Price display.
- * @param   {object}          props                               - Price display props.
- * @param   {object}          props.attributeValues               - Product attributes.
- * @param   {{value: number}} props.attributeValues.sale          - Sale price.
- * @param   {{value: number}} props.attributeValues.price         - Original price.
- * @param   {number}          [props.attributeValues.sale.value]  - Sale price.
- * @param   {number}          [props.attributeValues.price.value] - Original price.
- * @param   {string}          props.lang                          - Current language shortcode.
- * @returns {JSX.Element}                                         Price display with current/old prices.
+ * PriceDisplay component renders product pricing information with proper formatting.
+ * It displays both sale price and original price when available, with appropriate styling
+ * to distinguish between the two. The component uses internationalization for proper
+ * price formatting based on the current language.
+ * @param   {object}      props                               - Component properties
+ * @param   {object}      props.attributeValues               - Product attributes containing price information
+ * @param   {object}      [props.attributeValues.sale]        - Sale price object
+ * @param   {number}      [props.attributeValues.sale.value]  - Sale price value
+ * @param   {object}      [props.attributeValues.price]       - Original price object
+ * @param   {number}      [props.attributeValues.price.value] - Original price value
+ * @param   {string}      props.lang                          - Current language shortcode for price formatting
+ * @returns {JSX.Element}                                     A div element containing formatted price information, or empty fragment if no prices available
  */
 const PriceDisplay = ({
   attributeValues,
@@ -23,13 +26,16 @@ const PriceDisplay = ({
   };
   lang: string;
 }): JSX.Element => {
+  // Extract current (sale) price and original price from attributes
   const currentPrice = attributeValues?.sale?.value || 0;
   const originalPrice = attributeValues?.price?.value || 0;
+
+  // If no prices are available, return empty fragment
   if (!currentPrice && !originalPrice) {
     return <></>;
   }
 
-  // Format price with Intl.NumberFormat
+  // Format prices with Intl.NumberFormat based on current language
   const newPrice = UsePrice({ amount: currentPrice, lang });
   const oldPrice = UsePrice({
     amount: originalPrice,

@@ -7,10 +7,12 @@ import type { LoaderProps } from '@/app/types/global';
 import ProductsGridLoaderAnimations from '../animations/ProductsGridLoaderAnimations';
 
 /**
- * ProductsGridLoader
- * @param   {LoaderProps} props       - Loader props.
- * @param   {number}      props.limit - number of cards to load.
- * @returns {JSX.Element}             Products GridLoader.
+ * ProductsGridLoader component displays a loading skeleton for the products grid.
+ * It renders placeholder cards with a pulsing animation while the actual product data is being fetched.
+ * This provides a better user experience by showing content layout before the real data loads.
+ * @param   {LoaderProps} props       - Component properties
+ * @param   {number}      props.limit - Number of placeholder cards to render (defaults to 10)
+ * @returns {JSX.Element}             A section containing animated placeholder cards for products
  */
 const ProductsGridLoader: FC<LoaderProps> = ({
   limit = 10,

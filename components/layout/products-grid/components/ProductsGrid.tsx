@@ -5,13 +5,16 @@ import type { JSX } from 'react';
 import ProductCard from './product-card/ProductCard';
 
 /**
- * Products grid.
- * @param   {object}            props            - Products grid props.
- * @param   {string}            props.lang       - language code.
- * @param   {IAttributeValues}  props.dict       - dictionary from server api.
- * @param   {IProductsEntity[]} props.products   - Represents a product entity array of objects.
- * @param   {number}            props.pagesLimit - used for animations.
- * @returns {JSX.Element}                        Products grid.
+ * ProductsGrid component renders a responsive grid of product cards.
+ * It takes an array of product entities and displays them in a grid layout
+ * with responsive columns that adapt to different screen sizes.
+ * Only visible products are displayed in the grid.
+ * @param   {object}            props            - Component properties
+ * @param   {string}            props.lang       - Language code for localization
+ * @param   {IAttributeValues}  props.dict       - Dictionary of attribute values from server API for labels and messages
+ * @param   {IProductsEntity[]} props.products   - Array of product entities to display in the grid
+ * @param   {number}            props.pagesLimit - Number of items per page, used for calculating animation delays in child components
+ * @returns {JSX.Element}                        A div element containing a grid of ProductCard components
  */
 const ProductsGrid = ({
   lang,

@@ -2,16 +2,18 @@ import Image from 'next/image';
 import type { JSX } from 'react';
 
 /**
- * Sticker.
- * @param   {object}      props                                           - Sticker props.
- * @param   {object}      props.sticker                                   - Sticker object.
- * @param   {object}      props.sticker.value                             - Sticker value object.
- * @param   {string}      props.sticker.value.title                       - Sticker title.
- * @param   {string}      props.sticker.value.value                       - Sticker value.
- * @param   {object}      props.sticker.value.extended                    - Sticker extended object.
- * @param   {object}      props.sticker.value.extended.value              - Sticker extended value object.
- * @param   {string}      props.sticker.value.extended.value.downloadLink - Sticker extended value download link.
- * @returns {JSX.Element}                                                 Sticker component.
+ * Sticker component displays a product sticker image, typically used to show badges or special offers.
+ * It renders a small square container with an image if the sticker data is available.
+ * The sticker may contain a title, value, and an extended object with a download link for the image.
+ * @param   {object}      props                                           - Component properties
+ * @param   {object}      props.sticker                                   - Sticker object containing sticker data
+ * @param   {object}      props.sticker.value                             - Sticker value object with title and image information
+ * @param   {string}      props.sticker.value.title                       - Sticker title used as alt text for accessibility
+ * @param   {string}      props.sticker.value.value                       - Sticker value (not directly used in rendering)
+ * @param   {object}      props.sticker.value.extended                    - Sticker extended object containing additional data
+ * @param   {object}      props.sticker.value.extended.value              - Sticker extended value object
+ * @param   {string}      props.sticker.value.extended.value.downloadLink - URL to the sticker image file
+ * @returns {JSX.Element}                                                 A div container with the sticker image or empty fragment if no sticker data
  */
 const Sticker = ({
   sticker,
@@ -32,8 +34,14 @@ const Sticker = ({
     return <></>;
   }
 
+  // Return empty fragment if no sticker value is provided
+  if (!sticker?.value) {
+    return <></>;
+  }
+
   // Extract data from sticker
   const title = sticker.value?.title;
+  // Extract image source from sticker's extended value or from first item in array if applicable
   const imgSrc =
     sticker.value.extended?.value.downloadLink ||
     (Array.isArray(sticker.value) &&

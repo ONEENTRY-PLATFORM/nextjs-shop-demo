@@ -12,14 +12,17 @@ import ProductImage from './ProductImage';
 import Stickers from './Stickers';
 
 /**
- * Product card
- * @param   {object}           props            - Product card props
- * @param   {IProductsEntity}  props.product    - product entity object
- * @param   {string}           props.lang       - Current language shortcode
- * @param   {number}           props.index      - Index of element for animations stagger
- * @param   {IAttributeValues} props.dict       - dictionary from server api
- * @param   {number}           props.pagesLimit - used for animations
- * @returns {JSX.Element}                       - Product card component
+ * ProductCard component displays a single product in a compact card format.
+ * It includes the product image, title, price information, and action buttons.
+ * The card is wrapped in CardAnimations for entrance animations and is clickable
+ * to navigate to the full product page.
+ * @param   {object}           props            - Component properties
+ * @param   {IProductsEntity}  props.product    - Product entity object containing all product information
+ * @param   {string}           props.lang       - Current language shortcode for localization and price formatting
+ * @param   {number}           props.index      - Index of element for animation staggering calculation
+ * @param   {IAttributeValues} props.dict       - Dictionary of attribute values from server API for labels and messages
+ * @param   {number}           props.pagesLimit - Number of items per page, used for calculating animation delays
+ * @returns {JSX.Element}                       A product card with image, title, price, and action buttons
  */
 const ProductCard = ({
   product,
@@ -34,9 +37,12 @@ const ProductCard = ({
   dict: IAttributeValues;
   pagesLimit: number;
 }): JSX.Element => {
+  // Extract product data from the product entity
   const { id, statusIdentifier, attributeValues, localizeInfos } = product;
 
+  // Get product title from localized information
   const title = localizeInfos?.title || '';
+
   return (
     <CardAnimations
       className="product-card group"
@@ -48,10 +54,10 @@ const ProductCard = ({
         <FavoritesButton {...product} />
       </div>
 
-      {/** ProductImage */}
+      {/** Product image display */}
       <ProductImage attributeValues={attributeValues} alt={title} />
 
-      {/** Product Data */}
+      {/** Product information section including title, price and add to cart button */}
       <div className="z-10 mb-5 mt-auto flex w-full max-w-[160px] flex-col gap-2.5">
         <h2 className="text-center text-sm leading-4 text-neutral-600">
           {title}
@@ -70,6 +76,7 @@ const ProductCard = ({
         />
       </div>
 
+      {/** Clickable overlay that navigates to the product detail page */}
       <Link
         prefetch={true}
         href={'/' + lang + '/shop/product/' + id}

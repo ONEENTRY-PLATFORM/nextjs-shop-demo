@@ -6,17 +6,29 @@ import type { JSX } from 'react';
 import { useCallback } from 'react';
 
 /**
- * Pagination
- * @param   {object}      props            - Pagination props.
- * @param   {number}      props.totalPages - Total pages.
- * @returns {JSX.Element}                  Pagination
+ * Pagination component renders a set of page navigation buttons for paginated content.
+ * It creates a button for each page and allows users to navigate between pages.
+ * The component uses URL parameters to track the current page and update the route
+ * when a different page is selected.
+ * @param   {object}      props            - Component properties
+ * @param   {number}      props.totalPages - Total number of pages available for pagination
+ * @returns {JSX.Element}                  A div element containing page navigation buttons
  */
 const Pagination = ({ totalPages }: { totalPages: number }): JSX.Element => {
+  // Get current routing information
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useTransitionRouter();
+
+  // Extract current page from URL parameters or default to 1
   const currentPage = Number(searchParams.get('page')) || 1;
 
+  /**
+   * Create query string with updated page parameter
+   * @param   {string} name  - Parameter name
+   * @param   {string} value - Parameter value
+   * @returns {string}       Updated query string
+   */
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());

@@ -13,7 +13,7 @@ import ProductsNotFound from './components/ProductsNotFound';
 export const dynamic = 'force-dynamic';
 
 /**
- * Products grid layout.
+ * Products grid layout page component
  * @param   {object}               props                      - Products GridLayout props.
  * @param   {object}               props.params               - params from query string.
  * @param   {object}               props.searchParams         - search params from query string.
@@ -43,13 +43,19 @@ const ProductsGridLayout = async ({
   pagesLimit: number;
   isCategory?: boolean;
 }): Promise<JSX.Element> => {
+  // Extract current page number from search parameters or default to 1
   const currentPage = Number(searchParams?.page) || 1;
   const { lang } = params;
+
+  // Calculate the limit for product fetching based on current page
   const limit =
     currentPage * pagesLimit > 0 ? currentPage * pagesLimit : pagesLimit;
+
+  // Combine route params with search params for API requests
   const combinedParams = { ...params, searchParams };
 
   // Get all products from api or get products byPageUrl
+  // Fetch products either as general products or category-specific products
   const { error, isError, products, total } = !isCategory
     ? await getProducts({
         lang: lang,
@@ -64,27 +70,35 @@ const ProductsGridLayout = async ({
         params: combinedParams,
       });
 
+  // Handle case when no products are found or an error occurred
   if (!products || total < 1 || isError) {
     return (
       <ProductsNotFound lang={lang} dict={dict} {...(error && { error })} />
     );
   }
 
+  // Calculate total number of pages for pagination
   const totalPages = Math.ceil(total / pagesLimit);
+
+  // Extract price range from the first product for filtering purposes
   const fromToPrices = products[0]?.additional.prices || { min: 0, max: 1 };
 
   return (
     <>
+      {/* Animated container for the products grid */}
       <CardsGridAnimations
         className={'relative box-border flex w-full shrink-0 flex-col'}
       >
+        {/* Main section containing products grid and pagination */}
         <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+          {/* Render the actual products grid */}
           <ProductsGrid
             lang={lang}
             dict={dict}
             pagesLimit={pagesLimit}
             products={products}
           />
+          {/* Show load more button if there are multiple pages */}
           {totalPages > 1 && (
             <div className="mt-5 flex w-full justify-center">
               <LoadMore totalPages={totalPages} />
@@ -92,6 +106,7 @@ const ProductsGridLayout = async ({
           )}
         </section>
       </CardsGridAnimations>
+      {/* Modal component for filtering products by price range */}
       <FilterModal prices={fromToPrices} lang={lang} dict={dict} />
     </>
   );

@@ -4,11 +4,14 @@ import type { JSX } from 'react';
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
 /**
- * Product image.
- * @param   {object}        props                 - Component props.
- * @param   {AttributeType} props.attributeValues - product attributes.
- * @param   {string}        props.alt             - alt text for image.
- * @returns {JSX.Element}                         - Product image/placeholder.
+ * ProductImage component displays an optimized product image with lazy loading.
+ * It uses the OptimizedImage component for better performance and includes
+ * hover effects for enhanced user experience. If no image is available,
+ * it renders an empty container.
+ * @param   {object}        props                 - Component properties
+ * @param   {AttributeType} props.attributeValues - Product attributes containing the image source
+ * @param   {string}        props.alt             - Alternative text for the image for accessibility
+ * @returns {JSX.Element}                         A div container with the product image or empty container if no image
  */
 const ProductImage = ({
   attributeValues,
@@ -17,6 +20,7 @@ const ProductImage = ({
   attributeValues: AttributeType;
   alt: string;
 }): JSX.Element => {
+  // Extract image source from product attributes
   const imageSrc = attributeValues?.pic;
 
   return (
