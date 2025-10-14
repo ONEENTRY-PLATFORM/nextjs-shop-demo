@@ -7,16 +7,18 @@ import ProductCard from '../products-grid/components/product-card/ProductCard';
 import ProductAnimations from './animations/ProductAnimations';
 
 /**
- * RelatedItems.
- * @param   {object}            props                             - Related items props.
- * @param   {object}            props.block                       - The block data containing similar products.
- * @param   {IAttributeValues}  props.block.attributeValues       - The attribute values for the block.
- * @param   {object}            props.block.similarProducts       - The similar products data.
- * @param   {IProductsEntity[]} props.block.similarProducts.items - The array of similar products.
- * @param   {string}            props.lang                        - current language shortcode.
- * @param   {IAttributeValues}  props.dict                        - dictionary from server api.
- * @param   {string}            props.langCode                    - The language code for attribute values.
- * @returns {JSX.Element}                                         RelatedItems component.
+ * RelatedItems component displays a section of similar or related products.
+ * It renders a titled grid of product cards based on the provided block data.
+ * This component is typically used at the bottom of a product page to show related items.
+ * @param   {object}            props                               - Component properties
+ * @param   {object}            props.block                         - The block data containing similar products
+ * @param   {IAttributeValues}  props.block.attributeValues         - The attribute values for the block, including title information
+ * @param   {object}            props.block.similarProducts         - The similar products data container
+ * @param   {IProductsEntity[]} [props.block.similarProducts.items] - The array of similar products to display
+ * @param   {string}            props.lang                          - Current language shortcode for localization
+ * @param   {IAttributeValues}  props.dict                          - Dictionary of attribute values from server API
+ * @param   {string}            props.langCode                      - The language code for accessing localized attribute values
+ * @returns {JSX.Element}                                           A section containing a title and a grid of related product cards, or empty fragment if no data
  */
 const RelatedItems = ({
   block,
@@ -35,6 +37,7 @@ const RelatedItems = ({
   dict: IAttributeValues;
   langCode: string;
 }): JSX.Element => {
+  // Early return if essential data (block or similarProducts) is missing
   if (!block || !block.similarProducts) {
     return <></>;
   }

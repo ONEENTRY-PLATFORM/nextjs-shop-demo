@@ -4,10 +4,12 @@ import React from 'react';
 import ReviewAnimations from '../animations/ReviewAnimations';
 
 /**
- * ViewAllButton.
- * @param   {object}      props       - Button props.
- * @param   {boolean}     props.state - Button state.
- * @returns {JSX.Element}             ViewAll Button.
+ * ViewAllButton component displays a button that allows users to view all reviews.
+ * The button is animated using ReviewAnimations component and its visibility
+ * is controlled by the state prop.
+ * @param   {object}      props       - Component properties
+ * @param   {boolean}     props.state - Controls the animation state of the button
+ * @returns {JSX.Element}             Animated button element for viewing all reviews
  */
 const ViewAllButton = ({ state }: { state: boolean }): JSX.Element => {
   return (

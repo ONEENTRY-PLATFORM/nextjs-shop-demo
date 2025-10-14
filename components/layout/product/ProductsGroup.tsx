@@ -6,15 +6,17 @@ import ProductAnimations from './animations/ProductAnimations';
 import GroupCard from './group-card/GroupCard';
 
 /**
- * ProductsGroup
- * @param   {object}            props                       - The component props
+ * ProductsGroup component displays a group of products in a grid layout.
+ * It renders a section with a title and a collection of product cards.
+ * This component is typically used to showcase related or recommended products.
+ * @param   {object}            props                       - Component properties
  * @param   {object}            props.block                 - The block data containing products and attributes
- * @param   {object}            props.block.attributeValues - The attribute values for the block
- * @param   {IProductsEntity[]} props.block.products        - The products for the block
- * @param   {string}            props.lang                  - current language shortcode
- * @param   {IAttributeValues}  props.dict                  - dictionary from server api
- * @param   {string}            props.langCode              - The language code for attribute values
- * @returns {JSX.Element}                                   ProductsGroup
+ * @param   {object}            props.block.attributeValues - The attribute values for the block, including title information
+ * @param   {IProductsEntity[]} [props.block.products]      - The array of products to display in the group
+ * @param   {string}            props.lang                  - Current language shortcode for localization
+ * @param   {IAttributeValues}  props.dict                  - Dictionary of attribute values from server API
+ * @param   {string}            props.langCode              - The language code for accessing localized attribute values
+ * @returns {JSX.Element}                                   A section containing a title and a grid of product cards
  */
 const ProductsGroup = ({
   block,

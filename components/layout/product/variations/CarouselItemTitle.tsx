@@ -3,11 +3,13 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 
 /**
- * CarouselItem title.
- * @param   {object}          props      - component props.
- * @param   {IProductsEntity} props.item - product object.
- * @param   {string}          props.lang - current language shortcode.
- * @returns {JSX.Element}                title with link to product.
+ * CarouselItemTitle component displays the title of a product in a carousel.
+ * The title is linked to the product details page. If the product has multiple colors,
+ * they are displayed as a concatenated string separated by '+' symbols.
+ * @param   {object}          props      - Component properties
+ * @param   {IProductsEntity} props.item - Product object containing product details including id, localized information and attributes
+ * @param   {string}          props.lang - Current language shortcode for localization and URL generation
+ * @returns {JSX.Element}                A link element containing the product title or color information
  */
 const CarouselItemTitle = ({
   item: { id, localizeInfos, attributeValues },
@@ -16,7 +18,9 @@ const CarouselItemTitle = ({
   lang: string;
   item: IProductsEntity;
 }): JSX.Element => {
+  // Extract product title from localized information
   const title = localizeInfos.title;
+  // Extract color information from product attributes
   const colors = attributeValues?.color?.value;
 
   return (

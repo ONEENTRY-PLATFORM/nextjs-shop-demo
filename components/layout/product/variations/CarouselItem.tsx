@@ -6,14 +6,17 @@ import CarouselItemImage from './CarouselItemImage';
 import CarouselItemTitle from './CarouselItemTitle';
 
 /**
- * CarouselItem.
- * @param   {object}                           props                 - Carousel item props.
- * @param   {IProductsEntity}                  props.item            - product object.
- * @param   {string}                           props.lang            - current language shortcode.
- * @param   {number}                           props.index           - index of slide.
- * @param   {number}                           props.currentIndex    - index of current slide.
- * @param   {Dispatch<SetStateAction<number>>} props.setCurrentIndex - Set state action.
- * @returns {JSX.Element}                                            CarouselItem component.
+ * CarouselItem component represents a single item in a product carousel.
+ * It displays a product image and title, and allows users to select the item
+ * by clicking on it. The visual appearance changes based on whether the item
+ * is currently selected.
+ * @param   {object}                           props                 - Component properties
+ * @param   {IProductsEntity}                  props.item            - Product object containing product details
+ * @param   {string}                           props.lang            - Current language shortcode for localization
+ * @param   {number}                           props.index           - Index of this slide in the carousel
+ * @param   {number}                           props.currentIndex    - Index of the currently selected slide
+ * @param   {Dispatch<SetStateAction<number>>} props.setCurrentIndex - Function to update the current slide index
+ * @returns {JSX.Element}                                            A button element representing a product in the carousel
  */
 const CarouselItem = ({
   item,

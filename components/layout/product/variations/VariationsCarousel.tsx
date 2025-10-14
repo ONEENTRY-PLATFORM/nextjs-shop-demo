@@ -9,12 +9,15 @@ import CarouselItem from './CarouselItem';
 import NavigationButton from './NavigationButton';
 
 /**
- * Variations carousel
- * @param   {object}                 props       - Variations carousel props
- * @param   {Array<IProductsEntity>} props.items - array of products objects
- * @param   {number}                 props.total - total products count
- * @param   {string}                 props.lang  - Current language shortcode
- * @returns {JSX.Element}                        Product variations carousel component
+ * VariationsCarousel component displays a carousel of product variations.
+ * If there are more than 2 products, it renders a navigable carousel with arrow buttons.
+ * For 2 or fewer products, it displays them in a simple grid layout.
+ * The component allows users to select different product variations visually.
+ * @param   {object}                             props         - Component properties
+ * @param   {Array<IProductsEntity> | undefined} props.items   - Array of product objects representing different variations
+ * @param   {number}                             [props.total] - Total count of product variations
+ * @param   {string}                             props.lang    - Current language shortcode for localization
+ * @returns {JSX.Element}                                      A carousel or grid component displaying product variations
  * @see {@link https://github.com/vadymshymko/react-simply-carousel?tab=readme-ov-file#usage Carousel docs}
  */
 const VariationsCarousel = ({
@@ -26,13 +29,17 @@ const VariationsCarousel = ({
   total?: number;
   lang: string;
 }): JSX.Element => {
+  // State to track the currently selected product variation
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
+  // If no items or invalid total, render empty fragment
   if (!items || !total || total < 1) {
     return <></>;
   }
 
+  // Determine if carousel mode is needed (more than 2 items)
   const isCarousel = total > 2;
+  // Set container padding class based on carousel mode
   const containerClass = isCarousel ? 'px-16 max-md:px-8' : '';
 
   return (
@@ -43,6 +50,7 @@ const VariationsCarousel = ({
       }
     >
       {!isCarousel ? (
+        // Render simple grid for 2 or fewer items
         items.map((item: IProductsEntity, idx: number) => (
           <CarouselItem
             key={idx}
@@ -54,6 +62,7 @@ const VariationsCarousel = ({
           />
         ))
       ) : (
+        // Render carousel for more than 2 items
         <Carousel
           infinite
           showSlidesBeforeInit={false}

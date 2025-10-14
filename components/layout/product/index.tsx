@@ -17,15 +17,18 @@ import ReviewsSection from './ReviewsSection';
 import VariationsCarousel from './variations/VariationsCarousel';
 
 /**
- * Product single.
- * @param   {object}            props                      - Product single props.
- * @param   {IProductsEntity}   props.product              - product entity object.
- * @param   {string}            props.lang                 - current language shortcode.
- * @param   {IAttributeValues}  props.dict                 - dictionary from server api.
- * @param   {IProductsEntity[]} props.relatedProducts      - array of related products.
- * @param   {number}            props.relatedProductsTotal - total number of related products.
- * @param   {object}            props.blocksData           - pre-fetched block data.
- * @returns {JSX.Element}                                  Product single.
+ * ProductSingle component displays a complete product page with images, variations,
+ * description, details, reviews, and related products.
+ * It organizes the product information in a three-column layout on larger screens
+ * and stacks the sections on smaller screens.
+ * @param   {object}                                       props                      - Component properties
+ * @param   {IProductsEntity & { blocks?: Array<string> }} props.product              - Product entity object containing all product information
+ * @param   {string}                                       props.lang                 - Current language shortcode for localization
+ * @param   {IAttributeValues}                             props.dict                 - Dictionary of attribute values from server API
+ * @param   {IProductsEntity[]}                            props.relatedProducts      - Array of related products to display
+ * @param   {number}                                       props.relatedProductsTotal - Total number of related products
+ * @param   {Record<string, any>}                          [props.blocksData]         - Pre-fetched block data for dynamic content
+ * @returns {JSX.Element}                                                             A complete product page with all relevant information and sections
  */
 const ProductSingle = ({
   product,
@@ -45,12 +48,16 @@ const ProductSingle = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   blocksData?: Record<string, any>;
 }): JSX.Element => {
-  // extract data from product
+  // Extract necessary data from product entity
   const { attributeValues, blocks } = product;
+
+  // Get the formatted product title using helper function
   const productTitle = getProductTitle(product);
+
+  // Convert language shortcode to language code using enum
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  // Create a mock block object for RelatedItems component
+  // Create a mock block object with similar products data for the RelatedItems component
   const relatedItemsBlock = {
     attributeValues: {},
     similarProducts: {
