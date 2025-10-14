@@ -20,19 +20,20 @@ import OrdersTableLoader from './components/OrdersTableLoader';
 
 /**
  * Orders page component.
- * @param   {object}           props                             - Props for the component.
- * @param   {string}           props.lang                        - current language shortcode.
- * @param   {IAttributeValues} props.dict                        - dictionary from server api.
- * @param   {object}           props.settings                    - settings from server api.
- * @param   {object}           props.settings.orders_limit       - orders limit.
- * @param   {number}           props.settings.orders_limit.value - orders limit value.
- * @param   {object}           props.settings.date_title         - date title.
- * @param   {string}           props.settings.date_title.value   - date title value.
- * @param   {object}           props.settings.total_title        - total title.
- * @param   {string}           props.settings.total_title.value  - total title value.
- * @param   {object}           props.settings.status_title       - status title.
- * @param   {string}           props.settings.status_title.value - status title value.
- * @returns {JSX.Element}                                        JSX.Element
+ * Displays a list of user orders with pagination and loading states.
+ * @param   {object}           props                             - Component props
+ * @param   {string}           props.lang                        - Current language shortcode (e.g., 'en', 'ru')
+ * @param   {IAttributeValues} props.dict                        - Dictionary containing localized texts
+ * @param   {object}           props.settings                    - Settings from server API
+ * @param   {object}           props.settings.orders_limit       - Orders limit configuration
+ * @param   {number}           props.settings.orders_limit.value - Number of orders per page
+ * @param   {object}           props.settings.date_title         - Date column title configuration
+ * @param   {string}           props.settings.date_title.value   - Date column title text
+ * @param   {object}           props.settings.total_title        - Total column title configuration
+ * @param   {string}           props.settings.total_title.value  - Total column title text
+ * @param   {object}           props.settings.status_title       - Status column title configuration
+ * @param   {string}           props.settings.status_title.value - Status column title text
+ * @returns {JSX.Element}                                        Orders page with list of orders and pagination
  */
 const OrdersPage = ({
   lang,
@@ -56,7 +57,7 @@ const OrdersPage = ({
     };
   };
 }): JSX.Element => {
-  // Handle useSearchParams in a try/catch to prevent build errors
+  // Handle useSearchParams in a try/catch to prevent build errors during SSR
   let currentPage = 1;
   try {
     const searchParams = useSearchParams();
@@ -67,8 +68,10 @@ const OrdersPage = ({
     currentPage = 1;
   }
 
+  // Get authentication status from context
   const { isAuth } = useContext(AuthContext);
 
+  // State management for orders data, loading, and errors
   const [orderState, setOrderState] = useState<{
     orders?: IOrderByMarkerEntity[] | undefined;
     total: number;
@@ -81,19 +84,24 @@ const OrdersPage = ({
     error: undefined,
   });
 
+  // Determine page limit from settings or default to 10
   const pageLimit = settings?.orders_limit?.value || 10;
 
-  // get all orders by Marker
+  // Fetch orders when authentication status, current page, page limit, or language changes
   useEffect(() => {
+    // If user is not authenticated, stop loading and return
     if (!isAuth) {
       setOrderState((prev) => ({ ...prev, loading: false }));
       return;
     }
 
+    // Function to fetch orders from the API
     const fetchOrders = async () => {
       try {
+        // Set loading state and clear any previous errors
         setOrderState((prev) => ({ ...prev, loading: true, error: undefined }));
 
+        // Fetch orders using the API function
         const { isError, error, orders, total } = await getAllOrdersByMarker({
           marker: 'order',
           offset: (currentPage - 1) * pageLimit,
@@ -101,6 +109,7 @@ const OrdersPage = ({
           lang,
         });
 
+        // Process successful response
         if (orders && !isError) {
           setOrderState((prev) => ({
             ...prev,
@@ -112,6 +121,7 @@ const OrdersPage = ({
           }));
         }
 
+        // Handle API errors
         if (isError) {
           // eslint-disable-next-line no-console
           console.log('Failed to fetch orders:', error);
@@ -122,6 +132,7 @@ const OrdersPage = ({
           }));
         }
       } catch (error) {
+        // Handle unexpected errors
         // eslint-disable-next-line no-console
         console.log('Unexpected error fetching orders:', error);
         setOrderState((prev) => ({
@@ -135,12 +146,15 @@ const OrdersPage = ({
     fetchOrders();
   }, [isAuth, currentPage, pageLimit, lang]);
 
+  // Destructure order state for easier access
   const { orders, total, loading, error } = orderState;
 
+  // Show authentication error if user is not logged in
   if (!isAuth) {
     return <AuthError dict={dict} />;
   }
 
+  // Render the orders page with fade transition
   return (
     <FadeTransition
       className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full"
@@ -148,7 +162,7 @@ const OrdersPage = ({
     >
       <div className="orders-page">
         <div className="orders-table">
-          {/** head */}
+          {/* Orders table header with column titles */}
           <OrderRowAnimations className="w-full" index={0}>
             <div className="-mb-px flex w-full border-collapse gap-4 border-y border-[#B0BCCE] p-4 text-slate-700">
               <div className="w-1/2">
@@ -162,10 +176,14 @@ const OrdersPage = ({
               </div>
             </div>
           </OrderRowAnimations>
+
+          {/* Orders table body with actual order data */}
           <div className="orders-table__body mb-4 flex flex-col">
+            {/* Show loader on initial load */}
             {loading && currentPage === 1 ? (
               <OrdersTableLoader />
             ) : Array.isArray(orders) && orders.length > 0 ? (
+              // Map through orders and display each one
               orders.map((order, index) => (
                 <OrderRowAnimations key={order.id} className={''} index={0}>
                   <Order
@@ -177,13 +195,16 @@ const OrdersPage = ({
                 </OrderRowAnimations>
               ))
             ) : (
+              // Show empty orders message when no orders are found
               <EmptyOrders lang={''} dict={dict} />
             )}
+            {/* Show loading message when loading more orders */}
             {loading && currentPage > 0 && (
               <div className="p-4 text-center">Loading more orders...</div>
             )}
           </div>
         </div>
+        {/* Load more button for pagination */}
         {}
         {total > currentPage * pageLimit && !loading && !error && (
           <LoadMore totalPages={Math.ceil(total / pageLimit)} />

@@ -19,13 +19,14 @@ interface RepeatOrderButtonProps {
 }
 
 /**
- * RepeatOrder button
- * @param   {RepeatOrderButtonProps} props           - component props
- * @param   {IOrderByMarkerEntity}   props.data      - order data
- * @param   {boolean}                props.isLoading - loading state
- * @param   {string}                 props.title     - button title
- * @param   {string}                 props.lang      - current language shortcode
- * @returns {JSX.Element}                            JSX.Element
+ * RepeatOrder button component.
+ * Provides a button that allows users to re-order all products from a previous order.
+ * @param   {RepeatOrderButtonProps} props           - Component props
+ * @param   {IOrderByMarkerEntity}   props.data      - Order data containing products to repeat
+ * @param   {boolean}                props.isLoading - Loading state to show spinner when processing
+ * @param   {string}                 props.title     - Button title text
+ * @param   {string}                 props.lang      - Current language shortcode for product fetching
+ * @returns {JSX.Element}                            Repeat order button element with loading indicator
  */
 const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
   data,
@@ -33,10 +34,16 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
   title,
   lang,
 }: RepeatOrderButtonProps): JSX.Element => {
+  // Convert language shortcode to enum value for API requests
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+
+  // Get router instance for navigation with transitions
   const router = useTransitionRouter();
+
+  // Get dispatch function for Redux actions
   const dispatch = useAppDispatch();
 
+  // Extract products from order data
   const { products } = data;
 
   /**
@@ -79,12 +86,14 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
     return;
   };
 
+  // Render the repeat order button
   return (
     <button
       onClick={() => repeatOrderHandle()}
       type="button"
       className="btn btn-sm btn-o btn-o-primary"
     >
+      {/* Display button title and loading spinner when processing */}
       {title} {isLoading && <Loader />}
     </button>
   );
