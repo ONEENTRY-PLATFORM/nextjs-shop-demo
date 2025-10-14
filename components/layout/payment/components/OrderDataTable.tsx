@@ -7,11 +7,19 @@ import { useAppSelector } from '@/app/store/hooks';
 import { UseDate } from '@/components/utils/utils';
 
 /**
- * Order data table.
- * @param   {object}           props         - Component properties.
- * @param   {IAttributeValues} props.dict    - Dictionary data.
- * @param   {IAccountsEntity}  props.account - Account data.
- * @returns {JSX.Element}                    JSX.Element.
+ * Order data table component.
+ * Displays order information including delivery address, date, time and payment method.
+ * Retrieves order data from the Redux store and formats it for display.
+ * Shows a message with a link to the cart page if no order data is available.
+ * @param   {object}           props         - Component properties
+ * @param   {IAttributeValues} props.dict    - Dictionary data containing localized text values for UI elements
+ * @param   {IAccountsEntity}  props.account - Account data containing payment method information
+ * @returns {JSX.Element}                    Rendered order data table component
+ * @example
+ * <OrderDataTable
+ *   dict={dictionaryValues}
+ *   account={paymentAccount}
+ * />
  */
 const OrderDataTable = ({
   dict,
@@ -20,14 +28,23 @@ const OrderDataTable = ({
   dict: IAttributeValues;
   account: IAccountsEntity;
 }): JSX.Element => {
+  /**
+   * Retrieve current order data from Redux store
+   * The order data contains form fields with markers and values
+   */
   const orderData = useAppSelector((state) => state.orderReducer.order);
+
+  /** Extract localized text values from dictionary for consistent UI labeling */
   const {
     order_info_address_placeholder,
     delivery_date_text,
     delivery_time_text,
   } = dict;
 
-  // If no order data, show a message
+  /**
+   * Check if order data exists and has form data.
+   * If no valid order data, display informational message with link to cart
+   */
   if (!orderData || !orderData.formData || orderData.formData.length === 0) {
     return (
       <div className="p-4 text-center">
@@ -41,7 +58,10 @@ const OrderDataTable = ({
 
   return (
     <>
+      {/* Section header for order information */}
       <div className="mb-4 font-bold">Order Information</div>
+
+      {/* Map through order form data to display relevant fields */}
       {orderData.formData.map(
         (
           field: {
@@ -51,6 +71,7 @@ const OrderDataTable = ({
           },
           i: Key,
         ) => {
+          /** Display delivery address when marker matches */
           if (field.marker === 'order_address') {
             return (
               <div
@@ -61,6 +82,8 @@ const OrderDataTable = ({
               </div>
             );
           }
+
+          /** Display formatted delivery date when marker matches. Uses UseDate utility to format the fullDate value */
           if (field.marker === 'date') {
             return (
               <div
@@ -75,6 +98,8 @@ const OrderDataTable = ({
               </div>
             );
           }
+
+          /** Display delivery time when marker matches */
           if (field.marker === 'time') {
             return (
               <div
@@ -85,10 +110,16 @@ const OrderDataTable = ({
               </div>
             );
           }
+
+          /** Return null for unrecognized field markers */
           return null;
         },
       )}
+
+      {/* Section header for payment method */}
       <div className="mt-4 font-bold">Payment Method</div>
+
+      {/* Display payment method title from account localization info */}
       <div>{account?.localizeInfos?.title}</div>
     </>
   );

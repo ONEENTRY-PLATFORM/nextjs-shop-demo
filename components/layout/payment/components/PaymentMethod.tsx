@@ -17,15 +17,18 @@ import OrderDataTable from './OrderDataTable';
 import OrderProductsTable from './OrderProductsTable';
 
 /**
- * Payment method.
- * @param   {object}            props          - Account data and language.
- * @param   {object}            props.account  - Account data.
- * @param   {string}            props.lang     - current language shortcode.
- * @param   {IAttributeValues}  props.dict     - dictionary from server api.
- * @param   {number}            props.index    - Index of element for animations stagger.
- * @param   {IProductsEntity[]} props.products - Products data.
- * @param   {IProductsEntity}   props.delivery - Delivery data.
- * @returns {JSX.Element}                      JSX.Element.
+ * Payment method component.
+ * Displays a payment method option with associated order information and actions.
+ * Handles selection of payment methods and displays relevant cart data when selected.
+ * Integrates with order creation functionality and provides options to confirm or edit orders.
+ * @param   {object}            props          - Component properties.
+ * @param   {object}            props.account  - Account data containing payment method information.
+ * @param   {string}            props.lang     - Current language shortcode for localization.
+ * @param   {IAttributeValues}  props.dict     - Dictionary from server API containing localized text values.
+ * @param   {number}            props.index    - Index of element for animations stagger effect.
+ * @param   {IProductsEntity[]} props.products - Products data to display in order table (optional).
+ * @param   {IProductsEntity}   props.delivery - Delivery data to display in order table (optional).
+ * @returns {JSX.Element}                      Payment method component.
  */
 const PaymentMethod = ({
   account,
@@ -42,15 +45,25 @@ const PaymentMethod = ({
   products?: IProductsEntity[];
   delivery?: IProductsEntity;
 }): JSX.Element => {
+  /** Map language code to enum value for API calls */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+
+  /** Redux dispatch function for state updates */
   const dispatch = useAppDispatch();
+
+  /** Order creation hook with loading state and confirmation function */
   const { isLoading, onConfirmOrder } = useCreateOrder({ langCode });
 
+  /** Retrieve current order data from Redux store */
   const orderData = useAppSelector((state) => state.orderReducer.order);
+
+  /** Check if this payment method is currently active/selected */
   const isActive = orderData?.paymentAccountIdentifier === account.identifier;
 
-  // Get cart data
+  /** Get cart data from Redux store */
   const cartData = useAppSelector((state) => state.cartReducer.productsData);
+
+  /** Check if there are any selected items in the cart */
   const hasCartItems = cartData && cartData.some((item) => item.selected);
 
   return (

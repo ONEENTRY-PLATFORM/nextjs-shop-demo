@@ -11,11 +11,13 @@ import {
 
 /**
  * Decrease quantity button component.
- * @param props       - The component props.
- * @param props.id    - The product ID.
- * @param props.qty   - The current cart count for the product.
- * @param props.title - The name of the product.
- * @returns           A button that decreases the product quantity in the cart.
+ * Provides functionality to decrease product quantity in the cart or remove it entirely when quantity reaches 1.
+ * Uses memoization for performance optimization and includes user state synchronization.
+ * @param   {object}      props       - The component props.
+ * @param   {number}      props.id    - The product ID.
+ * @param   {number}      props.qty   - The current cart count for the product.
+ * @param   {string}      props.title - The name of the product.
+ * @returns {JSX.Element}             A button that decreases the product quantity in the cart.
  */
 const DecreaseButton = memo(
   ({
@@ -30,9 +32,7 @@ const DecreaseButton = memo(
     const dispatch = useAppDispatch();
     const { user } = useContext(AuthContext);
 
-    /**
-     * Remove product from cart and unsubscribe from events if user is authenticated
-     */
+    /** Remove product from cart and unsubscribe from events if user is authenticated */
     const onRemoveFromCart = useCallback(async () => {
       dispatch(removeProduct(id));
       toast('Product ' + title + ' removed from cart!');
@@ -42,17 +42,12 @@ const DecreaseButton = memo(
       }
     }, [dispatch, id, title, user]);
 
-    /**
-     * Decrease product quantity in the cart
-     */
+    /** Decrease product quantity in the cart */
     const onDecreaseHandle = useCallback(() => {
       dispatch(decreaseProductQty({ id: id, quantity: 1 }));
     }, [dispatch, id]);
 
-    /**
-     * Handle click event
-     * remove product from cart if quantity is 1, otherwise decrease quantity
-     */
+    /** Handle click event. remove product from cart if quantity is 1, otherwise decrease quantity */
     const handleClick = useCallback(() => {
       if (qty <= 1) {
         onRemoveFromCart();

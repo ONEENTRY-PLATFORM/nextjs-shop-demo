@@ -9,12 +9,16 @@ import {
 import { UsePrice } from '@/components/utils/utils';
 
 /**
- * Order products table.
- * @param   {object}                        props          - Component props.
- * @param   {string}                        props.lang     - current language shortcode.
- * @param   {IProductsEntity[] | undefined} props.products - Products data.
- * @param   {IProductsEntity | undefined}   props.delivery - Delivery data.
- * @returns {JSX.Element}                                  JSX.Element.
+ * Order products table component.
+ * Displays a table of products in the cart with their prices and quantities.
+ * Also shows delivery information if available.
+ * Retrieves product data from Redux store or uses passed props.
+ * Handles cases where there are no products or delivery information to display.
+ * @param   {object}                        props          - Component properties.
+ * @param   {string}                        props.lang     - Current language shortcode for price formatting.
+ * @param   {IProductsEntity[] | undefined} props.products - Products data to display (optional, falls back to Redux state).
+ * @param   {IProductsEntity | undefined}   props.delivery - Delivery data to display (optional, falls back to Redux state).
+ * @returns {JSX.Element}                                  Order products table component.
  */
 const OrderProductsTable = ({
   lang,
@@ -25,21 +29,26 @@ const OrderProductsTable = ({
   products: IProductsEntity[] | undefined;
   delivery: IProductsEntity | undefined;
 }): JSX.Element => {
+  /** Retrieve cart data from Redux store */
   const productsDataInCart = useAppSelector(selectCartData) as Array<{
     id: number;
     quantity: number;
     selected: boolean;
   }>;
+
+  /** Retrieve products in cart from Redux store */
   const productsInCart = useAppSelector(
     selectCartItems,
   ) as Array<IProductsEntity>;
+
+  /** Retrieve delivery information from Redux store */
   const d = useAppSelector((state) => state.cartReducer.delivery);
 
-  // Use passed products or fallback to Redux state
+  /** Use passed products or fallback to Redux state */
   const actualProducts = products || productsInCart;
   const actualProductsData = productsDataInCart;
 
-  // Check if we have data to display
+  /** Check if we have data to display */
   const hasProducts =
     actualProductsData && actualProductsData.some((item) => item.selected);
   const hasDelivery = delivery || d;
@@ -50,16 +59,16 @@ const OrderProductsTable = ({
 
   return (
     <>
-      {/** head row */}
+      {/** Table header row */}
       <div className="flex border-b border-solid border-[#B0BCCE] p-2">
         <div className="w-1/2 font-bold">Product</div>
         <div className="w-1/4 font-bold">Price</div>
         <div className="w-1/4 font-bold">Quantity</div>
       </div>
 
-      {/** products row */}
+      {/** Product rows */}
       {actualProductsData.map((product, i) => {
-        // Find the actual product by ID
+        /** Find the actual product by ID */
         const actualProduct = actualProducts.find((p) => p.id === product.id);
         if (!actualProduct || !product.selected) {
           return null;
@@ -89,7 +98,7 @@ const OrderProductsTable = ({
         );
       })}
 
-      {/** delivery row */}
+      {/** Delivery row */}
       {hasDelivery && (
         <div className="-mt-px flex border-b border-solid border-[#B0BCCE] p-2">
           <div className="w-1/2">

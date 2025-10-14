@@ -3,9 +3,10 @@ import type { JSX } from 'react';
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
 /**
- * Group product image.
+ * Group product image component.
+ * Displays a product image with optimized loading and responsive sizing.
  * @param   {object}      props          - Component props.
- * @param   {string}      props.imageSrc - Image source.
+ * @param   {string}      props.imageSrc - Image source URL.
  * @returns {JSX.Element}                Group product image.
  */
 const ProductImage = ({ imageSrc }: { imageSrc: string }): JSX.Element => {

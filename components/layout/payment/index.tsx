@@ -23,45 +23,52 @@ import Loader from '@/components/shared/Loader';
 import EmptyCart from '../cart/components/EmptyCart';
 
 /**
- * Payment page.
- * @param   {SimplePageProps}  props      - SimplePageProps.
- * @param   {string}           props.lang - current language shortcode.
- * @param   {IAttributeValues} props.dict - dictionary from server api.
- * @returns {JSX.Element}                 JSX.Element.
+ * Payment page component.
+ * Main payment page that displays available payment methods and handles the checkout process.
+ * Manages product data, delivery information, and order creation.
+ * Integrates with Redux store for state management and API hooks for data fetching.
+ * Handles authentication checks and loading states.
+ * @param   {SimplePageProps}  props      - Component properties.
+ * @param   {string}           props.lang - Current language shortcode for localization.
+ * @param   {IAttributeValues} props.dict - Dictionary from server API containing localized text values.
+ * @returns {JSX.Element}                 Payment page component.
  */
 const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
+  /** Redux dispatch function for state updates */
   const dispatch = useAppDispatch();
+
+  /** Authentication context to check if user is logged in */
   const { isAuth } = useContext(AuthContext);
 
-  // Payment methods in orderSlice
+  /** Retrieve payment methods from Redux order slice */
   const paymentMethods = useAppSelector(
     (state) => state.orderReducer.paymentMethods,
   );
 
-  // Products data in cartSlice
+  /** Retrieve products data from cart slice */
   const productsCartData = useAppSelector(selectCartData) as Array<{
     id: number;
     quantity: number;
     selected: boolean;
   }>;
 
-  // Products items in cartSlice
+  /** Retrieve product items from cart slice */
   const productsItems = useAppSelector(selectCartItems);
 
-  // Delivery data in cartSlice
+  /** Retrieve delivery data from cart slice */
   const deliveryData = useAppSelector((state) => state.cartReducer.delivery);
 
-  // Order data in orderSlice
+  /** Retrieve order data from order slice */
   const orderData = useAppSelector((state) => state.orderReducer.order);
 
-  // Check if we have products in cart
+  /** Check if we have products in cart */
   const hasCartItems =
     productsCartData && productsCartData.some((item) => item.selected);
 
-  // Get all payment accounts as an array
+  /** Fetch all available payment accounts from the API */
   const { data, error, isLoading: isAccountsLoading } = useGetAccountsQuery({});
 
-  // Fetch products by IDs
+  /** Fetch products by their IDs from the cart */
   const { data: productsData, isLoading: isProductsLoading } =
     useGetProductsByIdsQuery(
       {
@@ -72,7 +79,7 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
       },
     );
 
-  // Add delivery data to the cart
+  /** Add delivery data to the cart when it changes */
   useEffect(() => {
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
@@ -80,7 +87,7 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryData]);
 
-  // Add fetched products to the cart slice
+  /** Add fetched products to the cart slice when they are loaded */
   useEffect(() => {
     if (productsData) {
       dispatch(addProductsToCart(productsData as IProductsEntity[]));
@@ -88,7 +95,7 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productsData]);
 
-  // Combine products from cart and loaded products data
+  /** Combine products from cart and loaded products data */
   const combinedProducts = useMemo(() => {
     if (!productsData || productsData.length === 0) {
       return productsItems;
@@ -96,16 +103,16 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     return productsData;
   }, [productsData, productsItems]);
 
-  // Allowed payment methods
+  /** Filter payment methods based on whitelist from order slice */
   const whitelistMethods = useMemo(() => {
     if (!data) return [];
 
-    // If no payment methods restriction, show all
+    /** If no payment methods restriction, show all */
     if (!paymentMethods || paymentMethods.length === 0) {
       return data;
     }
 
-    // Filter by allowed payment methods
+    /** Filter by allowed payment methods */
     return data.filter((method) => {
       return paymentMethods.some(
         (whitelistMethod) => method.identifier === whitelistMethod.identifier,
@@ -113,7 +120,7 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     });
   }, [data, paymentMethods]);
 
-  // Products in orderSlice
+  /** Prepare products for order creation */
   const productsInOrder = useMemo(() => {
     if (!hasCartItems && !deliveryData) return [];
 
@@ -125,7 +132,7 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
         selected: item.selected,
       }));
 
-    // Add delivery if exists
+    /** Add delivery if exists */
     if (deliveryData?.id) {
       orderProducts.push({
         productId: deliveryData.id,
@@ -137,7 +144,7 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     return orderProducts;
   }, [productsCartData, deliveryData, hasCartItems]);
 
-  // Create order in orderSlice on init component
+  /** Create order in orderSlice on component initialization */
   useEffect(() => {
     if (productsInOrder.length > 0) {
       dispatch(
@@ -157,17 +164,17 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     return <></>;
   }
 
-  // Auth Error
+  /** Auth Error */
   if (!isAuth || error) {
     return <AuthError dict={dict} />;
   }
 
-  // Loader
+  /** Loader */
   if (isAccountsLoading || isProductsLoading) {
     return <Loader />;
   }
 
-  // If no products in cart
+  /** If no products in cart */
   if (!hasCartItems && !deliveryData) {
     return <EmptyCart lang={lang as string} dict={dict} />;
   }

@@ -5,11 +5,13 @@ import type { JSX } from 'react';
 import Loader from '@/components/shared/Loader';
 
 /**
- * Edit order button.
- * @param   {object}           props           - Edit order button props.
- * @param   {IAttributeValues} props.dict      - dictionary values.
- * @param   {boolean}          props.isLoading - loading state.
- * @returns {JSX.Element}                      JSX.Element.
+ * Edit order button component.
+ * Renders a button that allows users to navigate back to the cart to edit their order.
+ * Shows a loader when in loading state.
+ * @param   {object}           props           - Component properties.
+ * @param   {IAttributeValues} props.dict      - Dictionary values containing localized text.
+ * @param   {boolean}          props.isLoading - Loading state indicating if navigation is in progress.
+ * @returns {JSX.Element}                      Edit order button component.
  */
 const EditOrderButton = ({
   dict,
@@ -22,9 +24,11 @@ const EditOrderButton = ({
   const { edit_order_text } = dict;
 
   /**
-   * Edit order button click handler.
+   * Handles the edit order button click event.
+   * Navigates the user back to the cart page to make changes to their order.
+   * @returns {Promise<void>} Promise that resolves when navigation is complete.
    */
-  const onEditOrder = async () => {
+  const onEditOrder = async (): Promise<void> => {
     router.push('/cart');
   };
 
