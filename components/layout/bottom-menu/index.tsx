@@ -8,7 +8,7 @@ import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import NavItemCart from '../header/nav/NavItemCart';
 import NavItemFavorites from '../header/nav/NavItemFavorites';
 import NavItemProfile from '../header/nav/NavItemProfile';
-import { NavMenuLoader } from '../header/nav/NavMenuLoader';
+import NavMenuLoader from '../header/nav/NavMenuLoader';
 import NavItemCatalog from './components/NavItemCatalog';
 import NavItemHome from './components/NavItemHome';
 
