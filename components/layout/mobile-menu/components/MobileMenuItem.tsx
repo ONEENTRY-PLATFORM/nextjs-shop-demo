@@ -10,11 +10,12 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import MobileMenu from './MobileMenu';
 
 /**
- * Mobile menu list item.
- * @param   {object}      props      - Props for MobileMenuItem component.
- * @param   {IMenusPages} props.item - Represents a menu item objects.
- * @param   {string}      props.lang - Current language shortcode.
- * @returns {JSX.Element}            Mobile menu list item.
+ * Mobile menu list item component.
+ * Renders a single menu item with support for nested submenus in mobile navigation.
+ * @param   {object}      props      - Component properties
+ * @param   {IMenusPages} props.item - Menu item object containing title and URL information
+ * @param   {string}      props.lang - Current language shortcode (e.g., 'en', 'ru')
+ * @returns {JSX.Element}            A mobile menu item with optional submenu toggle
  */
 function MobileMenuItem({
   item,
@@ -23,42 +24,57 @@ function MobileMenuItem({
   item: IMenusPages;
   lang: string;
 }): JSX.Element {
+  // Access the setOpen function from OpenDrawerContext to control menu visibility
   const { setOpen } = useContext(OpenDrawerContext);
-  // check if item has child
+
+  // Check if the menu item has child items (submenu)
   const hasChild = Array.isArray(item.children) && item.children.length > 0;
-  // extract href from item pageUrl
+
+  // Construct the href for the menu item based on its page URL
   const href =
     item.pageUrl === 'category'
       ? '/' + lang + '/shop/category/'
       : '/' + lang + '/shop/category/' + item.pageUrl;
+
+  // State to control the visibility of submenu items
   const [openSubmenu, setOpenSubmenu] = useState(false);
 
   return (
+    // List item container with styling for mobile menu items
     <li
       key={item.localizeInfos.menuTitle}
       className={
         'flex w-full flex-col py-2 text-lg text-slate-700 transition-colors hover:text-orange-500'
       }
     >
+      {/* Link for the menu item with optional submenu toggle */}
       <Link
         className={'flex ' + (hasChild && '')}
         href={href}
         prefetch={true}
         onClick={(e) => {
+          // Prevent event from bubbling up to parent elements
           e.stopPropagation();
+          // Close the mobile menu when a link is clicked
           setOpen(false);
         }}
       >
+        {/* Display the localized menu item title */}
         {item.localizeInfos.menuTitle}
+
+        {/* Render submenu toggle button if item has children */}
         {hasChild && (
           <button
             onClick={(e) => {
+              // Prevent default button behavior and event bubbling
               e.preventDefault();
               e.stopPropagation();
+              // Toggle the submenu visibility state
               setOpenSubmenu(!openSubmenu);
             }}
             className="ml-auto"
           >
+            {/* Dropdown arrow icon indicating submenu availability */}
             <svg
               width="27"
               height="15"
@@ -72,6 +88,8 @@ function MobileMenuItem({
           </button>
         )}
       </Link>
+
+      {/* Render submenu if item has children and they should be visible */}
       {Array.isArray(item.children) && hasChild && (
         <MobileMenu
           menu={item.children}

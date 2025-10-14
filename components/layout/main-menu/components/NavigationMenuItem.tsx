@@ -6,12 +6,13 @@ import { usePathname } from 'next/navigation';
 import type { JSX } from 'react';
 
 /**
- * Main navigation menu item.
- * @param   {object}      props             - Menu item props.
- * @param   {string}      props.label       - Menu item label.
- * @param   {string}      props.href        - Menu item link.
- * @param   {boolean}     props.hasDropdown - If true, menu item has dropdown.
- * @returns {JSX.Element}                   Main navigation menu item.
+ * Individual navigation menu item component.
+ * Renders a single menu item with optional dropdown indicator and active state styling.
+ * @param   {object}      props               - Component properties
+ * @param   {string}      props.label         - Display text for the menu item
+ * @param   {string}      props.href          - URL path the menu item links to
+ * @param   {boolean}     [props.hasDropdown] - Whether the menu item has a dropdown (displays arrow icon if true)
+ * @returns {JSX.Element}                     A navigation link with optional dropdown indicator
  */
 const NavigationMenuItem = ({
   label,
@@ -22,15 +23,19 @@ const NavigationMenuItem = ({
   href: string;
   hasDropdown?: boolean;
 }): JSX.Element => {
+  // Get the current pathname to determine if this menu item is active
   const paths = usePathname();
+  // Check if the current path matches this menu item's href
   const isActive = paths === href;
 
   return (
+    // Link component for navigation with prefetching enabled
     <Link
       prefetch={true}
       href={href}
       className="relative box-border flex shrink-0 flex-row items-center gap-2.5 transition-colors duration-300 hover:text-red-500"
     >
+      {/* Menu item label with active state styling */}
       <div
         className={clsx(
           isActive && 'text-red-500 transition-colors duration-300',
@@ -38,6 +43,7 @@ const NavigationMenuItem = ({
       >
         {label}
       </div>
+      {/* Dropdown indicator arrow icon (only shown when hasDropdown is true) */}
       {hasDropdown && (
         <svg
           width="27"

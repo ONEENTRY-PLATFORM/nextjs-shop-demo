@@ -15,10 +15,11 @@ import CloseModal from './components/CloseModal';
 import MobileMenu from './components/MobileMenu';
 
 /**
- * Mobile menu offscreen modal.
+ * Mobile menu offscreen modal component.
+ * Renders the mobile menu in an offscreen modal with animations and backdrop.
  * @param   {object}                         props      - Component properties
- * @param   {IMenusPages[]}                  props.menu - Array of menu items
- * @param   {string}                         props.lang - Current language shortcode
+ * @param   {IMenusPages[]}                  props.menu - Array of menu items to display in the mobile menu
+ * @param   {string}                         props.lang - Current language shortcode (e.g., 'en', 'ru')
  * @returns {JSX.Element | null | undefined}            The rendered mobile menu component or nothing if conditions aren't met
  */
 const OffscreenModal = ({
@@ -28,36 +29,50 @@ const OffscreenModal = ({
   menu: IMenusPages[];
   lang: string;
 }): JSX.Element | null | undefined => {
+  // Get the current pathname to detect route changes
   const pathname = usePathname();
+  // Access the mobile menu state from the OpenDrawerContext
   const { open, setOpen, component } = useContext(OpenDrawerContext);
 
+  // Effect to handle window resize events
   useEffect(() => {
+    // Function to close the menu when window is resized to desktop size
     const handleResize = () => {
       if (window.innerWidth > 768) {
         setOpen(false);
       }
     };
+
+    // Add event listener for resize events
     window.addEventListener('resize', handleResize);
+
+    // Cleanup function to remove event listener
     return () => window.removeEventListener('resize', handleResize);
   }, [open]);
 
+  // Effect to close the menu when the pathname changes (navigation occurs)
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
+  // Don't render if the menu is not open or if this is not the MobileMenu component
   if (!open || component !== 'MobileMenu') {
     return;
   }
 
+  // Render the mobile menu modal with animations
   return (
     <MobileMenuAnimations
       id="modalBody"
       className="fixed left-1/2 top-1/2 z-50 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-6 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-[550px] lg:p-10"
     >
+      {/* Main container for the mobile menu modal */}
       <div className="fixed inset-0 z-50 flex size-full max-w-[420px] flex-col bg-white pb-6">
         <div className="p-6">
+          {/* Close button for the mobile menu modal */}
           <CloseModal />
 
+          {/* Logo display in the mobile menu */}
           <div className="mb-4 w-full">
             <Image
               src={'/images/logo-250x70.svg'}
@@ -69,9 +84,12 @@ const OffscreenModal = ({
             />
           </div>
 
+          {/* The actual mobile menu items */}
           <MobileMenu menu={menu} lang={lang} />
         </div>
       </div>
+
+      {/* Backdrop overlay for the mobile menu modal */}
       <ModalBackdrop />
     </MobileMenuAnimations>
   );
