@@ -11,12 +11,15 @@ import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
 
 /**
- * Products group card.
- * @param   {object}           props         - component props.
- * @param   {IProductsEntity}  props.product - product entity object.
- * @param   {string}           props.lang    - current language shortcode.
- * @param   {IAttributeValues} props.dict    - dictionary from server api.
- * @returns {JSX.Element}                    Products group card.
+ * Products group card component.
+ * Displays a product group card with product information, images, price and apply button.
+ * Handles localization of product information and displays multiple product images.
+ * Provides functionality to add/remove products from cart through the ApplyButton component.
+ * @param   {object}           props         - Component properties.
+ * @param   {IProductsEntity}  props.product - Product entity object containing product information.
+ * @param   {string}           props.lang    - Current language shortcode for localization.
+ * @param   {IAttributeValues} props.dict    - Dictionary from server API containing localized text values.
+ * @returns {JSX.Element}                    - Rendered products group card component.
  */
 const GroupCard = ({
   product,
@@ -27,14 +30,25 @@ const GroupCard = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
+  /** Map language code to enum value for attribute values */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+
+  /** Get attribute values for the current language or fallback to default */
   const attributeValues =
     product.attributeValues[langCode] || product.attributeValues;
+
+  /** Get localized product title or fallback to default */
   const title =
     product.localizeInfos[langCode]?.title || product.localizeInfos?.title;
+
+  /** Extract product images from attribute values */
   const images =
     attributeValues.more_pic?.value || attributeValues.more_pic?.value;
+
+  /** Get first product image download link */
   const pic1 = images && images[0]?.downloadLink;
+
+  /** Get second product image download link */
   const pic2 = images && images[1]?.downloadLink;
 
   return (

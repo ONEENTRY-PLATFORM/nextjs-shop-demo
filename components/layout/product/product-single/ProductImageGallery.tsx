@@ -32,8 +32,11 @@ const ProductImageGallery = ({
   product: IProductsEntity;
   alt: string;
 }): JSX.Element => {
+  /** State for slider navigation */
   const [nav1, setNav1] = useState<Slider>();
   const [nav2, setNav2] = useState<Slider>();
+
+  /** Refs for slider components */
   let sliderRef1 = useRef<RefObject<Slider | null>>(null);
   let sliderRef2 = useRef<RefObject<Slider | null>>(null);
 
@@ -44,6 +47,7 @@ const ProductImageGallery = ({
   const productTitle = getProductTitle(product, 'Product image');
   const imageAlt = alt || productTitle;
 
+  // Set slider navigation refs after component mounts
   useEffect(() => {
     setNav1(sliderRef1 as any);
     setNav2(sliderRef2 as any);
@@ -55,30 +59,36 @@ const ProductImageGallery = ({
   const isGallery = morePic.length > 0;
 
   // Safely construct Gallery
+  // Create an array of image objects with original and thumbnail URLs
   const imagesData: {
     original: string;
     thumbnail: string;
   }[] = imageSrc
     ? isGallery
-      ? [imageSrc, ...morePic].map((img) => {
+      ? // If we have multiple images, create an array with the main image and additional images
+        [imageSrc, ...morePic].map((img) => {
+          // Check if image exists and has the expected structure
           if (img && typeof img === 'object' && 'downloadLink' in img) {
             return {
               original: getProductImageUrl('pic', product),
               thumbnail: getProductImageUrl('pic', product),
             };
           }
+          // Fallback to placeholder if image data is invalid
           return {
             original: '/placeholder.jpg',
             thumbnail: '/placeholder.jpg',
           };
         })
-      : [
+      : // If we only have one image, create an array with just that image
+        [
           {
             original: getProductImageUrl('pic', product),
             thumbnail: getProductImageUrl('pic', product),
           },
         ]
-    : [
+    : // If no image data, use placeholder
+      [
         {
           original: '/placeholder.jpg',
           thumbnail: '/placeholder.jpg',
@@ -87,12 +97,15 @@ const ProductImageGallery = ({
 
   return (
     <div className="flex flex-row flex-wrap gap-2">
+      {/* Favorites button positioned at top right corner */}
       <div className="absolute right-2 top-2 z-10">
         <FavoritesButton {...product} />
       </div>
       {imagesData ? (
         isGallery ? (
+          // Render gallery with main image slider and thumbnail navigation
           <div className="relative w-full">
+            {/* Main image slider */}
             <Slider
               asNavFor={nav2}
               ref={(slide) => (sliderRef1 = slide as any)}
@@ -112,6 +125,7 @@ const ProductImageGallery = ({
                 );
               })}
             </Slider>
+            {/* Thumbnail navigation slider */}
             <Slider
               asNavFor={nav1}
               ref={(slide) => (sliderRef2 = slide as any)}
@@ -136,6 +150,7 @@ const ProductImageGallery = ({
             </Slider>
           </div>
         ) : (
+          // Render single image without gallery
           <div className="relative w-full">
             <Image
               width={360}
@@ -147,6 +162,7 @@ const ProductImageGallery = ({
           </div>
         )
       ) : (
+        // Render placeholder if no images available
         <Placeholder />
       )}
     </div>

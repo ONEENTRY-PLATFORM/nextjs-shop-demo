@@ -5,17 +5,19 @@ import ReviewAnimations from '../animations/ReviewAnimations';
 import UserComment from './UserComment';
 
 /**
- * Review card.
- * @param   {object}      props                     - Props for component.
- * @param   {object}      props.review              - review object entity.
- * @param   {string}      props.review.name         - Name of user.
- * @param   {string}      props.review.content      - Comment text.
- * @param   {number}      props.review.likeCount    - Count of likes.
- * @param   {number}      props.review.commentCount - Count of comments.
- * @param   {number}      props.review.rating       - Rating of user.
- * @param   {number}      props.index               - Index of element for animations stagger.
- * @param   {boolean}     props.state               - state of review card.
- * @returns {JSX.Element}                           Review card component.
+ * ReviewCard component.
+ * Displays a single product review with animation support.
+ * Wraps the UserComment component with ReviewAnimations for staggered entrance effects.
+ * @param   {object}      props                     - Component props.
+ * @param   {object}      props.review              - Review object entity containing all review data.
+ * @param   {string}      props.review.name         - Name of the user who wrote the review.
+ * @param   {string}      props.review.content      - The actual review comment text.
+ * @param   {number}      props.review.likeCount    - Number of likes the review has received.
+ * @param   {number}      props.review.commentCount - Number of comments on the review.
+ * @param   {number}      props.review.rating       - Star rating given by the user (1-5).
+ * @param   {number}      props.index               - Index of this element for staggered animations.
+ * @param   {boolean}     props.state               - Visibility state that triggers animation.
+ * @returns {JSX.Element}                           Review card component with animation wrapper.
  */
 const ReviewCard = ({
   review,
@@ -38,6 +40,7 @@ const ReviewCard = ({
       index={index}
       state={state}
     >
+      {/* Display the user comment with all review details inside an animated wrapper */}
       <UserComment review={review} />
     </ReviewAnimations>
   );

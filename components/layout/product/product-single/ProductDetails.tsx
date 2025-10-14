@@ -13,11 +13,14 @@ import PriceDisplay from '../components/PriceDisplay';
 import ProductUnits from './ProductUnits';
 
 /**
- * Product details.
- * @param   {object}           props         - Product details props.
- * @param   {IProductsEntity}  props.product - product entity object.
- * @param   {string}           props.lang    - current language shortcode.
- * @param   {IAttributeValues} props.dict    - dictionary from server api.
+ * Product details component.
+ * Displays comprehensive product information including title, category, price, availability and add to cart functionality.
+ * Uses utility functions to safely extract product data and handles localization.
+ * Integrates with other components like PriceDisplay, ProductUnits, and AddToCartButton.
+ * @param   {object}           props         - Component properties.
+ * @param   {IProductsEntity}  props.product - Product entity object containing all product information.
+ * @param   {string}           props.lang    - Current language shortcode for localization.
+ * @param   {IAttributeValues} props.dict    - Dictionary from server API containing localized text values.
  * @returns {JSX.Element}                    Product details component.
  */
 const ProductDetails = ({
@@ -29,11 +32,11 @@ const ProductDetails = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
-  // Extract data using safe utility functions
+  /** Extract data using safe utility functions */
   const title = getProductTitle(product) || '';
   const category = getProductCategory(product);
 
-  // Extract other data from product
+  /** Extract other data from product */
   const {
     id,
     statusIdentifier,

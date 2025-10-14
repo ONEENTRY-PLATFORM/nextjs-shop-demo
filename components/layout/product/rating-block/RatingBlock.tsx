@@ -31,10 +31,12 @@ const RatingBlock = ({
       index={4}
       state={state}
     >
+      {/* Display overall product rating with star rating and numeric value */}
       <div className="flex items-center gap-2.5 self-start text-3xl font-bold leading-8 text-neutral-600">
         <StarRating rating={productRating.rating} />
         <div>{productRating.rating}</div>
       </div>
+      {/* Display detailed rating distribution */}
       <div className="mt-6 flex w-full flex-col gap-2">
         {ratingsData.map((rating, index) => (
           <RatingRow key={index} rating={rating} state={state} />
