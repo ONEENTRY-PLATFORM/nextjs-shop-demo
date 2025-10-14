@@ -58,7 +58,6 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
     marker: 'reg',
     lang,
   });
-  // console.log(data);
 
   /**
    * Get form field values from Redux store
@@ -76,10 +75,7 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
     try {
       setLoading(true);
 
-      /**
-       * Prepare form data for submission
-       * Maps through form attributes and creates data objects for each field
-       */
+      /** Prepare form data for submission. Maps through form attributes and creates data objects for each field */
       const formData: IAuthFormData[] = data?.attributes
         .map((field: IAttributes) => {
           if (field.marker !== 'email_notifications') {
@@ -98,10 +94,7 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
           return el !== null;
         });
 
-      /**
-       * Update user with Users API
-       * Sends the prepared form data to update the user's profile information
-       */
+      /** Update user with Users API. Sends the prepared form data to update the user's profile information */
       if (user?.formIdentifier) {
         await api.Users.updateUser({
           formIdentifier: user.formIdentifier,
@@ -151,11 +144,11 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {/** Map through form attributes and render FormInput components Each input is populated with user's current data */}
           {data?.attributes.map((field: IAttributes, index: Key | number) => {
-            const fieldData =
-              Array.isArray(user.formData) &&
-              (user.formData.find(
-                (item) => item.marker === field.marker,
-              ) as FormDataType[]);
+            const fieldData = Array.isArray(user.formData)
+              ? (user.formData.find(
+                  (item) => item.marker === field.marker,
+                ) as FormDataType)
+              : {};
 
             if (field.marker !== 'email_notifications') {
               return (
@@ -164,7 +157,7 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
                   index={index as number}
                   {...field}
                   {...fieldData}
-                  value={field.value}
+                  value={fieldData.value}
                 />
               );
             }

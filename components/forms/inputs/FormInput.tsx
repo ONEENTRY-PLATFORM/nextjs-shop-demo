@@ -33,6 +33,7 @@ const FormInput = (field: {
   localizeInfos?: Record<string, any>;
 }): JSX.Element => {
   const { localizeInfos } = field;
+  console.log(field);
 
   /* State for storing the current value of the input field */
   const [value, setValue] = useState<string>(field.value || '');
