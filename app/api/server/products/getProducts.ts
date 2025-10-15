@@ -47,10 +47,10 @@ export const getProducts = async (props: {
 }> => {
   const { offset, limit, params, lang } = props;
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  const body = getSearchParams(params?.searchParams, params?.handle);
+  const body = getSearchParams(params?.searchParams, params?.handle) || [];
 
   try {
-    const data = await api.Products.getProducts(body || [], langCode, {
+    const data = await api.Products.getProducts(body, langCode, {
       limit,
       offset,
       sortOrder: 'ASC',

@@ -55,7 +55,6 @@ const ProductsGridLayout = async ({
   const combinedParams = { ...params, searchParams };
 
   /** Get all products from api or get products byPageUrl */
-  /** Fetch products either as general products or category-specific products */
   const { error, isError, products, total } = !isCategory
     ? await getProducts({
         lang: lang,
