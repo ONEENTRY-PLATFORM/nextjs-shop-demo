@@ -55,7 +55,7 @@ const OrderRow = ({
   // Render the order row with animations
   return (
     <OrderRowAnimations className="w-full" index={index}>
-      {/* Order summary row that can be clicked to expand details */}
+      {/** Order summary row that can be clicked to expand details */}
       <button
         onClick={() => {
           setState(!state);
@@ -65,14 +65,14 @@ const OrderRow = ({
           rowClass
         }
       >
-        {/* Display order creation date */}
+        {/** Display order creation date */}
         <div className="w-1/2">{date}</div>
-        {/* Display formatted order total */}
+        {/** Display formatted order total */}
         <div className="w-1/4">{formattedPrice}</div>
-        {/* Display order status */}
+        {/** Display order status */}
         <div className="w-1/4">{statusIdentifier}</div>
       </button>
-      {/* Expanded order details page, shown when state is true */}
+      {/** Expanded order details page, shown when state is true */}
       <OrderPage
         id={Number(id)}
         settings={settings}

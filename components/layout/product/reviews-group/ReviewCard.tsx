@@ -40,7 +40,7 @@ const ReviewCard = ({
       index={index}
       state={state}
     >
-      {/* Display the user comment with all review details inside an animated wrapper */}
+      {/** Display the user comment with all review details inside an animated wrapper */}
       <UserComment review={review} />
     </ReviewAnimations>
   );

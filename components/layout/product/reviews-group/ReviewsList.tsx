@@ -17,19 +17,19 @@ import ViewAllButton from './ViewAllButton';
 const ReviewsList = ({ state }: { state: boolean }): JSX.Element => {
   return (
     <>
-      {/* Reviews container with dynamic spacing based on state */}
+      {/** Reviews container with dynamic spacing based on state */}
       <section
         className={
           'flex flex-col max-md:mb-10 max-md:max-w-full ' +
           (state ? 'gap-5' : '')
         }
       >
-        {/* Map through all reviews and render a ReviewCard for each one */}
+        {/** Map through all reviews and render a ReviewCard for each one */}
         {reviewsData.map((review, index) => (
           <ReviewCard key={index} review={review} index={index} state={state} />
         ))}
       </section>
-      {/* View all reviews button with animation support */}
+      {/** View all reviews button with animation support */}
       <ViewAllButton state={state} />
     </>
   );

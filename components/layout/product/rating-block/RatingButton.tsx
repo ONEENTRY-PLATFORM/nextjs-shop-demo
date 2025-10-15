@@ -42,7 +42,7 @@ const RatingButton = ({
       onClick={() => setState(!state)}
       className="group mb-6 mr-auto flex gap-5"
     >
-      {/* Display rating information with stars, numeric rating and review count */}
+      {/** Display rating information with stars, numeric rating and review count */}
       <div className="flex gap-2.5">
         <StarRating rating={rating} />
         <div className="text-lg font-bold text-neutral-600">
@@ -51,7 +51,7 @@ const RatingButton = ({
         <div className="text-sm leading-5 text-slate-300">{reviewCount}</div>
       </div>
 
-      {/* Display reviews title with collapsible arrow indicator */}
+      {/** Display reviews title with collapsible arrow indicator */}
       <div
         className={
           'my-auto cursor-pointer flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600 group-hover:text-orange-500 '

@@ -93,7 +93,7 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
       type="button"
       className="btn btn-sm btn-o btn-o-primary"
     >
-      {/* Display button title and loading spinner when processing */}
+      {/** Display button title and loading spinner when processing */}
       {title} {isLoading && <Loader />}
     </button>
   );

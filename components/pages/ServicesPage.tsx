@@ -13,9 +13,9 @@ import type { SimplePageProps } from '@/app/types/global';
  * @returns {JSX.Element}                  Services page with title and content
  */
 const ServicesPage = ({ page }: SimplePageProps): JSX.Element => {
-  // Check if page exists and has localization information
+  /** Check if page exists and has localization information */
   if (!page || !page.localizeInfos) {
-    // Fallback content if page data is not available
+    /** Fallback content if page data is not available */
     return (
       <div className="flex flex-col pb-5 max-md:max-w-full">
         <h1>Services</h1>
@@ -24,7 +24,7 @@ const ServicesPage = ({ page }: SimplePageProps): JSX.Element => {
     );
   }
 
-  // Extract content from page localizeInfos for rendering
+  /** Extract content from page localizeInfos for rendering */
   const {
     localizeInfos: { title, htmlContent },
   } = page;

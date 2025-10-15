@@ -30,11 +30,11 @@ const RatingRow = ({
     index={4}
     state={state}
   >
-    {/* Display the rating value (number of stars) */}
+    {/** Display the rating value (number of stars) */}
     <div className="w-[30px] text-lg leading-5 text-neutral-600">{value}</div>
-    {/* Display the rating bar showing the percentage of reviews with this rating */}
+    {/** Display the rating bar showing the percentage of reviews with this rating */}
     <RatingBar value={barValue} maxWidth="200px" />
-    {/* Display the star rating for this row */}
+    {/** Display the star rating for this row */}
     <StarRating rating={starCount} />
   </ReviewAnimations>
 );

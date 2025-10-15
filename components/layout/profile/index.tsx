@@ -19,12 +19,12 @@ const ProfilePage = async ({
   lang,
   dict,
 }: SimplePageProps): Promise<JSX.Element> => {
-  // Show loader when dictionary data is not available
+  /** Show loader when dictionary data is not available */
   if (!dict) {
     return <Loader />;
   }
 
-  // Render the profile page with user form
+  /** Render the profile page with user form */
   return (
     <div className="flex flex-col pb-5 max-md:max-w-full">
       {/* Suspense boundary to handle loading state for the UserForm component */}

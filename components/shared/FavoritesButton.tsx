@@ -61,9 +61,7 @@ const FavoritesButton = memo((product: IProductsEntity): JSX.Element => {
     }
   }, [isFav, dispatch, id, localizeInfos?.title]);
 
-  /**
-   * Update user data favorites.
-   */
+  /** Update user data favorites. */
   const onUpdateUserFavoritesHandle = useCallback(async () => {
     try {
       if (!isFav) {
@@ -86,9 +84,7 @@ const FavoritesButton = memo((product: IProductsEntity): JSX.Element => {
     }
   }, [isFav, user, isAuth, dispatch, id, localizeInfos?.title]);
 
-  /**
-   * Handle click.
-   */
+  /** Handle click. */
   const handleClick = useCallback(() => {
     if (user && isAuth && (user as IUserEntity).id) {
       onUpdateUserFavoritesHandle();
@@ -97,9 +93,7 @@ const FavoritesButton = memo((product: IProductsEntity): JSX.Element => {
     }
   }, [user, isAuth, onUpdateUserFavoritesHandle, onUpdateFavoritesHandle]);
 
-  /**
-   * Set favorites on data change.
-   */
+  /** Set favorites on data change. */
   useEffect(() => {
     setIsFav(isFavorites);
   }, [isFavorites]);

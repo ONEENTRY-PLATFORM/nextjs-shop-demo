@@ -63,14 +63,14 @@ const CalendarAnimations = ({
     tl.fromTo(
       '.react-calendar__month-view__weekdays__weekday abbr, #modalBody > div button',
       {
-        scale: 0, // Initial scale: 0 (hidden)
-        opacity: 0, // Initial opacity: 0 (transparent)
+        scale: 0,
+        opacity: 0,
       },
       {
-        scale: 1, // Animate to full size
-        opacity: 1, // Animate to fully visible
-        delay: 0.15, // Delay before starting the animation
-        stagger: 0.01, // Stagger effect for each element
+        scale: 1,
+        opacity: 1,
+        delay: 0.15,
+        stagger: 0.01,
       },
     );
 
@@ -79,9 +79,11 @@ const CalendarAnimations = ({
      * This provides different animations for opening and closing the calendar
      */
     if (transition === 'close') {
-      tl.reverse(2); // Reverse the animation over 2 seconds
+      // Reverse the animation over 2 seconds
+      tl.reverse(2);
     } else {
-      tl.play(); // Play the animation
+      // Play the animation
+      tl.play();
     }
 
     /**
@@ -89,9 +91,9 @@ const CalendarAnimations = ({
      * Prevents memory leaks by ensuring animations are properly disposed
      */
     return () => {
-      tl.kill(); // Clean up the timeline on unmount or dependency change
+      tl.kill();
     };
-  }, [transition, open]); // Dependencies for re-running the animation
+  }, [transition, open]);
 
   /**
    * Render the component with the provided className and children

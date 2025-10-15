@@ -18,9 +18,9 @@ const RatingBar = ({
     className="my-auto flex flex-col justify-center"
     style={{ width: maxWidth }}
   >
-    {/* Background track for the rating bar */}
+    {/** Background track for the rating bar */}
     <div className="flex flex-col justify-center rounded-md bg-neutral-100">
-      {/* Foreground fill showing the rating percentage */}
+      {/** Foreground fill showing the rating percentage */}
       <div
         className="h-2 shrink-0 rounded-md bg-yellow-500"
         style={{ width: `${value}%` }}

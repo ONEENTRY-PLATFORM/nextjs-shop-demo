@@ -58,10 +58,10 @@ const OrderDataTable = ({
 
   return (
     <>
-      {/* Section header for order information */}
+      {/** Section header for order information */}
       <div className="mb-4 font-bold">Order Information</div>
 
-      {/* Map through order form data to display relevant fields */}
+      {/** Map through order form data to display relevant fields */}
       {orderData.formData.map(
         (
           field: {
@@ -116,10 +116,10 @@ const OrderDataTable = ({
         },
       )}
 
-      {/* Section header for payment method */}
+      {/** Section header for payment method */}
       <div className="mt-4 font-bold">Payment Method</div>
 
-      {/* Display payment method title from account localization info */}
+      {/** Display payment method title from account localization info */}
       <div>{account?.localizeInfos?.title}</div>
     </>
   );

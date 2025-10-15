@@ -86,23 +86,23 @@ const FormFieldAnimations = ({
     tl.fromTo(
       ref.current,
       {
-        width: 0, // Initial width: 0 (collapsed)
-        opacity: 0, // Initial opacity: 0 (transparent)
+        width: 0,
+        opacity: 0,
       },
       {
-        width: '100%', // Animate to full width
-        opacity: 1, // Animate to fully visible
-        delay: index / 10 + 0.35, // Stagger effect based on index
+        width: '100%',
+        opacity: 1,
+        delay: index / 10 + 0.35,
       },
     );
-    tl.play(); // Play the animation
+    tl.play();
 
     /**
      * Reverse the animation if transitioning to close
      * This provides a smooth exit animation when the drawer is closing
      */
     if (transition === 'close') {
-      tl.reverse(index / 10 + 0.65); // Reverse with stagger based on index
+      tl.reverse(index / 10 + 0.65);
     }
 
     /**
@@ -110,9 +110,9 @@ const FormFieldAnimations = ({
      * Prevents memory leaks by ensuring animations are properly disposed
      */
     return () => {
-      tl.kill(); // Clean up the timeline on unmount or dependency change
+      tl.kill();
     };
-  }, [transition, open]); // Dependencies for re-running the animation
+  }, [transition, open]);
 
   /**
    * Form stage leaving animations using GSAP
@@ -123,7 +123,7 @@ const FormFieldAnimations = ({
      * Create a new GSAP timeline for stage transition animations
      */
     const tl = gsap.timeline({
-      paused: true, // Create a new GSAP timeline and pause it initially
+      paused: true,
     });
 
     /**
@@ -133,13 +133,13 @@ const FormFieldAnimations = ({
     tl.fromTo(
       ref.current,
       {
-        width: 0, // Initial width: 0 (collapsed)
-        opacity: 0, // Initial opacity: 0 (transparent)
+        width: 0,
+        opacity: 0,
       },
       {
-        width: '100%', // Animate to full width
-        opacity: 1, // Animate to fully visible
-        delay: index / 10 + 0.35, // Stagger effect based on index
+        width: '100%',
+        opacity: 1,
+        delay: index / 10 + 0.35,
       },
     );
 
@@ -148,18 +148,20 @@ const FormFieldAnimations = ({
      * This provides a smooth exit animation when transitioning between form stages
      */
     if (stage === 'leaving' && prevStage === 'none') {
-      tl.reverse(1); // Reverse the animation over 1 second
+      // Reverse the animation over 1 second
+      tl.reverse(1);
     }
-    setPrevStage(stage); // Update the previous stage
+    // Update the previous stage
+    setPrevStage(stage);
 
     /**
      * Clean up function to kill the timeline
      * Prevents memory leaks by ensuring animations are properly disposed
      */
     return () => {
-      tl.kill(); // Clean up the timeline on unmount or dependency change
+      tl.kill();
     };
-  }, [stage]); // Dependency for re-running the animation
+  }, [stage]);
 
   /**
    * Render the component with the provided className and children

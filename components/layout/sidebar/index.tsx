@@ -34,7 +34,7 @@ const SidebarMenu = async ({
 
   return (
     <nav className="flex w-full pr-5">
-      {/* Animated container for the sidebar menu */}
+      {/** Animated container for the sidebar menu */}
       <SidebarAnimations className={''}>
         <ul className="sidebar-menu">
           {Array.isArray(pages) ? (
@@ -47,7 +47,7 @@ const SidebarMenu = async ({
             // Show loader if pages data is not an array
             <SidebarMenuLoader />
           )}
-          {/* Logout menu item that only appears when user is authenticated */}
+          {/** Logout menu item that only appears when user is authenticated */}
           <LogoutMenuItem />
         </ul>
       </SidebarAnimations>

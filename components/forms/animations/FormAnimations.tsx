@@ -75,9 +75,11 @@ const FormAnimations = ({
      * autoAlpha combines opacity and visibility properties for better performance
      */
     tl.from(ref.current, {
-      autoAlpha: 0, // Initial state: hidden
+      // Initial state: hidden
+      autoAlpha: 0,
     }).to(ref.current, {
-      autoAlpha: 1, // Animate to visible state
+      // Animate to visible state
+      autoAlpha: 1,
     });
 
     /**
@@ -85,9 +87,11 @@ const FormAnimations = ({
      * This provides different animations for opening and closing the form
      */
     if (transition === 'close') {
-      tl.reverse(0.5); // Reverse the animation over 0.5 seconds
+      // Reverse the animation over 0.5 seconds
+      tl.reverse(0.5);
     } else {
-      tl.play(); // Play the animation
+      // Play the animation
+      tl.play();
     }
 
     /**
@@ -95,7 +99,7 @@ const FormAnimations = ({
      * Prevents memory leaks by ensuring animations are properly disposed
      */
     return () => {
-      tl.kill(); // Clean up the timeline on unmount or dependency change
+      tl.kill();
     };
   }, [transition, open, isLoading]); // Dependencies for re-running the animation
 

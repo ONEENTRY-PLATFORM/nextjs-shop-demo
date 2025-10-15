@@ -50,23 +50,23 @@ const OptimizedImage = ({
   type?: string;
   loading?: string;
 }): JSX.Element => {
-  // Track image loading state for animations
+  /** Track image loading state for animations */
   const [isImageLoading, setImageLoading] = useState(true);
   const ref = useRef<HTMLImageElement>(null);
 
-  // Extract image URL from source data structure
+  /** Extract image URL from source data structure */
   const optimizedSrc =
     src?.value?.downloadLink || src?.value?.[0]?.downloadLink;
 
-  // Extract low-quality placeholder image for blur effect
+  /** Extract low-quality placeholder image for blur effect */
   const blurDataURL = src?.value?.previewLink?.default?.[0] || '';
 
-  // Show placeholder if no image source is available
+  /** Show placeholder if no image source is available */
   if (!optimizedSrc) {
     return <Placeholder />;
   }
 
-  // Prepare props for Next.js Image component
+  /** Prepare props for Next.js Image component */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const imageProps: any = {
     src: optimizedSrc,
@@ -95,7 +95,7 @@ const OptimizedImage = ({
           : '(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw',
   };
 
-  // Conditionally add placeholder and blurDataURL only when they exist
+  /** Conditionally add placeholder and blurDataURL only when they exist */
   if (blurDataURL) {
     imageProps.placeholder = 'blur';
     imageProps.blurDataURL = blurDataURL;

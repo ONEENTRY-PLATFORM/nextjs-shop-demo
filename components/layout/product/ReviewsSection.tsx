@@ -24,20 +24,20 @@ const ReviewsSection = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
 
   return (
     <div className="flex justify-between overflow-hidden max-md:flex-wrap">
-      {/* Left column: Rating button and reviews list */}
+      {/** Left column: Rating button and reviews list */}
       <div className="flex flex-col">
-        {/* Rating button that toggles the reviews list visibility */}
+        {/** Rating button that toggles the reviews list visibility */}
         <RatingButton
           dict={dict}
           state={state}
           setState={setState}
           {...productRating}
         />
-        {/* Reviews list that shows/hides based on state */}
+        {/** Reviews list that shows/hides based on state */}
         <ReviewsList state={state} />
       </div>
 
-      {/* Right column: Rating block with detailed rating distribution */}
+      {/** Right column: Rating block with detailed rating distribution */}
       <RatingBlock productRating={productRating} state={state} />
     </div>
   );

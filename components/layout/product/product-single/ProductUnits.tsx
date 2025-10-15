@@ -18,11 +18,11 @@ const ProductUnits = ({ units }: { units: number }): JSX.Element => {
 
   return (
     <div className="relative mb-6 box-border flex shrink-0 flex-col ">
-      {/* Display the number of units available */}
+      {/** Display the number of units available */}
       <div className="self-end text-sm text-slate-300">{units} units</div>
-      {/* Progress bar container */}
+      {/** Progress bar container */}
       <div className="z-10 mt-1.5 flex w-full flex-row justify-start rounded-xl bg-zinc-300">
-        {/* Progress bar showing the units level */}
+        {/** Progress bar showing the units level */}
         <div
           className={'mr-auto h-[3px] shrink-0 rounded-xl bg-orange-500'}
           style={{

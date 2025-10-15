@@ -22,38 +22,38 @@ const TableAnimations = ({
   children: ReactNode;
   className: string;
 }): JSX.Element => {
-  // Reference to the DOM element for GSAP animations
+  /** Reference to the DOM element for GSAP animations */
   const ref = useRef(null);
 
-  // GSAP animation hook for table row fade-in transitions
+  /** GSAP animation hook for table row fade-in transitions */
   useGSAP(() => {
-    // Create a GSAP timeline for coordinated animations
+    /** Create a GSAP timeline for coordinated animations */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Select all rows with the 'relative' class for animation
+    /** Select all rows with the 'relative' class for animation */
     const lines =
       ref.current &&
       (ref.current as HTMLDivElement).querySelectorAll('.relative');
 
-    // Animate the rows with staggered fade-in effect
+    /** Animate the rows with staggered fade-in effect */
     tl.to(lines, {
       autoAlpha: 1,
       duration: 0.15,
       stagger: 0.05,
     });
 
-    // Play the animation timeline
+    /** Play the animation timeline */
     tl.play();
 
-    // Cleanup function to kill the timeline on unmount
+    /** Cleanup function to kill the timeline on unmount */
     return () => {
       tl.kill();
     };
   }, []);
 
-  // Render the animated wrapper element
+  /** Render the animated wrapper element */
   return (
     <div ref={ref} className={className}>
       {children}
@@ -72,17 +72,17 @@ const OrdersTableLoader = ({ limit }: LoaderProps): JSX.Element => {
   // Render the table loader with animated rows
   return (
     <TableAnimations className="my-auto flex w-full max-w-[730px] flex-col max-md:max-w-full">
-      {/* Generate skeleton loader rows based on the limit */}
+      {/** Generate skeleton loader rows based on the limit */}
       {Array.from(Array(limit).keys()).map((item) => (
         <div
           key={item}
           className="relative -mb-px flex h-12 border-collapse gap-4 border-y p-4 opacity-0"
         >
-          {/* First column loader - wider to represent date field */}
+          {/** First column loader - wider to represent date field */}
           <div className="animate-loader h-full w-1/2"></div>
-          {/* Second column loader - medium width for price field */}
+          {/** Second column loader - medium width for price field */}
           <div className="animate-loader h-full w-1/4"></div>
-          {/* Third column loader - medium width for status field */}
+          {/** Third column loader - medium width for status field */}
           <div className="animate-loader h-full w-1/4"></div>
         </div>
       ))}

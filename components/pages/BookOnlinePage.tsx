@@ -15,9 +15,9 @@ import type { SimplePageProps } from '@/app/types/global';
 const BookOnlinePage = async ({
   page,
 }: SimplePageProps): Promise<JSX.Element> => {
-  // Check if page exists and has localization information
+  /** Check if page exists and has localization information */
   if (!page || !page.localizeInfos) {
-    // Fallback content if page data is not available
+    /** Fallback content if page data is not available */
     return (
       <div className="flex flex-col pb-5 max-md:max-w-full">
         <h1>Book Online</h1>
@@ -26,7 +26,7 @@ const BookOnlinePage = async ({
     );
   }
 
-  // Extract content from page localizeInfos for rendering
+  /** Extract content from page localizeInfos for rendering */
   const { localizeInfos } = page;
 
   return (

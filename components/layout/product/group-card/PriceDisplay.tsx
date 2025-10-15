@@ -47,15 +47,15 @@ const PriceDisplay = ({
 
   return (
     <div className="mb-5 mr-auto flex gap-2 py-1">
-      {/* Display current price if it exists */}
+      {/** Display current price if it exists */}
       {currentPrice && (
         <div className="grow text-lg font-bold leading-4 text-orange-500">
           {price}
         </div>
       )}
-      {/* Display original price with conditional styling */}
-      {/* If current price exists, show original price as smaller gray text (strikethrough pricing) */}
-      {/* If no current price, show original price as main price in orange */}
+      {/** Display original price with conditional styling */}
+      {/** If current price exists, show original price as smaller gray text (strikethrough pricing) */}
+      {/** If no current price, show original price as main price in orange */}
       <div
         className={
           'leading-4 ' +
