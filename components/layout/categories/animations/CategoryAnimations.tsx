@@ -25,10 +25,10 @@ const CategoryAnimations = ({
   className: string;
   index: number;
 }): JSX.Element => {
-  // Get current transition stage (entering or leaving) from next-transition-router
+  /** Get current transition stage (entering or leaving) from next-transition-router */
   const { stage } = useTransitionState();
 
-  // Reference to the category card element for GSAP animations
+  /** Reference to the category card element for GSAP animations */
   const ref = useRef(null);
 
   /**
@@ -36,12 +36,12 @@ const CategoryAnimations = ({
    * Handles both entering and leaving stage animations with staggered timing
    */
   useGSAP(() => {
-    // Create GSAP timeline for animations
+    /** Create GSAP timeline for animations */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Handle leaving stage animation - scale down and fade out
+    /** Handle leaving stage animation - scale down and fade out */
     if (stage === 'leaving') {
       tl.to(ref.current, {
         autoAlpha: 0,
@@ -51,13 +51,13 @@ const CategoryAnimations = ({
       tl.play();
     }
 
-    // Handle entering stage animation - scale up and fade in
+    /** Handle entering stage animation - scale up and fade in */
     if (stage === 'entering') {
-      // Set initial state before animation
+      /** Set initial state before animation */
       tl.set(ref.current, {
         autoAlpha: 0,
         scale: 0,
-        // Animate to final state with staggered delay based on index
+        /** Animate to final state with staggered delay based on index */
       }).to(ref.current, {
         autoAlpha: 1,
         scale: 1,
@@ -66,7 +66,7 @@ const CategoryAnimations = ({
       tl.play();
     }
 
-    // Cleanup function to kill timeline on unmount
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };

@@ -34,7 +34,7 @@ const CategoryCard = ({
   index: number;
 }): JSX.Element => {
   return (
-    // Wrap category card with animation component for staggered page transition effects
+    /** Wrap category card with animation component for staggered page transition effects */
     <CategoryAnimations
       className={`${baloo.className} block-card group relative flex w-1/4 grow flex-col justify-center overflow-hidden rounded-3xl text-2xl font-bold text-white transition-shadow duration-500 hover:shadow-xl max-md:w-full`}
       index={index}

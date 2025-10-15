@@ -37,10 +37,10 @@ const ProductCard = ({
   dict: IAttributeValues;
   pagesLimit: number;
 }): JSX.Element => {
-  // Extract product data from the product entity
+  /** Extract product data from the product entity */
   const { id, statusIdentifier, attributeValues, localizeInfos } = product;
 
-  // Get product title from localized information
+  /** Get product title from localized information */
   const title = localizeInfos?.title || '';
 
   return (

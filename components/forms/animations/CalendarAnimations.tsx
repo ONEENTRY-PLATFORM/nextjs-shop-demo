@@ -79,10 +79,10 @@ const CalendarAnimations = ({
      * This provides different animations for opening and closing the calendar
      */
     if (transition === 'close') {
-      // Reverse the animation over 2 seconds
+      /** Reverse the animation over 2 seconds */
       tl.reverse(2);
     } else {
-      // Play the animation
+      /** Play the animation */
       tl.play();
     }
 

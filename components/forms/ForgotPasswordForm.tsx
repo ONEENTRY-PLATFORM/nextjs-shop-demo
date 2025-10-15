@@ -32,21 +32,21 @@ export const ForgotPasswordForm = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
-  // Modal context for controlling form modal state
+  /** Modal context for controlling form modal state */
   const { setComponent, setAction } = useContext(OpenDrawerContext);
-  // State for storing error messages
+  /** State for storing error messages */
   const [isError, setError] = useState<string>('');
 
-  // Extract localized text values from the dictionary
+  /** Extract localized text values from the dictionary */
   const { reset_descr, send_text } = dict;
 
-  // Get form data with RTK Query from API for dynamic form fields
+  /** Get form data with RTK Query from API for dynamic form fields */
   const { data, isLoading } = useGetFormByMarkerQuery({
     marker: 'reg',
     lang,
   });
 
-  // Get form fields from Redux state
+  /** Get form fields from Redux state */
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
   /**
@@ -59,31 +59,31 @@ export const ForgotPasswordForm = ({
   const onSubmitFormHandle = async (
     e: FormEvent<HTMLFormElement>,
   ): Promise<void> => {
-    // Prevent default form submission behavior
+    /** Prevent default form submission behavior */
     e.preventDefault();
 
-    // Check if email field exists before proceeding
+    /** Check if email field exists before proceeding */
     if (!fields.email_reg) {
       setError('Email field is missing');
       return;
     }
 
     try {
-      // Generate verification code with API and send to user's email
+      /** Generate verification code with API and send to user's email */
       await api.AuthProvider.generateCode(
         'email',
         fields.email_reg.value,
         'generate_code',
       );
-      // Open Verification form for the next step in password reset process
+      /** Open Verification form for the next step in password reset process */
       setComponent('VerificationForm');
       setAction('checkCode');
     } catch (e: any) {
-      // Set error message from exception
+      /** Set error message from exception */
       setError(e.message);
-      // Handle bad request errors (e.g., invalid email)
+      /** Handle bad request errors (e.g., invalid email) */
       if (e.statusCode === 400) {
-        // Delay opening verification form to show error message first
+        /** Delay opening verification form to show error message first */
         setTimeout(() => {
           setComponent('VerificationForm');
         }, 800);
@@ -91,13 +91,13 @@ export const ForgotPasswordForm = ({
     }
   };
 
-  // Show loader while form data is being fetched
+  /** Show loader while form data is being fetched */
   if (!data || isLoading) {
     return <Loader />;
   }
 
   return (
-    // Form animation wrapper with loading state
+    /* Form animation wrapper with loading state */
     <FormAnimations isLoading={isLoading}>
       {/** Forgot password form with onSubmit handler */}
       <form
@@ -118,7 +118,7 @@ export const ForgotPasswordForm = ({
         <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
           {/** Map through form attributes to render only the email input field */}
           {data?.attributes.map((field: any, index: Key | number) => {
-            // Only render the email registration field for password reset
+            /** Only render the email registration field for password reset */
             if (field.marker === 'email_reg') {
               return (
                 <FormInput key={index} index={index as number} {...field} />

@@ -21,7 +21,7 @@ import type { Locale } from '@/i18n-config';
 import { LanguageEnum } from '../types/enum';
 import { getDictionary } from './dictionaries';
 
-// Fonts settings
+/** Fonts settings */
 const lato = Lato({
   subsets: ['latin'],
   weight: ['300', '400', '700', '900'],

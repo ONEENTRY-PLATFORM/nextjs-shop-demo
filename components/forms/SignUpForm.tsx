@@ -33,26 +33,26 @@ import SubmitButton from './inputs/FormSubmitButton';
  * @returns {JSX.Element}                 SignUp form component with validation and submission handling
  */
 const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
-  // State for managing loading status during form submission
+  /** State for managing loading status during form submission */
   const [loading, setIsLoading] = useState<boolean>(false);
-  // State for storing error messages
+  /** State for storing error messages */
   const [error, setError] = useState<string>('');
 
-  // Authentication context for user authentication
+  /** Authentication context for user authentication */
   const { authenticate } = useContext(AuthContext);
-  // Modal context for controlling form modal state
+  /** Modal context for controlling form modal state */
   const { setOpen, setComponent, setAction } = useContext(OpenDrawerContext);
 
-  // Extract localized text values from the dictionary
+  /** Extract localized text values from the dictionary */
   const { sign_up_text, sign_in_text, create_account_desc } = dict;
 
-  // Get form by marker with RTK Query for dynamic form fields
+  /** Get form by marker with RTK Query for dynamic form fields */
   const { data, isLoading } = useGetFormByMarkerQuery({
     marker: 'reg',
     lang,
   });
 
-  // Get form fields from Redux state
+  /** Get form fields from Redux state */
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
   /**
@@ -63,10 +63,10 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
    * @returns {Promise<void>}                Promise that resolves when the form is submitted
    */
   const onSignUp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    // Prevent default form submission behavior
+    /** Prevent default form submission behavior */
     e.preventDefault();
 
-    // Required form fields array for registration validation
+    /** Required form fields array for registration validation */
     const formFields = [
       'email_reg',
       'password_reg',
@@ -76,20 +76,20 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
       'email_notifications',
     ];
 
-    // Validate all form fields before submission
+    /** Validate all form fields before submission */
     const canSubmit = Object.keys(fields).reduce((isValid, field) => {
-      // If any field is invalid, return false
+      /** If any field is invalid, return false */
       if (!isValid) {
         return false;
       }
-      // Check if the current field is valid
+      /** Check if the current field is valid */
       const fieldData = fields[field as keyof typeof fields];
       return fieldData ? fieldData.valid : false;
     }, true);
 
-    // Process form submission only if all fields are valid
+    /** Process form submission only if all fields are valid */
     if (canSubmit) {
-      // Prepare form data for API submission by mapping fields
+      /** Prepare form data for API submission by mapping fields */
       const formData = Object.keys(fields).reduce(
         (
           arr: Array<{
@@ -99,15 +99,15 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           }>,
           field,
         ) => {
-          // Get field value from Redux state
+          /** Get field value from Redux state */
           const fieldValue = fields[field as keyof typeof fields];
-          // Create data structure for each field
+          /** Create data structure for each field */
           const candidate = {
             marker: field,
             type: 'string',
             value: fieldValue ? fieldValue.value : '',
           };
-          // Include only required fields in form data
+          /** Include only required fields in form data */
           if (formFields.includes(field)) {
             arr.push(candidate);
           }
@@ -116,14 +116,14 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         [],
       );
 
-      // Add email notifications data to form
+      /** Add email notifications data to form */
       formData.push({
         marker: 'email_notifications',
         type: 'string',
         value: fields.email_reg?.value || '',
       });
 
-      // Prepare sign up data structure for API call
+      /** Prepare sign up data structure for API call */
       const data: ISignUpData = {
         formIdentifier: 'reg',
         authData: [
@@ -138,19 +138,19 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         },
       };
 
-      // Set loading state to indicate form submission in progress
+      /** Set loading state to indicate form submission in progress */
       setIsLoading(true);
 
-      // Attempt to sign up user via API AuthProvider
+      /** Attempt to sign up user via API AuthProvider */
       try {
-        // Get language code for API request
+        /** Get language code for API request */
         const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-        // Submit registration data to the API
+        /** Submit registration data to the API */
         const res = await api.AuthProvider.signUp('email', data, langCode);
 
-        // Handle successful registration based on user activation status
+        /** Handle successful registration based on user activation status */
         if (res && res.isActive) {
-          // Automatically log in and authenticate active user
+          /** Automatically log in and authenticate active user */
           await logInUser({
             login: res.identifier,
             password: fields.password_reg?.value || '',
@@ -159,30 +159,30 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         }
         // Handle inactive user requiring verification
         else if (res && !res.isActive && !typeError(res)) {
-          // Open verification form for new user activation
+          /** Open verification form for new user activation */
           setOpen(true);
           setComponent('VerificationForm');
           setAction('activateUser');
         }
 
-        // Clear previous errors
+        /** Clear previous errors */
         setError('');
-        // Handle API error responses
+        /** Handle API error responses */
         if (typeError(res)) {
           setError('Error ' + res.status);
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (e: any) {
-        // Set error message from exception
+        /** Set error message from exception */
         setError(e.message);
       }
-      // Reset loading state after form submission
+      /** Reset loading state after form submission */
       setIsLoading(false);
     }
   };
 
   return (
-    // Form animation wrapper with loading state
+    /* Form animation wrapper with loading state */
     <FormAnimations isLoading={isLoading}>
       {/** Registration form with onSubmit handler */}
       <form
@@ -213,7 +213,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {/** Map through form attributes to render input fields */}
           {data?.attributes.map((field: IAttributes, index: Key | number) => {
-            // Exclude email notifications field from regular input rendering
+            /** Exclude email notifications field from regular input rendering */
             if (field.marker !== 'email_notifications') {
               return (
                 <FormInput

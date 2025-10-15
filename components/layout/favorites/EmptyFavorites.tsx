@@ -20,11 +20,11 @@ const EmptyFavorites = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
-  // Extract localized text values from the dictionary
+  /** Extract localized text values from the dictionary */
   const { empty_favorites_plug, go_to_shop } = dict;
 
   return (
-    // Fade transition wrapper for smooth animation when displaying the component
+    /** Fade transition wrapper for smooth animation when displaying the component */
     <FadeTransition
       className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800"
       index={2}

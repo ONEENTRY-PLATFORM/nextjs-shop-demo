@@ -23,13 +23,13 @@ const CategoriesGridAnimations = ({
   children: ReactNode;
   className: string;
 }): JSX.Element => {
-  // Get current transition stage (entering, leaving, none) from next-transition-router
+  /** Get current transition stage (entering, leaving, none) from next-transition-router */
   const { stage } = useTransitionState();
 
-  // Track previous stage to determine transition direction
+  /** Track previous stage to determine transition direction */
   const [prevStage, setPrevStage] = useState<string>('');
 
-  // Reference to the categories grid element for GSAP animations
+  /** Reference to the categories grid element for GSAP animations */
   const ref = useRef(null);
 
   /**
@@ -37,13 +37,13 @@ const CategoriesGridAnimations = ({
    * Handles fade-out animation when navigating away from the categories page
    */
   useGSAP(() => {
-    // Create GSAP timeline for animations
+    /** Create GSAP timeline for animations */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Execute leaving animation only when transitioning from 'none' to 'leaving'
-    // This ensures the animation plays when navigating away from the categories page
+    /** Execute leaving animation only when transitioning from 'none' to 'leaving' */
+    /** This ensures the animation plays when navigating away from the categories page */
     if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {
         autoAlpha: 0,
@@ -51,10 +51,10 @@ const CategoriesGridAnimations = ({
       tl.play();
     }
 
-    // Update previous stage to current stage for next render
+    /** Update previous stage to current stage for next render */
     setPrevStage(stage);
 
-    // Cleanup function to kill timeline on unmount
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };

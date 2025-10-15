@@ -23,7 +23,7 @@ const FadeTransition = ({
   index,
 }: AnimationsProps): JSX.Element => {
   const ref = useRef(null);
-  // on stage enter animations
+  /** on stage enter animations */
   useGSAP(() => {
     const tl = gsap
       .timeline()

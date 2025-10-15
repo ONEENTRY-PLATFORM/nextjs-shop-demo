@@ -21,7 +21,7 @@ export const getProductById = async (
   error?: IError;
   product?: IProductsEntity;
 }> => {
-  // Validate inputs
+  /** Validate inputs */
   if (!id || id <= 0) {
     return {
       isError: true,
@@ -44,7 +44,7 @@ export const getProductById = async (
 
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  // Validate language code
+  /** Validate language code */
   if (!langCode) {
     return {
       isError: true,

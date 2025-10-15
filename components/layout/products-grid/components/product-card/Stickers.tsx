@@ -16,8 +16,8 @@ const Stickers = ({
 }: {
   attributeValues: AttributeType;
 }): JSX.Element[] => {
-  // Map through stickers array and create Sticker component for each sticker
-  // If stickers don't exist in attributeValues, use empty array as fallback
+  /** Map through stickers array and create Sticker component for each sticker */
+  /** If stickers don't exist in attributeValues, use empty array as fallback */
   return [attributeValues?.stickers || []].map(
     (
       sticker: {

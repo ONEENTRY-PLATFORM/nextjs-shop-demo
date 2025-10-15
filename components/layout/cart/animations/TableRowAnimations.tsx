@@ -24,7 +24,7 @@ const TableRowAnimations = ({
   className,
   index,
 }: AnimationsProps): JSX.Element => {
-  // Reference to the table row wrapper element for GSAP animations
+  /** Reference to the table row wrapper element for GSAP animations */
   const ref = useRef(null);
 
   /**

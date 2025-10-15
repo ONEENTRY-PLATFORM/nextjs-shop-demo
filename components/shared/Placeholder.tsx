@@ -12,7 +12,7 @@ import { memo } from 'react';
  */
 const Placeholder = ({ className }: { className?: string }): JSX.Element => {
   return (
-    // Container div with background and optional custom styling
+    /** Container div with background and optional custom styling */
     <div
       className={
         'relative flex size-full flex-col items-center justify-center overflow-hidden rounded-xl bg-slate-50 ' +

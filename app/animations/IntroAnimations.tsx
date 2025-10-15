@@ -13,7 +13,7 @@ import { useRef } from 'react';
 const IntroAnimations = (): JSX.Element => {
   const ref = useRef(null);
 
-  // Intro animations
+  /** Intro animations */
   useGSAP(() => {
     const tl = gsap
       .timeline()

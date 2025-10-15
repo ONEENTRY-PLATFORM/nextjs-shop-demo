@@ -23,22 +23,22 @@ const SidebarMenuItem = ({
   menuItem: IMenusPages & { isActive: boolean };
   lang: string;
 }): JSX.Element => {
-  // Get current pathname to determine active menu item
+  /** Get current pathname to determine active menu item */
   const paths = usePathname();
   const pathNames = paths.split('/').filter((path: unknown) => path);
 
-  // Return empty fragment if no menu item is provided
+  /** Return empty fragment if no menu item is provided */
   if (!menuItem) {
     return <></>;
   }
 
-  // Extract page URL and localized information from menu item
+  /** Extract page URL and localized information from menu item */
   const { pageUrl, localizeInfos } = menuItem;
 
-  // Get the appropriate icon component based on page URL
+  /** Get the appropriate icon component based on page URL */
   const Icon = icons[pageUrl as keyof typeof icons];
 
-  // Determine if this menu item is currently active based on URL
+  /** Determine if this menu item is currently active based on URL */
   const isActive = menuItem.pageUrl === pathNames[1];
 
   return (

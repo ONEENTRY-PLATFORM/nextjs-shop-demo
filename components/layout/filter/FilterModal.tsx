@@ -34,7 +34,7 @@ const FilterModal = ({
   };
 }): JSX.Element => {
   return (
-    // Animate the modal entrance
+    /** Animate the modal entrance */
     <FilterModalAnimations>
       <div
         id="modalBody"

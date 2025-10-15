@@ -44,21 +44,21 @@ const PaymentMethodAnimations = ({
       return;
     }
 
-    // Set the transform origin for animations
+    /** Set the transform origin for animations */
     gsap.set(ref.current, {
       transformOrigin: '0 0',
     });
 
-    // Create a timeline for the animation sequence
+    /** Create a timeline for the animation sequence */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Find the cart data element to animate
+    /** Find the cart data element to animate */
     const cartData = (ref.current as HTMLDivElement).querySelector('#cartData');
 
     if (isActive) {
-      // Animate height from fixed to auto when active
+      /** Animate height from fixed to auto when active */
       tl.fromTo(
         ref.current,
         {
@@ -68,18 +68,18 @@ const PaymentMethodAnimations = ({
           height: 'auto',
         },
       )
-        // Fade in cart data with delay
+        /** Fade in cart data with delay */
         .to(cartData, {
           autoAlpha: 1,
           delay: -0.5,
         })
         .play();
     } else {
-      // Animate height to fixed value when inactive
+      /** Animate height to fixed value when inactive */
       tl.to(ref.current, {
         height: 110,
       })
-        // Fade out cart data with delay
+        /** Fade out cart data with delay */
         .to(cartData, {
           autoAlpha: 0,
           delay: -0.5,
@@ -87,7 +87,7 @@ const PaymentMethodAnimations = ({
         .play();
     }
 
-    // Cleanup function to kill timeline on unmount
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };
@@ -102,12 +102,12 @@ const PaymentMethodAnimations = ({
       return;
     }
 
-    // Create a timeline for stage transition animations
+    /** Create a timeline for stage transition animations */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Animate opacity when leaving the initial stage
+    /** Animate opacity when leaving the initial stage */
     if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {
         autoAlpha: 0,
@@ -115,10 +115,10 @@ const PaymentMethodAnimations = ({
       }).play();
     }
 
-    // Update previous stage for comparison
+    /** Update previous stage for comparison */
     setPrevStage(stage);
 
-    // Cleanup function to kill timeline on unmount
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };

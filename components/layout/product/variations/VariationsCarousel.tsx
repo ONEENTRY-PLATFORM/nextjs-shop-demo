@@ -29,17 +29,17 @@ const VariationsCarousel = ({
   total?: number;
   lang: string;
 }): JSX.Element => {
-  // State to track the currently selected product variation
+  /** State to track the currently selected product variation */
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  // If no items or invalid total, render empty fragment
+  /** If no items or invalid total, render empty fragment */
   if (!items || !total || total < 1) {
     return <></>;
   }
 
-  // Determine if carousel mode is needed (more than 2 items)
+  /** Determine if carousel mode is needed (more than 2 items) */
   const isCarousel = total > 2;
-  // Set container padding class based on carousel mode
+  /** Set container padding class based on carousel mode */
   const containerClass = isCarousel ? 'px-16 max-md:px-8' : '';
 
   return (
@@ -50,7 +50,7 @@ const VariationsCarousel = ({
       }
     >
       {!isCarousel ? (
-        // Render simple grid for 2 or fewer items
+        /** Render simple grid for 2 or fewer items */
         items.map((item: IProductsEntity, idx: number) => (
           <CarouselItem
             key={idx}
@@ -62,7 +62,7 @@ const VariationsCarousel = ({
           />
         ))
       ) : (
-        // Render carousel for more than 2 items
+        /** Render carousel for more than 2 items */
         <Carousel
           infinite
           showSlidesBeforeInit={false}

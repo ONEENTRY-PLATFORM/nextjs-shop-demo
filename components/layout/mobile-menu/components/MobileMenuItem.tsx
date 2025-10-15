@@ -24,23 +24,23 @@ function MobileMenuItem({
   item: IMenusPages;
   lang: string;
 }): JSX.Element {
-  // Access the setOpen function from OpenDrawerContext to control menu visibility
+  /** Access the setOpen function from OpenDrawerContext to control menu visibility */
   const { setOpen } = useContext(OpenDrawerContext);
 
-  // Check if the menu item has child items (submenu)
+  /** Check if the menu item has child items (submenu) */
   const hasChild = Array.isArray(item.children) && item.children.length > 0;
 
-  // Construct the href for the menu item based on its page URL
+  /** Construct the href for the menu item based on its page URL */
   const href =
     item.pageUrl === 'category'
       ? '/' + lang + '/shop/category/'
       : '/' + lang + '/shop/category/' + item.pageUrl;
 
-  // State to control the visibility of submenu items
+  /** State to control the visibility of submenu items */
   const [openSubmenu, setOpenSubmenu] = useState(false);
 
   return (
-    // List item container with styling for mobile menu items
+    /* List item container with styling for mobile menu items */
     <li
       key={item.localizeInfos.menuTitle}
       className={
@@ -53,9 +53,9 @@ function MobileMenuItem({
         href={href}
         prefetch={true}
         onClick={(e) => {
-          // Prevent event from bubbling up to parent elements
+          /** Prevent event from bubbling up to parent elements */
           e.stopPropagation();
-          // Close the mobile menu when a link is clicked
+          /** Close the mobile menu when a link is clicked */
           setOpen(false);
         }}
       >
@@ -66,10 +66,10 @@ function MobileMenuItem({
         {hasChild && (
           <button
             onClick={(e) => {
-              // Prevent default button behavior and event bubbling
+              /** Prevent default button behavior and event bubbling */
               e.preventDefault();
               e.stopPropagation();
-              // Toggle the submenu visibility state
+              /** Toggle the submenu visibility state */
               setOpenSubmenu(!openSubmenu);
             }}
             className="ml-auto"

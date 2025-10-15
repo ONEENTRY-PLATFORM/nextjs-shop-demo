@@ -16,31 +16,31 @@ const AvailabilityFilter = memo(
     const pathname = usePathname();
     const { replace } = useRouter();
 
-    // Handle useSearchParams in a try/catch to prevent build errors
-    // This is necessary because useSearchParams may not be available during SSR
+    /** Handle useSearchParams in a try/catch to prevent build errors */
+    /** This is necessary because useSearchParams may not be available during SSR */
     let params: URLSearchParams;
     try {
       const searchParams = useSearchParams();
       params = new URLSearchParams(searchParams?.toString() || '');
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      // If useSearchParams fails (e.g. during SSR), create empty params
+      /** If useSearchParams fails (e.g. during SSR), create empty params */
       params = new URLSearchParams();
     }
 
-    // Initialize availability state based on the 'in_stock' URL parameter
-    // If the parameter exists and equals 'true', set initial state to true
+    /** Initialize availability state based on the 'in_stock' URL parameter */
+    /** If the parameter exists and equals 'true', set initial state to true */
     const [available, setAvailability] = useState<boolean>(
       params.get('in_stock') === 'true',
     );
 
-    // Toggle the availability filter state when the checkbox is changed
+    /** Toggle the availability filter state when the checkbox is changed */
     const handleAvailabilityChange = useCallback(() => {
       setAvailability(!available);
     }, [available]);
 
-    // Update the URL query parameters whenever the availability state changes
-    // This creates a new URL with the updated parameters and navigates to it
+    /** Update the URL query parameters whenever the availability state changes */
+    /** This creates a new URL with the updated parameters and navigates to it */
     useEffect(() => {
       if (available) {
         params.set('in_stock', 'true');
@@ -48,7 +48,7 @@ const AvailabilityFilter = memo(
         params.delete('in_stock');
       }
 
-      // Only update URL if we have pathname to prevent potential errors
+      /** Only update URL if we have pathname to prevent potential errors */
       if (pathname) {
         replace(`${pathname}?${params.toString()}`);
       }

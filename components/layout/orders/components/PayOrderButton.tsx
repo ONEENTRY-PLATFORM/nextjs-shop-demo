@@ -25,14 +25,14 @@ const PayOrderButton = ({
   loading: boolean;
   title: string;
 }): JSX.Element => {
-  // Convert language shortcode to enum value for API requests
+  /** Convert language shortcode to enum value for API requests */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  // Get payment session creation function and loading state from custom hook
+  /** Get payment session creation function and loading state from custom hook */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { createSession, isLoading }: any = useCreateOrder({ langCode });
 
-  // Render the payment button
+  /* Render the payment button */
   return (
     <button
       onClick={() => createSession(id)}

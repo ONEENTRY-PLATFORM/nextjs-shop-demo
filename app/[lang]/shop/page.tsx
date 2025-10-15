@@ -117,14 +117,14 @@ export async function generateMetadata({
   const { handle, lang } = await params;
   const { isError, page } = await getPageByUrl('shop', lang);
 
-  // Return 404 page if page not found or an error occurred
+  /** Return 404 page if page not found or an error occurred */
   if (isError || !page) {
     return notFound();
   }
 
   const { localizeInfos, isVisible, attributeValues } = page;
 
-  // Return metadata object
+  /** Return metadata object */
   return generatePageMetadata({
     handle: handle,
     title: localizeInfos.title,

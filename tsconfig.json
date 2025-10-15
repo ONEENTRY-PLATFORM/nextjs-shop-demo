@@ -28,7 +28,6 @@
         "./*"
       ]
     },
-    // Более строгие правила типизации
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictBindCallApply": true,

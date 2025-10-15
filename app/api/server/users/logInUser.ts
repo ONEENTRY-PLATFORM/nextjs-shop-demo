@@ -39,7 +39,7 @@ export const logInUser = async ({
     if (result && result.accessToken && result.refreshToken) {
       return { data: result };
     }
-    // Handle case where result exists but doesn't have required tokens
+    /** Handle case where result exists but doesn't have required tokens */
     return { error: 'Authentication failed' };
   } catch (error) {
     const apiError = handleApiError('auth', error);

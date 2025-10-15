@@ -12,11 +12,11 @@ import HistoryBack from './HistoryBack';
  * @returns {JSX.Element}                 Filter header with navigation and title elements
  */
 const FilterHeader = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
-  // Extract the filter button text from the dictionary
+  /** Extract the filter button text from the dictionary */
   const { open_filters_button } = dict;
 
   return (
-    // Header container with background styling and padding
+    /** Header container with background styling and padding */
     <header className="flex w-full flex-col justify-center whitespace-nowrap bg-[#F6F7F9] p-8 text-2xl font-bold text-neutral-600 max-md:px-6 max-md:py-4">
       <div className="flex justify-between gap-5">
         {/** Back navigation button */}

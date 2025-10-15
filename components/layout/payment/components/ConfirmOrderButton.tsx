@@ -27,7 +27,7 @@ const ConfirmOrderButton = ({
   isLoading: boolean;
   onConfirmOrder: () => Promise<void>;
 }): JSX.Element => {
-  // Extract localized text values from the dictionary
+  /** Extract localized text values from the dictionary */
   const { apply_button_placeholder, pay_with_stripe } = dict;
 
   return (

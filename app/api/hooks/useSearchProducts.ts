@@ -30,7 +30,7 @@ export const useSearchProducts = ({
   const [products, setProducts] = useState<IProductsEntity[]>([]);
   const [refetch, setRefetch] = useState(false);
 
-  // search products on data change
+  /** search products on data change */
   useEffect(() => {
     if (!name) {
       return;

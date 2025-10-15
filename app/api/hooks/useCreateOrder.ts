@@ -73,7 +73,7 @@ export const useCreateOrder = ({
   const onConfirmOrder = async (): Promise<void> => {
     setIsLoading(true);
     if (order?.formIdentifier && order?.paymentAccountIdentifier) {
-      // prepare order data
+      /** prepare order data */
       const orderFormData = order.formData
         .slice()
         .filter((element) => element.marker !== 'time')
@@ -86,7 +86,7 @@ export const useCreateOrder = ({
         });
 
       try {
-        // Create order with Orders API
+        /** Create order with Orders API */
         const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
           'order',
           {
@@ -99,12 +99,12 @@ export const useCreateOrder = ({
           langCode,
         );
 
-        // remove all ordered products from cart
+        /** remove all ordered products from cart */
         order.products.forEach((product: IOrderProductData) => {
           dispatch(removeProduct(product.productId));
         });
 
-        // remove order
+        /** remove order */
         dispatch(removeOrder());
 
         if (paymentAccountIdentifier !== 'cash') {

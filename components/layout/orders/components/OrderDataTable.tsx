@@ -39,22 +39,22 @@ const OrderDataTable = ({
   data: IOrderByMarkerEntity;
   lang: string;
 }): JSX.Element => {
-  // Show loader if data or settings are not available
+  /** Show loader if data or settings are not available */
   if (!data || !settings) {
     return <Loader />;
   }
 
-  // Extract relevant order data
+  /** Extract relevant order data */
   const { formData, statusIdentifier, totalSum, paymentAccountLocalizeInfos } =
     data;
 
-  // Format the total amount using the UsePrice utility
+  /** Format the total amount using the UsePrice utility */
   const formattedTotal = UsePrice({
     amount: totalSum,
     lang,
   });
 
-  // Extract localized titles from settings
+  /** Extract localized titles from settings */
   const {
     status_of_payment_title,
     payment_account_title,
@@ -64,7 +64,7 @@ const OrderDataTable = ({
     delivery_time_title,
   } = settings;
 
-  // Render the order data table
+  /** Render the order data table */
   return (
     <div className="flex flex-col gap-3">
       {/* Top divider line */}
@@ -72,7 +72,7 @@ const OrderDataTable = ({
 
       {/* Map through form data to display address, date, and time fields */}
       {formData.map((field: IOrderField, i: Key) => {
-        // Display order address field
+        /** Display order address field */
         if (field.marker === 'order_address') {
           return (
             <div key={i} className="flex gap-2">
@@ -81,7 +81,7 @@ const OrderDataTable = ({
           );
         }
 
-        // Display delivery date field with formatted date
+        /** Display delivery date field with formatted date */
         if (field.marker === 'date') {
           const date = UseDate({
             fullDate: field.value.fullDate,
@@ -95,7 +95,7 @@ const OrderDataTable = ({
           );
         }
 
-        // Display delivery time field
+        /** Display delivery time field */
         if (field.marker === 'time') {
           return (
             <div key={i} className="flex gap-2">
@@ -104,7 +104,7 @@ const OrderDataTable = ({
           );
         }
 
-        // Skip unrecognized fields
+        /** Skip unrecognized fields */
         return null;
       })}
 

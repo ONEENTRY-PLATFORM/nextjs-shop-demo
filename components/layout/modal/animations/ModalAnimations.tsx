@@ -22,42 +22,42 @@ const ModalAnimations = ({
   children: ReactNode;
   component: string;
 }): JSX.Element => {
-  // Access the modal state from the OpenDrawerContext
+  /** Access the modal state from the OpenDrawerContext */
   const { open, transition, setOpen, setTransition } =
     useContext(OpenDrawerContext);
-  // Reference to the DOM element for GSAP animations
+  /** Reference to the DOM element for GSAP animations */
   const ref = useRef(null);
 
-  // GSAP animation hook for modal open/close transitions
+  /** GSAP animation hook for modal open/close transitions */
   useGSAP(() => {
-    // Skip animations if ref is not available or modal is not open
+    /** Skip animations if ref is not available or modal is not open */
     if (!ref.current || !open) {
       return;
     }
 
-    // Create a GSAP timeline for coordinated animations
+    /** Create a GSAP timeline for coordinated animations */
     const tl = gsap.timeline({
       paused: true,
-      // Reset transition state when animation completes
+      /** Reset transition state when animation completes */
       onComplete: () => {
         setTransition('');
       },
-      // Close modal and reset transition state when reverse animation completes
+      /** Close modal and reset transition state when reverse animation completes */
       onReverseComplete: () => {
         setOpen(false);
         setTransition('');
       },
     });
 
-    // Select modal background and body elements for animation
+    /** Select modal background and body elements for animation */
     const modalBg = (ref.current as HTMLDivElement).querySelector('#modalBg');
     const modalBody = (ref.current as HTMLDivElement).querySelector(
       '#modalBody',
     );
 
-    // Handle closing animation
+    /** Handle closing animation */
     if (transition === 'close') {
-      // Different animation duration for CalendarForm component
+      /** Different animation duration for CalendarForm component */
       const duration = component !== 'CalendarForm' ? 0.5 : 1.5;
       tl.to([modalBg, modalBody], {
         scaleX: 1,
@@ -82,18 +82,18 @@ const ModalAnimations = ({
       tl.play();
     }
 
-    // Cleanup function to kill the timeline on unmount
+    /** Cleanup function to kill the timeline on unmount */
     return () => {
       tl.kill();
     };
   }, [open, transition]);
 
-  // Don't render anything if the modal is not open
+  /** Don't render anything if the modal is not open */
   if (!open) {
     return <></>;
   }
 
-  // Render the animated modal wrapper
+  /** Render the animated modal wrapper */
   return (
     <div ref={ref} className="fixed z-50 flex h-screen w-full">
       {children}

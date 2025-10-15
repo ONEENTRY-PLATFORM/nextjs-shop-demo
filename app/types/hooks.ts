@@ -11,10 +11,10 @@ import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces'
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 
-// Generic type for API responses
+/** Generic type for API responses */
 export type ApiResponse<T> = T | IError;
 
-// Generic hook response type
+/** Generic hook response type */
 export interface UseApiHook<T> {
   data: T | null;
   isLoading: boolean;
@@ -22,7 +22,7 @@ export interface UseApiHook<T> {
   refetch: () => void;
 }
 
-// Specific hook response types
+/** Specific hook response types */
 export type UseProductById = UseApiHook<IProductsEntity>;
 export type UseProductsByIds = UseApiHook<IProductsEntity[]>;
 export type UseBlockByMarker = UseApiHook<IBlockEntity>;
@@ -34,5 +34,5 @@ export type UseAccounts = UseApiHook<IAccountsEntity[]>;
 export type UseOrderStorageByMarker = UseApiHook<IOrdersEntity>;
 export type UseSingleOrder = UseApiHook<IOrderByMarkerEntity>;
 
-// Generic hook function type
+/** Generic hook function type */
 export type ApiHookFunction<T, P> = (params: P) => UseApiHook<T>;

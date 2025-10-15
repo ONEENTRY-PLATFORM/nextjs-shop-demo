@@ -28,7 +28,7 @@ export default function TransitionProvider({
           return;
         }
 
-        // Check if we're in browser environment before accessing window
+        /** Check if we're in browser environment before accessing window */
         if (typeof window === 'undefined') {
           next();
           return;
@@ -56,7 +56,7 @@ export default function TransitionProvider({
           return;
         }
 
-        // Check if we're in browser environment before accessing window
+        /** Check if we're in browser environment before accessing window */
         if (typeof window === 'undefined') {
           next();
           return;

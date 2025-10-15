@@ -17,7 +17,7 @@ const PriceToInput = ({
   setPrice: Dispatch<SetStateAction<number>>;
 }): JSX.Element => {
   return (
-    // Input field for maximum price with number type
+    /* Input field for maximum price with number type */
     <input
       type="number"
       value={price}

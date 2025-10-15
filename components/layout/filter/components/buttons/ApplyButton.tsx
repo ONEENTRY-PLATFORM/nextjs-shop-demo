@@ -15,13 +15,13 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
  * @returns {JSX.Element}                 ApplyButton component with localized text
  */
 const ApplyButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
-  // Get the transition setter from the OpenDrawerContext to control modal state
+  /** Get the transition setter from the OpenDrawerContext to control modal state */
   const { setTransition } = useContext(OpenDrawerContext);
-  // Extract the apply button text from the dictionary
+  /** Extract the apply button text from the dictionary */
   const apply_button_placeholder = dict?.apply_button_placeholder;
 
   return (
-    // Apply button with styling and click handler to close the modal
+    /* Apply button with styling and click handler to close the modal */
     <button
       onClick={() => setTransition('close')}
       className="btn btn-xl btn-primary w-full"

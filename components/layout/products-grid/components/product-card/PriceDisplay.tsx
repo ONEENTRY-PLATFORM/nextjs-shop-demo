@@ -26,16 +26,16 @@ const PriceDisplay = ({
   };
   lang: string;
 }): JSX.Element => {
-  // Extract current (sale) price and original price from attributes
+  /** Extract current (sale) price and original price from attributes */
   const currentPrice = attributeValues?.sale?.value || 0;
   const originalPrice = attributeValues?.price?.value || 0;
 
-  // If no prices are available, return empty fragment
+  /** If no prices are available, return empty fragment */
   if (!currentPrice && !originalPrice) {
     return <></>;
   }
 
-  // Format prices with Intl.NumberFormat based on current language
+  /** Format prices with Intl.NumberFormat based on current language */
   const newPrice = UsePrice({ amount: currentPrice, lang });
   const oldPrice = UsePrice({
     amount: originalPrice,

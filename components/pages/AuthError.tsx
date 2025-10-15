@@ -14,7 +14,7 @@ import SignInButton from '../shared/SignInButton';
  * @returns {JSX.Element}                 AuthError page with error code, message, and sign-in button
  */
 const AuthError = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
-  // Extract the authentication required text from the dictionary
+  /** Extract the authentication required text from the dictionary */
   const { auth_required_text } = dict;
 
   return (

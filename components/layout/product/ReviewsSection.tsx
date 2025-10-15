@@ -19,7 +19,7 @@ import ReviewsList from './reviews-group/ReviewsList';
  * @returns {JSX.Element}                 Reviews section component with rating information and reviews list.
  */
 const ReviewsSection = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
-  // State to control the visibility of the reviews list
+  /** State to control the visibility of the reviews list */
   const [state, setState] = useState(false);
 
   return (

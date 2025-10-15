@@ -27,13 +27,13 @@ const BlockCardAnimations = ({
   className: string;
   index: number;
 }): JSX.Element => {
-  // Get current transition stage from next-transition-router (entering, leaving, or none)
+  /** Get current transition stage from next-transition-router (entering, leaving, or none) */
   const { stage } = useTransitionState();
 
-  // State to track the previous transition stage for comparison
+  /** State to track the previous transition stage for comparison */
   const [prevStage, setPrevStage] = useState('');
 
-  // Reference to the DOM element for applying GSAP animations
+  /** Reference to the DOM element for applying GSAP animations */
   const ref = useRef<any>(null);
 
   /**
@@ -42,12 +42,12 @@ const BlockCardAnimations = ({
    * Only runs once on component mount due to empty dependency array
    */
   useGSAP(() => {
-    // Create a GSAP timeline that is initially paused
+    /** Create a GSAP timeline that is initially paused */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Animate card entrance when in initial 'none' stage
+    /** Animate card entrance when in initial 'none' stage */
     if (stage === 'none' && prevStage === '') {
       tl.set(ref.current, {
         scale: 0, // Start scaled down to 0
@@ -62,7 +62,7 @@ const BlockCardAnimations = ({
 
     tl.play(); // Play the entrance animation timeline
 
-    // Cleanup function to kill timeline on component unmount
+    /** Cleanup function to kill timeline on component unmount */
     return () => {
       tl.kill();
     };
@@ -74,10 +74,10 @@ const BlockCardAnimations = ({
    * Runs when stage changes due to stage in dependency array
    */
   useGSAP(() => {
-    // Create a GSAP timeline for stage-based animations
+    /** Create a GSAP timeline for stage-based animations */
     const tl = gsap.timeline();
 
-    // Animate card exit when transitioning from 'none' to 'leaving' stage
+    /** Animate card exit when transitioning from 'none' to 'leaving' stage */
     if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {
         autoAlpha: 0, // Fade out to hidden
@@ -87,7 +87,7 @@ const BlockCardAnimations = ({
       });
     }
 
-    // Reveal images when transitioning from 'entering' to 'none' stage
+    /** Reveal images when transitioning from 'entering' to 'none' stage */
     if (stage === 'none' && prevStage === 'entering') {
       tl.set(ref.current?.querySelectorAll('img'), {
         autoAlpha: 0, // Initially hide all images
@@ -98,16 +98,16 @@ const BlockCardAnimations = ({
       });
     }
 
-    // Update previous stage to current stage for next comparison
+    /** Update previous stage to current stage for next comparison */
     setPrevStage(stage);
 
-    // Cleanup function to kill timeline on component unmount or stage change
+    /** Cleanup function to kill timeline on component unmount or stage change */
     return () => {
       tl.kill();
     };
   }, [stage]);
 
-  // Render the animation wrapper with provided className and children
+  /** Render the animation wrapper with provided className and children */
   return (
     <div className={className} ref={ref}>
       {children}

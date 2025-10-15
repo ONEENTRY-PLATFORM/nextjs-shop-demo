@@ -34,16 +34,16 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
   title,
   lang,
 }: RepeatOrderButtonProps): JSX.Element => {
-  // Convert language shortcode to enum value for API requests
+  /** Convert language shortcode to enum value for API requests */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  // Get router instance for navigation with transitions
+  /** Get router instance for navigation with transitions */
   const router = useTransitionRouter();
 
-  // Get dispatch function for Redux actions
+  /** Get dispatch function for Redux actions */
   const dispatch = useAppDispatch();
 
-  // Extract products from order data
+  /** Extract products from order data */
   const { products } = data;
 
   /**
@@ -56,11 +56,11 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
    * @returns {Promise<void>} resolves when all products are processed and user is redirected
    */
   const repeatOrderHandle = async (): Promise<void> => {
-    // Filter out product with ID 83 and create promises to fetch each product
+    /** Filter out product with ID 83 and create promises to fetch each product */
     const productPromises = products
       .filter((p: any) => p.id !== 83)
       .map(async (p: any) => {
-        // Fetch product details by ID
+        /** Fetch product details by ID */
         const { product, isError } = await getProductById(
           Number(p.id),
           langCode,
@@ -68,7 +68,7 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
         if (isError || !product) {
           return;
         }
-        // Add fetched product to cart with specified quantity
+        /** Add fetched product to cart with specified quantity */
         dispatch(
           addProductToCart({
             id: product.id,
@@ -79,14 +79,14 @@ const RepeatOrderButton: FC<RepeatOrderButtonProps> = ({
         return product;
       });
 
-    // Wait for all product fetching and adding operations to complete
+    /** Wait for all product fetching and adding operations to complete */
     await Promise.all(productPromises);
-    // Navigate to cart page
+    /** Navigate to cart page */
     router.push('/cart');
     return;
   };
 
-  // Render the repeat order button
+  /* Render the repeat order button */
   return (
     <button
       onClick={() => repeatOrderHandle()}

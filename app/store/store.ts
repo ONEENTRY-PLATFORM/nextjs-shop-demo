@@ -96,7 +96,7 @@ const orderReducer = persistReducer(
     key: 'order-slice',
     storage: storage,
     version: version,
-    whitelist: ['order'], // Сохраняем весь объект order
+    whitelist: ['order'],
   },
   orderSlice,
 );

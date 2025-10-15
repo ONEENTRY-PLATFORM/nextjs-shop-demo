@@ -40,26 +40,26 @@ const ProductImageGallery = ({
   let sliderRef1 = useRef<RefObject<Slider | null>>(null);
   let sliderRef2 = useRef<RefObject<Slider | null>>(null);
 
-  // Extract attributeValues from product
+  /** Extract attributeValues from product */
   const { attributeValues } = product;
 
-  // Use safe utility to get product title for alt text
+  /** Use safe utility to get product title for alt text */
   const productTitle = getProductTitle(product, 'Product image');
   const imageAlt = alt || productTitle;
 
-  // Set slider navigation refs after component mounts
+  /** Set slider navigation refs after component mounts */
   useEffect(() => {
     setNav1(sliderRef1 as any);
     setNav2(sliderRef2 as any);
   }, []);
 
-  // Extract images from attributeValues with safety checks
+  /** Extract images from attributeValues with safety checks */
   const imageSrc = attributeValues?.pic?.value;
   const morePic = attributeValues?.more_pic?.value || [];
   const isGallery = morePic.length > 0;
 
-  // Safely construct Gallery
-  // Create an array of image objects with original and thumbnail URLs
+  /** Safely construct Gallery */
+  /** Create an array of image objects with original and thumbnail URLs */
   const imagesData: {
     original: string;
     thumbnail: string;
@@ -67,14 +67,14 @@ const ProductImageGallery = ({
     ? isGallery
       ? // If we have multiple images, create an array with the main image and additional images
         [imageSrc, ...morePic].map((img) => {
-          // Check if image exists and has the expected structure
+          /** Check if image exists and has the expected structure */
           if (img && typeof img === 'object' && 'downloadLink' in img) {
             return {
               original: getProductImageUrl('pic', product),
               thumbnail: getProductImageUrl('pic', product),
             };
           }
-          // Fallback to placeholder if image data is invalid
+          /** Fallback to placeholder if image data is invalid */
           return {
             original: '/placeholder.jpg',
             thumbnail: '/placeholder.jpg',
@@ -103,7 +103,7 @@ const ProductImageGallery = ({
       </div>
       {imagesData ? (
         isGallery ? (
-          // Render gallery with main image slider and thumbnail navigation
+          /* Render gallery with main image slider and thumbnail navigation */
           <div className="relative w-full">
             {/* Main image slider */}
             <Slider
@@ -150,7 +150,7 @@ const ProductImageGallery = ({
             </Slider>
           </div>
         ) : (
-          // Render single image without gallery
+          /** Render single image without gallery */
           <div className="relative w-full">
             <Image
               width={360}
@@ -162,7 +162,7 @@ const ProductImageGallery = ({
           </div>
         )
       ) : (
-        // Render placeholder if no images available
+        /** Render placeholder if no images available */
         <Placeholder />
       )}
     </div>

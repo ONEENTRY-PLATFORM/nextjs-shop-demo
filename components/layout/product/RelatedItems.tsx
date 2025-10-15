@@ -37,7 +37,7 @@ const RelatedItems = ({
   dict: IAttributeValues;
   langCode: string;
 }): JSX.Element => {
-  // Early return if essential data (block or similarProducts) is missing
+  /** Early return if essential data (block or similarProducts) is missing */
   if (!block || !block.similarProducts) {
     return <></>;
   }

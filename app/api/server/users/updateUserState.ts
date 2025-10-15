@@ -31,7 +31,7 @@ export const updateUserState = async ({
 
   const formData: IAuthFormData[] = user.formData
     .map((item) => {
-      // Skip otp_code fields
+      /** Skip otp_code fields */
       if (item.marker === 'otp_code') {
         return undefined;
       }

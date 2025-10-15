@@ -28,7 +28,7 @@ const SlideUpTransition = ({
   const [prevStage, setPrevStage] = useState('');
   const ref = useRef(null);
 
-  // on stage change transitions
+  /** on stage change transitions */
   useGSAP(() => {
     if (!ref.current) {
       return;

@@ -20,11 +20,11 @@ const FilterModalAnimations = ({
 }: {
   children: ReactNode;
 }): JSX.Element => {
-  // Get modal state from context
+  /** Get modal state from context */
   const { open, component, transition, setOpen, setTransition } =
     useContext(OpenDrawerContext);
 
-  // Reference to the modal container for GSAP animations
+  /** Reference to the modal container for GSAP animations */
   const ref = useRef(null);
 
   /**
@@ -32,33 +32,33 @@ const FilterModalAnimations = ({
    * Handles both opening and closing animations with timeline
    */
   useGSAP(() => {
-    // Exit early if modal is not open or not a FilterForm component
+    /** Exit early if modal is not open or not a FilterForm component */
     if (!open || component !== 'FilterForm') {
       return;
     }
 
-    // Create GSAP timeline with callbacks for completion events
+    /** Create GSAP timeline with callbacks for completion events */
     const tl = gsap.timeline({
       paused: true,
-      // When animation completes (modal opened), clear transition state
+      /** When animation completes (modal opened), clear transition state */
       onComplete: () => {
         setTransition('');
       },
-      // When animation reverses (modal closed), update state
+      /** When animation reverses (modal closed), update state */
       onReverseComplete: () => {
         setOpen(false);
         setTransition('');
       },
     });
 
-    // Get modal background and body elements for animation
+    /** Get modal background and body elements for animation */
     const modalBg =
       ref.current && (ref.current as HTMLDivElement).querySelector('#modalBg');
     const modalBody =
       ref.current &&
       (ref.current as HTMLDivElement).querySelector('#modalBody');
 
-    // Set initial states for animation
+    /** Set initial states for animation */
     gsap.set(modalBg, {
       autoAlpha: 0,
       transformOrigin: 'right center',
@@ -68,7 +68,7 @@ const FilterModalAnimations = ({
       xPercent: 100,
     });
 
-    // Define entrance animation sequence
+    /** Define entrance animation sequence */
     tl.to(modalBg, {
       autoAlpha: 1,
       xPercent: 0,
@@ -84,20 +84,20 @@ const FilterModalAnimations = ({
       '-0.25', // Start slightly before previous animation completes
     );
 
-    // Play or reverse animation based on transition state
+    /** Play or reverse animation based on transition state */
     if (transition === 'close') {
       tl.reverse(2);
     } else {
       tl.play();
     }
 
-    // Cleanup function to kill timeline on unmount
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };
   }, [open, transition]);
 
-  // Don't render if modal is not open or not FilterForm component
+  /** Don't render if modal is not open or not FilterForm component */
   if (!open || component !== 'FilterForm') {
     return <></>;
   }

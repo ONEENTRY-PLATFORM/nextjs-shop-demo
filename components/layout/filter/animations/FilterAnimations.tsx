@@ -26,10 +26,10 @@ const FilterAnimations = ({
   className: string;
   index: number;
 }): JSX.Element => {
-  // Get transition state from context to handle closing animation
+  /** Get transition state from context to handle closing animation */
   const { transition } = useContext(OpenDrawerContext);
 
-  // Reference to the wrapper element for GSAP animations
+  /** Reference to the wrapper element for GSAP animations */
   const ref = useRef(null);
 
   /**
@@ -37,17 +37,17 @@ const FilterAnimations = ({
    * Creates staggered entrance effect based on element index
    */
   useGSAP(() => {
-    // Create GSAP timeline for entrance animation
+    /** Create GSAP timeline for entrance animation */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Set initial state before animation
+    /** Set initial state before animation */
     tl.set(ref.current, {
       autoAlpha: 0,
       yPercent: 100,
       height: 0,
-      // Animate to final state with staggered delay based on index
+      /** Animate to final state with staggered delay based on index */
     }).to(ref.current, {
       autoAlpha: 1,
       yPercent: 0,
@@ -55,10 +55,10 @@ const FilterAnimations = ({
       delay: index / 10,
     });
 
-    // Play the entrance animation
+    /** Play the entrance animation */
     tl.play();
 
-    // Cleanup function to kill timeline on unmount
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };
@@ -69,22 +69,22 @@ const FilterAnimations = ({
    * Handles closing animation when modal is being dismissed
    */
   useGSAP(() => {
-    // Create GSAP timeline for exit animation
+    /** Create GSAP timeline for exit animation */
     const tl = gsap.timeline();
 
-    // Execute exit animation when transition state is 'close'
+    /** Execute exit animation when transition state is 'close' */
     if (transition === 'close') {
       tl.to(ref.current, {
         autoAlpha: 0,
         yPercent: 100,
         height: 0,
         duration: 0.5,
-        // Negative delay creates staggered exit effect in reverse order
+        /** Negative delay creates staggered exit effect in reverse order */
         delay: -index / 20,
       });
     }
 
-    // Cleanup function to kill timeline on unmount
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };

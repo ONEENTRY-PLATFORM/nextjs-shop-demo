@@ -74,7 +74,7 @@ const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
           name="address"
           placeholder={placeholder}
           onChange={(e) => {
-            // Update delivery data in Redux store when address changes
+            /** Update delivery data in Redux store when address changes */
             dispatch(
               setDeliveryData({
                 ...deliveryData,

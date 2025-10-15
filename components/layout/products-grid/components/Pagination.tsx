@@ -15,12 +15,12 @@ import { useCallback } from 'react';
  * @returns {JSX.Element}                  A div element containing page navigation buttons
  */
 const Pagination = ({ totalPages }: { totalPages: number }): JSX.Element => {
-  // Get current routing information
+  /** Get current routing information */
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useTransitionRouter();
 
-  // Extract current page from URL parameters or default to 1
+  /** Extract current page from URL parameters or default to 1 */
   const currentPage = Number(searchParams.get('page')) || 1;
 
   /**

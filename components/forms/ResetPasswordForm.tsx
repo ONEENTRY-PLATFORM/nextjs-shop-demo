@@ -30,17 +30,17 @@ const ResetPasswordForm = ({
 }: {
   dict: IAttributeValues;
 }): JSX.Element => {
-  // Get form fields from Redux state (email, OTP code, passwords)
+  /** Get form fields from Redux state (email, OTP code, passwords) */
   const { email_reg, password_reg, password_confirm, otp_code } =
     useAppSelector((state) => state.formFieldsReducer.fields);
-  // Modal context for controlling form modal state
+  /** Modal context for controlling form modal state */
   const { setComponent, setAction } = useContext(OpenDrawerContext);
-  // State for managing loading status during form submission
+  /** State for managing loading status during form submission */
   const [isLoading, setLoading] = useState(false);
-  // State for storing error messages
+  /** State for storing error messages */
   const [isError, setError] = useState('');
 
-  // Extract localized text values from the dictionary
+  /** Extract localized text values from the dictionary */
   const { reset_password_text, new_password_desc, change_password_text } = dict;
 
   /**
@@ -53,20 +53,20 @@ const ResetPasswordForm = ({
   const onResetSubmit = async (
     e: FormEvent<HTMLFormElement>,
   ): Promise<void> => {
-    // Prevent default form submission behavior
+    /** Prevent default form submission behavior */
     e.preventDefault();
 
-    // Add null checks for form fields to ensure all required data is present
+    /** Add null checks for form fields to ensure all required data is present */
     if (!email_reg || !otp_code || !password_reg || !password_confirm) {
       setError('Form fields are not properly initialized');
       return;
     }
 
     try {
-      // Set loading state to indicate form submission in progress
+      /** Set loading state to indicate form submission in progress */
       setLoading(true);
 
-      // Call API to change user's password
+      /** Call API to change user's password */
       const result = await api.AuthProvider.changePassword(
         'email',
         email_reg.value,
@@ -77,23 +77,23 @@ const ResetPasswordForm = ({
         password_confirm.value,
       );
 
-      // If result is successful, open SignIn form for user to log in with new password
+      /** If result is successful, open SignIn form for user to log in with new password */
       if (result) {
         setComponent('SignInForm');
         setAction('');
       }
-      // Reset loading state after form submission
+      /** Reset loading state after form submission */
       setLoading(false);
     } catch (e: any) {
-      // Set error message from exception
+      /** Set error message from exception */
       setError(e.message);
-      // Reset loading state after form submission
+      /** Reset loading state after form submission */
       setLoading(false);
     }
   };
 
   return (
-    // Form animation wrapper with loading state
+    /** Form animation wrapper with loading state */
     <FormAnimations isLoading={isLoading}>
       {/** Reset password form with onSubmit handler */}
       <form

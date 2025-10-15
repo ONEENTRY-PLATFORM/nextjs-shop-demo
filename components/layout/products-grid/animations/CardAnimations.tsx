@@ -31,29 +31,29 @@ const CardAnimations = ({
   index: number;
   pagesLimit: number;
 }): JSX.Element => {
-  // Get current search parameters to determine the active page
+  /** Get current search parameters to determine the active page */
   const searchParams = useSearchParams();
-  // Extract current page number from URL parameters, default to 1
+  /** Extract current page number from URL parameters, default to 1 */
   const currentPage = Number(searchParams.get('page')) || 1;
 
-  // Reference to the DOM element for animation targeting
+  /** Reference to the DOM element for animation targeting */
   const ref = useRef(null);
-  // Calculate animation delay based on item position relative to current page
+  /** Calculate animation delay based on item position relative to current page */
   const delay = (index - (currentPage - 1) * pagesLimit) / 10;
-  // Check if element is in viewport for scroll-triggered animations
+  /** Check if element is in viewport for scroll-triggered animations */
   const inView = ref.current && ScrollTrigger.isInViewport(ref.current, 0.05);
 
-  // Entering animations using GSAP timeline
+  /** Entering animations using GSAP timeline */
   useGSAP(() => {
-    // Create a timeline for coordinated animations
+    /** Create a timeline for coordinated animations */
     const tl = gsap.timeline({});
 
-    // Get image elements within the card for separate animation
+    /** Get image elements within the card for separate animation */
     const img =
       ref.current &&
       (ref.current as HTMLDivElement).getElementsByTagName('img');
 
-    // Set initial state and execute animation sequence
+    /** Set initial state and execute animation sequence */
     tl.set(ref.current, {
       autoAlpha: 0,
       scale: 0,
@@ -73,18 +73,18 @@ const CardAnimations = ({
         stagger: 0.1,
       });
 
-    // Cleanup function to kill timeline on component unmount
+    /** Cleanup function to kill timeline on component unmount */
     return () => {
       tl.kill();
     };
   }, []);
 
-  // Handle scroll-triggered class changes for additional animations
+  /** Handle scroll-triggered class changes for additional animations */
   useGSAP(() => {
     if (!ref.current) {
       return;
     }
-    // Add or remove 'in-view' class based on viewport visibility
+    /** Add or remove 'in-view' class based on viewport visibility */
     if (inView === true || inView === null) {
       (ref.current as HTMLDivElement).classList.add('in-view');
     } else {

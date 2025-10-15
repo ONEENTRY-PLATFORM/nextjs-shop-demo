@@ -24,18 +24,18 @@ const OrderAnimations = ({
   className: string;
   isActive: boolean;
 }): JSX.Element => {
-  // Reference to the DOM element for GSAP animations
+  /** Reference to the DOM element for GSAP animations */
   const ref = useRef(null);
 
-  // GSAP animation hook for order expand/collapse transitions
+  /** GSAP animation hook for order expand/collapse transitions */
   useGSAP(() => {
-    // Create a GSAP timeline for coordinated animations
+    /** Create a GSAP timeline for coordinated animations */
     const tl = gsap.timeline({
       paused: true,
     });
 
     if (isActive) {
-      // Animation for expanding the order block
+      /** Animation for expanding the order block */
       tl.set(ref.current, {
         transformOrigin: '0 0',
         autoAlpha: 0,
@@ -46,20 +46,20 @@ const OrderAnimations = ({
       });
       tl.play();
     } else {
-      // Animation for collapsing the order block
+      /** Animation for collapsing the order block */
       tl.to(ref.current, {
         autoAlpha: 0,
         height: 0,
       }).play();
     }
 
-    // Cleanup function to kill the timeline on unmount
+    /** Cleanup function to kill the timeline on unmount */
     return () => {
       tl.kill();
     };
   }, [isActive]);
 
-  // Render the animated wrapper element
+  /** Render the animated wrapper element */
   return (
     <div ref={ref} className={className}>
       {children}

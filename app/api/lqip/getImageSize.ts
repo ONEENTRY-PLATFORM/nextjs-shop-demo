@@ -50,11 +50,11 @@ const getImageSize = async (
                     height: dimensions.height,
                   });
                   response.destroy();
-                  // Stop further data reception
+                  /** Stop further data reception */
                 }
                 // eslint-disable-next-line @typescript-eslint/no-unused-vars
               } catch (error) {
-                // If image-size throws an error due to insufficient data, continue receiving
+                /** If image-size throws an error due to insufficient data, continue receiving */
               }
             }
           })

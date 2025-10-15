@@ -23,7 +23,7 @@ const getSearchParams = (
 ): IFilterParams[] => {
   const expandedFilters: Array<IFilterParams & { statusMarker?: string }> = [];
 
-  // check if product has SKU or this is service product
+  /** check if product has SKU or this is service product */
   const servicesFilter: IFilterParams = {
     attributeMarker: 'sku',
     conditionMarker: 'nin',
@@ -89,7 +89,7 @@ const getSearchParams = (
     expandedFilters.push(filter);
   }
 
-  // Return undefined if no filters are applied to avoid empty filter blocking results
+  /** Return undefined if no filters are applied to avoid empty filter blocking results */
   return expandedFilters.length > 0 ? expandedFilters : [];
 };
 

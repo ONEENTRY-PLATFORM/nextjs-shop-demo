@@ -19,9 +19,9 @@ import {
  * @returns {JSX.Element}             About page with content and animations
  */
 const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
-  // Safely check if page exists and has attribute values
+  /** Safely check if page exists and has attribute values */
   if (!page || !page.attributeValues) {
-    // Fallback content if page data is not available
+    /** Fallback content if page data is not available */
     return (
       <div className="flex flex-col pb-5 max-md:max-w-full">
         <h1>About Us</h1>
@@ -30,17 +30,17 @@ const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
     );
   }
 
-  // Safely extract content from page using utility functions
+  /** Safely extract content from page using utility functions */
   const attributeValues = page.attributeValues;
-  // Extract page title from attribute values
+  /** Extract page title from attribute values */
   const pageTitle = getString('title', attributeValues);
-  // Extract image source URL from attribute values
+  /** Extract image source URL from attribute values */
   const imageSrc = getImageUrl('img', attributeValues);
-  // Extract main content text from attribute values
+  /** Extract main content text from attribute values */
   const contentData = getText('content', attributeValues, 'html');
-  // Extract list title from attribute values
+  /** Extract list title from attribute values */
   const listTitle = getString('list_title', attributeValues);
-  // Extract list content from attribute values
+  /** Extract list content from attribute values */
   const listData = getText('list', attributeValues, 'html');
 
   return (

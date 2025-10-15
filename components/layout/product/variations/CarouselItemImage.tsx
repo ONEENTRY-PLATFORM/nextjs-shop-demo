@@ -21,9 +21,9 @@ const CarouselItemImage = ({
   lang: string;
   item: IProductsEntity;
 }): JSX.Element => {
-  // Extract product title from localized information
+  /** Extract product title from localized information */
   const title = item.localizeInfos.title;
-  // Extract product image URL from product attributes
+  /** Extract product image URL from product attributes */
   const pic = item.attributeValues.pic;
 
   return (

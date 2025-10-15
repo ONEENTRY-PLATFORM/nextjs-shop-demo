@@ -33,7 +33,7 @@ const ContactsPage = async ({
     );
   }
 
-  // Extract content from page localizeInfos for rendering
+  /** Extract content from page localizeInfos for rendering */
   const { localizeInfos } = page;
 
   return (

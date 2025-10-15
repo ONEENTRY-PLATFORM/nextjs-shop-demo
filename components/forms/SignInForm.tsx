@@ -54,20 +54,20 @@ const SignInForm = ({
     phone_text,
   } = dict;
 
-  // Get form by marker with RTK
+  /** Get form by marker with RTK */
   const { data, isLoading } = useGetFormByMarkerQuery({
     marker: 'reg',
     lang,
   });
 
-  // get fields from formFieldsReducer
+  /** get fields from formFieldsReducer */
   const { email_reg, password_reg } = useAppSelector(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (state: { formFieldsReducer: { fields: any } }) =>
       state.formFieldsReducer.fields,
   );
 
-  // sort fields by position
+  /** sort fields by position */
   const formFields = data?.attributes
     .slice()
     .sort((a: IAttributes, b: IAttributes) => a.position - b.position);

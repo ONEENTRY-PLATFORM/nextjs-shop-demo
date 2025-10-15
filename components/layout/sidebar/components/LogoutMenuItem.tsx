@@ -15,13 +15,13 @@ import Profile from '@/components/icons/profile';
  * @returns {JSX.Element} Logout menu item with icon and text.
  */
 const LogoutMenuItem = (): JSX.Element => {
-  // Router for navigation with transition effects
+  /** Router for navigation with transition effects */
   const router = useTransitionRouter();
 
-  // Authentication context to check auth status and update it after logout
+  /** Authentication context to check auth status and update it after logout */
   const { authenticate, isAuth } = useContext(AuthContext);
 
-  // Don't render the logout item if user is not authenticated
+  /** Don't render the logout item if user is not authenticated */
   if (!isAuth) {
     return <></>;
   }
@@ -32,13 +32,13 @@ const LogoutMenuItem = (): JSX.Element => {
    * @async
    */
   const onLogout = async () => {
-    // Call the logout API to invalidate the user session
+    /** Call the logout API to invalidate the user session */
     await logOutUser({ marker: 'email' });
 
-    // Update the authentication context to reflect logged out state
+    /** Update the authentication context to reflect logged out state */
     authenticate();
 
-    // Redirect user to the home page after logout
+    /** Redirect user to the home page after logout */
     router.push('/');
   };
 

@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import type { JSX } from 'react';
 import { Suspense } from 'react';
 
-// Import custom API function and components
 import { getPageByUrl } from '@/app/api';
 import BlocksGrid from '@/components/layout/blocks-grid';
 import BlocksGridLoader from '@/components/layout/blocks-grid/components/BlocksGridLoader';
@@ -13,10 +12,10 @@ import { i18n } from '@/i18n-config';
 import { getImageUrl } from '../api/hooks/useAttributesData';
 import { generatePageMetadata } from '../utils/generatePageMetadata';
 
-// Increase revalidation time to reduce server load (60 seconds instead of 10)
+/** Increase revalidation time to reduce server load (60 seconds instead of 10) */
 export const revalidate = 60;
 
-// Enable dynamic route parameters
+/** Enable dynamic route parameters */
 export const dynamicParams = true;
 
 interface IndexPageLayoutProps {

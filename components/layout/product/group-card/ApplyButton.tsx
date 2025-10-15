@@ -29,16 +29,16 @@ const ApplyButton = ({
   product: any;
   dict: IAttributeValues;
 }): JSX.Element => {
-  // Redux dispatch function for state updates
+  /** Redux dispatch function for state updates */
   const dispatch = useAppDispatch();
 
-  // Local state to track if product is in cart
+  /** Local state to track if product is in cart */
   const [productInCart, setInCart] = useState(false);
 
-  // Extract localized text values from dictionary
+  /** Extract localized text values from dictionary */
   const { apply_button_placeholder, cancel_text } = dict;
 
-  // Check if product is currently in cart using Redux selector
+  /** Check if product is currently in cart using Redux selector */
   const inCart = useAppSelector((state) => selectIsInCart(state, product.id));
 
   /**
@@ -65,7 +65,7 @@ const ApplyButton = ({
     dispatch(removeProduct(product.id));
   };
 
-  // Render button with different text and actions based on cart status
+  /* Render button with different text and actions based on cart status */
   return !productInCart || !inCart ? (
     <button
       onClick={() => addToCartHandle()}

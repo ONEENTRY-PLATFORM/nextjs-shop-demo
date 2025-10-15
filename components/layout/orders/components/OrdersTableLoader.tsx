@@ -69,7 +69,7 @@ const TableAnimations = ({
  * @returns {JSX.Element}             Orders table loader with animated skeleton rows
  */
 const OrdersTableLoader = ({ limit }: LoaderProps): JSX.Element => {
-  // Render the table loader with animated rows
+  /** Render the table loader with animated rows */
   return (
     <TableAnimations className="my-auto flex w-full max-w-[730px] flex-col max-md:max-w-full">
       {/** Generate skeleton loader rows based on the limit */}

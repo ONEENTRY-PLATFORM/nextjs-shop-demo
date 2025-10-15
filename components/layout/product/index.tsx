@@ -48,16 +48,16 @@ const ProductSingle = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   blocksData?: Record<string, any>;
 }): JSX.Element => {
-  // Extract necessary data from product entity
+  /** Extract necessary data from product entity */
   const { attributeValues, blocks } = product;
 
-  // Get the formatted product title using helper function
+  /** Get the formatted product title using helper function */
   const productTitle = getProductTitle(product);
 
-  // Convert language shortcode to language code using enum
+  /** Convert language shortcode to language code using enum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  // Create a mock block object with similar products data for the RelatedItems component
+  /** Create a mock block object with similar products data for the RelatedItems component */
   const relatedItemsBlock = {
     attributeValues: {},
     similarProducts: {

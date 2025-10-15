@@ -23,9 +23,9 @@ function MobileMenu({
   className?: string;
   lang: string;
 }): JSX.Element {
-  // Check if menu is an array and has more than one item, then render the menu list
+  /** Check if menu is an array and has more than one item, then render the menu list */
   return Array.isArray(menu) && menu.length > 1 ? (
-    // Container for mobile menu items with flex column layout
+    /** Container for mobile menu items with flex column layout */
     <ul className={'flex flex-col ' + className}>
       {/* Map through menu items and render each as a MobileMenuItem component */}
       {menu.map((item: IMenusPages, index: Key) => (
@@ -33,7 +33,7 @@ function MobileMenu({
       ))}
     </ul>
   ) : (
-    // Display fallback message if menu is not available or has insufficient items
+    /** Display fallback message if menu is not available or has insufficient items */
     <div>Menu not available</div>
   );
 }

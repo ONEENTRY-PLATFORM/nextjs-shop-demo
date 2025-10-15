@@ -70,7 +70,7 @@ const DeliveryTable = ({
    * Updates date, time, and address information when delivery data changes
    */
   useEffect(() => {
-    // Exit early if no delivery data is available
+    /** Exit early if no delivery data is available */
     if (!deliveryData) {
       return;
     }

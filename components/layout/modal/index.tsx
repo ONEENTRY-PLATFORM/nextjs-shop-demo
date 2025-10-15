@@ -26,18 +26,18 @@ const Modal = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
-  // Access the component name from the OpenDrawerContext to determine which form to display
+  /** Access the component name from the OpenDrawerContext to determine which form to display */
   const { component } = useContext(OpenDrawerContext);
 
-  // Dynamically select the form component based on the component name from context
+  /** Dynamically select the form component based on the component name from context */
   const Form = forms[component as keyof typeof forms] || null;
 
-  // Don't render anything if no form component is found
+  /** Don't render anything if no form component is found */
   if (!Form) {
     return <></>;
   }
 
-  // Render the modal with animations and the selected form component
+  /** Render the modal with animations and the selected form component */
   return (
     <ModalAnimations component={component}>
       {/* Modal body container with positioning and styling */}

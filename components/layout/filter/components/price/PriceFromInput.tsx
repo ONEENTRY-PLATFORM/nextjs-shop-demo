@@ -17,7 +17,7 @@ const PriceFromInput = ({
   setPrice: Dispatch<SetStateAction<number>>;
 }): JSX.Element => {
   return (
-    // Input field for minimum price with number type
+    /* Input field for minimum price with number type */
     <input
       type="number"
       value={price}

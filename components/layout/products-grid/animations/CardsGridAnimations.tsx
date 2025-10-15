@@ -24,28 +24,28 @@ const CardsGridAnimations = ({
   children: ReactNode;
   className: string;
 }): JSX.Element => {
-  // Get the current transition stage (entering, leaving, none)
+  /** Get the current transition stage (entering, leaving, none) */
   const { stage } = useTransitionState();
-  // Track previous transition stage to determine animation conditions
+  /** Track previous transition stage to determine animation conditions */
   const [prevStage, setPrevStage] = useState('');
-  // Reference to the DOM element for animation targeting
+  /** Reference to the DOM element for animation targeting */
   const ref = useRef(null);
 
-  // Leaving animations using GSAP timeline
+  /** Leaving animations using GSAP timeline */
   useGSAP(() => {
-    // Create a paused timeline for coordinated exit animations
+    /** Create a paused timeline for coordinated exit animations */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Execute leaving animation when transitioning from 'none' to 'leaving' stage
+    /** Execute leaving animation when transitioning from 'none' to 'leaving' stage */
     if (stage === 'leaving' && prevStage === 'none') {
-      // Select all cards that are currently in view for individual animation
+      /** Select all cards that are currently in view for individual animation */
       const cards =
         ref.current &&
         (ref.current as HTMLDivElement).querySelectorAll('.in-view');
 
-      // Animate individual cards, then fade out the entire container
+      /** Animate individual cards, then fade out the entire container */
       tl.to(cards, {
         autoAlpha: 0,
         scale: 0,
@@ -58,10 +58,10 @@ const CardsGridAnimations = ({
       tl.play();
     }
 
-    // Update previous stage for next render
+    /** Update previous stage for next render */
     setPrevStage(stage);
 
-    // Cleanup function to kill timeline on component unmount
+    /** Cleanup function to kill timeline on component unmount */
     return () => {
       tl.kill();
     };

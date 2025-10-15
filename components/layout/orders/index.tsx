@@ -57,21 +57,21 @@ const OrdersPage = ({
     };
   };
 }): JSX.Element => {
-  // Handle useSearchParams in a try/catch to prevent build errors during SSR
+  /** Handle useSearchParams in a try/catch to prevent build errors during SSR */
   let currentPage = 1;
   try {
     const searchParams = useSearchParams();
     currentPage = Number(searchParams?.get('page')) || 1;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    // If useSearchParams fails (e.g. during SSR), default to page 1
+    /** If useSearchParams fails (e.g. during SSR), default to page 1 */
     currentPage = 1;
   }
 
-  // Get authentication status from context
+  /** Get authentication status from context */
   const { isAuth } = useContext(AuthContext);
 
-  // State management for orders data, loading, and errors
+  /** State management for orders data, loading, and errors */
   const [orderState, setOrderState] = useState<{
     orders?: IOrderByMarkerEntity[] | undefined;
     total: number;
@@ -84,24 +84,24 @@ const OrdersPage = ({
     error: undefined,
   });
 
-  // Determine page limit from settings or default to 10
+  /** Determine page limit from settings or default to 10 */
   const pageLimit = settings?.orders_limit?.value || 10;
 
-  // Fetch orders when authentication status, current page, page limit, or language changes
+  /** Fetch orders when authentication status, current page, page limit, or language changes */
   useEffect(() => {
-    // If user is not authenticated, stop loading and return
+    /** If user is not authenticated, stop loading and return */
     if (!isAuth) {
       setOrderState((prev) => ({ ...prev, loading: false }));
       return;
     }
 
-    // Function to fetch orders from the API
+    /** Function to fetch orders from the API */
     const fetchOrders = async () => {
       try {
-        // Set loading state and clear any previous errors
+        /** Set loading state and clear any previous errors */
         setOrderState((prev) => ({ ...prev, loading: true, error: undefined }));
 
-        // Fetch orders using the API function
+        /** Fetch orders using the API function */
         const { isError, error, orders, total } = await getAllOrdersByMarker({
           marker: 'order',
           offset: (currentPage - 1) * pageLimit,
@@ -109,7 +109,7 @@ const OrdersPage = ({
           lang,
         });
 
-        // Process successful response
+        /** Process successful response */
         if (orders && !isError) {
           setOrderState((prev) => ({
             ...prev,
@@ -121,7 +121,7 @@ const OrdersPage = ({
           }));
         }
 
-        // Handle API errors
+        /** Handle API errors */
         if (isError) {
           // eslint-disable-next-line no-console
           console.log('Failed to fetch orders:', error);
@@ -132,7 +132,7 @@ const OrdersPage = ({
           }));
         }
       } catch (error) {
-        // Handle unexpected errors
+        /** Handle unexpected errors */
         // eslint-disable-next-line no-console
         console.log('Unexpected error fetching orders:', error);
         setOrderState((prev) => ({
@@ -146,15 +146,15 @@ const OrdersPage = ({
     fetchOrders();
   }, [isAuth, currentPage, pageLimit, lang]);
 
-  // Destructure order state for easier access
+  /** Destructure order state for easier access */
   const { orders, total, loading, error } = orderState;
 
-  // Show authentication error if user is not logged in
+  /** Show authentication error if user is not logged in */
   if (!isAuth) {
     return <AuthError dict={dict} />;
   }
 
-  // Render the orders page with fade transition
+  /** Render the orders page with fade transition */
   return (
     <FadeTransition
       className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full"
@@ -183,7 +183,7 @@ const OrdersPage = ({
             {loading && currentPage === 1 ? (
               <OrdersTableLoader />
             ) : Array.isArray(orders) && orders.length > 0 ? (
-              // Map through orders and display each one
+              /** Map through orders and display each one */
               orders.map((order, index) => (
                 <OrderRowAnimations key={order.id} className={''} index={0}>
                   <Order
@@ -195,7 +195,7 @@ const OrdersPage = ({
                 </OrderRowAnimations>
               ))
             ) : (
-              // Show empty orders message when no orders are found
+              /** Show empty orders message when no orders are found */
               <EmptyOrders lang={''} dict={dict} />
             )}
             {/* Show loading message when loading more orders */}

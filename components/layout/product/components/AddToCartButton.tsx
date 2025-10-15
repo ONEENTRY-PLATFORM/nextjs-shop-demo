@@ -123,13 +123,13 @@ const AddToCartButton = ({
    * @returns {Promise<void>} Promise that resolves when product is added to cart.
    */
   const addToCartHandle = async (): Promise<void> => {
-    // Dispatch action to add product to cart with default quantity of 1
+    /** Dispatch action to add product to cart with default quantity of 1 */
     dispatch(addProductToCart({ id: id, selected: true, quantity: 1 }));
 
-    // Show toast notification confirming product addition
+    /** Show toast notification confirming product addition */
     toast('Product ' + productTitle + ' added to cart!');
 
-    // Update user state and subscribe to events if user is authenticated
+    /** Update user state and subscribe to events if user is authenticated */
     if (user && isAuth) {
       updateUserCartState();
     }

@@ -26,31 +26,31 @@ const MobileMenuAnimations = ({
   className: string;
   id: string;
 }): JSX.Element => {
-  // Access the mobile menu open state and transition controls from context
+  /** Access the mobile menu open state and transition controls from context */
   const { open, transition, setOpen, setTransition } =
     useContext(OpenDrawerContext);
-  // Reference to the DOM element for GSAP animations
+  /** Reference to the DOM element for GSAP animations */
   const ref = useRef(null);
 
-  // GSAP animation hook for mobile menu open/close transitions
+  /** GSAP animation hook for mobile menu open/close transitions */
   useGSAP(() => {
-    // Skip animations if menu is not open
+    /** Skip animations if menu is not open */
     if (!open) {
       return;
     }
 
-    // Create a GSAP timeline for coordinated animations
+    /** Create a GSAP timeline for coordinated animations */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Handle closing animation
+    /** Handle closing animation */
     if (transition === 'close') {
       tl.to('#modalBg, #modalBody', {
         xPercent: -150, // Move elements off-screen to the left
         autoAlpha: 0, // Fade out elements
         onComplete: () => {
-          // Reset transition state and close the menu
+          /** Reset transition state and close the menu */
           setTransition('');
           setOpen(false);
         },
@@ -73,18 +73,18 @@ const MobileMenuAnimations = ({
         .play();
     }
 
-    // Cleanup function to kill the timeline on unmount
+    /** Cleanup function to kill the timeline on unmount */
     return () => {
       tl.kill();
     };
   }, [open, transition]);
 
-  // Don't render anything if the menu is not open
+  /** Don't render anything if the menu is not open */
   if (!open) {
     return <></>;
   }
 
-  // Render the animated wrapper element
+  /** Render the animated wrapper element */
   return (
     <div ref={ref} id={id} className={className}>
       {children}

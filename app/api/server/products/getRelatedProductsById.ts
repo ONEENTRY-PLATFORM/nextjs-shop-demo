@@ -28,7 +28,7 @@ export const getRelatedProductsById = async (
   id: number,
   lang: string,
 ): Promise<RelatedProductsResult> => {
-  // Validate inputs
+  /** Validate inputs */
   if (!id || id <= 0) {
     return {
       isError: true,
@@ -53,7 +53,7 @@ export const getRelatedProductsById = async (
 
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  // Validate language code
+  /** Validate language code */
   if (!langCode) {
     return {
       isError: true,
@@ -71,7 +71,7 @@ export const getRelatedProductsById = async (
     if (isIError(data)) {
       return { isError: true, error: data as IError, total: 0 };
     } else {
-      // Type assertion to ensure we're working with the correct type
+      /** Type assertion to ensure we're working with the correct type */
       const productsResponse = data as IProductsResponse;
 
       return {

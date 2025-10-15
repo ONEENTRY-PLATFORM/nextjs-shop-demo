@@ -98,15 +98,15 @@ export async function generateMetadata({
   const { handle, lang } = await params;
   const { isError, page } = await getPageByUrl(handle, lang);
 
-  // Handle case when page is not found or an error occurred
+  /** Handle case when page is not found or an error occurred */
   if (isError || !page) {
     return notFound();
   }
 
-  // Extract data from page object
+  /** Extract data from page object */
   const { localizeInfos, isVisible, attributeValues } = page;
 
-  // Return metadata object with page information
+  /** Return metadata object with page information */
   return generatePageMetadata({
     handle: handle,
     title: localizeInfos.title,

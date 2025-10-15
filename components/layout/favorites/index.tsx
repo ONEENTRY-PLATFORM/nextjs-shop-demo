@@ -46,33 +46,33 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
    * @param {IProductsEntity[]} data   - Product data fetched from the API
    */
   useEffect(() => {
-    // Update products state when new data is available
+    /** Update products state when new data is available */
     if (data) {
       setProducts(data);
-      // Only connect to WebSocket if user is authenticated
+      /** Only connect to WebSocket if user is authenticated */
       if (isAuth) {
         const ws = api.WS.connect();
         if (ws) {
-          // Listen for product update notifications
+          /** Listen for product update notifications */
           ws.on('notification', async (res) => {
-            // Process product data from notification
+            /** Process product data from notification */
             if (res?.product) {
               const product = {
                 ...res.product,
                 attributeValues: res.product?.attributes,
               };
 
-              // Find the index of the updated product in the current list
+              /** Find the index of the updated product in the current list */
               const index = data.findIndex(
                 (p: IProductsEntity) => p.id === product.id,
               );
-              // Extract and parse the new price from product attributes
+              /** Extract and parse the new price from product attributes */
               const newPrice = parseInt(
                 product?.attributeValues?.price?.value,
                 10,
               );
 
-              // Update the product in the state with new price and status
+              /** Update the product in the state with new price and status */
               setProducts((prevProducts) => {
                 const newProducts = [...prevProducts];
                 if (index !== -1 && products[index]) {
@@ -86,7 +86,7 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
               });
             }
           });
-          // Cleanup function to disconnect WebSocket on unmount
+          /** Cleanup function to disconnect WebSocket on unmount */
           return () => {
             ws.disconnect();
           };
@@ -96,18 +96,18 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     return;
   }, [isAuth, data, products]);
 
-  // Memoize the loader component
+  /** Memoize the loader component */
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
-  // Handle empty favorites state - show empty favorites component or loading spinner
+  /** Handle empty favorites state - show empty favorites component or loading spinner */
   if (!products || products.length < 1) {
-    // If data has finished loading but there are no products, show empty state
+    /** If data has finished loading but there are no products, show empty state */
     if (!isLoading) {
       return (
         <EmptyFavorites lang={lang as string} dict={dict as IAttributeValues} />
       );
     } else {
-      // If data is still loading, show loading spinner
+      /** If data is still loading, show loading spinner */
       return <MemoizedProductsGridLoader />;
     }
   }

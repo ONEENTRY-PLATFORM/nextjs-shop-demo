@@ -34,15 +34,15 @@ const CategoriesGrid = ({
     /** Wrap categories grid with animation component for page transition effects */
     <CategoriesGridAnimations className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
       {Array.isArray(categories) ? (
-        // Render category cards with staggered animations if categories is an array
+        /** Render category cards with staggered animations if categories is an array */
         categories.map((category: CategoryCardProps, i: Key) => {
           return (
-            // Each category card receives its index for staggered animation timing
+            /** Each category card receives its index for staggered animation timing */
             <CategoryCard key={i} category={category} index={i as number} />
           );
         })
       ) : (
-        // Show loader if categories is not an array
+        /** Show loader if categories is not an array */
         <CategoriesLoader />
       )}
     </CategoriesGridAnimations>

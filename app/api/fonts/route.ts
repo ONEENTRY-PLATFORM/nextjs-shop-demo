@@ -24,11 +24,11 @@ const FONT_TYPES: Record<string, string> = {
  * @returns {Promise<NextResponse>}         NextResponse with font file data or error
  */
 export async function GET(request: Request): Promise<NextResponse> {
-  // Extract font filename from the URL path
+  /** Extract font filename from the URL path */
   const { pathname } = new URL(request.url);
   const fontFile = pathname.split('/').pop();
 
-  // Check if font is already cached to avoid unnecessary processing
+  /** Check if font is already cached to avoid unnecessary processing */
   if (fontCache.has(fontFile)) {
     const cached = fontCache.get(fontFile);
     const response = new NextResponse(cached.buffer, {
@@ -42,17 +42,19 @@ export async function GET(request: Request): Promise<NextResponse> {
   }
 
   try {
-    // Font retrieval logic would go here - from filesystem or CDN
-    // Currently using a placeholder implementation for demonstration
+    /**
+     * Font retrieval logic would go here - from filesystem or CDN
+     * Currently using a placeholder implementation for demonstration
+     */
 
-    // Determine font MIME type based on file extension
+    /** Determine font MIME type based on file extension */
     const ext = fontFile?.split('.').pop() || '';
     const contentType = FONT_TYPES[ext] || 'font/woff2';
 
-    // Create empty buffer as placeholder - real implementation would load actual font data
+    /** Create empty buffer as placeholder - real implementation would load actual font data */
     const buffer = Buffer.from('');
 
-    // Store font in cache for future requests
+    /** Store font in cache for future requests */
     fontCache.set(fontFile, { buffer, contentType });
 
     const response = new NextResponse(buffer, {
@@ -66,7 +68,7 @@ export async function GET(request: Request): Promise<NextResponse> {
     return response;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    // Return 404 error if font cannot be retrieved
+    /** Return 404 error if font cannot be retrieved */
     return new NextResponse('Font not found', { status: 404 });
   }
 }

@@ -25,7 +25,7 @@ const getBaseUrl = (): string => {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getBaseUrl();
 
-  // Generate sitemap entries for root pages of each locale with highest priority
+  /** Generate sitemap entries for root pages of each locale with highest priority */
   const localizedRoots = i18n.locales.map((loc) => ({
     url: `${baseUrl}/${loc}`,
     lastModified: new Date(),
@@ -33,9 +33,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 1,
   }));
 
-  // Known section paths
+  /** Known section paths */
   const sections = ['shop'];
-  // Generate sitemap entries for sections of each locale
+  /** Generate sitemap entries for sections of each locale */
   const localizedSections = i18n.locales.flatMap((loc) =>
     sections.map((s) => ({
       url: `${baseUrl}/${loc}/${s}`,
@@ -45,9 +45,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
-  // Here you can add products/pages from the CMS (via API) and return a list of links
-  // For example: const products = await api.Products.getAllHandles();
-  // and then create an array of handles
+  /** Here you can add products/pages from the CMS (via API) and return a list of links */
+  /** For example: const products = await api.Products.getAllHandles(); and then create an array of handles */
 
   return [...localizedRoots, ...localizedSections];
 }

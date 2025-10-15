@@ -33,23 +33,23 @@ const PriceFilter = memo(
       max: number;
     };
   }): JSX.Element => {
-    // Get current path and URL parameters for navigation
+    /** Get current path and URL parameters for navigation */
     const pathname = usePathname();
     const { replace } = useRouter();
     const searchParams = useSearchParams();
 
-    // Create a copy of URL parameters to work with filters
+    /** Create a copy of URL parameters to work with filters */
     const params = new URLSearchParams(searchParams?.toString() || '');
 
-    // Extract localized values from dictionary for UI labels
+    /** Extract localized values from dictionary for UI labels */
     const { filter_price_title, price_from, price_to } = dict;
 
-    // Constants for working with price range
+    /** Constants for working with price range */
     const STEP = 10;
     const MIN = prices?.min || 0;
     const MAX = prices?.max || 100;
 
-    // States for storing "from" and "to" values of price range
+    /** States for storing "from" and "to" values of price range */
     const [priceFrom, setPriceFrom] = useState(
       params.get('minPrice') ? Number(params.get('minPrice')) : MIN,
     );
@@ -66,38 +66,38 @@ const PriceFilter = memo(
       setPriceTo(values[1] || 0);
     }, []);
 
-    // Effect for updating minPrice parameter in URL when priceFrom changes
+    /** Effect for updating minPrice parameter in URL when priceFrom changes */
     useEffect(() => {
-      // Update URL with minPrice parameter if it differs from default minimum
+      /** Update URL with minPrice parameter if it differs from default minimum */
       if (priceFrom && priceFrom !== MIN) {
         params.set('minPrice', priceFrom.toString());
       } else {
-        // Remove parameter if it matches default value
+        /** Remove parameter if it matches default value */
         params.delete('minPrice');
       }
       replace(`${pathname}?${params.toString()}`);
     }, [priceFrom]);
 
-    // Effect for updating maxPrice parameter in URL when priceTo changes
+    /** Effect for updating maxPrice parameter in URL when priceTo changes */
     useEffect(() => {
-      // Update URL with maxPrice parameter if it differs from default maximum
+      /** Update URL with maxPrice parameter if it differs from default maximum */
       if (priceTo && priceTo !== MAX) {
         params.set('maxPrice', priceTo.toString());
       } else {
-        // Remove parameter if it matches default value
+        /** Remove parameter if it matches default value */
         params.delete('maxPrice');
       }
       replace(`${pathname}?${params.toString()}`);
     }, [priceTo]);
 
-    // Effect to reset priceFrom value when minPrice parameter is absent from URL
+    /** Effect to reset priceFrom value when minPrice parameter is absent from URL */
     useEffect(() => {
       if (!params.get('minPrice')) {
         setPriceFrom(MIN);
       }
     }, [params.get('minPrice')]);
 
-    // Effect to reset priceTo value when maxPrice parameter is absent from URL
+    /** Effect to reset priceTo value when maxPrice parameter is absent from URL */
     useEffect(() => {
       if (!params.get('maxPrice')) {
         setPriceTo(MAX);

@@ -36,7 +36,11 @@ interface SingleOrderProps {
   activeLang: string;
 }
 
-// Generic function to handle API responses
+/**
+ * Generic function to handle API responses
+ * @param   {any} apiCall - Promise to be handled.
+ * @returns {any}         Promise with API response
+ */
 const handleApiResponse = async <T>(
   apiCall: Promise<T | IError>,
 ): Promise<ApiResponse<T>> => {

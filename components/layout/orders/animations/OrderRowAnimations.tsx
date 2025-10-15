@@ -25,55 +25,55 @@ const OrderRowAnimations = ({
   className: string;
   index: number;
 }): JSX.Element => {
-  // Get the current transition stage from next-transition-router
+  /** Get the current transition stage from next-transition-router */
   const { stage } = useTransitionState();
-  // Track the previous stage to detect stage changes
+  /** Track the previous stage to detect stage changes */
   const [prevStage, setPrevStage] = useState('');
-  // Reference to the DOM element for GSAP animations
+  /** Reference to the DOM element for GSAP animations */
   const ref = useRef(null);
 
-  // Intro animations - fade in elements with staggered delays
+  /** Intro animations - fade in elements with staggered delays */
   useGSAP(() => {
-    // Skip animations if ref is not available
+    /** Skip animations if ref is not available */
     if (!ref.current) {
       return;
     }
 
-    // Create a GSAP timeline for coordinated animations
+    /** Create a GSAP timeline for coordinated animations */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Set initial state to hidden
+    /** Set initial state to hidden */
     tl.set(ref.current, {
       autoAlpha: 0,
     })
-      // Animate to visible with staggered delay based on index
+      /** Animate to visible with staggered delay based on index */
       .to(ref.current, {
         autoAlpha: 1,
         delay: index / 10,
       })
       .play();
 
-    // Cleanup function to kill the timeline on unmount
+    /** Cleanup function to kill the timeline on unmount */
     return () => {
       tl.kill();
     };
   }, []);
 
-  // Leaving stage animations - fade out elements when transitioning away
+  /** Leaving stage animations - fade out elements when transitioning away */
   useGSAP(() => {
-    // Skip animations if ref is not available
+    /** Skip animations if ref is not available */
     if (!ref.current) {
       return;
     }
 
-    // Create a GSAP timeline for coordinated animations
+    /** Create a GSAP timeline for coordinated animations */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Animate to hidden when leaving the page with staggered delay
+    /** Animate to hidden when leaving the page with staggered delay */
     if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {
         autoAlpha: 0,
@@ -81,16 +81,16 @@ const OrderRowAnimations = ({
       }).play();
     }
 
-    // Update the previous stage
+    /** Update the previous stage */
     setPrevStage(stage);
 
-    // Cleanup function to kill the timeline on unmount
+    /** Cleanup function to kill the timeline on unmount */
     return () => {
       tl.kill();
     };
   }, [stage]);
 
-  // Render the animated wrapper element
+  /** Render the animated wrapper element */
   return (
     <div ref={ref} className={className}>
       {children}

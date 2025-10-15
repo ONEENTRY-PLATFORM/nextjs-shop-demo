@@ -20,7 +20,7 @@ const ProductImage = ({
   attributeValues: AttributeType;
   alt: string;
 }): JSX.Element => {
-  // Extract image source from product attributes
+  /** Extract image source from product attributes */
   const imageSrc = attributeValues?.pic;
 
   return (

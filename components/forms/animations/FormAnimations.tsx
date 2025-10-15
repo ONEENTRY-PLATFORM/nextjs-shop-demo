@@ -75,10 +75,10 @@ const FormAnimations = ({
      * autoAlpha combines opacity and visibility properties for better performance
      */
     tl.from(ref.current, {
-      // Initial state: hidden
+      /** Initial state: hidden */
       autoAlpha: 0,
     }).to(ref.current, {
-      // Animate to visible state
+      /** Animate to visible state */
       autoAlpha: 1,
     });
 
@@ -87,10 +87,10 @@ const FormAnimations = ({
      * This provides different animations for opening and closing the form
      */
     if (transition === 'close') {
-      // Reverse the animation over 0.5 seconds
+      /** Reverse the animation over 0.5 seconds */
       tl.reverse(0.5);
     } else {
-      // Play the animation
+      /** Play the animation */
       tl.play();
     }
 

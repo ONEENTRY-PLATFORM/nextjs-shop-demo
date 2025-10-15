@@ -35,28 +35,28 @@ const OrderPage = ({
   lang: string;
   isActive: boolean;
 }): JSX.Element => {
-  // Convert language shortcode to enum value for API requests
+  /** Convert language shortcode to enum value for API requests */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  // Fetch order data using RTK Query hook
+  /** Fetch order data using RTK Query hook */
   const { data, isLoading, refetch } = useGetSingleOrderQuery({
     marker: 'order',
     id: id,
     activeLang: langCode,
   });
 
-  // Return empty element if data or settings are not available
+  /** Return empty element if data or settings are not available */
   if (!data || !settings) {
     return <></>;
   }
 
-  // Extract relevant data from the order
+  /** Extract relevant data from the order */
   const { products, statusIdentifier, paymentAccountIdentifier } = data;
 
-  // Extract button titles from settings
+  /** Extract button titles from settings */
   const { go_to_pay_title, repeat_order_title, cancel_order_title } = settings;
 
-  // Render the order page with animations
+  /** Render the order page with animations */
   return (
     <OrderAnimations
       isActive={isActive}
@@ -67,7 +67,7 @@ const OrderPage = ({
       {/* Product cards section */}
       <div className="flex flex-col gap-4 pb-5 max-md:max-w-full">
         {products.map((product: any, i: Key) => {
-          // Skip product with id 83 (possibly a special case or placeholder)
+          /** Skip product with id 83 (possibly a special case or placeholder) */
           if (product.id === 83) {
             return;
           }

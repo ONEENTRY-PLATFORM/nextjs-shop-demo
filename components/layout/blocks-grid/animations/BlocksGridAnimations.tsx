@@ -23,13 +23,13 @@ const BlocksGridAnimations = ({
   children: ReactNode;
   className: string;
 }): JSX.Element => {
-  // Get current transition stage from next-transition-router (entering, leaving, or none)
+  /** Get current transition stage from next-transition-router (entering, leaving, or none) */
   const { stage } = useTransitionState();
 
-  // State to track the previous transition stage for comparison
+  /** State to track the previous transition stage for comparison */
   const [prevStage, setPrevStage] = useState('');
 
-  // Reference to the DOM element for applying GSAP animations
+  /** Reference to the DOM element for applying GSAP animations */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref = useRef<any>(null);
 
@@ -39,12 +39,12 @@ const BlocksGridAnimations = ({
    * Uses a timeline-based approach for smooth, controlled animations
    */
   useGSAP(() => {
-    // Create a GSAP timeline that is initially paused
+    /** Create a GSAP timeline that is initially paused */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    // Animate blocks grid entrance when transitioning from 'leaving' to 'entering' stage
+    /** Animate blocks grid entrance when transitioning from 'leaving' to 'entering' stage */
     if (stage === 'entering' && prevStage === 'leaving') {
       tl.set(ref.current, {
         autoAlpha: 0, // Start with hidden state (0 opacity and visibility)
@@ -54,7 +54,7 @@ const BlocksGridAnimations = ({
       tl.play(); // Play the entrance animation timeline
     }
 
-    // Animate blocks grid exit when transitioning from 'none' to 'leaving' stage
+    /** Animate blocks grid exit when transitioning from 'none' to 'leaving' stage */
     if (stage === 'leaving' && prevStage === 'none') {
       tl.to(ref.current, {
         autoAlpha: 0, // Animate to hidden state (0 opacity and visibility)
@@ -62,16 +62,16 @@ const BlocksGridAnimations = ({
       tl.play(); // Play the exit animation timeline
     }
 
-    // Update previous stage to current stage for next comparison
+    /** Update previous stage to current stage for next comparison */
     setPrevStage(stage);
 
-    // Cleanup function to kill timeline on component unmount or stage change
+    /** Cleanup function to kill timeline on component unmount or stage change */
     return () => {
       tl.kill();
     };
   }, [stage]);
 
-  // Render the animation wrapper with provided className and children
+  /** Render the animation wrapper with provided className and children */
   return (
     <div ref={ref} className={className}>
       {children}

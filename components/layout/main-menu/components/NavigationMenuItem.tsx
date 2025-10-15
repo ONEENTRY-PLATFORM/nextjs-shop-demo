@@ -23,13 +23,13 @@ const NavigationMenuItem = ({
   href: string;
   hasDropdown?: boolean;
 }): JSX.Element => {
-  // Get the current pathname to determine if this menu item is active
+  /** Get the current pathname to determine if this menu item is active */
   const paths = usePathname();
-  // Check if the current path matches this menu item's href
+  /** Check if the current path matches this menu item's href */
   const isActive = paths === href;
 
   return (
-    // Link component for navigation with prefetching enabled
+    /** Link component for navigation with prefetching enabled */
     <Link
       prefetch={true}
       href={href}

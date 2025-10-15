@@ -35,8 +35,8 @@ const CancelOrderButton = ({
    * This function prepares the form data and sends a request to update the order status to 'canceled'.
    * @returns {Promise<object|null>} The updated order object or null if an error occurred
    */
-  const cancelOrderHandle = async () => {
-    // Prepare form data with updated status
+  const cancelOrderHandle = async (): Promise<object | null> => {
+    /** Prepare form data with updated status */
     const formData = {
       ...data,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -48,30 +48,30 @@ const CancelOrderButton = ({
     } as IOrderData;
 
     try {
-      // Send request to update order status to 'canceled'
+      /** Send request to update order status to 'canceled' */
       const order = await updateOrderByMarkerAndId({
         marker: 'order',
         id: data.id,
         data: formData,
       });
 
-      // Handle error response from the API
+      /** Handle error response from the API */
       if (order.isError) {
         console.log('Failed to cancel order:', order.error);
         return null;
       }
 
-      // Refetch orders to update the UI after successful cancellation
+      /** Refetch orders to update the UI after successful cancellation */
       refetch();
       return order;
     } catch (error) {
-      // Handle unexpected errors
+      /** Handle unexpected errors */
       console.log('Error cancelling order:', error);
       return null;
     }
   };
 
-  // Render the cancel order button with loading indicator
+  /* Render the cancel order button with loading indicator */
   return (
     <button
       onClick={() => cancelOrderHandle()}

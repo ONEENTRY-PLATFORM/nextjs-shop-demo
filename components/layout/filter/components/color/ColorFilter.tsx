@@ -35,14 +35,14 @@ const ColorFilter = memo(
     title?: string;
     attributes: IAttributesSetsEntity | IError;
   }): JSX.Element => {
-    // Get current path and URL parameters for navigation
+    /** Get current path and URL parameters for navigation */
     const pathname = usePathname();
     const { replace } = useRouter();
     const searchParams = useSearchParams();
 
-    // Create a copy of URL parameters to work with color filter
+    /** Create a copy of URL parameters to work with color filter */
     const params = new URLSearchParams(searchParams?.toString() || '');
-    // State for tracking currently selected color
+    /** State for tracking currently selected color */
     const [currentColor, setCurrentColor] = useState<string>(
       params.get('color') || '',
     );
@@ -55,23 +55,23 @@ const ColorFilter = memo(
       setCurrentColor(color);
     }, []);
 
-    // Update URL when currentColor changes
+    /** Update URL when currentColor changes */
     useEffect(() => {
-      // Create a new parameter set based on current parameters
+      /** Create a new parameter set based on current parameters */
       const newParams = new URLSearchParams(params);
       if (currentColor) {
-        // Set color parameter if a color is selected
+        /** Set color parameter if a color is selected */
         newParams.set('color', currentColor);
       } else {
-        // Remove color parameter if no color is selected
+        /** Remove color parameter if no color is selected */
         newParams.delete('color');
       }
-      // Navigate to the provided href. Replaces the current history entry.
+      /** Navigate to the provided href. Replaces the current history entry. */
       replace(`${pathname}?${newParams.toString()}`);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentColor, pathname, replace]);
 
-    // Extract color options from attributes data
+    /** Extract color options from attributes data */
     const colors: Color[] =
       attributes && !('error' in attributes)
         ? attributes.listTitles.map((item: IListTitle) => ({
@@ -80,7 +80,7 @@ const ColorFilter = memo(
           }))
         : [];
 
-    // Display skeleton loader if attributes data is not available or contains an error
+    /** Display skeleton loader if attributes data is not available or contains an error */
     if (!attributes || 'error' in attributes) {
       return (
         <div>
@@ -99,7 +99,7 @@ const ColorFilter = memo(
         {/** Color options list */}
         <div className="mb-9 flex flex-wrap gap-1 whitespace-nowrap text-sm leading-8 text-slate-400">
           {colors.map((color: Color, index: Key) => (
-            // Color option button with dynamic styling based on selection state
+            /* Color option button with dynamic styling based on selection state */
             <button
               key={index}
               className={

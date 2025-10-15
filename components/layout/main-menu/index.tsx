@@ -14,29 +14,29 @@ import NavigationMenu from './components/NavigationMenu';
  * @returns {Promise<JSX.Element>} The main navigation menu with mobile modal or loading state
  */
 const MainMenu = async (): Promise<JSX.Element> => {
-  // Get the current language from the server provider
+  /** Get the current language from the server provider */
   const [lang] = ServerProvider('lang');
 
-  // Fetch the menu data by marker from the API
+  /** Fetch the menu data by marker from the API */
   const { isError, menu } = await getMenuByMarker('main_web', lang as string);
 
-  // Return empty element if there's an error fetching the menu
+  /** Return empty element if there's an error fetching the menu */
   if (isError) {
     return <></>;
   }
 
-  // Show loading state if menu data is not available
+  /** Show loading state if menu data is not available */
   if (!menu || !menu.pages) {
     return <MainMenuLoader limit={4} />;
   }
 
-  // Convert the flat menu array to a nested structure for proper rendering
+  /** Convert the flat menu array to a nested structure for proper rendering */
   const mainMenu = flatMenuToNested(
     Array.isArray(menu.pages) ? menu.pages : [],
     null,
   );
 
-  // Render the navigation menu and offscreen mobile menu modal
+  /** Render the navigation menu and offscreen mobile menu modal */
   return (
     <>
       <NavigationMenu menu={mainMenu} lang={lang as string} />

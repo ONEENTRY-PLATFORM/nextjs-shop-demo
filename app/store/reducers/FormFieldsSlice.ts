@@ -70,8 +70,8 @@ const formFieldsSlice = createSlice({
   },
 });
 
-// Export the addField action for use in dispatching.
+/** Export the addField action for use in dispatching. */
 export const { addField } = formFieldsSlice.actions;
 
-// Export the reducer to be used in the store configuration.
+/** Export the reducer to be used in the store configuration. */
 export default formFieldsSlice.reducer;

@@ -41,7 +41,7 @@ export function isIError(error: unknown): error is IError {
  */
 export function handleApiError(handle: string, error: unknown): ApiError {
   if (isIError(error)) {
-    // Log the error for debugging purposes
+    /** Log the error for debugging purposes */
     console.log('API Error:', {
       handle: handle,
       message: error.message,
@@ -57,7 +57,7 @@ export function handleApiError(handle: string, error: unknown): ApiError {
   }
 
   if (error instanceof Error) {
-    // Log the error for debugging purposes
+    /** Log the error for debugging purposes */
     console.log('Generic Error:', {
       message: error.message,
       stack: error.stack,
@@ -67,7 +67,7 @@ export function handleApiError(handle: string, error: unknown): ApiError {
     return new ApiError(error.message || 'An error occurred', 500, error);
   }
 
-  // Log unknown errors
+  /** Log unknown errors */
   console.log('Unknown Error:', {
     error,
     timestamp: new Date().toISOString(),
@@ -81,7 +81,7 @@ export function handleApiError(handle: string, error: unknown): ApiError {
  * @returns {unknown} A function to handle API errors with toast notifications
  */
 export function useApiErrorHandler(): unknown {
-  // This would typically integrate with a notification system like toast
+  /* This would typically integrate with a notification system like toast */
   return function handleApiErrorWithNotification(error: unknown): ApiError {
     const apiError = handleApiError('useApiErrorHandler', error);
     toast.error(apiError.message);

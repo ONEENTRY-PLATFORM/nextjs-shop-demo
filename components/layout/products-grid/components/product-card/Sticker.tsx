@@ -34,14 +34,14 @@ const Sticker = ({
     return <></>;
   }
 
-  // Return empty fragment if no sticker value is provided
+  /** Return empty fragment if no sticker value is provided */
   if (!sticker?.value) {
     return <></>;
   }
 
-  // Extract data from sticker
+  /** Extract data from sticker */
   const title = sticker.value?.title;
-  // Extract image source from sticker's extended value or from first item in array if applicable
+  /** Extract image source from sticker's extended value or from first item in array if applicable */
   const imgSrc =
     sticker.value.extended?.value.downloadLink ||
     (Array.isArray(sticker.value) &&

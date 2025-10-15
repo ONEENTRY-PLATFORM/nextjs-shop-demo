@@ -12,15 +12,15 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
  * @returns {JSX.Element} Close button with 'X' symbol
  */
 const CloseModal = (): JSX.Element => {
-  // Get the transition setter from the OpenDrawerContext
+  /** Get the transition setter from the OpenDrawerContext */
   const { setTransition } = useContext(OpenDrawerContext);
 
   return (
-    // Button wrapper with hover effects and responsive sizing
+    /** Button wrapper with hover effects and responsive sizing */
     <button
       className="z-10 cursor-pointer size-12 items-center justify-center rounded-full border border-solid border-slate-200 bg-white text-lg text-slate-800 transition-colors hover:border-orange-500 hover:text-orange-500 md:size-[40px] lg:size-[50px] lg:p-2.5"
       onClick={() => {
-        // Trigger the close transition for the modal
+        /** Trigger the close transition for the modal */
         setTransition('close');
       }}
     >

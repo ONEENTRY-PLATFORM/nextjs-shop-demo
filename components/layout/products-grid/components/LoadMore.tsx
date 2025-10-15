@@ -21,17 +21,17 @@ import Spinner from '@/components/shared/Spinner';
  * @returns {JSX.Element}                  A button element for manual loading or an automatic scroll-triggered loader
  */
 const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
-  // Get current routing information
+  /** Get current routing information */
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  // Extract current page from URL parameters or default to 1
+  /** Extract current page from URL parameters or default to 1 */
   const currentPage = Number(searchParams.get('page')) || 1;
-  // Calculate next page number
+  /** Calculate next page number */
   const nextPage = (currentPage < 1 ? 1 : currentPage) + 1;
 
-  // Reference to the DOM element for scroll triggering
+  /** Reference to the DOM element for scroll triggering */
   const ref = useRef(null);
 
   /**
@@ -50,7 +50,7 @@ const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
     [searchParams],
   );
 
-  // Register GSAP plugins on component mount
+  /** Register GSAP plugins on component mount */
   useLayoutEffect(() => {
     gsap.registerPlugin(useGSAP, ScrollTrigger);
   }, []);
@@ -71,14 +71,14 @@ const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
     );
   };
 
-  // Set up scroll trigger to automatically load next page when reaching bottom
+  /** Set up scroll trigger to automatically load next page when reaching bottom */
   useGSAP(() => {
-    // Don't set up trigger if we're already on the last page
+    /** Don't set up trigger if we're already on the last page */
     if (nextPage > totalPages) {
       return;
     }
 
-    // Create scroll trigger that activates when component enters viewport
+    /** Create scroll trigger that activates when component enters viewport */
     const trigger = ScrollTrigger.create({
       trigger: ref.current,
       start: 'top bottom',
@@ -88,7 +88,7 @@ const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
       },
     });
 
-    // Cleanup function to kill trigger on component unmount
+    /** Cleanup function to kill trigger on component unmount */
     return () => {
       trigger.kill();
     };

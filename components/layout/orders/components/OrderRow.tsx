@@ -32,27 +32,27 @@ const OrderRow = ({
   lang,
   index,
 }: OrderRowProps): JSX.Element => {
-  // Extract relevant order data
+  /** Extract relevant order data */
   const { id, createdDate, statusIdentifier, totalSum } = order;
 
-  // Format the total amount using the UsePrice utility
+  /** Format the total amount using the UsePrice utility */
   const formattedPrice = UsePrice({
     amount: totalSum,
     lang,
   });
 
-  // Format the order creation date
+  /** Format the order creation date */
   const date = new Date(createdDate).toUTCString();
 
-  // State to track if the order details are expanded
+  /** State to track if the order details are expanded */
   const [state, setState] = useState(false);
 
-  // Determine row styling based on expanded state
+  /** Determine row styling based on expanded state */
   const rowClass = !state
     ? 'text-slate-700 hover:text-orange-500'
     : 'text-orange-500';
 
-  // Render the order row with animations
+  /** Render the order row with animations */
   return (
     <OrderRowAnimations className="w-full" index={index}>
       {/** Order summary row that can be clicked to expand details */}

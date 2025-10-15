@@ -40,7 +40,7 @@ const FiltersForm = async ({
     max: number;
   };
 }): Promise<JSX.Element> => {
-  // Fetch page information for catalog filters and color attribute data
+  /** Fetch page information for catalog filters and color attribute data */
   const pageInfo = await getPageByUrl('catalog_filters', lang);
   const data = await getSingleAttributeByMarkerSet({
     setMarker: 'product',
@@ -49,7 +49,7 @@ const FiltersForm = async ({
   });
   const { isError, error, attribute } = data;
 
-  // Extract and sort attribute values by position
+  /** Extract and sort attribute values by position */
   const attributeValues = (pageInfo.page as IPagesEntity).attributeValues;
   const sortedAttributes: Record<string, any> = sortObjectFieldsByPosition(
     attributeValues && typeof attributeValues === 'object'
@@ -62,17 +62,17 @@ const FiltersForm = async ({
       : {},
   );
 
-  // Handle error state
+  /** Handle error state */
   if (isError) {
     return <>{error?.message}</>;
   }
 
-  // Show loader if no attributes found
+  /** Show loader if no attributes found */
   if (!sortedAttributes) {
     return <Loader />;
   }
 
-  // Get attribute keys for mapping filter components
+  /** Get attribute keys for mapping filter components */
   const attributeKeys = Object.keys(sortedAttributes);
 
   return (
@@ -82,7 +82,7 @@ const FiltersForm = async ({
     >
       {Array.isArray(attributeKeys) ? (
         attributeKeys.map((attr, index) => {
-          // Render price filter component
+          /** Render price filter component */
           if (attr === 'price_filter' && prices) {
             return (
               <FilterAnimations key={index} className="w-full" index={0}>
@@ -90,7 +90,7 @@ const FiltersForm = async ({
               </FilterAnimations>
             );
           }
-          // Render color filter component
+          /** Render color filter component */
           if (attr === 'color_filter') {
             return (
               <FilterAnimations key={index} className="w-full" index={1}>
@@ -102,7 +102,7 @@ const FiltersForm = async ({
               </FilterAnimations>
             );
           }
-          // Render availability filter component
+          /** Render availability filter component */
           if (attr === 'availability_filter') {
             return (
               <FilterAnimations key={index} className="w-full" index={2}>

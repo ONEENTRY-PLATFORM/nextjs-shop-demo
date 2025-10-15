@@ -21,15 +21,15 @@ const SidebarMenu = async ({
 }: {
   lang: string;
 }): Promise<JSX.Element> => {
-  // Fetch menu data by marker from the OneEntry CMS API
+  /** Fetch menu data by marker from the OneEntry CMS API */
   const { isError, menu } = await getMenuByMarker('side_web', lang);
 
-  // Show loader if there's an error or no menu data is available
+  /** Show loader if there's an error or no menu data is available */
   if (isError || !menu) {
     return <SidebarMenuLoader />;
   }
 
-  // Cast menu pages to the expected type with isActive property
+  /** Cast menu pages to the expected type with isActive property */
   const pages = menu.pages as Array<IMenusPages & { isActive: boolean }>;
 
   return (
@@ -44,7 +44,7 @@ const SidebarMenu = async ({
               );
             })
           ) : (
-            // Show loader if pages data is not an array
+            /** Show loader if pages data is not an array */
             <SidebarMenuLoader />
           )}
           {/** Logout menu item that only appears when user is authenticated */}

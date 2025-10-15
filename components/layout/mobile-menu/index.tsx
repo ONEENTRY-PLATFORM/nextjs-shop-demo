@@ -29,38 +29,38 @@ const OffscreenModal = ({
   menu: IMenusPages[];
   lang: string;
 }): JSX.Element | null | undefined => {
-  // Get the current pathname to detect route changes
+  /** Get the current pathname to detect route changes */
   const pathname = usePathname();
-  // Access the mobile menu state from the OpenDrawerContext
+  /** Access the mobile menu state from the OpenDrawerContext */
   const { open, setOpen, component } = useContext(OpenDrawerContext);
 
-  // Effect to handle window resize events
+  /** Effect to handle window resize events */
   useEffect(() => {
-    // Function to close the menu when window is resized to desktop size
+    /** Function to close the menu when window is resized to desktop size */
     const handleResize = () => {
       if (window.innerWidth > 768) {
         setOpen(false);
       }
     };
 
-    // Add event listener for resize events
+    /** Add event listener for resize events */
     window.addEventListener('resize', handleResize);
 
-    // Cleanup function to remove event listener
+    /* Cleanup function to remove event listener */
     return () => window.removeEventListener('resize', handleResize);
   }, [open]);
 
-  // Effect to close the menu when the pathname changes (navigation occurs)
+  /** Effect to close the menu when the pathname changes (navigation occurs) */
   useEffect(() => {
     setOpen(false);
   }, [pathname]);
 
-  // Don't render if the menu is not open or if this is not the MobileMenu component
+  /** Don't render if the menu is not open or if this is not the MobileMenu component */
   if (!open || component !== 'MobileMenu') {
     return;
   }
 
-  // Render the mobile menu modal with animations
+  /** Render the mobile menu modal with animations */
   return (
     <MobileMenuAnimations
       id="modalBody"

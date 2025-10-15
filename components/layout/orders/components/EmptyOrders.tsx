@@ -20,10 +20,10 @@ const EmptyOrders = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
-  // Extract localized texts from the dictionary
+  /** Extract localized texts from the dictionary */
   const { empty_cart_plug, go_to_shop } = dict;
 
-  // Render the empty orders page with fade transition animation
+  /** Render the empty orders page with fade transition animation */
   return (
     <FadeTransition
       className="relative box-border flex shrink-0 flex-col items-center text-center text-slate-800"

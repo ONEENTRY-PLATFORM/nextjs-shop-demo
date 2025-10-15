@@ -15,16 +15,16 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
  * @returns {JSX.Element}                 SignIn button with localized text
  */
 const SignInButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
-  // Get modal control functions from the OpenDrawerContext
+  /** Get modal control functions from the OpenDrawerContext */
   const { setOpen, setComponent } = useContext(OpenDrawerContext);
-  // Extract the login text from the dictionary
+  /** Extract the login text from the dictionary */
   const { log_in_text } = dict;
 
   return (
-    // SignIn button with styling and click handler
+    /** SignIn button with styling and click handler */
     <button
       onClick={() => {
-        // Open the modal and set its content to the SignInForm component
+        /** Open the modal and set its content to the SignInForm component */
         setOpen(true);
         setComponent('SignInForm');
       }}

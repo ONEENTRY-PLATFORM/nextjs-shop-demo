@@ -18,9 +18,9 @@ const CarouselItemTitle = ({
   lang: string;
   item: IProductsEntity;
 }): JSX.Element => {
-  // Extract product title from localized information
+  /** Extract product title from localized information */
   const title = localizeInfos.title;
-  // Extract color information from product attributes
+  /** Extract color information from product attributes */
   const colors = attributeValues?.color?.value;
 
   return (
