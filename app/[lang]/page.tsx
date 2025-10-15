@@ -14,7 +14,7 @@ import { getImageUrl } from '../api/hooks/useAttributesData';
 import { generatePageMetadata } from '../utils/generatePageMetadata';
 
 // Increase revalidation time to reduce server load (60 seconds instead of 10)
-// export const revalidate = 60;
+export const revalidate = 60;
 
 // Enable dynamic route parameters
 export const dynamicParams = true;
@@ -34,33 +34,33 @@ interface IndexPageLayoutProps {
 const IndexPageLayout = async ({
   params,
 }: IndexPageLayoutProps): Promise<JSX.Element> => {
-  // Destructure language parameter from params
+  /** Destructure language parameter from params */
   const { lang } = await params;
 
-  // Validate language parameter
+  /** Validate language parameter */
   if (!lang || !i18n.locales.includes(lang as any)) {
     return notFound();
   }
 
-  // Fetch home page data by URL from the API
+  /** Fetch home page data by URL from the API */
   const { page, isError } = await getPageByUrl('home_web', lang);
 
-  // If there's an error, render a "not found" page
+  /** If there's an error, render a "not found" page */
   if (isError || !page) {
     // eslint-disable-next-line no-console
     console.log('Failed to load home page:', isError);
     return notFound();
   }
 
-  // If no page or blocks are found, render a loading state
+  /** If no page or blocks are found, render a loading state */
   if (!page.blocks) {
     return <BlocksGridLoader />;
   }
 
-  // Extract blocks from the fetched page data
+  /** Extract blocks from the fetched page data */
   const { blocks } = page;
 
-  // Organization structured data
+  /** Organization structured data */
   const organizationStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -69,7 +69,7 @@ const IndexPageLayout = async ({
     logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/logo.png`,
   };
 
-  // WebSite structured data
+  /** WebSite structured data */
   const websiteStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -77,7 +77,7 @@ const IndexPageLayout = async ({
     url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}`,
   };
 
-  // Render the main layout of the page
+  /** Render the main layout of the page */
   return (
     <>
       <script
@@ -105,7 +105,7 @@ const IndexPageLayout = async ({
   );
 };
 
-// Export the default component
+/** Export the default component */
 export default IndexPageLayout;
 
 /**
@@ -137,7 +137,7 @@ export async function generateMetadata({
   }
   const { localizeInfos, isVisible, attributeValues } = page;
 
-  // Return metadata object
+  /** Return metadata object */
   return generatePageMetadata({
     title: localizeInfos.title,
     description: localizeInfos.plainContent,

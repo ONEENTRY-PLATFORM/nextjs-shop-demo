@@ -25,12 +25,13 @@ const saveFunction = async (refreshToken: string): Promise<void> => {
  */
 export let api = defineOneEntry(PROJECT_URL, {
   token: APP_TOKEN,
+  langCode: 'en_US',
   auth: {
     saveFunction,
   },
-  // errors: {
-  //   isShell: false,
-  // },
+  errors: {
+    isShell: false,
+  },
 });
 
 /**
@@ -47,6 +48,7 @@ export async function reDefine(
   if (!refreshToken) {
     return;
   }
+
   api = defineOneEntry(PROJECT_URL, {
     langCode: langCode || 'en_US',
     token: APP_TOKEN,
@@ -54,8 +56,8 @@ export async function reDefine(
       refreshToken,
       saveFunction,
     },
-    // errors: {
-    //   isShell: false,
-    // },
+    errors: {
+      isShell: false,
+    },
   });
 }

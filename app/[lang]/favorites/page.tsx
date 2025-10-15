@@ -20,7 +20,7 @@ const FavoritesPageLayout = async ({
   params,
 }: PageProps): Promise<JSX.Element> => {
   const { lang } = await params;
-  // Get dictionary and set to server provider
+  /** Get dictionary and set to server provider */
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   return (

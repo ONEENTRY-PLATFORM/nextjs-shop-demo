@@ -19,7 +19,7 @@ export default function ApiTestPage(): JSX.Element {
    */
   const testApiPerformance = async (): Promise<void> => {
     const times = [];
-    // Loop 20 times to get sufficient data points for performance analysis
+    /** Loop 20 times to get sufficient data points for performance analysis */
     for (let i = 0; i < 20; i++) {
       const startTime = performance.now();
       try {
@@ -34,9 +34,9 @@ export default function ApiTestPage(): JSX.Element {
       }
     }
     setLoadingTimes(times);
-    // Filter out successful request times (values greater than 0)
+    /** Filter out successful request times (values greater than 0) */
     const validTimes = times.filter((t) => t > 0);
-    // Calculate and set the average response time
+    /** Calculate and set the average response time */
     if (validTimes.length > 0) {
       const avg = validTimes.reduce((a, b) => a + b, 0) / validTimes.length;
       setAverageTime(avg);

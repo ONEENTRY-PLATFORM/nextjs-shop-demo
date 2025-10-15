@@ -27,25 +27,25 @@ const ShopPageLayout = async (props: PageProps): Promise<JSX.Element> => {
   const params = await props.params;
   const { lang } = params;
 
-  // Get the dictionary from the API and set the server provider.
+  /** Get the dictionary from the API and set the server provider. */
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
-  // Get current Page ByUrl from api
+  /** Get current Page ByUrl from api */
   const { page } = await getPageByUrl('shop', lang);
 
-  // Set the number of products to display per page
+  /** Set the number of products to display per page */
   // TODO: Extract products per page limit from global settings
   const pagesLimit = 10;
 
-  // Memoize the loader component to prevent unnecessary re-renders
+  /** Memoize the loader component to prevent unnecessary re-renders */
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
-  // Return 404 page if shop page not found
+  /** Return 404 page if shop page not found */
   if (!page) {
     return notFound();
   }
 
-  // Generate structured data for breadcrumbs to improve SEO
+  /** Generate structured data for breadcrumbs to improve SEO */
   const breadcrumbStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

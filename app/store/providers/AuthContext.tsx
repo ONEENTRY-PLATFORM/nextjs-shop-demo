@@ -5,10 +5,7 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { JSX, ReactNode } from 'react';
 import { createContext, useEffect, useState } from 'react';
 
-import {
-  // reDefine,
-  useLazyGetMeQuery,
-} from '@/app/api';
+import { reDefine, useLazyGetMeQuery } from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import type { IProducts } from '@/app/types/global';
 
@@ -70,9 +67,7 @@ export const AuthProvider = ({
   const [refetch, setRefetch] = useState<boolean>(false);
   const [refetchUser, setRefetchUser] = useState<boolean>(false);
 
-  /**
-   * Get user data from redux AppSelector
-   */
+  /** Get user data from redux AppSelector */
   const cartVersion = useAppSelector(selectCartVersion) as number;
   const favoritesVersion = useAppSelector(selectFavoritesVersion) as number;
   const productsInCart = useAppSelector(selectCartData);
@@ -81,14 +76,12 @@ export const AuthProvider = ({
       selectFavoritesItems(state),
   );
 
-  /**
-   * Check user data loop
-   */
-  const [trigger, { isError }] = useLazyGetMeQuery();
+  /** Check user data loop */
+  const [trigger, { isError }] = useLazyGetMeQuery({
+    pollingInterval: isAuth ? 3000 : 0,
+  });
 
-  /**
-   * Initialize authorization
-   */
+  /** Initialize authorization */
   const onInit = async (): Promise<void> => {
     const refresh = localStorage.getItem('refresh-token');
 
@@ -96,18 +89,19 @@ export const AuthProvider = ({
       setIsAuth(false);
       return;
     }
-    // await reDefine(refresh, langCode);
+    await reDefine(refresh, langCode);
     await checkToken();
   };
 
   /**
-   * Check refresh token
+   * Check refresh token and validate user authentication
+   *
+   * This function triggers the user data fetch and validates the authentication
+   * status based on the response. It updates the authentication state accordingly.
+   * @async
    */
-  const checkToken = async (): Promise<void> => {
-    setIsLoading(true);
-    trigger({
-      langCode,
-    })
+  const checkToken = async () => {
+    trigger({ langCode })
       .then(async (res) => {
         if ((res.isError && !res.isLoading) || !res.data?.id) {
           localStorage.setItem('refresh-token', '');
@@ -116,18 +110,14 @@ export const AuthProvider = ({
           setUser(res.data);
           setIsAuth(true);
         }
-        setIsLoading(false);
       })
       .catch(async () => {
         localStorage.setItem('refresh-token', '');
         setIsAuth(false);
-        setIsLoading(false);
       });
   };
 
-  /**
-   * Update user state on server
-   */
+  /** Update user state on server */
   const updateUserData = async (): Promise<void> => {
     if (!user) {
       return;
@@ -139,7 +129,7 @@ export const AuthProvider = ({
     });
   };
 
-  // Update user data on auth
+  /** Update user data on auth */
   useEffect(() => {
     if (!isAuth || !user) {
       return;
@@ -148,7 +138,7 @@ export const AuthProvider = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, user, productsInCart, favoritesIds]);
 
-  // Load cart from user state
+  /** Load cart from user state */
   useEffect(() => {
     if (!user?.state.cart || cartVersion > 0) {
       return;
@@ -162,7 +152,7 @@ export const AuthProvider = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, user]);
 
-  // Load favorites from user state
+  /** Load favorites from user state */
   useEffect(() => {
     if (!user?.state.favorites || favoritesVersion > 0) {
       return;
@@ -174,7 +164,7 @@ export const AuthProvider = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, user]);
 
-  // Refetch
+  /** Refetch */
   useEffect(() => {
     setIsLoading(true);
     onInit().then(() => {
@@ -183,17 +173,17 @@ export const AuthProvider = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, langCode]);
 
-  // Refetch if error and has refresh-token
+  /** Refetch if error and has refresh-token */
   useEffect(() => {
     const refresh = localStorage.getItem('refresh-token');
     if (isError && refresh) {
       setRefetch(true);
-      // localStorage.setItem('refresh-token', '');
-      // setIsAuth(false);
+      localStorage.setItem('refresh-token', '');
+      setIsAuth(false);
     }
   }, [isError]);
 
-  // Check token on refetch
+  /** Check token on refetch */
   useEffect(() => {
     if (isAuth) {
       checkToken();

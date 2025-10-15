@@ -22,15 +22,15 @@ import { i18n } from '@/i18n-config';
  */
 const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
   const { lang } = await params;
-  // Get child pages by parent url
+  /** Get child pages by parent url */
   const { pages, isError } = await getChildPagesByParentUrl('category', lang);
 
-  // Return 404 page if there's an error or no pages found
+  /** Return 404 page if there's an error or no pages found */
   if (isError || !pages || !Array.isArray(pages)) {
     return notFound();
   }
 
-  // Extract categories data from pages for display in the grid
+  /** Extract categories data from pages for display in the grid */
   const categories = pages?.map((page: IPagesEntity) => {
     return {
       title: page.localizeInfos.title,
@@ -39,7 +39,7 @@ const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
     };
   });
 
-  // Generate structured data for breadcrumbs to improve SEO
+  /** Generate structured data for breadcrumbs to improve SEO */
   const breadcrumbStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',

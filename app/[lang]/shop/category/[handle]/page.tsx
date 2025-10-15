@@ -30,28 +30,28 @@ const ShopCategoryLayout = async (props: {
 }): Promise<JSX.Element> => {
   const params = await props.params;
   const { lang, handle } = params;
-  // Access searchParams without await to keep page static
+  /** Access searchParams without await to keep page static */
   const searchParams = await props.searchParams;
 
-  // Get the dictionary from the API and set the server provider.
+  /** Get the dictionary from the API and set the server provider. */
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
-  // Fetch category page data from the CMS
+  /** Fetch category page data from the CMS */
   const { page } = await getPageByUrl(handle, lang);
 
-  // Set products per page limit
+  /** Set products per page limit */
   // TODO: Extract products per page limit from global settings
   const pagesLimit = 10;
 
-  // Memoize the loader component to prevent unnecessary re-renders
+  /** Memoize the loader component to prevent unnecessary re-renders */
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
-  // Show 404 page if category page not found
+  /** Show 404 page if category page not found */
   if (!page) {
     return notFound();
   }
 
-  // Generate structured data for breadcrumbs to improve SEO
+  /** Generate structured data for breadcrumbs to improve SEO */
   const breadcrumbStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -141,13 +141,13 @@ export async function generateMetadata({
   const { handle, lang } = await params;
   const { isError, page } = await getPageByUrl(handle, lang);
 
-  // Return 404 page if page not found or an error occurred
+  /** Return 404 page if page not found or an error occurred */
   if (isError || !page) {
     return notFound();
   }
   const { localizeInfos, isVisible, attributeValues } = page;
 
-  // Return metadata object
+  /** Return metadata object */
   return generatePageMetadata({
     handle: handle,
     title: localizeInfos.title,

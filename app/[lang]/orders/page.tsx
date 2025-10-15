@@ -23,13 +23,13 @@ const OrdersPageLayout = async ({
   params,
 }: PageProps): Promise<JSX.Element> => {
   const { lang } = await params;
-  // Get the dictionary from the API and set the server provider.
+  /** Get the dictionary from the API and set the server provider. */
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
-  // Get block by marker from the API.
+  /** Get block by marker from the API. */
   const { block, isError } = await getBlockByMarker('orders_settings', lang);
 
-  // Return nothing if block data is not available or an error occurred
+  /** Return nothing if block data is not available or an error occurred */
   if (!block || isError) {
     return <></>;
   }

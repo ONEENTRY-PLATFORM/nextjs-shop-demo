@@ -28,18 +28,18 @@ const ProductPageLayout = async ({
   params: Promise<{ handle: string; lang: string }>;
 }): Promise<JSX.Element> => {
   const { lang, handle } = await params;
-  // Get the dictionary from the API and set the server provider.
+  /** Get the dictionary from the API and set the server provider. */
   const dict = await getDictionary(lang as Locale);
 
-  // Get product by current Id
+  /** Get product by current Id */
   const { product, isError } = await getProductById(Number(handle), lang);
 
-  // Return 404 page if product not found or an error occurred
+  /** Return 404 page if product not found or an error occurred */
   if (isError || !product) {
     return notFound();
   }
 
-  // Extract data from product for structured data generation
+  /** Extract data from product for structured data generation */
   const { attributeValues, localizeInfos, additional, statusIdentifier } =
     product;
 
@@ -93,9 +93,9 @@ export async function generateStaticParams(): Promise<
   Array<{ lang: string; handle: string }>
 > {
   const params: Array<{ lang: string; handle: string }> = [];
-  // Iterate through each supported locale to generate params
+  /** Iterate through each supported locale to generate params */
   for (const lang of i18n.locales) {
-    // Fetch products for the current locale with a limit of 100
+    /** Fetch products for the current locale with a limit of 100 */
     const { products } = await getProducts({
       lang,
       params: {},
@@ -103,11 +103,11 @@ export async function generateStaticParams(): Promise<
       limit: 100,
     });
 
-    // Process products and add them to the params array
+    /** Process products and add them to the params array */
     if (products && Array.isArray(products)) {
       for (const product of products) {
         if (product) {
-          // Add product ID as handle parameter for static generation
+          /** Add product ID as handle parameter for static generation */
           params.push({ lang, handle: String(product.id) });
         }
       }
@@ -129,18 +129,18 @@ export async function generateMetadata({
   params: Promise<{ handle: string; lang: string }>;
 }): Promise<Metadata> {
   const { handle, lang } = await params;
-  // Fetch product data by ID for the current locale
+  /** Fetch product data by ID for the current locale */
   const result = await getProductById(Number(handle), lang);
   const { product, isError } = result;
 
-  // Return 404 page if product not found or an error occurred
+  /** Return 404 page if product not found or an error occurred */
   if (isError || !product) {
     return notFound();
   }
-  // Extract required data from product for metadata generation
+  /** Extract required data from product for metadata generation */
   const { attributeValues, localizeInfos, isVisible } = product;
 
-  // Generate and return metadata object using the extracted data
+  /** Generate and return metadata object using the extracted data */
   return generatePageMetadata({
     handle: handle,
     title: localizeInfos.title,

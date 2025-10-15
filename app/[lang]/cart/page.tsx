@@ -10,7 +10,7 @@ import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 
-// Define the response type
+/** Define the response type */
 type ProductResponse = {
   isError: boolean;
   error?: {
@@ -32,10 +32,10 @@ type ProductResponse = {
  */
 const CartPageLayout = async ({ params }: PageProps): Promise<JSX.Element> => {
   const { lang } = await params;
-  // Get dictionary and set to server provider
+  /** Get dictionary and set to server provider */
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
-  // Get delivery(product) data by product id
+  /** Get delivery(product) data by product id */
   const response = await getProductById(83, lang);
   const deliveryData = response.isError
     ? undefined

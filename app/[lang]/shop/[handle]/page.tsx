@@ -31,17 +31,17 @@ const ShopCatalogPage = async (props: {
   const searchParams = await props.searchParams;
   const params = await props.params;
 
-  // Get the dictionary from the API and set the server provider.
+  /** Get the dictionary from the API and set the server provider. */
   const [dict] = ServerProvider(
     'dict',
     await getDictionary(params.lang as Locale),
   );
 
-  // Set the number of products to display per page
+  /** Set the number of products to display per page */
   // TODO: Extract products per page limit from global settings
   const pagesLimit = 10;
 
-  // Memoize the loader component to prevent unnecessary re-renders
+  /** Memoize the loader component to prevent unnecessary re-renders */
   const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
   return (

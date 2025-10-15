@@ -175,7 +175,8 @@ export const RTKApi = createApi({
     getMe: build.query<IUserEntity, { langCode: string }>({
       queryFn: async ({ langCode }) => {
         try {
-          const result = await handleApiResponse(api.Users.getUser(langCode));
+          const result = await api.Users.getUser(langCode);
+
           if (!result || (result as IError)?.statusCode) {
             return { error: result as IError };
           }

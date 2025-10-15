@@ -12,10 +12,10 @@ import { getPageByUrl } from '@/app/api';
  */
 const NotFound = async (): Promise<JSX.Element> => {
   const lang = 'en';
-  // get page by url from the API.
+  /** get page by url from the API. */
   const { page, isError } = await getPageByUrl('404', lang);
 
-  // if no page data return fallback
+  /** if no page data return fallback */
   if (isError || !page) {
     return (
       <div className="mx-auto flex min-h-80 w-full max-w-(--breakpoint-xl) flex-col items-center justify-center py-8">
@@ -25,7 +25,7 @@ const NotFound = async (): Promise<JSX.Element> => {
     );
   }
 
-  // extract data from page
+  /** extract data from page */
   const { localizeInfos, attributeValues } = page;
 
   return (
