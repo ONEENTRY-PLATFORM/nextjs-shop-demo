@@ -15,6 +15,7 @@ const IntroAnimations = (): JSX.Element => {
 
   /** Intro animations */
   useGSAP(() => {
+    /** Create timeline for intro animation sequence */
     const tl = gsap
       .timeline()
       .set('.fade-in', {
@@ -33,13 +34,15 @@ const IntroAnimations = (): JSX.Element => {
         stagger: 0.1,
       });
 
+    /** Play the animation timeline */
     tl.play();
-
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };
   }, []);
 
+  /** Render the intro animation overlay */
   return (
     <div ref={ref} className="fixed left-0 top-0 z-50 size-full bg-white"></div>
   );

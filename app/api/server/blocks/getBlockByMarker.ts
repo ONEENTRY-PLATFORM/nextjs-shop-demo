@@ -21,18 +21,24 @@ export const getBlockByMarker = async (
   error?: IError;
   block?: IBlockEntity;
 }> => {
+  /** */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
+  /** */
   try {
+    /** */
     const data = await api.Blocks.getBlockByMarker(marker, langCode);
 
+    /** */
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
       return { isError: false, block: data };
     }
   } catch (error) {
+    /** */
     const apiError = handleApiError('getBlockByMarker', error);
+    /** */
     return {
       isError: true,
       error: {

@@ -27,11 +27,16 @@ export const useCreateOrder = ({
   error: any;
   setError: any;
 } => {
+  /** Initialize router for navigation */
   const router = useTransitionRouter();
+  /** Get dispatch function for Redux actions */
   const dispatch = useAppDispatch();
+  /** Get order data from Redux store */
   const order = useAppSelector((state) => state.orderReducer.order);
 
+  /** Loading state for async operations */
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  /** Error state for handling API errors */
   const [error, setError] = useState<string>('');
 
   /**
@@ -41,26 +46,36 @@ export const useCreateOrder = ({
    * @see {@link https://doc.oneentry.cloud/docs/payments OneEntry CMS docs}
    */
   const createSession = async (id: number): Promise<string> => {
+    /** Return error status if no order ID provided */
     if (!id) {
       return 'error';
     }
+    /** Set loading state to true */
     setIsLoading(true);
 
+    /** Handle payment session creation */
     try {
+      /** Create payment session using Payments API */
       const { paymentUrl } = await api.Payments.createSession(id, 'session');
+      /** Handle cash payment method */
       if (order?.paymentAccountIdentifier === 'cash') {
         router.push('/orders');
         return 'payment_success';
       }
+      /** Redirect to payment URL if available */
       if (paymentUrl) {
         router.push(paymentUrl);
         return 'payment_method';
       }
+      /** Reset loading state if no action taken */
       setIsLoading(false);
       return '';
     } catch (error) {
+      /** Handle API errors */
       const apiError = handleApiError('createSession', error);
+      /** Set error message */
       setError(apiError.message);
+      /** Reset loading state */
       setIsLoading(false);
       return '';
     }

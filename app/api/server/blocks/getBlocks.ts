@@ -31,18 +31,24 @@ export const getBlocks = async ({
   error?: IError;
   blocks?: IBlocksResponse;
 }> => {
+  /** */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
+  /** */
   try {
+    /** */
     const data = await api.Blocks.getBlocks(type, langCode);
 
+    /** */
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
       return { isError: false, blocks: data };
     }
   } catch (error) {
+    /** */
     const apiError = handleApiError('getBlocks', error);
+    /** */
     return {
       isError: true,
       error: {

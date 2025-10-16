@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-any-type */
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IError } from 'oneentry/dist/base/utils';

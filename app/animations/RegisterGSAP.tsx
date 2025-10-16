@@ -13,8 +13,11 @@ import { useLayoutEffect } from 'react';
  * @returns {JSX.Element} - Empty component
  */
 const RegisterGSAP = (): JSX.Element => {
+  /** Register GSAP plugins on component mount */
   useLayoutEffect(() => {
+    /** Register useGSAP and ScrollTrigger plugins */
     gsap.registerPlugin(useGSAP, ScrollTrigger);
+    /** Register ScrollToPlugin for smooth scrolling */
     gsap.registerPlugin(ScrollToPlugin);
   }, []);
 

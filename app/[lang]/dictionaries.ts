@@ -19,6 +19,7 @@ const dict = async (lang: string): Promise<IAttributeValues> => {
       lang = i18n.defaultLocale;
     }
 
+    /** Get language code from LanguageEnum */
     const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
     /** get block by marker from api */
@@ -46,7 +47,9 @@ const dict = async (lang: string): Promise<IAttributeValues> => {
 export const getDictionary = async (
   locale: Locale,
 ): Promise<IAttributeValues> => {
+  /** Initialize dictionaries object with locale keys */
   try {
+    /** Create a dictionary loader for each locale */
     const dictionaries: Record<string, () => Promise<IAttributeValues>> =
       i18n.locales.reduce(
         (acc, lang) => {
@@ -56,10 +59,12 @@ export const getDictionary = async (
         {} as Record<string, () => Promise<IAttributeValues>>,
       );
 
+    /** Load the dictionary for the specified locale or use default */
     const dictionary = dictionaries[locale]
       ? await dictionaries[locale]()
       : (await dictionaries[i18n.defaultLocale]?.()) || {};
 
+    /** Return the loaded dictionary or empty object as fallback */
     return dictionary || {};
   } catch (error) {
     // eslint-disable-next-line no-console

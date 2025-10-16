@@ -22,6 +22,7 @@ import { getDictionary } from '../dictionaries';
 const OrdersPageLayout = async ({
   params,
 }: PageProps): Promise<JSX.Element> => {
+  /** Extract language parameter from route params */
   const { lang } = await params;
   /** Get the dictionary from the API and set the server provider. */
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
@@ -34,6 +35,7 @@ const OrdersPageLayout = async ({
     return <></>;
   }
 
+  /** Render the orders page with sidebar and settings */
   return (
     <section className="relative mx-auto box-border flex min-h-80 w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
@@ -58,10 +60,13 @@ export default OrdersPageLayout;
  * @returns {Promise<object[]>} Static params for pre-generation
  */
 export async function generateStaticParams(): Promise<object[]> {
+  /** Initialize an empty array to hold the static parameters */
   const params: Array<{ lang: string }> = [];
+  /** Loop through all available locales and create parameter objects */
   for (const lang of i18n.locales) {
     params.push({ lang });
   }
+  /** Return the array of static parameters for pre-rendering */
   return params;
 }
 
@@ -76,10 +81,14 @@ export async function generateMetadata({
 }: {
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
+  /** Extract the language parameter from the route params */
   const { lang } = await params;
+  /** Define the page title for SEO purposes */
   const title = 'My orders';
+  /** Define the page description for SEO purposes */
   const description = 'Order history and processing statuses.';
 
+  /** Return metadata object with SEO information */
   return {
     title,
     description,

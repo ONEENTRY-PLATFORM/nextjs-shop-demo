@@ -13,10 +13,12 @@ export const getProductTitle = (
   langCode?: string,
   fallback: string = '',
 ): string => {
+  /** Return fallback if product or localizeInfos is missing */
   if (!product?.localizeInfos) {
     return fallback;
   }
 
+  /** Check for title in specific language code */
   if (
     langCode &&
     product.localizeInfos[langCode] &&
@@ -27,6 +29,7 @@ export const getProductTitle = (
     return product.localizeInfos[langCode].title;
   }
 
+  /** Check for title in default localizeInfos */
   if (
     typeof product.localizeInfos === 'object' &&
     'title' in product.localizeInfos &&
@@ -50,14 +53,18 @@ export const getProductImageUrl = (
   product: IProductsEntity,
   type: 'image' | 'preview' = 'image',
 ): string => {
+  /** Get attribute data by name */
   const data = product?.attributeValues?.[name];
 
+  /** Return empty string if data is missing */
   if (!data) {
     return '';
   }
 
+  /** Extract picture value from data */
   const picValue = data.value;
 
+  /** Handle array of images or single image */
   if (Array.isArray(picValue) && picValue.length > 0) {
     const firstImage = picValue[0];
     if (
@@ -92,6 +99,7 @@ export const getProductImageUrl = (
 export const getProductPrice = (
   attributes: AttributeType,
 ): number | undefined => {
+  /** Extract price value from attributes */
   if (
     attributes?.price &&
     typeof attributes.price === 'object' &&
@@ -111,6 +119,7 @@ export const getProductPrice = (
 export const getProductSalePrice = (
   attributes: AttributeType,
 ): number | undefined => {
+  /** Extract sale price value from attributes */
   if (
     attributes?.sale &&
     typeof attributes.sale === 'object' &&
@@ -130,6 +139,7 @@ export const getProductSalePrice = (
 export const getProductCategory = (
   product: IProductsEntity,
 ): { value: string; title: string } | undefined => {
+  /** Extract category information from product attributes */
   if (
     product?.attributeValues?.category &&
     typeof product.attributeValues.category === 'object' &&

@@ -112,10 +112,13 @@ export default IndexPageLayout;
  * @returns {Promise<{ lang: string }[]>} Promise resolving to an array of language objects
  */
 export async function generateStaticParams(): Promise<{ lang: string }[]> {
+  /** Initialize an empty array to hold the static parameters */
   const params: Array<{ lang: string }> = [];
+  /** Loop through all available locales and create parameter objects */
   for (const lang of i18n.locales) {
     params.push({ lang });
   }
+  /** Return the array of static parameters for pre-rendering */
   return params;
 }
 
@@ -128,12 +131,16 @@ export async function generateStaticParams(): Promise<{ lang: string }[]> {
 export async function generateMetadata({
   params,
 }: IndexPageLayoutProps): Promise<Metadata> {
+  /** Extract language parameter from route params */
   const { lang } = await params;
+  /** Fetch home page data by URL and language */
   const { isError, page } = await getPageByUrl('home_web', lang);
 
+  /** Return 404 page if there's an error or page not found */
   if (isError || !page) {
     return notFound();
   }
+  /** Extract page information from the page object */
   const { localizeInfos, isVisible, attributeValues } = page;
 
   /** Return metadata object */

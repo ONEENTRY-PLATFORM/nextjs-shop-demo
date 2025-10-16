@@ -23,8 +23,11 @@ export const dynamic = 'force-dynamic';
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  */
 const ShopPageLayout = async (props: PageProps): Promise<JSX.Element> => {
+  /** Extract search parameters from props */
   const searchParams = await props.searchParams;
+  /** Extract route parameters from props */
   const params = await props.params;
+  /** Destructure language from parameters */
   const { lang } = params;
 
   /** Get the dictionary from the API and set the server provider. */
@@ -65,6 +68,7 @@ const ShopPageLayout = async (props: PageProps): Promise<JSX.Element> => {
     ],
   };
 
+  /** Render the shop page with structured data and product grid */
   return (
     <>
       <script
@@ -96,7 +100,9 @@ export default ShopPageLayout;
  * @returns {Promise<Array<{ lang: string }>>} Array of parameters for static generation
  */
 export async function generateStaticParams(): Promise<Array<{ lang: string }>> {
+  /** Initialize empty array to store static parameters */
   const params: Array<{ lang: string }> = [];
+  /** Loop through all available locales and create parameter objects */
   for (const lang of i18n.locales) {
     params.push({ lang });
   }
@@ -114,7 +120,9 @@ export async function generateStaticParams(): Promise<Array<{ lang: string }>> {
 export async function generateMetadata({
   params,
 }: MetadataParams): Promise<Metadata> {
+  /** Extract handle and language from route parameters */
   const { handle, lang } = await params;
+  /** Fetch the shop page by URL and language */
   const { isError, page } = await getPageByUrl('shop', lang);
 
   /** Return 404 page if page not found or an error occurred */
@@ -122,6 +130,7 @@ export async function generateMetadata({
     return notFound();
   }
 
+  /** Extract page information from the page object */
   const { localizeInfos, isVisible, attributeValues } = page;
 
   /** Return metadata object */

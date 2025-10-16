@@ -18,12 +18,15 @@ export default function TransitionProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
+  /** Reference to the container DOM element */
   const ref = useRef(null);
 
+  /* Render the transition router with enter and leave animations */
   return (
     <TransitionRouter
       auto={true}
       leave={async (next) => {
+        /** Exit early if ref is not available */
         if (!ref.current) {
           return;
         }
@@ -34,6 +37,7 @@ export default function TransitionProvider({
           return;
         }
 
+        /** Create timeline for leave animation */
         const tl = await gsap
           .timeline()
           .to(window, {
@@ -47,11 +51,13 @@ export default function TransitionProvider({
           })
           .call(next, undefined, 0.75);
 
+        /** Cleanup function to kill timeline on unmount */
         return () => {
           tl.kill();
         };
       }}
       enter={async (next) => {
+        /** Exit early if ref is not available */
         if (!ref.current) {
           return;
         }
@@ -62,6 +68,7 @@ export default function TransitionProvider({
           return;
         }
 
+        /** Create timeline for enter animation */
         const tl = await gsap
           .timeline()
           .set(ref.current, {
@@ -73,6 +80,7 @@ export default function TransitionProvider({
           })
           .call(next, undefined, 0.5);
 
+        /** Cleanup function to kill timeline on unmount */
         return () => {
           tl.kill();
         };

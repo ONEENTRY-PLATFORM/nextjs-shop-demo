@@ -21,6 +21,7 @@ import { i18n } from '@/i18n-config';
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  */
 const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
+  /** Extract language parameter from the route params */
   const { lang } = await params;
   /** Get child pages by parent url */
   const { pages, isError } = await getChildPagesByParentUrl('category', lang);
@@ -59,6 +60,7 @@ const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
     ],
   };
 
+  /** Render the category page with structured data and categories grid */
   return (
     <>
       <script
@@ -85,10 +87,14 @@ export default CategoryPage;
 export async function generateStaticParams(): Promise<
   Array<{ lang: string; handle: string }>
 > {
+  /** Initialize an empty array to store static parameters */
   const params: Array<{ lang: string; handle: string }> = [];
+  /** Loop through all available locales */
   for (const lang of i18n.locales) {
+    /** Fetch the category page by URL for the current language */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { page }: any = await getPageByUrl('category', lang);
+    /** Check if page exists */
     if (page) {
       const handle =
         'pageUrl' in page ? (page as { pageUrl: string }).pageUrl : '';
@@ -112,7 +118,9 @@ export async function generateMetadata({
 }: {
   params: Promise<{ handle: string; lang: string }>;
 }): Promise<Metadata> {
+  /** Extract handle and language from route parameters */
   const { handle, lang } = await params;
+  /** Fetch the category page by URL and language */
   const { isError, page } = await getPageByUrl('category', lang);
 
   /** Return 404 page if there's an error or page not found */

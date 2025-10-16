@@ -12,11 +12,14 @@ import { handleApiError } from '@/app/utils/errorHandler';
  */
 export const onSubscribeEvents = async (id: number): Promise<void> => {
   try {
+    /** Subscribe to status out of stock events */
     const status = await api.Events.subscribeByMarker(
       'status_out_of_stock',
       id,
     );
+    /** Subscribe to product price change events */
     const price = await api.Events.subscribeByMarker('product_price', id);
+    /** Show toast notifications for successful subscriptions */
     if (status) {
       toast('You subscribed to status updates for this product');
     }
@@ -24,6 +27,7 @@ export const onSubscribeEvents = async (id: number): Promise<void> => {
       toast('You subscribed to price updates for this product');
     }
   } catch (error) {
+    /** Handle API errors for event subscription */
     const apiError = handleApiError('onSubscribeEvents', error);
     // eslint-disable-next-line no-console
     console.log('Error subscribing to events:', apiError.message);
@@ -40,11 +44,14 @@ export const onSubscribeEvents = async (id: number): Promise<void> => {
 export const onUnsubscribeEvents = async (id: number): Promise<void> => {
   try {
     // await api.Events.unsubscribeByMarker('catalog_event', id);
+    /** Unsubscribe from status out of stock events */
     const status = await api.Events.unsubscribeByMarker(
       'status_out_of_stock',
       id,
     );
+    /** Unsubscribe from product price change events */
     const price = await api.Events.unsubscribeByMarker('product_price', id);
+    /** Show toast notifications for successful unsubscriptions */
     if (status) {
       toast('You unsubscribed from status updates for this product');
     }
@@ -52,6 +59,7 @@ export const onUnsubscribeEvents = async (id: number): Promise<void> => {
       toast('You unsubscribed from price updates for this product');
     }
   } catch (error) {
+    /** Handle API errors for event unsubscription */
     const apiError = handleApiError('onUnsubscribeEvents', error);
     // eslint-disable-next-line no-console
     console.log('Error unsubscribing from events:', apiError.message);

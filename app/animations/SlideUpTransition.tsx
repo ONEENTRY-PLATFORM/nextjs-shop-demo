@@ -24,19 +24,25 @@ const SlideUpTransition = ({
   className: string;
   index: number;
 }): JSX.Element => {
+  /** Get current transition stage from context */
   const { stage } = useTransitionState();
+  /** Store previous stage for comparison */
   const [prevStage, setPrevStage] = useState('');
+  /** Reference to the DOM element for animations */
   const ref = useRef(null);
 
   /** on stage change transitions */
   useGSAP(() => {
+    /** Exit early if ref is not available */
     if (!ref.current) {
       return;
     }
+    /** Create a timeline for slide up animation */
     const tl = gsap.timeline({
       paused: true,
     });
 
+    /** Define the animation sequence */
     tl.from(ref.current, {
       autoAlpha: 0,
       yPercent: 100,
@@ -47,6 +53,7 @@ const SlideUpTransition = ({
       delay: index / 10,
     });
 
+    /** Play or reverse animation based on stage transitions */
     if (stage === 'none' && prevStage === '') {
       tl.play();
     }
@@ -57,13 +64,16 @@ const SlideUpTransition = ({
       tl.reverse(1);
     }
 
+    /** Update previous stage state */
     setPrevStage(stage);
 
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };
   }, [stage]);
 
+  /** Render the animated component */
   return (
     <div ref={ref} className={className}>
       {children}

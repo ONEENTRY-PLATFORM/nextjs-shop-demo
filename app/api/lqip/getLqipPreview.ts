@@ -27,30 +27,37 @@ const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
  * ```
  */
 const getLqipPreview = async (imageUrl: string): Promise<string> => {
-  // Check cache first
+  /** Check cache first */
   const cached = lqipCache.get(imageUrl);
   if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
     return cached.dataURI;
   }
 
+  /** Attempt to generate LQIP preview for the image */
   try {
+    /** Fetch the image from the provided URL */
     const image = await fetch(imageUrl);
+    /** Validate the image response */
     if (!image.ok) {
       throw new Error(
         `Failed to fetch image: ${image.status} ${image.statusText}`,
       );
     }
 
+    /** Convert the image response to a buffer */
     const imageBuffer = Buffer.from(await image.arrayBuffer());
+    /** Generate LQIP preview using lqip-modern */
     const previewImage = await lqipModern(imageBuffer);
+    /** Extract the base64 data URI from the preview */
     const dataURI = previewImage.metadata.dataURIBase64;
 
-    // Cache the result
+    /** Cache the result */
     lqipCache.set(imageUrl, { dataURI, timestamp: Date.now() });
 
+    /** Return the generated data URI */
     return dataURI;
   } catch (error) {
-    // Return a default placeholder if LQIP generation fails
+    /** Return a default placeholder if LQIP generation fails */
     // eslint-disable-next-line no-console
     console.warn(`Failed to generate LQIP for ${imageUrl}:`, error);
     return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIwIiBoZWlnaHQ9IjMyMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiLz4=';

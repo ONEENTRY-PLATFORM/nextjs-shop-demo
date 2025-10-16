@@ -25,6 +25,7 @@ const FadeTransition = ({
   const ref = useRef(null);
   /** on stage enter animations */
   useGSAP(() => {
+    /** Create a new timeline for fade in animation */
     const tl = gsap
       .timeline()
       .set(ref.current, {
@@ -35,11 +36,13 @@ const FadeTransition = ({
         duration: 0.8,
         delay: index / 10,
       });
+    /** Cleanup function to kill timeline on unmount */
     return () => {
       tl.kill();
     };
   }, []);
 
+  /** Render the animated component with initial opacity set to 0 */
   return (
     <div ref={ref} className={className + ' opacity-0'}>
       {children}

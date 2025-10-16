@@ -37,10 +37,13 @@ const CartPageLayout = async ({ params }: PageProps): Promise<JSX.Element> => {
 
   /** Get delivery(product) data by product id */
   const response = await getProductById(83, lang);
+
+  /** Check if response has error */
   const deliveryData = response.isError
     ? undefined
     : (response as ProductResponse).product;
 
+  /** Render cart page layout with sidebar */
   return (
     <section className="relative mx-auto box-border flex min-h-80 w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
@@ -63,9 +66,12 @@ export default CartPageLayout;
  * @returns {Promise<{ lang: string }[]>} Static params for pre-generation
  */
 export async function generateStaticParams(): Promise<{ lang: string }[]> {
+  /** Initialize empty array for static params */
   const params: Array<{ lang: string }> = [];
+  /** Loop through all available locales and add them to params */
   for (const lang of i18n.locales) {
     params.push({ lang });
   }
+  /** Return array of static params for pre-rendering */
   return params;
 }

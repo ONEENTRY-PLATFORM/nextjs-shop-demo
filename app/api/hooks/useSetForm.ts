@@ -30,11 +30,16 @@ export const useSetForm = (): {
   loading: boolean;
   sendData: (data: IBodyPostFormData) => Promise<unknown>;
 } => {
+  /** Loading state for form submission */
   const [loading, setLoading] = useState<boolean>(false);
 
+  /* Function to send form data to the API */
   const sendData = (data: IBodyPostFormData) => {
+    /** Set loading state to true when starting submission */
     setLoading(true);
+    /* Create async function to handle the API call */
     const result = async () => {
+      /** Try to submit form data to the API */
       try {
         const res = await api.FormData.postFormsData(data);
         return res;
@@ -43,12 +48,14 @@ export const useSetForm = (): {
         console.error('Form submission error:', e);
         return e;
       } finally {
+        /** Reset loading state when submission is complete */
         setLoading(false);
       }
     };
     return result();
   };
 
+  /** Return loading state and send function */
   return {
     loading,
     sendData,
