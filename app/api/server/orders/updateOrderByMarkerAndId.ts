@@ -38,9 +38,12 @@ export const updateOrderByMarkerAndId = async ({
   error?: IError;
   order?: IBaseOrdersEntity;
 }> => {
+  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
+  /** Update order by marker and ID through the API */
   try {
+    /** Call the API to update order by marker and ID */
     const orderData = await api.Orders.updateOrderByMarkerAndId(
       marker,
       id,
@@ -48,13 +51,16 @@ export const updateOrderByMarkerAndId = async ({
       langCode,
     );
 
+    /** Check if the response is an error */
     if (isIError(orderData)) {
       return { isError: true, error: orderData };
     } else {
       return { isError: false, order: orderData };
     }
   } catch (error) {
+    /** Handle API errors */
     const apiError = handleApiError('updateOrderByMarkerAndId', error);
+    /** Return error response */
     return {
       isError: true,
       error: {

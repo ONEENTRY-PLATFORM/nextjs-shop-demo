@@ -22,18 +22,24 @@ export const getChildPagesByParentUrl = async (
   error?: IError;
   pages?: IPagesEntity[] | IError;
 }> => {
+  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
+  /** Fetch child pages by parent URL and language from the API */
   try {
+    /** Call the API to get child pages by parent URL and language */
     const data = await api.Pages.getChildPagesByParentUrl(url, langCode);
 
+    /** Check if the response is an error */
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
       return { isError: false, pages: data };
     }
   } catch (error) {
+    /** Handle API errors */
     const apiError = handleApiError('getChildPagesByParentUrl', error);
+    /** Return error response */
     return {
       isError: true,
       error: {

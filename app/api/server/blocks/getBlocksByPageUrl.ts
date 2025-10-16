@@ -26,18 +26,24 @@ export const getBlocksByPageUrl = async ({
   error?: IError;
   blocks?: IPositionBlock[];
 }> => {
+  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
+  /** Fetch blocks by page URL and language from the API */
   try {
+    /** Call the API to get blocks by page URL and language */
     const data = await api.Pages.getBlocksByPageUrl(pageUrl, langCode);
 
+    /** Check if the response is an error */
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
       return { isError: false, blocks: data };
     }
   } catch (error) {
+    /** Handle API errors */
     const apiError = handleApiError('getBlocksByPageUrl', error);
+    /** Return error response */
     return {
       isError: true,
       error: {

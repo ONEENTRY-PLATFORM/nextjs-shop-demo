@@ -25,10 +25,12 @@ export const updateUserState = async ({
   cart: IProducts[];
   user: IUserEntity;
 }): Promise<boolean> => {
+  /** */
   if (!user) {
     return false;
   }
 
+  /** */
   const formData: IAuthFormData[] = user.formData
     .map((item) => {
       /** Skip otp_code fields */
@@ -44,10 +46,13 @@ export const updateUserState = async ({
     })
     .filter((item): item is IAuthFormData => item !== undefined);
 
+  /** */
   const email = user.formData.find((item) => item.marker === 'email_reg');
   const phone = user.formData.find((item) => item.marker === 'phone_reg');
 
+  /** */
   try {
+    /** */
     const res = await api.Users.updateUser({
       formIdentifier: 'reg',
       formData: formData,
@@ -62,15 +67,18 @@ export const updateUserState = async ({
       },
     });
 
+    /** */
     if (!res || isIError(res)) {
       return false;
     }
 
+    /** */
     if (res === true) {
       return true;
     }
     return false;
   } catch (error) {
+    /** */
     const apiError = handleApiError('updateUser', error);
     // eslint-disable-next-line no-console
     console.log('Error updating user state:', apiError.message);
@@ -78,6 +86,12 @@ export const updateUserState = async ({
   }
 };
 
+/**
+ * Clear user state
+ * @param   {IUserEntity}      user - User entity
+ * @returns {Promise<boolean>}      - true if user state cleared successfully, false otherwise
+ */
 export const clearUserState = async (user: IUserEntity) => {
+  /** Clear user state by updating with empty favorites and cart */
   return updateUserState({ favorites: [], cart: [], user });
 };

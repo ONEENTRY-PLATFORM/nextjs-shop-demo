@@ -22,18 +22,24 @@ export const getPageById = async (
   error?: IError;
   page?: IPagesEntity;
 }> => {
+  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
+  /** Fetch page by ID and language from the API */
   try {
+    /** Call the API to get page by ID and language */
     const data = await api.Pages.getPageById(id, langCode);
 
+    /** Check if the response is an error */
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
       return { isError: false, page: data };
     }
   } catch (error) {
+    /** Handle API errors */
     const apiError = handleApiError('getPageById', error);
+    /** Return error response */
     return {
       isError: true,
       error: {

@@ -22,18 +22,24 @@ export const getMenuByMarker = async (
   error?: IError;
   menu?: IMenusEntity;
 }> => {
+  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
+  /** Fetch menu by marker and language from the API */
   try {
+    /** Call the API to get menu by marker and language */
     const data = await api.Menus.getMenusByMarker(marker, langCode);
 
+    /** Check if the response is an error */
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
       return { isError: false, menu: data };
     }
   } catch (error) {
+    /** Handle API errors */
     const apiError = handleApiError('getMenusByMarker', error);
+    /** Return error response */
     return {
       isError: true,
       error: {

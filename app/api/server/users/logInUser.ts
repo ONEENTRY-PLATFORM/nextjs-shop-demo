@@ -22,7 +22,9 @@ export const logInUser = async ({
   data?: any;
   error?: string;
 }> => {
+  /** Attempt to authenticate user with provided credentials */
   try {
+    /** Prepare authentication data with email and password */
     const preparedData: IAuthPostBody = {
       authData: [
         {
@@ -35,14 +37,18 @@ export const logInUser = async ({
         },
       ],
     };
+    /** Call the authentication API with prepared data */
     const result = await api.AuthProvider.auth('email', preparedData);
+    /** Check if authentication was successful by verifying tokens */
     if (result && result.accessToken && result.refreshToken) {
       return { data: result };
     }
     /** Handle case where result exists but doesn't have required tokens */
     return { error: 'Authentication failed' };
   } catch (error) {
+    /** Handle API errors during authentication */
     const apiError = handleApiError('auth', error);
+    /** Return error message */
     return { error: apiError.message };
   }
 };

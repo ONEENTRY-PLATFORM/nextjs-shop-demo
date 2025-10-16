@@ -45,11 +45,16 @@ export const getProductsByPageUrl = async (props: {
   products: IProductsEntity[] | [];
   total: number;
 }> => {
+  /** Destructure props to get limit, offset, params, and lang */
   const { limit, offset, params, lang } = props;
+  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  /** Prepare search parameters body for the API request */
   const body = getSearchParams(params.searchParams);
 
+  /** Fetch products by page URL with pagination and search parameters from the API */
   try {
+    /** Call the API to get products by page URL with filters, pagination, and sorting */
     const data = await api.Products.getProductsByPageUrl(
       params.handle,
       body,
@@ -62,6 +67,7 @@ export const getProductsByPageUrl = async (props: {
       },
     );
 
+    /** Check if the response is an error */
     if (isIError(data)) {
       return { isError: true, error: data, products: [], total: 0 };
     } else {
@@ -73,7 +79,9 @@ export const getProductsByPageUrl = async (props: {
       };
     }
   } catch (error) {
+    /** Handle API errors */
     const apiError = handleApiError('getProductsByPageUrl', error);
+    /** Return error response with empty products array and zero total */
     return {
       isError: true,
       error: {

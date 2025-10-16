@@ -30,6 +30,7 @@ export const getRelatedProductsById = async (
 ): Promise<RelatedProductsResult> => {
   /** Validate inputs */
   if (!id || id <= 0) {
+    /** Return error for invalid product ID */
     return {
       isError: true,
       error: {
@@ -40,7 +41,9 @@ export const getRelatedProductsById = async (
     };
   }
 
+  /** Check if language parameter is provided */
   if (!lang) {
+    /** Return error for missing language parameter */
     return {
       isError: true,
       error: {
@@ -51,10 +54,12 @@ export const getRelatedProductsById = async (
     };
   }
 
+  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
   /** Validate language code */
   if (!langCode) {
+    /** Return error for unsupported language */
     return {
       isError: true,
       error: {
@@ -65,15 +70,19 @@ export const getRelatedProductsById = async (
     };
   }
 
+  /** Fetch related products by ID and language from the API */
   try {
+    /** Call the API to get related products by ID and language */
     const data = await api.Products.getRelatedProductsById(id, langCode);
 
+    /** Check if the response is an error */
     if (isIError(data)) {
       return { isError: true, error: data as IError, total: 0 };
     } else {
       /** Type assertion to ensure we're working with the correct type */
       const productsResponse = data as IProductsResponse;
 
+      /** Return successful response with related products */
       return {
         isError: false,
         products: productsResponse.items,
@@ -81,7 +90,9 @@ export const getRelatedProductsById = async (
       };
     }
   } catch (error) {
+    /** Handle API errors */
     const apiError = handleApiError('getRelatedProductsById', error);
+    /** Return error response with zero total */
     return {
       isError: true,
       error: {

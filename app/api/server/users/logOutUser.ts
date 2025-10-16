@@ -20,15 +20,22 @@ export const logOutUser = async ({
   data?: any;
   error?: string;
 }> => {
+  /** Attempt to log out user by marker */
   try {
+    /** Get refresh token from localStorage */
     const token = localStorage.getItem('refresh-token');
+    /** Check if token exists */
     if (!token) {
       throw Error('No token provided');
     }
+    /** Call the logout API with marker and token */
     const result = await api.AuthProvider.logout(marker, token);
+    /** Return successful logout result */
     return { data: result };
   } catch (error) {
+    /** Handle API errors during logout */
     const apiError = handleApiError('logout', error);
+    /** Return error message */
     return { error: apiError.message };
   }
 };

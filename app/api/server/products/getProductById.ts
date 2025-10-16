@@ -23,6 +23,7 @@ export const getProductById = async (
 }> => {
   /** Validate inputs */
   if (!id || id <= 0) {
+    /** Return error for invalid product ID */
     return {
       isError: true,
       error: {
@@ -32,7 +33,9 @@ export const getProductById = async (
     };
   }
 
+  /** Check if language parameter is provided */
   if (!lang) {
+    /** Return error for missing language parameter */
     return {
       isError: true,
       error: {
@@ -42,6 +45,7 @@ export const getProductById = async (
     };
   }
 
+  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
   /** Validate language code */
@@ -55,16 +59,21 @@ export const getProductById = async (
     };
   }
 
+  /** Fetch product by ID and language from the API */
   try {
+    /** Call the API to get product by ID and language */
     const data = await api.Products.getProductById(id, langCode);
 
+    /** Check if the response is an error */
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
       return { isError: false, product: data };
     }
   } catch (error) {
+    /** Handle API errors */
     const apiError = handleApiError('getProductById', error);
+    /** Return error response */
     return {
       isError: true,
       error: {

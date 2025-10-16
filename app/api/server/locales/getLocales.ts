@@ -16,16 +16,21 @@ export const getLocales = async (): Promise<{
   error?: IError;
   locales?: ILocalEntity[];
 }> => {
+  /** Fetch locales from the API */
   try {
+    /** Call the API to get locales */
     const data = await api.Locales.getLocales();
 
+    /** Check if the response is an error */
     if (isIError(data)) {
       return { isError: true, error: data };
     } else {
       return { isError: false, locales: data };
     }
   } catch (error) {
+    /** Handle API errors */
     const apiError = handleApiError('getLocales', error);
+    /** Return error response */
     return {
       isError: true,
       error: {

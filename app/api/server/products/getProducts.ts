@@ -45,17 +45,23 @@ export const getProducts = async (props: {
   products?: IProductsEntity[];
   total: number;
 }> => {
+  /** Destructure props to get offset, limit, params, and lang */
   const { offset, limit, params, lang } = props;
+  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  /** Prepare search parameters body for the API request */
   const body = getSearchParams(params?.searchParams, params?.handle) || [];
 
+  /** Fetch products with pagination and search parameters from the API */
   try {
+    /** Call the API to get products with filters, pagination, and sorting */
     const data = await api.Products.getProducts(body, langCode, {
       limit,
       offset,
       sortOrder: 'ASC',
       sortKey: 'date',
     });
+    /** Check if the response is an error */
     if (isIError(data)) {
       return {
         isError: true,
@@ -70,7 +76,9 @@ export const getProducts = async (props: {
       };
     }
   } catch (error) {
+    /** Handle API errors */
     const apiError = handleApiError('getProducts', error);
+    /** Return error response with zero total */
     return {
       isError: true,
       error: {
