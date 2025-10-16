@@ -19,11 +19,16 @@ export default function StoreProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
+  /** */
   const storeRef = useRef<AppStore>(undefined);
+  /** */
   if (!storeRef.current) {
+    /** */
     storeRef.current = setupStore();
+    /** */
     persistStore(storeRef.current);
   }
 
+  /** */
   return <Provider store={storeRef.current}>{children}</Provider>;
 }

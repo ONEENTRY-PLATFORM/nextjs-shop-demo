@@ -21,9 +21,10 @@ const getSearchParams = (
   },
   handle?: string,
 ): IFilterParams[] => {
+  /** Initialize array to store expanded filters with optional status marker */
   const expandedFilters: Array<IFilterParams & { statusMarker?: string }> = [];
 
-  /** check if product has SKU or this is service product */
+  /** Check if product has SKU or this is service product - exclude service products from results */
   const servicesFilter: IFilterParams = {
     attributeMarker: 'sku',
     conditionMarker: 'nin',
@@ -31,8 +32,10 @@ const getSearchParams = (
     title: searchParams?.search || '',
     isNested: false,
   };
+  /** Add services filter to expanded filters array */
   expandedFilters.push(servicesFilter);
 
+  /** Add stickers filter if handle is provided */
   if (handle) {
     const stickersFilter: IFilterParams = {
       attributeMarker: 'stickers',
@@ -44,6 +47,7 @@ const getSearchParams = (
     expandedFilters.push(stickersFilter);
   }
 
+  /** Add stock availability filter if in_stock parameter is provided */
   if (searchParams?.in_stock) {
     expandedFilters.push({
       statusMarker: 'in_stock',
@@ -54,6 +58,7 @@ const getSearchParams = (
     });
   }
 
+  /** Add color filter if color parameter is provided */
   if (searchParams?.color) {
     const newFilter: IFilterParams = {
       attributeMarker: 'color',
@@ -65,6 +70,7 @@ const getSearchParams = (
     expandedFilters.push(newFilter);
   }
 
+  /** Add minimum price filter if minPrice parameter is provided */
   if (searchParams?.minPrice) {
     const filter: IFilterParams = {
       attributeMarker: 'price',
@@ -77,6 +83,7 @@ const getSearchParams = (
     expandedFilters.push(filter);
   }
 
+  /** Add maximum price filter if maxPrice parameter is provided */
   if (searchParams?.maxPrice) {
     const filter: IFilterParams = {
       attributeMarker: 'price',
@@ -89,7 +96,7 @@ const getSearchParams = (
     expandedFilters.push(filter);
   }
 
-  /** Return undefined if no filters are applied to avoid empty filter blocking results */
+  /** Return expanded filters array or empty array if no filters are applied */
   return expandedFilters.length > 0 ? expandedFilters : [];
 };
 

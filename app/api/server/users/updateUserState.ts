@@ -25,12 +25,12 @@ export const updateUserState = async ({
   cart: IProducts[];
   user: IUserEntity;
 }): Promise<boolean> => {
-  /** */
+  /** Check if user exists */
   if (!user) {
     return false;
   }
 
-  /** */
+  /** Prepare form data excluding otp_code fields */
   const formData: IAuthFormData[] = user.formData
     .map((item) => {
       /** Skip otp_code fields */
@@ -46,18 +46,20 @@ export const updateUserState = async ({
     })
     .filter((item): item is IAuthFormData => item !== undefined);
 
-  /** */
+  /** Extract email and phone from user form data */
   const email = user.formData.find((item) => item.marker === 'email_reg');
   const phone = user.formData.find((item) => item.marker === 'phone_reg');
 
-  /** */
+  /** Update user state with new favorites and cart data */
   try {
-    /** */
+    /** Call API to update user information */
     const res = await api.Users.updateUser({
       formIdentifier: 'reg',
       formData: formData,
       state: {
+        /** Update favorites list if not empty, otherwise keep existing */
         favorites: favorites.length > 0 ? favorites : user.state.favorites,
+        /** Update cart if not empty, otherwise keep existing */
         cart: cart.length > 0 ? cart : user.state.cart,
       },
       notificationData: {
@@ -67,18 +69,18 @@ export const updateUserState = async ({
       },
     });
 
-    /** */
+    /** Check if response is valid */
     if (!res || isIError(res)) {
       return false;
     }
 
-    /** */
+    /** Return success status */
     if (res === true) {
       return true;
     }
     return false;
   } catch (error) {
-    /** */
+    /** Handle API errors */
     const apiError = handleApiError('updateUser', error);
     // eslint-disable-next-line no-console
     console.log('Error updating user state:', apiError.message);
@@ -88,8 +90,8 @@ export const updateUserState = async ({
 
 /**
  * Clear user state
- * @param   {IUserEntity}      user - User entity
- * @returns {Promise<boolean>}      - true if user state cleared successfully, false otherwise
+ * @param {IUserEntity} user - User entity
+ * @returns {Promise<boolean>} - true if user state cleared successfully, false otherwise
  */
 export const clearUserState = async (user: IUserEntity) => {
   /** Clear user state by updating with empty favorites and cart */

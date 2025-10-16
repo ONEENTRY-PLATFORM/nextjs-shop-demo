@@ -46,11 +46,16 @@ export const OpenDrawerProvider = ({
 }: {
   children: ReactNode;
 }): JSX.Element => {
+  /** Track open state of the drawer */
   const [open, setOpen] = useState<boolean>(false);
+  /** Track component to be rendered in the drawer */
   const [component, setComponent] = useState<string>('');
+  /** Track action type for the drawer */
   const [action, setAction] = useState<string>('');
+  /** Track transition type for the drawer */
   const [transition, setTransition] = useState<string>('');
 
+  /** Provide context values to children components */
   return (
     <OpenDrawerContext.Provider
       value={{
