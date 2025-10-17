@@ -52,13 +52,23 @@ This project is designed for developers using OneEntry Headless CMS who need a q
 - **Tailwind:** User-friendly layout comprehensible to everyone.
 - **JsDoc:** BuiltIn VsCode jsDoc documentation.
 
-## Documentation
+## Project Documentation
 
 This is a [Next.js](https://nextjs.org/) project.
 
 [Ready-to-use backend and Admin panel](https://doc.oneentry.cloud/ 'Documentations OneEntry Headless CMS')
 
 [NPM SDK](https://oneentry.cloud/instructions/npm 'NPM SDK OneEntry Headless CMS')
+
+For detailed information about specific aspects of the project, please refer to the documentation files:
+
+- [Animations](docs/Animations.md) - Details about the GSAP animation system and components
+- [Authorization](docs/Authorization.md) - Information about JWT tokens and AuthContext
+- [Error Handling](docs/ErrorHandling.md) - Guide to the centralized error handling system
+- [Events](docs/Events.md) - Explanation of event notifications and WebSocket usage
+- [Appointment Booking Flow](docs/OrderFlow.md) - How the appointment booking process works
+- [State Management](docs/StateManagement.md) - Redux Toolkit and state management approach
+- [User State](docs/UserState.md) - How user state is implemented and synchronized
 
 ## Environment Variables
 
