@@ -90,8 +90,8 @@ export const updateUserState = async ({
 
 /**
  * Clear user state
- * @param {IUserEntity} user - User entity
- * @returns {Promise<boolean>} - true if user state cleared successfully, false otherwise
+ * @param   {IUserEntity}      user - User entity
+ * @returns {Promise<boolean>}      - true if user state cleared successfully, false otherwise
  */
 export const clearUserState = async (user: IUserEntity) => {
   /** Clear user state by updating with empty favorites and cart */

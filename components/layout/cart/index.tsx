@@ -76,7 +76,6 @@ const CartPage = ({
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryData]);
 
   /**
@@ -129,7 +128,6 @@ const CartPage = ({
         }
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isAuth]);
 
   return (

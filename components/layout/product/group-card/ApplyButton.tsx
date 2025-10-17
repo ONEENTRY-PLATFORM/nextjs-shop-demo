@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-any-type */
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';

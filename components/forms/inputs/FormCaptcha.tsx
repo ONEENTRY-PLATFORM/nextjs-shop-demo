@@ -22,7 +22,6 @@ const FormCaptcha = ({
   /** Effect hook to initialize captcha state. Sets the captcha state to true when component mounts */
   useEffect(() => {
     setIsCaptcha(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Handles the loading of the reCAPTCHA script and executes the verification process */
@@ -81,7 +80,6 @@ const FormCaptcha = ({
     return () => {
       script.removeEventListener('load', handleLoaded);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Component returns empty JSX as it only handles reCAPTCHA script loading and validation */

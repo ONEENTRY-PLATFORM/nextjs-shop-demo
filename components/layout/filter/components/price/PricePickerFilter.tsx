@@ -1,6 +1,6 @@
+/* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/prop-types */
-/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';

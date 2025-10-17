@@ -50,7 +50,6 @@ const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
         valid: address ? true : false,
       }),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryData]);
 
   return (

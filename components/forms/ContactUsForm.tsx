@@ -25,14 +25,10 @@ const ContactUsForm = memo(
   ({ className, lang }: { className?: string; lang: string }): JSX.Element => {
     // const [token, setToken] = useState<string | null>();
     // const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
-    /**
-     * Loading state for form submission
-     */
+    /** Loading state for form submission */
     const [loading, setLoading] = useState<boolean>(false);
 
-    /**
-     * Error state for form submission errors
-     */
+    /** Error state for form submission errors */
     const [error, setError] = useState<string>('');
 
     /**
@@ -82,9 +78,7 @@ const ContactUsForm = memo(
 
         // transform and send form data
         if (formFields) {
-          /**
-           * Get all form field property keys
-           */
+          /** Get all form field property keys */
           const propertiesArray = Object.keys(formFields);
 
           /**
@@ -233,12 +227,12 @@ const ContactUsForm = memo(
             } else if (field.type === 'spam') {
               return (
                 <div key={index}>
-                  {/** <FormCaptcha
+                  {/* <FormCaptcha
                   setToken={setToken}
                   setIsCaptcha={setIsCaptcha}
                   captchaKey={field.settings?.captchaKey || ''}
                 /> */}
-                  {/** <FormReCaptcha
+                  {/* <FormReCaptcha
                   setToken={setToken}
                   setIsCaptcha={setIsCaptcha}
                   captchaKey={field.settings?.captchaKey || ''}

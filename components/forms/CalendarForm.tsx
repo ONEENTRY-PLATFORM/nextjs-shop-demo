@@ -24,30 +24,20 @@ import TimeSlots from './calendar/TimeSlots';
  * @returns {JSX.Element}            Calendar form.
  */
 const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
-  /**
-   * Redux dispatch function for updating store
-   */
+  /** Redux dispatch function for updating store */
   const dispatch = useAppDispatch();
 
-  /**
-   * Context for controlling drawer transition animations
-   */
+  /** Context for controlling drawer transition animations */
   const { setTransition } = useContext(OpenDrawerContext);
 
-  /**
-   * Delivery data from Redux store including current date and time selection
-   */
+  /** Delivery data from Redux store including current date and time selection */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const deliveryData: any = useAppSelector(selectDeliveryData);
 
-  /**
-   * State for storing selected delivery date
-   */
+  /** State for storing selected delivery date */
   const [date, setDate] = useState<Date>(new Date(deliveryData?.date));
 
-  /**
-   * State for storing selected delivery time
-   */
+  /** State for storing selected delivery time */
   const [time, setTime] = useState<string>(deliveryData?.time);
 
   /**

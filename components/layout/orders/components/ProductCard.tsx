@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-any-type */
 import Image from 'next/image';
 import Link from 'next/link';
 // import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';

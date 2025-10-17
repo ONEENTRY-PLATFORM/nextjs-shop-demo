@@ -76,7 +76,6 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
         }),
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [otp]);
 
   /**

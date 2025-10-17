@@ -26,7 +26,6 @@ const FormReCaptcha = ({
    */
   useEffect(() => {
     setIsCaptcha(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /**

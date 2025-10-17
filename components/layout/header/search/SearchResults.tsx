@@ -46,7 +46,7 @@ const SearchResults = ({
     return <Spinner />;
   }
 
-  /**
+  /*
    * Search results dropdown container with absolute positioning
    * Appears below the search bar with shadow and rounded corners for visual distinction
    */

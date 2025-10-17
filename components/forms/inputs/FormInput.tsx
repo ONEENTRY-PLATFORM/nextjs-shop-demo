@@ -71,7 +71,6 @@ const FormInput = (field: {
         },
       }),
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value, valid]);
 
   /* Effect to set the input type when fieldType changes */
