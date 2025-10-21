@@ -28,10 +28,13 @@ const ProductsGrid = ({
   products: IProductsEntity[];
 }): JSX.Element => {
   return (
+    // Responsive grid container with min 200px columns and 1fr max columns
     <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
       {Array.isArray(products)
         ? products
+            // Filter to show only visible products
             ?.filter((item) => item.isVisible)
+            // Map each product to a ProductCard component
             .map((product: IProductsEntity, index: number) => {
               return (
                 <ProductCard

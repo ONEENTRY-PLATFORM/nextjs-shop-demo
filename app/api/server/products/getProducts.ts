@@ -46,7 +46,7 @@ export const getProducts = async (props: {
   total: number;
 }> => {
   /** Destructure props to get offset, limit, params, and lang */
-  const { offset, limit, params, lang } = props;
+  const { limit, offset, params, lang } = props;
   /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
   /** Prepare search parameters body for the API request */
