@@ -79,9 +79,12 @@ export const cartSlice = createSlice({
         quantity: number;
       }>,
     ) {
+      /** This function checks if the product is already in the cart */
       const index = state.productsData.findIndex(
         (product: { id: number }) => product.id === action.payload.id,
       );
+
+      /** If the product is not in the cart, we add it */
       if (index === -1) {
         /** Add the product to the cart with the specified quantity (minimum 1) */
         state.productsData.push({

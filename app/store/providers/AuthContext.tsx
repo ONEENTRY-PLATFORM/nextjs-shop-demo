@@ -85,12 +85,20 @@ export const AuthProvider = ({
       selectFavoritesItems(state),
   );
 
-  /** Check user data loop with polling interval */
+  /**
+   * Check user data loop with polling interval
+   *
+   * This function checks for a refresh token in local storage and initiates
+   */
   const [trigger, { isError }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 3000 : 0,
   });
 
-  /** Initialize authorization by checking refresh token */
+  /**
+   * Initialize authorization by checking refresh token
+   *
+   * This function checks for a refresh token in local storage and initiates
+   */
   const onInit = async (): Promise<void> => {
     /** Get refresh token from localStorage */
     const refresh = localStorage.getItem('refresh-token');
@@ -135,7 +143,12 @@ export const AuthProvider = ({
       });
   };
 
-  /** Update user state on server with cart and favorites data */
+  /**
+   * Update user state on server with cart and favorites data
+   *
+   * This function sends the updated user state to the server,
+   * including the cart and favorites data.
+   */
   const updateUserData = async (): Promise<void> => {
     /** Exit if no user data */
     if (!user) {
@@ -165,12 +178,16 @@ export const AuthProvider = ({
     if (!user?.state.cart || cartVersion > 0) {
       return;
     }
+
     /** Add each product from user state to Redux cart */
     user.state.cart?.forEach((product: IProducts) => {
-      dispatch(
-        addProductToCart({ id: product.id, selected: true, quantity: 1 }),
-      );
+      const productInCart = productsInCart?.find((p) => p.id === product.id);
+      /** If product not in cart, add to cart */
+      if (!productInCart) {
+        dispatch(addProductToCart(product));
+      }
     });
+
     /** Mark cart as loaded */
     dispatch(setCartVersion(1));
   }, [isAuth, user]);
