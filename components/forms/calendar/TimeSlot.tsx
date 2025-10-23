@@ -24,11 +24,12 @@ const TimeSlot = ({
   currentTime: string;
   setTime: Dispatch<SetStateAction<string>>;
 }): JSX.Element => {
-  /** Base CSS classes for the time slot button */
-  let className = 'px-2 py-1.5 rounded-3xl border-2 text-center text-sm ';
-
   /** Destructure slot properties for easier access */
   const { isDisabled, time } = slot;
+
+  /** Base CSS classes for the time slot button */
+  let className =
+    'px-2 py-1.5 rounded-3xl border-2 text-center text-xs cursor-pointer ';
 
   /**
    * Apply different CSS classes based on the slot's state:

@@ -15,7 +15,8 @@ import { handleApiError, isIError } from '@/app/utils/errorHandler';
  * @see {@link https://doc.oneentry.cloud/docs/attributes OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  */
-export const getSingleAttributeByMarkerSet = async ({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getSingleAttributeByMarkerSet: any = async ({
   setMarker,
   attributeMarker,
   lang,

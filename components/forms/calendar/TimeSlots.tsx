@@ -30,21 +30,19 @@ const TimeSlots = ({
      * Container for time slots grid
      * Uses CSS Grid to arrange time slots in a 4x4 layout with specific styling
      */
-    <div className="mx-auto mb-5 grid max-w-[320px] grid-cols-4 grid-rows-4 gap-2.5 rounded-3xl bg-white text-base font-bold tracking-wide text-orange-500">
-      {
-        /**
-         * Map through time slots and render TimeSlot component for each
-         * Passes down slot data, current time, and setTime function to each TimeSlot
-         */
-        timeSlots.map((slot, index) => (
-          <TimeSlot
-            key={index}
-            slot={slot}
-            currentTime={currentTime}
-            setTime={setTime}
-          />
-        ))
-      }
+    <div className="mx-auto mb-5 grid max-w-[320px] grid-cols-4 gap-2.5 rounded-3xl bg-white text-base font-bold tracking-wide text-orange-500">
+      {/*
+       * Map through time slots and render TimeSlot component for each
+       * Passes down slot data, current time, and setTime function to each TimeSlot
+       */
+      timeSlots?.map((slot) => (
+        <TimeSlot
+          key={slot.time}
+          slot={slot}
+          currentTime={currentTime}
+          setTime={setTime}
+        />
+      ))}
     </div>
   );
 };

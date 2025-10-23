@@ -1,5 +1,6 @@
 /* eslint-disable jsdoc/reject-any-type */
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
+import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
@@ -20,6 +21,12 @@ import { LanguageEnum } from '@/app/types/enum';
 import type { ApiResponse } from '@/app/types/hooks';
 
 import { api } from './api';
+
+interface AttributeByMarkerProps {
+  setMarker: string;
+  attributeMarker: string;
+  activeLang: string;
+}
 
 interface BlockByMarkerProps {
   marker: string;
@@ -78,6 +85,45 @@ export const RTKApi = createApi({
       },
     }),
     /**
+     * Get block by Marker.
+     * @param marker     - Marker of Block.
+     * @param activeLang - Language code. Default "en_US".
+     * @returns          Query result with block
+     */
+    getBlockByMarker: build.query<IBlockEntity, BlockByMarkerProps>({
+      queryFn: async ({ marker, activeLang }) => {
+        const result = await handleApiResponse(
+          api.Blocks.getBlockByMarker(marker, activeLang),
+        );
+        if (!result || (result as IError)?.statusCode) {
+          return { error: result as IError };
+        }
+        return { data: result as IBlockEntity };
+      },
+    }),
+    /**
+     * Get single attribute by marker set.
+     * @param setMarker       - Marker of attribute set.
+     * @param attributeMarker - Marker of attribute.
+     * @returns               Query result with attribute
+     */
+    // eslint-disable-next-line prettier/prettier
+    getSingleAttributeByMarkerSet: build.query<IAttributesSetsEntity, AttributeByMarkerProps>({
+      queryFn: async ({ setMarker, attributeMarker, activeLang }) => {
+        const result = await handleApiResponse(
+          api.AttributesSets.getSingleAttributeByMarkerSet(
+            setMarker,
+            attributeMarker,
+            activeLang,
+          ),
+        );
+        if (!result || (result as IError)?.statusCode) {
+          return { error: result as IError };
+        }
+        return { data: result as IAttributesSetsEntity };
+      },
+    }),
+    /**
      * Get Product By Id.
      * @param id - Product ID.
      * @returns  Query result with product
@@ -117,23 +163,6 @@ export const RTKApi = createApi({
         } else {
           return { data: result as IProductsEntity[] };
         }
-      },
-    }),
-    /**
-     * Get block by Marker.
-     * @param marker     - Marker of Block.
-     * @param activeLang - Language code. Default "en_US".
-     * @returns          Query result with block
-     */
-    getBlockByMarker: build.query<IBlockEntity, BlockByMarkerProps>({
-      queryFn: async ({ marker, activeLang }) => {
-        const result = await handleApiResponse(
-          api.Blocks.getBlockByMarker(marker, activeLang),
-        );
-        if (!result || (result as IError)?.statusCode) {
-          return { error: result as IError };
-        }
-        return { data: result as IBlockEntity };
       },
     }),
     /**
@@ -258,6 +287,7 @@ export const RTKApi = createApi({
 export const {
   useGetBlockByMarkerQuery,
   useGetBlocksByPageUrlQuery,
+  useGetSingleAttributeByMarkerSetQuery,
   useGetFormByMarkerQuery,
   useGetAuthProvidersQuery,
   useLazyGetMeQuery,

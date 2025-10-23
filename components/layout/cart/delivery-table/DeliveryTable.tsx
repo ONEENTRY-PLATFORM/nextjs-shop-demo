@@ -57,9 +57,7 @@ const DeliveryTable = ({
   } = dict;
 
   /** Filter form attributes to exclude 'time2' marker */
-  const attrs = data?.attributes.filter(
-    (attr: IAttributes) => attr.marker !== 'time2',
-  );
+  const attrs = data?.attributes;
 
   /** Get registered address from user form data if available */
   const addressReg =
