@@ -196,7 +196,7 @@ const OrdersPage = ({
               ))
             ) : (
               /** Show empty orders message when no orders are found */
-              <EmptyOrders lang={''} dict={dict} />
+              <EmptyOrders lang={lang} dict={dict} />
             )}
             {/* Show loading message when loading more orders */}
             {loading && currentPage > 0 && (

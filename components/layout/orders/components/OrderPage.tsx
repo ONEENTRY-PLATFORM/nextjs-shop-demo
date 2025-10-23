@@ -93,7 +93,6 @@ const OrderPage = ({
             data={data}
             title={repeat_order_title.value}
             isLoading={isLoading}
-            lang={lang}
           />
         )}
 

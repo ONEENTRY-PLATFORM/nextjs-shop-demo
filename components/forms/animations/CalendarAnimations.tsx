@@ -69,7 +69,7 @@ const CalendarAnimations = ({
       {
         scale: 1,
         opacity: 1,
-        delay: 0.15,
+        delay: 0.05,
         stagger: 0.01,
       },
     );
@@ -80,7 +80,7 @@ const CalendarAnimations = ({
      */
     if (transition === 'close') {
       /** Reverse the animation over 2 seconds */
-      tl.reverse(2);
+      tl.reverse(1.5);
     } else {
       /** Play the animation */
       tl.play();

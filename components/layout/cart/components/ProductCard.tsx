@@ -74,8 +74,10 @@ const ProductCard = ({
             name={'deselectProduct-' + id}
             id={'deselectProduct-' + id}
             checked={selected}
-            className="size-5 border-spacing-3 accent-orange-500 ring-2 ring-orange-700"
-            aria-label={`Deselect product ${title}`}
+            className="size-5 border-spacing-3 accent-orange-500 ring-2 ring-orange-700 cursor-pointer"
+            aria-label={
+              selected ? `Deselect product ${title}` : `Select product ${title}`
+            }
           />
         </div>
 
