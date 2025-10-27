@@ -3,7 +3,7 @@
 
 import { useTransitionRouter } from 'next-transition-router';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
-import type { FC, JSX } from 'react';
+import type { JSX } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { addProductToCart } from '@/app/store/reducers/CartSlice';
@@ -12,11 +12,11 @@ import Loader from '@/components/shared/Loader';
 /**
  * RepeatOrder button component.
  * Provides a button that allows users to re-order all products from a previous order.
- * @param   {RepeatOrderButtonProps} props           - Component props
- * @param   {IOrderByMarkerEntity}   props.data      - Order data containing products to repeat
- * @param   {boolean}                props.isLoading - Loading state to show spinner when processing
- * @param   {string}                 props.title     - Button title text
- * @returns {JSX.Element}                            Repeat order button element with loading indicator
+ * @param   {object}               props           - Component props
+ * @param   {IOrderByMarkerEntity} props.data      - Order data containing products to repeat
+ * @param   {boolean}              props.isLoading - Loading state to show spinner when processing
+ * @param   {string}               props.title     - Button title text
+ * @returns {JSX.Element}                          Repeat order button element with loading indicator
  */
 const RepeatOrderButton = ({
   data,

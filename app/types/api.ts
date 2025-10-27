@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/check-line-alignment */
 /**
  * API response types for strict typing
  */
