@@ -56,7 +56,7 @@ const ProductImageGallery = ({
   /** Extract images from attributeValues with safety checks */
   const imageSrc = attributeValues?.pic?.value;
   const morePic = attributeValues?.more_pic?.value || [];
-  const isGallery = morePic.length > 0;
+  const isGallery = morePic.length > 1;
 
   /** Safely construct Gallery */
   /** Create an array of image objects with original and thumbnail URLs */
