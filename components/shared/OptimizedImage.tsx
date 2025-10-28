@@ -1,4 +1,3 @@
-/* eslint-disable jsdoc/reject-any-type */
 'use client';
 
 import NextImage from 'next/image';
@@ -12,7 +11,7 @@ import Placeholder from './Placeholder';
 /**
  * Optimized image component with LQIP placeholder and lazy loading.
  * @param   {object}      props           - OptimizedImage component props.
- * @param   {any}         props.src       - Image source data.
+ * @param   {object}      props.src       - Image source data.
  * @param   {string}      props.alt       - Image alt text.
  * @param   {number}      props.width     - Image width.
  * @param   {number}      props.height    - Image height.

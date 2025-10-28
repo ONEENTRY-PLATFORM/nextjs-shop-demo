@@ -46,13 +46,13 @@ const GroupCard = ({
     attributeValues.more_pic?.value || attributeValues.more_pic?.value;
 
   /** Get first product image download link */
-  const pic1 = images;
+  const pic1 = images && images[0].downloadLink;
 
   /** Get second product image download link */
-  const pic2 = images;
+  const pic2 = images && images[1].downloadLink;
 
   return (
-    <div className="flex min-h-[170px] flex-row justify-between rounded-xl bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg max-md:flex-col">
+    <div className="flex min-h-[182px] flex-row justify-between rounded-xl bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg max-md:flex-col">
       <div className="flex min-w-full gap-2.5">
         <div className="flex w-[37%] flex-col">
           <h3 className="mb-5 text-sm leading-4 text-neutral-600">{title}</h3>
@@ -65,19 +65,11 @@ const GroupCard = ({
         </div>
 
         <div className="flex w-[63%] flex-row justify-between">
-          {pic1 ? (
-            <ProductImage imageSrc={pic1} />
-          ) : (
-            <Placeholder className="min-h-[110px]" />
-          )}
+          {pic1 && <ProductImage imageSrc={pic1} />}
           <div className="my-auto aspect-square w-4 shrink-0 fill-neutral-600 text-center">
             +
           </div>
-          {pic2 ? (
-            <ProductImage imageSrc={pic2} />
-          ) : (
-            <Placeholder className="min-h-[110px]" />
-          )}
+          {pic2 && <ProductImage imageSrc={pic2} />}
         </div>
       </div>
     </div>
