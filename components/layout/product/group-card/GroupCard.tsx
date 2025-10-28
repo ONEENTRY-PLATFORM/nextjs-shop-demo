@@ -46,10 +46,10 @@ const GroupCard = ({
     attributeValues.more_pic?.value || attributeValues.more_pic?.value;
 
   /** Get first product image download link */
-  const pic1 = images && images[0]?.downloadLink;
+  const pic1 = images;
 
   /** Get second product image download link */
-  const pic2 = images && images[1]?.downloadLink;
+  const pic2 = images;
 
   return (
     <div className="flex min-h-[170px] flex-row justify-between rounded-xl bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg max-md:flex-col">

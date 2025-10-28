@@ -15,14 +15,12 @@ import GroupCard from './group-card/GroupCard';
  * @param   {IProductsEntity[]} [props.block.products]      - The array of products to display in the group
  * @param   {string}            props.lang                  - Current language shortcode for localization
  * @param   {IAttributeValues}  props.dict                  - Dictionary of attribute values from server API
- * @param   {string}            props.langCode              - The language code for accessing localized attribute values
  * @returns {JSX.Element}                                   A section containing a title and a grid of product cards
  */
 const ProductsGroup = ({
   block,
   lang,
   dict,
-  langCode,
 }: {
   block: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -31,7 +29,6 @@ const ProductsGroup = ({
   };
   lang: string;
   dict: IAttributeValues;
-  langCode: string;
 }): JSX.Element => {
   return (
     <ProductAnimations
@@ -39,14 +36,14 @@ const ProductsGroup = ({
       index={4}
     >
       <h2 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
-        {block?.attributeValues?.[langCode]?.together_title?.value ||
+        {block?.attributeValues?.[lang]?.together_title?.value ||
           block?.attributeValues?.together_title?.value}
       </h2>
       <div className="flex w-full flex-row flex-wrap items-stretch justify-start gap-2.5">
         {block?.products?.map((product: IProductsEntity) => (
           <div
             key={product.id}
-            className="relative box-border flex w-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%]"
+            className="relative box-border flex w-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%] h-full"
           >
             <GroupCard product={product} lang={lang} dict={dict} />
           </div>

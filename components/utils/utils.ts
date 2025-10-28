@@ -26,8 +26,11 @@ export const UsePrice = ({
   amount: number | string;
   lang: string;
 }): string => {
-  const currency = CurrencyEnum[lang as keyof typeof CurrencyEnum];
-  const intlEnum = IntlEnum[lang as keyof typeof IntlEnum];
+  // Get currency code with fallback to USD if language not found in enum
+  const currency = CurrencyEnum[lang as keyof typeof CurrencyEnum] || 'USD';
+  // Get locale code with fallback to en-US if language not found in enum
+  const intlEnum = IntlEnum[lang as keyof typeof IntlEnum] || 'en-US';
+
   const formattedPrice = new Intl.NumberFormat(intlEnum, {
     style: 'currency',
     currency: currency,

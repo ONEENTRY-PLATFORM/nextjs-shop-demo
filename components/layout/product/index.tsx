@@ -6,7 +6,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 
 import { getProductTitle } from '@/app/api/hooks/useProductsData';
-import { LanguageEnum } from '@/app/types/enum';
+import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
 
 import ProductAnimations from './animations/ProductAnimations';
 import ProductDescription from './product-single/ProductDescription';
@@ -57,6 +57,7 @@ const ProductSingle = ({
 
   /** Convert language shortcode to language code using enum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const currencyCode = CurrencyEnum[lang as keyof typeof CurrencyEnum];
 
   /** Create a mock block object with similar products data for the RelatedItems component */
   const relatedItemsBlock = {
@@ -119,8 +120,8 @@ const ProductSingle = ({
             return (
               <ProductsGroup
                 key={block}
-                {...blocksData[block]}
-                lang={langCode}
+                block={blocksData[block]}
+                lang={currencyCode}
                 dict={dict}
               />
             );
