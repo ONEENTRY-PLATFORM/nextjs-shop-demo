@@ -3,7 +3,7 @@
 
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { JSX, ReactNode } from 'react';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { reDefine, useLazyGetMeQuery } from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
@@ -239,14 +239,17 @@ export const AuthProvider = ({
     }
   }, [refetch, refetchUser, isAuth]);
 
-  /** Context value object */
-  const value = {
-    isAuth,
-    isLoading,
-    user,
-    authenticate: () => setRefetch(!refetch),
-    refreshUser: () => setRefetchUser(!refetchUser),
-  };
+  /** Memoize context value to prevent unnecessary re-renders */
+  const value = useMemo(
+    () => ({
+      isAuth,
+      isLoading,
+      user,
+      authenticate: () => setRefetch(!refetch),
+      refreshUser: () => setRefetchUser(!refetchUser),
+    }),
+    [isAuth, isLoading, user, refetch, refetchUser],
+  );
 
   /** Return AuthContext Provider with value */
   return (
