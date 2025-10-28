@@ -4,7 +4,6 @@ import type { JSX } from 'react';
 import React from 'react';
 
 import { LanguageEnum } from '@/app/types/enum';
-import Placeholder from '@/components/shared/Placeholder';
 
 import ApplyButton from './ApplyButton';
 import PriceDisplay from './PriceDisplay';
