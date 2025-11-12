@@ -1,14 +1,9 @@
 /** @type {import('next').NextConfig} */
 import path from 'path';
-import process from 'process';
-import { fileURLToPath, URL } from 'url';
+import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-// Extract hostname from NEXT_PUBLIC_PROJECT_URL
-const projectUrl = process.env.NEXT_PUBLIC_PROJECT_URL;
-const hostname = projectUrl ? new URL(projectUrl).hostname : 'localhost';
 
 const nextConfig = {
   experimental: {
@@ -39,7 +34,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: hostname,
+        hostname: '**.oneentry.cloud',
         port: '',
         pathname: '/cloud-static/**',
       },
