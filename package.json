@@ -86,6 +86,7 @@
     "stylelint": "^16.26.1",
     "stylelint-config-recess-order": "^7.4.0",
     "stylelint-config-standard-scss": "^16.0.0",
+    "stylelint-order": "^7.0.0",
     "tailwindcss": "^4.1.17",
     "typescript": "^5.9.3",
     "use-debounce": "^10.0.6"

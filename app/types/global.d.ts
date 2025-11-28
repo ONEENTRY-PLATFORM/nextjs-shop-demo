@@ -78,12 +78,12 @@ export type CartState = {
 
 /**
  * Animations props.
- * @property {React.ReactNode} children  - Children of the component.
+ * @property {ReactNode} children  - Children of the component.
  * @property {string}          className - Class name of the component.
  * @property {number}          index     - Index of the component.
  */
 export type AnimationsProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   className: string;
   index: number;
 };

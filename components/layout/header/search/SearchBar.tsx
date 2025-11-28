@@ -4,7 +4,7 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX } from 'react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
 import SearchIcon from '@/components/icons/search';

@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';

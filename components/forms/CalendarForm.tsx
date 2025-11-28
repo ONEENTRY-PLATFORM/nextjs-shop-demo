@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
 import utc from 'dayjs/plugin/utc';
 import type { JSX } from 'react';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 
 import { useGetSingleAttributeByMarkerSetQuery } from '@/app/api/api/RTKApi';

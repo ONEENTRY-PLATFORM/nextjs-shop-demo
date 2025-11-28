@@ -1,7 +1,7 @@
 'use client';
 
 import type { JSX } from 'react';
-import React, { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { selectCartItemWithIdLength } from '@/app/store/reducers/CartSlice';

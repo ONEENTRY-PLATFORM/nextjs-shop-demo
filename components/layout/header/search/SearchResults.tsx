@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { Dispatch, JSX, Key, SetStateAction } from 'react';
-import React from 'react';
 
 import { useSearchProducts } from '@/app/api/hooks/useSearchProducts';
 import Spinner from '@/components/shared/Spinner';
