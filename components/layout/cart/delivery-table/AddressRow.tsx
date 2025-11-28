@@ -50,12 +50,13 @@ const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
         valid: address ? true : false,
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryData]);
 
   return (
     /* Wrap row with animation component for staggered entrance effects */
     <TableRowAnimations
-      className="tr h-[50px] -mb-[1px] border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
+      className="tr h-[50px] -mb-px border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
       index={7}
     >
       {/** Address label cell */}

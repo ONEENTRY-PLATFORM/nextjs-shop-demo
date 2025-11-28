@@ -118,7 +118,7 @@ const rootReducer = combineReducers({
  * @returns {ReturnType<typeof configureStore>} Configured store
  * @see {@link https://github.com/rt2zz/redux-persist?tab=readme-ov-file#nested-persists}
  */
-export const setupStore = () => {
+export const setupStore = (): ReturnType<typeof configureStore> => {
   return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>

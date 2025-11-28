@@ -170,6 +170,7 @@ export const AuthProvider = ({
     }
     /** Update user data with current cart and favorites */
     updateUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuth, user, productsInCart, favoritesIds]);
 
   /** Load cart from user state to Redux store */
@@ -190,7 +191,7 @@ export const AuthProvider = ({
 
     /** Mark cart as loaded */
     dispatch(setCartVersion(1));
-  }, [isAuth, user]);
+  }, [isAuth, user, cartVersion, productsInCart, dispatch]);
 
   /** Load favorites from user state to Redux store */
   useEffect(() => {
@@ -204,17 +205,29 @@ export const AuthProvider = ({
     });
     /** Mark favorites as loaded */
     dispatch(setFavoritesVersion(1));
-  }, [isAuth, user]);
+  }, [isAuth, user, favoritesVersion, dispatch]);
 
   /** Refetch user data when refetch flag changes */
   useEffect(() => {
-    /** Set loading state to true */
-    setIsLoading(true);
-    /** Initialize auth process */
-    onInit().then(() => {
+    let cancelled = false;
+
+    const initAuth = async () => {
+      /** Set loading state to true */
+      if (!cancelled) setIsLoading(true);
+
+      /** Initialize auth process */
+      await onInit();
+
       /** Set loading state to false after init */
-      setIsLoading(false);
-    });
+      if (!cancelled) setIsLoading(false);
+    };
+
+    initAuth();
+
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, langCode]);
 
   /** Refetch if error and has refresh-token */
@@ -223,11 +236,12 @@ export const AuthProvider = ({
     const refresh = localStorage.getItem('refresh-token');
     /** If error occurred and refresh token exists */
     if (isError && refresh) {
-      /** Trigger refetch */
-      setRefetch(true);
-      /** Clear refresh token and set auth to false */
+      /** Clear refresh token first */
       localStorage.setItem('refresh-token', '');
+
+      /** Update state in batch */
       setIsAuth(false);
+      setRefetch((prev) => !prev);
     }
   }, [isError]);
 
@@ -237,6 +251,7 @@ export const AuthProvider = ({
     if (isAuth) {
       checkToken();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, refetchUser, isAuth]);
 
   /** Memoize context value to prevent unnecessary re-renders */

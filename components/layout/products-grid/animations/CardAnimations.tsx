@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 import { useSearchParams } from 'next/navigation';
 import type { JSX, ReactNode } from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 /**
  * CardAnimations component provides entrance animations for product cards using GSAP.
@@ -38,10 +38,30 @@ const CardAnimations = ({
 
   /** Reference to the DOM element for animation targeting */
   const ref = useRef(null);
+  /** State to track if element is in viewport */
+  const [inView, setInView] = useState<boolean | null>(null);
   /** Calculate animation delay based on item position relative to current page */
   const delay = (index - (currentPage - 1) * pagesLimit) / 10;
+
   /** Check if element is in viewport for scroll-triggered animations */
-  const inView = ref.current && ScrollTrigger.isInViewport(ref.current, 0.05);
+  useEffect(() => {
+    const checkInView = () => {
+      if (ref.current) {
+        setInView(ScrollTrigger.isInViewport(ref.current, 0.05));
+      }
+    };
+
+    // Check on mount and when ScrollTrigger updates
+    checkInView();
+
+    // Listen for ScrollTrigger refresh events
+    ScrollTrigger.addEventListener('refresh', checkInView);
+
+    // Cleanup listener
+    return () => {
+      ScrollTrigger.removeEventListener('refresh', checkInView);
+    };
+  }, []);
 
   /** Entering animations using GSAP timeline */
   useGSAP(() => {

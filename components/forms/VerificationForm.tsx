@@ -76,7 +76,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
         }),
       );
     }
-  }, [otp]);
+  }, [dispatch, otp]);
 
   /**
    * Submit form handle for checkCode/activateUser

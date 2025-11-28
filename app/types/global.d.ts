@@ -2,7 +2,7 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
-import type React from 'react';
+import type React, { ReactNode } from 'react';
 
 /**
  * Localize info.
@@ -79,8 +79,8 @@ export type CartState = {
 /**
  * Animations props.
  * @property {ReactNode} children  - Children of the component.
- * @property {string}          className - Class name of the component.
- * @property {number}          index     - Index of the component.
+ * @property {string}    className - Class name of the component.
+ * @property {number}    index     - Index of the component.
  */
 export type AnimationsProps = {
   children: ReactNode;

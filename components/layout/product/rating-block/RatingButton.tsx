@@ -1,7 +1,7 @@
 'use client';
+
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { Dispatch, JSX, SetStateAction } from 'react';
-import { useEffect, useState } from 'react';
 
 import StarRating from './StarRating';
 
@@ -28,14 +28,7 @@ const RatingButton = ({
   state: boolean;
   setState: Dispatch<SetStateAction<boolean>>;
 }): JSX.Element => {
-  const [reviewsTitle, setReviewsTitle] = useState('');
   const { reviews_title } = dict;
-
-  useEffect(() => {
-    if (reviews_title) {
-      setReviewsTitle(reviews_title?.value || '');
-    }
-  }, [reviews_title]);
 
   return (
     <button
@@ -57,7 +50,9 @@ const RatingButton = ({
           'my-auto cursor-pointer flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600 group-hover:text-orange-500 '
         }
       >
-        <div className={state ? 'text-orange-500' : ''}>{reviewsTitle}</div>
+        <div className={state ? 'text-orange-500' : ''}>
+          {reviews_title?.value || ''}
+        </div>
         <svg
           width="26"
           height="14"

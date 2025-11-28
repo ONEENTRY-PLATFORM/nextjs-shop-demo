@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import '@/app/styles/image-gallery.css';
@@ -7,8 +6,8 @@ import '@/app/styles/slick-theme.css';
 
 import Image from 'next/image';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { JSX, Key, RefObject } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import type { JSX, Key } from 'react';
+import { useState } from 'react';
 import Slider from 'react-slick';
 
 import {
@@ -33,12 +32,8 @@ const ProductImageGallery = ({
   alt: string;
 }): JSX.Element => {
   /** State for slider navigation */
-  const [nav1, setNav1] = useState<Slider>();
-  const [nav2, setNav2] = useState<Slider>();
-
-  /** Refs for slider components */
-  let sliderRef1 = useRef<RefObject<Slider | null>>(null);
-  let sliderRef2 = useRef<RefObject<Slider | null>>(null);
+  const [nav1, setNav1] = useState<Slider | null>(null);
+  const [nav2, setNav2] = useState<Slider | null>(null);
 
   /** Extract attributeValues from product */
   const { attributeValues } = product;
@@ -46,12 +41,6 @@ const ProductImageGallery = ({
   /** Use safe utility to get product title for alt text */
   const productTitle = getProductTitle(product, 'Product image');
   const imageAlt = alt || productTitle;
-
-  /** Set slider navigation refs after component mounts */
-  useEffect(() => {
-    setNav1(sliderRef1 as any);
-    setNav2(sliderRef2 as any);
-  }, []);
 
   /** Extract images from attributeValues with safety checks */
   const imageSrc = attributeValues?.pic?.value;
@@ -108,10 +97,7 @@ const ProductImageGallery = ({
           /* Render gallery with main image slider and thumbnail navigation */
           <div className="relative w-full">
             {/* Main image slider */}
-            <Slider
-              asNavFor={nav2}
-              ref={(slide) => (sliderRef1 = slide as any)}
-            >
+            <Slider asNavFor={nav2 ?? undefined} ref={setNav1}>
               {imagesData.map((image, i: Key) => {
                 return (
                   <div key={i} className="w-full items-center">
@@ -129,8 +115,8 @@ const ProductImageGallery = ({
             </Slider>
             {/* Thumbnail navigation slider */}
             <Slider
-              asNavFor={nav1}
-              ref={(slide) => (sliderRef2 = slide as any)}
+              asNavFor={nav1 ?? undefined}
+              ref={setNav2}
               slidesToShow={3}
               swipeToSlide={true}
               focusOnSelect={true}

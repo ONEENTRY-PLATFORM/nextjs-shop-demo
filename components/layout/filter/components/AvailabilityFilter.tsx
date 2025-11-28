@@ -52,6 +52,7 @@ const AvailabilityFilter = memo(
       if (pathname) {
         replace(`${pathname}?${params.toString()}`);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [available, pathname, replace]);
 
     return (

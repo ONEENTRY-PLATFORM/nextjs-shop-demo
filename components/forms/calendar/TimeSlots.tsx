@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/no-undefined-types */
 import type { Dispatch, JSX } from 'react';
 
 import TimeSlot from './TimeSlot';

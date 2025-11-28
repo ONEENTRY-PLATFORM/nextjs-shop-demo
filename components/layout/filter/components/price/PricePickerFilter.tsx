@@ -1,12 +1,11 @@
 /* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable react/prop-types */
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';
 
 import PriceFromInput from './PriceFromInput';
@@ -59,50 +58,37 @@ const PriceFilter = memo(
 
     /**
      * Handler for changing price range values when slider is moved
+     * Updates both local state and URL parameters
      * @param {number[]} values - array of values [from, to]
      */
-    const handlePriceChange = useCallback((values: number[]): void => {
-      setPriceFrom(values[0] || 0);
-      setPriceTo(values[1] || 0);
-    }, []);
+    const handlePriceChange = useCallback(
+      (values: number[]): void => {
+        const newPriceFrom = values[0] || 0;
+        const newPriceTo = values[1] || 0;
 
-    /** Effect for updating minPrice parameter in URL when priceFrom changes */
-    useEffect(() => {
-      /** Update URL with minPrice parameter if it differs from default minimum */
-      if (priceFrom && priceFrom !== MIN) {
-        params.set('minPrice', priceFrom.toString());
-      } else {
-        /** Remove parameter if it matches default value */
-        params.delete('minPrice');
-      }
-      replace(`${pathname}?${params.toString()}`);
-    }, [priceFrom]);
+        setPriceFrom(newPriceFrom);
+        setPriceTo(newPriceTo);
 
-    /** Effect for updating maxPrice parameter in URL when priceTo changes */
-    useEffect(() => {
-      /** Update URL with maxPrice parameter if it differs from default maximum */
-      if (priceTo && priceTo !== MAX) {
-        params.set('maxPrice', priceTo.toString());
-      } else {
-        /** Remove parameter if it matches default value */
-        params.delete('maxPrice');
-      }
-      replace(`${pathname}?${params.toString()}`);
-    }, [priceTo]);
+        const newParams = new URLSearchParams(searchParams?.toString() || '');
 
-    /** Effect to reset priceFrom value when minPrice parameter is absent from URL */
-    useEffect(() => {
-      if (!params.get('minPrice')) {
-        setPriceFrom(MIN);
-      }
-    }, [params.get('minPrice')]);
+        /** Update URL with minPrice parameter if it differs from default minimum */
+        if (newPriceFrom && newPriceFrom !== MIN) {
+          newParams.set('minPrice', newPriceFrom.toString());
+        } else {
+          newParams.delete('minPrice');
+        }
 
-    /** Effect to reset priceTo value when maxPrice parameter is absent from URL */
-    useEffect(() => {
-      if (!params.get('maxPrice')) {
-        setPriceTo(MAX);
-      }
-    }, [params.get('maxPrice')]);
+        /** Update URL with maxPrice parameter if it differs from default maximum */
+        if (newPriceTo && newPriceTo !== MAX) {
+          newParams.set('maxPrice', newPriceTo.toString());
+        } else {
+          newParams.delete('maxPrice');
+        }
+
+        replace(`${pathname}?${newParams.toString()}`);
+      },
+      [MIN, MAX, pathname, replace, searchParams, setPriceFrom, setPriceTo],
+    );
 
     /**
      * Render markers on the range track to show price intervals

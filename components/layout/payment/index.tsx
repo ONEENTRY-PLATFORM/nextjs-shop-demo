@@ -84,14 +84,14 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
     }
-  }, [deliveryData]);
+  }, [deliveryData, dispatch]);
 
   /** Add fetched products to the cart slice when they are loaded */
   useEffect(() => {
     if (productsData) {
       dispatch(addProductsToCart(productsData as IProductsEntity[]));
     }
-  }, [productsData]);
+  }, [dispatch, productsData]);
 
   /** Combine products from cart and loaded products data */
   const combinedProducts = useMemo(() => {
@@ -155,6 +155,7 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
       );
       dispatch(addProducts(productsInOrder));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [productsInOrder]);
 
   if (!dict) {

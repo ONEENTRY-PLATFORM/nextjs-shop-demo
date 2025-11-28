@@ -15,6 +15,9 @@ import EmptyFavorites from '@/components/layout/favorites/EmptyFavorites';
 import ProductCard from '../products-grid/components/product-card/ProductCard';
 import ProductsGridLoader from '../products-grid/components/ProductsGridLoader';
 
+/** Memoize the loader component outside of the main component */
+const MemoizedProductsGridLoader = memo(ProductsGridLoader);
+
 /**
  * Favorites page.
  * @param   {SimplePageProps}  props      - Page props.
@@ -24,7 +27,9 @@ import ProductsGridLoader from '../products-grid/components/ProductsGridLoader';
  */
 const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   const { isAuth } = useContext(AuthContext);
-  const [products, setProducts] = useState<IProductsEntity[]>([]);
+  const [updatedProducts, setUpdatedProducts] = useState<
+    Record<number, Partial<IProductsEntity>>
+  >({});
 
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
@@ -36,14 +41,12 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   });
 
   /**
-   * Effect hook to update products state when data changes.
-   * @param {IProductsEntity[]} data - Product data fetched from the API
+   * Merge API data with real-time WebSocket updates
    */
-  useEffect(() => {
-    if (data) {
-      setProducts(data);
-    }
-  }, [data]);
+  const products = data?.map((product) => ({
+    ...product,
+    ...updatedProducts[product.id],
+  }));
 
   /**
    * Effect hook to handle real-time WebSocket notifications.
@@ -56,7 +59,7 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
    */
   useEffect(() => {
     /** Only connect to WebSocket if user is authenticated and we have products */
-    if (!isAuth || !products.length) {
+    if (!isAuth || !data?.length) {
       return;
     }
 
@@ -77,29 +80,14 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
         /** Extract and parse the new price from product attributes */
         const newPrice = parseInt(product?.attributeValues?.price?.value, 10);
 
-        /** Update the product in the state with new price and status */
-        setProducts((prevProducts) => {
-          const index = prevProducts.findIndex(
-            (p: IProductsEntity) => p.id === product.id,
-          );
-
-          if (index === -1) {
-            return prevProducts;
-          }
-
-          const newProducts = [...prevProducts];
-          const existingProduct = prevProducts[index];
-
-          if (existingProduct) {
-            newProducts[index] = {
-              ...existingProduct,
-              price: newPrice,
-              statusIdentifier: res?.product?.status?.identifier,
-            } as IProductsEntity;
-          }
-
-          return newProducts;
-        });
+        /** Update the product updates map with new price and status */
+        setUpdatedProducts((prev) => ({
+          ...prev,
+          [product.id]: {
+            price: newPrice,
+            statusIdentifier: res?.product?.status?.identifier,
+          },
+        }));
       }
     });
 
@@ -107,10 +95,7 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     return () => {
       ws.disconnect();
     };
-  }, [isAuth]);
-
-  /** Memoize the loader component */
-  const MemoizedProductsGridLoader = memo(ProductsGridLoader);
+  }, [isAuth, data]);
 
   /**
    * Handle empty favorites state

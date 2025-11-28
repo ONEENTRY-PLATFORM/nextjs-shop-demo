@@ -68,6 +68,7 @@ const ColorFilter = memo(
       }
       /** Navigate to the provided href. Replaces the current history entry. */
       replace(`${pathname}?${newParams.toString()}`);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentColor, pathname, replace]);
 
     /** Extract color options from attributes data */

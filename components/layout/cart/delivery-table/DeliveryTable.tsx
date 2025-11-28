@@ -111,6 +111,7 @@ const DeliveryTable = ({
         valid: address ? true : false,
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryData]);
 
   return (

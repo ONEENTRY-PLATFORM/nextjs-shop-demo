@@ -37,8 +37,8 @@ const FormInput = (field: {
   /* State for storing the current value of the input field */
   const [value, setValue] = useState<string>(field.value || '');
 
-  /* State for storing the type of the input field (e.g., text, password) */
-  const [type, setType] = useState<string>('');
+  /* State for toggling password visibility (text/password) */
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   /* Redux dispatch function for updating form field values in the store */
   const dispatch = useAppDispatch();
@@ -58,6 +58,17 @@ const FormInput = (field: {
         : (field.type as any)
   ];
 
+  /**
+   * Calculate the actual input type
+   * For password fields, toggle between 'password' and 'text' based on visibility state
+   */
+  const type =
+    fieldType === 'password'
+      ? showPassword
+        ? 'text'
+        : 'password'
+      : fieldType || 'text';
+
   /* Check if the field is required based on validators */
   const required = field?.validators?.['requiredValidator']?.strict || false;
 
@@ -71,12 +82,7 @@ const FormInput = (field: {
         },
       }),
     );
-  }, [value, valid]);
-
-  /* Effect to set the input type when fieldType changes */
-  useEffect(() => {
-    setType(fieldType || 'text');
-  }, [fieldType]);
+  }, [value, valid, field.marker, dispatch]);
 
   /* Return empty element if field or type is not defined */
   if (!field || !type) {
@@ -156,15 +162,11 @@ const FormInput = (field: {
         <button
           onClick={(e) => {
             e.preventDefault();
-            if (type === 'password') {
-              setType('text');
-            } else {
-              setType('password');
-            }
+            setShowPassword((prev) => !prev);
           }}
           className="absolute bottom-2 right-2 flex size-6 items-center"
         >
-          {type === 'password' ? <EyeIcon /> : <EyeOpenIcon />}
+          {showPassword ? <EyeOpenIcon /> : <EyeIcon />}
         </button>
       )}
     </FormFieldAnimations>

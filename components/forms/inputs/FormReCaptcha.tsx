@@ -26,7 +26,7 @@ const FormReCaptcha = ({
    */
   useEffect(() => {
     setIsCaptcha(true);
-  }, []);
+  }, [setIsCaptcha]);
 
   /**
    * Google reCAPTCHA component
