@@ -4,7 +4,7 @@ import type { JSX } from 'react';
  * YouTube SVG icon component
  * @returns {JSX.Element} JSX.Element
  */
-const YT = () => (
+const YT = (): JSX.Element => (
   <svg
     width="175"
     height="85"
