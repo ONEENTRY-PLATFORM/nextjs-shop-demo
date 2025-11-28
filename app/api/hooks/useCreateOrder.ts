@@ -12,7 +12,7 @@ import { removeOrder } from '@/app/store/reducers/OrderSlice';
 import { handleApiError } from '@/app/utils/errorHandler';
 
 /**
- * Create order function
+ * Custom hook to handle order creation and payment session
  * @param   {object} props          - useCreateOrder props
  * @param   {string} props.langCode - Language code
  * @returns {object}                useCreateOrder object with onConfirmOrder function, loading state and error state
@@ -67,17 +67,16 @@ export const useCreateOrder = ({
         router.push(paymentUrl);
         return 'payment_method';
       }
-      /** Reset loading state if no action taken */
-      setIsLoading(false);
       return '';
     } catch (error) {
       /** Handle API errors */
       const apiError = handleApiError('createSession', error);
       /** Set error message */
       setError(apiError.message);
+      return '';
+    } finally {
       /** Reset loading state */
       setIsLoading(false);
-      return '';
     }
   };
 

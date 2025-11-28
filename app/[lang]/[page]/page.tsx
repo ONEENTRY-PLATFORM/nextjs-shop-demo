@@ -137,10 +137,12 @@ export async function generateMetadata({
 }: {
   params: Promise<{ page: string; lang: string }>;
 }): Promise<Metadata> {
+  /** Extract page name from params */
   const { page: pageData, lang } = await params;
-  /** get page by Url */
+  /** Get page data by current url */
   const { page, isError } = await getPageByUrl(pageData, lang);
 
+  /** if error return notFound */
   if (isError || !page) {
     return notFound();
   }
