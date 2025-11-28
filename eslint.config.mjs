@@ -1,7 +1,5 @@
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
-import js from '@eslint/js';
 
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
@@ -13,37 +11,25 @@ import tailwindcssPlugin from 'eslint-plugin-tailwindcss';
 import simpleImportSortPlugin from 'eslint-plugin-simple-import-sort';
 import jsdocPlugin from 'eslint-plugin-jsdoc';
 
+import { defineConfig, globalIgnores } from "eslint/config";
+import nextVitals from "eslint-config-next/core-web-vitals";
+import nextTs from "eslint-config-next/typescript";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-});
-
-const eslintConfig = [
-  {
-    ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts"
-    ]
-  },
-  // Base extends via compat to support flat config plugins
-  ...compat.config({
-    extends: [
-      'eslint:recommended',
-      // 'next',
-      'next/typescript',
-    ],
-  }),
-  // legacy compat extends for some plugins
-  ...compat.extends(
-    'plugin:react/recommended',
-    'plugin:@next/next/recommended'
-  ),
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  // Override default ignores of eslint-config-next.
+  globalIgnores([
+    "node_modules/**",
+    // Default ignores of eslint-config-next:
+    ".next/**",
+    "out/**",
+    "build/**",
+    "next-env.d.ts",
+  ]),
 
   // Main ruleset for JS/TS/JSX/TSX
   {
@@ -150,7 +136,7 @@ const eslintConfig = [
       // JSDoc rules
       'jsdoc/check-line-alignment': ['warn', 'always'],
     },
-  }
-];
+  },
+]);
 
 export default eslintConfig;
