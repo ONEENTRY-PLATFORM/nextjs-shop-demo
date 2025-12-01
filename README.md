@@ -70,6 +70,27 @@ For detailed information about specific aspects of the project, please refer to 
 - [State Management](docs/StateManagement.md) - Redux Toolkit and state management approach
 - [User State](docs/UserState.md) - How user state is implemented and synchronized
 
+## Getting Started with OneEntry
+
+Before running the demo locally, you need to create a OneEntry account and generate your API credentials.  
+A detailed step-by-step setup guide is available on the template landing page:
+
+👉 https://oneentry-free-template-e-commerce-nextjs.vercel.app/
+
+### 1. Create a OneEntry Workspace
+If you don’t have an account yet, sign up here  
+👉 https://oneentry.cloud/
+
+Create your workspace — this will be the backend for the demo Next.js store.
+
+### 2. Generate an App Token
+Once inside the admin panel:
+
+1. Navigate to **Settings → Access Tokens**
+2. Click **Create App Token**
+3. Copy your generated token — you'll need it for running the project
+4. (Optional) Configure access scopes depending on your use case
+
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file.
@@ -87,7 +108,7 @@ To run this project, you will need to add the following environment variables to
 Clone the project
 
 ```bash
-  git clone git@github.com:OneEntry/nextjs-shop-demo.git
+  git clone git@github.com:ONEENTRY-PLATFORM/nextjs-shop-demo.git
 ```
 
 Go to the project directory
