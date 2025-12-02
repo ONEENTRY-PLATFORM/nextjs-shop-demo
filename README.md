@@ -1,7 +1,7 @@
-<table width="100%">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td align="left">
-<img src="https://oneentry.cloud/img/git/oneenrty_light.png" alt="OneEntry Plaform" width="200" />
+      <img src="https://oneentry.cloud/img/git/oneenrty_light.png" alt="OneEntry Plaform" width="200" />
     </td>
     <td align="right">
       <a href="https://discord.gg/b7SmTC97">
