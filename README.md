@@ -1,20 +1,20 @@
-<img src="https://oneentry.cloud/img/git/oneenrty_light.png" alt="OneEntry Headless CMS" width="200" />
+<img src="https://oneentry.cloud/img/git/oneenrty_light.png" alt="OneEntry Plaform" width="200" />
 
 # OneEntry next.js shop example
 
 [App Promo Page](https://oneentry-free-template-e-commerce-nextjs.vercel.app 'DEMO')
 
-# OneEntry Headless CMS E-commerce Template
+# OneEntry Plaform E-commerce Template
 
-This project is a demo version of an e-commerce store, fully integrated with OneEntry Headless CMS. The primary goal of this project is to provide developers with a free, ready-to-use front-end template that demonstrates the capabilities of working with OneEntry.
+This project is a demo version of an e-commerce store, fully integrated with OneEntry Plaform. The primary goal of this project is to provide developers with a free, ready-to-use front-end template that demonstrates the capabilities of working with OneEntry.
 
 ## Project Goals
 
-1. **Showcase OneEntry’s Capabilities**: This e-commerce template gives users a clear example of how OneEntry Headless CMS can be used to manage content and products on an online store.
+1. **Showcase OneEntry’s Capabilities**: This e-commerce template gives users a clear example of how OneEntry Plaform can be used to manage content and products on an online store.
 
 2. **Simplify Development for Front-End Developers**: This project serves as a foundation that developers can use to quickly set up an e-commerce store. They can use the code as-is or customize it, adapting the design and adding their own features, which significantly reduces development time.
 
-3. **Ready-to-Use Solution for Quick Start**: This e-commerce template isn’t just an example—it’s a fully functional codebase that’s already integrated with OneEntry Headless CMS, ready to be tailored to fit specific project needs.
+3. **Ready-to-Use Solution for Quick Start**: This e-commerce template isn’t just an example—it’s a fully functional codebase that’s already integrated with OneEntry Plaform, ready to be tailored to fit specific project needs.
 
 ## Key Features
 
@@ -24,11 +24,11 @@ This project is a demo version of an e-commerce store, fully integrated with One
 
 - **Quick Start & Easy Adaptation**: Developers can hit the ground running with this ready-made template and customize it as needed to meet specific business or branding requirements.
 
-- **Scalability Support**: With OneEntry Headless CMS, this store can easily scale, handling high traffic and growing data volumes, making it suitable for both small projects and larger stores.
+- **Scalability Support**: With OneEntry Plaform, this store can easily scale, handling high traffic and growing data volumes, making it suitable for both small projects and larger stores.
 
 ## Usage
 
-This project is designed for developers using OneEntry Headless CMS who need a quick and flexible way to launch an e-commerce store. It serves as a starting point for creating a custom online store with minimal time and effort on front-end development.
+This project is designed for developers using OneEntry Plaform who need a quick and flexible way to launch an e-commerce store. It serves as a starting point for creating a custom online store with minimal time and effort on front-end development.
 
 ## Demo
 
@@ -56,9 +56,9 @@ This project is designed for developers using OneEntry Headless CMS who need a q
 
 This is a [Next.js](https://nextjs.org/) project.
 
-[Ready-to-use backend and Admin panel](https://doc.oneentry.cloud/ 'Documentations OneEntry Headless CMS')
+[Ready-to-use backend and Admin panel](https://doc.oneentry.cloud/ 'Documentations OneEntry Plaform')
 
-[NPM SDK](https://oneentry.cloud/instructions/npm 'NPM SDK OneEntry Headless CMS')
+[NPM SDK](https://oneentry.cloud/instructions/npm 'NPM SDK OneEntry Plaform')
 
 For detailed information about specific aspects of the project, please refer to the documentation files:
 
