@@ -22,7 +22,6 @@ import { i18n } from '@/i18n-config';
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  * @see {@link https://nextjs.org/docs/app/api-reference/file-conventions/page Next.js docs}
  */
-
 const ShopCategoryLayout = async (props: {
   params: Promise<{ lang: string; handle: string }>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

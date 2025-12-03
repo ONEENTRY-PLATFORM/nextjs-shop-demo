@@ -1,5 +1,6 @@
+/* eslint-disable jsdoc/no-undefined-types */
 /* eslint-disable @next/next/no-img-element */
-import React, { type JSX } from 'react';
+import type { JSX } from 'react';
 
 import type { ImageProps } from '@/app/types/global';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import type { JSX } from 'react';
-import React, { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { selectCartItemWithIdLength } from '@/app/store/reducers/CartSlice';
@@ -38,22 +38,10 @@ const QuantitySelector = memo(
     className?: string;
     height: number;
   }): JSX.Element => {
-    const [qty, setQty] = useState(1);
-
     /** Extract data from cartSlice for the specific product */
-    const data = useAppSelector((state) =>
-      selectCartItemWithIdLength(state, id),
-    );
-    const quantity = data || 0;
+    const quantity =
+      useAppSelector((state) => selectCartItemWithIdLength(state, id)) || 0;
 
-    /**
-     * Update local qty state when Redux store quantity changes.
-     * Ensures local state stays in sync with global state.
-     */
-    useEffect(() => {
-      /** Set qty to the Redux quantity or default to 1 if not in cart */
-      setQty(quantity > 0 ? quantity : 1);
-    }, [quantity]);
     /**
      * Hide component when product is not in cart (quantity <= 0)
      * This provides a clean UI experience by only showing quantity controls
@@ -71,9 +59,9 @@ const QuantitySelector = memo(
         }
         style={{ height: height }}
       >
-        <DecreaseButton id={id} qty={qty} title={title} />
-        <QuantityInput id={id} qty={qty} units={units} />
-        <IncreaseButton id={id} qty={qty} units={units} />
+        <DecreaseButton id={id} qty={quantity} title={title} />
+        <QuantityInput id={id} qty={quantity} units={units} />
+        <IncreaseButton id={id} qty={quantity} units={units} />
       </div>
     );
   },

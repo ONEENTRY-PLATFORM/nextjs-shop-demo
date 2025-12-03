@@ -47,11 +47,13 @@ const OffscreenModal = ({
 
     /* Cleanup function to remove event listener */
     return () => window.removeEventListener('resize', handleResize);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
   /** Effect to close the menu when the pathname changes (navigation occurs) */
   useEffect(() => {
     setOpen(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   /** Don't render if the menu is not open or if this is not the MobileMenu component */

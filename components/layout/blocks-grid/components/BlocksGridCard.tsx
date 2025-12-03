@@ -1,7 +1,7 @@
 import { Baloo_2 as Baloo } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
-import type React from 'react';
+import type { ReactElement } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
@@ -20,15 +20,15 @@ const baloo = Baloo({
  * Fetches block data by marker from API and displays it with title, image, and optional sticker
  * Supports external and internal links with appropriate target handling
  * Wrapped with animation component for entrance effects with staggered timing
- * @param   {object}                      props                  - Component props
- * @param   {string}                      props.marker           - Text marker used to identify and fetch the specific block
- * @param   {string}                      props.bgColor          - Background color CSS class for the card
- * @param   {string}                      props.lang             - Current language shortcode for content localization
- * @param   {object}                      props.className        - CSS classes object for styling the card
- * @param   {string}                      props.className.width  - Width CSS class for the card
- * @param   {string}                      props.className.height - Height CSS class for the card
- * @param   {number}                      props.index            - Index of element in array for staggered animations
- * @returns {Promise<React.ReactElement>}                        Block card component with content and animations
+ * @param   {object}                props                  - Component props
+ * @param   {string}                props.marker           - Text marker used to identify and fetch the specific block
+ * @param   {string}                props.bgColor          - Background color CSS class for the card
+ * @param   {string}                props.lang             - Current language shortcode for content localization
+ * @param   {object}                props.className        - CSS classes object for styling the card
+ * @param   {string}                props.className.width  - Width CSS class for the card
+ * @param   {string}                props.className.height - Height CSS class for the card
+ * @param   {number}                props.index            - Index of element in array for staggered animations
+ * @returns {Promise<ReactElement>}                        Block card component with content and animations
  */
 const BlocksGridCard = async ({
   marker,
@@ -45,7 +45,7 @@ const BlocksGridCard = async ({
     height: string;
   };
   index: number;
-}): Promise<React.ReactElement> => {
+}): Promise<ReactElement> => {
   /** Convert language shortcode to language code for API requests */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 

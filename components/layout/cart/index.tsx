@@ -50,9 +50,12 @@ const CartPage = ({
   const { isAuth } = useContext(AuthContext);
 
   /**
-   * State to store products in the cart with their current data
+   * State to store real-time WebSocket updates for products
+   * Maps product ID to updated fields
    */
-  const [products, setProducts] = useState<IProductsEntity[]>([]);
+  const [updatedProducts, setUpdatedProducts] = useState<
+    Record<number, Partial<IProductsEntity>>
+  >({});
 
   /**
    * Get products data from Redux cart slice
@@ -69,6 +72,14 @@ const CartPage = ({
   });
 
   /**
+   * Merge API data with real-time WebSocket updates
+   */
+  const products = data?.map((product) => ({
+    ...product,
+    ...updatedProducts[product.id],
+  }));
+
+  /**
    * Effect hook to add delivery data to the cart
    * Runs when deliveryData prop changes
    */
@@ -76,59 +87,65 @@ const CartPage = ({
     if (deliveryData) {
       dispatch(addDeliveryToCart(deliveryData));
     }
-  }, [deliveryData]);
+  }, [deliveryData, dispatch]);
 
   /**
-   * Effect hook to handle fetched products and WebSocket connection
-   * Adds products to cart and sets up real-time updates for authenticated users
+   * Effect hook to add products to Redux cart when data is fetched
    */
   useEffect(() => {
     if (data) {
-      setProducts(data);
       dispatch(addProductsToCart(data));
-      if (isAuth) {
-        /**
-         * Connect to WebSocket if authenticated
-         * Enables real-time updates for product information
-         */
-        const ws = api.WS.connect();
-        if (ws) {
-          ws.on('notification', async (res) => {
-            if (res?.product) {
-              const product = {
-                ...res.product,
-                attributeValues: res.product?.attributes,
-              };
-
-              const index = data.findIndex(
-                (p: IProductsEntity) => p.id === product.id,
-              );
-              const newPrice = parseInt(
-                product?.attributeValues?.price?.value,
-                10,
-              );
-
-              /**
-               * Update product price and status on receiving a notification
-               * Uses functional update to ensure we're working with the latest state
-               */
-              setProducts((prevProducts) => {
-                const newProducts = [...prevProducts];
-                if (index !== -1 && prevProducts[index]) {
-                  newProducts[index] = {
-                    ...prevProducts[index],
-                    price: newPrice,
-                    statusIdentifier: res?.product?.status?.identifier,
-                  };
-                }
-                return newProducts;
-              });
-            }
-          });
-        }
-      }
     }
-  }, [data, isAuth]);
+  }, [data, dispatch]);
+
+  /**
+   * Effect hook to handle WebSocket connection for real-time updates
+   * Sets up listener for product changes when user is authenticated
+   */
+  useEffect(() => {
+    if (!isAuth || !data?.length) {
+      return;
+    }
+
+    /**
+     * Connect to WebSocket if authenticated
+     * Enables real-time updates for product information
+     */
+    const ws = api.WS.connect();
+    if (!ws) {
+      return;
+    }
+
+    ws.on('notification', async (res) => {
+      if (res?.product) {
+        const product = {
+          ...res.product,
+          attributeValues: res.product?.attributes,
+        };
+
+        const newPrice = parseInt(product?.attributeValues?.price?.value, 10);
+
+        /**
+         * Update product price and status on receiving a notification
+         * Store updates in a map to be merged with API data
+         */
+        setUpdatedProducts((prev) => ({
+          ...prev,
+          [product.id]: {
+            price: newPrice,
+            statusIdentifier: res?.product?.status?.identifier,
+          },
+        }));
+      }
+    });
+
+    /**
+     * Cleanup function to disconnect WebSocket on unmount
+     */
+    return () => {
+      ws.disconnect();
+    };
+  }, [isAuth, data]);
 
   return (
     /**

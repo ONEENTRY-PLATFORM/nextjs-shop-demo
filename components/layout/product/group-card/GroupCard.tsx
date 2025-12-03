@@ -1,7 +1,6 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
-import React from 'react';
 
 import { LanguageEnum } from '@/app/types/enum';
 

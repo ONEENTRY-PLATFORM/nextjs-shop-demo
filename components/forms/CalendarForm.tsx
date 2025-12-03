@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
 import utc from 'dayjs/plugin/utc';
 import type { JSX } from 'react';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Calendar from 'react-calendar';
 
 import { useGetSingleAttributeByMarkerSetQuery } from '@/app/api/api/RTKApi';
@@ -47,8 +47,6 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
   /** State for storing selected delivery time */
   const [time, setTime] = useState<string>(deliveryData?.time);
 
-  const [dateTime, setDateTime] = useState<Date>();
-
   /** Query for shipping schedule data */
   const { data, error, isLoading } = useGetSingleAttributeByMarkerSetQuery({
     setMarker: 'order',
@@ -56,30 +54,16 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
     activeLang: lang,
   });
 
-  /** Update datetime when date or time changes */
+  /** Dispatch updated delivery data when date or time changes */
   useEffect(() => {
-    const [hh, mm] = time.split(':').map(Number);
-    setDateTime(
-      dayjs(date)
-        .hour(hh || 0)
-        .minute(mm || 0)
-        .second(0)
-        .toDate(),
+    dispatch(
+      setDeliveryData({
+        date: date.getTime(),
+        time: time,
+        address: deliveryData.address,
+      }),
     );
-  }, [date, time]);
-
-  /** Dispatch updated delivery data when datetime or interval changes */
-  useEffect(() => {
-    if (dateTime) {
-      dispatch(
-        setDeliveryData({
-          date: date.getTime(),
-          time: time,
-          address: deliveryData.address,
-        }),
-      );
-    }
-  }, [dateTime]);
+  }, [date, time, dispatch, deliveryData.address]);
 
   /** If loading, return loading indicator */
   if (isLoading) {

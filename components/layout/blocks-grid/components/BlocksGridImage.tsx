@@ -1,6 +1,5 @@
 /* eslint-disable jsdoc/reject-any-type */
 // import Image from 'next/image';
-import type React from 'react';
 import type { JSX } from 'react';
 
 import OptimizedImage from '@/components/shared/OptimizedImage';

@@ -1,7 +1,7 @@
 'use client';
 
 import type { JSX } from 'react';
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 

@@ -2,7 +2,7 @@ import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX, Key } from 'react';
-import React, { useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -111,6 +111,7 @@ const DeliveryTable = ({
         valid: address ? true : false,
       }),
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deliveryData]);
 
   return (

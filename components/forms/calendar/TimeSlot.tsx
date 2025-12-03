@@ -1,5 +1,4 @@
 import type { Dispatch, JSX, SetStateAction } from 'react';
-import React from 'react';
 
 /**
  * Time slot button component for selecting a specific time slot.

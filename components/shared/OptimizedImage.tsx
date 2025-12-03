@@ -65,49 +65,62 @@ const OptimizedImage = ({
     return <Placeholder />;
   }
 
-  /** Prepare props for Next.js Image component */
+  /**
+   * Prepare props for Next.js Image component
+   * @returns {object} - Image props
+   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const imageProps: any = {
-    src: optimizedSrc,
-    alt,
-    fill: !width && !height,
-    ...(width !== undefined && { width }),
-    ...(height !== undefined && { height }),
-    priority,
-    quality,
-    loading,
-    className: `
-      duration-300 ease-in-out
-      ${isImageLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0 object-cover'}
-      ${isImageLoading ? 'opacity-0' : 'opacity-100'}
-    `,
-    ref,
-    onLoad: () => setImageLoading(false),
-    onError: () => {
-      setImageLoading(false);
-    },
-    sizes:
-      width && height
-        ? `${width}px`
-        : sizes
-          ? sizes
-          : '(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw',
+  const getImageProps = (): any => {
+    const baseProps = {
+      src: optimizedSrc,
+      alt,
+      fill: !width && !height,
+      ...(width !== undefined && { width }),
+      ...(height !== undefined && { height }),
+      priority,
+      quality,
+      loading,
+      className: `
+        duration-300 ease-in-out
+        ${isImageLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0 object-cover'}
+        ${isImageLoading ? 'opacity-0' : 'opacity-100'}
+      `,
+      ref,
+      onLoad: () => setImageLoading(false),
+      onError: () => {
+        setImageLoading(false);
+      },
+      sizes:
+        width && height
+          ? `${width}px`
+          : sizes
+            ? sizes
+            : '(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw',
+    };
+
+    /** Conditionally add placeholder and blurDataURL only when they exist */
+    if (blurDataURL) {
+      return {
+        ...baseProps,
+        placeholder: 'blur',
+        blurDataURL: blurDataURL,
+      };
+    } else {
+      return {
+        ...baseProps,
+        placeholder: 'empty',
+      };
+    }
   };
 
-  /** Conditionally add placeholder and blurDataURL only when they exist */
-  if (blurDataURL) {
-    imageProps.placeholder = 'blur';
-    imageProps.blurDataURL = blurDataURL;
-  } else {
-    imageProps.placeholder = 'empty';
-  }
+  const imageProps = getImageProps();
 
   return (
     <div className={`${className} overflow-hidden`} style={{ width, height }}>
       {type === 'next' ? (
         <NextImage {...imageProps} />
       ) : (
-        <Image {...imageProps} />
+        <Image {...imageProps} alt={alt} />
       )}
       {/* {isLoading && (
         <div className="absolute inset-0 bg-gray-200 animate-pulse" />

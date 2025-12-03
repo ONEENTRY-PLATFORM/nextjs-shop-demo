@@ -1,5 +1,4 @@
 import type { JSX } from 'react';
-import React from 'react';
 
 import { UsePrice } from '@/components/utils/utils';
 

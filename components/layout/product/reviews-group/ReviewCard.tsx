@@ -1,5 +1,4 @@
 import type { JSX } from 'react';
-import React from 'react';
 
 import ReviewAnimations from '../animations/ReviewAnimations';
 import UserComment from './UserComment';

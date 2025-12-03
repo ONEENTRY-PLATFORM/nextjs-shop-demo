@@ -2,7 +2,7 @@
 'use client';
 
 import type { Dispatch, JSX, ReactNode } from 'react';
-import React, { createContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
 /**
  * Open drawer context
