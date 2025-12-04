@@ -7,7 +7,7 @@ import { createSlice } from '@reduxjs/toolkit'; // Importing createSlice from Re
  * @property {boolean} valid - A boolean indicating whether the field's value is considered valid.
  */
 type FieldType = {
-  value: string;
+  value: string | number;
   valid: boolean;
 };
 

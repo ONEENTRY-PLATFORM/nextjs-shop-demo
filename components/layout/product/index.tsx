@@ -106,7 +106,7 @@ const ProductSingle = ({
 
       {/** Reviews */}
       <ProductAnimations className={''} index={3}>
-        <ReviewsSection dict={dict} />
+        <ReviewsSection lang={lang} dict={dict} product={product} />
       </ProductAnimations>
 
       {/** blocks */}

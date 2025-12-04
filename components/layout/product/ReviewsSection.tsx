@@ -1,6 +1,7 @@
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 import { useState } from 'react';
 
@@ -14,11 +15,21 @@ import ReviewsList from './reviews-group/ReviewsList';
  * ReviewsSection component.
  * Displays the product reviews section including rating summary, toggle button, and review list.
  * This component manages the state for showing/hiding the detailed reviews list.
- * @param   {object}           props      - Component props.
- * @param   {IAttributeValues} props.dict - Dictionary containing localized texts from the server API.
- * @returns {JSX.Element}                 Reviews section component with rating information and reviews list.
+ * @param   {object}           props         - Component props.
+ * @param   {string}           props.lang    - Language code.
+ * @param   {IAttributeValues} props.dict    - Dictionary containing localized texts from the server API.
+ * @param   {IProductsEntity}  props.product - Product data.
+ * @returns {JSX.Element}                    Reviews section component with rating information and reviews list.
  */
-const ReviewsSection = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
+const ReviewsSection = ({
+  lang,
+  dict,
+  product,
+}: {
+  lang: string;
+  dict: IAttributeValues;
+  product: IProductsEntity;
+}): JSX.Element => {
   /** State to control the visibility of the reviews list */
   const [state, setState] = useState(false);
 
@@ -38,7 +49,12 @@ const ReviewsSection = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
       </div>
 
       {/** Right column: Rating block with detailed rating distribution */}
-      <RatingBlock productRating={productRating} state={state} />
+      <RatingBlock
+        productRating={productRating}
+        state={state}
+        lang={lang}
+        dict={dict}
+      />
     </div>
   );
 };
