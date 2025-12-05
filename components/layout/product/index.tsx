@@ -7,7 +7,6 @@ import type { JSX } from 'react';
 
 import { getProductTitle } from '@/app/api/hooks/useProductsData';
 import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
-import { ReviewForm } from '@/components/forms';
 
 import ProductAnimations from './animations/ProductAnimations';
 import ProductDescription from './product-single/ProductDescription';
@@ -107,8 +106,6 @@ const ProductSingle = ({
 
       {/** Reviews */}
       <ProductAnimations className={''} index={3}>
-        {/* !!! ReviewForm */}
-        <ReviewForm lang={lang} dict={dict} product={product} />
         <ReviewsSection lang={lang} dict={dict} product={product} />
       </ProductAnimations>
 

@@ -6,6 +6,7 @@ import type { JSX } from 'react';
 import { useState } from 'react';
 
 import { productRating } from '@/components/data';
+import { ReviewForm } from '@/components/forms';
 
 import RatingBlock from './rating-block/RatingBlock';
 import RatingButton from './rating-block/RatingButton';
@@ -24,7 +25,7 @@ import ReviewsList from './reviews-group/ReviewsList';
 const ReviewsSection = ({
   lang,
   dict,
-  // product,
+  product,
 }: {
   lang: string;
   dict: IAttributeValues;
@@ -34,28 +35,32 @@ const ReviewsSection = ({
   const [state, setState] = useState(false);
 
   return (
-    <div className="flex justify-between overflow-hidden max-md:flex-wrap">
-      {/** Left column: Rating button and reviews list */}
-      <div className="flex flex-col">
-        {/** Rating button that toggles the reviews list visibility */}
-        <RatingButton
-          dict={dict}
-          state={state}
-          setState={setState}
-          {...productRating}
-        />
-        {/** Reviews list that shows/hides based on state */}
-        <ReviewsList state={state} />
-      </div>
+    <>
+      {/* !!! ReviewForm */}
+      <ReviewForm lang={lang} dict={dict} product={product} />
+      <div className="flex justify-between overflow-hidden max-md:flex-wrap">
+        {/** Left column: Rating button and reviews list */}
+        <div className="flex flex-col">
+          {/** Rating button that toggles the reviews list visibility */}
+          <RatingButton
+            dict={dict}
+            state={state}
+            setState={setState}
+            {...productRating}
+          />
+          {/** Reviews list that shows/hides based on state */}
+          <ReviewsList state={state} />
+        </div>
 
-      {/** Right column: Rating block with detailed rating distribution */}
-      <RatingBlock
-        productRating={productRating}
-        state={state}
-        lang={lang}
-        dict={dict}
-      />
-    </div>
+        {/** Right column: Rating block with detailed rating distribution */}
+        <RatingBlock
+          productRating={productRating}
+          state={state}
+          lang={lang}
+          dict={dict}
+        />
+      </div>
+    </>
   );
 };
 
