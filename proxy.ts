@@ -33,7 +33,7 @@ function getLocale(request: NextRequest): string | undefined {
  * @param   {NextRequest}           request - The incoming HTTP request
  * @returns {Promise<NextResponse>}         The response
  */
-export async function middleware(request: NextRequest): Promise<NextResponse> {
+export async function proxy(request: NextRequest): Promise<NextResponse> {
   const pathname = request.nextUrl.pathname;
   if (PUBLIC_FILE.test(pathname)) {
     return NextResponse.next();

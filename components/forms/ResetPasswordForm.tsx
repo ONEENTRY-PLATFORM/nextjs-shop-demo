@@ -69,12 +69,12 @@ const ResetPasswordForm = ({
       /** Call API to change user's password */
       const result = await api.AuthProvider.changePassword(
         'email',
-        email_reg.value,
+        email_reg.value as string,
         'reg',
         1,
         otp_code.value.toString(),
-        password_reg.value,
-        password_confirm.value,
+        password_reg.value as string,
+        password_confirm.value as string,
       );
 
       /** If result is successful, open SignIn form for user to log in with new password */

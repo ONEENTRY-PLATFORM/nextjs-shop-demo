@@ -31,6 +31,8 @@ const ReviewForm = memo(
     // const { authenticate } = useContext(AuthContext);
     // const { setOpen } = useContext(OpenDrawerContext);
 
+    console.log('data', product);
+
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
 
@@ -157,9 +159,8 @@ const ReviewForm = memo(
     );
 
     if (!product || !data) {
-      return <></>;
+      return <>Error. Some data not found.</>;
     }
-    console.log('data', data);
 
     return (
       <FormAnimations isLoading={isLoading || !formFields}>
