@@ -1,17 +1,17 @@
-// ReviewForm
-// 'use client';
+'use client';
 
+import Image from 'next/image';
 import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FormEvent, Key } from 'react';
-import { type JSX, useCallback, useContext, useState } from 'react';
-import { toast } from 'react-toastify';
+import { type JSX, useCallback, useState } from 'react';
 
+// import { toast } from 'react-toastify';
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
-import { AuthContext } from '@/app/store/providers/AuthContext';
-import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
-import StarRating from '../layout/product/rating-block/StarRating';
+// import { AuthContext } from '@/app/store/providers/AuthContext';
+// import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FormAnimations from './animations/FormAnimations';
 import FormFieldAnimations from './animations/FormFieldAnimations';
 import ErrorMessage from './inputs/ErrorMessage';
@@ -20,18 +20,20 @@ import FormSubmitButton from './inputs/FormSubmitButton';
 
 const ReviewForm = ({
   lang,
-  dict,
+  // dict,
+  product,
 }: {
   lang: string;
   dict: IAttributeValues;
+  product: IProductsEntity;
 }): JSX.Element => {
-  const { authenticate } = useContext(AuthContext);
-  const { setOpen } = useContext(OpenDrawerContext);
+  // const { authenticate } = useContext(AuthContext);
+  // const { setOpen } = useContext(OpenDrawerContext);
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
-  const { sign_in_text } = dict;
+  // const { sign_in_text } = dict;
 
   /** Get form by marker with RTK */
   const { data, isLoading } = useGetFormByMarkerQuery({
@@ -164,10 +166,15 @@ const ReviewForm = ({
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <FormFieldAnimations
             index={0}
-            className="max-w-full text-xl font-bold text-neutral-600"
+            className="max-w-full text-xl font-bold text-neutral-600 flex gap-4"
           >
-            {/* <img src={product.image} alt={product.name} /> */}
-            <h2>Product name</h2>
+            <Image
+              src={product.attributeValues.pic.value.downloadLink}
+              alt={product.localizeInfos.title}
+              width={100}
+              height={100}
+            />
+            <h2>{product.localizeInfos.title}</h2>
           </FormFieldAnimations>
         </div>
 

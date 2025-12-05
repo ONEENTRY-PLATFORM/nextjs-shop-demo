@@ -142,13 +142,25 @@ const FormInput = (field: {
           value={value}
         />
       )}
+      {/** Render groupOfImages type field */}
+      {type === 'groupOfImages' && (
+        <input
+          type="file"
+          id={field.marker}
+          placeholder={localizeInfos?.title}
+          className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
+          required={required}
+          onChange={(val) => setValue(val.currentTarget.value)}
+          value={value}
+        />
+      )}
       {/** Render 5 stars, filling them based on the rating value */}
       {field.marker === 'rating' && (
-        <div className="flex shrink-0 flex-row items-center gap-1.5">
+        <div className="flex shrink-0 flex-row items-center gap-1.5 ">
           {[...Array(5)].map((_, index) => (
             <svg
               key={index}
-              className="my-auto aspect-square w-[25px] shrink-0 self-start"
+              className="my-auto aspect-square w-[25px] shrink-0 self-start cursor-pointer"
               width="25"
               height="25"
               viewBox="0 0 25 25"

@@ -2,8 +2,8 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
 
 import { ratingsData } from '@/components/data';
-import { ReviewForm } from '@/components/forms';
 
+// import { ReviewForm } from '@/components/forms';
 import ReviewAnimations from '../animations/ReviewAnimations';
 import RatingRow from './RatingRow';
 import StarRating from './StarRating';
@@ -22,8 +22,8 @@ import StarRating from './StarRating';
 const RatingBlock = ({
   productRating,
   state,
-  lang,
-  dict,
+  // lang,
+  // dict,
 }: {
   productRating: {
     rating: number;
@@ -56,8 +56,6 @@ const RatingBlock = ({
       >
         Leave review
       </button>
-      {/* !!! ReviewForm */}
-      <ReviewForm lang={lang} dict={dict} />
     </ReviewAnimations>
   );
 };

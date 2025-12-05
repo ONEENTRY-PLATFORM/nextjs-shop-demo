@@ -24,7 +24,7 @@ import ReviewsList from './reviews-group/ReviewsList';
 const ReviewsSection = ({
   lang,
   dict,
-  product,
+  // product,
 }: {
   lang: string;
   dict: IAttributeValues;
