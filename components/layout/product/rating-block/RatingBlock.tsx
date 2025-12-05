@@ -42,7 +42,8 @@ const RatingBlock = ({
    * Get drawer state and control functions from OpenDrawerContext
    * Used to open/close the sign in form drawer
    */
-  const { open, setOpen, setComponent } = useContext(OpenDrawerContext);
+  const { open, setOpen, setComponent, setData } =
+    useContext(OpenDrawerContext);
 
   return (
     <ReviewAnimations
@@ -50,8 +51,6 @@ const RatingBlock = ({
       index={4}
       state={state}
     >
-      {/* !!! ReviewForm */}
-      {/* <ReviewForm lang={lang} dict={dict} product={product} /> */}
       {/** Display overall product rating with star rating and numeric value */}
       <div className="flex items-center gap-2.5 self-start text-3xl font-bold leading-8 text-neutral-600">
         <StarRating rating={productRating.rating} />
@@ -68,11 +67,14 @@ const RatingBlock = ({
         onClick={() => {
           setOpen(!open);
           setComponent('ReviewForm');
+          setData(product);
         }}
         className="btn btn-o w-full btn-md mt-5 self-end max-md:self-center"
       >
         Leave review
       </button>
+      {/* !!! ReviewForm */}
+      <ReviewForm lang={lang} dict={dict} />
     </ReviewAnimations>
   );
 };

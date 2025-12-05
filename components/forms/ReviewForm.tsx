@@ -4,11 +4,12 @@ import Image from 'next/image';
 import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FormEvent, Key } from 'react';
-import { type JSX, memo, useCallback, useState } from 'react';
+import { type JSX, memo, useCallback, useContext, useState } from 'react';
 
 // import { toast } from 'react-toastify';
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 // import { AuthContext } from '@/app/store/providers/AuthContext';
 // import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -22,16 +23,12 @@ const ReviewForm = memo(
   ({
     lang,
     // dict,
-    product,
   }: {
     lang: string;
     dict: IAttributeValues;
-    product: IProductsEntity;
   }): JSX.Element => {
     // const { authenticate } = useContext(AuthContext);
-    // const { setOpen } = useContext(OpenDrawerContext);
-
-    console.log('data', product);
+    const { data: productData } = useContext(OpenDrawerContext);
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
@@ -51,6 +48,7 @@ const ReviewForm = memo(
     const fieldsData = useAppSelector(
       (state) => state.formFieldsReducer.fields,
     );
+
     /**
      * Sort form fields by position attribute
      * This ensures fields are displayed in the correct order
@@ -142,8 +140,7 @@ const ReviewForm = memo(
               formIdentifier: data?.identifier || '',
               formData: transformedFormData,
               formModuleConfigId: moduleFormConfig?.id || 0,
-              moduleEntityIdentifier:
-                moduleFormConfig?.entityIdentifiers?.[0]?.id || '',
+              moduleEntityIdentifier: productData.id,
               replayTo: null,
               status: 'sent',
             });
@@ -155,10 +152,10 @@ const ReviewForm = memo(
           }
         }
       },
-      [formFields, fieldsData, data, moduleFormConfig],
+      [formFields, fieldsData, data, moduleFormConfig, productData],
     );
 
-    if (!product || !data) {
+    if (!productData || !data) {
       return <>Error. Some data not found.</>;
     }
 
@@ -174,12 +171,12 @@ const ReviewForm = memo(
               className="max-w-full text-xl items-center font-bold text-neutral-600 flex gap-4"
             >
               <Image
-                src={product.attributeValues?.pic.value.downloadLink}
-                alt={product.localizeInfos?.title}
+                src={productData.attributeValues?.pic.value.downloadLink}
+                alt={productData.localizeInfos?.title}
                 width={100}
                 height={100}
               />
-              <h2>{product.localizeInfos?.title}</h2>
+              <h2>{productData.localizeInfos?.title}</h2>
             </FormFieldAnimations>
           </div>
 
