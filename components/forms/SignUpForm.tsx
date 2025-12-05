@@ -105,7 +105,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           const candidate = {
             marker: field,
             type: 'string',
-            value: fieldValue ? fieldValue.value : '',
+            value: fieldValue ? String(fieldValue.value) : '',
           };
           /** Include only required fields in form data */
           if (formFields.includes(field)) {
@@ -120,21 +120,27 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
       formData.push({
         marker: 'email_notifications',
         type: 'string',
-        value: fields.email_reg?.value || '',
+        value: fields.email_reg?.value ? String(fields.email_reg.value) : '',
       });
 
       /** Prepare sign up data structure for API call */
       const data: ISignUpData = {
         formIdentifier: 'reg',
         authData: [
-          { marker: 'email_reg', value: fields.email_reg?.value || '' },
-          { marker: 'password_reg', value: fields.password_reg?.value || '' },
+          {
+            marker: 'email_reg',
+            value: (fields.email_reg?.value as string) || '',
+          },
+          {
+            marker: 'password_reg',
+            value: (fields.password_reg?.value as string) || '',
+          },
         ],
         formData,
         notificationData: {
-          email: fields.email_reg?.value || '',
-          phonePush: [fields.phone_reg?.value || ''],
-          phoneSMS: fields.phone_reg?.value || '',
+          email: (fields.email_reg?.value as string) || '',
+          phonePush: [(fields.phone_reg?.value as string) || ''],
+          phoneSMS: (fields.phone_reg?.value as string) || '',
         },
       };
 
@@ -153,7 +159,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           /** Automatically log in and authenticate active user */
           await logInUser({
             login: res.identifier,
-            password: fields.password_reg?.value || '',
+            password: (fields.password_reg?.value as string) || '',
           });
           authenticate();
         }

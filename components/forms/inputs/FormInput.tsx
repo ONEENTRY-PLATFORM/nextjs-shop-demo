@@ -103,7 +103,7 @@ const FormInput = (field: {
         {required && <span className="text-red-500">*</span>}
       </label>
       {/** Render select dropdown for list type fields */}
-      {type === 'list' && (
+      {field.type === 'list' && (
         <select
           id={field.marker}
           className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
@@ -138,7 +138,7 @@ const FormInput = (field: {
         </select>
       )}
       {/** Render textarea for textarea type fields */}
-      {type === 'textarea' && (
+      {field.type === 'textarea' && (
         <textarea
           id={field.marker}
           placeholder={localizeInfos?.title}
@@ -149,7 +149,7 @@ const FormInput = (field: {
         />
       )}
       {/** Render groupOfImages type field */}
-      {type === 'groupOfImages' && (
+      {field.type === 'groupOfImages' && (
         <input
           type="file"
           id={field.marker}
@@ -195,22 +195,29 @@ const FormInput = (field: {
         </div>
       )}
       {/** Render standard input for all other field types text/password/email... */}
-      {type !== 'textarea' && type !== 'list' && field.marker !== 'rating' && (
-        <input
-          type={type}
-          id={field.marker}
-          placeholder={localizeInfos?.title}
-          className={cn}
-          required={required}
-          onChange={(val) => setValue(val.currentTarget.value)}
-          autoComplete={fieldType === 'password' ? 'password' : ''}
-          minLength={field.validators?.['stringInspectionValidator']?.stringMin}
-          maxLength={field.validators?.['stringInspectionValidator']?.stringMax}
-          value={value}
-        />
-      )}
+      {field.type !== 'textarea' &&
+        field.type !== 'list' &&
+        field.type !== 'groupOfImages' &&
+        field.marker !== 'rating' && (
+          <input
+            type={type}
+            id={field.marker}
+            placeholder={localizeInfos?.title}
+            className={cn}
+            required={required}
+            onChange={(val) => setValue(val.currentTarget.value)}
+            autoComplete={fieldType === 'password' ? 'password' : ''}
+            minLength={
+              field.validators?.['stringInspectionValidator']?.stringMin
+            }
+            maxLength={
+              field.validators?.['stringInspectionValidator']?.stringMax
+            }
+            value={value}
+          />
+        )}
       {/** Render password visibility toggle button for password fields */}
-      {fieldType === 'password' && (
+      {field.type === 'password' && (
         <button
           onClick={(e) => {
             e.preventDefault();

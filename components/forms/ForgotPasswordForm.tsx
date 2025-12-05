@@ -72,7 +72,7 @@ export const ForgotPasswordForm = ({
       /** Generate verification code with API and send to user's email */
       await api.AuthProvider.generateCode(
         'email',
-        fields.email_reg.value,
+        fields.email_reg.value as string,
         'generate_code',
       );
       /** Open Verification form for the next step in password reset process */
