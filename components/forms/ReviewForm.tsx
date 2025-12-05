@@ -60,10 +60,6 @@ const ReviewForm = ({
    */
   const moduleFormConfig = data?.moduleFormConfigs?.[0];
 
-  /**
-   * Get the module form fields
-   * This contains additional settings for the form submission
-   */
   const onLeaveReview = useCallback(
     async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -166,7 +162,7 @@ const ReviewForm = ({
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <FormFieldAnimations
             index={0}
-            className="max-w-full text-xl font-bold text-neutral-600 flex gap-4"
+            className="max-w-full text-xl items-center font-bold text-neutral-600 flex gap-4"
           >
             <Image
               src={product.attributeValues.pic.value.downloadLink}
@@ -181,7 +177,13 @@ const ReviewForm = ({
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {formFields?.map((field: IAttributes, index: Key | number) => {
             return (
-              <FormInput key={index} index={2} {...field} value={field.value} />
+              <FormInput
+                key={index}
+                index={index as number}
+                {...field}
+                value={field.value}
+                className="border border-solid rounded-md border-gray-300"
+              />
             );
           })}
         </div>

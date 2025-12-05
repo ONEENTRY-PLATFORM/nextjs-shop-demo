@@ -13,15 +13,16 @@ import EyeOpenIcon from '@/components/icons/eye-o';
 /**
  * FormInput component for rendering various types of form fields.
  * Handles text inputs, textareas, select dropdowns, and password fields with show/hide functionality.
- * @param   {object}              field               - Field properties.
- * @param   {string | number}     field.value         - Field value.
- * @param   {string}              field.marker        - Field marker.
- * @param   {string}              field.type          - Field type.
- * @param   {Record<string, any>} field.validators    - Field validators.
- * @param   {number}              field.index         - Field index.
- * @param   {Record<string, any>} field.listTitles    - List titles.
- * @param   {Record<string, any>} field.localizeInfos - Localize info.
- * @returns {JSX.Element}                             Form input.
+ * @param   {object}              field                 - Field properties.
+ * @param   {string}              field.marker          - Field marker.
+ * @param   {string}              field.type            - Field type.
+ * @param   {string | number}     field.value           - Field value.
+ * @param   {Record<string, any>} [field.validators]    - Field validators.
+ * @param   {number}              [field.index]         - Field index.
+ * @param   {Record<string, any>} [field.listTitles]    - List titles.
+ * @param   {Record<string, any>} [field.localizeInfos] - Localize info.
+ * @param   {string}              [field.className]     - Class name.
+ * @returns {JSX.Element}                               Form input.
  */
 const FormInput = (field: {
   marker: string;
@@ -31,6 +32,7 @@ const FormInput = (field: {
   index?: number;
   listTitles?: Record<string, any>;
   localizeInfos?: Record<string, any>;
+  className?: string;
 }): JSX.Element => {
   const { localizeInfos } = field;
 
@@ -89,6 +91,10 @@ const FormInput = (field: {
     return <></>;
   }
 
+  const cn =
+    field.className ||
+    'relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800';
+
   return (
     <FormFieldAnimations index={field.index as number} className="input-group">
       {/** Label for the form field * Shows an asterisk if the field is required */}
@@ -136,7 +142,7 @@ const FormInput = (field: {
         <textarea
           id={field.marker}
           placeholder={localizeInfos?.title}
-          className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
+          className={cn}
           required={required}
           onChange={(val) => setValue(val.currentTarget.value)}
           value={value}
@@ -148,13 +154,14 @@ const FormInput = (field: {
           type="file"
           id={field.marker}
           placeholder={localizeInfos?.title}
-          className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
+          className={cn}
           required={required}
           onChange={(val) => setValue(val.currentTarget.value)}
           value={value}
+          multiple
         />
       )}
-      {/** Render 5 stars, filling them based on the rating value */}
+      {/** Render 5 stars rating field  if marker is 'rating' */}
       {field.marker === 'rating' && (
         <div className="flex shrink-0 flex-row items-center gap-1.5 ">
           {[...Array(5)].map((_, index) => (
@@ -193,7 +200,7 @@ const FormInput = (field: {
           type={type}
           id={field.marker}
           placeholder={localizeInfos?.title}
-          className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
+          className={cn}
           required={required}
           onChange={(val) => setValue(val.currentTarget.value)}
           autoComplete={fieldType === 'password' ? 'password' : ''}
