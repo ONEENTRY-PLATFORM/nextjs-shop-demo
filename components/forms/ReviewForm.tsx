@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import Image from 'next/image';
@@ -184,17 +185,18 @@ const ReviewForm = memo(
           </div>
 
           <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-            {formFields?.map((field: IAttributes, index: Key | number) => {
-              return (
-                <FormInput
-                  key={index}
-                  index={index as number}
-                  {...field}
-                  value={field.value}
-                  className="border border-solid mt-2.5 min-h-20 rounded-[20px] p-5 border-gray-300"
-                />
-              );
-            })}
+            {formFields?.map(
+              (field: IAttributes & { value: any }, index: Key | number) => {
+                return (
+                  <FormInput
+                    key={index}
+                    index={index as number}
+                    {...field}
+                    className="border border-solid mt-2.5 min-h-20 rounded-[20px] p-5 border-gray-300 cursor-pointer"
+                  />
+                );
+              },
+            )}
           </div>
 
           <FormSubmitButton

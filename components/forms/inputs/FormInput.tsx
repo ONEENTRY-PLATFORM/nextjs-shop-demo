@@ -101,7 +101,7 @@ const FormInput = (field: {
   return (
     <FormFieldAnimations index={field.index as number} className="input-group">
       {/** Label for the form field * Shows an asterisk if the field is required */}
-      <label htmlFor={field.marker} className="text-gray-400">
+      <label htmlFor={field.marker} className="text-gray-400 cursor-pointer">
         {localizeInfos?.title}{' '}
         {required && <span className="text-red-500">*</span>}
       </label>

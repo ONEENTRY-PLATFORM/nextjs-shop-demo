@@ -1,10 +1,50 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { type JSX, useEffect } from 'react';
+import { type JSX, useEffect, useState } from 'react';
 
 import { api } from '@/app/api';
 
 import ReviewCard from './ReviewCard';
 import ViewAllButton from './ViewAllButton';
+
+const reviewsData = [
+  {
+    name: 'Ahmet K.',
+    avatarSrc: '',
+    content:
+      'Lorem ipsum dolor sit amet consectetur. Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+    likeCount: 17,
+    commentCount: 0,
+    rating: 5,
+  },
+  {
+    name: 'Sit consequat',
+    avatarSrc: '',
+    content:
+      'Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+    likeCount: 7,
+    commentCount: 4,
+    rating: 3,
+  },
+  {
+    name: 'Diam eget',
+    avatarSrc: '',
+    content:
+      'Lorem ipsum dolor sit amet consectetur. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+    likeCount: 17,
+    commentCount: 0,
+    rating: 2,
+  },
+  {
+    name: 'Lorem ipsum',
+    avatarSrc: '',
+    content:
+      'Lorem ipsum dolor. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+    likeCount: 32,
+    commentCount: 2,
+    rating: 4,
+  },
+];
 
 /**
  * ReviewsList component.
@@ -22,6 +62,10 @@ const ReviewsList = ({
   state: boolean;
   product: IProductsEntity;
 }): JSX.Element => {
+  const [reviewsData, setReviewsData] = useState<any[]>([]);
+  /**
+   * Fetch reviews data from the API when the component mounts.
+   */
   useEffect(() => {
     // console.log(product);
     const fetchReviews = async () => {
@@ -38,51 +82,23 @@ const ReviewsList = ({
         1, // isNested - Flag for getting hierarchical data.
         'en_US', // langCode - Language code.
         0, // offset — Parameter for pagination. Default: 0.
-        10, // limit — Parameter for pagination. Default: 30.
+        2, // limit — Parameter for pagination. Default: 30.
       );
-      console.log(result);
+
+      // Check if result is an error
+      if (result && !('statusCode' in result)) {
+        // Extract the forms data array from the result
+        const formsData = result.items || [];
+        setReviewsData(formsData as any[]);
+      } else {
+        // Handle error case - set empty array or show error message
+        setReviewsData([]);
+      }
     };
     fetchReviews();
   }, [product]);
 
-  const reviewsData = [
-    {
-      name: 'Ahmet K.',
-      avatarSrc: '',
-      content:
-        'Lorem ipsum dolor sit amet consectetur. Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-      likeCount: 17,
-      commentCount: 0,
-      rating: 5,
-    },
-    {
-      name: 'Sit consequat',
-      avatarSrc: '',
-      content:
-        'Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-      likeCount: 7,
-      commentCount: 4,
-      rating: 3,
-    },
-    {
-      name: 'Diam eget',
-      avatarSrc: '',
-      content:
-        'Lorem ipsum dolor sit amet consectetur. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-      likeCount: 17,
-      commentCount: 0,
-      rating: 2,
-    },
-    {
-      name: 'Lorem ipsum',
-      avatarSrc: '',
-      content:
-        'Lorem ipsum dolor. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-      likeCount: 32,
-      commentCount: 2,
-      rating: 4,
-    },
-  ];
+  console.log(reviewsData);
 
   return (
     <>

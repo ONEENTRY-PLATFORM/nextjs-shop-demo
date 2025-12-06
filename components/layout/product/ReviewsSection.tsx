@@ -37,7 +37,7 @@ const ReviewsSection = ({
   return (
     <div className="flex justify-between overflow-hidden max-md:flex-wrap">
       {/** Left column: Rating button and reviews list */}
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         {/** Rating button that toggles the reviews list visibility */}
         <RatingButton
           dict={dict}
