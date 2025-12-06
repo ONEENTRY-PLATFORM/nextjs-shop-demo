@@ -6,8 +6,8 @@ import type { JSX } from 'react';
 import { useState } from 'react';
 
 import { productRating } from '@/components/data';
-import { ReviewForm } from '@/components/forms';
 
+// import { ReviewForm } from '@/components/forms';
 import RatingBlock from './rating-block/RatingBlock';
 import RatingButton from './rating-block/RatingButton';
 import ReviewsList from './reviews-group/ReviewsList';
@@ -46,7 +46,7 @@ const ReviewsSection = ({
           {...productRating}
         />
         {/** Reviews list that shows/hides based on state */}
-        <ReviewsList state={state} />
+        <ReviewsList state={state} product={product} />
       </div>
 
       {/** Right column: Rating block with detailed rating distribution */}
