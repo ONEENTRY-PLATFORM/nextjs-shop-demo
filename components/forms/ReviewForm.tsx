@@ -159,6 +159,7 @@ const ReviewForm = memo(
     if (!productData || !data) {
       return <>Error. Some data not found.</>;
     }
+    const title = productData.localizeInfos?.title;
 
     return (
       <FormAnimations isLoading={isLoading || !formFields}>
@@ -173,11 +174,12 @@ const ReviewForm = memo(
             >
               <Image
                 src={productData.attributeValues?.pic.value.downloadLink}
-                alt={productData.localizeInfos?.title}
-                width={100}
-                height={100}
+                alt={title}
+                width={80}
+                height={90}
+                className="min-h-[90px] min-w-20 object-cover"
               />
-              <h2>{productData.localizeInfos?.title}</h2>
+              <h2>{title}</h2>
             </FormFieldAnimations>
           </div>
 
@@ -189,7 +191,7 @@ const ReviewForm = memo(
                   index={index as number}
                   {...field}
                   value={field.value}
-                  className="border border-solid rounded-[20px] p-5 border-gray-300"
+                  className="border border-solid mt-2.5 min-h-20 rounded-[20px] p-5 border-gray-300"
                 />
               );
             })}
