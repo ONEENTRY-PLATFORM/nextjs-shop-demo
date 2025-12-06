@@ -5,9 +5,8 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-import { getProductTitle } from '@/app/api/hooks/useProductsData';
-import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
-
+// import { getProductTitle } from '@/app/api/hooks/useProductsData';
+// import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
 import ProductAnimations from './animations/ProductAnimations';
 // import ProductDescription from './product-single/ProductDescription';
 // import ProductDetails from './product-single/ProductDetails';
@@ -35,7 +34,7 @@ const ProductSingle = ({
   product,
   lang,
   dict,
-  relatedProducts,
+  // relatedProducts,
   // relatedProductsTotal,
   // blocksData,
 }: {

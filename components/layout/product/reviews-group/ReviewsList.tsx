@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type JSX, useEffect, useState } from 'react';
@@ -7,44 +8,44 @@ import { api } from '@/app/api';
 import ReviewCard from './ReviewCard';
 import ViewAllButton from './ViewAllButton';
 
-const reviewsData = [
-  {
-    name: 'Ahmet K.',
-    avatarSrc: '',
-    content:
-      'Lorem ipsum dolor sit amet consectetur. Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-    likeCount: 17,
-    commentCount: 0,
-    rating: 5,
-  },
-  {
-    name: 'Sit consequat',
-    avatarSrc: '',
-    content:
-      'Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-    likeCount: 7,
-    commentCount: 4,
-    rating: 3,
-  },
-  {
-    name: 'Diam eget',
-    avatarSrc: '',
-    content:
-      'Lorem ipsum dolor sit amet consectetur. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-    likeCount: 17,
-    commentCount: 0,
-    rating: 2,
-  },
-  {
-    name: 'Lorem ipsum',
-    avatarSrc: '',
-    content:
-      'Lorem ipsum dolor. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-    likeCount: 32,
-    commentCount: 2,
-    rating: 4,
-  },
-];
+// const reviewsData = [
+//   {
+//     name: 'Ahmet K.',
+//     avatarSrc: '',
+//     content:
+//       'Lorem ipsum dolor sit amet consectetur. Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+//     likeCount: 17,
+//     commentCount: 0,
+//     rating: 5,
+//   },
+//   {
+//     name: 'Sit consequat',
+//     avatarSrc: '',
+//     content:
+//       'Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+//     likeCount: 7,
+//     commentCount: 4,
+//     rating: 3,
+//   },
+//   {
+//     name: 'Diam eget',
+//     avatarSrc: '',
+//     content:
+//       'Lorem ipsum dolor sit amet consectetur. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+//     likeCount: 17,
+//     commentCount: 0,
+//     rating: 2,
+//   },
+//   {
+//     name: 'Lorem ipsum',
+//     avatarSrc: '',
+//     content:
+//       'Lorem ipsum dolor. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
+//     likeCount: 32,
+//     commentCount: 2,
+//     rating: 4,
+//   },
+// ];
 
 /**
  * ReviewsList component.
@@ -98,7 +99,7 @@ const ReviewsList = ({
     fetchReviews();
   }, [product]);
 
-  console.log(reviewsData);
+  // console.log(reviewsData);
 
   return (
     <>

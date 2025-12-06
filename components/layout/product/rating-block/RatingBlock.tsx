@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import { type JSX, useContext } from 'react';
@@ -62,6 +63,7 @@ const RatingBlock = ({
           <RatingRow key={index} rating={rating} state={state} />
         ))}
       </div>
+      {/** Leave review button */}
       <button
         type="button"
         onClick={() => {
@@ -73,7 +75,7 @@ const RatingBlock = ({
       >
         Leave review
       </button>
-      {/* !!! ReviewForm */}
+      {/* Review form */}
       <ReviewForm lang={lang} dict={dict} />
     </ReviewAnimations>
   );

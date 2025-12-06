@@ -102,13 +102,13 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
           authData: [
             {
               marker: 'password_reg',
-              value: fields['password_reg']?.value || '',
+              value: String(fields['password_reg']?.value || ''),
             },
           ],
           notificationData: {
-            email: fields['email_reg']?.value || '',
+            email: String(fields['email_reg']?.value || ''),
             phonePush: [],
-            phoneSMS: fields['phone_reg']?.value || '',
+            phoneSMS: String(fields['phone_reg']?.value || ''),
           },
           state: {},
         });

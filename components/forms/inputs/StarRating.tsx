@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { JSX } from 'react';
 
@@ -6,9 +7,9 @@ import type { JSX } from 'react';
  * @param   {object}      props          - Star rating props.
  * @param   {number}      props.value    - rating value.
  * @param   {any}         props.setValue - set rating value.
- * @param                 props.type
- * @param                 props.field
- * @param                 props.required
+ * @param   {string}      props.type     - input type.
+ * @param   {any}         props.field    - field.
+ * @param   {boolean}     props.required - required.
  * @returns {JSX.Element}                StarRating component.
  */
 const StarRating = ({
@@ -22,7 +23,7 @@ const StarRating = ({
   setValue: any;
   type: string;
   field: any;
-  required: any;
+  required: boolean;
 }): JSX.Element => {
   return (
     <div className="flex shrink-0 flex-row items-center gap-1.5 ">

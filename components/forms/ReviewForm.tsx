@@ -3,7 +3,7 @@
 
 import Image from 'next/image';
 import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+// import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FormEvent, Key } from 'react';
 import { type JSX, memo, useCallback, useContext, useState } from 'react';
 
@@ -63,7 +63,6 @@ const ReviewForm = memo(
      * This contains additional settings for the form submission
      */
     const moduleFormConfig = data?.moduleFormConfigs?.[0];
-    // console.log(moduleFormConfig);
 
     const onLeaveReview = useCallback(
       async (e: FormEvent<HTMLFormElement>) => {
@@ -147,7 +146,6 @@ const ReviewForm = memo(
               status: 'sent',
             });
             setLoading(false);
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (e: any) {
             setLoading(false);
             setError(e.message);
@@ -160,6 +158,7 @@ const ReviewForm = memo(
     if (!productData || !data) {
       return <>Error. Some data not found.</>;
     }
+
     const title = productData.localizeInfos?.title;
 
     return (
@@ -168,11 +167,13 @@ const ReviewForm = memo(
           className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
           onSubmit={(e) => onLeaveReview(e)}
         >
+          {/* Product info */}
           <div className="relative box-border flex shrink-0 flex-col gap-2.5">
             <FormFieldAnimations
               index={0}
               className="max-w-full text-xl items-center font-bold text-neutral-600 flex gap-4"
             >
+              {/* Product image */}
               <Image
                 src={productData.attributeValues?.pic.value.downloadLink}
                 alt={title}
@@ -180,10 +181,11 @@ const ReviewForm = memo(
                 height={90}
                 className="min-h-[90px] min-w-20 object-cover"
               />
+              {/* Product title */}
               <h2>{title}</h2>
             </FormFieldAnimations>
           </div>
-
+          {/* Form fields map */}
           <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
             {formFields?.map(
               (field: IAttributes & { value: any }, index: Key | number) => {
@@ -198,13 +200,13 @@ const ReviewForm = memo(
               },
             )}
           </div>
-
+          {/* Submit button */}
           <FormSubmitButton
             index={5}
             title={'Leave review'}
             isLoading={loading}
           />
-
+          {/* Error message */}
           {error && <ErrorMessage error={error} />}
         </form>
       </FormAnimations>
