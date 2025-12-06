@@ -64,11 +64,9 @@ const ReviewsList = ({
   product: IProductsEntity;
 }): JSX.Element => {
   const [reviewsData, setReviewsData] = useState<any[]>([]);
-  /**
-   * Fetch reviews data from the API when the component mounts.
-   */
+  /** Fetch reviews data from the API when the component mounts. */
   useEffect(() => {
-    // console.log(product);
+    /** Fetch reviews */
     const fetchReviews = async () => {
       const result = await api.FormData.getFormsDataByMarker(
         'comment_to_product', // marker - Form marker
@@ -86,20 +84,18 @@ const ReviewsList = ({
         2, // limit — Parameter for pagination. Default: 30.
       );
 
-      // Check if result is an error
+      /** Check if result is an error */
       if (result && !('statusCode' in result)) {
-        // Extract the forms data array from the result
+        /** Extract the forms data array from the result */
         const formsData = result.items || [];
         setReviewsData(formsData as any[]);
       } else {
-        // Handle error case - set empty array or show error message
+        /** Handle error case - set empty array or show error message */
         setReviewsData([]);
       }
     };
     fetchReviews();
   }, [product]);
-
-  // console.log(reviewsData);
 
   return (
     <>
