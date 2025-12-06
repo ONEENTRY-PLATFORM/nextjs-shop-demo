@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { JSX } from 'react';
+import { type JSX, useState } from 'react';
 
+import CommentForm from '@/components/forms/CommentForm';
 import LikeIcon from '@/components/icons/like';
 
 import StarRating from '../rating-block/StarRating';
@@ -15,9 +16,13 @@ import StarRating from '../rating-block/StarRating';
 const UserComment = ({ review }: { review: any }): JSX.Element => {
   // console.log(review);
   // console.log(review.formData);
+  const [state, setState] = useState(false);
   const formData = review.formData;
+
   const rating = formData[0].value;
   const content = formData[1]?.value;
+  // const attachments = formData[3]?.value;
+  // console.log(attachments);
 
   return (
     <>
@@ -37,7 +42,15 @@ const UserComment = ({ review }: { review: any }): JSX.Element => {
         {/** Engagement metrics (likes and comments) */}
         <div className="mt-auto flex w-full justify-between gap-2.5 whitespace-nowrap text-slate-300 max-md:w-full">
           <div className="flex gap-2.5">
-            <div className="text-orange-500">Leave answer</div>
+            <button
+              type="button"
+              onClick={() => {
+                setState(!state);
+              }}
+              className="text-orange-500 cursor-pointer"
+            >
+              Leave answer
+            </button>
             <div className="text-orange-500">1 comment</div>
           </div>
           <div className="flex">
@@ -56,6 +69,9 @@ const UserComment = ({ review }: { review: any }): JSX.Element => {
           </div>
         </div>
       </div>
+
+      {/* Comment form */}
+      {state && <CommentForm lang={''} />}
     </>
   );
 };

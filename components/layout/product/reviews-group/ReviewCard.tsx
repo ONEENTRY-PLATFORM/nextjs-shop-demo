@@ -32,15 +32,6 @@ const ReviewCard = ({
       {/** Display the user comment with all review details inside an animated wrapper */}
       <div className="flex flex-col w-full rounded-3xl border border-solid border-slate-300 bg-white px-6 py-4 max-md:px-5">
         <UserComment review={review} />
-        <form className="w-full">
-          <input
-            type="text"
-            name="review_id"
-            placeholder="Your comment to the review"
-            value={'review.id'}
-            className="s"
-          />
-        </form>
       </div>
     </ReviewAnimations>
   );
