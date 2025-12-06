@@ -62,6 +62,7 @@ const ReviewForm = memo(
      * This contains additional settings for the form submission
      */
     const moduleFormConfig = data?.moduleFormConfigs?.[0];
+    // console.log(moduleFormConfig);
 
     const onLeaveReview = useCallback(
       async (e: FormEvent<HTMLFormElement>) => {
@@ -188,7 +189,7 @@ const ReviewForm = memo(
                   index={index as number}
                   {...field}
                   value={field.value}
-                  className="border border-solid rounded-md border-gray-300"
+                  className="border border-solid rounded-[20px] p-5 border-gray-300"
                 />
               );
             })}

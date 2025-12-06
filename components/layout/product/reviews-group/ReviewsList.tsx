@@ -23,16 +23,22 @@ const ReviewsList = ({
   product: IProductsEntity;
 }): JSX.Element => {
   useEffect(() => {
-    console.log(product);
+    // console.log(product);
     const fetchReviews = async () => {
       const result = await api.FormData.getFormsDataByMarker(
-        'comment_to_product',
-        product.id, // Form module configuration ID.
-        {}, // Request body.
-        0, // Flag for getting hierarchical data.
-        'en_US',
-        0,
-        10,
+        'comment_to_product', // marker - Form marker
+        5, // formModuleConfigId - Form module configuration ID
+        {
+          entityIdentifier: product.id,
+          userIdentifier: '',
+          status: 'approved',
+          dateFrom: '',
+          dateTo: '',
+        }, // body - Request body.
+        1, // isNested - Flag for getting hierarchical data.
+        'en_US', // langCode - Language code.
+        0, // offset — Parameter for pagination. Default: 0.
+        10, // limit — Parameter for pagination. Default: 30.
       );
       console.log(result);
     };
