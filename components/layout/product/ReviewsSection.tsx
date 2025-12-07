@@ -5,12 +5,15 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 import { useState } from 'react';
 
-import { productRating } from '@/components/data';
-
 // import { ReviewForm } from '@/components/forms';
 import RatingBlock from './rating-block/RatingBlock';
 import RatingButton from './rating-block/RatingButton';
 import ReviewsList from './reviews-group/ReviewsList';
+
+export const productRating = {
+  rating: 4.7,
+  reviewCount: 7979,
+};
 
 /**
  * ReviewsSection component.
@@ -33,6 +36,7 @@ const ReviewsSection = ({
 }): JSX.Element => {
   /** State to control the visibility of the reviews list */
   const [state, setState] = useState(true);
+  const totalRating = productRating.rating;
 
   return (
     <div className="flex justify-between overflow-hidden max-md:flex-wrap">
@@ -43,7 +47,8 @@ const ReviewsSection = ({
           dict={dict}
           state={state}
           setState={setState}
-          {...productRating}
+          rating={totalRating}
+          reviewsCount={0}
         />
         {/** Reviews list that shows/hides based on state */}
         <ReviewsList state={state} product={product} />

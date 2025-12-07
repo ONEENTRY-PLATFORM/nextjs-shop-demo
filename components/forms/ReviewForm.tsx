@@ -73,7 +73,7 @@ const ReviewForm = memo(
           value: string | object;
         }[] = [];
 
-        // transform and send form data
+        /** transform and send form data */
         if (formFields) {
           /** Get all form field property keys */
           const propertiesArray = Object.keys(formFields);
@@ -96,9 +96,7 @@ const ReviewForm = memo(
               value: string | object;
             };
 
-            /**
-             * Handle special field types with specific data structures
-             */
+            /** Handle special field types with specific data structures */
             if (marker === 'spam') {
               newData = {
                 marker: marker,
@@ -106,6 +104,7 @@ const ReviewForm = memo(
                 value: '',
               };
             }
+            /**  */
             if (marker === 'send') {
               newData = {
                 marker: marker,
@@ -113,6 +112,7 @@ const ReviewForm = memo(
                 value: '',
               };
             }
+            /**  */
             if (type === 'text') {
               newData = {
                 marker: marker,
@@ -132,18 +132,16 @@ const ReviewForm = memo(
             return formData;
           }, emptyFormData);
 
-          /**
-           * Send transformed form data to OneEntry API
-           */
+          /** Send transformed form data to OneEntry API */
           try {
             setLoading(true);
             await api.FormData.postFormsData({
               formIdentifier: data?.identifier || '',
               formData: transformedFormData,
-              formModuleConfigId: moduleFormConfig?.id || 0,
+              formModuleConfigId: moduleFormConfig?.id || 5,
               moduleEntityIdentifier: productData.id,
               replayTo: null,
-              status: 'sent',
+              status: 'approved',
             });
             setLoading(false);
           } catch (e: any) {

@@ -7,24 +7,24 @@ import StarRating from './StarRating';
 
 /**
  * RatingButton.
- * @param   {object}                            props             - Props for RatingButton.
- * @param   {number}                            props.rating      - Rating value.
- * @param   {number}                            props.reviewCount - Review count.
- * @param   {boolean}                           props.state       - State.
- * @param   {Dispatch<SetStateAction<boolean>>} props.setState    - Set state.
- * @param   {IAttributeValues}                  props.dict        - Dictionary
- * @returns {JSX.Element}                                         RatingButton.
+ * @param   {object}                            props              - Props for RatingButton.
+ * @param   {number}                            props.rating       - Rating value.
+ * @param   {number}                            props.reviewsCount - Review count.
+ * @param   {boolean}                           props.state        - State.
+ * @param   {Dispatch<SetStateAction<boolean>>} props.setState     - Set state.
+ * @param   {IAttributeValues}                  props.dict         - Dictionary
+ * @returns {JSX.Element}                                          RatingButton.
  */
 const RatingButton = ({
   dict,
   rating,
-  reviewCount,
+  reviewsCount,
   state,
   setState,
 }: {
   dict: IAttributeValues;
   rating: number;
-  reviewCount: number;
+  reviewsCount: number;
   state: boolean;
   setState: Dispatch<SetStateAction<boolean>>;
 }): JSX.Element => {
@@ -41,7 +41,7 @@ const RatingButton = ({
         <div className="text-lg font-bold text-neutral-600">
           {rating.toFixed(1)}
         </div>
-        <div className="text-sm leading-5 text-slate-300">{reviewCount}</div>
+        <div className="text-sm leading-5 text-slate-300">{reviewsCount}</div>
       </div>
 
       {/** Display reviews title with collapsible arrow indicator */}

@@ -63,7 +63,9 @@ const ReviewsList = ({
   state: boolean;
   product: IProductsEntity;
 }): JSX.Element => {
+  /** reviewsData */
   const [reviewsData, setReviewsData] = useState<any[]>([]);
+
   /** Fetch reviews data from the API when the component mounts. */
   useEffect(() => {
     /** Fetch reviews */

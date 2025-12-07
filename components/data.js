@@ -156,18 +156,6 @@ export const timeSlotsData = [
 ];
 
 /**
- * Product rating information
- *
- * This object contains overall product rating data including average rating
- * and total review count. Used to display product ratings in the UI.
- * @type {{rating: number, reviewCount: number}}
- */
-export const productRating = {
-  rating: 4.7,
-  reviewCount: 7979,
-};
-
-/**
  * Detailed ratings data for product reviews
  *
  * This array contains detailed breakdown of product ratings by star count,
