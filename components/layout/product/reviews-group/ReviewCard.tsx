@@ -2,6 +2,7 @@
 import type { JSX } from 'react';
 
 import ReviewAnimations from '../animations/ReviewAnimations';
+import StarRating from '../rating-block/StarRating';
 import UserComment from './UserComment';
 
 /**
@@ -23,6 +24,9 @@ const ReviewCard = ({
   index: number;
   state: boolean;
 }): JSX.Element => {
+  const formData = review.formData;
+
+  const rating = formData[0].value;
   return (
     <ReviewAnimations
       className="relative box-border flex h-0 shrink-0 flex-col"
@@ -31,6 +35,11 @@ const ReviewCard = ({
     >
       {/** Display the user comment with all review details inside an animated wrapper */}
       <div className="flex flex-col w-full rounded-3xl border border-solid border-slate-300 bg-white px-6 py-4 max-md:px-5">
+        {/** Review header with user name and star rating */}
+        <header className="mb-4 flex justify-between gap-5 text-lg font-bold leading-8 text-neutral-600 max-md:max-w-full max-md:flex-wrap">
+          <h2>{review.name}</h2>
+          <StarRating rating={rating} />
+        </header>
         <UserComment review={review} />
       </div>
     </ReviewAnimations>

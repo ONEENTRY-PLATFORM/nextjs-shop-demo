@@ -2,9 +2,8 @@
 import { type JSX, useState } from 'react';
 
 import CommentForm from '@/components/forms/CommentForm';
-import LikeIcon from '@/components/icons/like';
 
-import StarRating from '../rating-block/StarRating';
+import RatingBlock from './RatingBlock';
 
 /**
  * UserComment component.
@@ -19,19 +18,13 @@ const UserComment = ({ review }: { review: any }): JSX.Element => {
   const [state, setState] = useState(false);
   const formData = review.formData;
 
-  const rating = formData[0].value;
   const content = formData[1]?.value;
   // const attachments = formData[3]?.value;
+  const commentsCount = 1;
   // console.log(attachments);
 
   return (
     <>
-      {/** Review header with user name and star rating */}
-      <header className="mb-4 flex justify-between gap-5 text-lg font-bold leading-8 text-neutral-600 max-md:max-w-full max-md:flex-wrap">
-        <h2>{review.name}</h2>
-        <StarRating rating={rating} />
-      </header>
-
       {/** Review content and engagement metrics */}
       <div className="flex flex-col w-full items-start gap-5 text-sm max-md:max-w-full max-md:flex-wrap">
         {/** User comment text */}
@@ -51,22 +44,9 @@ const UserComment = ({ review }: { review: any }): JSX.Element => {
             >
               Leave answer
             </button>
-            <div className="text-orange-500">1 comment</div>
+            <div className="text-orange-500">{commentsCount} comment</div>
           </div>
-          <div className="flex">
-            {/** Like counter with icon */}
-            <div className="relative box-border flex shrink-0 flex-row gap-1">
-              <LikeIcon />
-              <div className="my-auto">{review.likeCount}</div>
-            </div>
-            {/** Comment counter with icon (rotated like icon) */}
-            <div className="relative box-border flex shrink-0 flex-row gap-1">
-              <span className="rotate-180">
-                <LikeIcon />
-              </span>
-              <div className="my-auto">{review.commentCount}</div>
-            </div>
-          </div>
+          <RatingBlock />
         </div>
       </div>
 
