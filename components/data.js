@@ -18,10 +18,6 @@ export const socialProvidersButtons = [
 
 /**
  * Configuration data for different block types used in the application
- *
- * This array contains width and height configurations for various block types
- * used throughout the application. Each entry corresponds to a specific block
- * identifier and contains CSS classes for styling.
  */
 export const blocksData = [
   // home_banner:

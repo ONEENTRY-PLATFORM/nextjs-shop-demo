@@ -25,6 +25,7 @@ export const ratingsData = [
  * @param   {string}           props.lang        - language code
  * @param   {IAttributeValues} props.dict        - dictionary
  * @param   {any}              props.product     - product data
+ * @param   {any}              props.reviewsData - reviews data
  * @returns {JSX.Element}                        RatingBlock component.
  */
 const RatingBlock = ({
@@ -33,12 +34,14 @@ const RatingBlock = ({
   // lang,
   // dict,
   product,
+  reviewsData,
 }: {
   totalRating: number;
   state: boolean;
   lang: string;
   dict: IAttributeValues;
   product: any;
+  reviewsData: any;
 }): JSX.Element => {
   /**
    * Get drawer state and control functions from OpenDrawerContext

@@ -29,10 +29,11 @@ const ReviewForm = memo(
     dict: IAttributeValues;
   }): JSX.Element => {
     // const { authenticate } = useContext(AuthContext);
-    const { data: productData } = useContext(OpenDrawerContext);
+    const { setOpen, data: productData } = useContext(OpenDrawerContext);
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
+    const [response, setResponse] = useState<any>(null);
 
     // const { sign_in_text } = dict;
 
@@ -64,94 +65,95 @@ const ReviewForm = memo(
      */
     const moduleFormConfig = data?.moduleFormConfigs?.[0];
 
-    const onLeaveReview = useCallback(
-      async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const emptyFormData: {
-          marker: string;
-          type: string;
-          value: string | object;
-        }[] = [];
+    const onLeaveReview = async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const emptyFormData: {
+        marker: string;
+        type: string;
+        value: string | object;
+      }[] = [];
 
-        /** transform and send form data */
-        if (formFields) {
-          /** Get all form field property keys */
-          const propertiesArray = Object.keys(formFields);
+      /** transform and send form data */
+      if (formFields) {
+        /** Get all form field property keys */
+        const propertiesArray = Object.keys(formFields);
 
-          /**
-           * Transform form data based on field types
-           * Each field is processed according to its type to create the correct data structure
-           */
-          const transformedFormData = propertiesArray?.reduce((formData, i) => {
-            const type = formFields[i].type;
-            const marker = formFields[i].marker;
-            const value = fieldsData[marker as keyof typeof fieldsData]?.value;
-            let newData = {
+        /**
+         * Transform form data based on field types
+         * Each field is processed according to its type to create the correct data structure
+         */
+        const transformedFormData = propertiesArray?.reduce((formData, i) => {
+          const type = formFields[i].type;
+          const marker = formFields[i].marker;
+          const value = fieldsData[marker as keyof typeof fieldsData]?.value;
+          let newData = {
+            marker: marker,
+            type: type,
+            value: value,
+          } as {
+            marker: string;
+            type: string;
+            value: string | object;
+          };
+
+          /** Handle special field types with specific data structures */
+          if (marker === 'spam') {
+            newData = {
               marker: marker,
-              type: type,
-              value: value,
-            } as {
-              marker: string;
-              type: string;
-              value: string | object;
+              type: 'spam',
+              value: '',
             };
-
-            /** Handle special field types with specific data structures */
-            if (marker === 'spam') {
-              newData = {
-                marker: marker,
-                type: 'spam',
-                value: '',
-              };
-            }
-            /**  */
-            if (marker === 'send') {
-              newData = {
-                marker: marker,
-                type: 'button',
-                value: '',
-              };
-            }
-            /**  */
-            if (type === 'text') {
-              newData = {
-                marker: marker,
-                type: 'text',
-                value: [
-                  {
-                    // htmlValue: value,
-                    plainValue: value,
-                  },
-                ],
-              };
-            }
-
-            if (newData) {
-              formData.push(newData);
-            }
-            return formData;
-          }, emptyFormData);
-
-          /** Send transformed form data to OneEntry API */
-          try {
-            setLoading(true);
-            await api.FormData.postFormsData({
-              formIdentifier: data?.identifier || '',
-              formData: transformedFormData,
-              formModuleConfigId: moduleFormConfig?.id || 5,
-              moduleEntityIdentifier: productData.id,
-              replayTo: null,
-              status: 'approved',
-            });
-            setLoading(false);
-          } catch (e: any) {
-            setLoading(false);
-            setError(e.message);
           }
+          /** button */
+          if (marker === 'send') {
+            newData = {
+              marker: marker,
+              type: 'button',
+              value: '',
+            };
+          }
+          /** text */
+          if (type === 'text') {
+            newData = {
+              marker: marker,
+              type: 'text',
+              value: [
+                {
+                  // htmlValue: value,
+                  plainValue: value,
+                },
+              ],
+            };
+          }
+
+          if (newData) {
+            formData.push(newData);
+          }
+          return formData;
+        }, emptyFormData);
+
+        /** Send transformed form data to OneEntry API */
+        try {
+          setLoading(true);
+          const rersponse = await api.FormData.postFormsData({
+            formIdentifier: data?.identifier || '',
+            formData: transformedFormData,
+            formModuleConfigId: moduleFormConfig?.id || 5,
+            moduleEntityIdentifier: productData.id,
+            replayTo: null,
+            status: 'approved',
+          });
+          setLoading(false);
+          setResponse(rersponse);
+          setTimeout(() => {
+            setOpen(false);
+          }, 500);
+        } catch (e: any) {
+          setLoading(false);
+          setError(e.message);
         }
-      },
-      [formFields, fieldsData, data, moduleFormConfig, productData],
-    );
+      }
+    };
 
     if (!productData || !data) {
       return <>Error. Some data not found.</>;
@@ -206,6 +208,7 @@ const ReviewForm = memo(
           />
           {/* Error message */}
           {error && <ErrorMessage error={error} />}
+          <div className="text-center">{response?.actionMessage}</div>
         </form>
       </FormAnimations>
     );

@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { type JSX, useEffect, useState } from 'react';
+import { type JSX, Key, useEffect, useState } from 'react';
 
 import { api } from '@/app/api';
 
@@ -51,55 +51,19 @@ import ViewAllButton from './ViewAllButton';
  * ReviewsList component.
  * Displays a list of product reviews with conditional styling based on visibility state.
  * Renders individual ReviewCard components for each review and includes a ViewAllButton.
- * @param   {object}      props         - Component props.
- * @param   {boolean}     props.state   - Visibility state that controls the layout spacing and ReviewCard animations.
- * @param   {any}         props.product - Product object.
- * @returns {JSX.Element}               Reviews list section with all reviews and a view all button.
+ * @param   {object}      props             - Component props.
+ * @param   {boolean}     props.state       - Visibility state that controls the layout spacing and ReviewCard animations.
+ * @param   {any}         props.reviewsData - Array of review objects.
+ * @returns {JSX.Element}                   Reviews list section with all reviews and a view all button.
  */
 const ReviewsList = ({
   state,
-  product,
+  reviewsData,
 }: {
   state: boolean;
-  product: IProductsEntity;
+  reviewsData: any;
 }): JSX.Element => {
-  /** reviewsData */
-  const [reviewsData, setReviewsData] = useState<any[]>([]);
-
-  /** Fetch reviews data from the API when the component mounts. */
-  useEffect(() => {
-    /** Fetch reviews */
-    const fetchReviews = async () => {
-      const result = await api.FormData.getFormsDataByMarker(
-        'comment_to_product', // marker - Form marker
-        5, // formModuleConfigId - Form module configuration ID
-        {
-          entityIdentifier: product.id,
-          userIdentifier: '',
-          status: 'approved',
-          dateFrom: '',
-          dateTo: '',
-        }, // body - Request body.
-        1, // isNested - Flag for getting hierarchical data.
-        'en_US', // langCode - Language code.
-        0, // offset — Parameter for pagination. Default: 0.
-        2, // limit — Parameter for pagination. Default: 30.
-      );
-
-      /** Check if result is an error */
-      if (result && !('statusCode' in result)) {
-        /** Extract the forms data array from the result */
-        const formsData = result.items || [];
-        setReviewsData(formsData as any[]);
-      } else {
-        /** Handle error case - set empty array or show error message */
-        setReviewsData([]);
-      }
-    };
-    fetchReviews();
-  }, [product]);
-
-  if (reviewsData.length < 1) {
+  if (!reviewsData || reviewsData.length < 1) {
     return (
       <div className="flex text-center w-full h-50 justify-center items-center">
         <h2 className="text-2xl">There no reviews yet</h2>
@@ -117,7 +81,7 @@ const ReviewsList = ({
         }
       >
         {/** Map through all reviews and render a ReviewCard for each one */}
-        {reviewsData.map((review, index) => (
+        {reviewsData.items?.map((review: any, index: number) => (
           <ReviewCard key={index} review={review} index={index} state={state} />
         ))}
       </section>

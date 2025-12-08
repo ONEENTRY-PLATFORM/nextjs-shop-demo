@@ -1,9 +1,9 @@
 /* eslint-disable jsdoc/reject-any-type */
-'use client';
-
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
+
+import { api } from '@/app/api';
 
 // import { getProductTitle } from '@/app/api/hooks/useProductsData';
 // import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
@@ -30,7 +30,7 @@ import ReviewsSection from './ReviewsSection';
  * @param   {Record<string, any>}                          [props.blocksData]         - Pre-fetched block data for dynamic content
  * @returns {JSX.Element}                                                             A complete product page with all relevant information and sections
  */
-const ProductSingle = ({
+const ProductSingle = async ({
   product,
   lang,
   dict,
@@ -47,9 +47,25 @@ const ProductSingle = ({
   relatedProductsTotal: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   blocksData?: Record<string, any>;
-}): JSX.Element => {
+}): Promise<JSX.Element> => {
   /** Extract necessary data from product entity */
   // const { attributeValues, blocks } = product;
+
+  const reviewsData = await api.FormData.getFormsDataByMarker(
+    'comment_to_product', // marker - Form marker
+    5, // formModuleConfigId - Form module configuration ID
+    {
+      entityIdentifier: product.id,
+      userIdentifier: '',
+      status: 'approved',
+      dateFrom: '',
+      dateTo: '',
+    }, // body - Request body.
+    1, // isNested - Flag for getting hierarchical data.
+    'en_US', // langCode - Language code.
+    0, // offset — Parameter for pagination. Default: 0.
+    2, // limit — Parameter for pagination. Default: 30.
+  );
 
   /** Get the formatted product title using helper function */
   // const productTitle = getProductTitle(product);
@@ -103,7 +119,12 @@ const ProductSingle = ({
 
       {/** Reviews */}
       <ProductAnimations className={''} index={3}>
-        <ReviewsSection lang={lang} dict={dict} product={product} />
+        <ReviewsSection
+          lang={lang}
+          dict={dict}
+          reviewsData={reviewsData}
+          product={product}
+        />
       </ProductAnimations>
 
       {/** blocks */}
