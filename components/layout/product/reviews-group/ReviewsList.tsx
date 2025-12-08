@@ -59,13 +59,13 @@ import ViewAllButton from './ViewAllButton';
 const ReviewsList = ({
   lang,
   state,
-  reviewsData,
   product,
+  reviewsData,
 }: {
   lang: any;
   state: boolean;
-  reviewsData: any;
   product: IProductsEntity;
+  reviewsData: any;
 }): JSX.Element => {
   if (!reviewsData || reviewsData.length < 1) {
     return (
@@ -74,6 +74,25 @@ const ReviewsList = ({
       </div>
     );
   }
+
+  // Filter parent reviews (with parentId: null)
+  const parentReviews = reviewsData.items?.filter(
+    (review: any) => review.parentId === null,
+  );
+
+  // Group child reviews by parent ID
+  const childReviewsByParentId = reviewsData.items?.reduce(
+    (acc: any, review: any) => {
+      if (review.parentId !== null) {
+        if (!acc[review.parentId]) {
+          acc[review.parentId] = [];
+        }
+        acc[review.parentId].push(review);
+      }
+      return acc;
+    },
+    {},
+  );
 
   return (
     <>
@@ -84,12 +103,13 @@ const ReviewsList = ({
           (state ? 'gap-5' : '')
         }
       >
-        {/** Map through all reviews and render a ReviewCard for each one */}
-        {reviewsData.items?.map((review: any, index: number) => (
+        {/** Map through parent reviews and render a ReviewCard for each one */}
+        {parentReviews?.map((review: any, index: number) => (
           <ReviewCard
-            key={index}
+            key={review.id || index}
             lang={lang}
             review={review}
+            childReviews={childReviewsByParentId[review.id] || []}
             index={index}
             state={state}
             product={product}

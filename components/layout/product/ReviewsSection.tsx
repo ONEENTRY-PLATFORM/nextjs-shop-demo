@@ -11,7 +11,7 @@ import RatingButton from './rating-block/RatingButton';
 import ReviewsList from './reviews-group/ReviewsList';
 
 /**
- * Calculate the average rating from all formData values across all reviews.
+ * Calculate the average rating from parent reviews only (with parentId: null).
  * @param   {object} reviewsData - Reviews data object containing items array.
  * @returns {number}             Average value of all formData values, or 0 if no data.
  */
@@ -23,7 +23,12 @@ const totalRating = (reviewsData: any): number => {
   let totalSum = 0;
   let totalCount = 0;
 
-  reviewsData.items.forEach((item: any) => {
+  // Filter only parent reviews (with parentId: null)
+  const parentReviews = reviewsData.items.filter(
+    (item: any) => item.parentId === null,
+  );
+
+  parentReviews.forEach((item: any) => {
     if (item?.formData && Array.isArray(item.formData)) {
       item.formData.forEach((formItem: any) => {
         if (formItem?.marker === 'rating') {
@@ -71,6 +76,11 @@ const ReviewsSection = ({
   const [state, setState] = useState(true);
   const averageRating = totalRating(reviewsData);
 
+  // Count only parent reviews (with parentId: null)
+  const parentReviewsCount =
+    reviewsData?.items?.filter((review: any) => review.parentId === null)
+      .length || 0;
+
   return (
     <div className="flex justify-between overflow-hidden max-md:flex-wrap">
       {/** Left column: Rating button and reviews list */}
@@ -81,7 +91,7 @@ const ReviewsSection = ({
           state={state}
           setState={setState}
           totalRating={averageRating}
-          reviewsCount={reviewsData.total}
+          reviewsCount={parentReviewsCount}
         />
         {/** Reviews list that shows/hides based on state */}
         <ReviewsList

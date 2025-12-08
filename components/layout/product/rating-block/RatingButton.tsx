@@ -41,6 +41,7 @@ const RatingButton = ({
         <div className="text-lg font-bold text-neutral-600">
           {totalRating.toFixed(1)}
         </div>
+        {/* reviewsCount */}
         <div className="text-sm leading-5 text-slate-300">{reviewsCount}</div>
       </div>
 

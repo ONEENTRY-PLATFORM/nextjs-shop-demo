@@ -3,33 +3,36 @@ import { type JSX, useState } from 'react';
 
 import CommentForm from '@/components/forms/CommentForm';
 
+import ChildReviews from './ChildReviews';
 import RatingBlock from './RatingBlock';
 
 /**
  * UserComment component.
  * Displays a single user review with their name, rating, comment, and engagement metrics.
- * @param   {object}      props         - UserCommentProps.
- * @param   {object}      props.lang    - Language code.
- * @param   {object}      props.product - product object entity.
- * @param   {object}      props.review  - review object entity.
- * @returns {JSX.Element}               UserComment component.
+ * @param   {object}      props              - UserCommentProps.
+ * @param   {object}      props.lang         - Language code.
+ * @param   {object}      props.product      - product object entity.
+ * @param   {object}      props.review       - review object entity.
+ * @param   {Array}       props.childReviews - Array of child review objects.
+ * @returns {JSX.Element}                    UserComment component.
  */
 const UserComment = ({
   lang,
   product,
   review,
+  childReviews = [],
 }: {
   lang: any;
   product: any;
   review: any;
+  childReviews?: any[];
 }): JSX.Element => {
   const [state, setState] = useState(false);
   const formData = review.formData;
 
   const content = formData[2]?.value;
-  const commentsCount = 1;
+  const commentsCount = childReviews.length;
   // const attachments = formData[3]?.value;
-  console.log(review);
 
   return (
     <>
@@ -52,7 +55,11 @@ const UserComment = ({
             >
               Leave answer
             </button>
-            <div className="text-orange-500">{commentsCount} comment</div>
+            {commentsCount > 0 && (
+              <div className="text-orange-500">
+                {commentsCount} {commentsCount === 1 ? 'comment' : 'comments'}
+              </div>
+            )}
           </div>
           <RatingBlock />
         </div>
@@ -60,6 +67,9 @@ const UserComment = ({
 
       {/* Comment form */}
       {state && <CommentForm lang={lang} review={review} product={product} />}
+
+      {/* Display child reviews */}
+      <ChildReviews lang={lang} product={product} childReviews={childReviews} />
     </>
   );
 };
