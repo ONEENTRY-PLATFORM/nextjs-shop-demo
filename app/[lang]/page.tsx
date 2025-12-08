@@ -5,10 +5,8 @@ import type { JSX } from 'react';
 import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
-import BlocksGrid, {
-  blocksColors,
-  blocksData,
-} from '@/components/layout/blocks-grid';
+import { blocksColors, blocksData } from '@/components/data';
+import BlocksGrid from '@/components/layout/blocks-grid';
 import BlocksGridLoader from '@/components/layout/blocks-grid/components/BlocksGridLoader';
 import { i18n } from '@/i18n-config';
 

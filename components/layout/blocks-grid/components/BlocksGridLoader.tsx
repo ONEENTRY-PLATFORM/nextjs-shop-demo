@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useGSAP } from '@gsap/react';
@@ -8,17 +7,17 @@ import type { JSX } from 'react';
 /**
  * Blocks grid loader component for displaying skeleton loaders for content blocks.
  * Renders a grid of placeholder blocks with animations while content is loading.
- * @param   {any}         props              - Props for the component
- * @param   {any}         props.blocksData   - Data for the blocks
- * @param   {any}         props.blocksColors - Colors for the blocks
+ * @param   {object}      props              - Props for the component
+ * @param   {object}      props.blocksData   - Data for the blocks
+ * @param   {object}      props.blocksColors - Colors for the blocks
  * @returns {JSX.Element}                    Loader component
  */
 const BlocksGridLoader = ({
   blocksData,
   blocksColors,
 }: {
-  blocksData: any;
-  blocksColors: any;
+  blocksData: object;
+  blocksColors: object;
 }): JSX.Element => {
   /**
    * Array of block names representing different content sections
@@ -78,7 +77,7 @@ const BlocksGridLoader = ({
          * Each loader has specific dimensions and colors based on block type
          */
         blocks.map((block, index) => {
-          /** Get CSS classes for width and height based on block index */
+          /** Get CSS classes for block by index */
           const className = blocksData[index as keyof typeof blocksData] as {
             width: string;
             height: string;
