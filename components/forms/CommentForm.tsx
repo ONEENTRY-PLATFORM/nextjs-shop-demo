@@ -5,41 +5,50 @@ import { useState } from 'react';
 
 import { api } from '@/app/api';
 
+import ErrorMessage from './inputs/ErrorMessage';
+
 // CommentForm.tsx
 const CommentForm = ({
   // lang,
   // dict,
+  review,
   product,
 }: {
   lang: string;
   // dict: IAttributeValues;
+  review: any;
   product: IProductsEntity;
 }) => {
+  // const { authenticate } = useContext(AuthContext);
   const [value, setValue] = useState('');
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [response, setResponse] = useState<any>(null);
 
-  const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    const moduleFormConfig = product?.moduleFormConfigs?.[0] || {};
     /** Send transformed form data to OneEntry API */
     try {
       setLoading(true);
-      // const res = await api.FormData.postFormsData({
-      //   formIdentifier: data?.identifier || '',
-      //   formData: transformedFormData,
-      //   formModuleConfigId: moduleFormConfig?.id || 5,
-      //   moduleEntityIdentifier: product.id,
-      //   replayTo: null,
-      //   status: 'approved',
-      // });
+      const res = await api.FormData.postFormsData({
+        formIdentifier:
+          moduleFormConfig?.formIdentifier || 'comment_to_product',
+        formData: [
+          {
+            marker: 'comment_description',
+            type: 'string',
+            value: value,
+          },
+        ],
+        formModuleConfigId: moduleFormConfig?.id || 5,
+        moduleEntityIdentifier: product.id.toString(),
+        replayTo: review.id.toString(), // review id for answer
+        status: 'approved',
+      });
       setLoading(false);
-      // setResponse(res);
-      // setTimeout(() => {
-      //   setOpen(false);
-      // }, 500);
+      setResponse(res);
     } catch (e: any) {
       setLoading(false);
       setError(e.message);
@@ -93,6 +102,9 @@ const CommentForm = ({
           </defs>
         </svg>
       </button>
+      {/* Error message */}
+      {error && <ErrorMessage error={error} />}
+      <div className="text-center">{response?.actionMessage}</div>
     </form>
   );
 };

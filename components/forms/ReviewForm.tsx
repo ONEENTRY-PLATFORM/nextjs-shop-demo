@@ -5,7 +5,7 @@ import Image from 'next/image';
 import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
 // import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FormEvent, Key } from 'react';
-import { type JSX, memo, useCallback, useContext, useState } from 'react';
+import { type JSX, memo, useContext, useState } from 'react';
 
 // import { toast } from 'react-toastify';
 import { api, useGetFormByMarkerQuery } from '@/app/api';

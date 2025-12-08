@@ -10,6 +10,7 @@ import UserComment from './UserComment';
  * Displays a single product review with animation support.
  * Wraps the UserComment component with ReviewAnimations for staggered entrance effects.
  * @param   {object}      props         - Component props.
+ * @param   {object}      props.lang    - Language code.
  * @param   {object}      props.product - Product object entity.
  * @param   {object}      props.review  - Review object entity containing all review data.
  * @param   {number}      props.index   - Index of this element for staggered animations.
@@ -17,11 +18,13 @@ import UserComment from './UserComment';
  * @returns {JSX.Element}               Review card component with animation wrapper.
  */
 const ReviewCard = ({
+  lang,
   product,
   review,
   index,
   state,
 }: {
+  lang: any;
   product: any;
   review: any;
   index: number;
@@ -44,7 +47,7 @@ const ReviewCard = ({
           <h2>{userName}</h2>
           <StarRating rating={rating} />
         </header>
-        <UserComment review={review} product={product} />
+        <UserComment lang={lang} review={review} product={product} />
       </div>
     </ReviewAnimations>
   );

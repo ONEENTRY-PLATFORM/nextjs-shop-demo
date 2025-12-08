@@ -6,15 +6,9 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 import { useState } from 'react';
 
-// import { ReviewForm } from '@/components/forms';
 import RatingBlock from './rating-block/RatingBlock';
 import RatingButton from './rating-block/RatingButton';
 import ReviewsList from './reviews-group/ReviewsList';
-
-export const productRating = {
-  rating: 4.7,
-  reviewCount: 7979,
-};
 
 /**
  * Calculate the average rating from all formData values across all reviews.
@@ -94,6 +88,7 @@ const ReviewsSection = ({
           state={state}
           reviewsData={reviewsData}
           product={product}
+          lang={lang}
         />
       </div>
 

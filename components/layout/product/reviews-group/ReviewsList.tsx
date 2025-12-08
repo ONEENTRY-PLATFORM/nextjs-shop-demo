@@ -50,16 +50,19 @@ import ViewAllButton from './ViewAllButton';
  * Displays a list of product reviews with conditional styling based on visibility state.
  * Renders individual ReviewCard components for each review and includes a ViewAllButton.
  * @param   {object}          props             - Component props.
+ * @param   {any}             props.lang        - Language object.
  * @param   {boolean}         props.state       - Visibility state that controls the layout spacing and ReviewCard animations.
  * @param   {any}             props.reviewsData - Array of review objects.
  * @param   {IProductsEntity} props.product     - Product object.
  * @returns {JSX.Element}                       Reviews list section with all reviews and a view all button.
  */
 const ReviewsList = ({
+  lang,
   state,
   reviewsData,
   product,
 }: {
+  lang: any;
   state: boolean;
   reviewsData: any;
   product: IProductsEntity;
@@ -85,6 +88,7 @@ const ReviewsList = ({
         {reviewsData.items?.map((review: any, index: number) => (
           <ReviewCard
             key={index}
+            lang={lang}
             review={review}
             index={index}
             state={state}
