@@ -47,8 +47,8 @@ const ReviewsSection = ({
           dict={dict}
           state={state}
           setState={setState}
-          rating={totalRating}
-          reviewsCount={0}
+          totalRating={totalRating}
+          reviewsCount={20}
         />
         {/** Reviews list that shows/hides based on state */}
         <ReviewsList state={state} product={product} />
@@ -56,7 +56,7 @@ const ReviewsSection = ({
 
       {/** Right column: Rating block with detailed rating distribution */}
       <RatingBlock
-        productRating={productRating}
+        totalRating={totalRating}
         state={state}
         lang={lang}
         dict={dict}

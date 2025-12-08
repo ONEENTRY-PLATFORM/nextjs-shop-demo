@@ -18,7 +18,6 @@ import {
   setDeliveryData,
 } from '@/app/store/reducers/CartSlice';
 
-// import { timeSlotsData } from '../data';
 import CalendarAnimations from './animations/CalendarAnimations';
 import TimeSlots from './calendar/TimeSlots';
 

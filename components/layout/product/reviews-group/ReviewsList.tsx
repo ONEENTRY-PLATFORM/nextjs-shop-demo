@@ -99,6 +99,14 @@ const ReviewsList = ({
     fetchReviews();
   }, [product]);
 
+  if (reviewsData.length < 1) {
+    return (
+      <div className="flex text-center w-full h-50 justify-center items-center">
+        <h2 className="text-2xl">There no reviews yet</h2>
+      </div>
+    );
+  }
+
   return (
     <>
       {/** Reviews container with dynamic spacing based on state */}
@@ -114,7 +122,7 @@ const ReviewsList = ({
         ))}
       </section>
       {/** View all reviews button with animation support */}
-      <ViewAllButton state={state} />
+      {reviewsData.length > 0 && <ViewAllButton state={state} />}
     </>
   );
 };

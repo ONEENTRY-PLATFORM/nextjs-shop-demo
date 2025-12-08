@@ -10,10 +10,40 @@ import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
-import { resetPasswordFormFields } from '../data';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
+
+/**
+ * Form field configurations for the reset password form
+ *
+ * This array defines the structure and properties of form fields used in
+ * the reset password functionality. Each field includes type, visibility,
+ * localization, placeholder, marker, and required status information.
+ * @type {Array<object>}
+ */
+export const resetPasswordFormFields = [
+  {
+    fieldType: 'password',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Password',
+    },
+    placeholder: '•••••',
+    marker: 'password_reg',
+    required: true,
+  },
+  {
+    fieldType: 'password',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Confirm password',
+    },
+    placeholder: '•••••',
+    marker: 'password_confirm',
+    required: true,
+  },
+];
 
 /**
  * Reset password form component that allows users to set a new password.

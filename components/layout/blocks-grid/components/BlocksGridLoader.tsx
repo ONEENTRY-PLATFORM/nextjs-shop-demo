@@ -1,17 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import type { JSX } from 'react';
 
-import { blocksColors, blocksData } from '@/components/data';
-
 /**
  * Blocks grid loader component for displaying skeleton loaders for content blocks.
  * Renders a grid of placeholder blocks with animations while content is loading.
- * @returns {JSX.Element} Loader
+ * @param   {any}         props              - Props for the component
+ * @param   {any}         props.blocksData   - Data for the blocks
+ * @param   {any}         props.blocksColors - Colors for the blocks
+ * @returns {JSX.Element}                    Loader component
  */
-const BlocksGridLoader = (): JSX.Element => {
+const BlocksGridLoader = ({
+  blocksData,
+  blocksColors,
+}: {
+  blocksData: any;
+  blocksColors: any;
+}): JSX.Element => {
   /**
    * Array of block names representing different content sections
    * Each name corresponds to a specific type of content block in the grid

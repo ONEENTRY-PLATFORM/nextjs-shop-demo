@@ -1,9 +1,59 @@
 import type { JSX } from 'react';
 
-import { blocksColors, blocksData } from '@/components/data';
-
 import BlocksGridAnimations from './animations/BlocksGridAnimations';
 import BlocksGridCard from './components/BlocksGridCard';
+/**
+ * Configuration data for different block types used in the application
+ *
+ * This array contains width and height configurations for various block types
+ * used throughout the application. Each entry corresponds to a specific block
+ * identifier and contains CSS classes for styling.
+ */
+export const blocksData: Array<{ className: string }> = [
+  // home_banner:
+  {
+    className: 'w-full max-sm:flex-col h-[175px]',
+  },
+  // offer_best_seller:
+  {
+    className:
+      'w-full lg:w-[calc(33%-0.65rem)] md:w-[calc(50%-0.65rem)] h-[260px]',
+  },
+  // offer_promotion:
+  {
+    className:
+      'w-full lg:w-[calc(33%-0.65rem)] md:w-[calc(50%-0.65rem)] h-[260px]',
+  },
+  // offer_offer_day:
+  {
+    className:
+      'w-full lg:w-[calc(33%-0.65rem)] md:w-[calc(50%-0.65rem)] h-[260px]',
+  },
+  // offer_new_arrivals:
+  {
+    className: 'w-full md:w-[calc(50%-0.65rem)] h-[260px]',
+  },
+  // offer_youtube:
+  {
+    className: 'w-full lg:w-[calc(50%-0.65rem)] h-[260px]',
+  },
+];
+
+/**
+ * Color configurations for different block types
+ *
+ * This object maps block identifiers to their corresponding background color
+ * classes and additional styling. Used to apply consistent color schemes
+ * across different sections of the application.
+ */
+export const blocksColors = {
+  home_banner: 'bg-purple-200 w-full max-sm:flex-col',
+  offer_best_seller: 'bg-purple-600',
+  offer_promotion: 'bg-orange-300',
+  offer_offer_day: 'bg-purple-300',
+  offer_new_arrivals: 'bg-teal-300',
+  offer_youtube: 'bg-blue-200',
+};
 
 /**
  * Blocks grid component that renders a grid of content blocks with animations
@@ -37,7 +87,8 @@ const BlocksGrid = async ({
         {Array.isArray(blocks) ? (
           blocks.map((block, index) => {
             /** Get styling data for the current block based on its index */
-            const className = blocksData[index as keyof typeof blocksData];
+            const blockData = blocksData[index];
+            const className = blockData ? blockData.className : '';
 
             return (
               /** Individual block card component with index, marker, styling and localization */
@@ -45,14 +96,9 @@ const BlocksGrid = async ({
                 key={index}
                 index={index}
                 marker={block}
-                className={
-                  className as {
-                    width: string;
-                    height: string;
-                  }
-                }
-                bgColor={blocksColors[block as keyof typeof blocksColors] || ''}
+                className={className}
                 lang={lang}
+                blocksColors={blocksColors}
               />
             );
           })
