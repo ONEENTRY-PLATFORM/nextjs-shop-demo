@@ -1,24 +1,53 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // import type { IAttributeValues } from 'oneentry/dist/base/utils';
-// import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { useState } from 'react';
 
+import { api } from '@/app/api';
+
 // CommentForm.tsx
-const CommentForm = (
-  {
-    // lang,
-    // dict,
-    // product,
-  }: {
-    lang: string;
-    // dict: IAttributeValues;
-    // product: IProductsEntity;
-  },
-) => {
+const CommentForm = ({
+  // lang,
+  // dict,
+  product,
+}: {
+  lang: string;
+  // dict: IAttributeValues;
+  product: IProductsEntity;
+}) => {
   const [value, setValue] = useState('');
 
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const [response, setResponse] = useState<any>(null);
+
+  const onSubmitComment = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    /** Send transformed form data to OneEntry API */
+    try {
+      setLoading(true);
+      // const res = await api.FormData.postFormsData({
+      //   formIdentifier: data?.identifier || '',
+      //   formData: transformedFormData,
+      //   formModuleConfigId: moduleFormConfig?.id || 5,
+      //   moduleEntityIdentifier: product.id,
+      //   replayTo: null,
+      //   status: 'approved',
+      // });
+      setLoading(false);
+      // setResponse(res);
+      // setTimeout(() => {
+      //   setOpen(false);
+      // }, 500);
+    } catch (e: any) {
+      setLoading(false);
+      setError(e.message);
+    }
+  };
+
   return (
-    <form className="w-full flex gap-4 mt-4">
+    <form className="w-full flex gap-4 mt-4" onSubmit={onSubmitComment}>
       <input
         type="text"
         name="review_id"
@@ -27,7 +56,11 @@ const CommentForm = (
         onChange={(e) => setValue(e.target.value)}
         className="border border-solid border-gray-300 p-2 w-full rounded-xl"
       />
-      <button type="submit" className="rounded-full cursor-pointer">
+      <button
+        type="submit"
+        className="rounded-full cursor-pointer"
+        disabled={loading}
+      >
         <svg
           width="40"
           height="40"

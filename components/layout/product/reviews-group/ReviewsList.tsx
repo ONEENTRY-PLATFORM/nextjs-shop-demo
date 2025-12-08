@@ -1,9 +1,7 @@
 /* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { type JSX, Key, useEffect, useState } from 'react';
-
-import { api } from '@/app/api';
+import type { JSX } from 'react';
 
 import ReviewCard from './ReviewCard';
 import ViewAllButton from './ViewAllButton';
@@ -51,17 +49,20 @@ import ViewAllButton from './ViewAllButton';
  * ReviewsList component.
  * Displays a list of product reviews with conditional styling based on visibility state.
  * Renders individual ReviewCard components for each review and includes a ViewAllButton.
- * @param   {object}      props             - Component props.
- * @param   {boolean}     props.state       - Visibility state that controls the layout spacing and ReviewCard animations.
- * @param   {any}         props.reviewsData - Array of review objects.
- * @returns {JSX.Element}                   Reviews list section with all reviews and a view all button.
+ * @param   {object}          props             - Component props.
+ * @param   {boolean}         props.state       - Visibility state that controls the layout spacing and ReviewCard animations.
+ * @param   {any}             props.reviewsData - Array of review objects.
+ * @param   {IProductsEntity} props.product     - Product object.
+ * @returns {JSX.Element}                       Reviews list section with all reviews and a view all button.
  */
 const ReviewsList = ({
   state,
   reviewsData,
+  product,
 }: {
   state: boolean;
   reviewsData: any;
+  product: IProductsEntity;
 }): JSX.Element => {
   if (!reviewsData || reviewsData.length < 1) {
     return (
@@ -82,7 +83,13 @@ const ReviewsList = ({
       >
         {/** Map through all reviews and render a ReviewCard for each one */}
         {reviewsData.items?.map((review: any, index: number) => (
-          <ReviewCard key={index} review={review} index={index} state={state} />
+          <ReviewCard
+            key={index}
+            review={review}
+            index={index}
+            state={state}
+            product={product}
+          />
         ))}
       </section>
       {/** View all reviews button with animation support */}

@@ -8,19 +8,24 @@ import RatingBlock from './RatingBlock';
 /**
  * UserComment component.
  * Displays a single user review with their name, rating, comment, and engagement metrics.
- * @param   {object}      props        - UserCommentProps.
- * @param   {object}      props.review - review object entity.
- * @returns {JSX.Element}              UserComment component.
+ * @param   {object}      props         - UserCommentProps.
+ * @param   {object}      props.product - product object entity.
+ * @param   {object}      props.review  - review object entity.
+ * @returns {JSX.Element}               UserComment component.
  */
-const UserComment = ({ review }: { review: any }): JSX.Element => {
-  // console.log(review);
-  // console.log(review.formData);
+const UserComment = ({
+  product,
+  review,
+}: {
+  product: any;
+  review: any;
+}): JSX.Element => {
   const [state, setState] = useState(false);
   const formData = review.formData;
 
-  const content = formData[1]?.value;
-  // const attachments = formData[3]?.value;
+  const content = formData[2]?.value;
   const commentsCount = 1;
+  // const attachments = formData[3]?.value;
   // console.log(attachments);
 
   return (
@@ -51,7 +56,7 @@ const UserComment = ({ review }: { review: any }): JSX.Element => {
       </div>
 
       {/* Comment form */}
-      {state && <CommentForm lang={''} />}
+      {state && <CommentForm lang={''} product={product} />}
     </>
   );
 };

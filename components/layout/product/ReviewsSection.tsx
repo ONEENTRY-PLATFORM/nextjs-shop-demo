@@ -18,7 +18,7 @@ export const productRating = {
 
 /**
  * Calculate the average rating from all formData values across all reviews.
- * @param   {any}    reviewsData - Reviews data object containing items array.
+ * @param   {object} reviewsData - Reviews data object containing items array.
  * @returns {number}             Average value of all formData values, or 0 if no data.
  */
 const totalRating = (reviewsData: any): number => {
@@ -32,14 +32,16 @@ const totalRating = (reviewsData: any): number => {
   reviewsData.items.forEach((item: any) => {
     if (item?.formData && Array.isArray(item.formData)) {
       item.formData.forEach((formItem: any) => {
-        const value = Number(formItem?.value);
-        if (
-          !isNaN(value) &&
-          formItem?.value !== undefined &&
-          formItem?.value !== null
-        ) {
-          totalSum += value;
-          totalCount++;
+        if (formItem?.marker === 'rating') {
+          const value = Number(formItem?.value);
+          if (
+            !isNaN(value) &&
+            formItem?.value !== undefined &&
+            formItem?.value !== null
+          ) {
+            totalSum += value;
+            totalCount++;
+          }
         }
       });
     }
@@ -57,7 +59,7 @@ const totalRating = (reviewsData: any): number => {
  * @param   {string}           props.lang        - Language code.
  * @param   {IAttributeValues} props.dict        - Dictionary containing localized texts from the server API.
  * @param   {IProductsEntity}  props.product     - Product data.
- * @param   {any}              props.reviewsData - Reviews data.
+ * @param   {object}           props.reviewsData - Reviews data.
  * @returns {JSX.Element}                        Reviews section component with rating information and reviews list.
  */
 const ReviewsSection = ({
@@ -88,7 +90,11 @@ const ReviewsSection = ({
           reviewsCount={reviewsData.total}
         />
         {/** Reviews list that shows/hides based on state */}
-        <ReviewsList state={state} reviewsData={reviewsData} />
+        <ReviewsList
+          state={state}
+          reviewsData={reviewsData}
+          product={product}
+        />
       </div>
 
       {/** Right column: Rating block with detailed rating distribution */}
