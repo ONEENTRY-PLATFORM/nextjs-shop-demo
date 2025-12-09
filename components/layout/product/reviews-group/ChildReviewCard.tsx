@@ -16,7 +16,7 @@ import RatingBlock from './RatingBlock';
  * @param   {object}           props.review  - Review
  * @returns {JSX.Element}                    Child review
  */
-const ChildReview = ({
+const ChildReviewCard = ({
   dict,
   product,
   review,
@@ -27,12 +27,17 @@ const ChildReview = ({
 }): JSX.Element => {
   const [state, setState] = useState(false);
 
+  /** formData */
   const childFormData = review.formData;
+  /** */
   const userName = review.userIdentifier;
+  /** */
   const content = childFormData[2]?.value;
+  /** */
   const reviewDate = review.time
     ? new Date(review.time).toLocaleDateString('en-US')
     : '';
+  /** */
   const isUserAdmin = review.isUserAdmin;
 
   return (
@@ -45,6 +50,7 @@ const ChildReview = ({
         {/** Review header with name and date */}
         <div className="flex items-center justify-between gap-4 text-neutral-600">
           <div className="flex items-center gap-2">
+            {/* Admin avatar */}
             {isUserAdmin && (
               <svg
                 width="24"
@@ -66,13 +72,14 @@ const ChildReview = ({
                     y2="24"
                     gradientUnits="userSpaceOnUse"
                   >
-                    <stop stop-color="#FFDB0D" />
-                    <stop offset="0.5" stop-color="#FF6B00" />
-                    <stop offset="1" stop-color="#FF00BF" />
+                    <stop stopColor="#FFDB0D" />
+                    <stop offset="0.5" stopColor="#FF6B00" />
+                    <stop offset="1" stopColor="#FF00BF" />
                   </linearGradient>
                 </defs>
               </svg>
             )}
+            {/* User name */}
             <h3 className="text-lg font-bold">{userName}</h3>
           </div>
           {/** Review date */}
@@ -100,4 +107,4 @@ const ChildReview = ({
   );
 };
 
-export default ChildReview;
+export default ChildReviewCard;

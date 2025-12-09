@@ -4,7 +4,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-import ChildReview from './ChildReviewCard';
+import ChildReviewCard from './ChildReviewCard';
 
 /**
  * Child reviews
@@ -32,7 +32,7 @@ const ChildReviews = ({
   return (
     <div className="mt-5 flex flex-col gap-5">
       {childReviews.map((childReview: any) => (
-        <ChildReview
+        <ChildReviewCard
           key={childReview.id}
           product={product}
           review={childReview}
