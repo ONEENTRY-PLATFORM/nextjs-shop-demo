@@ -12,13 +12,13 @@ import StarRating from './StarRating';
 /**
  * Calculate rating distribution from reviews data.
  * @param   {any}   reviewsData - Reviews data object containing items array.
- * @returns {Array}             Array of rating distribution objects with value, barValue, and starCount.
+ * @returns {any[]}             Array of rating distribution objects with value, barValue, and starCount.
  */
-const calculateRatingDistribution = (reviewsData: any) => {
-  // Initialize counters for each rating (1-5 stars)
+const calculateRatingDistribution = (reviewsData: any): any[] => {
+  /** Initialize counters for each rating (1-5 stars) */
   const ratingCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
-  // Count ratings from reviewsData
+  /** Count ratings from reviewsData */
   if (reviewsData?.items && Array.isArray(reviewsData.items)) {
     reviewsData.items.forEach((item: any) => {
       if (item?.formData && Array.isArray(item.formData)) {
@@ -34,9 +34,10 @@ const calculateRatingDistribution = (reviewsData: any) => {
     });
   }
 
-  // Calculate bar values based on maximum count
+  /** Calculate bar values based on maximum count */
   const maxCount = Math.max(...Object.values(ratingCounts));
 
+  /** Map each rating to a rating distribution object */
   return [5, 4, 3, 2, 1].map((starCount) => {
     const count = ratingCounts[starCount as keyof typeof ratingCounts];
     const barValue = maxCount > 0 ? (count / maxCount) * 100 : 0;
@@ -52,25 +53,22 @@ const calculateRatingDistribution = (reviewsData: any) => {
 /**
  * Rating block.
  * @param   {object}           props             - Rating block props.
+ * @param   {IAttributeValues} props.dict        - dictionary
  * @param   {object}           props.totalRating - product rating data.
  * @param   {boolean}          props.state       - animation state
- * @param   {string}           props.lang        - language code
- * @param   {IAttributeValues} props.dict        - dictionary
  * @param   {any}              props.product     - product data
  * @param   {any}              props.reviewsData - reviews data
  * @returns {JSX.Element}                        RatingBlock component.
  */
 const RatingBlock = ({
+  // dict,
   totalRating,
   state,
-  // lang,
-  // dict,
   product,
   reviewsData,
 }: {
   totalRating: number;
   state: boolean;
-  lang: string;
   dict: IAttributeValues;
   product: any;
   reviewsData: any;
@@ -84,6 +82,7 @@ const RatingBlock = ({
 
   // Calculate dynamic rating distribution from reviewsData
   const dynamicRatingsData = calculateRatingDistribution(reviewsData);
+  const leave_review_text = 'Leave review';
 
   return (
     <ReviewAnimations
@@ -96,12 +95,14 @@ const RatingBlock = ({
         <StarRating rating={totalRating} />
         <div>{totalRating}</div>
       </div>
+
       {/** Display detailed rating distribution */}
       <div className="mt-6 flex w-full flex-col gap-2">
         {dynamicRatingsData.map((rating, index) => (
           <RatingRow key={index} rating={rating} state={state} />
         ))}
       </div>
+
       {/** Leave review button */}
       <button
         type="button"
@@ -112,7 +113,7 @@ const RatingBlock = ({
         }}
         className="btn btn-o w-full btn-md mt-5 self-end max-md:self-center"
       >
-        Leave review
+        {leave_review_text}
       </button>
     </ReviewAnimations>
   );

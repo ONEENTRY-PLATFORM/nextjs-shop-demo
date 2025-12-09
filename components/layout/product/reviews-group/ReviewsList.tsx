@@ -50,23 +50,21 @@ import ViewAllButton from './ViewAllButton';
  * Displays a list of product reviews with conditional styling based on visibility state.
  * Renders individual ReviewCard components for each review and includes a ViewAllButton.
  * @param   {object}          props             - Component props.
- * @param   {any}             props.lang        - Language object.
  * @param   {boolean}         props.state       - Visibility state that controls the layout spacing and ReviewCard animations.
  * @param   {any}             props.reviewsData - Array of review objects.
  * @param   {IProductsEntity} props.product     - Product object.
  * @returns {JSX.Element}                       Reviews list section with all reviews and a view all button.
  */
 const ReviewsList = ({
-  lang,
   state,
   product,
   reviewsData,
 }: {
-  lang: any;
   state: boolean;
   product: IProductsEntity;
   reviewsData: any;
 }): JSX.Element => {
+  /** Check if there are any reviews available and return a message if none are found */
   if (!reviewsData || reviewsData.length < 1) {
     return (
       <div className="flex text-center w-full h-50 justify-center items-center">
@@ -75,12 +73,12 @@ const ReviewsList = ({
     );
   }
 
-  // Filter parent reviews (with parentId: null)
+  /** Filter parent reviews (with parentId: null) */
   const parentReviews = reviewsData.items?.filter(
     (review: any) => review.parentId === null,
   );
 
-  // Group child reviews by parent ID
+  /** Group child reviews by parent ID */
   const childReviewsByParentId = reviewsData.items?.reduce(
     (acc: any, review: any) => {
       if (review.parentId !== null) {
@@ -107,7 +105,6 @@ const ReviewsList = ({
         {parentReviews?.map((review: any, index: number) => (
           <ReviewCard
             key={review.id || index}
-            lang={lang}
             review={review}
             childReviews={childReviewsByParentId[review.id] || []}
             index={index}

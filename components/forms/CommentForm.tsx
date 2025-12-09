@@ -1,24 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { FormEvent, JSX } from 'react';
 import { useState } from 'react';
 
 import { api } from '@/app/api';
 
+import ArrowUpIcon from '../icons/arrow-up';
 import ErrorMessage from './inputs/ErrorMessage';
 
-// CommentForm.tsx
+/**
+ * Comment form
+ * @param   {object}          props         - Props
+ * @param   {object}          props.review  - Review
+ * @param   {IProductsEntity} props.product - Product
+ * @returns {JSX.Element}                   Comment form
+ */
 const CommentForm = ({
-  // lang,
-  // dict,
   review,
   product,
 }: {
-  lang: string;
-  // dict: IAttributeValues;
   review: any;
   product: IProductsEntity;
-}) => {
+}): JSX.Element => {
   // const { authenticate } = useContext(AuthContext);
   const [value, setValue] = useState('');
 
@@ -26,8 +29,16 @@ const CommentForm = ({
   const [error, setError] = useState<string>('');
   const [response, setResponse] = useState<any>(null);
 
-  const onSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
+  /**
+   * Submit comment
+   * @param   {FormEvent<HTMLFormElement>} e - Form event
+   * @returns {Promise<void>}                void
+   */
+  const onSubmitComment = async (
+    e: FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault();
+    /** Use first module form config of product */
     const moduleFormConfig = product?.moduleFormConfigs?.[0] || {};
     /** Send transformed form data to OneEntry API */
     try {
@@ -56,7 +67,15 @@ const CommentForm = ({
   };
 
   return (
-    <form className="w-full flex gap-4 mt-4" onSubmit={onSubmitComment}>
+    <form
+      className="w-full flex gap-4 mt-4"
+      onSubmit={(e) => {
+        if (!value) {
+          return;
+        }
+        onSubmitComment(e);
+      }}
+    >
       <input
         type="text"
         name="review_id"
@@ -69,38 +88,9 @@ const CommentForm = ({
         type="submit"
         className="rounded-full cursor-pointer"
         disabled={loading}
+        title="Submit review"
       >
-        <svg
-          width="40"
-          height="40"
-          viewBox="0 0 40 40"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g clipPath="url(#clip0_1135_2378)">
-            <circle
-              cx="20"
-              cy="20"
-              r="20"
-              transform="rotate(90 20 20)"
-              fill="#EEEFF0"
-            />
-            <path
-              d="M27.5736 19.6218C27.8466 19.3432 28 18.9654 28 18.5714C28 18.1775 27.8466 17.7996 27.5736 17.521L21.0207 10.8352C20.7477 10.5567 20.3773 10.4002 19.9912 10.4002C19.6051 10.4002 19.2348 10.5567 18.9617 10.8352L12.4088 17.521C12.1435 17.8012 11.9967 18.1765 12.0001 18.5661C12.0034 18.9556 12.1565 19.3283 12.4265 19.6038C12.6965 19.8792 13.0617 20.0355 13.4435 20.0389C13.8254 20.0422 14.1932 19.8925 14.4678 19.6218L18.535 15.6L18.535 29.7145C18.535 30.1085 18.6884 30.4864 18.9615 30.765C19.2346 31.0437 19.605 31.2002 19.9912 31.2002C20.3774 31.2002 20.7478 31.0437 21.0209 30.765C21.294 30.4864 21.4474 30.1085 21.4474 29.7145L21.4474 15.6L25.5146 19.6218C25.7877 19.9004 26.158 20.0569 26.5441 20.0569C26.9302 20.0569 27.3006 19.9004 27.5736 19.6218Z"
-              fill="#4C4D56"
-            />
-          </g>
-          <defs>
-            <clipPath id="clip0_1135_2378">
-              <rect
-                width="40"
-                height="40"
-                fill="white"
-                transform="translate(40 1.74846e-06) rotate(90)"
-              />
-            </clipPath>
-          </defs>
-        </svg>
+        <ArrowUpIcon />
       </button>
       {/* Error message */}
       {error && <ErrorMessage error={error} />}

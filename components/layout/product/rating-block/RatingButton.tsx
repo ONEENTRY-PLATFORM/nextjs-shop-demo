@@ -8,12 +8,12 @@ import StarRating from './StarRating';
 /**
  * RatingButton.
  * @param   {object}                            props              - Props for RatingButton.
+ * @param   {IAttributeValues}                  props.dict         - Dictionary
  * @param   {number}                            props.totalRating  - Rating value.
  * @param   {number}                            props.reviewsCount - Review count.
  * @param   {boolean}                           props.state        - State.
  * @param   {Dispatch<SetStateAction<boolean>>} props.setState     - Set state.
- * @param   {IAttributeValues}                  props.dict         - Dictionary
- * @returns {JSX.Element}                                          RatingButton.
+ * @returns {JSX.Element}                                          Rating button component.
  */
 const RatingButton = ({
   dict,

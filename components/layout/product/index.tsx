@@ -22,18 +22,16 @@ import ReviewsSection from './ReviewsSection';
  * It organizes the product information in a three-column layout on larger screens
  * and stacks the sections on smaller screens.
  * @param   {object}                                       props                      - Component properties
- * @param   {IProductsEntity & { blocks?: Array<string> }} props.product              - Product entity object containing all product information
- * @param   {string}                                       props.lang                 - Current language shortcode for localization
  * @param   {IAttributeValues}                             props.dict                 - Dictionary of attribute values from server API
+ * @param   {IProductsEntity & { blocks?: Array<string> }} props.product              - Product entity object containing all product information
  * @param   {IProductsEntity[]}                            props.relatedProducts      - Array of related products to display
  * @param   {number}                                       props.relatedProductsTotal - Total number of related products
  * @param   {Record<string, any>}                          [props.blocksData]         - Pre-fetched block data for dynamic content
  * @returns {JSX.Element}                                                             A complete product page with all relevant information and sections
  */
 const ProductSingle = async ({
-  product,
-  lang,
   dict,
+  product,
   // relatedProducts,
   // relatedProductsTotal,
   // blocksData,
@@ -41,7 +39,6 @@ const ProductSingle = async ({
   product: IProductsEntity & {
     blocks?: Array<string>;
   };
-  lang: string;
   dict: IAttributeValues;
   relatedProducts: IProductsEntity[];
   relatedProductsTotal: number;
@@ -120,7 +117,6 @@ const ProductSingle = async ({
       {/** Reviews */}
       <ProductAnimations className={''} index={3}>
         <ReviewsSection
-          lang={lang}
           dict={dict}
           reviewsData={reviewsData}
           product={product}

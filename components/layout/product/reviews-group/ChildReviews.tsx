@@ -1,37 +1,40 @@
-// ChildReviews.tsx
+/* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-import ChildReview from './ChildReview';
+import ChildReview from './ChildReviewCard';
 
 /**
  * Child reviews
+ * @param   {object}          props              - Component props
+ * @param   {IProductsEntity} props.product      - Product data
+ * @param   {any[]}           props.childReviews - Child reviews data
+ * @returns {JSX.Element}                        ChildReviews
  */
 const ChildReviews = ({
-  lang,
   product,
   childReviews = [],
 }: {
-  lang: any;
-  product: any;
+  product: IProductsEntity;
   childReviews?: any[];
 }): JSX.Element => {
+  /** If there are no child reviews, return an empty fragment */
+  if (childReviews.length < 1) {
+    return <></>;
+  }
+
+  /** If there are child reviews, map through them and return a ChildReview component for each */
   return (
-    <>
-      {/* Display child reviews */}
-      {childReviews.length > 0 && (
-        <div className="mt-6 flex flex-col gap-6">
-          {childReviews.map((childReview: any, index: number) => (
-            <ChildReview
-              key={childReview.id || index}
-              lang={lang}
-              product={product}
-              review={childReview}
-            />
-          ))}
-        </div>
-      )}
-    </>
+    <div className="mt-6 flex flex-col gap-6">
+      {childReviews.map((childReview: any) => (
+        <ChildReview
+          key={childReview.id}
+          product={product}
+          review={childReview}
+        />
+      ))}
+    </div>
   );
 };
 

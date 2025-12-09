@@ -55,28 +55,27 @@ const totalRating = (reviewsData: any): number => {
  * Displays the product reviews section including rating summary, toggle button, and review list.
  * This component manages the state for showing/hiding the detailed reviews list.
  * @param   {object}           props             - Component props.
- * @param   {string}           props.lang        - Language code.
  * @param   {IAttributeValues} props.dict        - Dictionary containing localized texts from the server API.
  * @param   {IProductsEntity}  props.product     - Product data.
  * @param   {object}           props.reviewsData - Reviews data.
  * @returns {JSX.Element}                        Reviews section component with rating information and reviews list.
  */
 const ReviewsSection = ({
-  lang,
   dict,
   product,
   reviewsData,
 }: {
-  lang: string;
   dict: IAttributeValues;
   product: IProductsEntity;
   reviewsData: any;
 }): JSX.Element => {
   /** State to control the visibility of the reviews list */
   const [state, setState] = useState(true);
+
+  /** Use totalRating function to calculate the average rating */
   const averageRating = totalRating(reviewsData);
 
-  // Count only parent reviews (with parentId: null)
+  /** Count only parent reviews (with parentId: null) */
   const parentReviewsCount =
     reviewsData?.items?.filter((review: any) => review.parentId === null)
       .length || 0;
@@ -98,7 +97,6 @@ const ReviewsSection = ({
           state={state}
           reviewsData={reviewsData}
           product={product}
-          lang={lang}
         />
       </div>
 
@@ -106,7 +104,6 @@ const ReviewsSection = ({
       <RatingBlock
         totalRating={averageRating}
         state={state}
-        lang={lang}
         dict={dict}
         product={product}
         reviewsData={reviewsData}
