@@ -26,7 +26,7 @@ const baloo = Baloo({
  * @param   {number}                props.index        - Index of element in array for staggered animations
  * @param   {string}                props.lang         - Current language shortcode for content localization
  * @param   {string}                props.className    - CSS classes object for styling the card
- * @param   {any}                   props.blocksColors - Object containing colors for each block type
+ * @param   {object}                props.blocksColors - Object containing colors for each block type
  * @returns {Promise<ReactElement>}                    Block card component with content and animations
  */
 const BlocksGridCard = async ({

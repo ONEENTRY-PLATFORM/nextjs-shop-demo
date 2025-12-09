@@ -1,5 +1,6 @@
 /* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
@@ -49,17 +50,20 @@ import ViewAllButton from './ViewAllButton';
  * ReviewsList component.
  * Displays a list of product reviews with conditional styling based on visibility state.
  * Renders individual ReviewCard components for each review and includes a ViewAllButton.
- * @param   {object}          props             - Component props.
- * @param   {boolean}         props.state       - Visibility state that controls the layout spacing and ReviewCard animations.
- * @param   {any}             props.reviewsData - Array of review objects.
- * @param   {IProductsEntity} props.product     - Product object.
- * @returns {JSX.Element}                       Reviews list section with all reviews and a view all button.
+ * @param   {object}           props             - Component props.
+ * @param   {IAttributeValues} props.dict        - Dictionary object containing translations.
+ * @param   {boolean}          props.state       - Visibility state that controls the layout spacing and ReviewCard animations.
+ * @param   {any}              props.reviewsData - Array of review objects.
+ * @param   {IProductsEntity}  props.product     - Product object.
+ * @returns {JSX.Element}                        Reviews list section with all reviews and a view all button.
  */
 const ReviewsList = ({
+  dict,
   state,
   product,
   reviewsData,
 }: {
+  dict: IAttributeValues;
   state: boolean;
   product: IProductsEntity;
   reviewsData: any;
@@ -110,6 +114,7 @@ const ReviewsList = ({
             index={index}
             state={state}
             product={product}
+            dict={dict}
           />
         ))}
       </section>

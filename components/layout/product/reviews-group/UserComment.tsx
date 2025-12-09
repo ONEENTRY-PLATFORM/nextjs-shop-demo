@@ -1,26 +1,32 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type JSX, useState } from 'react';
 
 import CommentForm from '@/components/forms/CommentForm';
 
+import AnswerButton from './AnswerButton';
 import ChildReviews from './ChildReviews';
 import RatingBlock from './RatingBlock';
 
 /**
  * UserComment component.
  * Displays a single user review with their name, rating, comment, and engagement metrics.
- * @param   {object}      props              - UserCommentProps.
- * @param   {object}      props.product      - product object entity.
- * @param   {object}      props.review       - review object entity.
- * @param   {Array}       props.childReviews - Array of child review objects.
- * @returns {JSX.Element}                    UserComment component.
+ * @param   {object}           props              - UserCommentProps.
+ * @param   {IAttributeValues} props.dict         - Dictionary object.
+ * @param   {IProductsEntity}  props.product      - product object entity.
+ * @param   {object}           props.review       - review object entity.
+ * @param   {Array}            props.childReviews - Array of child review objects.
+ * @returns {JSX.Element}                         UserComment component.
  */
 const UserComment = ({
+  dict,
   product,
   review,
   childReviews = [],
 }: {
-  product: any;
+  dict: IAttributeValues;
+  product: IProductsEntity;
   review: any;
   childReviews?: any[];
 }): JSX.Element => {
@@ -43,15 +49,7 @@ const UserComment = ({
         {/** Engagement metrics (likes and comments) */}
         <div className="mt-auto flex w-full justify-between gap-2.5 whitespace-nowrap text-slate-300 max-md:w-full">
           <div className="flex gap-2.5">
-            <button
-              type="button"
-              onClick={() => {
-                setState(!state);
-              }}
-              className="text-orange-500 cursor-pointer"
-            >
-              Leave answer
-            </button>
+            <AnswerButton dict={dict} state={state} setState={setState} />
             {commentsCount > 0 && (
               <div className="text-orange-500">
                 {commentsCount} {commentsCount === 1 ? 'comment' : 'comments'}
@@ -66,7 +64,7 @@ const UserComment = ({
       {state && <CommentForm review={review} product={product} />}
 
       {/* Display child reviews */}
-      <ChildReviews product={product} childReviews={childReviews} />
+      <ChildReviews product={product} childReviews={childReviews} dict={dict} />
     </>
   );
 };

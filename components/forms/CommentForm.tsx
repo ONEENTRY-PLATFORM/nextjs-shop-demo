@@ -68,7 +68,7 @@ const CommentForm = ({
 
   return (
     <form
-      className="w-full flex gap-4 mt-4"
+      className="w-full flex gap-4 mt-4 flex-col"
       onSubmit={(e) => {
         if (!value) {
           return;
@@ -76,25 +76,27 @@ const CommentForm = ({
         onSubmitComment(e);
       }}
     >
-      <input
-        type="text"
-        name="review_id"
-        placeholder="Your comment to the review"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
-        className="border border-solid border-gray-300 p-2 w-full rounded-xl"
-      />
-      <button
-        type="submit"
-        className="rounded-full cursor-pointer"
-        disabled={loading}
-        title="Submit review"
-      >
-        <ArrowUpIcon />
-      </button>
+      <div className="flex w-full gap-4">
+        <input
+          type="text"
+          name="review_id"
+          placeholder="Your comment to the review"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          className="border border-solid border-gray-300 p-2 w-full rounded-full"
+        />
+        <button
+          type="submit"
+          className="rounded-full cursor-pointer group"
+          disabled={loading}
+          title="Submit review"
+        >
+          <ArrowUpIcon />
+        </button>
+      </div>
       {/* Error message */}
       {error && <ErrorMessage error={error} />}
-      <div className="text-center">{response?.actionMessage}</div>
+      <div className="w-full text-center">{response?.actionMessage}</div>
     </form>
   );
 };

@@ -94,6 +94,7 @@ const ReviewsSection = ({
         />
         {/** Reviews list that shows/hides based on state */}
         <ReviewsList
+          dict={dict}
           state={state}
           reviewsData={reviewsData}
           product={product}
