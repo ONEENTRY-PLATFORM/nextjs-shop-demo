@@ -17,6 +17,7 @@ import RatingBlock from './RatingBlock';
  * @param   {IProductsEntity}  props.product      - product object entity.
  * @param   {object}           props.review       - review object entity.
  * @param   {Array}            props.childReviews - Array of child review objects.
+ * @param   {Array}            props.allReviews   - All reviews for recursive lookup.
  * @returns {JSX.Element}                         UserComment component.
  */
 const UserComment = ({
@@ -24,11 +25,13 @@ const UserComment = ({
   product,
   review,
   childReviews = [],
+  allReviews = [],
 }: {
   dict: IAttributeValues;
   product: IProductsEntity;
   review: any;
   childReviews?: any[];
+  allReviews?: any[];
 }): JSX.Element => {
   const [state, setState] = useState(false);
   const formData = review.formData;
@@ -64,7 +67,12 @@ const UserComment = ({
       {state && <CommentForm review={review} product={product} />}
 
       {/* Display child reviews */}
-      <ChildReviews product={product} childReviews={childReviews} dict={dict} />
+      <ChildReviews
+        product={product}
+        childReviews={childReviews}
+        dict={dict}
+        allReviews={allReviews}
+      />
     </>
   );
 };

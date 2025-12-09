@@ -82,10 +82,10 @@ const ReviewsList = ({
     (review: any) => review.parentId === null,
   );
 
-  /** Group child reviews by parent ID */
+  /** Group direct child reviews by their parent ID */
   const childReviewsByParentId = reviewsData.items?.reduce(
     (acc: any, review: any) => {
-      if (review.parentId !== null) {
+      if (review.parentId !== null && review.parentId !== undefined) {
         if (!acc[review.parentId]) {
           acc[review.parentId] = [];
         }
@@ -111,6 +111,7 @@ const ReviewsList = ({
             key={review.id || index}
             review={review}
             childReviews={childReviewsByParentId[review.id] || []}
+            allReviews={reviewsData.items || []}
             index={index}
             state={state}
             product={product}

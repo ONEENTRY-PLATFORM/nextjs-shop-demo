@@ -16,6 +16,7 @@ import UserComment from './UserComment';
  * @param   {IProductsEntity}  props.product      - Product object entity.
  * @param   {object}           props.review       - Review object entity containing all review data.
  * @param   {Array}            props.childReviews - Array of child review objects.
+ * @param   {Array}            props.allReviews   - All reviews for recursive lookup.
  * @param   {number}           props.index        - Index of this element for staggered animations.
  * @param   {boolean}          props.state        - Visibility state that triggers animation.
  * @returns {JSX.Element}                         Review card component with animation wrapper.
@@ -25,6 +26,7 @@ const ReviewCard = ({
   product,
   review,
   childReviews,
+  allReviews,
   index,
   state,
 }: {
@@ -32,6 +34,7 @@ const ReviewCard = ({
   product: IProductsEntity;
   review: any;
   childReviews: any[];
+  allReviews: any[];
   index: number;
   state: boolean;
 }): JSX.Element => {
@@ -75,6 +78,7 @@ const ReviewCard = ({
           review={review}
           product={product}
           childReviews={childReviews}
+          allReviews={allReviews}
           dict={dict}
         />
       </div>

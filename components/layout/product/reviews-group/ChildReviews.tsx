@@ -12,16 +12,19 @@ import ChildReviewCard from './ChildReviewCard';
  * @param   {IAttributeValues} props.dict         - Dictionary
  * @param   {IProductsEntity}  props.product      - Product data
  * @param   {any[]}            props.childReviews - Child reviews data
+ * @param   {any[]}            props.allReviews   - All reviews data for recursive lookup
  * @returns {JSX.Element}                         ChildReviews
  */
 const ChildReviews = ({
   dict,
   product,
   childReviews = [],
+  allReviews = [],
 }: {
   dict: IAttributeValues;
   product: IProductsEntity;
   childReviews?: any[];
+  allReviews?: any[];
 }): JSX.Element => {
   /** If there are no child reviews, return an empty fragment */
   if (childReviews.length < 1) {
@@ -37,6 +40,7 @@ const ChildReviews = ({
           product={product}
           review={childReview}
           dict={dict}
+          allReviews={allReviews}
         />
       ))}
     </div>
