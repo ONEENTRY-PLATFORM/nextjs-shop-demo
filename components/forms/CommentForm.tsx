@@ -88,7 +88,7 @@ const CommentForm = ({
         <button
           type="submit"
           className="rounded-full cursor-pointer group"
-          disabled={loading}
+          disabled={loading || !value}
           title="Submit review"
         >
           <ArrowUpIcon />

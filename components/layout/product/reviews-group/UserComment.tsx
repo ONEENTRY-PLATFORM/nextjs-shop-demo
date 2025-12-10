@@ -37,8 +37,22 @@ const UserComment = ({
   const formData = review.formData;
 
   const content = formData[2]?.value;
-  const commentsCount = childReviews.length;
   // const attachments = formData[3]?.value;
+
+  // Recursively count all comments (including nested replies)
+  const countAllComments = (reviewId: number): number => {
+    // Find direct children
+    const directChildren = allReviews.filter(
+      (r: any) => r.parentId == reviewId && r.id !== reviewId,
+    );
+
+    // Count direct children + their nested children
+    return directChildren.reduce((total: number, child: any) => {
+      return total + 1 + countAllComments(child.id);
+    }, 0);
+  };
+
+  const commentsCount = countAllComments(review?.id);
 
   return (
     <>

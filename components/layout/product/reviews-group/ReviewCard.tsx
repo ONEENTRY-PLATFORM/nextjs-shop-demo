@@ -54,7 +54,13 @@ const ReviewCard = ({
       index={index}
       state={state}
     >
-      <ReviewModal dict={dict} product={product} review={review} />
+      <ReviewModal
+        dict={dict}
+        product={product}
+        review={review}
+        allReviews={allReviews}
+        childReviews={childReviews}
+      />
       {/** Display the user comment with all review details inside an animated wrapper */}
       <div className="flex flex-col w-full rounded-3xl border border-solid border-slate-300 bg-white px-10 py-[30px] max-md:px-5">
         {/** Review header with user name, date and star rating */}
