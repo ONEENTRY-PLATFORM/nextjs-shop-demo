@@ -42,7 +42,7 @@ const ReviewCard = ({
   /** Extract necessary data from the review object */
   const formData = review.formData;
   /**  */
-  const userName = review.userIdentifier;
+  const userName = review.userIdentifier || 'Anonymous';
   const rating = formData[0].value;
   const reviewDate = review.time
     ? new Date(review.time).toLocaleDateString('en-US')

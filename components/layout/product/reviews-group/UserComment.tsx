@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import Image from 'next/image';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type JSX, useState } from 'react';
@@ -37,7 +38,12 @@ const UserComment = ({
   const formData = review.formData;
 
   const content = formData[2]?.value;
-  // const attachments = formData[3]?.value;
+  const attachments = formData[1]?.value || [];
+
+  // Filter and prepare images
+  const reviewImages = attachments?.filter(
+    (img: any) => img && typeof img === 'object' && 'downloadLink' in img,
+  );
 
   // Recursively count all comments (including nested replies)
   const countAllComments = (reviewId: number): number => {
@@ -59,9 +65,29 @@ const UserComment = ({
       {/** Review content and engagement metrics */}
       <div className="flex flex-col w-full items-start gap-5 text-sm max-md:max-w-full max-md:flex-wrap">
         {/** User comment text */}
-        <p className="w-10/12 flex-auto self-start leading-5 text-neutral-600 max-md:max-w-full">
+        <p className="flex-auto self-start leading-5 text-neutral-600 max-md:max-w-full">
           {content}
         </p>
+
+        {/* Attachments */}
+        {reviewImages.length > 0 && (
+          <div className="grid grid-cols-2 gap-4 w-full max-w-md">
+            {reviewImages.map((image: any, index: number) => (
+              <div
+                key={index}
+                className="relative aspect-square rounded-2xl overflow-hidden"
+              >
+                <Image
+                  src={image.downloadLink}
+                  alt={`Review image ${index + 1}`}
+                  width={200}
+                  height={200}
+                  className="object-cover w-full h-full"
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         {/** Engagement metrics (likes and comments) */}
         <div className="mt-auto flex w-full justify-between gap-2.5 whitespace-nowrap text-slate-300 max-md:w-full">
