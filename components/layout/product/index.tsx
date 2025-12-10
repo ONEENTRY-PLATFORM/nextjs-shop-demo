@@ -61,7 +61,7 @@ const ProductSingle = async ({
     1, // isNested - Flag for getting hierarchical data.
     'en_US', // langCode - Language code.
     0, // offset — Parameter for pagination. Default: 0.
-    2, // limit — Parameter for pagination. Default: 30.
+    500, // limit — Parameter for pagination. Default: 30.
   );
 
   /** Get the formatted product title using helper function */

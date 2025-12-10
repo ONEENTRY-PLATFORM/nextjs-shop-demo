@@ -68,12 +68,8 @@ const ReviewModal = ({
   const productTitle = getProductTitle(product);
 
   // Extract review images from formData
-  const reviewImages = formData[1]?.value || [
-    {
-      downloadLink: 'https://via.placeholder.com/600x600.png?text=Image+1',
-    },
-  ];
-  console.log(reviewImages);
+  const reviewImages = formData[1]?.value || [];
+
   // State for slider navigation
   const [nav1, setNav1] = useState<Slider | null>(null);
   const [nav2, setNav2] = useState<Slider | null>(null);
