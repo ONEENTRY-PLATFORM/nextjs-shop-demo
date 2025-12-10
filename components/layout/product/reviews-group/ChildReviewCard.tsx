@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
@@ -51,7 +52,7 @@ const ChildReviewCard = ({
   /** Is user admin */
   const isUserAdmin = review.isUserAdmin;
 
-  // Find child reviews of this review (replies to this reply)
+  /** Find child reviews of this review (replies to this reply) */
   const nestedChildReviews = allReviews.filter(
     (r: any) => r.parentId == review.id && r.id !== review.id,
   );

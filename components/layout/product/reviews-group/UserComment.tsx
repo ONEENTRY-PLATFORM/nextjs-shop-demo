@@ -2,8 +2,9 @@
 import Image from 'next/image';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import { type JSX, useState } from 'react';
+import { type JSX, useContext, useState } from 'react';
 
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import CommentForm from '@/components/forms/CommentForm';
 
 import AnswerButton from './AnswerButton';
@@ -34,18 +35,24 @@ const UserComment = ({
   childReviews?: any[];
   allReviews?: any[];
 }): JSX.Element => {
+  const { open, setOpen, setComponent, setData } =
+    useContext(OpenDrawerContext);
   const [state, setState] = useState(false);
   const formData = review.formData;
 
   const content = formData[2]?.value;
   const attachments = formData[1]?.value || [];
 
-  // Filter and prepare images
+  /** Filter and prepare images */
   const reviewImages = attachments?.filter(
     (img: any) => img && typeof img === 'object' && 'downloadLink' in img,
   );
 
-  // Recursively count all comments (including nested replies)
+  /**
+   * Recursively count all comments (including nested replies)
+   * @param   {number} reviewId - ID of the review to count
+   * @returns {number}          - Total number of comments
+   */
   const countAllComments = (reviewId: number): number => {
     // Find direct children
     const directChildren = allReviews.filter(
@@ -76,6 +83,17 @@ const UserComment = ({
               <div
                 key={index}
                 className="relative aspect-square rounded-2xl overflow-hidden"
+                onClick={() => {
+                  setOpen(!open);
+                  setComponent('ReviewModal');
+                  setData({
+                    dict,
+                    allReviews,
+                    childReviews,
+                    product,
+                    review,
+                  });
+                }}
               >
                 <Image
                   src={image.downloadLink}

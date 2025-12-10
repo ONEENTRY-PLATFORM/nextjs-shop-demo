@@ -8,6 +8,8 @@ import SignUpForm from '@/components/forms/SignUpForm';
 import UserForm from '@/components/forms/UserForm';
 import VerificationForm from '@/components/forms/VerificationForm';
 
+import ReviewModal from '../layout/product/reviews-group/ReviewModal';
+
 /**
  * Form components barrel export
  *
@@ -21,6 +23,7 @@ export {
   ForgotPasswordForm,
   ResetPasswordForm,
   ReviewForm,
+  ReviewModal,
   SignInForm,
   SignUpForm,
   UserForm,
