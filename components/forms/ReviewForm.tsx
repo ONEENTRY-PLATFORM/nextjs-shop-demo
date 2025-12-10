@@ -67,11 +67,6 @@ const ReviewForm = memo(
 
     const onLeaveReview = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      const emptyFormData: {
-        marker: string;
-        type: string;
-        value: string | object;
-      }[] = [];
 
       /** transform and send form data */
       if (formFields) {
@@ -82,7 +77,8 @@ const ReviewForm = memo(
          * Transform form data based on field types
          * Each field is processed according to its type to create the correct data structure
          */
-        const transformedFormData = propertiesArray?.reduce((formData, i) => {
+        const transformedFormData = [];
+        for (const i of propertiesArray) {
           const type = formFields[i].type;
           const marker = formFields[i].marker;
           const value = fieldsData[marker as keyof typeof fieldsData]?.value;
@@ -93,7 +89,7 @@ const ReviewForm = memo(
           } as {
             marker: string;
             type: string;
-            value: string | object;
+            value: string | number | object | File[];
           };
 
           /** Handle special field types with specific data structures */
@@ -125,12 +121,39 @@ const ReviewForm = memo(
               ],
             };
           }
+          /** groupOfImages */
+          if (type === 'groupOfImages') {
+            // Upload each file and collect the file data
+            const uploadedFiles = [];
+            if (Array.isArray(value) && value.length > 0) {
+              for (const file of value) {
+                try {
+                  const uploadResult = await api.FileUploading.upload(file, {
+                    type: 'catalog',
+                    entity: 'editor',
+                    id: productData.id,
+                  });
+                  // uploadResult is an array, so we spread it into uploadedFiles
+                  if (Array.isArray(uploadResult)) {
+                    uploadedFiles.push(...uploadResult);
+                  }
+                } catch {
+                  // File upload failed, skip this file
+                }
+              }
+            }
+
+            newData = {
+              marker: marker,
+              type: 'groupOfImages',
+              value: uploadedFiles.length > 0 ? uploadedFiles : [],
+            };
+          }
 
           if (newData) {
-            formData.push(newData);
+            transformedFormData.push(newData);
           }
-          return formData;
-        }, emptyFormData);
+        }
 
         /** Send transformed form data to OneEntry API */
         try {
