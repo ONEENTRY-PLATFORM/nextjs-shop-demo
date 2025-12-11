@@ -111,7 +111,7 @@ const RatingBlock = ({
           setComponent('ReviewForm');
           setData(product);
         }}
-        className="btn btn-o w-full btn-md mt-5 self-end max-md:self-center"
+        className="btn btn-o btn-o-primary w-full btn-md mt-5 self-end max-md:self-center"
       >
         {leave_review_text}
       </button>

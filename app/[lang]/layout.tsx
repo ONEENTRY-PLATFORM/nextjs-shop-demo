@@ -87,7 +87,7 @@ export default async function RootLayout({
               <Header />
               <NavigationMenu />
               <Breadcrumbs />
-              <main className="flex-grow">
+              <main className="grow">
                 <ClientProviders>{children}</ClientProviders>
               </main>
               <Footer />

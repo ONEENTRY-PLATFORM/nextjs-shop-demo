@@ -8,7 +8,7 @@ import SignUpForm from '@/components/forms/SignUpForm';
 import UserForm from '@/components/forms/UserForm';
 import VerificationForm from '@/components/forms/VerificationForm';
 
-import ReviewModal from '../layout/product/reviews-group/ReviewModal';
+import ReviewModal from '../layout/product/reviews-group/review-modal/ReviewModal';
 
 /**
  * Form components barrel export

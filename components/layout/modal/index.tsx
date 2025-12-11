@@ -29,6 +29,11 @@ const Modal = ({
   /** Access the component name from the OpenDrawerContext to determine which form to display */
   const { component } = useContext(OpenDrawerContext);
 
+  const cn =
+    component === 'ReviewModal'
+      ? 'lg:w-[980px] lg:h-[70vh]'
+      : 'lg:w-[550px] lg:h-auto';
+
   /** Dynamically select the form component based on the component name from context */
   const Form = forms[component as keyof typeof forms] || null;
 
@@ -43,7 +48,10 @@ const Modal = ({
       {/* Modal body container with positioning and styling */}
       <div
         id="modalBody"
-        className="fixed left-1/2 top-1/2 z-20 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-6 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-[550px] lg:p-10"
+        className={
+          'fixed left-1/2 top-1/2 z-20 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-6 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:p-10 ' +
+          cn
+        }
       >
         {/* Close button for the modal */}
         <CloseModal />

@@ -54,12 +54,12 @@ const UserComment = ({
    * @returns {number}          - Total number of comments
    */
   const countAllComments = (reviewId: number): number => {
-    // Find direct children
+    /** Find direct children */
     const directChildren = allReviews.filter(
       (r: any) => r.parentId == reviewId && r.id !== reviewId,
     );
 
-    // Count direct children + their nested children
+    /** Count direct children + their nested children */
     return directChildren.reduce((total: number, child: any) => {
       return total + 1 + countAllComments(child.id);
     }, 0);
@@ -82,7 +82,7 @@ const UserComment = ({
             {reviewImages.map((image: any, index: number) => (
               <div
                 key={index}
-                className="relative aspect-square rounded-2xl overflow-hidden"
+                className="relative aspect-square rounded-2xl overflow-hidden cursor-pointer border border-solid border-gray-300"
                 onClick={() => {
                   setOpen(!open);
                   setComponent('ReviewModal');

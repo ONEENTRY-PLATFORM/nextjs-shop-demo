@@ -29,6 +29,10 @@ const CommentForm = ({
   const [error, setError] = useState<string>('');
   const [response, setResponse] = useState<any>(null);
 
+  // !!! dict
+  const { submit_review_text } = {
+    submit_review_text: 'Submit review',
+  };
   /**
    * Submit comment
    * @param   {FormEvent<HTMLFormElement>} e - Form event
@@ -70,10 +74,14 @@ const CommentForm = ({
     <form
       className="w-full flex gap-4 mt-4 flex-col"
       onSubmit={(e) => {
+        // check if value is empty
         if (!value) {
           return;
         }
+        // submit the comment
         onSubmitComment(e);
+        // reset the value
+        setValue('');
       }}
     >
       <div className="flex w-full gap-4">
@@ -89,7 +97,7 @@ const CommentForm = ({
           type="submit"
           className="rounded-full cursor-pointer group"
           disabled={loading || !value}
-          title="Submit review"
+          title={submit_review_text}
         >
           <ArrowUpIcon />
         </button>
