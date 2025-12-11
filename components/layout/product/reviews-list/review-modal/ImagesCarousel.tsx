@@ -2,7 +2,7 @@
 'use client';
 
 import Image from 'next/image';
-import { type JSX, type Key, useState } from 'react';
+import type { JSX, Key } from 'react';
 import Slider from 'react-slick';
 
 import Placeholder from '@/components/shared/Placeholder';
