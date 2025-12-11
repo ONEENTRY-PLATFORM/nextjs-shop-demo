@@ -9,13 +9,13 @@ import Placeholder from '@/components/shared/Placeholder';
 
 const ImagesCarousel = ({
   reviewImages,
+  nav2,
+  setNav1,
 }: {
   reviewImages: any;
+  nav2: any;
+  setNav1: any;
 }): JSX.Element => {
-  /** State for slider navigation */
-  const [nav1, setNav1] = useState<Slider | null>(null);
-  const [nav2, setNav2] = useState<Slider | null>(null);
-
   /** Prepare images data for carousel */
   const imagesData: { original: string }[] = reviewImages
     .filter(
@@ -41,27 +41,6 @@ const ImagesCarousel = ({
                 src={image.original}
                 alt={`Review image ${i}`}
                 className="mx-auto self-center rounded-3xl"
-              />
-            </div>
-          ))}
-        </Slider>
-        {/* Thumbnail navigation slider */}
-        <Slider
-          asNavFor={nav1 ?? undefined}
-          ref={setNav2}
-          slidesToShow={3}
-          swipeToSlide={true}
-          focusOnSelect={true}
-          arrows={false}
-        >
-          {imagesData.map((image, i: Key) => (
-            <div key={i} className="w-full items-center cursor-pointer">
-              <Image
-                width={150}
-                height={150}
-                src={image.original}
-                alt={`Review thumbnail ${i}`}
-                className="mx-auto self-center rounded-xl"
               />
             </div>
           ))}

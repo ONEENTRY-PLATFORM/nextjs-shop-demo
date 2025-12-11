@@ -3,9 +3,11 @@
 import '@/app/styles/slick.css';
 import '@/app/styles/slick-theme.css';
 
+import Image from 'next/image';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
+import type Slider from 'react-slick';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import CommentForm from '@/components/forms/CommentForm';
@@ -15,6 +17,7 @@ import RatingBlock from '../LikesBlock';
 import ChildReviews from '../review-card/ChildReviews';
 import ImagesCarousel from './ImagesCarousel';
 import ModalHeading from './ModalHeading';
+import ReviewImages from './ReviewImages';
 import TotalComments from './TotalComments';
 
 /**
@@ -25,6 +28,10 @@ import TotalComments from './TotalComments';
  * @returns {JSX.Element}                 ReviewModal component.
  */
 const ReviewModal = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
+  /** State for slider navigation */
+  const [nav1, setNav1] = useState<Slider | null>(null);
+  const [nav2, setNav2] = useState<Slider | null>(null);
+
   // const { authenticate } = useContext(AuthContext);
   const { data: reviewData } = useContext(OpenDrawerContext);
   // Extract data from review
@@ -56,7 +63,11 @@ const ReviewModal = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
       <div className="grid grid-cols-2 max-h-100">
         {/* User images carousel */}
         <div className="flex flex-row max-h-100">
-          <ImagesCarousel reviewImages={reviewImages} />
+          <ImagesCarousel
+            reviewImages={reviewImages}
+            nav2={nav2}
+            setNav1={setNav1}
+          />
         </div>
 
         {/* Review content */}
@@ -72,10 +83,19 @@ const ReviewModal = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
           {/* Review date */}
           <time className="text-sm text-neutral-500">{reviewDate}</time>
 
+          {/* Thumbnail navigation slider - review images */}
+          <div className="flex gap-2 flex-wrap">
+            <ReviewImages
+              reviewImages={reviewImages}
+              nav1={nav1}
+              setNav2={setNav2}
+            />
+          </div>
+
           {/* Review text */}
           <p className="text-neutral-600 leading-relaxed">{content}</p>
 
-          {/* Like/Dislike buttons */}
+          {/* !!! Like/Dislike buttons */}
           <div className="flex self-end">
             <RatingBlock />
           </div>
