@@ -44,7 +44,7 @@ const CarouselItem = ({
       }
     >
       <div className="flex w-full flex-col gap-1 overflow-hidden pb-1 text-center text-sm">
-        <div className="flex h-[80px] w-full justify-center cursor-pointer">
+        <div className="flex h-20 w-full justify-center cursor-pointer">
           <CarouselItemImage lang={lang} item={item} />
         </div>
         <h3 className="w-full text-center text-xs leading-4">

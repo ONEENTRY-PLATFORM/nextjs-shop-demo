@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 import RatingBlock from './rating-block/RatingBlock';
 import RatingButton from './rating-block/RatingButton';
-import ReviewsList from './reviews-group/ReviewsList';
+import ReviewsList from './reviews-list/ReviewsList';
 
 /**
  * Calculate the average rating from parent reviews only (with parentId: null).

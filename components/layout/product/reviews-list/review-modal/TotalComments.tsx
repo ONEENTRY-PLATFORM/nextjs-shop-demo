@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// TotalComments.tsx
 import type { JSX } from 'react';
 
 /**

@@ -6,9 +6,9 @@ import { type JSX, useState } from 'react';
 
 import CommentForm from '@/components/forms/CommentForm';
 
+import RatingBlock from '../LikesBlock';
 import AnswerButton from './AnswerButton';
 import ChildReviews from './ChildReviews';
-import RatingBlock from './RatingBlock';
 
 /**
  * Child review

@@ -48,6 +48,7 @@ const ProductSingle = async ({
   /** Extract necessary data from product entity */
   // const { attributeValues, blocks } = product;
 
+  /** getFormsDataByMarker */
   const reviewsData = await api.FormData.getFormsDataByMarker(
     'comment_to_product', // marker - Form marker
     5, // formModuleConfigId - Form module configuration ID

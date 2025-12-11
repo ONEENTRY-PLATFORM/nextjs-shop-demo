@@ -4,7 +4,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-import ReviewCard from './ReviewCard';
+import ReviewCard from './review-card/ReviewCard';
 import ViewAllButton from './ViewAllButton';
 
 // const reviewsData = [

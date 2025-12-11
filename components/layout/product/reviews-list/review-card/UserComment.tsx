@@ -7,9 +7,9 @@ import { type JSX, useContext, useState } from 'react';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import CommentForm from '@/components/forms/CommentForm';
 
+import RatingBlock from '../LikesBlock';
 import AnswerButton from './AnswerButton';
 import ChildReviews from './ChildReviews';
-import RatingBlock from './RatingBlock';
 
 /**
  * UserComment component.
@@ -40,8 +40,8 @@ const UserComment = ({
   const [state, setState] = useState(false);
   const formData = review.formData;
 
-  const content = formData[2]?.value;
   const attachments = formData[1]?.value || [];
+  const content = formData[2]?.value;
 
   /** Filter and prepare images */
   const reviewImages = attachments?.filter(

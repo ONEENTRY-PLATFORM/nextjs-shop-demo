@@ -11,8 +11,8 @@ import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import CommentForm from '@/components/forms/CommentForm';
 
 import StarRating from '../../rating-block/StarRating';
-import ChildReviews from '../ChildReviews';
-import RatingBlock from '../RatingBlock';
+import RatingBlock from '../LikesBlock';
+import ChildReviews from '../review-card/ChildReviews';
 import ImagesCarousel from './ImagesCarousel';
 import ModalHeading from './ModalHeading';
 import TotalComments from './TotalComments';

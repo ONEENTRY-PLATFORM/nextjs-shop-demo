@@ -3,7 +3,7 @@ import type { JSX } from 'react';
 import LikeIcon from '@/components/icons/like';
 
 // RatingBlock.tsx
-const RatingBlock = (): JSX.Element => {
+const LikesBlock = (): JSX.Element => {
   return (
     <div className="flex gap-2.5 text-sm leading-5 text-slate-300">
       {/** Like counter with icon */}
@@ -20,4 +20,4 @@ const RatingBlock = (): JSX.Element => {
   );
 };
 
-export default RatingBlock;
+export default LikesBlock;
