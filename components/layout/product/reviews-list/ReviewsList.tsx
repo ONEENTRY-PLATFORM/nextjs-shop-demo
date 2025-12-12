@@ -1,50 +1,14 @@
 /* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+'use client';
+
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
+import { useState } from 'react';
 
 import ReviewCard from './review-card/ReviewCard';
 import ViewAllButton from './ViewAllButton';
-
-// const reviewsData = [
-//   {
-//     name: 'Ahmet K.',
-//     avatarSrc: '',
-//     content:
-//       'Lorem ipsum dolor sit amet consectetur. Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-//     likeCount: 17,
-//     commentCount: 0,
-//     rating: 5,
-//   },
-//   {
-//     name: 'Sit consequat',
-//     avatarSrc: '',
-//     content:
-//       'Sit consequat laoreet arcu odio volutpat. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-//     likeCount: 7,
-//     commentCount: 4,
-//     rating: 3,
-//   },
-//   {
-//     name: 'Diam eget',
-//     avatarSrc: '',
-//     content:
-//       'Lorem ipsum dolor sit amet consectetur. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-//     likeCount: 17,
-//     commentCount: 0,
-//     rating: 2,
-//   },
-//   {
-//     name: 'Lorem ipsum',
-//     avatarSrc: '',
-//     content:
-//       'Lorem ipsum dolor. Diam eget vitae vulputate integer volutpat nec. Iaculis neque tristique sed id ultrices sed. Pharetra duis eget adipiscing rhoncus diam sagittis turpis ac. Sit consequat quis enim ac platea gravida.',
-//     likeCount: 32,
-//     commentCount: 2,
-//     rating: 4,
-//   },
-// ];
 
 /**
  * ReviewsList component.
@@ -68,6 +32,8 @@ const ReviewsList = ({
   product: IProductsEntity;
   reviewsData: any;
 }): JSX.Element => {
+  const [showAll, setShowAll] = useState(false);
+  const INITIAL_REVIEWS_COUNT = 1;
   /** Check if there are any reviews available and return a message if none are found */
   if (!reviewsData || reviewsData.length < 1) {
     return (
@@ -96,6 +62,14 @@ const ReviewsList = ({
     {},
   );
 
+  /** Determine which reviews to display based on showAll state */
+  const displayedReviews = showAll
+    ? parentReviews
+    : parentReviews?.slice(0, INITIAL_REVIEWS_COUNT);
+
+  /** Check if there are more reviews to show */
+  const hasMoreReviews = parentReviews?.length > INITIAL_REVIEWS_COUNT;
+
   return (
     <>
       {/** Reviews container with dynamic spacing based on state */}
@@ -105,8 +79,8 @@ const ReviewsList = ({
           (state ? 'gap-5' : '')
         }
       >
-        {/** Map through parent reviews and render a ReviewCard for each one */}
-        {parentReviews?.map((review: any, index: number) => (
+        {/** Map through displayed reviews and render a ReviewCard for each one */}
+        {displayedReviews?.map((review: any, index: number) => (
           <ReviewCard
             key={review.id || index}
             review={review}
@@ -120,7 +94,9 @@ const ReviewsList = ({
         ))}
       </section>
       {/** View all reviews button with animation support */}
-      {reviewsData.length > 0 && <ViewAllButton state={state} />}
+      {hasMoreReviews && !showAll && (
+        <ViewAllButton state={state} onClick={() => setShowAll(true)} />
+      )}
     </>
   );
 };

@@ -30,6 +30,7 @@ const TotalComments = ({
     }, 0);
   };
 
+  /** totalComments */
   const totalComments = countAllComments(review?.id);
 
   return (
