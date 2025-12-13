@@ -79,7 +79,6 @@ const ReviewsSection = ({
   const parentReviewsCount =
     reviewsData?.items?.filter((review: any) => review.parentId === null)
       .length || 0;
-  console.log(reviewsData?.items);
 
   return (
     <div className="flex justify-between overflow-hidden max-md:flex-wrap">

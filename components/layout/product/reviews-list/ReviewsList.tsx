@@ -33,12 +33,18 @@ const ReviewsList = ({
   reviewsData: any;
 }): JSX.Element => {
   const [showAll, setShowAll] = useState(false);
-  const INITIAL_REVIEWS_COUNT = 1;
+  // !!! TODO: add translations
+  const { no_reviews_text } = dict;
+
+  const INITIAL_REVIEWS_COUNT = 2;
+
   /** Check if there are any reviews available and return a message if none are found */
   if (!reviewsData || reviewsData.length < 1) {
     return (
       <div className="flex text-center w-full h-50 justify-center items-center">
-        <h2 className="text-2xl">There no reviews yet</h2>
+        <h2 className="text-2xl">
+          {no_reviews_text?.value || 'There no reviews yet'}
+        </h2>
       </div>
     );
   }
