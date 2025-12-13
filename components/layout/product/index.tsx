@@ -59,7 +59,7 @@ const ProductSingle = async ({
       dateFrom: '',
       dateTo: '',
     }, // body - Request body.
-    1, // isNested - Flag for getting hierarchical data.
+    0, // isNested - Flag for getting hierarchical data.
     'en_US', // langCode - Language code.
     0, // offset — Parameter for pagination. Default: 0.
     500, // limit — Parameter for pagination. Default: 30.

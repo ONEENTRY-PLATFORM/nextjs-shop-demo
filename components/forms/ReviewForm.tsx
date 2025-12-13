@@ -175,7 +175,7 @@ const ReviewForm = memo(
     return (
       <FormAnimations isLoading={isLoading || !formFields}>
         <form
-          className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+          className="mx-auto flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
           onSubmit={(e) => onLeaveReview(e)}
         >
           {/* Product info */}
@@ -190,7 +190,7 @@ const ReviewForm = memo(
                 alt={title}
                 width={80}
                 height={90}
-                className="min-h-[90px] min-w-20 object-cover"
+                className="min-h-22.5 min-w-20 object-cover"
               />
               {/* Product title */}
               <h2>{title}</h2>
