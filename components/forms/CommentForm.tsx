@@ -1,27 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FormEvent, JSX } from 'react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { api } from '@/app/api';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 
 import ArrowUpIcon from '../icons/arrow-up';
+import AuthError from '../pages/AuthError';
 import ErrorMessage from './inputs/ErrorMessage';
 
 /**
  * Comment form
  * @param   {object}          props         - Props
+ * @param   {object}          props.dict    - Dictionary
  * @param   {object}          props.review  - Review
  * @param   {IProductsEntity} props.product - Product
  * @returns {JSX.Element}                   Comment form
  */
 const CommentForm = ({
+  dict,
   review,
   product,
 }: {
+  dict: any;
   review: any;
   product: IProductsEntity;
 }): JSX.Element => {
+  /** Authentication context providing user authentication status and methods */
+  const { isAuth } = useContext(AuthContext);
   // const { authenticate } = useContext(AuthContext);
   const [value, setValue] = useState('');
 
@@ -33,6 +40,12 @@ const CommentForm = ({
   const { submit_review_text } = {
     submit_review_text: 'Submit review',
   };
+
+  /** Show authentication error if user is not logged in */
+  if (!isAuth) {
+    return <AuthError dict={dict} />;
+  }
+
   /**
    * Submit comment
    * @param   {FormEvent<HTMLFormElement>} e - Form event

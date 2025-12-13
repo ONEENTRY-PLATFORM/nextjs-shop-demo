@@ -10,8 +10,10 @@ import { type JSX, memo, useContext, useState } from 'react';
 // import { toast } from 'react-toastify';
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
+import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
+import AuthError from '../pages/AuthError';
 // import { AuthContext } from '@/app/store/providers/AuthContext';
 // import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FormAnimations from './animations/FormAnimations';
@@ -21,21 +23,14 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 const ReviewForm = memo(
-  ({
-    lang,
-    // dict,
-  }: {
-    lang: string;
-    dict: IAttributeValues;
-  }): JSX.Element => {
-    // const { authenticate } = useContext(AuthContext);
+  ({ lang, dict }: { lang: string; dict: IAttributeValues }): JSX.Element => {
+    /** Authentication context providing user authentication status and methods */
+    const { isAuth } = useContext(AuthContext);
     const { setOpen, data: productData } = useContext(OpenDrawerContext);
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const [response, setResponse] = useState<any>(null);
-
-    // const { sign_in_text } = dict;
 
     /** Get form by marker with RTK */
     const { data, isLoading } = useGetFormByMarkerQuery({
@@ -51,6 +46,10 @@ const ReviewForm = memo(
       (state) => state.formFieldsReducer.fields,
     );
 
+    /** Show authentication error if user is not logged in */
+    if (!isAuth) {
+      return <AuthError dict={dict} />;
+    }
     /**
      * Sort form fields by position attribute
      * This ensures fields are displayed in the correct order
@@ -65,6 +64,11 @@ const ReviewForm = memo(
      */
     const moduleFormConfig = data?.moduleFormConfigs?.[0];
 
+    /**
+     * Handle form submission
+     * This function sends the form data to the OneEntry API for processing
+     * @param {FormEvent<HTMLFormElement>} e - Form event
+     */
     const onLeaveReview = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
 

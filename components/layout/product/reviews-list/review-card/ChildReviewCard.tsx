@@ -120,7 +120,9 @@ const ChildReviewCard = ({
           </div>
 
           {/* Comment form */}
-          {state && <CommentForm review={review} product={product} />}
+          {state && (
+            <CommentForm review={review} product={product} dict={dict} />
+          )}
         </div>
       </div>
 
