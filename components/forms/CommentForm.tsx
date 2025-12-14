@@ -1,4 +1,6 @@
-import type { IError } from 'oneentry/dist/base/utils';
+import type { IAttributeValues, IError } from 'oneentry/dist/base/utils';
+import type { IPostFormResponse } from 'oneentry/dist/forms-data/formsDataInterfaces';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { FormEvent, JSX } from 'react';
 import { memo, useCallback, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -9,10 +11,31 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import ArrowUpIcon from '../icons/arrow-up';
 import AuthError from '../pages/AuthError';
 import ErrorMessage from './inputs/ErrorMessage';
-import type {
-  CommentFormProps,
-  IPostFormResponse,
-} from './types/commentForm.types';
+
+/**
+ * Review data interface
+ * Represents a product review that can be replied to
+ * @property {number | string} id - Unique identifier of the review
+ */
+export interface ReviewData {
+  id: number | string;
+  [key: string]: unknown;
+}
+
+/**
+ * CommentForm component props
+ * @property {IAttributeValues} dict    - Dictionary object containing localized strings for UI text
+ * @property {ReviewData}       review  - Review data object being replied to, contains the review ID
+ * @property {IProductsEntity}  product - Product entity containing product details and form configuration
+ */
+export interface CommentFormProps {
+  /** Dictionary for localized text strings */
+  dict: IAttributeValues;
+  /** Review being replied to */
+  review: ReviewData;
+  /** Product entity with form configuration */
+  product: IProductsEntity;
+}
 
 const DEFAULT_MODULE_CONFIG_ID = 5;
 const DEFAULT_FORM_IDENTIFIER = 'comment_to_product';

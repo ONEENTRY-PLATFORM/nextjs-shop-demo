@@ -1,7 +1,12 @@
-import type {
-  FormDataType,
-  TransformFieldParams,
-} from '../types/reviewForm.types';
+import type { FormDataType } from 'oneentry/dist/forms-data/formsDataInterfaces';
+
+// Parameters for transforming a single field
+export interface TransformFieldParams {
+  marker: string;
+  type: string;
+  value: unknown;
+  productId: number;
+}
 
 /**
  * Field transformer function type

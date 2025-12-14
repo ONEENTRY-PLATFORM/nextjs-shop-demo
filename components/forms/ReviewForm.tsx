@@ -1,17 +1,17 @@
-/* eslint-disable jsdoc/no-undefined-types */
 'use client';
 
 import Image from 'next/image';
-import type { IAttributes, IError } from 'oneentry/dist/base/utils';
-import type { FormEvent } from 'react';
-import {
-  type JSX,
-  memo,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react';
+import type {
+  IAttributes,
+  IAttributeValues,
+  IError,
+} from 'oneentry/dist/base/utils';
+import type {
+  FormDataType,
+  IPostFormResponse,
+} from 'oneentry/dist/forms-data/formsDataInterfaces';
+import type { FormEvent, JSX } from 'react';
+import { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
@@ -25,12 +25,27 @@ import FormFieldAnimations from './animations/FormFieldAnimations';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
-import type { FormDataType, IPostFormResponse } from './types/reviewForm.types';
-import type { ReviewFormProps } from './types/reviewFormProps.types';
 import {
   transformFormField,
   validateFormData,
 } from './utils/transformFormData';
+
+// Field value from Redux store
+export interface FieldValue {
+  value?: unknown;
+}
+
+/**
+ * ReviewForm component props
+ * @property {string}           lang - Language code for localization (e.g., 'en_US', 'ru_RU')
+ * @property {IAttributeValues} dict - Dictionary object containing localized strings for UI text
+ */
+export interface ReviewFormProps {
+  /** Language code for form localization */
+  lang: string;
+  /** Dictionary with localized text strings */
+  dict: IAttributeValues;
+}
 
 const DEFAULT_MODULE_CONFIG_ID = 5;
 const FORM_MARKER = 'comment_to_product';
