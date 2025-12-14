@@ -157,7 +157,7 @@ const OrdersPage = ({
   /** Render the orders page with fade transition */
   return (
     <FadeTransition
-      className="flex max-w-[730px] flex-col pb-5 max-md:max-w-full"
+      className="flex max-w-182.5 flex-col pb-5 max-md:max-w-full"
       index={0}
     >
       <div className="orders-page">

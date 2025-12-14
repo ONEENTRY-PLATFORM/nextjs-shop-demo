@@ -178,7 +178,7 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   }
 
   return (
-    <div className={'flex max-w-[730px] flex-col gap-5 pb-5 max-md:max-w-full'}>
+    <div className={'flex max-w-182.5 flex-col gap-5 pb-5 max-md:max-w-full'}>
       {whitelistMethods.map((item, index) => {
         return (
           <PaymentMethod

@@ -13,7 +13,7 @@ const Footer = (): JSX.Element => {
      * Main footer element with fade-in animation and responsive bottom margin
      * Contains all footer content within a semantic footer tag
      */
-    <footer className="fade-in w-full max-xs:mb-[60px]">
+    <footer className="fade-in w-full max-xs:mb-15">
       {/** Footer menu section containing all navigation menus and contact information. This component renders the main footer content including menus, logo, and contact info*/}
       <FooterMenuSection />
     </footer>

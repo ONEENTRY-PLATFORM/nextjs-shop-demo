@@ -86,7 +86,7 @@ const RatingBlock = ({
 
   return (
     <ReviewAnimations
-      className="flex max-w-[420px] flex-col px-5 max-md:max-w-full"
+      className="flex max-w-105 flex-col px-5 max-md:max-w-full"
       index={4}
       state={state}
     >

@@ -30,7 +30,7 @@ const StarRating = ({
       {[...Array(5)].map((_, index) => (
         <svg
           key={index}
-          className="my-auto aspect-square w-[25px] shrink-0 self-start cursor-pointer"
+          className="my-auto aspect-square w-6.25 shrink-0 self-start cursor-pointer"
           width="34"
           height="34"
           viewBox="0 0 34 34"

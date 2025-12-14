@@ -50,7 +50,7 @@ const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
         {/** Animated image container */}
         <SlideUpTransition
           index={3}
-          className="relative w-1/5 max-lg:w-1/4 max-md:mx-auto max-md:w-full max-md:max-w-[200px]"
+          className="relative w-1/5 max-lg:w-1/4 max-md:mx-auto max-md:w-full max-md:max-w-50"
         >
           <Image
             width={200}

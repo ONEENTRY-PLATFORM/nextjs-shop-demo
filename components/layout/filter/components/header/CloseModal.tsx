@@ -18,7 +18,7 @@ const CloseModal = (): JSX.Element => {
   return (
     /** Button wrapper with hover effects and responsive sizing */
     <button
-      className="z-10 cursor-pointer size-12 items-center justify-center rounded-full border border-solid border-slate-200 bg-white text-lg text-slate-800 transition-colors hover:border-orange-500 hover:text-orange-500 md:size-[40px] lg:size-[50px] lg:p-2.5"
+      className="z-10 cursor-pointer size-12 items-center justify-center rounded-full border border-solid border-slate-200 bg-white text-lg text-slate-800 transition-colors hover:border-orange-500 hover:text-orange-500 md:size-10 lg:size-12.5 lg:p-2.5"
       onClick={() => {
         /** Trigger the close transition for the modal */
         setTransition('close');

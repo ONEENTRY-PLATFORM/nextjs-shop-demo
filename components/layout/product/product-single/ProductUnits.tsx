@@ -24,7 +24,7 @@ const ProductUnits = ({ units }: { units: number }): JSX.Element => {
       <div className="z-10 mt-1.5 flex w-full flex-row justify-start rounded-xl bg-zinc-300">
         {/** Progress bar showing the units level */}
         <div
-          className={'mr-auto h-[3px] shrink-0 rounded-xl bg-orange-500'}
+          className={'mr-auto h-0.75 shrink-0 rounded-xl bg-orange-500'}
           style={{
             width: width + '%',
           }}

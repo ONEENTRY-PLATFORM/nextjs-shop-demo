@@ -32,7 +32,7 @@ const FormSubmitButton = ({
       <button
         // disabled={isLoading}
         type="submit"
-        className="slide-up btn btn-lg btn-primary mx-auto mt-auto w-full max-w-[280px] uppercase max-md:mt-0"
+        className="slide-up btn btn-lg btn-primary mx-auto mt-auto w-full max-w-70 uppercase max-md:mt-0"
       >
         {isLoading ? <Spinner /> : title}
       </button>

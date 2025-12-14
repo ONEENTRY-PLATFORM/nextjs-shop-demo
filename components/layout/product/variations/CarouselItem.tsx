@@ -35,7 +35,7 @@ const CarouselItem = ({
     <button
       onClick={() => setCurrentIndex(index)}
       className={
-        'relative border border-solid rounded-lg box-border flex w-[100px] min-h-[130px] shrink-0 flex-col duration-500 ease-in-out ' +
+        'relative border border-solid rounded-lg box-border flex w-25 min-h-32.5 shrink-0 flex-col duration-500 ease-in-out ' +
         clsx(
           index === currentIndex
             ? 'border-slate-50 text-slate-700'

@@ -38,7 +38,7 @@ const FilterModal = ({
     <FilterModalAnimations>
       <div
         id="modalBody"
-        className="fixed right-0 top-0 z-20 flex size-full max-h-[90vh] min-h-[90vh] flex-col overflow-auto bg-white shadow-xl md:top-[5vh] md:overflow-hidden md:rounded-l-3xl lg:h-auto lg:w-[380px]"
+        className="fixed right-0 top-0 z-20 flex size-full max-h-[90vh] min-h-[90vh] flex-col overflow-auto bg-white shadow-xl md:top-[5vh] md:overflow-hidden md:rounded-l-3xl lg:h-auto lg:w-95"
       >
         {/** Display the filter header with title and close button */}
         <FilterHeader dict={dict} />

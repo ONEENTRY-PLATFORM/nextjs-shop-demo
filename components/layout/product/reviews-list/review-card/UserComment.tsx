@@ -122,7 +122,7 @@ const UserComment = ({
       </div>
 
       {/* Comment form */}
-      {state && <CommentForm review={review} product={product} />}
+      {state && <CommentForm review={review} product={product} dict={dict} />}
 
       {/* Display child reviews */}
       <ChildReviews

@@ -96,7 +96,7 @@ const BlocksGridLoader = ({
               >
                 {/** Placeholder for block icon or logo */}
                 <div className="absolute left-3 top-3 z-10">
-                  <div className="size-[30px]" />
+                  <div className="size-7.5" />
                 </div>
 
                 {/** Placeholder for block title or heading */}

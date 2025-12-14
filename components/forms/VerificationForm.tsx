@@ -185,7 +185,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
     <FormAnimations isLoading={isLoading}>
       {/** OTP verification form */}
       <form
-        className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+        className="mx-auto flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
         onSubmit={(e) => onSubmitHandle(e)}
       >
         {/** Form header with title and description */}

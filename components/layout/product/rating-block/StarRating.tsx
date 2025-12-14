@@ -13,7 +13,7 @@ const StarRating = ({ rating }: { rating: number }): JSX.Element => {
       {[...Array(5)].map((_, index) => (
         <svg
           key={index}
-          className="my-auto aspect-square w-[15px] shrink-0 self-start"
+          className="my-auto aspect-square w-3.75 shrink-0 self-start"
           width="16"
           height="16"
           viewBox="0 0 16 16"

@@ -65,7 +65,7 @@ const OEMenuSection = (): JSX.Element => {
           <Link
             target="_blank"
             href="https://www.trustpilot.com/review/oneentry.cloud"
-            className="flex w-[160px] flex-col gap-2 rounded-lg bg-white p-3 max-sm:mx-auto max-sm:mb-4"
+            className="flex w-40 flex-col gap-2 rounded-lg bg-white p-3 max-sm:mx-auto max-sm:mb-4"
           >
             <Image
               alt="trustpilot-logo"

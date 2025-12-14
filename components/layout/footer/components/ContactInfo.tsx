@@ -63,7 +63,7 @@ const ContactInfo = async (): Promise<JSX.Element> => {
 
   return (
     /** Navigation container for contact information. Uses flex layout for responsive design across different screen sizes */
-    <nav className="flex flex-col font-bold text-white max-lg:max-w-[160px] max-md:max-w-[50%] max-sm:mb-5 max-sm:max-w-full">
+    <nav className="flex flex-col font-bold text-white max-lg:max-w-40 max-md:max-w-[50%] max-sm:mb-5 max-sm:max-w-full">
       {/** Contact information title from CMS */}
       <h2 className="mb-5 text-xl">{info_title?.value}</h2>
       {/** Container for all contact details. Uses responsive flex layout that changes on smaller screens*/}

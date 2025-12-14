@@ -15,7 +15,7 @@ import type { LoaderProps } from '@/app/types/global';
  */
 const SidebarMenuLoader = ({ limit = 5 }: LoaderProps): JSX.Element => {
   return (
-    <ul className="flex w-full flex-row gap-2 overflow-hidden py-3 text-base md:max-w-[165px] md:flex-col md:gap-5 md:py-0">
+    <ul className="flex w-full flex-row gap-2 overflow-hidden py-3 text-base md:max-w-41.25 md:flex-col md:gap-5 md:py-0">
       {Array.from(Array(limit).keys()).map((item) => (
         <li key={item} className={`group flex h-5 justify-start gap-3 pr-5`}>
           {/** Animated loader for the icon placeholder */}

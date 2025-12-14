@@ -52,7 +52,7 @@ const NavigationMenuItem = ({
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className={
-            'size-[18px] ' +
+            'size-4.5 ' +
             clsx(
               isActive
                 ? 'fill-red-500  transition-colors duration-300'

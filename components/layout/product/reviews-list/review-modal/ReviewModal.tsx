@@ -105,7 +105,7 @@ const ReviewModal = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
 
             {/* Comment input */}
             <div className="mb-6 flex gap-2">
-              <CommentForm review={review} product={product} />
+              <CommentForm review={review} product={product} dict={dict} />
             </div>
 
             {/* Display child reviews */}

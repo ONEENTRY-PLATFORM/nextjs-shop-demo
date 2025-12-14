@@ -45,7 +45,7 @@ const VariationsCarousel = ({
   return (
     <div
       className={
-        'flex h-[130px] w-full items-center justify-center self-stretch ' +
+        'flex h-32.5 w-full items-center justify-center self-stretch ' +
         containerClass
       }
     >

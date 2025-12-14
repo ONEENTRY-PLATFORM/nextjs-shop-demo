@@ -54,7 +54,7 @@ const ReviewCard = ({
       state={state}
     >
       {/** Display the user comment with all review details inside an animated wrapper */}
-      <div className="flex flex-col w-full rounded-3xl border border-solid border-slate-300 bg-white px-10 py-[30px] max-md:px-5">
+      <div className="flex flex-col w-full rounded-3xl border border-solid border-slate-300 bg-white px-10 py-7.5 max-md:px-5">
         {/** Review header with user name, date and star rating */}
         <header className="mb-4 flex justify-between gap-5 text-lg font-bold leading-8 text-neutral-600 max-md:max-w-full max-md:flex-wrap">
           {/* User name */}

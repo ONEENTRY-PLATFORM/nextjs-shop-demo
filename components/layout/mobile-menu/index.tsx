@@ -65,10 +65,10 @@ const OffscreenModal = ({
   return (
     <MobileMenuAnimations
       id="modalBody"
-      className="fixed left-1/2 top-1/2 z-50 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-6 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-[550px] lg:p-10"
+      className="fixed left-1/2 top-1/2 z-50 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-6 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:h-auto lg:w-137.5 lg:p-10"
     >
       {/* Main container for the mobile menu modal */}
-      <div className="fixed inset-0 z-50 flex size-full max-w-[420px] flex-col bg-white pb-6">
+      <div className="fixed inset-0 z-50 flex size-full max-w-105 flex-col bg-white pb-6">
         <div className="p-6">
           {/* Close button for the mobile menu modal */}
           <CloseModal />

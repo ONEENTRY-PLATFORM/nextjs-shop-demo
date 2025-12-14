@@ -193,7 +193,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
       {/** Registration form with onSubmit handler */}
       <form
         onSubmit={(e) => onSignUp(e)}
-        className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+        className="mx-auto flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
       >
         {/** Form header with title and sign-in link */}
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
