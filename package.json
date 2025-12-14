@@ -54,8 +54,8 @@
     "@types/react-google-recaptcha-enterprise": "^1.0.3",
     "@types/react-redux": "^7.1.34",
     "@types/react-slick": "^0.23.13",
-    "@typescript-eslint/eslint-plugin": "^8.49.0",
-    "@typescript-eslint/parser": "^8.49.0",
+    "@typescript-eslint/eslint-plugin": "^8.48.1",
+    "@typescript-eslint/parser": "^8.48.1",
     "autoprefixer": "^10.4.22",
     "clsx": "^2.1.1",
     "critters": "^0.0.25",
@@ -86,6 +86,7 @@
     "stylelint-order": "^7.0.0",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.1",
     "use-debounce": "^10.0.6"
   },
   "engines": {
