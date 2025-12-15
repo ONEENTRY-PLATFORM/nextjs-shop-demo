@@ -26,9 +26,9 @@ import ProductSingle from './index';
  * @returns {Promise<JSX.Element>}                                       A Promise that resolves to a JSX element containing the ProductSingle component
  */
 const ProductSingleServer = async ({
-  product,
   lang,
   dict,
+  product,
 }: {
   product: IProductsEntity & {
     blocks?: Array<string>;
@@ -125,8 +125,9 @@ const ProductSingleServer = async ({
 
   return (
     <ProductSingle
-      product={product}
+      lang={lang}
       dict={dict}
+      product={product}
       relatedProducts={products as IProductsEntity[]}
       relatedProductsTotal={total}
       blocksData={blocksData}

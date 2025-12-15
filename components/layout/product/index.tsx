@@ -4,17 +4,17 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 
 import { api } from '@/app/api';
+import { getProductTitle } from '@/app/api/hooks/useProductsData';
+import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
 
-// import { getProductTitle } from '@/app/api/hooks/useProductsData';
-// import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
 import ProductAnimations from './animations/ProductAnimations';
-// import ProductDescription from './product-single/ProductDescription';
-// import ProductDetails from './product-single/ProductDetails';
-// import ProductImageGallery from './product-single/ProductImageGallery';
-// import ProductsGroup from './ProductsGroup';
-// import RelatedItems from './RelatedItems';
+import ProductDescription from './product-single/ProductDescription';
+import ProductDetails from './product-single/ProductDetails';
+import ProductImageGallery from './product-single/ProductImageGallery';
+import ProductsGroup from './ProductsGroup';
+import RelatedItems from './RelatedItems';
 import ReviewsSection from './ReviewsSection';
-// import VariationsCarousel from './variations/VariationsCarousel';
+import VariationsCarousel from './variations/VariationsCarousel';
 
 /**
  * ProductSingle component displays a complete product page with images, variations,
@@ -22,6 +22,7 @@ import ReviewsSection from './ReviewsSection';
  * It organizes the product information in a three-column layout on larger screens
  * and stacks the sections on smaller screens.
  * @param   {object}                                       props                      - Component properties
+ * @param   {string}                                       props.lang                 - Language code for product
  * @param   {IAttributeValues}                             props.dict                 - Dictionary of attribute values from server API
  * @param   {IProductsEntity & { blocks?: Array<string> }} props.product              - Product entity object containing all product information
  * @param   {IProductsEntity[]}                            props.relatedProducts      - Array of related products to display
@@ -30,23 +31,25 @@ import ReviewsSection from './ReviewsSection';
  * @returns {JSX.Element}                                                             A complete product page with all relevant information and sections
  */
 const ProductSingle = async ({
+  lang,
   dict,
   product,
-  // relatedProducts,
-  // relatedProductsTotal,
-  // blocksData,
+  relatedProducts,
+  relatedProductsTotal,
+  blocksData,
 }: {
+  lang: string;
+  dict: IAttributeValues;
   product: IProductsEntity & {
     blocks?: Array<string>;
   };
-  dict: IAttributeValues;
   relatedProducts: IProductsEntity[];
   relatedProductsTotal: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   blocksData?: Record<string, any>;
 }): Promise<JSX.Element> => {
   /** Extract necessary data from product entity */
-  // const { attributeValues, blocks } = product;
+  const { attributeValues, blocks } = product;
 
   /** getFormsDataByMarker */
   const reviewsData = await api.FormData.getFormsDataByMarker(
@@ -66,33 +69,33 @@ const ProductSingle = async ({
   );
 
   /** Get the formatted product title using helper function */
-  // const productTitle = getProductTitle(product);
+  const productTitle = getProductTitle(product);
 
   /** Convert language shortcode to language code using enum */
-  // const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  // const currencyCode = CurrencyEnum[lang as keyof typeof CurrencyEnum];
+  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const currencyCode = CurrencyEnum[lang as keyof typeof CurrencyEnum];
 
   /** Create a mock block object with similar products data for the RelatedItems component */
-  // const relatedItemsBlock = {
-  //   attributeValues: {},
-  //   similarProducts: {
-  //     items: relatedProducts,
-  //   },
-  // };
+  const relatedItemsBlock = {
+    attributeValues: {},
+    similarProducts: {
+      items: relatedProducts,
+    },
+  };
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:gap-4 max-sm:flex-wrap">
         {/** ProductImage - col-1 */}
-        {/* <ProductAnimations
-          className="relative mb-10 flex min-h-[280px] w-[30%] grow flex-col max-md:mb-4 max-md:w-4/12 max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full"
+        <ProductAnimations
+          className="relative mb-10 flex min-h-70 w-[30%] grow flex-col max-md:mb-4 max-md:w-4/12 max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full"
           index={0}
         >
           <ProductImageGallery product={product} alt={productTitle} />
-        </ProductAnimations> */}
+        </ProductAnimations>
 
         {/** VariationsCarousel + ProductDescription - col-2 */}
-        {/* <ProductAnimations
+        <ProductAnimations
           className="flex w-4/12 grow flex-col max-md:w-4/12 max-sm:w-full"
           index={1}
         >
@@ -104,15 +107,15 @@ const ProductSingle = async ({
             />
           </div>
           <ProductDescription description={attributeValues?.description} />
-        </ProductAnimations> */}
+        </ProductAnimations>
 
         {/** ProductDetails - col-3 */}
-        {/* <ProductAnimations
+        <ProductAnimations
           className="flex w-3/12 flex-col pt-1.5 max-md:mb-10 max-md:w-4/12 max-sm:w-full"
           index={2}
         >
           <ProductDetails product={product} lang={lang} dict={dict} />
-        </ProductAnimations> */}
+        </ProductAnimations>
       </div>
 
       {/** Reviews */}
@@ -125,7 +128,7 @@ const ProductSingle = async ({
       </ProductAnimations>
 
       {/** blocks */}
-      {/* {Array.isArray(blocks) &&
+      {Array.isArray(blocks) &&
         blocks.map((block: string) => {
           if (
             block === 'multiply_items_offer' &&
@@ -142,17 +145,17 @@ const ProductSingle = async ({
             );
           }
           return null;
-        })} */}
+        })}
 
       {/** Related products */}
-      {/* <ProductAnimations className={'mb-10'} index={4}>
+      <ProductAnimations className={'mb-10'} index={4}>
         <RelatedItems
           block={relatedItemsBlock}
           lang={lang}
           dict={dict}
           langCode={langCode}
         />
-      </ProductAnimations> */}
+      </ProductAnimations>
     </section>
   );
 };
