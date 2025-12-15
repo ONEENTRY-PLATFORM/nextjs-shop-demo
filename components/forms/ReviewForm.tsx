@@ -91,6 +91,8 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
     null,
   );
 
+  const { form_error_text } = dict;
+
   /** Get form by marker with RTK */
   const { data, isLoading } = useGetFormByMarkerQuery({
     marker: FORM_MARKER,
@@ -196,7 +198,7 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
   }
 
   if (!productData || !data) {
-    return <>Error. Some data not found.</>;
+    return form_error_text?.value || 'Error. Some data not found.';
   }
 
   const title =

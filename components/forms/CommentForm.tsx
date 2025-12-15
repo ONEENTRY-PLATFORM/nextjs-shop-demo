@@ -80,7 +80,7 @@ const CommentForm = memo(
       null,
     );
 
-    const submitReviewText = dict.submit_review_text;
+    const { form_error_text, submit_review_text, comment_placeholder } = dict;
 
     /**
      * Submit comment
@@ -144,13 +144,15 @@ const CommentForm = memo(
       return <AuthError dict={dict} />;
     }
 
-    const buttonTitle =
-      typeof submitReviewText === 'string'
-        ? submitReviewText
-        : submitReviewText?.value || 'Submit comment';
+    /** Show error if product or review data is missing */
+    if (!product || !review) {
+      return form_error_text?.value || 'Error. Some data not found.';
+    }
 
+    /** Extract localized strings for button title and placeholder text */
+    const buttonTitle = submit_review_text?.value || 'Submit comment';
     const placeholderText =
-      dict.comment_placeholder?.value || 'Your comment to the review';
+      comment_placeholder?.value || 'Your comment to the review';
 
     return (
       <form
