@@ -8,8 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "tsc": "npx tsc --noEmit --watch false",
-    "lint-fix": "eslint --fix .",
-    "install": "npm i"
+    "lint-fix": "eslint --fix ."
   },
   "dependencies": {
     "gsap": "^3.14.1",
