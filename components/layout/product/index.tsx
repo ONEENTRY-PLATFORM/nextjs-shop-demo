@@ -58,7 +58,7 @@ const ProductSingle = async ({
     {
       entityIdentifier: product.id,
       userIdentifier: '',
-      status: 'approved',
+      status: ['approved'],
       dateFrom: '',
       dateTo: '',
     }, // body - Request body.
@@ -85,6 +85,7 @@ const ProductSingle = async ({
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+      {/** Product */}
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:gap-4 max-sm:flex-wrap">
         {/** ProductImage - col-1 */}
         <ProductAnimations
