@@ -7,35 +7,43 @@ import { useAppDispatch } from '@/app/store/hooks';
 import { addField } from '@/app/store/reducers/FormFieldsSlice';
 import { FormFieldsEnum } from '@/app/types/enum';
 import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimations';
+import CameraIcon from '@/components/icons/camera';
 import EyeIcon from '@/components/icons/eye';
 import EyeOpenIcon from '@/components/icons/eye-o';
+
+import StarRating from './StarRating';
 
 /**
  * FormInput component for rendering various types of form fields.
  * Handles text inputs, textareas, select dropdowns, and password fields with show/hide functionality.
- * @param   {object}              field               - Field properties.
- * @param   {string}              field.value         - Field value.
- * @param   {string}              field.marker        - Field marker.
- * @param   {string}              field.type          - Field type.
- * @param   {Record<string, any>} field.validators    - Field validators.
- * @param   {number}              field.index         - Field index.
- * @param   {Record<string, any>} field.listTitles    - List titles.
- * @param   {Record<string, any>} field.localizeInfos - Localize info.
- * @returns {JSX.Element}                             Form input.
+ * @param   {object}              field                 - Field properties.
+ * @param   {string}              field.marker          - Field marker.
+ * @param   {string}              field.type            - Field type.
+ * @param   {string | number}     field.value           - Field value.
+ * @param   {Record<string, any>} [field.validators]    - Field validators.
+ * @param   {number}              [field.index]         - Field index.
+ * @param   {Record<string, any>} [field.listTitles]    - List titles.
+ * @param   {Record<string, any>} [field.localizeInfos] - Localize info.
+ * @param   {string}              [field.className]     - Class name.
+ * @returns {JSX.Element}                               Form input.
  */
 const FormInput = (field: {
   marker: string;
   type: string;
-  value: string;
+  value: string | number;
   validators?: Record<string, any>;
   index?: number;
   listTitles?: Record<string, any>;
   localizeInfos?: Record<string, any>;
+  className?: string;
 }): JSX.Element => {
   const { localizeInfos } = field;
 
   /* State for storing the current value of the input field */
-  const [value, setValue] = useState<string>(field.value || '');
+  const [value, setValue] = useState<string | number>(field.value || '');
+
+  /* State for storing uploaded files */
+  const [files, setFiles] = useState<File[]>([]);
 
   /* State for toggling password visibility (text/password) */
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -78,29 +86,34 @@ const FormInput = (field: {
       addField({
         [field.marker]: {
           valid: valid,
-          value: value,
+          value: field.type === 'groupOfImages' ? files : value,
         },
       }),
     );
-  }, [value, valid, field.marker, dispatch]);
+  }, [value, files, valid, field.marker, field.type, dispatch]);
 
   /* Return empty element if field or type is not defined */
   if (!field || !type) {
     return <></>;
   }
 
+  const defaultClassName =
+    'relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800';
+
+  const cn = field.className || defaultClassName;
+
   return (
     <FormFieldAnimations index={field.index as number} className="input-group">
       {/** Label for the form field * Shows an asterisk if the field is required */}
-      <label htmlFor={field.marker} className="text-gray-400">
+      <label htmlFor={field.marker} className="text-gray-400 cursor-pointer">
         {localizeInfos?.title}{' '}
         {required && <span className="text-red-500">*</span>}
       </label>
       {/** Render select dropdown for list type fields */}
-      {type === 'list' && (
+      {field.type === 'list' && (
         <select
           id={field.marker}
-          className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
+          className={cn}
           required={required}
           value={value}
           onChange={(val) => setValue(val.currentTarget.value)}
@@ -132,33 +145,79 @@ const FormInput = (field: {
         </select>
       )}
       {/** Render textarea for textarea type fields */}
-      {type === 'textarea' && (
+      {field.type === 'textarea' && (
         <textarea
           id={field.marker}
           placeholder={localizeInfos?.title}
-          className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
+          className={cn}
           required={required}
           onChange={(val) => setValue(val.currentTarget.value)}
           value={value}
+        />
+      )}
+      {/** Render groupOfImages type field */}
+      {field.type === 'groupOfImages' && (
+        <div className={'flex items-center gap-4 group ' + cn}>
+          <CameraIcon />
+          <input
+            type="file"
+            id={field.marker}
+            placeholder={localizeInfos?.title}
+            // className={cn}
+            required={required}
+            onChange={async (val) => {
+              const fileList = val.currentTarget.files;
+              if (fileList && fileList.length > 0) {
+                // Convert FileList to Array and recreate files without contentType
+                const filesArray = await Promise.all(
+                  Array.from(fileList).map(async (file) => {
+                    // Create a new File object without contentType property
+                    const blob = await file.arrayBuffer();
+                    return new File([blob], file.name, { type: file.type });
+                  }),
+                );
+                setFiles(filesArray);
+              }
+            }}
+            multiple
+            accept="image/*"
+          />
+        </div>
+      )}
+      {/** Render 5 stars rating field  if marker is 'rating' */}
+      {field.marker === 'rating' && (
+        <StarRating
+          value={value}
+          setValue={setValue}
+          type={type}
+          field={field}
+          required={required}
         />
       )}
       {/** Render standard input for all other field types text/password/email... */}
-      {type !== 'textarea' && type !== 'list' && (
-        <input
-          type={type}
-          id={field.marker}
-          placeholder={localizeInfos?.title}
-          className="relative border-b border-solid border-[none] border-b-stone-300 py-3 text-base leading-5 text-slate-800"
-          required={required}
-          onChange={(val) => setValue(val.currentTarget.value)}
-          autoComplete={fieldType === 'password' ? 'password' : ''}
-          minLength={field.validators?.['stringInspectionValidator']?.stringMin}
-          maxLength={field.validators?.['stringInspectionValidator']?.stringMax}
-          value={value}
-        />
-      )}
+      {field.type !== 'textarea' &&
+        field.type !== 'list' &&
+        field.type !== 'groupOfImages' &&
+        field.marker !== 'rating' && (
+          <input
+            type={type}
+            id={field.marker}
+            placeholder={localizeInfos?.title}
+            className={cn}
+            required={required}
+            onChange={(val) => setValue(val.currentTarget.value)}
+            autoComplete={fieldType === 'password' ? 'password' : ''}
+            minLength={
+              field.validators?.['stringInspectionValidator']?.stringMin
+            }
+            maxLength={
+              field.validators?.['stringInspectionValidator']?.stringMax
+            }
+            value={value}
+          />
+        )}
       {/** Render password visibility toggle button for password fields */}
-      {fieldType === 'password' && (
+      {field.type === 'password' && (
         <button
           onClick={(e) => {
             e.preventDefault();

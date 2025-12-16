@@ -37,7 +37,8 @@ const BlocksGrid = async ({
         {Array.isArray(blocks) ? (
           blocks.map((block, index) => {
             /** Get styling data for the current block based on its index */
-            const className = blocksData[index as keyof typeof blocksData];
+            const blockData = blocksData[index];
+            const className = blockData ? blockData.className : '';
 
             return (
               /** Individual block card component with index, marker, styling and localization */
@@ -45,14 +46,9 @@ const BlocksGrid = async ({
                 key={index}
                 index={index}
                 marker={block}
-                className={
-                  className as {
-                    width: string;
-                    height: string;
-                  }
-                }
-                bgColor={blocksColors[block as keyof typeof blocksColors] || ''}
+                className={className}
                 lang={lang}
+                blocksColors={blocksColors}
               />
             );
           })

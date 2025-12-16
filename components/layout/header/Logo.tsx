@@ -11,7 +11,7 @@ const Logo = ({ lang }: { lang: string }): JSX.Element => {
   return (
     <Link
       href={'/' + lang}
-      className="fade-in relative flex h-auto w-full max-w-[240px] items-center outline-none max-lg:max-w-[200px] max-md:max-w-[160px] max-sm:max-w-[120px]"
+      className="fade-in relative flex h-auto w-full max-w-60 items-center outline-none max-lg:max-w-50 max-md:max-w-40 max-sm:max-w-30"
     >
       <svg
         width="237"

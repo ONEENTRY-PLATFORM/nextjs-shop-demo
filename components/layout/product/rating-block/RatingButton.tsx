@@ -7,24 +7,24 @@ import StarRating from './StarRating';
 
 /**
  * RatingButton.
- * @param   {object}                            props             - Props for RatingButton.
- * @param   {number}                            props.rating      - Rating value.
- * @param   {number}                            props.reviewCount - Review count.
- * @param   {boolean}                           props.state       - State.
- * @param   {Dispatch<SetStateAction<boolean>>} props.setState    - Set state.
- * @param   {IAttributeValues}                  props.dict        - Dictionary
- * @returns {JSX.Element}                                         RatingButton.
+ * @param   {object}                            props              - Props for RatingButton.
+ * @param   {IAttributeValues}                  props.dict         - Dictionary
+ * @param   {number}                            props.totalRating  - Rating value.
+ * @param   {number}                            props.reviewsCount - Review count.
+ * @param   {boolean}                           props.state        - State.
+ * @param   {Dispatch<SetStateAction<boolean>>} props.setState     - Set state.
+ * @returns {JSX.Element}                                          Rating button component.
  */
 const RatingButton = ({
   dict,
-  rating,
-  reviewCount,
+  totalRating,
+  reviewsCount,
   state,
   setState,
 }: {
   dict: IAttributeValues;
-  rating: number;
-  reviewCount: number;
+  totalRating: number;
+  reviewsCount: number;
   state: boolean;
   setState: Dispatch<SetStateAction<boolean>>;
 }): JSX.Element => {
@@ -33,15 +33,16 @@ const RatingButton = ({
   return (
     <button
       onClick={() => setState(!state)}
-      className="group mb-6 mr-auto flex gap-5"
+      className="group mr-auto flex gap-5"
     >
       {/** Display rating information with stars, numeric rating and review count */}
       <div className="flex gap-2.5">
-        <StarRating rating={rating} />
+        <StarRating rating={totalRating} />
         <div className="text-lg font-bold text-neutral-600">
-          {rating.toFixed(1)}
+          {totalRating.toFixed(1)}
         </div>
-        <div className="text-sm leading-5 text-slate-300">{reviewCount}</div>
+        {/* reviewsCount */}
+        <div className="text-sm leading-5 text-slate-300">{reviewsCount}</div>
       </div>
 
       {/** Display reviews title with collapsible arrow indicator */}

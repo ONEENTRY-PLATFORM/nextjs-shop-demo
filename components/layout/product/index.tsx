@@ -1,10 +1,9 @@
 /* eslint-disable jsdoc/reject-any-type */
-'use client';
-
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
+import { api } from '@/app/api';
 import { getProductTitle } from '@/app/api/hooks/useProductsData';
 import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
 
@@ -23,34 +22,51 @@ import VariationsCarousel from './variations/VariationsCarousel';
  * It organizes the product information in a three-column layout on larger screens
  * and stacks the sections on smaller screens.
  * @param   {object}                                       props                      - Component properties
- * @param   {IProductsEntity & { blocks?: Array<string> }} props.product              - Product entity object containing all product information
- * @param   {string}                                       props.lang                 - Current language shortcode for localization
+ * @param   {string}                                       props.lang                 - Language code for product
  * @param   {IAttributeValues}                             props.dict                 - Dictionary of attribute values from server API
+ * @param   {IProductsEntity & { blocks?: Array<string> }} props.product              - Product entity object containing all product information
  * @param   {IProductsEntity[]}                            props.relatedProducts      - Array of related products to display
  * @param   {number}                                       props.relatedProductsTotal - Total number of related products
  * @param   {Record<string, any>}                          [props.blocksData]         - Pre-fetched block data for dynamic content
  * @returns {JSX.Element}                                                             A complete product page with all relevant information and sections
  */
-const ProductSingle = ({
-  product,
+const ProductSingle = async ({
   lang,
   dict,
+  product,
   relatedProducts,
   relatedProductsTotal,
   blocksData,
 }: {
+  lang: string;
+  dict: IAttributeValues;
   product: IProductsEntity & {
     blocks?: Array<string>;
   };
-  lang: string;
-  dict: IAttributeValues;
   relatedProducts: IProductsEntity[];
   relatedProductsTotal: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   blocksData?: Record<string, any>;
-}): JSX.Element => {
+}): Promise<JSX.Element> => {
   /** Extract necessary data from product entity */
   const { attributeValues, blocks } = product;
+
+  /** getFormsDataByMarker */
+  const reviewsData = await api.FormData.getFormsDataByMarker(
+    'comment_to_product', // marker - Form marker
+    5, // formModuleConfigId - Form module configuration ID
+    {
+      entityIdentifier: product.id,
+      userIdentifier: '',
+      status: ['approved'],
+      dateFrom: '',
+      dateTo: '',
+    }, // body - Request body.
+    1, // isNested - Flag for getting hierarchical data.
+    'en_US', // langCode - Language code.
+    0, // offset — Parameter for pagination. Default: 0.
+    500, // limit — Parameter for pagination. Default: 30.
+  );
 
   /** Get the formatted product title using helper function */
   const productTitle = getProductTitle(product);
@@ -69,10 +85,11 @@ const ProductSingle = ({
 
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+      {/** Product */}
       <div className="flex flex-row gap-10 max-md:max-w-full max-md:gap-4 max-sm:flex-wrap">
         {/** ProductImage - col-1 */}
         <ProductAnimations
-          className="relative mb-10 flex min-h-[280px] w-[30%] grow flex-col max-md:mb-4 max-md:w-4/12 max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full"
+          className="relative mb-10 flex min-h-70 w-[30%] grow flex-col max-md:mb-4 max-md:w-4/12 max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full"
           index={0}
         >
           <ProductImageGallery product={product} alt={productTitle} />
@@ -90,8 +107,6 @@ const ProductSingle = ({
               lang={lang}
             />
           </div>
-
-          {/** ProductDescription */}
           <ProductDescription description={attributeValues?.description} />
         </ProductAnimations>
 
@@ -106,7 +121,11 @@ const ProductSingle = ({
 
       {/** Reviews */}
       <ProductAnimations className={''} index={3}>
-        <ReviewsSection dict={dict} />
+        <ReviewsSection
+          dict={dict}
+          reviewsData={reviewsData}
+          product={product}
+        />
       </ProductAnimations>
 
       {/** blocks */}

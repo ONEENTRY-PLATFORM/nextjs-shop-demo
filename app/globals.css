@@ -45,7 +45,7 @@ input {
   overflow: hidden;
   outline: none !important;
 }
-input:placeholder-shown[placeholder] {
+/* input:placeholder-shown[placeholder] {
   color: rgba(0, 0, 0, 0.5);
   transition: all 350ms ease;
 }
@@ -71,7 +71,7 @@ input:placeholder-shown:focus::-moz-placeholder {
   color: rgba(0, 0, 0, 0);
   font-size: 0px;
   -moz-transition: all 350ms ease;
-}
+} */
 input:focus-visible {
   outline: none !important;
   border-color: #f97316;

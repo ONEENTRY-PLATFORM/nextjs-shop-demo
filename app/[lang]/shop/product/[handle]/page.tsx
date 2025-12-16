@@ -75,8 +75,8 @@ const ProductPageLayout = async ({
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-col bg-white">
         <ProductSingleServer
           lang={lang}
-          product={product as IProductsEntity}
           dict={dict}
+          product={product as IProductsEntity}
         />
       </div>
     </>

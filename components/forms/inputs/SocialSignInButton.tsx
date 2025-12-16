@@ -31,7 +31,7 @@ const SocialSignInButton = ({
         loading="lazy"
         src={imageSrc}
         alt={alt}
-        className="aspect-square w-[50px] shrink-0"
+        className="aspect-square w-12.5 shrink-0"
       />
     </button>
   );

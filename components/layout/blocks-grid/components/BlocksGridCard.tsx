@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Baloo_2 as Baloo } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -20,31 +21,26 @@ const baloo = Baloo({
  * Fetches block data by marker from API and displays it with title, image, and optional sticker
  * Supports external and internal links with appropriate target handling
  * Wrapped with animation component for entrance effects with staggered timing
- * @param   {object}                props                  - Component props
- * @param   {string}                props.marker           - Text marker used to identify and fetch the specific block
- * @param   {string}                props.bgColor          - Background color CSS class for the card
- * @param   {string}                props.lang             - Current language shortcode for content localization
- * @param   {object}                props.className        - CSS classes object for styling the card
- * @param   {string}                props.className.width  - Width CSS class for the card
- * @param   {string}                props.className.height - Height CSS class for the card
- * @param   {number}                props.index            - Index of element in array for staggered animations
- * @returns {Promise<ReactElement>}                        Block card component with content and animations
+ * @param   {object}                props              - Component props
+ * @param   {string}                props.marker       - Text marker used to identify and fetch the specific block
+ * @param   {number}                props.index        - Index of element in array for staggered animations
+ * @param   {string}                props.lang         - Current language shortcode for content localization
+ * @param   {string}                props.className    - CSS classes object for styling the card
+ * @param   {object}                props.blocksColors - Object containing colors for each block type
+ * @returns {Promise<ReactElement>}                    Block card component with content and animations
  */
 const BlocksGridCard = async ({
   marker,
-  bgColor,
+  index,
   lang,
   className,
-  index,
+  blocksColors,
 }: {
   marker: string;
-  bgColor: string;
   lang: string;
-  className: {
-    width: string;
-    height: string;
-  };
+  className: string;
   index: number;
+  blocksColors: any;
 }): Promise<ReactElement> => {
   /** Convert language shortcode to language code for API requests */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
@@ -73,10 +69,13 @@ const BlocksGridCard = async ({
     return <>Block error</>;
   }
 
+  /** bgColor */
+  const bgColor = blocksColors[marker as keyof typeof blocksColors] || '';
+
   return (
     /** Wrap card with animation component for entrance effects */
     <BlockCardAnimations
-      className={`${baloo.className} block-card group relative flex flex-col ${className.width} ${className.height} grow flex-col justify-center text-2xl font-bold text-white`}
+      className={`${baloo.className} block-card group relative flex flex-col ${className} grow flex-col justify-center text-2xl font-bold text-white`}
       index={index}
     >
       {/** Link wrapper with dynamic target and href based on link type */}

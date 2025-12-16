@@ -89,7 +89,7 @@ const ProductsGridLayout = async ({
         className={'relative box-border flex w-full shrink-0 flex-col'}
       >
         {/** Main section containing products grid and pagination */}
-        <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+        <section className="relative mx-auto box-border flex min-h-25 w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
           {/** Render the actual products grid */}
           <ProductsGrid
             lang={lang}

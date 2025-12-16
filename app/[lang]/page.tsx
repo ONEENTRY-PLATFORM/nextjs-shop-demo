@@ -5,6 +5,7 @@ import type { JSX } from 'react';
 import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
+import { blocksColors, blocksData } from '@/components/data';
 import BlocksGrid from '@/components/layout/blocks-grid';
 import BlocksGridLoader from '@/components/layout/blocks-grid/components/BlocksGridLoader';
 import { i18n } from '@/i18n-config';
@@ -53,7 +54,9 @@ const IndexPageLayout = async ({
 
   /** If no page or blocks are found, render a loading state */
   if (!page.blocks) {
-    return <BlocksGridLoader />;
+    return (
+      <BlocksGridLoader blocksData={blocksData} blocksColors={blocksColors} />
+    );
   }
 
   /** Extract blocks from the fetched page data */
@@ -94,7 +97,14 @@ const IndexPageLayout = async ({
       <main className="flex flex-col items-center justify-between gap-16">
         <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
           <div className="flex w-full flex-col items-center gap-5 bg-white">
-            <Suspense fallback={<BlocksGridLoader />}>
+            <Suspense
+              fallback={
+                <BlocksGridLoader
+                  blocksData={blocksData}
+                  blocksColors={blocksColors}
+                />
+              }
+            >
               <BlocksGrid blocks={blocks as Array<string>} lang={lang} />
             </Suspense>
           </div>

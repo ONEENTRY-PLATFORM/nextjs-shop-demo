@@ -3,11 +3,11 @@ import { createSlice } from '@reduxjs/toolkit'; // Importing createSlice from Re
 
 /**
  * Define a type for individual form fields, including their value and validity status.
- * @property {string}  value - The value of the form field as a string.
+ * @property {string}  value - The value of the form field as a string, number, or array of files.
  * @property {boolean} valid - A boolean indicating whether the field's value is considered valid.
  */
 type FieldType = {
-  value: string;
+  value: string | number | File[];
   valid: boolean;
 };
 

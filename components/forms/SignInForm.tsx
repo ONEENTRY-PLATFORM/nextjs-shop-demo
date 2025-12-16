@@ -115,7 +115,7 @@ const SignInForm = ({
   return (
     <FormAnimations isLoading={isLoading || !formFields}>
       <form
-        className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+        className="mx-auto flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
         onSubmit={(e) => onSignIn(e)}
       >
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
@@ -194,7 +194,7 @@ const SignInForm = ({
 
         <FormFieldAnimations
           index={6}
-          className="mx-auto mb-5 flex w-[380px] max-w-full justify-center gap-5 text-sm"
+          className="mx-auto mb-5 flex w-95 max-w-full justify-center gap-5 text-sm"
         >
           <div className="font-bold text-gray-800">
             {forgot_password_text?.value}

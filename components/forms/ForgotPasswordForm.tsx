@@ -72,7 +72,7 @@ export const ForgotPasswordForm = ({
       /** Generate verification code with API and send to user's email */
       await api.AuthProvider.generateCode(
         'email',
-        fields.email_reg.value,
+        fields.email_reg.value as string,
         'generate_code',
       );
       /** Open Verification form for the next step in password reset process */
@@ -101,7 +101,7 @@ export const ForgotPasswordForm = ({
     <FormAnimations isLoading={isLoading}>
       {/** Forgot password form with onSubmit handler */}
       <form
-        className="mx-auto flex min-h-[480px] max-w-[350px] flex-col gap-4 text-xl leading-5"
+        className="mx-auto flex min-h-120 max-w-87.5 flex-col gap-4 text-xl leading-5"
         onSubmit={(e) => onSubmitFormHandle(e)}
       >
         {/** Form header with title and description */}

@@ -71,7 +71,7 @@ const TableAnimations = ({
 const OrdersTableLoader = ({ limit }: LoaderProps): JSX.Element => {
   /** Render the table loader with animated rows */
   return (
-    <TableAnimations className="my-auto flex w-full max-w-[730px] flex-col max-md:max-w-full">
+    <TableAnimations className="my-auto flex w-full max-w-182.5 flex-col max-md:max-w-full">
       {/** Generate skeleton loader rows based on the limit */}
       {Array.from(Array(limit).keys()).map((item) => (
         <div

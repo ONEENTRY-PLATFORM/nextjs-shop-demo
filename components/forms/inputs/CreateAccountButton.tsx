@@ -27,7 +27,7 @@ const CreateAccountButton = ({ title }: { title: string }): JSX.Element => {
         setComponent('SignUpForm');
       }}
       type="button"
-      className="slide-up btn btn-lg btn-o btn-o-primary mx-auto w-[280px] border-2 leading-6"
+      className="slide-up btn btn-lg btn-o btn-o-primary mx-auto w-70 border-2 leading-6"
     >
       {title}
     </button>

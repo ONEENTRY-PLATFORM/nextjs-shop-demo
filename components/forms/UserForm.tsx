@@ -102,13 +102,13 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
           authData: [
             {
               marker: 'password_reg',
-              value: fields['password_reg']?.value || '',
+              value: String(fields['password_reg']?.value || ''),
             },
           ],
           notificationData: {
-            email: fields['email_reg']?.value || '',
+            email: String(fields['email_reg']?.value || ''),
             phonePush: [],
-            phoneSMS: fields['phone_reg']?.value || '',
+            phoneSMS: String(fields['phone_reg']?.value || ''),
           },
           state: {},
         });
@@ -138,7 +138,7 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
   return (
     <FormAnimations isLoading={isLoading}>
       <form
-        className="flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+        className="flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
         onSubmit={(e) => onUpdateUserData(e)}
       >
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">

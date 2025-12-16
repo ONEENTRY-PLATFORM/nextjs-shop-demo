@@ -61,7 +61,7 @@ const ProductCard = memo(
     return (
       <div className="relative flex w-full flex-row gap-4 py-2">
         {/** Product image container */}
-        <div className="relative h-[150px] w-[320px]">
+        <div className="relative h-37.5 w-[320px]">
           {productImage ? (
             /** Display product image if available */
             <Image

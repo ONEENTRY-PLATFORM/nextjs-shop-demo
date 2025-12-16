@@ -82,7 +82,7 @@ const ProductCard = ({
         </div>
 
         {/** Product image */}
-        <div className="relative h-[150px] w-[130px] shrink-0 rounded-xl bg-slate-50">
+        <div className="relative h-37.5 w-32.5 shrink-0 rounded-xl bg-slate-50">
           <OptimizedImage
             width={130}
             height={150}

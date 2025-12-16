@@ -4,14 +4,21 @@ import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import type { JSX } from 'react';
 
-import { blocksColors, blocksData } from '@/components/data';
-
 /**
  * Blocks grid loader component for displaying skeleton loaders for content blocks.
  * Renders a grid of placeholder blocks with animations while content is loading.
- * @returns {JSX.Element} Loader
+ * @param   {object}      props              - Props for the component
+ * @param   {object}      props.blocksData   - Data for the blocks
+ * @param   {object}      props.blocksColors - Colors for the blocks
+ * @returns {JSX.Element}                    Loader component
  */
-const BlocksGridLoader = (): JSX.Element => {
+const BlocksGridLoader = ({
+  blocksData,
+  blocksColors,
+}: {
+  blocksData: object;
+  blocksColors: object;
+}): JSX.Element => {
   /**
    * Array of block names representing different content sections
    * Each name corresponds to a specific type of content block in the grid
@@ -70,7 +77,7 @@ const BlocksGridLoader = (): JSX.Element => {
          * Each loader has specific dimensions and colors based on block type
          */
         blocks.map((block, index) => {
-          /** Get CSS classes for width and height based on block index */
+          /** Get CSS classes for block by index */
           const className = blocksData[index as keyof typeof blocksData] as {
             width: string;
             height: string;
@@ -89,7 +96,7 @@ const BlocksGridLoader = (): JSX.Element => {
               >
                 {/** Placeholder for block icon or logo */}
                 <div className="absolute left-3 top-3 z-10">
-                  <div className="size-[30px]" />
+                  <div className="size-7.5" />
                 </div>
 
                 {/** Placeholder for block title or heading */}

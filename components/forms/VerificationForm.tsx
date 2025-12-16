@@ -105,7 +105,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
         /** Handle password reset verification */
         const result = await api.AuthProvider.checkCode(
           'email',
-          fields.email_reg?.value || '',
+          String(fields.email_reg?.value || ''),
           'reg', // Registration context
           otp,
         );
@@ -121,7 +121,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
         /** Activate user with the provided OTP */
         const result = await api.AuthProvider.activateUser(
           'email',
-          fields.email_reg?.value || '',
+          String(fields.email_reg?.value || ''),
           otp,
         );
 
@@ -130,8 +130,8 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
           try {
             /** Log in the user with their credentials */
             await logInUser({
-              login: fields.email_reg?.value || '',
-              password: fields.password_reg?.value || '',
+              login: String(fields.email_reg?.value || ''),
+              password: String(fields.password_reg?.value || ''),
             });
 
             /** Authenticate the user and redirect to profile page */
@@ -167,7 +167,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
         /** Request a new verification code from the API */
         await api.AuthProvider.generateCode(
           'email',
-          fields.email_reg?.value || '',
+          String(fields.email_reg?.value || ''),
           'generate_code',
         );
       } catch (e: any) {
@@ -185,7 +185,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
     <FormAnimations isLoading={isLoading}>
       {/** OTP verification form */}
       <form
-        className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+        className="mx-auto flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
         onSubmit={(e) => onSubmitHandle(e)}
       >
         {/** Form header with title and description */}

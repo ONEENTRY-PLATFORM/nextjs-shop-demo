@@ -10,10 +10,40 @@ import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
-import { resetPasswordFormFields } from '../data';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
+
+/**
+ * Form field configurations for the reset password form
+ *
+ * This array defines the structure and properties of form fields used in
+ * the reset password functionality. Each field includes type, visibility,
+ * localization, placeholder, marker, and required status information.
+ * @type {Array<object>}
+ */
+export const resetPasswordFormFields = [
+  {
+    fieldType: 'password',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Password',
+    },
+    placeholder: '•••••',
+    marker: 'password_reg',
+    required: true,
+  },
+  {
+    fieldType: 'password',
+    isVisible: true,
+    localizeInfos: {
+      title: 'Confirm password',
+    },
+    placeholder: '•••••',
+    marker: 'password_confirm',
+    required: true,
+  },
+];
 
 /**
  * Reset password form component that allows users to set a new password.
@@ -69,12 +99,12 @@ const ResetPasswordForm = ({
       /** Call API to change user's password */
       const result = await api.AuthProvider.changePassword(
         'email',
-        email_reg.value,
+        email_reg.value as string,
         'reg',
         1,
         otp_code.value.toString(),
-        password_reg.value,
-        password_confirm.value,
+        password_reg.value as string,
+        password_confirm.value as string,
       );
 
       /** If result is successful, open SignIn form for user to log in with new password */
@@ -98,7 +128,7 @@ const ResetPasswordForm = ({
       {/** Reset password form with onSubmit handler */}
       <form
         name="resetPasswordForm"
-        className="mx-auto flex min-h-full w-full max-w-[430px] flex-col gap-4 text-xl leading-5"
+        className="mx-auto flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
         onSubmit={onResetSubmit}
       >
         {/** Form header with title and description */}

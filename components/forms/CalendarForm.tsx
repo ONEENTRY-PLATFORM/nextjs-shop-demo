@@ -18,7 +18,6 @@ import {
   setDeliveryData,
 } from '@/app/store/reducers/CartSlice';
 
-// import { timeSlotsData } from '../data';
 import CalendarAnimations from './animations/CalendarAnimations';
 import TimeSlots from './calendar/TimeSlots';
 
@@ -106,7 +105,7 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
   };
 
   return (
-    <CalendarAnimations className="mx-auto max-w-[350px] max-sm:max-w-[300px]">
+    <CalendarAnimations className="mx-auto max-w-87.5 max-sm:max-w-75">
       <Calendar
         locale={lang}
         view="month"
@@ -124,7 +123,7 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
         <button
           onClick={onApplyHandle}
           type="button"
-          className="btn btn-xl btn-primary mx-auto mt-auto w-[270px] max-md:mt-10"
+          className="btn btn-xl btn-primary mx-auto mt-auto w-67.5 max-md:mt-10"
         >
           {/** !!! */}
           Apply

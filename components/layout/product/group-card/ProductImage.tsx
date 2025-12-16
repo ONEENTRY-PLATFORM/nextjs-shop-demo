@@ -13,7 +13,7 @@ import Placeholder from '@/components/shared/Placeholder';
 const ProductImage = ({ imageSrc }: { imageSrc: string }): JSX.Element => {
   return (
     <div
-      className="relative h-[130px] w-[110px] shrink-0"
+      className="relative h-32.5 w-27.5 shrink-0"
       role="img"
       aria-label="Product image"
     >

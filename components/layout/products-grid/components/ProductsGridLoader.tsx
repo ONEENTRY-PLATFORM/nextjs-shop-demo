@@ -23,7 +23,7 @@ const ProductsGridLoader: FC<LoaderProps> = ({
       className={'relative box-border flex w-full shrink-0 flex-col'}
     >
       {/* Main section container with max width constraint */}
-      <section className="relative mx-auto box-border flex min-h-[100px] w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
+      <section className="relative mx-auto box-border flex min-h-25 w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
         {/* Grid container with responsive columns, matching the actual products grid */}
         <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
           {/* Generate an array of placeholder cards based on the limit prop */}
@@ -32,7 +32,7 @@ const ProductsGridLoader: FC<LoaderProps> = ({
             <div
               key={item}
               className={
-                'product-card relative flex size-full min-h-[360px] flex-col items-center rounded-3xl bg-slate-100 p-4 opacity-40'
+                'product-card relative flex size-full min-h-90 flex-col items-center rounded-3xl bg-slate-100 p-4 opacity-40'
               }
             >
               {/* Product image placeholder */}

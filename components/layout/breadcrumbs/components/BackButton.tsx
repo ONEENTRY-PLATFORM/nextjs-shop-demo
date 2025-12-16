@@ -20,7 +20,7 @@ const BackButton = (): JSX.Element => {
   return (
     <button
       type="button"
-      className="group cursor-pointer flex size-9 items-center justify-center rounded-full border border-solid border-gray-400 bg-white p-2 transition-colors duration-300 hover:border-orange-500 md:size-[40px] lg:size-[50px] lg:p-3.5"
+      className="group cursor-pointer flex size-9 items-center justify-center rounded-full border border-solid border-gray-400 bg-white p-2 transition-colors duration-300 hover:border-orange-500 md:size-10 lg:size-12.5 lg:p-3.5"
       aria-label="Go back"
       onClick={() => router.back()}
     >
