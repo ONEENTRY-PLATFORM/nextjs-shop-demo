@@ -33,7 +33,7 @@ const RatingButton = ({
   return (
     <button
       onClick={() => setState(!state)}
-      className="group mb-6 mr-auto flex gap-5"
+      className="group mr-auto flex gap-5"
     >
       {/** Display rating information with stars, numeric rating and review count */}
       <div className="flex gap-2.5">

@@ -83,7 +83,7 @@ const ReviewsSection = ({
   return (
     <div className="flex justify-between overflow-hidden max-md:flex-wrap">
       {/** Left column: Rating button and reviews list */}
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full gap-5 mb-6">
         {/** Rating button that toggles the reviews list visibility */}
         <RatingButton
           dict={dict}
