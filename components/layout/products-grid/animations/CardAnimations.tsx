@@ -45,6 +45,11 @@ const CardAnimations = ({
 
   /** Check if element is in viewport for scroll-triggered animations */
   useEffect(() => {
+    /** Only run on client side where window is available */
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     const checkInView = () => {
       if (ref.current) {
         setInView(ScrollTrigger.isInViewport(ref.current, 0.05));

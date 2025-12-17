@@ -123,7 +123,21 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     if (!hasCartItems && !deliveryData) return [];
 
     const orderProducts = productsCartData
-      .filter((item) => item.selected)
+      .filter((item) => {
+        /** Only include selected items that are in stock */
+        if (!item.selected) return false;
+
+        /** Find the actual product to check stock status */
+        const product = combinedProducts.find((p) => p.id === item.id);
+        if (!product) return false;
+
+        /** Check if product is in stock */
+        const isInStock =
+          product.statusIdentifier === 'in_stock' &&
+          (product.attributeValues?.units_product?.value ?? 0) >= 1;
+
+        return isInStock;
+      })
       .map((item) => ({
         productId: item.id,
         quantity: item.quantity,
@@ -140,7 +154,7 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     }
 
     return orderProducts;
-  }, [productsCartData, deliveryData, hasCartItems]);
+  }, [productsCartData, deliveryData, hasCartItems, combinedProducts]);
 
   /** Create order in orderSlice on component initialization */
   useEffect(() => {
