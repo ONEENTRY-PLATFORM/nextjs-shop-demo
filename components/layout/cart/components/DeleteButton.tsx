@@ -27,7 +27,8 @@ import DeleteIcon from '@/components/icons/delete';
  * @returns               Delete button component with icon
  */
 const DeleteButton = memo(
-  ({ productId }: { productId: number }): JSX.Element => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ({ dict, productId }: { dict: any; productId: number }): JSX.Element => {
     /** Redux dispatch function for updating state */
     const dispatch = useAppDispatch();
 
@@ -37,7 +38,9 @@ const DeleteButton = memo(
     /** Get cart data and items from Redux store */
     const productsData = useAppSelector(selectCartData);
     const cartItems = useAppSelector(selectCartItems);
-    // removed_text, undo_text
+
+    /** Extract necessary texts from dictionary */
+    const { removed_text, undo_text } = dict;
 
     /**
      * Handle product deletion from cart
@@ -67,7 +70,8 @@ const DeleteButton = memo(
         ({ closeToast }) => (
           <div className="flex items-center justify-between gap-3">
             <span>
-              {productInfo?.localizeInfos?.title || 'Product'} removed from cart
+              {productInfo?.localizeInfos?.title || 'Product'}{' '}
+              {removed_text?.value || 'removed from cart'}
             </span>
             <button
               onClick={async () => {
@@ -89,7 +93,7 @@ const DeleteButton = memo(
               }}
               className="rounded bg-orange-500 px-3 w-20 cursor-pointer py-1 text-sm font-semibold text-white hover:bg-orange-600"
             >
-              Undo
+              {undo_text?.value || 'Undo'}
             </button>
           </div>
         ),
@@ -97,7 +101,16 @@ const DeleteButton = memo(
           autoClose: 8000,
         },
       );
-    }, [dispatch, productId, user, isAuth, productsData, cartItems]);
+    }, [
+      dispatch,
+      productId,
+      user,
+      isAuth,
+      productsData,
+      cartItems,
+      removed_text,
+      undo_text,
+    ]);
 
     return (
       /** Button element with click handler to delete product */
