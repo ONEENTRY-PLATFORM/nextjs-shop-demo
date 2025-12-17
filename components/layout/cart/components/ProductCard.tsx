@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 import { memo } from 'react';
@@ -16,23 +17,26 @@ import PriceDisplay from './PriceDisplay';
  * Product card component that displays a product in the shopping cart
  * Shows product image, title, price and provides controls for quantity and selection
  * Wrapped with animation component for staggered entrance effects
- * @param   {object}          props          - Product card props
- * @param   {IProductsEntity} props.product  - Product entity object containing product data
- * @param   {boolean}         props.selected - Indicates if the product is currently selected
- * @param   {string}          props.lang     - Current language shortcode for price formatting
- * @param   {number}          props.index    - Index of element in array for staggered animation timing
- * @returns {JSX.Element}                    Product card with animations
+ * @param   {object}           props          - Product card props
+ * @param   {IProductsEntity}  props.product  - Product entity object containing product data
+ * @param   {boolean}          props.selected - Indicates if the product is currently selected
+ * @param   {string}           props.lang     - Current language shortcode for price formatting
+ * @param   {number}           props.index    - Index of element in array for staggered animation timing
+ * @param   {IAttributeValues} props.dict     - Dictionary for translations
+ * @returns {JSX.Element}                     Product card with animations
  */
 const ProductCard = ({
   product,
   selected,
   lang,
   index,
+  dict,
 }: {
   product: IProductsEntity;
   selected: boolean;
   lang: string;
   index: number;
+  dict: IAttributeValues;
 }): JSX.Element => {
   /** Redux dispatch function for updating state */
   const dispatch = useAppDispatch();
@@ -126,7 +130,7 @@ const ProductCard = ({
         />
 
         {/** Button to remove product from cart */}
-        <DeleteButton productId={id} />
+        <DeleteButton productId={id} dict={dict} />
       </div>
     </ProductAnimations>
   );

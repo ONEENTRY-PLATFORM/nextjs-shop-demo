@@ -175,6 +175,7 @@ const CartPage = ({
                       lang={lang}
                       selected={cartItem?.selected ?? true}
                       index={index}
+                      dict={dict}
                     />
                   );
                 })

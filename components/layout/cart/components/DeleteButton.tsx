@@ -1,3 +1,4 @@
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import { type JSX, memo, useCallback, useContext } from 'react';
 import { toast } from 'react-toastify';
 
@@ -23,12 +24,18 @@ import DeleteIcon from '@/components/icons/delete';
  * Uses memoization to prevent unnecessary re-renders
  * Shows a toast notification with undo functionality
  * @param props           - Delete button props
+ * @param props.dict      - Dictionary for translations
  * @param props.productId - Product ID to be removed from cart
- * @returns               Delete button component with icon
+ * @returns               - Delete button component with icon
  */
 const DeleteButton = memo(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  ({ dict, productId }: { dict: any; productId: number }): JSX.Element => {
+  ({
+    dict,
+    productId,
+  }: {
+    dict: IAttributeValues;
+    productId: number;
+  }): JSX.Element => {
     /** Redux dispatch function for updating state */
     const dispatch = useAppDispatch();
 
