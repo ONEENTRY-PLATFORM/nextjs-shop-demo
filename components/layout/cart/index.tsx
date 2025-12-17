@@ -11,6 +11,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   addDeliveryToCart,
   addProductsToCart,
+  deselectProduct,
   selectCartData,
 } from '@/app/store/reducers/CartSlice';
 import type { IProducts } from '@/app/types/global';
@@ -99,6 +100,28 @@ const CartPage = ({
   }, [data, dispatch]);
 
   /**
+   * Effect hook to auto-deselect products that are out of stock
+   * Runs when products data changes to ensure out of stock items are not selected
+   */
+  useEffect(() => {
+    if (products && products.length > 0) {
+      products.forEach((product) => {
+        const cartItem = productsCartData.find(
+          (item) => item.id === product.id,
+        );
+        const isOutOfStock =
+          product.statusIdentifier !== 'in_stock' ||
+          (product.attributeValues?.units_product?.value ?? 0) < 1;
+
+        /** If product is out of stock but still selected, deselect it */
+        if (isOutOfStock && cartItem?.selected) {
+          dispatch(deselectProduct(product.id));
+        }
+      });
+    }
+  }, [products, productsCartData, dispatch]);
+
+  /**
    * Effect hook to handle WebSocket connection for real-time updates
    * Sets up listener for product changes when user is authenticated
    */
@@ -175,6 +198,7 @@ const CartPage = ({
                       lang={lang}
                       selected={cartItem?.selected ?? true}
                       index={index}
+                      dict={dict}
                     />
                   );
                 })

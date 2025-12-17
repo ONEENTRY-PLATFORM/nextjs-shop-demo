@@ -404,13 +404,22 @@ export const selectCartTotal = (state: {
     if (product.selected) {
       /** Find product by ID instead of using index */
       const p = state.cartReducer.products.find((p) => p.id === product.id);
-      const price = p
-        ? p.attributeValues?.sale?.value ||
-          p.attributeValues?.price?.value ||
-          p.price ||
-          0
-        : 0;
-      total += price * product.quantity;
+
+      /** Check if product is in stock */
+      const isInStock =
+        p?.statusIdentifier === 'in_stock' &&
+        (p?.attributeValues?.units_product?.value ?? 0) >= 1;
+
+      /** Only add to total if product is in stock */
+      if (isInStock) {
+        const price = p
+          ? p.attributeValues?.sale?.value ||
+            p.attributeValues?.price?.value ||
+            p.price ||
+            0
+          : 0;
+        total += price * product.quantity;
+      }
     }
     return total;
   }, 0);

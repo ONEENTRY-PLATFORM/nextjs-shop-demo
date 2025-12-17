@@ -70,7 +70,7 @@ const ReviewsSection = ({
   reviewsData: any;
 }): JSX.Element => {
   /** State to control the visibility of the reviews list */
-  const [state, setState] = useState(true);
+  const [state, setState] = useState(false);
 
   /** Use totalRating function to calculate the average rating */
   const averageRating = totalRating(reviewsData);

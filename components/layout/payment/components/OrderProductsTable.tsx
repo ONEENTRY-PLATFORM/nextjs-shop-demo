@@ -74,6 +74,16 @@ const OrderProductsTable = ({
           return null;
         }
 
+        /** Check if product is in stock */
+        const isInStock =
+          actualProduct.statusIdentifier === 'in_stock' &&
+          (actualProduct.attributeValues?.units_product?.value ?? 0) >= 1;
+
+        /** Don't show out of stock products in order */
+        if (!isInStock) {
+          return null;
+        }
+
         const { quantity } = product;
         const { localizeInfos, price, attributeValues } = actualProduct;
 
