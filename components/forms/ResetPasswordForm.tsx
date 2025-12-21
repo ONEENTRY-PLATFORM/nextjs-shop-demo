@@ -3,7 +3,7 @@
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX } from 'react';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
 import { api } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -22,7 +22,7 @@ import FormSubmitButton from './inputs/FormSubmitButton';
  * localization, placeholder, marker, and required status information.
  * @type {Array<object>}
  */
-export const resetPasswordFormFields = [
+export const resetPasswordFormFields: Array<object> = [
   {
     fieldType: 'password',
     isVisible: true,
@@ -80,47 +80,55 @@ const ResetPasswordForm = ({
    * @param   {FormEvent<HTMLFormElement>} e - Form submission event
    * @returns {Promise<void>}                Promise that resolves when the form submission is complete
    */
-  const onResetSubmit = async (
-    e: FormEvent<HTMLFormElement>,
-  ): Promise<void> => {
-    /** Prevent default form submission behavior */
-    e.preventDefault();
+  const onResetSubmit = useCallback(
+    async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+      /** Prevent default form submission behavior */
+      e.preventDefault();
 
-    /** Add null checks for form fields to ensure all required data is present */
-    if (!email_reg || !otp_code || !password_reg || !password_confirm) {
-      setError('Form fields are not properly initialized');
-      return;
-    }
-
-    try {
-      /** Set loading state to indicate form submission in progress */
-      setLoading(true);
-
-      /** Call API to change user's password */
-      const result = await api.AuthProvider.changePassword(
-        'email',
-        email_reg.value as string,
-        'reg',
-        1,
-        otp_code.value.toString(),
-        password_reg.value as string,
-        password_confirm.value as string,
-      );
-
-      /** If result is successful, open SignIn form for user to log in with new password */
-      if (result) {
-        setComponent('SignInForm');
-        setAction('');
+      /** Add null checks for form fields to ensure all required data is present */
+      if (!email_reg || !otp_code || !password_reg || !password_confirm) {
+        setError('Form fields are not properly initialized');
+        return;
       }
-      /** Reset loading state after form submission */
-      setLoading(false);
-    } catch (e: any) {
-      /** Set error message from exception */
-      setError(e.message);
-      /** Reset loading state after form submission */
-      setLoading(false);
-    }
-  };
+
+      try {
+        /** Set loading state to indicate form submission in progress */
+        setLoading(true);
+
+        /** Call API to change user's password */
+        const result = await api.AuthProvider.changePassword(
+          'email',
+          email_reg.value as string,
+          'reg',
+          1,
+          otp_code.value.toString(),
+          password_reg.value as string,
+          password_confirm.value as string,
+        );
+
+        /** If result is successful, open SignIn form for user to log in with new password */
+        if (result) {
+          setComponent('SignInForm');
+          setAction('');
+        }
+        /** Reset loading state after form submission */
+        setLoading(false);
+      } catch (e: any) {
+        /** Set error message from exception */
+        setError(e.message);
+        /** Reset loading state after form submission */
+        setLoading(false);
+      }
+    },
+    [
+      email_reg,
+      otp_code,
+      password_reg,
+      password_confirm,
+      setComponent,
+      setAction,
+    ],
+  );
 
   return (
     /** Form animation wrapper with loading state */
@@ -155,7 +163,7 @@ const ResetPasswordForm = ({
                 position={0}
                 type={''}
                 validators={{}}
-                key={index}
+                key={field.marker || index}
                 {...field}
               />
             );

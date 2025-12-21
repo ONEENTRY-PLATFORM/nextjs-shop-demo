@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
 import utc from 'dayjs/plugin/utc';
 import type { JSX } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';
 
 import { useGetSingleAttributeByMarkerSetQuery } from '@/app/api/api/RTKApi';
@@ -53,6 +53,46 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
     activeLang: lang,
   });
 
+  /** Generate and format time intervals (memoized) */
+  const timeIntervals = useMemo(() => {
+    const schedule = data?.value?.[0]?.values?.[0]?.times;
+    return schedule
+      ?.map((time: any) => {
+        return {
+          time: `${time[0].hours}:${time[0].minutes < 10 ? `0${time[0].minutes}` : time[0].minutes}`,
+        };
+      })
+      ?.map((data: any) => {
+        return {
+          time: data.time,
+          isDisabled: false,
+          isSelected: false,
+        };
+      });
+  }, [data]);
+
+  /**
+   * Handler function for date change
+   */
+  const handleDateChange = useCallback((value: any) => {
+    setDate(value as Date);
+  }, []);
+
+  /**
+   * Handler function for applying selected date and time
+   * Updates the delivery data in Redux store and closes the drawer
+   */
+  const onApplyHandle = useCallback(() => {
+    dispatch(
+      setDeliveryData({
+        date: date.getTime(),
+        time: time,
+        address: deliveryData.address,
+      }),
+    );
+    setTransition('close');
+  }, [date, time, deliveryData.address, dispatch, setTransition]);
+
   /** Dispatch updated delivery data when date or time changes */
   useEffect(() => {
     dispatch(
@@ -72,46 +112,13 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
   if (error) {
     return <div>Error: {error.message}</div>;
   }
-  const schedule = data?.value[0].values[0].times;
-
-  /** Generate and format time intervals */
-  const timeIntervals = schedule
-    ?.map((time: any) => {
-      return {
-        time: `${time[0].hours}:${time[0].minutes < 10 ? `0${time[0].minutes}` : time[0].minutes}`,
-      };
-    })
-    ?.map((data: any) => {
-      return {
-        time: data.time,
-        isDisabled: false,
-        isSelected: false,
-      };
-    });
-
-  /**
-   * Handler function for applying selected date and time
-   * Updates the delivery data in Redux store and closes the drawer
-   */
-  const onApplyHandle = () => {
-    dispatch(
-      setDeliveryData({
-        date: date.getTime(),
-        time: time,
-        address: deliveryData.address,
-      }),
-    );
-    setTransition('close');
-  };
 
   return (
     <CalendarAnimations className="mx-auto max-w-87.5 max-sm:max-w-75">
       <Calendar
         locale={lang}
         view="month"
-        onChange={(value) => {
-          setDate(value as Date);
-        }}
+        onChange={handleDateChange}
         value={new Date(date)}
       />
       <TimeSlots

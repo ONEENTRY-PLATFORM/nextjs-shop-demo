@@ -125,6 +125,17 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
   const moduleFormConfig = data?.moduleFormConfigs?.[0];
 
   /**
+   * Extract product title from productData (memoized)
+   * Handles different possible title formats from the API
+   */
+  const productTitle = useMemo(() => {
+    if (!productData) return 'Product';
+    return typeof productData.localizeInfos?.title === 'string'
+      ? productData.localizeInfos.title
+      : productData.localizeInfos?.title?.value || 'Product';
+  }, [productData]);
+
+  /**
    * Handle form submission
    * This function sends the form data to the OneEntry API for processing
    */
@@ -201,16 +212,11 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
     return form_error_text?.value || 'Error. Some data not found.';
   }
 
-  const title =
-    typeof productData.localizeInfos?.title === 'string'
-      ? productData.localizeInfos.title
-      : productData.localizeInfos?.title?.value || 'Product';
-
   return (
     <FormAnimations isLoading={isLoading || !formFields}>
       <form
         className="mx-auto flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
-        onSubmit={(e) => onLeaveReview(e)}
+        onSubmit={onLeaveReview}
       >
         {/* Product info */}
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
@@ -221,13 +227,13 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
             {/* Product image */}
             <Image
               src={productData.attributeValues?.pic.value.downloadLink}
-              alt={title}
+              alt={productTitle}
               width={80}
               height={90}
               className="min-h-22.5 min-w-20 object-cover"
             />
             {/* Product title */}
-            <h2>{title}</h2>
+            <h2>{productTitle}</h2>
           </FormFieldAnimations>
         </div>
         {/* Form fields map */}

@@ -1,8 +1,8 @@
 import type { IAttributeValues, IError } from 'oneentry/dist/base/utils';
 import type { IPostFormResponse } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { FormEvent, JSX } from 'react';
-import { memo, useCallback, useContext, useState } from 'react';
+import type { ChangeEvent, FormEvent, JSX } from 'react';
+import { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { api } from '@/app/api';
@@ -73,7 +73,7 @@ const CommentForm = memo(
     /** Authentication context providing user authentication status and methods */
     const { isAuth } = useContext(AuthContext);
 
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const [response, setResponse] = useState<IPostFormResponse | IError | null>(
@@ -81,6 +81,34 @@ const CommentForm = memo(
     );
 
     const { form_error_text, submit_review_text, comment_placeholder } = dict;
+
+    /**
+     * Extract localized strings (memoized)
+     */
+    const buttonTitle = useMemo(
+      () => submit_review_text?.value || 'Submit comment',
+      [submit_review_text],
+    );
+
+    const placeholderText = useMemo(
+      () => comment_placeholder?.value || 'Your comment to the review',
+      [comment_placeholder],
+    );
+
+    /**
+     * Memoized trimmed value check for button disabled state
+     */
+    const isValueEmpty = useMemo(() => !value.trim(), [value]);
+
+    /**
+     * Handle input change
+     */
+    const handleInputChange = useCallback(
+      (e: ChangeEvent<HTMLInputElement>) => {
+        setValue(e.target.value);
+      },
+      [],
+    );
 
     /**
      * Submit comment
@@ -149,11 +177,6 @@ const CommentForm = memo(
       return form_error_text?.value || 'Error. Some data not found.';
     }
 
-    /** Extract localized strings for button title and placeholder text */
-    const buttonTitle = submit_review_text?.value || 'Submit comment';
-    const placeholderText =
-      comment_placeholder?.value || 'Your comment to the review';
-
     return (
       <form
         className="w-full flex gap-4 mt-4 flex-col"
@@ -165,14 +188,14 @@ const CommentForm = memo(
             name="comment_text"
             placeholder={placeholderText}
             value={value}
-            onChange={(e) => setValue(e.target.value)}
+            onChange={handleInputChange}
             disabled={loading}
             className="border border-solid border-gray-300 p-2 w-full rounded-full disabled:opacity-50"
           />
           <button
             type="submit"
             className="rounded-full cursor-pointer group disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={loading || !value.trim()}
+            disabled={loading || isValueEmpty}
             title={buttonTitle}
             aria-label={buttonTitle}
           >

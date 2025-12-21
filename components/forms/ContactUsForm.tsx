@@ -2,7 +2,7 @@
 
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX, Key } from 'react';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -49,12 +49,14 @@ const ContactUsForm = memo(
     );
 
     /**
-     * Sort form fields by position attribute
+     * Sort form fields by position attribute (memoized)
      * This ensures fields are displayed in the correct order
      */
-    const formFields = data?.attributes
-      .slice()
-      .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
+    const formFields = useMemo(() => {
+      return data?.attributes
+        ?.slice()
+        .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
+    }, [data?.attributes]);
 
     /**
      * Get the first module form configuration
@@ -218,7 +220,7 @@ const ContactUsForm = memo(
             if (field.type === 'button') {
               return (
                 <FormSubmitButton
-                  key={index}
+                  key={field.marker || index}
                   title={field.localizeInfos.title}
                   isLoading={loading}
                   index={10}
@@ -226,7 +228,7 @@ const ContactUsForm = memo(
               );
             } else if (field.type === 'spam') {
               return (
-                <div key={index}>
+                <div key={field.marker || index}>
                   {/* <FormCaptcha
                   setToken={setToken}
                   setIsCaptcha={setIsCaptcha}
@@ -242,7 +244,7 @@ const ContactUsForm = memo(
             } else {
               return (
                 <FormInput
-                  key={index}
+                  key={field.marker || index}
                   index={index as number}
                   value={field.value}
                   marker={field.marker}

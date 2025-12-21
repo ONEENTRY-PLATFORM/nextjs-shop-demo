@@ -2,7 +2,7 @@
 
 import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX, Key } from 'react';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { logInUser, useGetFormByMarkerQuery } from '@/app/api';
@@ -67,10 +67,15 @@ const SignInForm = ({
       state.formFieldsReducer.fields,
   );
 
-  /** sort fields by position */
-  const formFields = data?.attributes
-    .slice()
-    .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
+  /**
+   * Sort fields by position (memoized)
+   * This ensures fields are displayed in the correct order
+   */
+  const formFields = useMemo(() => {
+    return data?.attributes
+      ?.slice()
+      .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
+  }, [data?.attributes]);
 
   /**
    * Handles the sign-in form submission
@@ -81,42 +86,59 @@ const SignInForm = ({
    * @param   {FormEvent<HTMLFormElement>} e - Form submission event
    * @returns {Promise<void>}                Promise that resolves when the form submission is complete.
    */
-  const onSignIn = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    if (!email_reg || !password_reg) {
-      return;
-    }
-
-    try {
-      setLoading(true);
-      const result = await logInUser({
-        login: email_reg.value,
-        password: password_reg.value,
-      });
-      if (result && result.error) {
-        setError(result.error);
-        throw new Error(result.error);
-      } else if (result) {
-        setOpen(false);
-        authenticate();
-        setError('');
-        toast('You sign in!');
-      } else {
-        setError('Login or password incorrect');
+  const onSignIn = useCallback(
+    async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+      e.preventDefault();
+      if (!email_reg || !password_reg) {
+        return;
       }
-      setLoading(false);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      setLoading(false);
-      setError(e.message);
-    }
-  };
+
+      try {
+        setLoading(true);
+        const result = await logInUser({
+          login: email_reg.value,
+          password: password_reg.value,
+        });
+        if (result && result.error) {
+          setError(result.error);
+          throw new Error(result.error);
+        } else if (result) {
+          setOpen(false);
+          authenticate();
+          setError('');
+          toast('You sign in!');
+        } else {
+          setError('Login or password incorrect');
+        }
+        setLoading(false);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        setLoading(false);
+        setError(e.message);
+      }
+    },
+    [email_reg, password_reg, setOpen, authenticate],
+  );
+
+  /**
+   * Handler for switching to email tab
+   */
+  const handleEmailTabClick = useCallback(() => {
+    setTab('email');
+  }, []);
+
+  /**
+   * Handler for switching to phone tab
+   */
+  const handlePhoneTabClick = useCallback(() => {
+    setTab('phone');
+  }, []);
 
   return (
     <FormAnimations isLoading={isLoading || !formFields}>
       <form
         className="mx-auto flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
-        onSubmit={(e) => onSignIn(e)}
+        onSubmit={onSignIn}
       >
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <FormFieldAnimations
@@ -131,19 +153,17 @@ const SignInForm = ({
             className="max-w-full text-xs text-gray-400"
           >
             <button
-              onClick={() => {
-                setTab('email');
-              }}
+              onClick={handleEmailTabClick}
               className={tab === 'email' ? 'font-bold' : ''}
+              type="button"
             >
               {email_text?.value}
             </button>
             /
             <button
-              onClick={() => {
-                setTab('phone');
-              }}
+              onClick={handlePhoneTabClick}
               className={tab === 'phone' ? 'font-bold' : ''}
+              type="button"
             >
               {phone_text?.value}
             </button>
@@ -155,7 +175,7 @@ const SignInForm = ({
             if (field.marker === 'email_reg' && tab === 'email') {
               return (
                 <FormInput
-                  key={index}
+                  key={field.marker || index}
                   index={2}
                   {...field}
                   value={field.value}
@@ -165,7 +185,7 @@ const SignInForm = ({
             if (field.marker === 'phone_reg' && tab === 'phone') {
               return (
                 <FormInput
-                  key={index}
+                  key={field.marker || index}
                   index={3}
                   {...field}
                   value={field.value}
@@ -175,7 +195,7 @@ const SignInForm = ({
             if (field.marker === 'password_reg') {
               return (
                 <FormInput
-                  key={index}
+                  key={field.marker || index}
                   index={4}
                   {...field}
                   value={field.value}

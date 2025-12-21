@@ -4,7 +4,7 @@
 import { useTransitionRouter } from 'next-transition-router';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX } from 'react';
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 
 import { api, logInUser } from '@/app/api';
@@ -84,80 +84,81 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
    * @param   {FormEvent<HTMLFormElement>} e - FormEvent from form submission
    * @returns {Promise<void>}                Promise that resolves when the form submission is complete
    */
-  const onSubmitHandle = async (
-    e: FormEvent<HTMLFormElement>,
-  ): Promise<void> => {
-    /** Prevent default form submission behavior */
-    e.preventDefault();
+  const onSubmitHandle = useCallback(
+    async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+      /** Prevent default form submission behavior */
+      e.preventDefault();
 
-    /** Validate OTP length before processing */
-    if (otp.length < 6) {
-      return;
-    }
+      /** Validate OTP length before processing */
+      if (otp.length < 6) {
+        return;
+      }
 
-    try {
-      /** Set loading state and clear previous errors */
-      setLoading(true);
-      setError('');
+      try {
+        /** Set loading state and clear previous errors */
+        setLoading(true);
+        setError('');
 
-      /** Check OTP code with API AuthProvider based on the current action */
-      if (action !== 'activateUser') {
-        /** Handle password reset verification */
-        const result = await api.AuthProvider.checkCode(
-          'email',
-          String(fields.email_reg?.value || ''),
-          'reg', // Registration context
-          otp,
-        );
+        /** Check OTP code with API AuthProvider based on the current action */
+        if (action !== 'activateUser') {
+          /** Handle password reset verification */
+          const result = await api.AuthProvider.checkCode(
+            'email',
+            String(fields.email_reg?.value || ''),
+            'reg', // Registration context
+            otp,
+          );
 
-        /** If verification is successful, show reset password form */
-        if (result) {
-          setComponent('ResetPasswordForm');
+          /** If verification is successful, show reset password form */
+          if (result) {
+            setComponent('ResetPasswordForm');
+          }
+          setLoading(false);
+        }
+        // Handle user activation for new registrations
+        else {
+          /** Activate user with the provided OTP */
+          const result = await api.AuthProvider.activateUser(
+            'email',
+            String(fields.email_reg?.value || ''),
+            otp,
+          );
+
+          /** If user activation is successful, log in the user */
+          if (result) {
+            try {
+              /** Log in the user with their credentials */
+              await logInUser({
+                login: String(fields.email_reg?.value || ''),
+                password: String(fields.password_reg?.value || ''),
+              });
+
+              /** Authenticate the user and redirect to profile page */
+              authenticate();
+              router.push('/profile');
+              setOpen(false);
+            } catch (e: any) {
+              setError(e.message);
+            }
+          } else {
+            setError('Error');
+          }
         }
         setLoading(false);
+      } catch (e: any) {
+        setError(e.message);
+        setLoading(false);
       }
-      // Handle user activation for new registrations
-      else {
-        /** Activate user with the provided OTP */
-        const result = await api.AuthProvider.activateUser(
-          'email',
-          String(fields.email_reg?.value || ''),
-          otp,
-        );
-
-        /** If user activation is successful, log in the user */
-        if (result) {
-          try {
-            /** Log in the user with their credentials */
-            await logInUser({
-              login: String(fields.email_reg?.value || ''),
-              password: String(fields.password_reg?.value || ''),
-            });
-
-            /** Authenticate the user and redirect to profile page */
-            authenticate();
-            router.push('/profile');
-            setOpen(false);
-          } catch (e: any) {
-            setError(e.message);
-          }
-        } else {
-          setError('Error');
-        }
-      }
-      setLoading(false);
-    } catch (e: any) {
-      setError(e.message);
-      setLoading(false);
-    }
-  };
+    },
+    [otp, action, fields, setComponent, authenticate, router, setOpen],
+  );
 
   /**
    * Generate and resend verification code
    * Requests a new OTP to be sent to the user's email
    * @returns {Promise<void>} Promise that resolves when the resend operation is complete
    */
-  const onResendHandle = async (): Promise<void> => {
+  const onResendHandle = useCallback(async (): Promise<void> => {
     try {
       /** Set loading state and clear previous errors */
       setLoading(true);
@@ -178,7 +179,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
       setError(e.message);
       setLoading(false);
     }
-  };
+  }, [fields]);
 
   return (
     /* Form animation wrapper with loading state */
@@ -186,7 +187,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
       {/** OTP verification form */}
       <form
         className="mx-auto flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
-        onSubmit={(e) => onSubmitHandle(e)}
+        onSubmit={onSubmitHandle}
       >
         {/** Form header with title and description */}
         <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">

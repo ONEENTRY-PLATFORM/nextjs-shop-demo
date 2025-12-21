@@ -4,7 +4,7 @@
 import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX, Key } from 'react';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { logInUser } from '@/app/api';
@@ -55,6 +55,19 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
   /** Get form fields from Redux state */
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
+  /** Required form fields array for registration validation */
+  const formFields = useMemo(
+    () => [
+      'email_reg',
+      'password_reg',
+      'name_reg',
+      'phone_reg',
+      'address_reg',
+      'email_notifications',
+    ],
+    [],
+  );
+
   /**
    * SignUp form submit handler.
    * Validates form fields, prepares registration data, and submits to the API.
@@ -62,137 +75,130 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
    * @param   {FormEvent<HTMLFormElement>} e - Form event object
    * @returns {Promise<void>}                Promise that resolves when the form is submitted
    */
-  const onSignUp = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    /** Prevent default form submission behavior */
-    e.preventDefault();
+  const onSignUp = useCallback(
+    async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+      /** Prevent default form submission behavior */
+      e.preventDefault();
 
-    /** Required form fields array for registration validation */
-    const formFields = [
-      'email_reg',
-      'password_reg',
-      'name_reg',
-      'phone_reg',
-      'address_reg',
-      'email_notifications',
-    ];
+      /** Validate all form fields before submission */
+      const canSubmit = Object.keys(fields).reduce((isValid, field) => {
+        /** If any field is invalid, return false */
+        if (!isValid) {
+          return false;
+        }
+        /** Check if the current field is valid */
+        const fieldData = fields[field as keyof typeof fields];
+        return fieldData ? fieldData.valid : false;
+      }, true);
 
-    /** Validate all form fields before submission */
-    const canSubmit = Object.keys(fields).reduce((isValid, field) => {
-      /** If any field is invalid, return false */
-      if (!isValid) {
-        return false;
-      }
-      /** Check if the current field is valid */
-      const fieldData = fields[field as keyof typeof fields];
-      return fieldData ? fieldData.valid : false;
-    }, true);
+      /** Process form submission only if all fields are valid */
+      if (canSubmit) {
+        /** Prepare form data for API submission by mapping fields */
+        const formData = Object.keys(fields).reduce(
+          (
+            arr: Array<{
+              marker: string;
+              type: string;
+              value: string;
+            }>,
+            field,
+          ) => {
+            /** Get field value from Redux state */
+            const fieldValue = fields[field as keyof typeof fields];
+            /** Create data structure for each field */
+            const candidate = {
+              marker: field,
+              type: 'string',
+              value: fieldValue ? String(fieldValue.value) : '',
+            };
+            /** Include only required fields in form data */
+            if (formFields.includes(field)) {
+              arr.push(candidate);
+            }
+            return arr;
+          },
+          [],
+        );
 
-    /** Process form submission only if all fields are valid */
-    if (canSubmit) {
-      /** Prepare form data for API submission by mapping fields */
-      const formData = Object.keys(fields).reduce(
-        (
-          arr: Array<{
-            marker: string;
-            type: string;
-            value: string;
-          }>,
-          field,
-        ) => {
-          /** Get field value from Redux state */
-          const fieldValue = fields[field as keyof typeof fields];
-          /** Create data structure for each field */
-          const candidate = {
-            marker: field,
-            type: 'string',
-            value: fieldValue ? String(fieldValue.value) : '',
-          };
-          /** Include only required fields in form data */
-          if (formFields.includes(field)) {
-            arr.push(candidate);
+        /** Add email notifications data to form */
+        formData.push({
+          marker: 'email_notifications',
+          type: 'string',
+          value: fields.email_reg?.value ? String(fields.email_reg.value) : '',
+        });
+
+        /** Prepare sign up data structure for API call */
+        const data: ISignUpData = {
+          formIdentifier: 'reg',
+          authData: [
+            {
+              marker: 'email_reg',
+              value: (fields.email_reg?.value as string) || '',
+            },
+            {
+              marker: 'password_reg',
+              value: (fields.password_reg?.value as string) || '',
+            },
+          ],
+          formData,
+          notificationData: {
+            email: (fields.email_reg?.value as string) || '',
+            phonePush: [(fields.phone_reg?.value as string) || ''],
+            phoneSMS: (fields.phone_reg?.value as string) || '',
+          },
+        };
+
+        /** Set loading state to indicate form submission in progress */
+        setIsLoading(true);
+
+        /** Attempt to sign up user via API AuthProvider */
+        try {
+          /** Get language code for API request */
+          const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+          /** Submit registration data to the API */
+          const res = await api.AuthProvider.signUp('email', data, langCode);
+
+          /** Handle successful registration based on user activation status */
+          if (res && res.isActive) {
+            /** Automatically log in and authenticate active user */
+            await logInUser({
+              login: res.identifier,
+              password: (fields.password_reg?.value as string) || '',
+            });
+            authenticate();
           }
-          return arr;
-        },
-        [],
-      );
+          // Handle inactive user requiring verification
+          else if (res && !res.isActive && !typeError(res)) {
+            /** Open verification form for new user activation */
+            setOpen(true);
+            setComponent('VerificationForm');
+            setAction('activateUser');
+          }
 
-      /** Add email notifications data to form */
-      formData.push({
-        marker: 'email_notifications',
-        type: 'string',
-        value: fields.email_reg?.value ? String(fields.email_reg.value) : '',
-      });
-
-      /** Prepare sign up data structure for API call */
-      const data: ISignUpData = {
-        formIdentifier: 'reg',
-        authData: [
-          {
-            marker: 'email_reg',
-            value: (fields.email_reg?.value as string) || '',
-          },
-          {
-            marker: 'password_reg',
-            value: (fields.password_reg?.value as string) || '',
-          },
-        ],
-        formData,
-        notificationData: {
-          email: (fields.email_reg?.value as string) || '',
-          phonePush: [(fields.phone_reg?.value as string) || ''],
-          phoneSMS: (fields.phone_reg?.value as string) || '',
-        },
-      };
-
-      /** Set loading state to indicate form submission in progress */
-      setIsLoading(true);
-
-      /** Attempt to sign up user via API AuthProvider */
-      try {
-        /** Get language code for API request */
-        const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-        /** Submit registration data to the API */
-        const res = await api.AuthProvider.signUp('email', data, langCode);
-
-        /** Handle successful registration based on user activation status */
-        if (res && res.isActive) {
-          /** Automatically log in and authenticate active user */
-          await logInUser({
-            login: res.identifier,
-            password: (fields.password_reg?.value as string) || '',
-          });
-          authenticate();
+          /** Clear previous errors */
+          setError('');
+          /** Handle API error responses */
+          if (typeError(res)) {
+            setError('Error ' + res.status);
+          }
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (e: any) {
+          /** Set error message from exception */
+          setError(e.message);
         }
-        // Handle inactive user requiring verification
-        else if (res && !res.isActive && !typeError(res)) {
-          /** Open verification form for new user activation */
-          setOpen(true);
-          setComponent('VerificationForm');
-          setAction('activateUser');
-        }
-
-        /** Clear previous errors */
-        setError('');
-        /** Handle API error responses */
-        if (typeError(res)) {
-          setError('Error ' + res.status);
-        }
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (e: any) {
-        /** Set error message from exception */
-        setError(e.message);
+        /** Reset loading state after form submission */
+        setIsLoading(false);
       }
-      /** Reset loading state after form submission */
-      setIsLoading(false);
-    }
-  };
+    },
+    [fields, formFields, lang, authenticate, setOpen, setComponent, setAction],
+  );
 
   return (
     /* Form animation wrapper with loading state */
     <FormAnimations isLoading={isLoading}>
       {/** Registration form with onSubmit handler */}
       <form
-        onSubmit={(e) => onSignUp(e)}
+        onSubmit={onSignUp}
         className="mx-auto flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
       >
         {/** Form header with title and sign-in link */}
@@ -204,10 +210,9 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           <p className="slide-up text-xs text-gray-400 max-md:max-w-full">
             {/** Sign-in link to switch to login form */}
             <button
-              onClick={() => {
-                setComponent('SignInForm');
-              }}
+              onClick={() => setComponent('SignInForm')}
               className="underline"
+              type="button"
             >
               {sign_in_text?.value}
             </button>{' '}
@@ -224,7 +229,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
               return (
                 <FormInput
                   index={index as number}
-                  key={index}
+                  key={field.marker}
                   {...field}
                   value={field.value}
                 />

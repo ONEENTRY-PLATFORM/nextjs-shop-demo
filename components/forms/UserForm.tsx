@@ -5,7 +5,7 @@ import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInt
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FormDataType } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { FormEvent, JSX, Key } from 'react';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
@@ -66,64 +66,82 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
   const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
   /**
+   * Memoized map of form data for efficient lookup
+   * Converts array to object to avoid repeated find() calls in render
+   */
+  const formDataMap = useMemo(() => {
+    if (!user?.formData || !Array.isArray(user.formData)) return {};
+    return user.formData.reduce(
+      (acc: Record<string, FormDataType>, item: FormDataType) => {
+        acc[item.marker as string] = item;
+        return acc;
+      },
+      {} as Record<string, FormDataType>,
+    );
+  }, [user]);
+
+  /**
    * Handle user data update submission
    * Prepares form data and sends it to the OneEntry API to update user information
    * @param {FormEvent<HTMLFormElement>} e - Form submission event
    */
-  const onUpdateUserData = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
+  const onUpdateUserData = useCallback(
+    async (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      try {
+        setLoading(true);
 
-      /** Prepare form data for submission. Maps through form attributes and creates data objects for each field */
-      const formData: IAuthFormData[] = data?.attributes
-        .map((field: IAttributes) => {
-          if (field.marker !== 'email_notifications') {
-            const fieldData = fields[field.marker as keyof typeof fields];
-            if (fieldData) {
-              return {
-                marker: field.marker,
-                value: fieldData.value,
-                type: 'string',
-              };
+        /** Prepare form data for submission. Maps through form attributes and creates data objects for each field */
+        const formData: IAuthFormData[] = data?.attributes
+          .map((field: IAttributes) => {
+            if (field.marker !== 'email_notifications') {
+              const fieldData = fields[field.marker as keyof typeof fields];
+              if (fieldData) {
+                return {
+                  marker: field.marker,
+                  value: fieldData.value,
+                  type: 'string',
+                };
+              }
             }
-          }
-          return null;
-        })
-        .filter(function (el: null) {
-          return el !== null;
-        });
+            return null;
+          })
+          .filter(function (el: null) {
+            return el !== null;
+          });
 
-      /** Update user with Users API. Sends the prepared form data to update the user's profile information */
-      if (user?.formIdentifier) {
-        await api.Users.updateUser({
-          formIdentifier: user.formIdentifier,
-          formData,
-          authData: [
-            {
-              marker: 'password_reg',
-              value: String(fields['password_reg']?.value || ''),
+        /** Update user with Users API. Sends the prepared form data to update the user's profile information */
+        if (user?.formIdentifier) {
+          await api.Users.updateUser({
+            formIdentifier: user.formIdentifier,
+            formData,
+            authData: [
+              {
+                marker: 'password_reg',
+                value: String(fields['password_reg']?.value || ''),
+              },
+            ],
+            notificationData: {
+              email: String(fields['email_reg']?.value || ''),
+              phonePush: [],
+              phoneSMS: String(fields['phone_reg']?.value || ''),
             },
-          ],
-          notificationData: {
-            email: String(fields['email_reg']?.value || ''),
-            phonePush: [],
-            phoneSMS: String(fields['phone_reg']?.value || ''),
-          },
-          state: {},
-        });
+            state: {},
+          });
+        }
+        refreshUser();
+        setError('');
+        setLoading(false);
+        toast('Data saved!');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (e: any) {
+        refreshUser();
+        setLoading(false);
+        setError(e.message);
       }
-      refreshUser();
-      setError('');
-      setLoading(false);
-      toast('Data saved!');
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (e: any) {
-      refreshUser();
-      setLoading(false);
-      setError(e.message);
-    }
-  };
+    },
+    [data, fields, user, refreshUser],
+  );
 
   /** Show loader while form data is being fetched */
   if (isLoading) {
@@ -139,21 +157,19 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
     <FormAnimations isLoading={isLoading}>
       <form
         className="flex min-h-full w-full max-w-107.5 flex-col gap-4 text-xl leading-5"
-        onSubmit={(e) => onUpdateUserData(e)}
+        onSubmit={onUpdateUserData}
       >
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {/** Map through form attributes and render FormInput components Each input is populated with user's current data */}
           {data?.attributes.map((field: IAttributes, index: Key | number) => {
-            const fieldData = Array.isArray(user.formData)
-              ? (user.formData.find(
-                  (item) => item.marker === field.marker,
-                ) as FormDataType)
-              : {};
+            const marker = field.marker as string;
+            const fieldData =
+              (formDataMap as Record<string, FormDataType>)[marker] || {};
 
             if (field.marker !== 'email_notifications') {
               return (
                 <FormInput
-                  key={index}
+                  key={field.marker}
                   index={index as number}
                   {...field}
                   {...fieldData}

@@ -3,7 +3,7 @@
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX, Key } from 'react';
-import { useContext, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
 import { api, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
@@ -56,40 +56,41 @@ export const ForgotPasswordForm = ({
    * @param   {FormEvent<HTMLFormElement>} e - Form submission event
    * @returns {Promise<void>}                Promise that resolves when the form is submitted
    */
-  const onSubmitFormHandle = async (
-    e: FormEvent<HTMLFormElement>,
-  ): Promise<void> => {
-    /** Prevent default form submission behavior */
-    e.preventDefault();
+  const onSubmitFormHandle = useCallback(
+    async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+      /** Prevent default form submission behavior */
+      e.preventDefault();
 
-    /** Check if email field exists before proceeding */
-    if (!fields.email_reg) {
-      setError('Email field is missing');
-      return;
-    }
-
-    try {
-      /** Generate verification code with API and send to user's email */
-      await api.AuthProvider.generateCode(
-        'email',
-        fields.email_reg.value as string,
-        'generate_code',
-      );
-      /** Open Verification form for the next step in password reset process */
-      setComponent('VerificationForm');
-      setAction('checkCode');
-    } catch (e: any) {
-      /** Set error message from exception */
-      setError(e.message);
-      /** Handle bad request errors (e.g., invalid email) */
-      if (e.statusCode === 400) {
-        /** Delay opening verification form to show error message first */
-        setTimeout(() => {
-          setComponent('VerificationForm');
-        }, 800);
+      /** Check if email field exists before proceeding */
+      if (!fields.email_reg) {
+        setError('Email field is missing');
+        return;
       }
-    }
-  };
+
+      try {
+        /** Generate verification code with API and send to user's email */
+        await api.AuthProvider.generateCode(
+          'email',
+          fields.email_reg.value as string,
+          'generate_code',
+        );
+        /** Open Verification form for the next step in password reset process */
+        setComponent('VerificationForm');
+        setAction('checkCode');
+      } catch (e: any) {
+        /** Set error message from exception */
+        setError(e.message);
+        /** Handle bad request errors (e.g., invalid email) */
+        if (e.statusCode === 400) {
+          /** Delay opening verification form to show error message first */
+          setTimeout(() => {
+            setComponent('VerificationForm');
+          }, 800);
+        }
+      }
+    },
+    [fields, setComponent, setAction],
+  );
 
   /** Show loader while form data is being fetched */
   if (!data || isLoading) {
@@ -102,7 +103,7 @@ export const ForgotPasswordForm = ({
       {/** Forgot password form with onSubmit handler */}
       <form
         className="mx-auto flex min-h-120 max-w-87.5 flex-col gap-4 text-xl leading-5"
-        onSubmit={(e) => onSubmitFormHandle(e)}
+        onSubmit={onSubmitFormHandle}
       >
         {/** Form header with title and description */}
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
@@ -121,7 +122,11 @@ export const ForgotPasswordForm = ({
             /** Only render the email registration field for password reset */
             if (field.marker === 'email_reg') {
               return (
-                <FormInput key={index} index={index as number} {...field} />
+                <FormInput
+                  key={field.marker || index}
+                  index={index as number}
+                  {...field}
+                />
               );
             }
             return;
