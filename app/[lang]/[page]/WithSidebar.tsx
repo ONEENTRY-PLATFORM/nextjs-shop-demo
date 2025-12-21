@@ -28,7 +28,7 @@ const WithSidebar = async ({
        */}
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-row max-md:flex-row max-md:flex-wrap">
         {/* Sidebar container with fixed width on desktop and full width on mobile */}
-        <aside className="w-[210px] pb-8 max-md:w-full">
+        <aside className="w-52.5 pb-8 max-md:w-full">
           <SidebarMenu lang={lang} />
         </aside>
         {/*

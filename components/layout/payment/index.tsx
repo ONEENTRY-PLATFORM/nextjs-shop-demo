@@ -177,13 +177,19 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   }
 
   /** Auth Error */
-  if (!isAuth || error) {
+  if (!isAuth) {
     return <AuthError dict={dict} />;
   }
 
   /** Loader */
   if (isAccountsLoading || isProductsLoading) {
     return <Loader />;
+  }
+
+  /** API Error - if there's an error fetching payment accounts, show empty methods list */
+  if (error) {
+    // Silently handle API errors by showing the page without payment methods
+    // This prevents authenticated users from seeing AuthError
   }
 
   /** If no products in cart */

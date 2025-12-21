@@ -1,7 +1,7 @@
 'use client';
 
 import type { JSX } from 'react';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { selectCartItemWithIdLength } from '@/app/store/reducers/CartSlice';
@@ -30,7 +30,7 @@ const QuantitySelector = memo(
     units,
     title,
     height,
-    className,
+    className = '',
   }: {
     id: number;
     units: number;
@@ -43,6 +43,21 @@ const QuantitySelector = memo(
       useAppSelector((state) => selectCartItemWithIdLength(state, id)) || 0;
 
     /**
+     * Memoized className to avoid string concatenation on every render
+     */
+    const containerClassName = useMemo(
+      () =>
+        'flex items-center justify-between rounded-3xl bg-slate-50 px-2' +
+        className,
+      [className],
+    );
+
+    /**
+     * Memoized style object to avoid creating new object on every render
+     */
+    const containerStyle = useMemo(() => ({ height: height }), [height]);
+
+    /**
      * Hide component when product is not in cart (quantity <= 0)
      * This provides a clean UI experience by only showing quantity controls
      * for products that have been added to the cart
@@ -52,13 +67,7 @@ const QuantitySelector = memo(
     }
 
     return (
-      <div
-        className={
-          'flex items-center justify-between rounded-3xl bg-slate-50 px-2' +
-          className
-        }
-        style={{ height: height }}
-      >
+      <div className={containerClassName} style={containerStyle}>
         <DecreaseButton id={id} qty={quantity} title={title} />
         <QuantityInput id={id} qty={quantity} units={units} />
         <IncreaseButton id={id} qty={quantity} units={units} />
