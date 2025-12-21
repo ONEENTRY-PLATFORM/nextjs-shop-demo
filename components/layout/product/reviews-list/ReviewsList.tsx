@@ -37,8 +37,11 @@ const ReviewsList = ({
 
   const INITIAL_REVIEWS_COUNT = 2;
 
-  /** Check if there are any reviews available and return a message if none are found */
+  /** Check if there are any reviews available and return a message if none are found (only when expanded) */
   if (!reviewsData || reviewsData.items.length < 1) {
+    if (!state) {
+      return <></>;
+    }
     return (
       <div className="flex text-center w-full h-50 justify-center items-center">
         <h2 className="text-2xl">
