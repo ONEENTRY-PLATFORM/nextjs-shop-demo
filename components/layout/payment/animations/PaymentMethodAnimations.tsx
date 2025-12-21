@@ -16,6 +16,7 @@ import { useRef, useState } from 'react';
  * @param   {string}      props.className - CSS className to apply to the wrapper element.
  * @param   {number}      props.index     - Index of element for animations stagger effect.
  * @param   {boolean}     props.isActive  - Indicates if this payment method is currently active.
+ * @param   {Function}    props.onClick   - Click handler for the payment method card (optional).
  * @returns {JSX.Element}                 Payment method animations wrapper component.
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
@@ -24,11 +25,13 @@ const PaymentMethodAnimations = ({
   className,
   isActive,
   index,
+  onClick,
 }: {
   children: ReactNode;
   className: string;
   index: number;
   isActive: boolean;
+  onClick?: () => void;
 }): JSX.Element => {
   const { stage } = useTransitionState();
   const [prevStage, setPrevStage] = useState('');
@@ -125,7 +128,7 @@ const PaymentMethodAnimations = ({
   }, [stage]);
 
   return (
-    <div ref={ref} className={className}>
+    <div ref={ref} className={className} onClick={onClick}>
       {children}
     </div>
   );

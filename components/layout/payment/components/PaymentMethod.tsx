@@ -3,6 +3,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -63,43 +64,62 @@ const PaymentMethod = ({
   /** Get cart data from Redux store */
   const cartData = useAppSelector((state) => state.cartReducer.productsData);
 
-  /** Check if there are any selected items in the cart */
-  const hasCartItems = cartData && cartData.some((item) => item.selected);
+  /** Check if there are any selected items in the cart (memoized) */
+  const hasCartItems = useMemo(
+    () => cartData && cartData.some((item) => item.selected),
+    [cartData],
+  );
+
+  /**
+   * Toggle payment method selection
+   * Opens the method if it's not active, closes it if it is active
+   */
+  const handleToggleMethod = useCallback(() => {
+    if (isActive) {
+      dispatch(addPaymentMethod(''));
+    } else {
+      dispatch(addPaymentMethod(account.identifier));
+    }
+  }, [isActive, dispatch, account.identifier]);
+
+  /**
+   * Memoized container className
+   */
+  const containerClassName = useMemo(
+    () =>
+      'relative overflow-hidden w-full flex-row text-slate-700 items-center justify-between rounded-md border border-solid border-neutral-300 bg-transparent p-4 ' +
+      clsx(isActive && 'min-h-36', ' min-h-10 cursor-pointer'),
+    [isActive],
+  );
 
   return (
     <PaymentMethodAnimations
-      className={
-        'relative overflow-hidden w-full flex-row text-slate-700 items-center justify-between rounded-md border border-solid border-neutral-300 bg-transparent p-4 ' +
-        clsx(isActive && 'min-h-36', ' min-h-10 cursor-pointer')
-      }
+      className={containerClassName}
       index={index}
       isActive={isActive}
+      onClick={handleToggleMethod}
     >
-      <div
-        onClick={() => {
-          if (!isActive) {
-            dispatch(addPaymentMethod(account.identifier));
-          }
-        }}
-      >
+      <div>
         <div className={'flex-col'}>
           <h2 className="text-lg font-bold">{account?.localizeInfos?.title}</h2>
           <p className="mb-4 text-base">
             Payment description {account?.localizeInfos?.title}
           </p>
           <button
-            onClick={() => {
-              if (isActive) {
-                dispatch(addPaymentMethod(''));
-              }
-            }}
-            className="absolute bottom-4 right-4 size-6 rounded-full bg-slate-50 text-center"
+            className="absolute cursor-pointer bottom-4 right-4 size-6 rounded-full bg-slate-50 text-center"
+            aria-label={
+              isActive ? 'Collapse payment method' : 'Expand payment method'
+            }
           >
             {isActive ? '-' : '+'}
           </button>
         </div>
 
-        <div id="cartData" className={`w-full ${isActive ? '' : 'hidden'}`}>
+        <div
+          id="cartData"
+          className={`w-full ${isActive ? '' : 'hidden'}`}
+          onClick={(e) => e.stopPropagation()}
+        >
           <div className="flex flex-wrap justify-between text-[#4C4D56]">
             <div className="flex w-2/3 min-h-full justify-between flex-col border border-r-0 border-b-0 border-solid border-[#B0BCCE] max-md:w-full max-md:max-w-full">
               {hasCartItems ? (
