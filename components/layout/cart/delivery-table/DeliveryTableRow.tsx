@@ -20,7 +20,7 @@ const DeliveryTableRow = ({
   label,
   value,
   icon,
-  placeholder,
+  placeholder = '',
 }: {
   label: string;
   value: string;

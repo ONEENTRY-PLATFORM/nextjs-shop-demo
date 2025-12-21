@@ -72,6 +72,16 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
   }, [data]);
 
   /**
+   * Get today's date at midnight (memoized)
+   * This is used as the minimum selectable date
+   */
+  const minDate = useMemo(() => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today;
+  }, []);
+
+  /**
    * Handler function for date change
    */
   const handleDateChange = useCallback((value: any) => {
@@ -120,6 +130,7 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
         view="month"
         onChange={handleDateChange}
         value={new Date(date)}
+        minDate={minDate}
       />
       <TimeSlots
         timeSlots={timeIntervals}
