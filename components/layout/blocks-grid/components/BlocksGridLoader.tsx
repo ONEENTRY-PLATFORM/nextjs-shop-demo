@@ -88,7 +88,7 @@ const BlocksGridLoader = ({
 
           return (
             <div
-              key={index}
+              key={block}
               className={`block-card ${className.width} ${className.height}`}
             >
               <div

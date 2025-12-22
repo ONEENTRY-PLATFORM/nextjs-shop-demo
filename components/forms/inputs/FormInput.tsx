@@ -1,6 +1,6 @@
 /* eslint-disable jsdoc/reject-any-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 import { useEffect, useState } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
@@ -119,24 +119,21 @@ const FormInput = (field: {
           onChange={(val) => setValue(val.currentTarget.value)}
         >
           {field.listTitles?.map(
-            (
-              option: {
-                value: string;
-                title:
-                  | string
-                  | number
-                  | bigint
-                  | boolean
-                  | Iterable<React.ReactNode>
-                  | React.ReactPortal
-                  | Promise<unknown>
-                  | null
-                  | undefined;
-              },
-              i: Key,
-            ) => {
+            (option: {
+              value: string;
+              title:
+                | string
+                | number
+                | bigint
+                | boolean
+                | Iterable<React.ReactNode>
+                | React.ReactPortal
+                | Promise<unknown>
+                | null
+                | undefined;
+            }) => {
               return (
-                <option key={i} value={option.value as string}>
+                <option key={option.value} value={option.value as string}>
                   {option.title as string}
                 </option>
               );

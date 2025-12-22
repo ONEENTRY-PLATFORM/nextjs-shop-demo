@@ -202,7 +202,7 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
       {whitelistMethods.map((item, index) => {
         return (
           <PaymentMethod
-            key={index}
+            key={item.id}
             index={index as number}
             account={item}
             lang={lang as string}

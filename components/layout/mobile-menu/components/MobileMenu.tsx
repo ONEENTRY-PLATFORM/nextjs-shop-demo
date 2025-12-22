@@ -28,8 +28,8 @@ function MobileMenu({
     /** Container for mobile menu items with flex column layout */
     <ul className={'flex flex-col ' + className}>
       {/* Map through menu items and render each as a MobileMenuItem component */}
-      {menu.map((item: IMenusPages, index: Key) => (
-        <MobileMenuItem key={index} item={item} lang={lang} />
+      {menu.map((item: IMenusPages) => (
+        <MobileMenuItem key={item.id} item={item} lang={lang} />
       ))}
     </ul>
   ) : (

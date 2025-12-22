@@ -1,7 +1,7 @@
 import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 import { useContext, useEffect } from 'react';
 
 import { useGetFormByMarkerQuery } from '@/app/api';
@@ -122,14 +122,14 @@ const DeliveryTable = ({
     >
       <div>
         {/** Map through form attributes to render appropriate form rows */}
-        {attrs?.map((attr: IAttributes, i: Key) => {
+        {attrs?.map((attr: IAttributes) => {
           const marker = attr.marker;
 
           /** Render date row with calendar icon */
           if (marker === 'date') {
             return (
               <DeliveryTableRow
-                key={i}
+                key={marker}
                 value={new Date(deliveryData.date).toLocaleDateString('en-US')}
                 icon={'/icons/calendar.svg'}
                 label={order_info_date_placeholder?.value}
@@ -142,7 +142,7 @@ const DeliveryTable = ({
           if (marker === 'time') {
             return (
               <DeliveryTableRow
-                key={i}
+                key={marker}
                 value={deliveryData.time}
                 icon={'/icons/time.svg'}
                 label={order_info_time_placeholder?.value}
@@ -155,7 +155,7 @@ const DeliveryTable = ({
           if (marker === 'order_address') {
             return (
               <AddressRow
-                key={i}
+                key={marker}
                 placeholder={order_info_address_placeholder?.value}
               />
             );

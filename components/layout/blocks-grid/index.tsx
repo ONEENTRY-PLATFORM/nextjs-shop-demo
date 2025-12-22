@@ -43,7 +43,7 @@ const BlocksGrid = async ({
             return (
               /** Individual block card component with index, marker, styling and localization */
               <BlocksGridCard
-                key={index}
+                key={block}
                 index={index}
                 marker={block}
                 className={className}

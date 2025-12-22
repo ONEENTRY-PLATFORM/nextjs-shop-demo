@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 
 import NavigationMenuItem from './NavigationMenuItem';
 
@@ -25,9 +25,9 @@ const NavigationMenu = async ({
       <div className="flex w-full max-w-(--breakpoint-xl) items-center justify-center py-5 max-md:px-5">
         {/* List of top-level menu items */}
         <ul className="flex w-full justify-between gap-5 max-md:flex-wrap">
-          {menu?.map((item: IMenusPages, index: Key) => (
+          {menu?.map((item: IMenusPages) => (
             <li
-              key={index}
+              key={item.id}
               className="group my-auto flex justify-between gap-5 whitespace-nowrap py-1"
             >
               {/* Navigation menu item with potential dropdown */}
@@ -40,9 +40,9 @@ const NavigationMenu = async ({
               {/* Dropdown submenu for items that have children */}
               {Array.isArray(item.children) && (
                 <ul className="absolute z-10 mt-8 hidden flex-col gap-3 rounded-b-2xl bg-white p-6 leading-8 shadow-lg group-hover:flex">
-                  {item.children.map((it: IMenusPages, i: Key) => {
+                  {item.children.map((it: IMenusPages) => {
                     return (
-                      <li key={i}>
+                      <li key={it.id}>
                         {/* Link to the submenu category page */}
                         <Link
                           prefetch={true}

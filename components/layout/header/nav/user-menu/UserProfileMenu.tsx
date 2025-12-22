@@ -76,9 +76,9 @@ const UserProfileMenu = ({
         {/** Dropdown menu content with user navigation links */}
         {pages && (
           <ul className="my-4 text-gray-800">
-            {pages.map((page, i) => {
+            {pages.map((page) => {
               return (
-                <li key={i}>
+                <li key={page.id}>
                   <UserMenuItem lang={lang} page={page} setState={setState} />
                 </li>
               );

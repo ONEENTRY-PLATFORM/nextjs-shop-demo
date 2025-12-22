@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/reject-function-type */
 'use client';
 
 import { useGSAP } from '@gsap/react';

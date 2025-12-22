@@ -102,16 +102,16 @@ const PageLayout = async ({
   return (
     <div className="mx-auto flex min-h-80 w-full max-w-(--breakpoint-xl) flex-col overflow-hidden">
       {Array.isArray(pages) ? (
-        pages.map((p, i) => {
+        pages.map((p) => {
           if (pageUrl !== p.name) {
             return null;
           }
           return p.templateType === 'withSidebar' ? (
-            <WithSidebar lang={lang} key={i}>
+            <WithSidebar lang={lang} key={p.name}>
               {p.component}
             </WithSidebar>
           ) : (
-            <div key={i}>{p.component}</div>
+            <div key={p.name}>{p.component}</div>
           );
         })
       ) : (

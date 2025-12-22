@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { UseDate } from '@/components/utils/utils';
@@ -63,19 +63,16 @@ const OrderDataTable = ({
 
       {/** Map through order form data to display relevant fields */}
       {orderData.formData.map(
-        (
-          field: {
-            marker: string;
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            value: any;
-          },
-          i: Key,
-        ) => {
+        (field: {
+          marker: string;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          value: any;
+        }) => {
           /** Display delivery address when marker matches */
           if (field.marker === 'order_address') {
             return (
               <div
-                key={i}
+                key={field.marker}
                 className="flex flex-col max-md:flex-row max-md:gap-2"
               >
                 <b>{order_info_address_placeholder?.value}:</b> {field.value}
@@ -87,7 +84,7 @@ const OrderDataTable = ({
           if (field.marker === 'date') {
             return (
               <div
-                key={i}
+                key={field.marker}
                 className="flex flex-col max-md:flex-row max-md:gap-2"
               >
                 <b>{delivery_date_text?.value}: </b>{' '}
@@ -103,7 +100,7 @@ const OrderDataTable = ({
           if (field.marker === 'time') {
             return (
               <div
-                key={i}
+                key={field.marker}
                 className="flex flex-col max-md:flex-row max-md:gap-2"
               >
                 <b>{delivery_time_text?.value}: </b> {field.value}

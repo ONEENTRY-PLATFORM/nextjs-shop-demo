@@ -6,7 +6,7 @@ import type {
   IListTitle,
 } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IError } from 'oneentry/dist/base/utils';
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 import { memo, useCallback, useEffect, useState } from 'react';
 
 /**
@@ -98,10 +98,10 @@ const ColorFilter = memo(
         <div className="mb-5 text-lg text-[#4C4D56]">{title}</div>
         {/** Color options list */}
         <div className="mb-9 flex flex-wrap gap-1 whitespace-nowrap text-sm leading-8 text-slate-400">
-          {colors.map((color: Color, index: Key) => (
+          {colors.map((color: Color) => (
             /* Color option button with dynamic styling based on selection state */
             <button
-              key={index}
+              key={color.code}
               className={
                 'flex cursor-pointer gap-1.5 rounded-full pl-1 pr-2 transition-colors w-24 ' +
                 (color.code === currentColor

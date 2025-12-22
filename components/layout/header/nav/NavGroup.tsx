@@ -50,7 +50,10 @@ const NavGroup = async ({ lang }: { lang: string }): Promise<JSX.Element> => {
         menu.pages.map((item: IMenusPages, i: Key) => {
           return (
             /** Container for individual navigation items with responsive sizing */
-            <div className="flex size-8 max-sm:size-6 max-xs:hidden" key={i}>
+            <div
+              className="flex size-8 max-sm:size-6 max-xs:hidden"
+              key={item.id}
+            >
               {item.pageUrl === 'profile' && (
                 <NavItemProfile
                   item={item}

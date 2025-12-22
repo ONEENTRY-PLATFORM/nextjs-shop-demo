@@ -90,7 +90,7 @@ const ReviewsList = ({
         {/** Map through displayed reviews and render a ReviewCard for each one */}
         {displayedReviews?.map((review: any, index: number) => (
           <ReviewCard
-            key={review.id || index}
+            key={review.id}
             review={review}
             childReviews={childReviewsByParentId[review.id] || []}
             allReviews={reviewsData.items || []}

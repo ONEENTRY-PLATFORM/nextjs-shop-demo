@@ -1,6 +1,6 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 
 import CardsGridAnimations from '../products-grid/animations/CardsGridAnimations';
 import ProductCard from '../products-grid/components/product-card/ProductCard';
@@ -53,10 +53,10 @@ const RelatedItems = ({
       {/* Products cards grid with animation */}
       <CardsGridAnimations className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
         {block?.similarProducts?.items?.map(
-          (product: IProductsEntity, i: Key | number) => {
+          (product: IProductsEntity, i: number) => {
             return (
               <ProductCard
-                key={i}
+                key={product.id}
                 lang={lang}
                 product={product}
                 dict={dict}

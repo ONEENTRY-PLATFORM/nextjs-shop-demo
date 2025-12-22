@@ -67,7 +67,7 @@ const OrderProductsTable = ({
       </div>
 
       {/** Product rows */}
-      {actualProductsData.map((product, i) => {
+      {actualProductsData.map((product) => {
         /** Find the actual product by ID */
         const actualProduct = actualProducts.find((p) => p.id === product.id);
         if (!actualProduct || !product.selected) {
@@ -89,7 +89,7 @@ const OrderProductsTable = ({
 
         return (
           <div
-            key={i}
+            key={actualProduct.id}
             className="-mt-px flex border-b border-solid border-[#B0BCCE] p-2"
           >
             <div className="w-1/2">{localizeInfos?.title}</div>

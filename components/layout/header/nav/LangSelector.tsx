@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter } from 'next/navigation';
 import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 
 /**
  * Language selector component for switching between different locales in the application.
@@ -60,9 +60,9 @@ const LangSelector = ({
       {/** Map through active locales and create option elements */}
       {locales
         ?.filter((locale: { isActive: boolean }) => locale.isActive && locale)
-        .map((locale: ILocalEntity, i: Key) => {
+        .map((locale: ILocalEntity) => {
           return (
-            <option key={i} value={locale.shortCode}>
+            <option key={locale.shortCode} value={locale.shortCode}>
               {locale.shortCode}
             </option>
           );

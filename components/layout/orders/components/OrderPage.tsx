@@ -2,7 +2,7 @@
 'use client';
 
 // import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
@@ -66,15 +66,15 @@ const OrderPage = ({
     >
       {/* Product cards section */}
       <div className="flex flex-col gap-4 pb-5 max-md:max-w-full">
-        {products.map((product: any, i: Key) => {
+        {products.map((product: any) => {
           /** Skip product with id 83 (possibly a special case or placeholder) */
           if (product.id === 83) {
             return;
           }
           return (
             <ProductCard
+              key={product.id}
               settings={settings}
-              key={i}
               product={product}
               lang={lang}
             />

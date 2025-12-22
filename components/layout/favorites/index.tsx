@@ -2,7 +2,7 @@
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 import { memo, useContext, useEffect, useState } from 'react';
 
 import { api, useGetProductsByIdsQuery } from '@/app/api';
@@ -120,10 +120,10 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
           <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
             {/** Let's make sure products are an array before calling map */}
             {Array.isArray(products) && products.length > 0 ? (
-              products.map((product: IProductsEntity, index: Key | number) => {
+              products.map((product: IProductsEntity, index: number) => {
                 return (
                   <ProductCard
-                    key={index}
+                    key={product.id}
                     product={product}
                     index={index as number}
                     lang={lang as string}

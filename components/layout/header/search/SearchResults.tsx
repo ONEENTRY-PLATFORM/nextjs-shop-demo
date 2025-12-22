@@ -72,7 +72,7 @@ const SearchResults = ({
             }
             /* Container for individual product search result */
             return (
-              <div key={i} className="flex w-full">
+              <div key={id} className="flex w-full">
                 {/** Link to product page with product title */}
                 <Link
                   prefetch={true}

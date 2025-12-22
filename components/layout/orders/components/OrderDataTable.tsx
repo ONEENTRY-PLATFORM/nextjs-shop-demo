@@ -2,7 +2,7 @@
 'use client';
 
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 
 import Loader from '@/components/shared/Loader';
 import { UseDate, UsePrice } from '@/components/utils/utils';
@@ -71,11 +71,11 @@ const OrderDataTable = ({
       <hr className="mb-4 text-slate-400" />
 
       {/* Map through form data to display address, date, and time fields */}
-      {formData.map((field: IOrderField, i: Key) => {
+      {formData.map((field: IOrderField) => {
         /** Display order address field */
         if (field.marker === 'order_address') {
           return (
-            <div key={i} className="flex gap-2">
+            <div key={field.marker} className="flex gap-2">
               <b>{address_title.value}:</b> {field.value}
             </div>
           );
@@ -89,7 +89,7 @@ const OrderDataTable = ({
           });
 
           return (
-            <div key={i} className="flex gap-2">
+            <div key={field.marker} className="flex gap-2">
               <b>{delivery_date_title.value}: </b> {date}
             </div>
           );
@@ -98,7 +98,7 @@ const OrderDataTable = ({
         /** Display delivery time field */
         if (field.marker === 'time') {
           return (
-            <div key={i} className="flex gap-2">
+            <div key={field.marker} className="flex gap-2">
               <b>{delivery_time_title.value}: </b> {field.value}
             </div>
           );

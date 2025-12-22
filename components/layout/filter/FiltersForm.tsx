@@ -81,11 +81,11 @@ const FiltersForm = async ({
       className="flex size-full h-auto flex-col overflow-x-hidden overscroll-y-auto px-8 pb-16 pt-5 max-md:max-h-full max-md:px-6"
     >
       {Array.isArray(attributeKeys) ? (
-        attributeKeys.map((attr, index) => {
+        attributeKeys.map((attr) => {
           /** Render price filter component */
           if (attr === 'price_filter' && prices) {
             return (
-              <FilterAnimations key={index} className="w-full" index={0}>
+              <FilterAnimations key={attr} className="w-full" index={0}>
                 <PricePickerFilter prices={prices} dict={dict} />
               </FilterAnimations>
             );
@@ -93,9 +93,8 @@ const FiltersForm = async ({
           /** Render color filter component */
           if (attr === 'color_filter') {
             return (
-              <FilterAnimations key={index} className="w-full" index={1}>
+              <FilterAnimations key={attr} className="w-full" index={1}>
                 <ColorFilter
-                  key={index}
                   title={sortedAttributes[attr]?.value}
                   attributes={attribute as IAttributesSetsEntity}
                 />
@@ -105,11 +104,8 @@ const FiltersForm = async ({
           /** Render availability filter component */
           if (attr === 'availability_filter') {
             return (
-              <FilterAnimations key={index} className="w-full" index={2}>
-                <AvailabilityFilter
-                  key={index}
-                  title={sortedAttributes[attr]?.value}
-                />
+              <FilterAnimations key={attr} className="w-full" index={2}>
+                <AvailabilityFilter title={sortedAttributes[attr]?.value} />
               </FilterAnimations>
             );
           }
