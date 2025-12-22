@@ -3,7 +3,6 @@ import type {
   IMenusPages,
 } from 'oneentry/dist/menus/menusInterfaces';
 import type { JSX } from 'react';
-import { type Key } from 'react';
 
 import { getLocales, getMenuByMarker } from '@/app/api';
 
@@ -47,7 +46,7 @@ const NavGroup = async ({ lang }: { lang: string }): Promise<JSX.Element> => {
     <div className="fade-in my-auto flex items-center gap-6 max-md:max-w-full max-md:gap-4 max-sm:gap-2">
       {/** Render navigation items if menu and pages are available */}
       {menu && Array.isArray(menu.pages) ? (
-        menu.pages.map((item: IMenusPages, i: Key) => {
+        menu.pages.map((item: IMenusPages) => {
           return (
             /** Container for individual navigation items with responsive sizing */
             <div

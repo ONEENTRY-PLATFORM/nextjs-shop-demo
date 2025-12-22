@@ -1,7 +1,7 @@
 'use client';
 
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 
 import MobileMenuItem from './MobileMenuItem';
 

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { Dispatch, JSX, Key, SetStateAction } from 'react';
+import type { Dispatch, JSX, SetStateAction } from 'react';
 
 import { useSearchProducts } from '@/app/api/hooks/useSearchProducts';
 import Spinner from '@/components/shared/Spinner';
@@ -60,7 +60,7 @@ const SearchResults = ({
       </button>
       {/** Map through products and display search results */}
       {products.length > 0
-        ? products.map((product: IProductsEntity, i: Key) => {
+        ? products.map((product: IProductsEntity) => {
             const { id, localizeInfos, attributeSetIdentifier } = product;
 
             /**
