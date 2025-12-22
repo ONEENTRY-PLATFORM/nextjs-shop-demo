@@ -176,14 +176,14 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     return <></>;
   }
 
-  /** Auth Error */
-  if (!isAuth) {
-    return <AuthError dict={dict} />;
-  }
-
   /** Loader */
   if (isAccountsLoading || isProductsLoading) {
     return <Loader />;
+  }
+
+  /** Auth Error */
+  if (!isAuth) {
+    return <AuthError dict={dict} />;
   }
 
   /** API Error - if there's an error fetching payment accounts, show empty methods list */
