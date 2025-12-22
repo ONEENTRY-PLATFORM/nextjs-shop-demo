@@ -38,7 +38,7 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   const dispatch = useAppDispatch();
 
   /** Authentication context to check if user is logged in */
-  const { isAuth } = useContext(AuthContext);
+  const { isAuth, isLoading: isAuthLoading } = useContext(AuthContext);
 
   /** Retrieve payment methods from Redux order slice */
   const paymentMethods = useAppSelector(
@@ -176,14 +176,14 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     return <></>;
   }
 
-  /** Auth Error */
-  if (!isAuth) {
-    return <AuthError dict={dict} />;
+  /** Loader - show loader while checking auth or loading data */
+  if (isAuthLoading || isAccountsLoading || isProductsLoading) {
+    return <Loader />;
   }
 
-  /** Loader */
-  if (isAccountsLoading || isProductsLoading) {
-    return <Loader />;
+  /** Auth Error - only show after loading is complete */
+  if (!isAuth) {
+    return <AuthError dict={dict} />;
   }
 
   /** API Error - if there's an error fetching payment accounts, show empty methods list */
