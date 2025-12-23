@@ -58,9 +58,9 @@ export const blocksData = [
  */
 export const blocksColors = {
   home_banner: 'bg-purple-200 w-full max-sm:flex-col',
-  offer_best_seller: 'bg-purple-600',
-  offer_promotion: 'bg-orange-300',
+  offer_best_seller: 'bg-orange-300',
+  offer_promotion: 'bg-blue-200',
   offer_offer_day: 'bg-purple-300',
-  offer_new_arrivals: 'bg-teal-300',
-  offer_youtube: 'bg-blue-200',
+  offer_new_arrivals: 'bg-purple-300',
+  offer_youtube: 'bg-teal-300',
 };

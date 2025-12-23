@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useGSAP } from '@gsap/react';
@@ -16,7 +17,7 @@ const BlocksGridLoader = ({
   blocksData,
   blocksColors,
 }: {
-  blocksData: object;
+  blocksData: any;
   blocksColors: object;
 }): JSX.Element => {
   /**
@@ -78,19 +79,14 @@ const BlocksGridLoader = ({
          */
         blocks.map((block, index) => {
           /** Get CSS classes for block by index */
-          const className = blocksData[index as keyof typeof blocksData] as {
-            width: string;
-            height: string;
-          };
+          const className =
+            blocksData[index as keyof typeof blocksData].className;
 
           /** Get background color class based on block name */
           const bgColor = blocksColors[block as keyof typeof blocksColors];
 
           return (
-            <div
-              key={block}
-              className={`block-card ${className.width} ${className.height}`}
-            >
+            <div key={block} className={`block-card ${className}`}>
               <div
                 className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}
               >
