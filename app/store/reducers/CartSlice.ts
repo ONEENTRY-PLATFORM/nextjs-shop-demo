@@ -26,6 +26,7 @@ type InitialStateType = {
     date: number;
     time: string;
     address: string;
+    interval?: Date[];
   };
   transitionId: number;
   total: number;
@@ -50,6 +51,7 @@ const initialState: InitialStateType = {
     date: new Date().getTime(),
     time: '',
     address: '',
+    interval: [],
   },
   transitionId: 0,
   total: 0,
@@ -284,13 +286,19 @@ export const cartSlice = createSlice({
      */
     setDeliveryData(
       state: WritableDraft<InitialStateType>,
-      action: PayloadAction<{ date: number; time: string; address: string }>,
+      action: PayloadAction<{
+        date: number;
+        time: string;
+        address: string;
+        interval?: Date[];
+      }>,
     ) {
-      state.deliveryData = {
-        date: action.payload.date,
-        time: action.payload.time,
-        address: action.payload.address,
-      };
+      state.deliveryData.date = action.payload.date;
+      state.deliveryData.time = action.payload.time;
+      state.deliveryData.address = action.payload.address;
+      if (action.payload.interval !== undefined) {
+        state.deliveryData.interval = action.payload.interval;
+      }
     },
     /**
      * Set the transition ID for animations
@@ -378,11 +386,17 @@ export const selectIsInCart = (
  * @param   {number}  state.cartReducer.deliveryData.date    - Delivery date.
  * @param   {string}  state.cartReducer.deliveryData.time    - Delivery time.
  * @param   {string}  state.cartReducer.deliveryData.address - Delivery address.
+ * @param   {Date[]}  state.cartReducer.deliveryData.interval - Delivery time interval.
  * @returns {unknown}                                        Delivery data object containing date, time and address.
  */
 export const selectDeliveryData = (state: {
   cartReducer: {
-    deliveryData: { date: number; time: string; address: string };
+    deliveryData: {
+      date: number;
+      time: string;
+      address: string;
+      interval?: Date[];
+    };
   };
 }): unknown => state.cartReducer.deliveryData;
 

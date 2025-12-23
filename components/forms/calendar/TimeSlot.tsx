@@ -1,27 +1,27 @@
-import type { Dispatch, JSX, SetStateAction } from 'react';
+import type { JSX } from 'react';
 
 /**
  * Time slot button component for selecting a specific time slot.
  * Renders a button representing a time slot with different styles based on its state.
- * @param   {object}                           props                 - Time slot props.
- * @param   {object}                           props.slot            - Time slot object. It contains time and isDisabled properties.
- * @param   {string}                           props.slot.time       - Time value
- * @param   {boolean}                          props.slot.isDisabled - Disabled state
- * @param   {string}                           props.currentTime     - Current time. It is used to determine which time slot is currently selected.
- * @param   {Dispatch<SetStateAction<string>>} props.setTime         - Set time. It is used to update the selected time.
- * @returns {JSX.Element}                                            Time slot button.
+ * @param   {object}      props                 - Time slot props.
+ * @param   {object}      props.slot            - Time slot object. It contains time and isDisabled properties.
+ * @param   {string}      props.slot.time       - Time value
+ * @param   {boolean}     props.slot.isDisabled - Disabled state
+ * @param   {string}      props.currentTime     - Current time. It is used to determine which time slot is currently selected.
+ * @param   {() => void}  props.onSelect        - Callback function to handle time slot selection.
+ * @returns {JSX.Element}                       Time slot button.
  */
 const TimeSlot = ({
   slot,
   currentTime,
-  setTime,
+  onSelect,
 }: {
   slot: {
     time: string;
     isDisabled?: boolean;
   };
   currentTime: string;
-  setTime: Dispatch<SetStateAction<string>>;
+  onSelect: () => void;
 }): JSX.Element => {
   /** Destructure slot properties for easier access */
   const { isDisabled, time } = slot;
@@ -47,15 +47,11 @@ const TimeSlot = ({
 
   /**
    * Button element representing a time slot
-   * Updates the selected time when clicked and is disabled when isDisabled is true
+   * Calls onSelect when clicked and is disabled when isDisabled is true
    * @returns {JSX.Element} - Button element
    */
   return (
-    <button
-      className={className}
-      onClick={() => setTime(time)}
-      disabled={isDisabled}
-    >
+    <button className={className} onClick={onSelect} disabled={isDisabled}>
       <time>{time}</time>
     </button>
   );

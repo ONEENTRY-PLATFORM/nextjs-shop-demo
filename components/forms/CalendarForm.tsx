@@ -25,6 +25,35 @@ dayjs.extend(utc);
 dayjs.extend(dayOfYear);
 
 /**
+ * Filter time intervals by a specific date.
+ *
+ * This function filters an array of time intervals to only include those
+ * that overlap with the specified target date.
+ * @param   {[string, string][]} intervals  - Array of time intervals as string tuples [start, end].
+ * @param   {Date}               targetDate - Date to filter intervals by.
+ * @returns {[string, string][]}            Filtered array of intervals that match the target date.
+ */
+const filterIntervalsByDate = (
+  intervals: [string, string][],
+  targetDate: Date,
+): [string, string][] => {
+  if (!intervals) return [];
+
+  /** Create start and end of day in UTC using dayjs */
+  const startOfDay = dayjs(targetDate).startOf('day').utc();
+  const endOfDay = dayjs(targetDate).endOf('day').utc();
+
+  return intervals.filter(([start, end]) => {
+    /** Parse interval start and end as UTC */
+    const intervalStart = dayjs(start).utc();
+    const intervalEnd = dayjs(end).utc();
+
+    /** Check if the interval overlaps with the target day */
+    return intervalStart.isBefore(endOfDay) && intervalEnd.isAfter(startOfDay);
+  });
+};
+
+/**
  * Calendar form component for selecting delivery date and time.
  * @param   {object}      props      - Component props.
  * @param   {string}      props.lang - Current language shortcode.
@@ -46,6 +75,9 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
   /** State for storing selected delivery time */
   const [time, setTime] = useState<string>(deliveryData?.time);
 
+  /** State for storing current time interval */
+  const [currentInterval, setCurrentInterval] = useState<Date[]>([]);
+
   /** Query for shipping schedule data */
   const { data, error, isLoading } = useGetSingleAttributeByMarkerSetQuery({
     setMarker: 'order',
@@ -53,23 +85,41 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
     activeLang: lang,
   });
 
-  /** Generate and format time intervals (memoized) */
-  const timeIntervals = useMemo(() => {
-    const schedule = data?.value?.[0]?.values?.[0]?.times;
+  /** Extract time intervals and holidays from API response */
+  const schedule = data?.value?.[0]?.values;
+
+  /** Extract holidays from schedule */
+  const holidays = useMemo(() => {
     return schedule
-      ?.map((time: any) => {
+      ?.flatMap((interval: any) => interval.external)
+      .filter((h: any) => h && dayjs(h.date).dayOfYear());
+  }, [schedule]);
+
+  /** Generate and format time intervals based on selected date */
+  const timeIntervals = useMemo(() => {
+    const intervals = schedule?.flatMap(
+      (interval: any) => interval.timeIntervals,
+    );
+
+    const filteredIntervals = filterIntervalsByDate(intervals, date);
+
+    return filteredIntervals
+      ?.map((interval: any) => {
+        const d = dayjs(interval[0]).toDate();
         return {
-          time: `${time[0].hours}:${time[0].minutes < 10 ? `0${time[0].minutes}` : time[0].minutes}`,
+          interval: interval,
+          time: `${d.getUTCHours()}:${d.getUTCMinutes() === 0 ? '00' : d.getUTCMinutes()}`,
         };
       })
       ?.map((data: any) => {
         return {
+          interval: data.interval,
           time: data.time,
           isDisabled: false,
           isSelected: false,
         };
       });
-  }, [data]);
+  }, [schedule, date]);
 
   /**
    * Get today's date at midnight (memoized)
@@ -98,10 +148,18 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
         date: date.getTime(),
         time: time,
         address: deliveryData.address,
+        interval: currentInterval,
       }),
     );
     setTransition('close');
-  }, [date, time, deliveryData.address, dispatch, setTransition]);
+  }, [
+    date,
+    time,
+    deliveryData.address,
+    currentInterval,
+    dispatch,
+    setTransition,
+  ]);
 
   /** Dispatch updated delivery data when date or time changes */
   useEffect(() => {
@@ -110,9 +168,10 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
         date: date.getTime(),
         time: time,
         address: deliveryData.address,
+        interval: currentInterval,
       }),
     );
-  }, [date, time, dispatch, deliveryData.address]);
+  }, [date, time, deliveryData.address, currentInterval, dispatch]);
 
   /** If loading, return loading indicator */
   if (isLoading) {
@@ -131,12 +190,16 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
         onChange={handleDateChange}
         value={new Date(date)}
         minDate={minDate}
+        tileDisabled={({ date }) => holidays?.includes(dayjs(date).dayOfYear())}
       />
-      <TimeSlots
-        timeSlots={timeIntervals}
-        currentTime={time}
-        setTime={setTime}
-      />
+      {timeIntervals && (
+        <TimeSlots
+          timeSlots={timeIntervals}
+          currentTime={time}
+          setTime={setTime}
+          setInterval={setCurrentInterval}
+        />
+      )}
       <div className="flex w-full">
         <button
           onClick={onApplyHandle}

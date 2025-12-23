@@ -3,6 +3,13 @@ import type { Dispatch, JSX } from 'react';
 
 import TimeSlot from './TimeSlot';
 
+export type TimeSlotData = {
+  time: string;
+  interval: [string, string];
+  isSelected?: boolean | undefined;
+  isDisabled?: boolean;
+};
+
 /**
  * Time slots grid component for displaying available time slots in a grid layout.
  * Renders a grid of TimeSlot components based on the provided time slots data.
@@ -10,21 +17,29 @@ import TimeSlot from './TimeSlot';
  * @param   {Array<object>}                          props.timeSlots   - Array of time slots. Each time slot is an object with time and isSelected properties.
  * @param   {string}                                 props.currentTime - Current time. It is used to highlight the currently selected time slot.
  * @param   {Dispatch<React.SetStateAction<string>>} props.setTime     - Function to set the selected time.
+ * @param   {Dispatch<React.SetStateAction<Date[]>>} props.setInterval - Function to set the selected interval.
  * @returns {JSX.Element}                                              Time slots grid component.
  */
 const TimeSlots = ({
   timeSlots,
   currentTime,
   setTime,
+  setInterval,
 }: {
-  timeSlots: Array<{
-    time: string;
-    isSelected?: boolean | undefined;
-    isDisabled?: boolean;
-  }>;
+  timeSlots: Array<TimeSlotData>;
   currentTime: string;
   setTime: Dispatch<React.SetStateAction<string>>;
+  setInterval: Dispatch<React.SetStateAction<Date[]>>;
 }): JSX.Element => {
+  /**
+   * Handle time slot selection
+   * Updates both the time and interval when a slot is clicked
+   */
+  const handleTimeSelect = (time: string, interval: [string, string]) => {
+    setTime(time);
+    setInterval(interval.map((dateStr) => new Date(dateStr)));
+  };
+
   return (
     /**
      * Container for time slots grid
@@ -33,14 +48,14 @@ const TimeSlots = ({
     <div className="mx-auto mb-5 grid max-w-[320px] grid-cols-4 gap-2.5 rounded-3xl bg-white text-base font-bold tracking-wide text-orange-500">
       {/*
        * Map through time slots and render TimeSlot component for each
-       * Passes down slot data, current time, and setTime function to each TimeSlot
+       * Passes down slot data, current time, and handler for time/interval selection
        */
       timeSlots?.map((slot) => (
         <TimeSlot
           key={slot.time}
           slot={slot}
           currentTime={currentTime}
-          setTime={setTime}
+          onSelect={() => handleTimeSelect(slot.time, slot.interval)}
         />
       ))}
     </div>
