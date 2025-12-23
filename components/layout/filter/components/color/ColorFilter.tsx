@@ -1,13 +1,15 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import type {
   IAttributesSetsEntity,
   IListTitle,
 } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IError } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useContext, useEffect, useState } from 'react';
+
+import { FilterContext } from '@/app/store/providers/FilterContext';
 
 /**
  * Color filter interface representing a single color option.
@@ -35,10 +37,11 @@ const ColorFilter = memo(
     title?: string;
     attributes: IAttributesSetsEntity | IError;
   }): JSX.Element => {
-    /** Get current path and URL parameters for navigation */
-    const pathname = usePathname();
-    const { replace } = useRouter();
+    /** Get current URL parameters for reading filter values */
     const searchParams = useSearchParams();
+
+    /** Get filter context for managing temporary filter state */
+    const { setColor: setContextColor } = useContext(FilterContext);
 
     /** Create a copy of URL parameters to work with color filter */
     const params = new URLSearchParams(searchParams?.toString() || '');
@@ -47,29 +50,19 @@ const ColorFilter = memo(
       params.get('color') || '',
     );
 
+    /** Sync local state with context when color changes */
+    useEffect(() => {
+      setContextColor(currentColor);
+    }, [currentColor, setContextColor]);
+
     /**
      * Handler for changing the selected color
+     * Updates only local state without URL navigation
      * @param {string} color - Color code to select
      */
     const handleColorChange = useCallback((color: string) => {
       setCurrentColor(color);
     }, []);
-
-    /** Update URL when currentColor changes */
-    useEffect(() => {
-      /** Create a new parameter set based on current parameters */
-      const newParams = new URLSearchParams(params);
-      if (currentColor) {
-        /** Set color parameter if a color is selected */
-        newParams.set('color', currentColor);
-      } else {
-        /** Remove color parameter if no color is selected */
-        newParams.delete('color');
-      }
-      /** Navigate to the provided href. Replaces the current history entry. */
-      replace(`${pathname}?${newParams.toString()}`);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [currentColor, pathname, replace]);
 
     /** Extract color options from attributes data */
     const colors: Color[] =

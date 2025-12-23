@@ -2,11 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useContext, useEffect, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';
+
+import { FilterContext } from '@/app/store/providers/FilterContext';
 
 import PriceFromInput from './PriceFromInput';
 import PriceToInput from './PriceToInput';
@@ -32,10 +34,12 @@ const PriceFilter = memo(
       max: number;
     };
   }): JSX.Element => {
-    /** Get current path and URL parameters for navigation */
-    const pathname = usePathname();
-    const { replace } = useRouter();
+    /** Get current URL parameters for reading initial filter values */
     const searchParams = useSearchParams();
+
+    /** Get filter context for managing temporary filter state */
+    const { setPriceFrom: setContextPriceFrom, setPriceTo: setContextPriceTo } =
+      useContext(FilterContext);
 
     /** Create a copy of URL parameters to work with filters */
     const params = new URLSearchParams(searchParams?.toString() || '');
@@ -48,7 +52,7 @@ const PriceFilter = memo(
     const MIN = prices?.min || 0;
     const MAX = prices?.max || 100;
 
-    /** States for storing "from" and "to" values of price range */
+    /** Local states for storing "from" and "to" values of price range */
     const [priceFrom, setPriceFrom] = useState(
       params.get('minPrice') ? Number(params.get('minPrice')) : MIN,
     );
@@ -56,9 +60,15 @@ const PriceFilter = memo(
       params.get('maxPrice') ? Number(params.get('maxPrice')) : MAX,
     );
 
+    /** Sync local state with context on mount and when values change */
+    useEffect(() => {
+      setContextPriceFrom(priceFrom !== MIN ? priceFrom : null);
+      setContextPriceTo(priceTo !== MAX ? priceTo : null);
+    }, [priceFrom, priceTo, MIN, MAX, setContextPriceFrom, setContextPriceTo]);
+
     /**
      * Handler for changing price range values when slider is moved
-     * Updates both local state and URL parameters
+     * Updates only local state without URL navigation
      * @param {number[]} values - array of values [from, to]
      */
     const handlePriceChange = useCallback(
@@ -68,26 +78,8 @@ const PriceFilter = memo(
 
         setPriceFrom(newPriceFrom);
         setPriceTo(newPriceTo);
-
-        const newParams = new URLSearchParams(searchParams?.toString() || '');
-
-        /** Update URL with minPrice parameter if it differs from default minimum */
-        if (newPriceFrom && newPriceFrom !== MIN) {
-          newParams.set('minPrice', newPriceFrom.toString());
-        } else {
-          newParams.delete('minPrice');
-        }
-
-        /** Update URL with maxPrice parameter if it differs from default maximum */
-        if (newPriceTo && newPriceTo !== MAX) {
-          newParams.set('maxPrice', newPriceTo.toString());
-        } else {
-          newParams.delete('maxPrice');
-        }
-
-        replace(`${pathname}?${newParams.toString()}`);
       },
-      [MIN, MAX, pathname, replace, searchParams, setPriceFrom, setPriceTo],
+      [setPriceFrom, setPriceTo],
     );
 
     /**

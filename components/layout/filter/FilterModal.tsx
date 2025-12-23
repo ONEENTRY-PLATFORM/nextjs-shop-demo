@@ -2,6 +2,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
 import { Suspense } from 'react';
 
+import { FilterProvider } from '@/app/store/providers/FilterContext';
 import Loader from '@/components/shared/Loader';
 
 import ModalBackdrop from '../modal/components/ModalBackdrop';
@@ -34,22 +35,25 @@ const FilterModal = ({
   };
 }): JSX.Element => {
   return (
-    /** Animate the modal entrance */
-    <FilterModalAnimations>
-      <div
-        id="modalBody"
-        className="fixed right-0 top-0 z-20 flex size-full max-h-[90vh] min-h-[90vh] flex-col overflow-auto bg-white shadow-xl md:top-[5vh] md:overflow-hidden md:rounded-l-3xl lg:h-auto lg:w-95"
-      >
-        {/** Display the filter header with title and close button */}
-        <FilterHeader dict={dict} />
-        {/** Load filter form with suspense fallback */}
-        <Suspense fallback={<Loader />}>
-          <FiltersForm prices={prices} lang={lang} dict={dict} />
-        </Suspense>
-      </div>
-      {/** Backdrop overlay for modal */}
-      <ModalBackdrop />
-    </FilterModalAnimations>
+    /** Wrap in FilterProvider to manage temporary filter state */
+    <FilterProvider>
+      {/** Animate the modal entrance */}
+      <FilterModalAnimations>
+        <div
+          id="modalBody"
+          className="fixed right-0 top-0 z-20 flex size-full max-h-[90vh] min-h-[90vh] flex-col overflow-auto bg-white shadow-xl md:top-[5vh] md:overflow-hidden md:rounded-l-3xl lg:h-auto lg:w-95"
+        >
+          {/** Display the filter header with title and close button */}
+          <FilterHeader dict={dict} />
+          {/** Load filter form with suspense fallback */}
+          <Suspense fallback={<Loader />}>
+            <FiltersForm prices={prices} lang={lang} dict={dict} />
+          </Suspense>
+        </div>
+        {/** Backdrop overlay for modal */}
+        <ModalBackdrop />
+      </FilterModalAnimations>
+    </FilterProvider>
   );
 };
 

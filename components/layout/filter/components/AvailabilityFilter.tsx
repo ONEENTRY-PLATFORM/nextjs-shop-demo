@@ -1,8 +1,10 @@
 'use client';
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import type { JSX } from 'react';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useContext, useEffect, useState } from 'react';
+
+import { FilterContext } from '@/app/store/providers/FilterContext';
 
 /**
  * Availability filter component for products.
@@ -13,8 +15,8 @@ import { memo, useCallback, useEffect, useState } from 'react';
  */
 const AvailabilityFilter = memo(
   ({ title }: { title?: string }): JSX.Element => {
-    const pathname = usePathname();
-    const { replace } = useRouter();
+    /** Get filter context for managing temporary filter state */
+    const { setInStock: setContextInStock } = useContext(FilterContext);
 
     /** Handle useSearchParams in a try/catch to prevent build errors */
     /** This is necessary because useSearchParams may not be available during SSR */
@@ -34,26 +36,16 @@ const AvailabilityFilter = memo(
       params.get('in_stock') === 'true',
     );
 
+    /** Sync local state with context when availability changes */
+    useEffect(() => {
+      setContextInStock(available);
+    }, [available, setContextInStock]);
+
     /** Toggle the availability filter state when the checkbox is changed */
+    /** Updates only local state without URL navigation */
     const handleAvailabilityChange = useCallback(() => {
       setAvailability(!available);
     }, [available]);
-
-    /** Update the URL query parameters whenever the availability state changes */
-    /** This creates a new URL with the updated parameters and navigates to it */
-    useEffect(() => {
-      if (available) {
-        params.set('in_stock', 'true');
-      } else {
-        params.delete('in_stock');
-      }
-
-      /** Only update URL if we have pathname to prevent potential errors */
-      if (pathname) {
-        replace(`${pathname}?${params.toString()}`);
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [available, pathname, replace]);
 
     return (
       <div className="mb-9 flex gap-5">

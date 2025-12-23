@@ -3,7 +3,8 @@
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useTransitionRouter } from 'next-transition-router';
 import type { JSX } from 'react';
 import { useLayoutEffect, useRef } from 'react';
 import { useCallback } from 'react';
@@ -24,7 +25,7 @@ const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
   /** Get current routing information */
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const router = useRouter();
+  const router = useTransitionRouter();
 
   /** Extract current page from URL parameters or default to 1 */
   const currentPage = Number(searchParams.get('page')) || 1;
@@ -35,19 +36,22 @@ const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
   const ref = useRef(null);
 
   /**
-   * Create query string with updated page parameter
+   * Create query string with updated page parameter while preserving all other params
+   * Reads current URL params directly from window.location to ensure freshness
    * @param   {string} name  - Parameter name
    * @param   {string} value - Parameter value
    * @returns {string}       Updated query string
    */
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
+      /** Read current URL params directly from window.location to get the most recent state */
+      const currentParams = new URLSearchParams(window.location.search);
+      /** Set the new page parameter */
+      currentParams.set(name, value);
 
-      return params.toString();
+      return currentParams.toString();
     },
-    [searchParams],
+    [],
   );
 
   /** Register GSAP plugins on component mount */
@@ -59,17 +63,16 @@ const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
    * Navigate to the next page by updating the URL
    * Ensures we don't go beyond the total number of pages
    */
-  const goToNextPage = () => {
-    router.push(
-      pathname +
-        '?' +
-        createQueryString(
-          'page',
-          (nextPage <= totalPages ? nextPage : currentPage).toString(),
-        ),
-      { scroll: false },
+  const goToNextPage = useCallback(() => {
+    const queryString = createQueryString(
+      'page',
+      (nextPage <= totalPages ? nextPage : currentPage).toString(),
     );
-  };
+    const fullUrl = pathname + '?' + queryString;
+
+    /** Navigate without scrolling to top */
+    router.push(fullUrl, { scroll: false });
+  }, [pathname, createQueryString, nextPage, totalPages, currentPage, router]);
 
   /** Set up scroll trigger to automatically load next page when reaching bottom */
   useGSAP(() => {
@@ -92,7 +95,7 @@ const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
     return () => {
       trigger.kill();
     };
-  }, [currentPage]);
+  }, [currentPage, goToNextPage, nextPage, totalPages]);
 
   return (
     <button
