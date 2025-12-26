@@ -122,6 +122,13 @@ export const AuthProvider = ({
    * @async
    */
   const checkToken = async () => {
+    /** Check if refresh token exists before triggering */
+    const refresh = localStorage.getItem('refresh-token');
+    if (!refresh) {
+      setIsAuth(false);
+      return;
+    }
+
     /** Trigger user data fetch */
     trigger({ langCode })
       .then(async (res) => {

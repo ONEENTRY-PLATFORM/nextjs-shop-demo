@@ -17,13 +17,9 @@ const saveFunction = async (refreshToken: string): Promise<void> => {
 };
 
 /**
- * Initial api definition
- * @param PROJECT_URL - Project url from .env
- * @param APP_TOKEN   - Token from .env
- * @returns           api instance
- * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
+ * Internal api instance that can be mutated
  */
-export let api = defineOneEntry(PROJECT_URL, {
+let apiInstance = defineOneEntry(PROJECT_URL, {
   token: APP_TOKEN,
   langCode: 'en_US',
   auth: {
@@ -31,6 +27,45 @@ export let api = defineOneEntry(PROJECT_URL, {
   },
   errors: {
     isShell: false,
+  },
+});
+
+/**
+ * API getter that returns current api instance
+ * This ensures we always get the latest reDefineed instance
+ * @returns Current api instance
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
+ */
+export const getApi = () => apiInstance;
+
+/**
+ * Exported api for backward compatibility
+ * Note: This creates a proxy that always returns the current instance
+ */
+export const api = new Proxy({} as ReturnType<typeof defineOneEntry>, {
+  get: (_target, prop) => {
+    // Always get the fresh value from current apiInstance
+    const value = (apiInstance as any)[prop];
+
+    // If it's an object (Users, Products, etc.), wrap it in a proxy
+    if (value && typeof value === 'object' && prop !== 'constructor') {
+      return new Proxy(value, {
+        get: (_subTarget, subProp) => {
+          // Always get the fresh value from current apiInstance
+          const currentValue = (apiInstance as any)[prop];
+          const method = currentValue[subProp];
+
+          // If it's a function, bind it to the current context
+          if (typeof method === 'function') {
+            return method.bind(currentValue);
+          }
+
+          return method;
+        },
+      });
+    }
+
+    return value;
   },
 });
 
@@ -49,7 +84,7 @@ export async function reDefine(
     return;
   }
 
-  api = defineOneEntry(PROJECT_URL, {
+  apiInstance = defineOneEntry(PROJECT_URL, {
     langCode: langCode || 'en_US',
     token: APP_TOKEN,
     auth: {
