@@ -177,7 +177,7 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
         setLoading(true);
 
         const responseData = await api.FormData.postFormsData({
-          formIdentifier: data.identifier || '',
+          formIdentifier: data.identifier,
           formData: transformedFormData,
           formModuleConfigId: moduleFormConfig?.id || DEFAULT_MODULE_CONFIG_ID,
           moduleEntityIdentifier: productData.id,

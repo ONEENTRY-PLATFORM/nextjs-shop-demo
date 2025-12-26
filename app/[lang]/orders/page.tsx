@@ -24,6 +24,7 @@ const OrdersPageLayout = async ({
 }: PageProps): Promise<JSX.Element> => {
   /** Extract language parameter from route params */
   const { lang } = await params;
+
   /** Get the dictionary from the API and set the server provider. */
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
@@ -32,7 +33,7 @@ const OrdersPageLayout = async ({
 
   /** Return nothing if block data is not available or an error occurred */
   if (!block || isError) {
-    return <></>;
+    return <div className="text-center">Block Error</div>;
   }
 
   /** Render the orders page with sidebar and settings */

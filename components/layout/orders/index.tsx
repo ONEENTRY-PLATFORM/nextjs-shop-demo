@@ -59,6 +59,7 @@ const OrdersPage = ({
 }): JSX.Element => {
   /** Handle useSearchParams in a try/catch to prevent build errors during SSR */
   let currentPage = 1;
+
   try {
     const searchParams = useSearchParams();
     currentPage = Number(searchParams?.get('page')) || 1;
@@ -149,6 +150,9 @@ const OrdersPage = ({
   /** Destructure order state for easier access */
   const { orders, total, loading, error } = orderState;
 
+  /** Destructure block attributes for easier access */
+  const { date_title, total_title, status_title } = settings;
+
   /** Show authentication error if user is not logged in */
   if (!isAuth) {
     return <AuthError dict={dict} />;
@@ -165,15 +169,9 @@ const OrdersPage = ({
           {/* Orders table header with column titles */}
           <OrderRowAnimations className="w-full" index={0}>
             <div className="-mb-px flex w-full border-collapse gap-4 border-y border-[#B0BCCE] p-4 text-slate-700">
-              <div className="w-1/2">
-                {settings?.date_title?.value || 'Date'}
-              </div>
-              <div className="w-1/4">
-                {settings?.total_title?.value || 'Total'}
-              </div>
-              <div className="w-1/4">
-                {settings?.status_title?.value || 'Status'}
-              </div>
+              <div className="w-1/2">{date_title?.value || 'Date'}</div>
+              <div className="w-1/4">{total_title?.value || 'Total'}</div>
+              <div className="w-1/4">{status_title?.value || 'Status'}</div>
             </div>
           </OrderRowAnimations>
 
@@ -205,7 +203,6 @@ const OrdersPage = ({
           </div>
         </div>
         {/* Load more button for pagination */}
-        {}
         {total > currentPage * pageLimit && !loading && !error && (
           <LoadMore totalPages={Math.ceil(total / pageLimit)} />
         )}
