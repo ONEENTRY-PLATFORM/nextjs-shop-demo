@@ -33,7 +33,7 @@ const DeliveryTableRow = ({
   return (
     /** Wrap row with animation component for staggered entrance effects */
     <TableRowAnimations
-      className="tr h-12.5 border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
+      className="tr h-12.5 border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
       index={7}
     >
       {/** Label cell for the input field */}
