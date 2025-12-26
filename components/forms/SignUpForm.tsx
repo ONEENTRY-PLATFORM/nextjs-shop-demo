@@ -113,6 +113,10 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
             };
             /** Include only required fields in form data */
             if (formFields.includes(field)) {
+              /** Skip phone_reg if it has no value */
+              if (field === 'phone_reg' && !fieldValue?.value) {
+                return arr;
+              }
               arr.push(candidate);
             }
             return arr;
@@ -126,6 +130,20 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           type: 'string',
           value: fields.email_reg?.value ? String(fields.email_reg.value) : '',
         });
+
+        /** Prepare notification data object dynamically - only include fields with values */
+        const notificationData: Partial<{
+          email: string;
+          phonePush: string[];
+          phoneSMS: string;
+        }> = {};
+        if (fields.email_reg?.value) {
+          notificationData.email = fields.email_reg.value as string;
+        }
+        if (fields.phone_reg?.value) {
+          notificationData.phonePush = [fields.phone_reg.value as string];
+          notificationData.phoneSMS = fields.phone_reg.value as string;
+        }
 
         /** Prepare sign up data structure for API call */
         const data: ISignUpData = {
@@ -141,10 +159,10 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
             },
           ],
           formData,
-          notificationData: {
-            email: (fields.email_reg?.value as string) || '',
-            phonePush: [(fields.phone_reg?.value as string) || ''],
-            phoneSMS: (fields.phone_reg?.value as string) || '',
+          notificationData: notificationData as {
+            email: string;
+            phonePush: string[];
+            phoneSMS: string;
           },
         };
 

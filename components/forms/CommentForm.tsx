@@ -47,13 +47,6 @@ const FORM_STATUS = 'approved';
  * This component renders a form that allows authenticated users to submit comments
  * in reply to product reviews. It handles form validation, submission to the OneEntry API,
  * and displays success/error messages.
- * Features:
- * - Authentication check (shows AuthError if user is not logged in)
- * - Real-time validation (checks for empty comments)
- * - Toast notifications on successful submission
- * - Error handling with user-friendly messages
- * - Automatic form clearing on successful submission
- * - Loading states with disabled UI during submission
  * @param   {CommentFormProps} props         - Component props
  * @param   {object}           props.dict    - Dictionary with localized strings (submit_review_text, comment_placeholder)
  * @param   {object}           props.review  - Review being replied to (contains review.id for replyTo field)

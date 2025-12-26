@@ -56,8 +56,10 @@ const DeliveryTable = ({
     order_info_address_placeholder,
   } = dict;
 
-  /** Filter form attributes to exclude 'time2' marker */
-  const attrs = data?.attributes;
+  /** Filter form attributes and sort by position */
+  const attrs = data?.attributes
+    ?.slice()
+    .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
 
   /** Get registered address from user form data if available */
   const addressReg =
@@ -95,7 +97,7 @@ const DeliveryTable = ({
     /** Dispatch action to update time information in order data */
     dispatch(
       addData({
-        marker: 'time',
+        marker: 'shipping_interval',
         type: 'string',
         value: time,
         valid: time ? true : false,
@@ -139,7 +141,7 @@ const DeliveryTable = ({
           }
 
           /** Render time row with clock icon */
-          if (marker === 'time') {
+          if (marker === 'shipping_interval') {
             return (
               <DeliveryTableRow
                 key={marker}
