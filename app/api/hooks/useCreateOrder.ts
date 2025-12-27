@@ -5,7 +5,7 @@ import { useTransitionRouter } from 'next-transition-router';
 import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import { useState } from 'react';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { removeProduct } from '@/app/store/reducers/CartSlice';
 import { removeOrder } from '@/app/store/reducers/OrderSlice';
@@ -56,7 +56,10 @@ export const useCreateOrder = ({
     /** Handle payment session creation */
     try {
       /** Create payment session using Payments API */
-      const { paymentUrl } = await api.Payments.createSession(id, 'session');
+      const { paymentUrl } = await getApi().Payments.createSession(
+        id,
+        'session',
+      );
       /** Handle cash payment method */
       if (order?.paymentAccountIdentifier === 'cash') {
         router.push('/orders');
@@ -101,17 +104,18 @@ export const useCreateOrder = ({
 
       try {
         /** Create order with Orders API */
-        const { id, paymentAccountIdentifier } = await api.Orders.createOrder(
-          'order',
-          {
-            // ...order,
-            formData: orderFormData,
-            products: order.products,
-            paymentAccountIdentifier: order.paymentAccountIdentifier,
-            formIdentifier: order.formIdentifier,
-          },
-          langCode,
-        );
+        const { id, paymentAccountIdentifier } =
+          await getApi().Orders.createOrder(
+            'order',
+            {
+              // ...order,
+              formData: orderFormData,
+              products: order.products,
+              paymentAccountIdentifier: order.paymentAccountIdentifier,
+              formIdentifier: order.formIdentifier,
+            },
+            langCode,
+          );
 
         /** remove all ordered products from cart */
         order.products.forEach((product: IOrderProductData) => {

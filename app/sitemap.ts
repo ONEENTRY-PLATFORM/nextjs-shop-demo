@@ -46,7 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   /** Here you can add products/pages from the CMS (via API) and return a list of links */
-  /** For example: const products = await api.Products.getAllHandles(); and then create an array of handles */
+  /** For example: const products = await getApi().Products.getAllHandles(); and then create an array of handles */
 
   return [...localizedRoots, ...localizedSections];
 }

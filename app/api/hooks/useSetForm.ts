@@ -3,7 +3,7 @@
 import type { IBodyPostFormData } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import { useState } from 'react';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 
 /**
  * Custom hook for handling form submissions to the OneEntry CMS
@@ -41,7 +41,7 @@ export const useSetForm = (): {
     const result = async () => {
       /** Try to submit form data to the API */
       try {
-        const res = await api.FormData.postFormsData(data);
+        const res = await getApi().FormData.postFormsData(data);
         return res;
       } catch (e: unknown) {
         // eslint-disable-next-line no-console

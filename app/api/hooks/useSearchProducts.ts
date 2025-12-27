@@ -3,7 +3,7 @@
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { useEffect, useState } from 'react';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 
 /**
@@ -45,7 +45,7 @@ export const useSearchProducts = ({
       /** Set loading state to true */
       setLoading(true);
       /** Search products using API */
-      const result = await api.Products.searchProduct(name, langCode);
+      const result = await getApi().Products.searchProduct(name, langCode);
       /** Update products state with search results */
       setProducts(result as IProductsEntity[]);
       /** Set loading state to false */

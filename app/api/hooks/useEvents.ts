@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { handleApiError } from '@/app/utils/errorHandler';
 
 /**
@@ -13,12 +13,12 @@ import { handleApiError } from '@/app/utils/errorHandler';
 export const onSubscribeEvents = async (id: number): Promise<void> => {
   try {
     /** Subscribe to status out of stock events */
-    const status = await api.Events.subscribeByMarker(
+    const status = await getApi().Events.subscribeByMarker(
       'status_out_of_stock',
       id,
     );
     /** Subscribe to product price change events */
-    const price = await api.Events.subscribeByMarker('product_price', id);
+    const price = await getApi().Events.subscribeByMarker('product_price', id);
     /** Show toast notifications for successful subscriptions */
     if (status) {
       toast('You subscribed to status updates for this product');
@@ -43,14 +43,17 @@ export const onSubscribeEvents = async (id: number): Promise<void> => {
  */
 export const onUnsubscribeEvents = async (id: number): Promise<void> => {
   try {
-    // await api.Events.unsubscribeByMarker('catalog_event', id);
+    // await getApi().Events.unsubscribeByMarker('catalog_event', id);
     /** Unsubscribe from status out of stock events */
-    const status = await api.Events.unsubscribeByMarker(
+    const status = await getApi().Events.unsubscribeByMarker(
       'status_out_of_stock',
       id,
     );
     /** Unsubscribe from product price change events */
-    const price = await api.Events.unsubscribeByMarker('product_price', id);
+    const price = await getApi().Events.unsubscribeByMarker(
+      'product_price',
+      id,
+    );
     /** Show toast notifications for successful unsubscriptions */
     if (status) {
       toast('You unsubscribed from status updates for this product');
