@@ -71,6 +71,7 @@ const OrderRow = ({
         <div className="w-1/4">{formattedPrice}</div>
         {/** Display order status */}
         <div className="w-1/4">{statusIdentifier}</div>
+        <div className="w-1/4">{id}</div>
       </button>
       {/** Expanded order details page, shown when state is true */}
       <OrderPage

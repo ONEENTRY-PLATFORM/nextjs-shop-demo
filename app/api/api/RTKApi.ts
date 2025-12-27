@@ -298,13 +298,28 @@ export const RTKApi = createApi({
      */
     getSingleOrder: build.query<IOrderByMarkerEntity, SingleOrderProps>({
       queryFn: async ({ id, marker, activeLang }) => {
-        const result = await handleApiResponse(
-          getApi().Orders.getOrderByMarkerAndId(marker, id, activeLang),
-        );
-        if (!result || (result as IError)?.statusCode) {
-          return { error: result as IError };
+        try {
+          const result = await handleApiResponse(
+            getApi().Orders.getOrderByMarkerAndId(marker, id, activeLang),
+          );
+          if (!result || (result as IError)?.statusCode) {
+            return { error: result as IError };
+          }
+          return { data: result as IOrderByMarkerEntity };
+        } catch (error) {
+          /** Handle SDK errors (e.g., scheduleGroup.values.forEach) */
+          // eslint-disable-next-line no-console
+          console.error(`Error fetching order ${id}:`, error);
+          return {
+            error: {
+              statusCode: 500,
+              message:
+                error instanceof Error
+                  ? error.message
+                  : 'Failed to fetch order data',
+            } as IError,
+          };
         }
-        return { data: result as IOrderByMarkerEntity };
       },
     }),
   }),

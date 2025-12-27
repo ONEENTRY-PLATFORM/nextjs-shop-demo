@@ -6,6 +6,7 @@ import type { JSX } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
+import Loader from '@/components/shared/Loader';
 
 import OrderAnimations from '../animations/OrderAnimations';
 import CancelOrderButton from './CancelOrderButton';
@@ -39,14 +40,49 @@ const OrderPage = ({
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
   /** Fetch order data using RTK Query hook */
-  const { data, isLoading, refetch } = useGetSingleOrderQuery({
+  const { data, isLoading, refetch, error } = useGetSingleOrderQuery({
     marker: 'order',
     id: id,
     activeLang: langCode,
   });
 
-  /** Return empty element if data or settings are not available */
-  if (!data || !settings) {
+  /** Show loader while data is being fetched */
+  if (isLoading) {
+    return (
+      <OrderAnimations
+        isActive={isActive}
+        className={
+          'flex h-0 opacity-0 flex-col text-[#4C4D56] ' +
+          (isActive ? 'p-4' : '')
+        }
+      >
+        <Loader />
+      </OrderAnimations>
+    );
+  }
+
+  /** Show error message if order data failed to load */
+  if (error || !data) {
+    return (
+      <OrderAnimations
+        isActive={isActive}
+        className={
+          'flex h-0 opacity-0 flex-col text-[#4C4D56] ' +
+          (isActive ? 'p-4' : '')
+        }
+      >
+        <div className="text-red-500">
+          Failed to load order details.{' '}
+          {error && 'message' in error && (error as any).message
+            ? (error as any).message
+            : 'Unknown error'}
+        </div>
+      </OrderAnimations>
+    );
+  }
+
+  /** Return empty element if settings are not available */
+  if (!settings) {
     return <></>;
   }
 
