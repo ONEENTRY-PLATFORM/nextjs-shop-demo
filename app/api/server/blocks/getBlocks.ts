@@ -4,7 +4,7 @@ import type {
   IBlocksResponse,
 } from 'oneentry/dist/blocks/blocksInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -37,7 +37,7 @@ export const getBlocks = async ({
   /** Fetch blocks by type and language from the API */
   try {
     /** Call the API to get blocks by type and language */
-    const data = await api.Blocks.getBlocks(type, langCode);
+    const data = await getApi().Blocks.getBlocks(type, langCode);
 
     /** Check if the response is an error */
     if (isIError(data)) {

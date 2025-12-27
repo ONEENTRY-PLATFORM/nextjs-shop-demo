@@ -1,7 +1,7 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -28,7 +28,7 @@ export const getMenuByMarker = async (
   /** Fetch menu by marker and language from the API */
   try {
     /** Call the API to get menu by marker and language */
-    const data = await api.Menus.getMenusByMarker(marker, langCode);
+    const data = await getApi().Menus.getMenusByMarker(marker, langCode);
 
     /** Check if the response is an error */
     if (isIError(data)) {

@@ -1,7 +1,7 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
@@ -19,7 +19,7 @@ export const getLocales = async (): Promise<{
   /** Fetch locales from the API */
   try {
     /** Call the API to get locales */
-    const data = await api.Locales.getLocales();
+    const data = await getApi().Locales.getLocales();
 
     /** Check if the response is an error */
     if (isIError(data)) {

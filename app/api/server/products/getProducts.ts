@@ -1,7 +1,7 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
@@ -55,7 +55,7 @@ export const getProducts = async (props: {
   /** Fetch products with pagination and search parameters from the API */
   try {
     /** Call the API to get products with filters, pagination, and sorting */
-    const data = await api.Products.getProducts(body, langCode, {
+    const data = await getApi().Products.getProducts(body, langCode, {
       limit,
       offset,
       sortOrder: 'ASC',

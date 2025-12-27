@@ -1,7 +1,7 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -27,7 +27,7 @@ export const getBlockByMarker = async (
   /** Fetch block by marker and language from the API */
   try {
     /** Call the API to get block by marker and language */
-    const data = await api.Blocks.getBlockByMarker(marker, langCode);
+    const data = await getApi().Blocks.getBlockByMarker(marker, langCode);
 
     /** Check if the response is an error */
     if (isIError(data)) {

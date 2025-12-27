@@ -4,7 +4,7 @@ import type {
   IProductsResponse,
 } from 'oneentry/dist/products/productsInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -73,7 +73,7 @@ export const getRelatedProductsById = async (
   /** Fetch related products by ID and language from the API */
   try {
     /** Call the API to get related products by ID and language */
-    const data = await api.Products.getRelatedProductsById(id, langCode);
+    const data = await getApi().Products.getRelatedProductsById(id, langCode);
 
     /** Check if the response is an error */
     if (isIError(data)) {

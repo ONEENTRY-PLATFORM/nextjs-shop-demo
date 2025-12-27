@@ -1,7 +1,7 @@
 import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import type { IProducts } from '@/app/types/global';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -53,7 +53,7 @@ export const updateUserState = async ({
   /** Update user state with new favorites and cart data */
   try {
     /** Call API to update user information */
-    const res = await api.Users.updateUser({
+    const res = await getApi().Users.updateUser({
       formIdentifier: 'reg',
       formData: formData,
       state: {

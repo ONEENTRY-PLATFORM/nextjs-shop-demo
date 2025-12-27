@@ -1,7 +1,7 @@
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IError } from 'oneentry/dist/base/utils';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -35,11 +35,12 @@ export const getSingleAttributeByMarkerSet: any = async ({
   /** Fetch single attribute by marker set from the API */
   try {
     /** Call the API to get single attribute by marker set */
-    const attribute = await api.AttributesSets.getSingleAttributeByMarkerSet(
-      setMarker,
-      attributeMarker,
-      langCode,
-    );
+    const attribute =
+      await getApi().AttributesSets.getSingleAttributeByMarkerSet(
+        setMarker,
+        attributeMarker,
+        langCode,
+      );
 
     /** Check if the response is an error */
     if (isIError(attribute)) {

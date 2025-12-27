@@ -1,7 +1,7 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -32,7 +32,7 @@ export const getBlocksByPageUrl = async ({
   /** Fetch blocks by page URL and language from the API */
   try {
     /** Call the API to get blocks by page URL and language */
-    const data = await api.Pages.getBlocksByPageUrl(pageUrl, langCode);
+    const data = await getApi().Pages.getBlocksByPageUrl(pageUrl, langCode);
 
     /** Check if the response is an error */
     if (isIError(data)) {

@@ -4,7 +4,7 @@ import type {
   IOrderData,
 } from 'oneentry/dist/orders/ordersInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -44,7 +44,7 @@ export const updateOrderByMarkerAndId = async ({
   /** Update order by marker and ID through the API */
   try {
     /** Call the API to update order by marker and ID */
-    const orderData = await api.Orders.updateOrderByMarkerAndId(
+    const orderData = await getApi().Orders.updateOrderByMarkerAndId(
       marker,
       id,
       data,

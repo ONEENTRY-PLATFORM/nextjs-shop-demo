@@ -1,7 +1,7 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
@@ -28,7 +28,7 @@ export const getPageById = async (
   /** Fetch page by ID and language from the API */
   try {
     /** Call the API to get page by ID and language */
-    const data = await api.Pages.getPageById(id, langCode);
+    const data = await getApi().Pages.getPageById(id, langCode);
 
     /** Check if the response is an error */
     if (isIError(data)) {

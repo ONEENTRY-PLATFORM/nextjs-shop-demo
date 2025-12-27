@@ -1,4 +1,4 @@
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { handleApiError } from '@/app/utils/errorHandler';
 
 type LogOutProps = { marker: string; token?: string };
@@ -29,7 +29,7 @@ export const logOutUser = async ({
       throw Error('No token provided');
     }
     /** Call the logout API with marker and token */
-    const result = await api.AuthProvider.logout(marker, token);
+    const result = await getApi().AuthProvider.logout(marker, token);
     /** Return successful logout result */
     return { data: result };
   } catch (error) {

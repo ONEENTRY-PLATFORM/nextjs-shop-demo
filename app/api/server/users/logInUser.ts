@@ -1,6 +1,6 @@
 import type { IAuthPostBody } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { handleApiError } from '@/app/utils/errorHandler';
 
 type LogInProps = { login: string; password: string };
@@ -38,7 +38,7 @@ export const logInUser = async ({
       ],
     };
     /** Call the authentication API with prepared data */
-    const result = await api.AuthProvider.auth('email', preparedData);
+    const result = await getApi().AuthProvider.auth('email', preparedData);
     /** Check if authentication was successful by verifying tokens */
     if (result && result.accessToken && result.refreshToken) {
       return { data: result };
