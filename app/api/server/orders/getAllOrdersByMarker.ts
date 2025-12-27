@@ -1,7 +1,7 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { handleApiError, isIError } from '@/app/utils/errorHandler';
 
 /**
@@ -39,7 +39,7 @@ export const getAllOrdersByMarker = async ({
   /** Fetch orders by marker with pagination from the API */
   try {
     /** Call the API to get orders by marker with offset and limit */
-    const data = await api.Orders.getAllOrdersByMarker(
+    const data = await getApi().Orders.getAllOrdersByMarker(
       marker,
       langCode,
       offset,

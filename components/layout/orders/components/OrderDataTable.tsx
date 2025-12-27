@@ -71,7 +71,7 @@ const OrderDataTable = ({
       <hr className="mb-4 text-slate-400" />
 
       {/* Map through form data to display address, date, and time fields */}
-      {formData.map((field: IOrderField) => {
+      {formData?.map((field: IOrderField) => {
         /** Display order address field */
         if (field.marker === 'order_address') {
           return (
@@ -108,18 +108,18 @@ const OrderDataTable = ({
         return null;
       })}
 
-      {/* Display payment status */}
+      {/* Payment status */}
       <div className="flex gap-2">
         <b>{status_of_payment_title.value}:</b> {statusIdentifier}
       </div>
 
-      {/* Display payment account information */}
+      {/* Payment account information */}
       <div className="flex gap-2">
         <b>{payment_account_title.value}:</b>{' '}
         {paymentAccountLocalizeInfos?.title}
       </div>
 
-      {/* Display formatted total amount with larger text */}
+      {/* Formatted total amount with larger text */}
       <div className="flex gap-2 text-lg">
         <b>{total_amount_title.value}: </b> {formattedTotal}
       </div>

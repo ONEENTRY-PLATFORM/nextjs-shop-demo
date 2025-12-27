@@ -66,7 +66,7 @@ const OrderPage = ({
     >
       {/* Product cards section */}
       <div className="flex flex-col gap-4 pb-5 max-md:max-w-full">
-        {products.map((product: any) => {
+        {products?.map((product: any) => {
           /** Skip product with id 83 (possibly a special case or placeholder) */
           if (product.id === 83) {
             return;
