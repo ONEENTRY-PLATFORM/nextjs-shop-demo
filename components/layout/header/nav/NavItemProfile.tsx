@@ -58,7 +58,7 @@ const NavItemProfile = ({
         setComponent('SignInForm');
       }}
       title={item.localizeInfos.menuTitle}
-      className="group cursor-pointer relative box-border flex size-8 shrink-0 max-sm:size-6"
+      className="group relative box-border flex size-8 shrink-0 cursor-pointer max-sm:size-6"
     >
       <ProfileAltIcon />
     </button>
@@ -70,7 +70,7 @@ const NavItemProfile = ({
     <Link
       href={'/' + lang + '/profile'}
       title={item.localizeInfos.menuTitle}
-      className="group cursor-pointer relative box-border flex size-8 shrink-0 max-sm:size-6"
+      className="group relative box-border flex size-8 shrink-0 cursor-pointer max-sm:size-6"
     >
       <ProfileAltIcon />
     </Link>

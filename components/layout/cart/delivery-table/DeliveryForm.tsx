@@ -56,7 +56,7 @@ const DeliveryForm = ({
           lang={lang}
           dict={dict}
           // deliveryData={deliveryData}
-          className="flex self-center text-lg font-bold leading-6 text-slate-700"
+          className="flex self-center text-lg leading-6 font-bold text-slate-700"
         />
 
         {/** Payment button to proceed to payment page */}

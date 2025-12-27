@@ -29,7 +29,7 @@ const BlocksGridImage = async ({
       priority={'high'}
       quality={75}
       sizes="(min-width: 1024px) 66vw, 100vw"
-      className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-transform duration-500 group-hover:scale-125"
+      className="absolute top-0 left-0 z-0 size-full rounded-3xl object-cover transition-transform duration-500 group-hover:scale-125"
     />
   );
 };

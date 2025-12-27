@@ -59,9 +59,9 @@ const ReviewModal = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
       <ModalHeading product={product} />
 
       {/* User Product images and review content */}
-      <div className="grid grid-cols-2 max-h-100">
+      <div className="grid max-h-100 grid-cols-2">
         {/* User images carousel */}
-        <div className="flex flex-row max-h-100">
+        <div className="flex max-h-100 flex-row">
           <ImagesCarousel
             reviewImages={reviewImages}
             nav2={nav2}
@@ -70,9 +70,9 @@ const ReviewModal = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
         </div>
 
         {/* Review content */}
-        <div className="flex flex-col gap-3.5 px-4 overflow-y-auto max-h-full">
+        <div className="flex max-h-full flex-col gap-3.5 overflow-y-auto px-4">
           {/* Review header */}
-          <div className="flex items-center justify-between mb-2">
+          <div className="mb-2 flex items-center justify-between">
             <h3 className="text-[18px] font-bold text-neutral-800">
               {userName}
             </h3>
@@ -83,7 +83,7 @@ const ReviewModal = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
           <time className="text-sm text-neutral-500">{reviewDate}</time>
 
           {/* Thumbnail navigation slider - review images */}
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex flex-wrap gap-2">
             <ReviewImages
               reviewImages={reviewImages}
               nav1={nav1}
@@ -92,7 +92,7 @@ const ReviewModal = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
           </div>
 
           {/* Review text */}
-          <p className="text-neutral-600 leading-relaxed">{content}</p>
+          <p className="leading-relaxed text-neutral-600">{content}</p>
 
           {/* !!! Like/Dislike buttons */}
           <div className="flex self-end">

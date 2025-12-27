@@ -68,7 +68,7 @@ const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
           <section className="text-sm leading-5 text-neutral-600 max-md:mt-10 max-md:max-w-full">
             {/** Page title with slide up animation */}
             <SlideUpTransition index={4} className={''}>
-              <h1 className="mb-5 text-xl font-bold leading-8 text-neutral-600">
+              <h1 className="mb-5 text-xl leading-8 font-bold text-neutral-600">
                 {pageTitle}
               </h1>
             </SlideUpTransition>
@@ -85,7 +85,7 @@ const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
           {/** List title with slide up animation */}
           {listTitle && (
             <SlideUpTransition index={6} className={''}>
-              <h2 className="mt-5 text-base font-bold leading-6 text-neutral-600 max-md:mt-10">
+              <h2 className="mt-5 text-base leading-6 font-bold text-neutral-600 max-md:mt-10">
                 {listTitle}
               </h2>
             </SlideUpTransition>

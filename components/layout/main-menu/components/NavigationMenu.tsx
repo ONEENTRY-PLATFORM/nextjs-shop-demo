@@ -20,7 +20,7 @@ const NavigationMenu = async ({
   menu: IMenusPages[];
 }): Promise<JSX.Element> => {
   return (
-    <nav className="fade-in relative z-20 items-center justify-center bg-white px-5 text-lg font-bold uppercase text-[#4C4D56] max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
+    <nav className="fade-in relative z-20 items-center justify-center bg-white px-5 text-lg font-bold text-[#4C4D56] uppercase max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
       {/* Main container for the navigation menu */}
       <div className="flex w-full max-w-(--breakpoint-xl) items-center justify-center py-5 max-md:px-5">
         {/* List of top-level menu items */}
@@ -28,7 +28,7 @@ const NavigationMenu = async ({
           {menu?.map((item: IMenusPages) => (
             <li
               key={item.id}
-              className="group my-auto flex justify-between gap-5 whitespace-nowrap py-1"
+              className="group my-auto flex justify-between gap-5 py-1 whitespace-nowrap"
             >
               {/* Navigation menu item with potential dropdown */}
               <NavigationMenuItem

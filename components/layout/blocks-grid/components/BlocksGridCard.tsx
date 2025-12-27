@@ -93,7 +93,7 @@ const BlocksGridCard = async ({
         >
           {/** Optional sticker image positioned at top-left corner */}
           {stickerImage && (
-            <div className="absolute left-3 top-3 z-10">
+            <div className="absolute top-3 left-3 z-10">
               <Image width={30} height={30} src={stickerImage} alt={''} />
             </div>
           )}

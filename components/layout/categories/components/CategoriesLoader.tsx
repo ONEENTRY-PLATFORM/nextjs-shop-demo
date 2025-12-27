@@ -19,10 +19,10 @@ export const CategoriesLoader = ({ limit = 4 }: LoaderProps): JSX.Element => {
           <div
             className={`relative flex size-full h-64 overflow-hidden rounded-3xl p-6`}
           >
-            <div className="animate-loader z-10 mt-auto h-6 w-full bg-slate-500 text-2xl font-bold uppercase text-white">
+            <div className="animate-loader z-10 mt-auto h-6 w-full bg-slate-500 text-2xl font-bold text-white uppercase">
               {''}
             </div>
-            <div className="animate-loader absolute left-0 top-0 size-full rounded-3xl bg-slate-500" />
+            <div className="animate-loader absolute top-0 left-0 size-full rounded-3xl bg-slate-500" />
           </div>
         </div>
       ))}

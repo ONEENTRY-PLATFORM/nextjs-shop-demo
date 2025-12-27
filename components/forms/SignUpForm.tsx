@@ -8,7 +8,7 @@ import { useCallback, useContext, useMemo, useState } from 'react';
 
 import { useGetFormByMarkerQuery } from '@/app/api';
 import { logInUser } from '@/app/api';
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -174,7 +174,11 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           /** Get language code for API request */
           const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
           /** Submit registration data to the API */
-          const res = await api.AuthProvider.signUp('email', data, langCode);
+          const res = await getApi().AuthProvider.signUp(
+            'email',
+            data,
+            langCode,
+          );
 
           /** Handle successful registration based on user activation status */
           if (res && res.isActive) {

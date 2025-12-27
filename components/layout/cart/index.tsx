@@ -5,7 +5,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
-import { api, useGetProductsByIdsQuery } from '@/app/api';
+import { getApi, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
@@ -134,7 +134,7 @@ const CartPage = ({
      * Connect to WebSocket if authenticated
      * Enables real-time updates for product information
      */
-    const ws = api.WS.connect();
+    const ws = getApi().WS.connect();
     if (!ws) {
       return;
     }

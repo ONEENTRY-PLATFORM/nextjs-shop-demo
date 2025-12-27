@@ -48,7 +48,7 @@ const RatingButton = ({
       {/** Display reviews title with collapsible arrow indicator */}
       <div
         className={
-          'my-auto cursor-pointer flex items-center gap-3.5 whitespace-nowrap text-lg uppercase text-neutral-600 group-hover:text-orange-500 '
+          'my-auto flex cursor-pointer items-center gap-3.5 text-lg whitespace-nowrap text-neutral-600 uppercase group-hover:text-orange-500'
         }
       >
         <div className={state ? 'text-orange-500' : ''}>
@@ -61,7 +61,7 @@ const RatingButton = ({
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className={
-            'group-hover:fill-orange-500 fill-[#4C4D56] transition-transform origin-center ' +
+            'origin-center fill-[#4C4D56] transition-transform group-hover:fill-orange-500 ' +
             (state ? 'rotate-180 fill-orange-500' : '')
           }
         >

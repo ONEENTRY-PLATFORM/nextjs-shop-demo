@@ -5,7 +5,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX } from 'react';
 import { useCallback, useContext, useState } from 'react';
 
-import { api } from '@/app/api';
+import { getApi } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
@@ -96,7 +96,7 @@ const ResetPasswordForm = ({
         setLoading(true);
 
         /** Call API to change user's password */
-        const result = await api.AuthProvider.changePassword(
+        const result = await getApi().AuthProvider.changePassword(
           'email',
           email_reg.value as string,
           'reg',

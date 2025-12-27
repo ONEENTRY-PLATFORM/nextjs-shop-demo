@@ -32,7 +32,7 @@ const ProductImage = ({
           src={imageSrc}
           alt={alt}
           loading="lazy"
-          className="size-40 shrink-0 relative transition-transform duration-500 group-hover:scale-125"
+          className="relative size-40 shrink-0 transition-transform duration-500 group-hover:scale-125"
         />
       )}
     </div>

@@ -45,7 +45,7 @@ const LogoutMenuItem = (): JSX.Element => {
   return (
     <li>
       <button
-        className={`group cursor-pointer mr-auto flex justify-start gap-3 whitespace-nowrap hover:text-orange-500`}
+        className={`group mr-auto flex cursor-pointer justify-start gap-3 whitespace-nowrap hover:text-orange-500`}
         onClick={onLogout}
       >
         <div className="my-auto aspect-square size-4 shrink-0">

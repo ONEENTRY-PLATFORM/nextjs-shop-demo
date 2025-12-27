@@ -30,12 +30,12 @@ const MobileMenuTrigger = (): JSX.Element => {
         setComponent('MobileMenu');
       }}
       aria-label="Open menu"
-      className="flex cursor-pointer size-10 flex-col items-center justify-center gap-1 rounded-md transition-colors md:hidden"
+      className="flex size-10 cursor-pointer flex-col items-center justify-center gap-1 rounded-md transition-colors md:hidden"
     >
       {/** Hamburger menu icon lines. Three horizontal lines that form the classic hamburger menu icon */}
-      <span className={'block h-0.5 w-8 bg-gray-600 '}></span>
-      <span className={'block h-0.5 w-8 bg-gray-600 '}></span>
-      <span className={'block h-0.5 w-8 bg-gray-600 '}></span>
+      <span className={'block h-0.5 w-8 bg-gray-600'}></span>
+      <span className={'block h-0.5 w-8 bg-gray-600'}></span>
+      <span className={'block h-0.5 w-8 bg-gray-600'}></span>
     </button>
   );
 };

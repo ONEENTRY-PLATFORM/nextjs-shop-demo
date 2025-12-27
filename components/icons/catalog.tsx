@@ -2,7 +2,7 @@ const CatalogIcon = (props?: { active?: boolean }) => {
   return (
     <svg
       className={
-        'size-full group-hover:fill-orange-500 transition-colors duration-300 ' +
+        'size-full transition-colors duration-300 group-hover:fill-orange-500 ' +
         (props?.active ? 'fill-orange-500' : 'fill-[#817E80]')
       }
       width="24"

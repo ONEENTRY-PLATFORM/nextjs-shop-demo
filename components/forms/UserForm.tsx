@@ -8,7 +8,7 @@ import type { FormEvent, JSX, Key } from 'react';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { api, useGetFormByMarkerQuery } from '@/app/api';
+import { getApi, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import type { FormProps } from '@/app/types/global';
@@ -37,7 +37,7 @@ export type InputValue = {
  * Allows authenticated users to update their personal data.
  * @param   {FormProps}        props      - Component props.
  * @param   {string}           props.lang - Current language shortcode.
- * @param   {IAttributeValues} props.dict - dictionary from server api.
+ * @param   {IAttributeValues} props.dict - dictionary from server getApi().
  * @returns {JSX.Element}                 User form component.
  */
 const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
@@ -112,7 +112,7 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
 
         /** Update user with Users API. Sends the prepared form data to update the user's profile information */
         if (user?.formIdentifier) {
-          await api.Users.updateUser({
+          await getApi().Users.updateUser({
             formIdentifier: user.formIdentifier,
             formData,
             authData: [

@@ -20,7 +20,7 @@ const CloseModal = (): JSX.Element => {
         /** Trigger the closing animation by setting the transition state to 'close' */
         setTransition('close');
       }}
-      className="absolute right-4 top-6 flex aspect-square size-12 shrink-0 items-center justify-center rounded-full border border-[#EEEFF0] text-xl text-slate-700"
+      className="absolute top-6 right-4 flex aspect-square size-12 shrink-0 items-center justify-center rounded-full border border-[#EEEFF0] text-xl text-slate-700"
     >
       &#10005;
     </button>

@@ -43,7 +43,7 @@ const ReviewsList = ({
       return <></>;
     }
     return (
-      <div className="flex text-center w-full h-50 justify-center items-center">
+      <div className="flex h-50 w-full items-center justify-center text-center">
         <h2 className="text-2xl">
           {no_reviews_text?.value || 'There no reviews yet'}
         </h2>

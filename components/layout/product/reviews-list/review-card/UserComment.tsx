@@ -70,7 +70,7 @@ const UserComment = ({
   return (
     <>
       {/** Review content and engagement metrics */}
-      <div className="flex flex-col w-full items-start gap-5 text-sm max-md:max-w-full max-md:flex-wrap">
+      <div className="flex w-full flex-col items-start gap-5 text-sm max-md:max-w-full max-md:flex-wrap">
         {/** User comment text */}
         <p className="flex-auto self-start leading-5 text-neutral-600 max-md:max-w-full">
           {content}
@@ -78,11 +78,11 @@ const UserComment = ({
 
         {/* Attachments */}
         {reviewImages.length > 0 && (
-          <div className="grid grid-cols-2 gap-4 w-full max-w-md">
+          <div className="grid w-full max-w-md grid-cols-2 gap-4">
             {reviewImages.map((image: any, index: number) => (
               <div
                 key={index}
-                className="relative aspect-square rounded-2xl overflow-hidden cursor-pointer border border-solid border-gray-300"
+                className="relative aspect-square cursor-pointer overflow-hidden rounded-2xl border border-solid border-gray-300"
                 onClick={() => {
                   setOpen(!open);
                   setComponent('ReviewModal');
@@ -100,7 +100,7 @@ const UserComment = ({
                   alt={`Review image ${index + 1}`}
                   width={200}
                   height={200}
-                  className="object-cover w-full h-full"
+                  className="h-full w-full object-cover"
                 />
               </div>
             ))}

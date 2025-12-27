@@ -7,7 +7,7 @@ import type { FormEvent, JSX } from 'react';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 
-import { api, logInUser } from '@/app/api';
+import { getApi, logInUser } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -102,7 +102,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
         /** Check OTP code with API AuthProvider based on the current action */
         if (action !== 'activateUser') {
           /** Handle password reset verification */
-          const result = await api.AuthProvider.checkCode(
+          const result = await getApi().AuthProvider.checkCode(
             'email',
             String(fields.email_reg?.value || ''),
             'reg', // Registration context
@@ -118,7 +118,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
         // Handle user activation for new registrations
         else {
           /** Activate user with the provided OTP */
-          const result = await api.AuthProvider.activateUser(
+          const result = await getApi().AuthProvider.activateUser(
             'email',
             String(fields.email_reg?.value || ''),
             otp,
@@ -166,7 +166,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
 
       try {
         /** Request a new verification code from the API */
-        await api.AuthProvider.generateCode(
+        await getApi().AuthProvider.generateCode(
           'email',
           String(fields.email_reg?.value || ''),
           'generate_code',

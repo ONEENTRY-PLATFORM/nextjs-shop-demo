@@ -57,7 +57,7 @@ const ProductDetails = ({
         </p>
       )}
 
-      <div className="mb-5 mt-4 text-left text-xl font-bold leading-8 text-neutral-600">
+      <div className="mt-4 mb-5 text-left text-xl leading-8 font-bold text-neutral-600">
         <PriceDisplay
           currentPrice={sale?.value}
           originalPrice={price?.value}

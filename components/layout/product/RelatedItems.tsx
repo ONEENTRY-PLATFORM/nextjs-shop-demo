@@ -45,7 +45,7 @@ const RelatedItems = ({
     <section className="flex flex-col max-md:max-w-full">
       {/* Heading */}
       <ProductAnimations className={''} index={0}>
-        <h3 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
+        <h3 className="mb-5 text-base leading-5 text-neutral-600 uppercase max-md:max-w-full">
           {block?.attributeValues?.[langCode]?.block_title?.value ||
             block?.attributeValues?.block_title?.value}
         </h3>

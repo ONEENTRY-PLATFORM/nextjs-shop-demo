@@ -40,7 +40,7 @@ const ProductSingleServer = async ({
   if (!product || !lang || !dict) {
     return (
       <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
-        <div className="flex items-center justify-center min-h-100">
+        <div className="flex min-h-100 items-center justify-center">
           {!product && <p>Product not found</p>}
           {!lang && <p>Language not specified</p>}
           {!dict && <p>Dictionary not loaded</p>}
@@ -56,7 +56,7 @@ const ProductSingleServer = async ({
   if (!localizeInfos?.title) {
     return (
       <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
-        <div className="flex items-center justify-center min-h-100">
+        <div className="flex min-h-100 items-center justify-center">
           <p>Invalid product data</p>
         </div>
       </section>

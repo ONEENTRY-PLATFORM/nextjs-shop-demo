@@ -46,7 +46,7 @@ const EmptyFavorites = ({
         />
       </svg>
       {/** Message indicating that the favorites list is empty */}
-      <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
+      <h1 className="mb-5 text-lg font-bold text-slate-600 uppercase">
         {empty_favorites_plug?.value || 'Your favorite list is empty'}
       </h1>
       {/** Link to shop page with localized text */}

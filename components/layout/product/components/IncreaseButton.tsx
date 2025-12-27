@@ -46,7 +46,7 @@ const IncreaseButton = memo(
       return (
         <button
           disabled // Disable the button as the maximum quantity is reached
-          className="relative cursor-not-allowed m-1 box-border size-8 rounded-full text-center text-slate-400"
+          className="relative m-1 box-border size-8 cursor-not-allowed rounded-full text-center text-slate-400"
           aria-label="Maximum quantity reached" // Accessibility label indicating the button is disabled
         >
           +
@@ -57,7 +57,7 @@ const IncreaseButton = memo(
     return (
       <button
         onClick={onIncreaseHandle} // Call the handler when the button is clicked
-        className="relative cursor-pointer m-1 box-border size-8 rounded-full text-center text-slate-700 transition-all duration-500 hover:bg-slate-100 hover:text-orange-500 hover:shadow-inner"
+        className="relative m-1 box-border size-8 cursor-pointer rounded-full text-center text-slate-700 transition-all duration-500 hover:bg-slate-100 hover:text-orange-500 hover:shadow-inner"
         aria-label="Increase quantity" // Accessibility label for the button
       >
         +

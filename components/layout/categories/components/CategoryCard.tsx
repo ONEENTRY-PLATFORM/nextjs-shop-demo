@@ -54,7 +54,7 @@ const CategoryCard = ({
           src={imgSrc ? imgSrc : '/images/card.svg'}
           alt={title}
           quality={75}
-          className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover transition-all duration-500 group-hover:scale-125"
+          className="absolute top-0 left-0 z-0 size-full rounded-3xl object-cover transition-all duration-500 group-hover:scale-125"
         />
 
         {/** Radial hover effect overlay */}

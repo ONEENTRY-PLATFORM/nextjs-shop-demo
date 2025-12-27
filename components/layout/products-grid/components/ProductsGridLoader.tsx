@@ -38,13 +38,13 @@ const ProductsGridLoader: FC<LoaderProps> = ({
               {/* Product image placeholder */}
               <div className="relative mb-3 size-36 w-full rounded-md bg-white opacity-40"></div>
               {/* Product title placeholder */}
-              <div className="z-10 mb-4 mt-auto flex h-6 w-full flex-col rounded-full bg-white opacity-30"></div>
+              <div className="z-10 mt-auto mb-4 flex h-6 w-full flex-col rounded-full bg-white opacity-30"></div>
               {/* Product attribute line 1 placeholder */}
-              <div className="z-10 mb-2 mt-auto flex h-4 w-full flex-col gap-2.5 rounded-full bg-white opacity-30"></div>
+              <div className="z-10 mt-auto mb-2 flex h-4 w-full flex-col gap-2.5 rounded-full bg-white opacity-30"></div>
               {/* Product attribute line 2 placeholder */}
-              <div className="z-10 mb-2 mt-auto flex h-4 w-full flex-col gap-2.5 rounded-full bg-white opacity-30"></div>
+              <div className="z-10 mt-auto mb-2 flex h-4 w-full flex-col gap-2.5 rounded-full bg-white opacity-30"></div>
               {/* Product price/action button placeholder */}
-              <div className="z-10 mb-4 mt-auto flex h-8 w-full flex-col gap-2.5 rounded-full bg-white opacity-30"></div>
+              <div className="z-10 mt-auto mb-4 flex h-8 w-full flex-col gap-2.5 rounded-full bg-white opacity-30"></div>
             </div>
           ))}
         </div>

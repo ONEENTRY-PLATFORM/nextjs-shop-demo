@@ -54,7 +54,7 @@ const Menu = ({ menu }: { menu: IMenusEntity }): JSX.Element => {
      * Container for the footer menu
      * Uses flex layout with responsive width adjustments
      */
-    <div className="flex flex-col max-xs:w-[45%]">
+    <div className="max-xs:w-[45%] flex flex-col">
       {/** Navigation element containing the menu title and items */}
       <nav className="flex flex-col text-white">
         {/** Menu title from CMS with styling */}

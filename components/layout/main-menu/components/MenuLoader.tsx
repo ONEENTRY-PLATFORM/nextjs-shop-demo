@@ -13,7 +13,7 @@ import type { LoaderProps } from '@/app/types/global';
  */
 const MainMenuLoader = ({ limit = 4 }: LoaderProps): JSX.Element => {
   return (
-    <div className="relative z-20 items-center justify-center bg-white px-5 text-lg font-bold uppercase text-neutral-600 max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
+    <div className="relative z-20 items-center justify-center bg-white px-5 text-lg font-bold text-neutral-600 uppercase max-lg:text-sm max-md:hidden max-md:px-5 max-md:text-sm md:flex">
       {/* Container for the menu loader with responsive styling */}
       <div className="flex w-full max-w-(--breakpoint-xl) items-center justify-center py-5 max-md:px-5">
         {/* List of loading placeholders */}
@@ -21,7 +21,7 @@ const MainMenuLoader = ({ limit = 4 }: LoaderProps): JSX.Element => {
           {Array.from(Array(limit).keys()).map((item) => (
             <li
               key={item}
-              className="group my-auto flex w-1/4 justify-between gap-5 whitespace-nowrap py-1"
+              className="group my-auto flex w-1/4 justify-between gap-5 py-1 whitespace-nowrap"
             >
               {/* Individual animated placeholder for a menu item */}
               <div className="animate-loader relative box-border flex w-full shrink-0 flex-row items-center gap-2.5 text-slate-800 hover:text-red-500">

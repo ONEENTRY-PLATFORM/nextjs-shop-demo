@@ -48,7 +48,7 @@ const DeliveryRow = ({
           </div>
 
           {/** Delivery price formatted according to current language */}
-          <div className="mb-2 text-xl font-bold leading-8">
+          <div className="mb-2 text-xl leading-8 font-bold">
             {UsePrice({
               amount: delivery?.price || 0,
               lang,

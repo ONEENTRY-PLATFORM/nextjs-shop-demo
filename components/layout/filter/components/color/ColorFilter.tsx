@@ -80,7 +80,7 @@ const ColorFilter = memo(
           {/** Title skeleton */}
           <div className="mb-5 h-5 bg-slate-100">{title}</div>
           {/** Color options skeleton */}
-          <div className="mb-9 flex h-5 flex-wrap gap-5 whitespace-nowrap bg-slate-100 text-sm leading-8"></div>
+          <div className="mb-9 flex h-5 flex-wrap gap-5 bg-slate-100 text-sm leading-8 whitespace-nowrap"></div>
         </div>
       );
     }
@@ -90,13 +90,13 @@ const ColorFilter = memo(
         {/** Filter title */}
         <div className="mb-5 text-lg text-[#4C4D56]">{title}</div>
         {/** Color options list */}
-        <div className="mb-9 flex flex-wrap gap-1 whitespace-nowrap text-sm leading-8 text-slate-400">
+        <div className="mb-9 flex flex-wrap gap-1 text-sm leading-8 whitespace-nowrap text-slate-400">
           {colors.map((color: Color) => (
             /* Color option button with dynamic styling based on selection state */
             <button
               key={color.code}
               className={
-                'flex cursor-pointer gap-1.5 rounded-full pl-1 pr-2 transition-colors w-24 ' +
+                'flex w-24 cursor-pointer gap-1.5 rounded-full pr-2 pl-1 transition-colors ' +
                 (color.code === currentColor
                   ? 'bg-slate-100 text-neutral-700'
                   : 'hover:bg-slate-100')
@@ -105,7 +105,7 @@ const ColorFilter = memo(
             >
               {/** Color swatch display */}
               <div
-                className={'my-auto size-6 rounded-full '}
+                className={'my-auto size-6 rounded-full'}
                 style={{
                   backgroundColor: color.code,
                 }}

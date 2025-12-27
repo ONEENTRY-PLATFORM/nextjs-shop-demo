@@ -5,7 +5,7 @@ import type { ChangeEvent, FormEvent, JSX } from 'react';
 import { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { api } from '@/app/api';
+import { useFormsData } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
 import ArrowUpIcon from '../icons/arrow-up';
@@ -66,8 +66,10 @@ const CommentForm = memo(
     /** Authentication context providing user authentication status and methods */
     const { isAuth } = useContext(AuthContext);
 
+    /** Use form submission hook for loading state and API calls */
+    const { loading, sendData } = useFormsData();
+
     const [value, setValue] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const [response, setResponse] = useState<IPostFormResponse | IError | null>(
       null,
@@ -121,11 +123,9 @@ const CommentForm = memo(
         }
 
         try {
-          setLoading(true);
-
           const moduleFormConfig = product?.moduleFormConfigs?.[0];
 
-          const responseData = await api.FormData.postFormsData({
+          const responseData = await sendData({
             formIdentifier:
               moduleFormConfig?.formIdentifier || DEFAULT_FORM_IDENTIFIER,
             formData: [
@@ -142,22 +142,25 @@ const CommentForm = memo(
             status: FORM_STATUS,
           });
 
-          setResponse(responseData);
-          setLoading(false);
+          const typedResponse = responseData as IPostFormResponse | IError;
+          setResponse(typedResponse);
           setValue(''); // Clear input on success
 
           // Show success toast
-          if (responseData?.actionMessage) {
-            toast.success(responseData.actionMessage);
+          if (
+            typedResponse &&
+            'actionMessage' in typedResponse &&
+            typedResponse.actionMessage
+          ) {
+            toast.success(typedResponse.actionMessage);
           }
         } catch (err) {
-          setLoading(false);
           const errorMessage =
             err instanceof Error ? err.message : 'Failed to submit comment';
           setError(errorMessage);
         }
       },
-      [value, product, review],
+      [value, product, review, sendData],
     );
 
     /** Show authentication error if user is not logged in */
@@ -172,7 +175,7 @@ const CommentForm = memo(
 
     return (
       <form
-        className="w-full flex gap-4 mt-4 flex-col"
+        className="mt-4 flex w-full flex-col gap-4"
         onSubmit={onSubmitComment}
       >
         <div className="flex w-full gap-4">
@@ -183,11 +186,11 @@ const CommentForm = memo(
             value={value}
             onChange={handleInputChange}
             disabled={loading}
-            className="border border-solid border-gray-300 p-2 w-full rounded-full disabled:opacity-50"
+            className="w-full rounded-full border border-solid border-gray-300 p-2 disabled:opacity-50"
           />
           <button
             type="submit"
-            className="rounded-full cursor-pointer group disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group cursor-pointer rounded-full disabled:cursor-not-allowed disabled:opacity-50"
             disabled={loading || isValueEmpty}
             title={buttonTitle}
             aria-label={buttonTitle}

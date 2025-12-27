@@ -175,7 +175,7 @@ const PriceFilter = memo(
     return (
       <div className="relative box-border flex shrink-0 flex-col">
         {/** Price filter title */}
-        <div className="mb-5 self-start text-lg font-medium leading-8 text-[#4C4D56]">
+        <div className="mb-5 self-start text-lg leading-8 font-medium text-[#4C4D56]">
           {filter_price_title?.value}
         </div>
 

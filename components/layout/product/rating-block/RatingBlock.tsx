@@ -91,7 +91,7 @@ const RatingBlock = ({
       state={state}
     >
       {/** Display overall product rating with star rating and numeric value */}
-      <div className="flex items-center gap-2.5 self-start text-3xl font-bold leading-8 text-neutral-600">
+      <div className="flex items-center gap-2.5 self-start text-3xl leading-8 font-bold text-neutral-600">
         <StarRating rating={totalRating} />
         <div>{totalRating}</div>
       </div>
@@ -111,7 +111,7 @@ const RatingBlock = ({
           setComponent('ReviewForm');
           setData(product);
         }}
-        className="btn btn-o btn-o-primary w-full btn-md mt-5 self-end max-md:self-center"
+        className="btn btn-o btn-o-primary btn-md mt-5 w-full self-end max-md:self-center"
       >
         {leave_review_text}
       </button>

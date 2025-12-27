@@ -35,7 +35,7 @@ const ReviewImages = ({
         .map((img: { downloadLink: string }, index: number) => (
           <div
             key={index}
-            className="relative w-20 h-20 rounded-lg overflow-hidden"
+            className="relative h-20 w-20 overflow-hidden rounded-lg"
           >
             <Image
               src={img.downloadLink}

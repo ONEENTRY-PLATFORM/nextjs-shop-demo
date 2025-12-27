@@ -65,7 +65,7 @@ const ChildReviewCard = ({
           (isUserAdmin ? ' border-l border-orange-500' : '')
         }
       >
-        <div className="flex flex-col gap-3 flex-1">
+        <div className="flex flex-1 flex-col gap-3">
           {/** Review header with name and date */}
           <div className="flex items-center justify-between gap-4 text-neutral-600">
             <div className="flex items-center gap-2">
@@ -114,7 +114,7 @@ const ChildReviewCard = ({
             <AnswerButton dict={dict} state={state} setState={setState} />
 
             {/** Like and dislike buttons */}
-            <div className="flex items-center gap-4 ml-auto">
+            <div className="ml-auto flex items-center gap-4">
               <RatingBlock />
             </div>
           </div>

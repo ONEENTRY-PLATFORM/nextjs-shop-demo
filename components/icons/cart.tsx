@@ -9,7 +9,7 @@ const CartAltIcon = (props?: { active?: boolean }) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={
-        'size-full group-hover:fill-orange-500 transition-colors duration-300 ' +
+        'size-full transition-colors duration-300 group-hover:fill-orange-500 ' +
         (props?.active ? 'fill-orange-500' : 'fill-[#817E80]')
       }
     >

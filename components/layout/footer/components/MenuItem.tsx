@@ -57,7 +57,7 @@ const MenuItem = ({
       {/** Navigation link with conditional styling based on active state. Changes color when hovered or when active */}
       <Link
         className={
-          'hover:text-red-500 font-normal ' + (isActive ? 'text-red-500' : '')
+          'font-normal hover:text-red-500 ' + (isActive ? 'text-red-500' : '')
         }
         href={'/' + lang + '/' + page.pageUrl}
       >

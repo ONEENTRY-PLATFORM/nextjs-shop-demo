@@ -49,7 +49,7 @@ const Modal = ({
       <div
         id="modalBody"
         className={
-          'fixed left-1/2 top-1/2 z-20 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-6 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:p-10 ' +
+          'fixed top-1/2 left-1/2 z-20 flex size-full max-w-full -translate-x-1/2 -translate-y-1/2 flex-col overflow-auto bg-white p-6 pt-12 shadow-xl md:overflow-hidden md:rounded-3xl lg:p-10 ' +
           cn
         }
       >

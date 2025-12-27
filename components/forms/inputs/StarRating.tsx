@@ -26,11 +26,11 @@ const StarRating = ({
   required: boolean;
 }): JSX.Element => {
   return (
-    <div className="flex shrink-0 flex-row items-center gap-1.5 ">
+    <div className="flex shrink-0 flex-row items-center gap-1.5">
       {[...Array(5)].map((_, index) => (
         <svg
           key={index}
-          className="my-auto aspect-square w-6.25 shrink-0 self-start cursor-pointer"
+          className="my-auto aspect-square w-6.25 shrink-0 cursor-pointer self-start"
           width="34"
           height="34"
           viewBox="0 0 34 34"

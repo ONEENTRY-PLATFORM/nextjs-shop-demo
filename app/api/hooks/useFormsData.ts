@@ -11,7 +11,7 @@ import { getApi } from '@/app/api';
  * This hook provides functionality to submit form data with loading state management.
  * It's designed to work with OneEntry CMS form endpoints.
  * @example
- * const { loading, sendData } = useSetForm();
+ * const { loading, sendData } = useFormsData();
  *
  * const handleSubmit = async (formData) => {
  *   const result = await sendData(formData);
@@ -26,7 +26,7 @@ import { getApi } from '@/app/api';
  *                   - loading: boolean indicating submission status
  *                   - sendData: function to submit form data, returns Promise<unknown>
  */
-export const useSetForm = (): {
+export const useFormsData = (): {
   loading: boolean;
   sendData: (data: IBodyPostFormData) => Promise<unknown>;
 } => {

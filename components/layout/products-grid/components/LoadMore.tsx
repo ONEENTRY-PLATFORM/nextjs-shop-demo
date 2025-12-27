@@ -42,17 +42,14 @@ const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
    * @param   {string} value - Parameter value
    * @returns {string}       Updated query string
    */
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      /** Read current URL params directly from window.location to get the most recent state */
-      const currentParams = new URLSearchParams(window.location.search);
-      /** Set the new page parameter */
-      currentParams.set(name, value);
+  const createQueryString = useCallback((name: string, value: string) => {
+    /** Read current URL params directly from window.location to get the most recent state */
+    const currentParams = new URLSearchParams(window.location.search);
+    /** Set the new page parameter */
+    currentParams.set(name, value);
 
-      return currentParams.toString();
-    },
-    [],
-  );
+    return currentParams.toString();
+  }, []);
 
   /** Register GSAP plugins on component mount */
   useLayoutEffect(() => {

@@ -106,7 +106,7 @@ const PaymentMethod = ({
             Payment description {account?.localizeInfos?.title}
           </p>
           <button
-            className="absolute cursor-pointer bottom-4 right-4 size-6 rounded-full bg-slate-50 text-center"
+            className="absolute right-4 bottom-4 size-6 cursor-pointer rounded-full bg-slate-50 text-center"
             aria-label={
               isActive ? 'Collapse payment method' : 'Expand payment method'
             }
@@ -121,7 +121,7 @@ const PaymentMethod = ({
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex flex-wrap justify-between text-[#4C4D56]">
-            <div className="flex w-2/3 min-h-full justify-between flex-col border border-r-0 border-b-0 border-solid border-[#B0BCCE] max-md:w-full max-md:max-w-full">
+            <div className="flex min-h-full w-2/3 flex-col justify-between border border-r-0 border-b-0 border-solid border-[#B0BCCE] max-md:w-full max-md:max-w-full">
               {hasCartItems ? (
                 <OrderProductsTable
                   lang={lang}
@@ -138,7 +138,7 @@ const PaymentMethod = ({
             <div className="mt-2 flex">
               <TotalAmount
                 className={
-                  'text-base font-bold leading-8 text-neutral-600 lg:self-end'
+                  'text-base leading-8 font-bold text-neutral-600 lg:self-end'
                 }
                 lang={lang}
                 dict={dict}

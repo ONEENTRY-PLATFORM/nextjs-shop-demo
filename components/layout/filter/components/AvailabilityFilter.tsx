@@ -56,7 +56,7 @@ const AvailabilityFilter = memo(
           {title || 'Availability'}
         </label>
         {/** Custom styled toggle switch for availability filter */}
-        <div className="relative inline-block w-10 select-none align-middle transition duration-200 ease-in">
+        <div className="relative inline-block w-10 align-middle transition duration-200 ease-in select-none">
           <input
             id="availability"
             type="checkbox"

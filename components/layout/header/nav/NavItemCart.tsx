@@ -86,7 +86,7 @@ const NavItemCart = ({
       {/** Cart icon component */}
       <CartAltIcon />
       {/** Badge displaying the number of items in the cart */}
-      <div className="absolute -right-1.5 -top-1 z-10 size-4 rounded-full text-white bg-orange-500 text-center text-xs leading-4">
+      <div className="absolute -top-1 -right-1.5 z-10 size-4 rounded-full bg-orange-500 text-center text-xs leading-4 text-white">
         {count}
       </div>
     </Link>

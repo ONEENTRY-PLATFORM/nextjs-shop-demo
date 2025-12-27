@@ -64,7 +64,7 @@ const Image = ({
         alt={alt}
         loading={loading}
         className={
-          'relative z-10 size-full object-cover transition-opacity duration-300 '
+          'relative z-10 size-full object-cover transition-opacity duration-300'
         }
         onLoad={() => onLoad()}
         fetchPriority={priority || 'auto'}

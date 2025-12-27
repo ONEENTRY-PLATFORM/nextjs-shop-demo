@@ -178,6 +178,7 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
     return <div>Loading...</div>;
   }
 
+  /** If error, return error message */
   if (error) {
     return <div>Error: {error.message}</div>;
   }

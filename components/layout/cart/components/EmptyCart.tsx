@@ -40,7 +40,7 @@ const EmptyCart = ({
       />
 
       {/** Empty cart message from localized dictionary */}
-      <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
+      <h1 className="mb-5 text-lg font-bold text-slate-600 uppercase">
         {empty_cart_plug?.value}
       </h1>
 

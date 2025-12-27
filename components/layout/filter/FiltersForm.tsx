@@ -78,7 +78,7 @@ const FiltersForm = async ({
   return (
     <div
       id="filter"
-      className="flex size-full h-auto flex-col overflow-x-hidden overscroll-y-auto px-8 pb-16 pt-5 max-md:max-h-full max-md:px-6"
+      className="flex size-full h-auto flex-col overflow-x-hidden overscroll-y-auto px-8 pt-5 pb-16 max-md:max-h-full max-md:px-6"
     >
       {Array.isArray(attributeKeys) ? (
         attributeKeys.map((attr) => {

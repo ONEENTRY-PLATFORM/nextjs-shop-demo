@@ -134,7 +134,7 @@ const SearchBar = ({
         {/** Search submit button with icon. Triggers form submission to navigate to the shop page with search results */}
         <button
           type="submit"
-          className="group cursor-pointer relative m-auto box-border flex shrink-0 flex-col p-2.5"
+          className="group relative m-auto box-border flex shrink-0 cursor-pointer flex-col p-2.5"
         >
           {/** Hidden text for accessibility. Provides context for screen readers about the search button */}
           <span className="sr-only">{dict?.search_placeholder?.value}</span>

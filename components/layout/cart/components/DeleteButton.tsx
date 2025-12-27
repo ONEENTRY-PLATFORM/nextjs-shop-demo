@@ -98,7 +98,7 @@ const DeleteButton = memo(
 
                 closeToast();
               }}
-              className="rounded bg-orange-500 px-3 w-20 cursor-pointer py-1 text-sm font-semibold text-white hover:bg-orange-600"
+              className="w-20 cursor-pointer rounded bg-orange-500 px-3 py-1 text-sm font-semibold text-white hover:bg-orange-600"
             >
               {undo_text?.value || 'Undo'}
             </button>
@@ -122,7 +122,7 @@ const DeleteButton = memo(
     return (
       /** Button element with click handler to delete product */
       <button
-        className="group cursor-pointer relative box-border flex size-5 shrink-0 flex-col items-center justify-center"
+        className="group relative box-border flex size-5 shrink-0 cursor-pointer flex-col items-center justify-center"
         aria-label="Delete item"
         onClick={handleDelete}
       >

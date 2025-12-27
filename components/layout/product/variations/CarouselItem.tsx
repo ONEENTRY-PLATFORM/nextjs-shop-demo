@@ -35,7 +35,7 @@ const CarouselItem = ({
     <button
       onClick={() => setCurrentIndex(index)}
       className={
-        'relative border border-solid rounded-lg box-border flex w-25 min-h-32.5 shrink-0 flex-col duration-500 ease-in-out ' +
+        'relative box-border flex min-h-32.5 w-25 shrink-0 flex-col rounded-lg border border-solid duration-500 ease-in-out ' +
         clsx(
           index === currentIndex
             ? 'border-slate-50 text-slate-700'
@@ -44,7 +44,7 @@ const CarouselItem = ({
       }
     >
       <div className="flex w-full flex-col gap-1 overflow-hidden pb-1 text-center text-sm">
-        <div className="flex h-20 w-full justify-center cursor-pointer">
+        <div className="flex h-20 w-full cursor-pointer justify-center">
           <CarouselItemImage lang={lang} item={item} />
         </div>
         <h3 className="w-full text-center text-xs leading-4">

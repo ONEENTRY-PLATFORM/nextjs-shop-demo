@@ -89,7 +89,7 @@ const ProductImageGallery = ({
   return (
     <div className="flex flex-row flex-wrap gap-2">
       {/* Favorites button positioned at top right corner */}
-      <div className="absolute right-2 top-2 z-10">
+      <div className="absolute top-2 right-2 z-10">
         <FavoritesButton {...product} />
       </div>
       {imagesData ? (
@@ -124,7 +124,7 @@ const ProductImageGallery = ({
             >
               {imagesData.map((image, i: Key) => {
                 return (
-                  <div key={i} className="w-full items-center cursor-pointer">
+                  <div key={i} className="w-full cursor-pointer items-center">
                     <Image
                       width={80}
                       height={80}

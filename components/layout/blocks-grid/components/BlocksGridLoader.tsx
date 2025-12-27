@@ -91,7 +91,7 @@ const BlocksGridLoader = ({
                 className={`relative flex size-full p-6 ${bgColor} overflow-hidden rounded-3xl`}
               >
                 {/** Placeholder for block icon or logo */}
-                <div className="absolute left-3 top-3 z-10">
+                <div className="absolute top-3 left-3 z-10">
                   <div className="size-7.5" />
                 </div>
 
@@ -99,13 +99,13 @@ const BlocksGridLoader = ({
                 <div className="z-10 mt-auto bg-slate-50"></div>
 
                 {/** Placeholder for block content or description */}
-                <div className="z-10 ml-auto mt-auto w-60 bg-slate-50 max-sm:ml-0"></div>
+                <div className="z-10 mt-auto ml-auto w-60 bg-slate-50 max-sm:ml-0"></div>
 
                 {/** Placeholder for block background image or pattern */}
-                <div className="absolute left-0 top-0 z-0 size-full rounded-3xl object-cover opacity-15 invert">
+                <div className="absolute top-0 left-0 z-0 size-full rounded-3xl object-cover opacity-15 invert">
                   <div
                     className={
-                      'relative flex size-full flex-col items-center justify-center overflow-hidden rounded-xl bg-slate-50 '
+                      'relative flex size-full flex-col items-center justify-center overflow-hidden rounded-xl bg-slate-50'
                     }
                   />
                 </div>

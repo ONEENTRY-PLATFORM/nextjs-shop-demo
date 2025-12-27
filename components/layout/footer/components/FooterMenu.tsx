@@ -49,7 +49,7 @@ const FooterMenuSection = async (): Promise<JSX.Element> => {
     <div
       className={
         baloo.className +
-        ' flex w-full overflow-hidden items-center justify-center bg-[#4d4b4d] px-5 py-10 max-md:px-5'
+        ' flex w-full items-center justify-center overflow-hidden bg-[#4d4b4d] px-5 py-10 max-md:px-5'
       }
     >
       {/** Inner container with maximum width and flex layout. Arranges footer content in a responsive grid-like structure */}

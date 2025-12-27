@@ -52,7 +52,7 @@ const OrderPage = ({
       <OrderAnimations
         isActive={isActive}
         className={
-          'flex h-0 opacity-0 flex-col text-[#4C4D56] ' +
+          'flex h-0 flex-col text-[#4C4D56] opacity-0 ' +
           (isActive ? 'p-4' : '')
         }
       >
@@ -67,7 +67,7 @@ const OrderPage = ({
       <OrderAnimations
         isActive={isActive}
         className={
-          'flex h-0 opacity-0 flex-col text-[#4C4D56] ' +
+          'flex h-0 flex-col text-[#4C4D56] opacity-0 ' +
           (isActive ? 'p-4' : '')
         }
       >
@@ -97,7 +97,7 @@ const OrderPage = ({
     <OrderAnimations
       isActive={isActive}
       className={
-        'flex h-0 opacity-0 flex-col text-[#4C4D56] ' + (isActive ? 'p-4' : '')
+        'flex h-0 flex-col text-[#4C4D56] opacity-0 ' + (isActive ? 'p-4' : '')
       }
     >
       {/* Product cards section */}

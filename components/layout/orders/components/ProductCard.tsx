@@ -97,7 +97,7 @@ const ProductCard = memo(
         <Link
           prefetch={true}
           href={'/' + lang + '/shop/product/' + id}
-          className="absolute left-0 top-0 z-0 flex size-full rounded-lg transition-shadow duration-500 hover:shadow-xl"
+          className="absolute top-0 left-0 z-0 flex size-full rounded-lg transition-shadow duration-500 hover:shadow-xl"
           aria-label={`View details for ${title}`}
         ></Link>
       </div>

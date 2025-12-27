@@ -35,7 +35,7 @@ const ProductsGroup = ({
       index={4}
     >
       {/* together_title */}
-      <h2 className="mb-5 text-base uppercase leading-5 text-neutral-600 max-md:max-w-full">
+      <h2 className="mb-5 text-base leading-5 text-neutral-600 uppercase max-md:max-w-full">
         {block?.attributeValues?.[lang]?.together_title?.value ||
           block?.attributeValues?.together_title?.value}
       </h2>
@@ -45,7 +45,7 @@ const ProductsGroup = ({
         {block?.products?.map((product: IProductsEntity) => (
           <div
             key={product.id}
-            className="relative box-border flex w-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%] h-full"
+            className="relative box-border flex h-full w-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%]"
           >
             <GroupCard product={product} lang={lang} dict={dict} />
           </div>

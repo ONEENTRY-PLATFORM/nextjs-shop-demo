@@ -45,7 +45,7 @@ const Pagination = ({ totalPages }: { totalPages: number }): JSX.Element => {
         <button
           key={item}
           className={
-            'size-8 rounded-full border border-neutral-100 border-solid hover:text-orange-500 hover:border-orange-500 text-neutral-700 transition-colors ' +
+            'size-8 rounded-full border border-solid border-neutral-100 text-neutral-700 transition-colors hover:border-orange-500 hover:text-orange-500 ' +
             (currentPage === Number(item)
               ? 'border-orange-500 text-orange-500'
               : '')

@@ -53,7 +53,7 @@ const PriceDisplay = ({
       <div
         className={
           'leading-6 ' +
-          (currentPrice ? 'text-slate-300 text-sm' : 'text-orange-500 text-lg')
+          (currentPrice ? 'text-sm text-slate-300' : 'text-lg text-orange-500')
         }
       >
         {oldPrice}

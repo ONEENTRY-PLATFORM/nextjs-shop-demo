@@ -14,7 +14,7 @@ import type { FormEvent, JSX } from 'react';
 import { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { api, useGetFormByMarkerQuery } from '@/app/api';
+import { useFormsData, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -85,7 +85,9 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
   const { isAuth } = useContext(AuthContext);
   const { setOpen, data: productData } = useContext(OpenDrawerContext);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  /** Use form submission hook for loading state and API calls */
+  const { loading, sendData } = useFormsData();
+
   const [error, setError] = useState<string>('');
   const [response, setResponse] = useState<IPostFormResponse | IError | null>(
     null,
@@ -173,10 +175,8 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
           return;
         }
 
-        /** Send transformed form data to OneEntry API */
-        setLoading(true);
-
-        const responseData = await api.FormData.postFormsData({
+        /** Send transformed form data to OneEntry API using hook */
+        const responseData = await sendData({
           formIdentifier: data.identifier,
           formData: transformedFormData,
           formModuleConfigId: moduleFormConfig?.id || DEFAULT_MODULE_CONFIG_ID,
@@ -185,22 +185,37 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
           status: FORM_STATUS,
         });
 
-        setResponse(responseData);
-        setLoading(false);
+        const typedResponse = responseData as IPostFormResponse | IError;
+        setResponse(typedResponse);
 
         // Close drawer and show success message
         setTimeout(() => {
           setOpen(false);
-          toast(responseData?.actionMessage || 'Review sent successfully.');
+          if (
+            typedResponse &&
+            'actionMessage' in typedResponse &&
+            typedResponse.actionMessage
+          ) {
+            toast(typedResponse.actionMessage);
+          } else {
+            toast('Review sent successfully.');
+          }
         }, 500);
       } catch (err) {
-        setLoading(false);
         const errorMessage =
           err instanceof Error ? err.message : 'Failed to submit review';
         setError(errorMessage);
       }
     },
-    [formFields, data, productData, fieldsData, moduleFormConfig, setOpen],
+    [
+      formFields,
+      data,
+      productData,
+      fieldsData,
+      moduleFormConfig,
+      setOpen,
+      sendData,
+    ],
   );
 
   /** Show authentication error if user is not logged in */
@@ -222,7 +237,7 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <FormFieldAnimations
             index={0}
-            className="max-w-full text-xl items-center font-bold text-neutral-600 flex gap-4"
+            className="flex max-w-full items-center gap-4 text-xl font-bold text-neutral-600"
           >
             {/* Product image */}
             <Image
@@ -251,7 +266,7 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
                 index={index}
                 {...field}
                 value={value}
-                className="border border-solid mt-2.5 min-h-20 rounded-[20px] p-5 border-gray-300 cursor-pointer"
+                className="mt-2.5 min-h-20 cursor-pointer rounded-[20px] border border-solid border-gray-300 p-5"
               />
             );
           })}

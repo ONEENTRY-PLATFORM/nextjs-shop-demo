@@ -67,14 +67,14 @@ const ContactInfo = async (): Promise<JSX.Element> => {
       {/** Contact information title from CMS */}
       <h2 className="mb-5 text-xl">{info_title?.value}</h2>
       {/** Container for all contact details. Uses responsive flex layout that changes on smaller screens*/}
-      <div className="flex flex-col gap-1.5 whitespace-nowrap text-sm leading-5 max-md:flex-row max-md:flex-wrap">
+      <div className="flex flex-col gap-1.5 text-sm leading-5 whitespace-nowrap max-md:flex-row max-md:flex-wrap">
         {/** Address section with title and value */}
         <div className="mb-2 flex w-full flex-col gap-1">
           <div className="font-bold">{info_address_title?.value}</div>
           <div className="text-[1rem] font-normal">{address?.value}</div>
         </div>
         {/** Phone numbers section with clickable links */}
-        <div className="mb-2 mr-auto flex flex-col gap-1 max-md:max-w-[50%]">
+        <div className="mr-auto mb-2 flex flex-col gap-1 max-md:max-w-[50%]">
           <div className="font-bold">{info_phones_title?.value}</div>
           <a
             href={'tel:' + phone_1?.value}
@@ -90,7 +90,7 @@ const ContactInfo = async (): Promise<JSX.Element> => {
           </a>
         </div>
         {/** Email addresses section with clickable links.  Each email is a mailto: link for easy contact */}
-        <div className="mb-2 mr-auto flex flex-col gap-1 max-md:max-w-[50%]">
+        <div className="mr-auto mb-2 flex flex-col gap-1 max-md:max-w-[50%]">
           <div className="font-bold">{info_emails_title?.value}</div>
           <a
             href={'mailto:' + email_1?.value}

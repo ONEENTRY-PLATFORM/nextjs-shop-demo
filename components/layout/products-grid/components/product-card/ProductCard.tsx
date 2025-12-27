@@ -58,7 +58,7 @@ const ProductCard = ({
       <ProductImage attributeValues={attributeValues} alt={title} />
 
       {/** Product information section including title, price and add to cart button */}
-      <div className="z-10 mb-5 mt-auto flex w-full max-w-40 flex-col gap-2.5">
+      <div className="z-10 mt-auto mb-5 flex w-full max-w-40 flex-col gap-2.5">
         <h2 className="text-center text-sm leading-4 text-neutral-600">
           {title}
         </h2>
@@ -80,7 +80,7 @@ const ProductCard = ({
       <Link
         prefetch={true}
         href={'/' + lang + '/shop/product/' + id}
-        className="absolute left-0 top-0 z-0 flex size-full"
+        className="absolute top-0 left-0 z-0 flex size-full"
       ></Link>
     </CardAnimations>
   );

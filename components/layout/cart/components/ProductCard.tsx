@@ -131,13 +131,13 @@ const ProductCard = ({
         {/** Link to product details page */}
         <Link
           href={`/shop/product/` + id}
-          className="absolute left-0 top-0 z-0 flex size-full"
+          className="absolute top-0 left-0 z-0 flex size-full"
           aria-label={`${title}`}
         ></Link>
       </div>
 
       {/** Product controls: quantity selector and delete button */}
-      <div className="z-10 flex items-center gap-5 self-start text-xl font-bold leading-8 text-neutral-600 max-sm:ml-8 max-sm:flex">
+      <div className="z-10 flex items-center gap-5 self-start text-xl leading-8 font-bold text-neutral-600 max-sm:ml-8 max-sm:flex">
         {/** Show out of stock message or quantity selector based on availability */}
         {isOutOfStock ? (
           <div className="flex h-10.5 items-center rounded-3xl bg-slate-100 px-5 text-base font-medium text-gray-500">

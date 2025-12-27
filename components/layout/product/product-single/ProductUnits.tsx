@@ -17,7 +17,7 @@ const ProductUnits = ({ units }: { units: number }): JSX.Element => {
   const width = (units / maxUnits) * 100;
 
   return (
-    <div className="relative mb-6 box-border flex shrink-0 flex-col ">
+    <div className="relative mb-6 box-border flex shrink-0 flex-col">
       {/** Display the number of units available */}
       <div className="self-end text-sm text-slate-300">{units} units</div>
       {/** Progress bar container */}

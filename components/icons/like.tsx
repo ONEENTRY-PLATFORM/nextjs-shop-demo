@@ -4,7 +4,7 @@ const LikeIcon = ({ className }: { className?: string }): JSX.Element => {
   return (
     <svg
       className={
-        'size-full fill-[#B0BCCE] cursor-pointer transition-colors duration-300 group-hover:fill-orange-500 ' +
+        'size-full cursor-pointer fill-[#B0BCCE] transition-colors duration-300 group-hover:fill-orange-500 ' +
         className
       }
       width="20"

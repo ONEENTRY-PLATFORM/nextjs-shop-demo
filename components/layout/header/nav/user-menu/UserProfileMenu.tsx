@@ -63,13 +63,13 @@ const UserProfileMenu = ({
           setState(true);
         }}
         title={title}
-        className="group cursor-pointer relative box-border flex size-8 shrink-0 max-sm:size-6"
+        className="group relative box-border flex size-8 shrink-0 cursor-pointer max-sm:size-6"
       >
         <ProfileIcon />
       </button>
       {/** Profile menu animations wrapper with dropdown styling */}
       <ProfileMenuAnimations
-        className="absolute left-0 top-8 h-0 w-48 overflow-hidden rounded-md bg-white px-4 text-slate-800 shadow-lg"
+        className="absolute top-8 left-0 h-0 w-48 overflow-hidden rounded-md bg-white px-4 text-slate-800 shadow-lg"
         state={state}
         setState={setState}
       >

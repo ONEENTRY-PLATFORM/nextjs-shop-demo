@@ -30,7 +30,7 @@ const EmptyOrders = ({
       index={0}
     >
       {/* Heading with empty cart icon and localized message */}
-      <h1 className="mb-5 text-lg font-bold uppercase text-slate-600">
+      <h1 className="mb-5 text-lg font-bold text-slate-600 uppercase">
         <EmptyCartIcon />
         {empty_cart_plug?.value}
       </h1>

@@ -54,15 +54,15 @@ const ReviewCard = ({
       state={state}
     >
       {/** Display the user comment with all review details inside an animated wrapper */}
-      <div className="flex flex-col w-full rounded-3xl border border-solid border-slate-300 bg-white px-10 py-7.5 max-md:px-5">
+      <div className="flex w-full flex-col rounded-3xl border border-solid border-slate-300 bg-white px-10 py-7.5 max-md:px-5">
         {/** Review header with user name, date and star rating */}
-        <header className="mb-4 flex justify-between gap-5 text-lg font-bold leading-8 text-neutral-600 max-md:max-w-full max-md:flex-wrap">
+        <header className="mb-4 flex justify-between gap-5 text-lg leading-8 font-bold text-neutral-600 max-md:max-w-full max-md:flex-wrap">
           {/* User name */}
           <div className="flex items-center">
             <h2 className="text-lg font-bold">{userName}</h2>
           </div>
           {/* Date and star rating */}
-          <div className="flex gap-3 items-end justify-center">
+          <div className="flex items-end justify-center gap-3">
             {/* Date */}
             {reviewDate && (
               <time className="text-sm font-normal text-neutral-600">

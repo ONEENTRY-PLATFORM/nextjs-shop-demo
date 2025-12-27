@@ -28,7 +28,7 @@ const BreadcrumbsTrail = ({ lang }: { lang: string }): JSX.Element => {
       <ul className="flex w-full items-center gap-1.5 text-slate-300">
         {/** Home link as the first breadcrumb item */}
         <li>
-          <Link href={'/' + lang + '/'} className=" hover:text-orange-500">
+          <Link href={'/' + lang + '/'} className="hover:text-orange-500">
             Home
           </Link>
         </li>

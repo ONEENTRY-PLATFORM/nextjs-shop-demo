@@ -17,7 +17,7 @@ const CloseModal = (): JSX.Element => {
   return (
     /* Button element with styling for positioning and appearance */
     <button
-      className="absolute cursor-pointer right-8 top-4 z-10 size-10 rounded-full border border-solid border-slate-200 text-slate-800 transition-colors hover:border-orange-500 hover:text-orange-500"
+      className="absolute top-4 right-8 z-10 size-10 cursor-pointer rounded-full border border-solid border-slate-200 text-slate-800 transition-colors hover:border-orange-500 hover:text-orange-500"
       onClick={() => setTransition('close')}
     >
       {/* Unicode multiplication sign (×) as the close icon */}

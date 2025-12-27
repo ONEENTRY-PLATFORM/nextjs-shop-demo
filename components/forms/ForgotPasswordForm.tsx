@@ -5,7 +5,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX, Key } from 'react';
 import { useCallback, useContext, useState } from 'react';
 
-import { api, useGetFormByMarkerQuery } from '@/app/api';
+import { getApi, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
@@ -69,7 +69,7 @@ export const ForgotPasswordForm = ({
 
       try {
         /** Generate verification code with API and send to user's email */
-        await api.AuthProvider.generateCode(
+        await getApi().AuthProvider.generateCode(
           'email',
           fields.email_reg.value as string,
           'generate_code',

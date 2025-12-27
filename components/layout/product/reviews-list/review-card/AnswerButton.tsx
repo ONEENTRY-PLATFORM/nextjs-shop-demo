@@ -18,7 +18,7 @@ const AnswerButton = ({
       onClick={() => {
         setState(!state);
       }}
-      className="text-orange-500 text-sm cursor-pointer hover:underline"
+      className="cursor-pointer text-sm text-orange-500 hover:underline"
     >
       Leave answer
     </button>

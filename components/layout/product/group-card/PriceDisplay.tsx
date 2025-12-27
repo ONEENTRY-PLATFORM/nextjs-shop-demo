@@ -46,10 +46,10 @@ const PriceDisplay = ({
   });
 
   return (
-    <div className="mb-5 mr-auto flex gap-2 py-1">
+    <div className="mr-auto mb-5 flex gap-2 py-1">
       {/** Display current price if it exists */}
       {currentPrice && (
-        <div className="grow text-lg font-bold leading-7 text-orange-500">
+        <div className="grow text-lg leading-7 font-bold text-orange-500">
           {price}
         </div>
       )}
@@ -61,7 +61,7 @@ const PriceDisplay = ({
       <div
         className={
           'leading-7 line-through ' +
-          (currentPrice ? 'text-gray-400 text-sm' : 'text-orange-500 text-lg')
+          (currentPrice ? 'text-sm text-gray-400' : 'text-lg text-orange-500')
         }
       >
         {oldPrice}

@@ -4,7 +4,7 @@ import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX, Key } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
 
-import { api, useGetFormByMarkerQuery } from '@/app/api';
+import { useFormsData, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 
 import Loader from '../shared/Loader';
@@ -25,8 +25,9 @@ const ContactUsForm = memo(
   ({ className, lang }: { className?: string; lang: string }): JSX.Element => {
     // const [token, setToken] = useState<string | null>();
     // const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
-    /** Loading state for form submission */
-    const [loading, setLoading] = useState<boolean>(false);
+
+    /** Use form submission hook for loading state and API calls */
+    const { loading, sendData } = useFormsData();
 
     /** Error state for form submission errors */
     const [error, setError] = useState<string>('');
@@ -78,7 +79,7 @@ const ContactUsForm = memo(
           value: string | object;
         }[] = [];
 
-        // transform and send form data
+        /** transform and send form data */
         if (formFields) {
           /** Get all form field property keys */
           const propertiesArray = Object.keys(formFields);
@@ -101,9 +102,7 @@ const ContactUsForm = memo(
               value: string | object;
             };
 
-            /**
-             * Handle special field types with specific data structures
-             */
+            /** Handle special field types with specific data structures */
             if (marker === 'spam') {
               newData = {
                 marker: marker,
@@ -154,52 +153,39 @@ const ContactUsForm = memo(
             return formData;
           }, emptyFormData);
 
-          /**
-           * Send transformed form data to OneEntry API
-           */
+          /** Send transformed form data to OneEntry API using hook */
           try {
-            setLoading(true);
-            await api.FormData.postFormsData({
-              /**
-               * Form identifier from CMS data
-               */
+            const result = await sendData({
+              /** Form identifier from CMS data */
               formIdentifier: data?.identifier || '',
-              /**
-               * Transformed form data
-               */
+              /** Transformed form data */
               formData: transformedFormData,
-              /**
-               * Form module configuration ID
-               */
+              /** Form module configuration ID */
               formModuleConfigId: moduleFormConfig?.id || 0,
-              /**
-               * Module entity identifier
-               */
+              /** Module entity identifier */
               moduleEntityIdentifier:
                 moduleFormConfig?.entityIdentifiers?.[0]?.id || '',
-              /**
-               * Reply-to email (not used in this form)
-               */
+              /** Reply-to email (not used in this form) */
               replayTo: null,
-              /**
-               * Initial status of the form submission
-               */
+              /** Initial status of the form submission */
               status: 'sent',
             });
-            setLoading(false);
+
+            /** Handle errors from sendData */
+            if (result && typeof result === 'object' && 'error' in result) {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              setError((result as any).error);
+            }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (e: any) {
-            setLoading(false);
             setError(e.message);
           }
         }
       },
-      [formFields, fieldsData, data, moduleFormConfig],
+      [formFields, fieldsData, data, moduleFormConfig, sendData],
     );
 
-    /**
-     * Show loader while form data is being fetched
-     */
+    /** Show loader while form data is being fetched */
     if (isLoading) {
       return <Loader />;
     }
@@ -214,9 +200,7 @@ const ContactUsForm = memo(
       >
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {formFields?.map((field: IAttributes, index: Key | number) => {
-            /**
-             * Render form fields based on their type
-             */
+            /** Render form fields based on their type */
             if (field.type === 'button') {
               return (
                 <FormSubmitButton

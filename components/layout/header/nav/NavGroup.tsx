@@ -50,7 +50,7 @@ const NavGroup = async ({ lang }: { lang: string }): Promise<JSX.Element> => {
           return (
             /** Container for individual navigation items with responsive sizing */
             <div
-              className="flex size-8 max-sm:size-6 max-xs:hidden"
+              className="max-xs:hidden flex size-8 max-sm:size-6"
               key={item.id}
             >
               {item.pageUrl === 'profile' && (

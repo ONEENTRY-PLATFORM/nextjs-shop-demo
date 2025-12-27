@@ -57,8 +57,8 @@ const PriceDisplay = ({
           className={
             'leading-6 ' +
             (currentPrice
-              ? 'text-slate-300 text-sm'
-              : 'text-orange-500 text-lg')
+              ? 'text-sm text-slate-300'
+              : 'text-lg text-orange-500')
           }
           aria-label={`Original price: ${oldPrice}`}
         >

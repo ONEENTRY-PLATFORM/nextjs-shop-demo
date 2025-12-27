@@ -5,7 +5,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 import { memo, useContext, useEffect, useState } from 'react';
 
-import { api, useGetProductsByIdsQuery } from '@/app/api';
+import { getApi, useGetProductsByIdsQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
@@ -22,7 +22,7 @@ const MemoizedProductsGridLoader = memo(ProductsGridLoader);
  * Favorites page.
  * @param   {SimplePageProps}  props      - Page props.
  * @param   {string}           props.lang - Current language shortcode.
- * @param   {IAttributeValues} props.dict - dictionary from server api.
+ * @param   {IAttributeValues} props.dict - dictionary from server getApi().
  * @returns {JSX.Element}                 favorites page with animations.
  */
 const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
@@ -63,7 +63,7 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
       return;
     }
 
-    const ws = api.WS.connect();
+    const ws = getApi().WS.connect();
     if (!ws) {
       return;
     }

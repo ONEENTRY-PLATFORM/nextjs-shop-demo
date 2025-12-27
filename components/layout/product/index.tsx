@@ -3,7 +3,6 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-import { api } from '@/app/api';
 import { getProductTitle } from '@/app/api/hooks/useProductsData';
 import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
 
@@ -52,7 +51,7 @@ const ProductSingle = async ({
   const { attributeValues, blocks } = product;
 
   /** getFormsDataByMarker */
-  const reviewsData = await api.FormData.getFormsDataByMarker(
+  const reviewsData = await getApi().FormData.getFormsDataByMarker(
     'comment_to_product', // marker - Form marker
     5, // formModuleConfigId - Form module configuration ID
     {

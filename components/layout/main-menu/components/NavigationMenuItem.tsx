@@ -55,7 +55,7 @@ const NavigationMenuItem = ({
             'size-4.5 ' +
             clsx(
               isActive
-                ? 'fill-red-500  transition-colors duration-300'
+                ? 'fill-red-500 transition-colors duration-300'
                 : 'fill-current transition-colors duration-300',
             )
           }

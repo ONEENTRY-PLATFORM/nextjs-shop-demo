@@ -50,10 +50,10 @@ const SearchResults = ({
    * Appears below the search bar with shadow and rounded corners for visual distinction
    */
   return state ? (
-    <div className="absolute left-0 top-full z-30 mt-px flex w-full flex-col gap-1 rounded-2xl bg-white p-5 shadow-lg">
+    <div className="absolute top-full left-0 z-30 mt-px flex w-full flex-col gap-1 rounded-2xl bg-white p-5 shadow-lg">
       {/** Close button to hide search results */}
       <button
-        className="absolute right-3 top-3 size-4"
+        className="absolute top-3 right-3 size-4"
         onClick={() => setState(false)}
       >
         &#10005;

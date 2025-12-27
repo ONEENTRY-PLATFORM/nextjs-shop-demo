@@ -105,7 +105,7 @@ const FormInput = (field: {
   return (
     <FormFieldAnimations index={field.index as number} className="input-group">
       {/** Label for the form field * Shows an asterisk if the field is required */}
-      <label htmlFor={field.marker} className="text-gray-400 cursor-pointer">
+      <label htmlFor={field.marker} className="cursor-pointer text-gray-400">
         {localizeInfos?.title}{' '}
         {required && <span className="text-red-500">*</span>}
       </label>
@@ -154,7 +154,7 @@ const FormInput = (field: {
       )}
       {/** Render groupOfImages type field */}
       {field.type === 'groupOfImages' && (
-        <div className={'flex items-center gap-4 group ' + cn}>
+        <div className={'group flex items-center gap-4 ' + cn}>
           <CameraIcon />
           <input
             type="file"
@@ -220,7 +220,7 @@ const FormInput = (field: {
             e.preventDefault();
             setShowPassword((prev) => !prev);
           }}
-          className="absolute bottom-2 right-2 flex size-6 items-center"
+          className="absolute right-2 bottom-2 flex size-6 items-center"
         >
           {showPassword ? <EyeOpenIcon /> : <EyeIcon />}
         </button>
