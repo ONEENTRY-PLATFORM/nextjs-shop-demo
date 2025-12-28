@@ -16,7 +16,8 @@
     "test:e2e:report": "playwright show-report",
     "test:e2e:chromium": "playwright test --project=chromium",
     "test:e2e:firefox": "playwright test --project=firefox",
-    "test:e2e:webkit": "playwright test --project=webkit"
+    "test:e2e:webkit": "playwright test --project=webkit",
+    "test:e2e:install": "playwright install"
   },
   "dependencies": {
     "gsap": "^3.14.2",
