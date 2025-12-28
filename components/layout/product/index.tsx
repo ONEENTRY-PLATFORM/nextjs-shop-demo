@@ -3,7 +3,6 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-import { getApi } from '@/app/api';
 import { getProductTitle } from '@/app/api/hooks/useProductsData';
 import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
 
@@ -13,7 +12,7 @@ import ProductDetails from './product-single/ProductDetails';
 import ProductImageGallery from './product-single/ProductImageGallery';
 import ProductsGroup from './ProductsGroup';
 import RelatedItems from './RelatedItems';
-import ReviewsSection from './ReviewsSection';
+import ReviewsSectionServer from './ReviewsSectionServer';
 import VariationsCarousel from './variations/VariationsCarousel';
 
 /**
@@ -50,23 +49,6 @@ const ProductSingle = async ({
 }): Promise<JSX.Element> => {
   /** Extract necessary data from product entity */
   const { attributeValues, blocks } = product;
-
-  /** getFormsDataByMarker */
-  const reviewsData = await getApi().FormData.getFormsDataByMarker(
-    'comment_to_product', // marker - Form marker
-    5, // formModuleConfigId - Form module configuration ID
-    {
-      entityIdentifier: product.id,
-      userIdentifier: '',
-      status: ['approved'],
-      dateFrom: '',
-      dateTo: '',
-    }, // body - Request body.
-    1, // isNested - Flag for getting hierarchical data.
-    'en_US', // langCode - Language code.
-    0, // offset — Parameter for pagination. Default: 0.
-    500, // limit — Parameter for pagination. Default: 30.
-  );
 
   /** Get the formatted product title using helper function */
   const productTitle = getProductTitle(product);
@@ -121,11 +103,7 @@ const ProductSingle = async ({
 
       {/** Reviews */}
       <ProductAnimations className={''} index={3}>
-        <ReviewsSection
-          dict={dict}
-          reviewsData={reviewsData}
-          product={product}
-        />
+        <ReviewsSectionServer dict={dict} product={product} />
       </ProductAnimations>
 
       {/** blocks */}
