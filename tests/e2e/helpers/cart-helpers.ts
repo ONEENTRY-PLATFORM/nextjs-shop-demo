@@ -9,7 +9,8 @@ import { SELECTORS } from '../fixtures/test-data';
 
 /**
  * Opens the cart page by clicking the cart icon or navigating directly
- * @param page - Playwright page object
+ * @param   {Page}          page - Playwright page object
+ * @returns {Promise<void>}      Promise that resolves when the cart page is opened
  */
 export async function openCart(page: Page): Promise<void> {
   // Wait for redux-persist to save cart state to localStorage
@@ -137,8 +138,8 @@ export async function getCartItemQuantity(
 
 /**
  * Gets the total price from the cart
- * @param page - Playwright page object
- * @returns    Total price as number
+ * @param   {Page}            page - Playwright page object
+ * @returns {Promise<number>}      Total price as number
  */
 export async function getCartTotal(page: Page): Promise<number> {
   const totalText = await page.locator(SELECTORS.cartTotal).textContent();
@@ -151,7 +152,8 @@ export async function getCartTotal(page: Page): Promise<number> {
 
 /**
  * Proceeds to checkout from cart
- * @param page - Playwright page object
+ * @param   {Page}          page - Playwright page object
+ * @returns {Promise<void>}      Promise that resolves when checkout is complete
  */
 export async function proceedToCheckout(page: Page): Promise<void> {
   await page.click(SELECTORS.checkoutButton);
@@ -161,7 +163,8 @@ export async function proceedToCheckout(page: Page): Promise<void> {
 
 /**
  * Clears all items from the cart
- * @param page - Playwright page object
+ * @param   {Page}          page - Playwright page object
+ * @returns {Promise<void>}      Promise that resolves when the cart is cleared
  */
 export async function clearCart(page: Page): Promise<void> {
   await openCart(page);

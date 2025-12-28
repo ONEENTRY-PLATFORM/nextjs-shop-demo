@@ -9,7 +9,7 @@ import { ROUTES, SELECTORS } from '../fixtures/test-data';
 
 /**
  * Navigates to the home page
- * @param page - Playwright page object
+ * @param {Page} page - Playwright page object
  */
 export async function goToHome(page: Page): Promise<void> {
   await page.goto(ROUTES.home);
@@ -18,7 +18,7 @@ export async function goToHome(page: Page): Promise<void> {
 
 /**
  * Navigates to the shop page
- * @param page - Playwright page object
+ * @param {Page} page - Playwright page object
  */
 export async function goToShop(page: Page): Promise<void> {
   await page.goto(ROUTES.shop);
@@ -27,7 +27,7 @@ export async function goToShop(page: Page): Promise<void> {
 
 /**
  * Navigates to the cart page
- * @param page - Playwright page object
+ * @param {Page} page - Playwright page object
  */
 export async function goToCart(page: Page): Promise<void> {
   await page.goto(ROUTES.cart);
@@ -36,7 +36,7 @@ export async function goToCart(page: Page): Promise<void> {
 
 /**
  * Navigates to the favorites page
- * @param page - Playwright page object
+ * @param {Page} page - Playwright page object
  */
 export async function goToFavorites(page: Page): Promise<void> {
   await page.goto(ROUTES.favorites);
@@ -45,8 +45,8 @@ export async function goToFavorites(page: Page): Promise<void> {
 
 /**
  * Navigates to a product page
- * @param page      - Playwright page object
- * @param productId - Product ID
+ * @param {Page}            page      - Playwright page object
+ * @param {string | number} productId - Product ID
  */
 export async function goToProduct(
   page: Page,
@@ -59,7 +59,8 @@ export async function goToProduct(
 
 /**
  * Waits for the page to be fully loaded
- * @param page - Playwright page object
+ * @param   {Page}          page - Playwright page object
+ * @returns {Promise<void>}      Promise that resolves when the page is fully loaded
  */
 export async function waitForPageLoad(page: Page): Promise<void> {
   await page.waitForLoadState('networkidle');
@@ -68,8 +69,8 @@ export async function waitForPageLoad(page: Page): Promise<void> {
 
 /**
  * Navigates to first available product (in stock) from shop page
- * @param page - Playwright page object
- * @returns    Product URL
+ * @param   {Page}            page - Playwright page object
+ * @returns {Promise<string>}      Product URL
  */
 export async function goToFirstProduct(page: Page): Promise<string> {
   await goToShop(page);

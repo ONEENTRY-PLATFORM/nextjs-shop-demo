@@ -13,7 +13,10 @@ import { SELECTORS } from '../fixtures/test-data';
  */
 export function getFavoritesBadge(page: Page): Locator {
   // Use .first() to handle cases where badge appears multiple times (desktop + mobile)
-  return page.locator(SELECTORS.favoritesIcon).locator('[data-testid="favorites-badge"]').first();
+  return page
+    .locator(SELECTORS.favoritesIcon)
+    .locator('[data-testid="favorites-badge"]')
+    .first();
 }
 
 /**
@@ -40,7 +43,10 @@ export async function getFavoritesItemCount(page: Page): Promise<number> {
  * @param {Page}   page - Playwright page object
  * @param {string} lang - Language code
  */
-export async function openFavorites(page: Page, lang: string = 'en'): Promise<void> {
+export async function openFavorites(
+  page: Page,
+  lang: string = 'en',
+): Promise<void> {
   // Navigate directly to favorites page
   await page.goto(`/${lang}/favorites`);
 

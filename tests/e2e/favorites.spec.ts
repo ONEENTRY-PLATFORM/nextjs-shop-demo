@@ -14,7 +14,6 @@ import {
 /**
  * E2E tests for favorites/wishlist functionality
  */
-
 test.describe('Favorites', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/en');

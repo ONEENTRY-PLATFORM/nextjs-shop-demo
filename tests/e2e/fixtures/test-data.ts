@@ -37,7 +37,8 @@ export const SELECTORS = {
 
   // Cart (clicking cart icon navigates to /cart page)
   cartIcon: '[data-testid="cart-icon"]',
-  cartDrawer: '[data-testid="cart-drawer"]', // Cart page content wrapper
+  // Cart page content wrapper
+  cartDrawer: '[data-testid="cart-drawer"]',
   cartItem: '[data-testid="cart-item"]',
   cartItemQuantity: '[data-testid="cart-item-quantity"]',
   cartItemRemove: '[data-testid="cart-item-remove"]',
@@ -46,22 +47,14 @@ export const SELECTORS = {
   increaseQuantityButton: '[data-testid="increase-quantity"]',
   decreaseQuantityButton: '[data-testid="decrease-quantity"]',
 
-  // !!! Checkout form
-  checkoutForm: '[data-testid="checkout-form"]',
-  nameInput: '[data-testid="name-input"]',
-  emailInput: '[data-testid="email-input"]',
-  phoneInput: '[data-testid="phone-input"]',
-  addressInput: '[data-testid="address-input"]',
-  submitOrderButton: '[data-testid="submit-order-button"]',
-
-  // !!! Success/Error
-  successMessage: '[data-testid="success-message"]',
-  errorMessage: '[data-testid="error-message"]',
-
   // Favorites
   favoritesIcon: '[data-testid="favorites-icon"]',
   favoritesDrawer: '[data-testid="favorites-drawer"]',
   favoriteItem: '.product-card',
+
+  // !!! Success/Error
+  successMessage: '[data-testid="success-message"]',
+  errorMessage: '[data-testid="error-message"]',
 } as const;
 
 /**
