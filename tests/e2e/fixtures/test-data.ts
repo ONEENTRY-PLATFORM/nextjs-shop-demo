@@ -18,6 +18,14 @@ export const TEST_USER = {
 /**
  * Test product selectors
  * These should be updated if the product structure changes
+ *
+ * Selector types supported by Playwright:
+ * - data-testid: '[data-testid="element"]' (recommended)
+ * - CSS class: '.my-class'
+ * - CSS ID: '#my-id'
+ * - Attribute: '[aria-label="My Label"]'
+ * - Text: 'text=Button Text'
+ * - Role: 'role=button[name="Submit"]'
  */
 export const SELECTORS = {
   // Product page
@@ -38,7 +46,7 @@ export const SELECTORS = {
   increaseQuantityButton: '[data-testid="increase-quantity"]',
   decreaseQuantityButton: '[data-testid="decrease-quantity"]',
 
-  // Checkout form
+  // !!! Checkout form
   checkoutForm: '[data-testid="checkout-form"]',
   nameInput: '[data-testid="name-input"]',
   emailInput: '[data-testid="email-input"]',
@@ -46,14 +54,14 @@ export const SELECTORS = {
   addressInput: '[data-testid="address-input"]',
   submitOrderButton: '[data-testid="submit-order-button"]',
 
-  // Success/Error
+  // !!! Success/Error
   successMessage: '[data-testid="success-message"]',
   errorMessage: '[data-testid="error-message"]',
 
   // Favorites
   favoritesIcon: '[data-testid="favorites-icon"]',
   favoritesDrawer: '[data-testid="favorites-drawer"]',
-  favoriteItem: '[data-testid="favorite-item"]',
+  favoriteItem: '.product-card',
 } as const;
 
 /**

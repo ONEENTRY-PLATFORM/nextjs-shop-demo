@@ -109,7 +109,7 @@ const FavoritesButton = memo((product: IProductsEntity): JSX.Element => {
       onClick={handleClick}
       aria-label={isFav ? 'Remove from favorites' : 'Add to favorites'}
       // test id for e2e testing
-      data-testid="add-to-favorites-button"
+      id="add-to-favorites-button"
     >
       {isFav ? <HeartIcon /> : <HeartOpenIcon />}
     </button>

@@ -99,22 +99,17 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
 
   /**
    * Handle empty favorites state
-   * show empty favorites component or loading spinner
    */
-  if (!products || products.length < 1) {
-    /** If data has finished loading but there are no products, show empty state */
-    if (!isLoading) {
-      return (
-        <EmptyFavorites lang={lang as string} dict={dict as IAttributeValues} />
-      );
-    } else {
-      /** If data is still loading, show loading spinner */
-      return <MemoizedProductsGridLoader />;
-    }
+  if (isLoading) {
+    return <MemoizedProductsGridLoader />;
   }
 
   return (
-    <div className="flex flex-col pb-5 max-md:max-w-full">
+    <div
+      className="flex flex-col pb-5 max-md:max-w-full"
+      // test id for e2e testing
+      data-testid="favorites-drawer"
+    >
       <div className={'relative box-border flex w-full shrink-0 flex-col'}>
         <section className="relative mx-auto box-border flex min-h-80 w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
           <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
