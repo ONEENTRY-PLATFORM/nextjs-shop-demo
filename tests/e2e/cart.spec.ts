@@ -4,6 +4,7 @@ import { SELECTORS } from './fixtures/test-data';
 import {
   changeCartItemQuantity,
   clearCart,
+  getCartBadge,
   getCartItemCount,
   getCartItemQuantity,
   openCart,
@@ -38,12 +39,14 @@ test.describe('Shopping Cart', () => {
     await expect(addButton).toBeVisible();
     await addButton.click();
 
-    // Wait for cart to update
-    await page.waitForTimeout(1000);
+    // Wait for cart badge to update (Playwright will auto-retry until it matches)
+    const expectedCount = initialCount + 1;
+    const badge = getCartBadge(page);
+    await expect(badge).toHaveText(String(expectedCount), { timeout: 5000 });
 
     // Verify cart count increased
     const newCount = await getCartItemCount(page);
-    expect(newCount).toBe(initialCount + 1);
+    expect(newCount).toBe(expectedCount);
 
     // Open cart and verify item is there
     await openCart(page);
@@ -56,7 +59,10 @@ test.describe('Shopping Cart', () => {
     await goToFirstProduct(page);
     const addButton = page.locator(SELECTORS.addToCartButton).first();
     await addButton.click();
-    await page.waitForTimeout(1000);
+
+    // Wait for cart badge to show 1 item
+    const badge = getCartBadge(page);
+    await expect(badge).toHaveText('1', { timeout: 5000 });
 
     // Open cart
     await openCart(page);
@@ -77,9 +83,14 @@ test.describe('Shopping Cart', () => {
     await goToFirstProduct(page);
     const addButton = page.locator(SELECTORS.addToCartButton).first();
     await addButton.click();
-    await page.waitForTimeout(500);
+
+    // Wait for first item to be added
+    const badge = getCartBadge(page);
+    await expect(badge).toHaveText('1', { timeout: 5000 });
+
+    // Add second item
     await addButton.click();
-    await page.waitForTimeout(1000);
+    await expect(badge).toHaveText('2', { timeout: 5000 });
 
     // Open cart
     await openCart(page);
@@ -101,7 +112,10 @@ test.describe('Shopping Cart', () => {
     await goToFirstProduct(page);
     const addButton = page.locator(SELECTORS.addToCartButton).first();
     await addButton.click();
-    await page.waitForTimeout(1000);
+
+    // Wait for cart badge to show 1 item
+    const badge = getCartBadge(page);
+    await expect(badge).toHaveText('1', { timeout: 5000 });
 
     // Open cart
     await openCart(page);
@@ -149,7 +163,10 @@ test.describe('Shopping Cart', () => {
     await goToFirstProduct(page);
     const addButton = page.locator(SELECTORS.addToCartButton).first();
     await addButton.click();
-    await page.waitForTimeout(1000);
+
+    // Wait for cart badge to show 1 item
+    const badge = getCartBadge(page);
+    await expect(badge).toHaveText('1', { timeout: 5000 });
 
     // Get cart count
     const countBeforeReload = await getCartItemCount(page);
@@ -169,7 +186,10 @@ test.describe('Shopping Cart', () => {
     await goToFirstProduct(page);
     const addButton = page.locator(SELECTORS.addToCartButton).first();
     await addButton.click();
-    await page.waitForTimeout(1000);
+
+    // Wait for cart badge to show 1 item
+    const badge = getCartBadge(page);
+    await expect(badge).toHaveText('1', { timeout: 5000 });
 
     // Open cart
     await openCart(page);
@@ -183,7 +203,9 @@ test.describe('Shopping Cart', () => {
 
       // Increase quantity
       await changeCartItemQuantity(page, 0, 'increase');
-      await page.waitForTimeout(500);
+
+      // Wait for badge to update to 2
+      await expect(badge).toHaveText('2', { timeout: 5000 });
 
       // Verify total changed
       const newTotal = await totalElement.textContent();
@@ -198,7 +220,10 @@ test.describe('Shopping Cart', () => {
     await goToFirstProduct(page);
     const addButton = page.locator(SELECTORS.addToCartButton).first();
     await addButton.click();
-    await page.waitForTimeout(1000);
+
+    // Wait for cart badge to show 1 item
+    const badge = getCartBadge(page);
+    await expect(badge).toHaveText('1', { timeout: 5000 });
 
     // Open cart
     await openCart(page);

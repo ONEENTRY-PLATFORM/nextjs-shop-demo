@@ -19,12 +19,13 @@ import {
  * Uses GSAP library to animate product cards when they are added or removed from the cart
  * Implements staggered entrance animation and smooth removal animation with toast notification
  * Wrapped with memo to prevent unnecessary re-renders
- * @param props           - ProductAnimationsProps
- * @param props.children  - children ReactNode elements to be animated
- * @param props.className - CSS class names for styling the product wrapper
- * @param props.product   - Product entity object containing product data
- * @param props.index     - Index of element in array for staggered animation timing
- * @returns               Product wrapper with entrance/exit animations
+ * @param props            - ProductAnimationsProps
+ * @param props.children   - children ReactNode elements to be animated
+ * @param props.className  - CSS class names for styling the product wrapper
+ * @param props.product    - Product entity object containing product data
+ * @param props.index      - Index of element in array for staggered animation timing
+ * @param props.dataTestid - Data-testid attribute for testing purposes
+ * @returns                Product wrapper with entrance/exit animations
  * @see {@link https://gsap.com/cheatsheet/ gsap cheatsheet}
  */
 const ProductAnimations = memo(
@@ -33,11 +34,13 @@ const ProductAnimations = memo(
     className,
     product,
     index,
+    dataTestid,
   }: {
     children: ReactNode;
     className: string;
     index: number;
     product: IProductsEntity;
+    dataTestid: string;
   }): JSX.Element => {
     /** Redux dispatch function for updating state */
     const dispatch = useAppDispatch();
@@ -143,7 +146,7 @@ const ProductAnimations = memo(
     ]);
 
     return (
-      <div ref={ref} className={className}>
+      <div ref={ref} className={className} data-testid={dataTestid}>
         {children}
       </div>
     );

@@ -56,6 +56,7 @@ const LangSelector = ({
       defaultValue={lang}
       onChange={(e) => onChange(e.target.value)}
       className="cursor-pointer bg-transparent text-lg font-bold text-neutral-600 uppercase"
+      name="lang-selector"
     >
       {/** Map through active locales and create option elements */}
       {locales

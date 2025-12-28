@@ -125,6 +125,8 @@ const DeleteButton = memo(
         className="group relative box-border flex size-5 shrink-0 cursor-pointer flex-col items-center justify-center"
         aria-label="Delete item"
         onClick={handleDelete}
+        // test id for e2e testing
+        data-testid="cart-item-remove"
       >
         {/** Delete icon component */}
         <DeleteIcon />

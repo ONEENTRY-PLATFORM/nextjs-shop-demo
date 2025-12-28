@@ -141,6 +141,8 @@ const AddToCartButton = ({
       type="button"
       className={className}
       aria-label={`Add ${productTitle} to cart`}
+      // test id for e2e testing
+      data-testid="add-to-cart-button"
     >
       {add_to_cart_button?.value}
     </button>

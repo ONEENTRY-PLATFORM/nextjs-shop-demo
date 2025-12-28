@@ -7,7 +7,7 @@
  */
 export const TEST_USER = {
   name: 'Test User',
-  email: 'test@example.com',
+  email: 'kvasssukr.net@gmail.com',
   phone: '+1234567890',
   address: '123 Test Street',
   city: 'Test City',
@@ -25,6 +25,7 @@ export const SELECTORS = {
   addToFavoritesButton: '[data-testid="add-to-favorites-button"]',
   productPrice: '[data-testid="product-price"]',
   productTitle: '[data-testid="product-title"]',
+  cartBadge: '[data-testid="cart-badge"]',
 
   // Cart
   cartIcon: '[data-testid="cart-icon"]',

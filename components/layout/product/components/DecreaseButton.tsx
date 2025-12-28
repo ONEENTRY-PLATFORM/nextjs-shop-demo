@@ -61,6 +61,8 @@ const DecreaseButton = memo(
         onClick={handleClick}
         className="relative m-1 box-border size-8 cursor-pointer rounded-full text-center text-slate-700 transition-all duration-500 hover:bg-slate-100 hover:text-orange-500 hover:shadow-inner"
         aria-label="Decrease quantity"
+        // test id for e2e testing
+        data-testid="decrease-quantity"
       >
         –
       </button>

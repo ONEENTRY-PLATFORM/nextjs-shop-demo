@@ -17,13 +17,22 @@ export async function openCart(page: Page): Promise<void> {
 }
 
 /**
+ * Gets the cart badge locator (first one if multiple exist)
+ * @param   {Page}    page - Playwright page object
+ * @returns {Locator}      Cart badge locator
+ */
+export function getCartBadge(page: Page): Locator {
+  // Use .first() to handle cases where badge appears multiple times (desktop + mobile)
+  return page.locator(SELECTORS.cartBadge).first();
+}
+
+/**
  * Gets the number of items in the cart from the cart icon badge
- * @param page - Playwright page object
- * @returns    Number of items in cart
+ * @param   {Page}            page - Playwright page object
+ * @returns {Promise<number>}      Number of items in cart
  */
 export async function getCartItemCount(page: Page): Promise<number> {
-  const cartIcon = page.locator(SELECTORS.cartIcon);
-  const badge = cartIcon.locator('[data-testid="cart-badge"]');
+  const badge = getCartBadge(page);
 
   const isVisible = await badge.isVisible().catch(() => false);
   if (!isVisible) {
@@ -31,13 +40,15 @@ export async function getCartItemCount(page: Page): Promise<number> {
   }
 
   const count = await badge.textContent();
-  return count ? parseInt(count, 10) : 0;
+  const trimmedCount = count ? count.trim() : '0';
+  const parsedCount = parseInt(trimmedCount, 10);
+  return isNaN(parsedCount) ? 0 : parsedCount;
 }
 
 /**
  * Adds a product to cart from product card
- * @param page        - Playwright page object
- * @param productCard - Product card locator
+ * @param {Page}          page        - Playwright page object
+ * @param {Promise<void>} productCard - Product card locator
  */
 export async function addToCartFromCard(
   page: Page,
@@ -51,8 +62,9 @@ export async function addToCartFromCard(
 
 /**
  * Removes an item from cart
- * @param page      - Playwright page object
- * @param itemIndex - Index of item to remove (0-based)
+ * @param   {Page}          page      - Playwright page object
+ * @param   {number}        itemIndex - Index of item to remove (0-based)
+ * @returns {Promise<void>}           Promise that resolves when the item is removed
  */
 export async function removeCartItem(
   page: Page,
@@ -68,9 +80,10 @@ export async function removeCartItem(
 
 /**
  * Changes the quantity of a cart item
- * @param page      - Playwright page object
- * @param itemIndex - Index of item to change (0-based)
- * @param action    - 'increase' or 'decrease'
+ * @param   {Page}          page      - Playwright page object
+ * @param   {number}        itemIndex - Index of item to change (0-based)
+ * @param   {string}        action    - 'increase' or 'decrease'
+ * @returns {Promise<void>}           Promise that resolves when the quantity change is complete
  */
 export async function changeCartItemQuantity(
   page: Page,
@@ -91,9 +104,9 @@ export async function changeCartItemQuantity(
 
 /**
  * Gets the current quantity of a cart item
- * @param page      - Playwright page object
- * @param itemIndex - Index of item (0-based)
- * @returns         Current quantity
+ * @param   {Page}            page      - Playwright page object
+ * @param   {number}          itemIndex - Index of item (0-based)
+ * @returns {Promise<number>}           Current quantity
  */
 export async function getCartItemQuantity(
   page: Page,

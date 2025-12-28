@@ -51,17 +51,20 @@ npx playwright install webkit
 ### 2. Run Your First Test
 
 Start the development server in one terminal:
+
 ```bash
 npm run dev
 ```
 
 In another terminal, run the tests:
+
 ```bash
 # Run all tests in UI mode (recommended for first time)
 npm run test:e2e:ui
 ```
 
 This will open the Playwright UI where you can:
+
 - See all available tests
 - Run tests individually
 - Watch tests execute in real-time
@@ -76,6 +79,7 @@ The tests are currently set up but will fail because the components don't have t
 **Follow the [INTEGRATION_GUIDE.md](./INTEGRATION_GUIDE.md)** to add these attributes to your components.
 
 **Priority order:**
+
 1. Cart components (cart icon, drawer, items)
 2. Product components (add to cart button)
 3. Checkout form (form inputs, submit button)
@@ -105,6 +109,7 @@ npm run test:e2e:debug
 ```
 
 This opens Playwright Inspector where you can:
+
 - Step through tests
 - Inspect the page at each step
 - See what selectors are being used
@@ -130,13 +135,17 @@ npm run test:e2e:report      # View last test report
 ## 🔍 Understanding Test Results
 
 ### Passing Tests ✅
+
 When tests pass, you'll see:
+
 ```
 ✓ tests/e2e/cart.spec.ts:10:5 › should add product to cart (5s)
 ```
 
 ### Failing Tests ❌
+
 When tests fail, you'll see:
+
 ```
 ✗ tests/e2e/cart.spec.ts:10:5 › should add product to cart (5s)
 
@@ -166,6 +175,7 @@ View these to see exactly what happened when the test failed.
 Let's add a `data-testid` to the "Add to Cart" button:
 
 ### Before
+
 ```tsx
 <button onClick={handleAddToCart}>
   Add to Cart
@@ -173,6 +183,7 @@ Let's add a `data-testid` to the "Add to Cart" button:
 ```
 
 ### After
+
 ```tsx
 <button
   data-testid="add-to-cart-button"
@@ -189,6 +200,7 @@ Now the test can find this button and click it!
 Current test coverage:
 
 ### Cart Tests (8)
+
 - ✅ Add product to cart
 - ✅ Increase/decrease quantity
 - ✅ Remove product
@@ -198,6 +210,7 @@ Current test coverage:
 - ✅ Navigate to checkout
 
 ### Checkout Tests (9)
+
 - ✅ Complete checkout flow
 - ✅ Form validation
 - ✅ Email/phone validation
@@ -206,6 +219,7 @@ Current test coverage:
 - ✅ Multiple items
 
 ### Favorites Tests (5)
+
 - ✅ Add/remove favorites
 - ✅ View favorites page
 - ✅ Favorites persistence
@@ -214,19 +228,25 @@ Current test coverage:
 ## 🐛 Troubleshooting
 
 ### Problem: Tests timeout
+
 **Solution**:
+
 - Ensure dev server is running (`npm run dev`)
 - Check if port 3000 is available
 - Increase timeout in test if needed
 
 ### Problem: Element not found
+
 **Solution**:
+
 - Add `data-testid` attribute to component
 - Check selector in `tests/e2e/fixtures/test-data.ts`
 - Use Playwright Inspector to debug
 
 ### Problem: Tests are flaky
+
 **Solution**:
+
 - Avoid hardcoded waits (`page.waitForTimeout()`)
 - Use Playwright's auto-waiting
 - Add proper loading states in components

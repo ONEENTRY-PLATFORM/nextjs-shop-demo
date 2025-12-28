@@ -5,6 +5,7 @@ This guide explains how to add `data-testid` attributes to your components to ma
 ## Why data-testid?
 
 Using `data-testid` attributes provides:
+
 - **Stability**: Tests won't break when CSS classes or text content changes
 - **Clarity**: Clear indication of what elements are used in tests
 - **Separation**: Test selectors separate from styling and content
@@ -12,6 +13,7 @@ Using `data-testid` attributes provides:
 ## Where to Add data-testid
 
 Add `data-testid` to:
+
 1. Interactive elements (buttons, links, inputs)
 2. Dynamic content (cart items, product cards, totals)
 3. Navigation elements (menus, drawers, modals)
@@ -25,6 +27,7 @@ To make the current E2E tests work, add these attributes to your components:
 ### 1. Cart Components
 
 #### Cart Icon/Button
+
 ```tsx
 // components/layout/header/cart-icon/CartIcon.tsx
 <button data-testid="cart-icon" onClick={openCart}>
@@ -36,6 +39,7 @@ To make the current E2E tests work, add these attributes to your components:
 ```
 
 #### Cart Drawer
+
 ```tsx
 // components/layout/cart-drawer/CartDrawer.tsx
 <div data-testid="cart-drawer" className={isOpen ? 'open' : ''}>
@@ -44,6 +48,7 @@ To make the current E2E tests work, add these attributes to your components:
 ```
 
 #### Cart Items
+
 ```tsx
 // components/layout/cart-drawer/CartItem.tsx
 <div data-testid="cart-item" key={item.id}>
@@ -73,6 +78,7 @@ To make the current E2E tests work, add these attributes to your components:
 ```
 
 #### Cart Total
+
 ```tsx
 // components/layout/cart-drawer/CartTotal.tsx
 <div data-testid="cart-total">
@@ -81,6 +87,7 @@ To make the current E2E tests work, add these attributes to your components:
 ```
 
 #### Checkout Button
+
 ```tsx
 // components/layout/cart-drawer/CheckoutButton.tsx
 <button
@@ -95,6 +102,7 @@ To make the current E2E tests work, add these attributes to your components:
 ### 2. Product Components
 
 #### Add to Cart Button
+
 ```tsx
 // components/layout/product/AddToCartButton.tsx
 <button
@@ -106,6 +114,7 @@ To make the current E2E tests work, add these attributes to your components:
 ```
 
 #### Product Information
+
 ```tsx
 // components/layout/product/ProductDetails.tsx
 <h1 data-testid="product-title">{product.title}</h1>
@@ -115,6 +124,7 @@ To make the current E2E tests work, add these attributes to your components:
 ### 3. Favorites Components
 
 #### Favorites Icon/Button
+
 ```tsx
 // components/layout/header/favorites-icon/FavoritesIcon.tsx
 <button data-testid="favorites-icon" onClick={openFavorites}>
@@ -126,6 +136,7 @@ To make the current E2E tests work, add these attributes to your components:
 ```
 
 #### Add to Favorites Button
+
 ```tsx
 // components/layout/product/AddToFavoritesButton.tsx
 <button
@@ -138,6 +149,7 @@ To make the current E2E tests work, add these attributes to your components:
 ```
 
 #### Favorites Drawer
+
 ```tsx
 // components/layout/favorites-drawer/FavoritesDrawer.tsx
 <div data-testid="favorites-drawer" className={isOpen ? 'open' : ''}>
@@ -146,6 +158,7 @@ To make the current E2E tests work, add these attributes to your components:
 ```
 
 #### Favorite Items
+
 ```tsx
 // components/layout/favorites-drawer/FavoriteItem.tsx
 <div data-testid="favorite-item" key={item.id}>
@@ -156,6 +169,7 @@ To make the current E2E tests work, add these attributes to your components:
 ### 4. Checkout/Form Components
 
 #### Checkout Form
+
 ```tsx
 // components/forms/checkout-form/CheckoutForm.tsx
 <form data-testid="checkout-form" onSubmit={handleSubmit}>
@@ -213,6 +227,7 @@ To make the current E2E tests work, add these attributes to your components:
 ### 5. Message Components
 
 #### Success Message
+
 ```tsx
 // components/shared/SuccessMessage.tsx
 <div data-testid="success-message" className="success">
@@ -221,6 +236,7 @@ To make the current E2E tests work, add these attributes to your components:
 ```
 
 #### Error Message
+
 ```tsx
 // components/shared/ErrorMessage.tsx
 <div data-testid="error-message" className="error">
@@ -231,6 +247,7 @@ To make the current E2E tests work, add these attributes to your components:
 ## Best Practices
 
 ### 1. Use Descriptive Names
+
 ```tsx
 // Good
 <button data-testid="add-to-cart-button">Add to Cart</button>
@@ -240,12 +257,15 @@ To make the current E2E tests work, add these attributes to your components:
 ```
 
 ### 2. Be Consistent
+
 Use the same naming pattern across components:
+
 - Actions: `{action}-{element}` (e.g., `add-to-cart-button`, `submit-order-button`)
 - Content: `{content}-{type}` (e.g., `product-title`, `cart-total`)
 - Containers: `{feature}-{container}` (e.g., `cart-drawer`, `checkout-form`)
 
 ### 3. Don't Overuse
+
 Only add `data-testid` to elements that need to be tested. Don't add it to every element.
 
 ```tsx
@@ -265,6 +285,7 @@ Only add `data-testid` to elements that need to be tested. Don't add it to every
 ```
 
 ### 4. Dynamic Lists
+
 For dynamic lists, use the same `data-testid` for all items:
 
 ```tsx
@@ -279,6 +300,7 @@ For dynamic lists, use the same `data-testid` for all items:
 ```
 
 ### 5. Conditional Elements
+
 Add test IDs to elements that appear conditionally:
 
 ```tsx
@@ -315,22 +337,26 @@ Use this checklist to track implementation progress:
 After adding `data-testid` attributes:
 
 1. **Run the dev server**:
+
    ```bash
    npm run dev
    ```
 
 2. **Run E2E tests**:
+
    ```bash
    npm run test:e2e:headed
    ```
 
 3. **Use Playwright Inspector** to debug:
+
    ```bash
    npm run test:e2e:debug
    ```
 
 4. **Check specific selector**:
    Open browser console and run:
+
    ```javascript
    document.querySelector('[data-testid="add-to-cart-button"]')
    ```
@@ -340,6 +366,7 @@ After adding `data-testid` attributes:
 Here are examples based on your project structure:
 
 ### ProductCard Component
+
 ```tsx
 // components/layout/products-grid/components/product-card/ProductCard.tsx
 export default function ProductCard({ product }: ProductCardProps) {
@@ -365,6 +392,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 ```
 
 ### Header Component
+
 ```tsx
 // components/layout/header/Header.tsx
 export default function Header() {
@@ -393,6 +421,7 @@ export default function Header() {
 ## Need Help?
 
 If you're unsure where to add a `data-testid`, check:
+
 1. The test files in `tests/e2e/` to see what selectors are being used
 2. The `SELECTORS` object in `tests/e2e/fixtures/test-data.ts`
 3. Run tests and see which selectors are failing

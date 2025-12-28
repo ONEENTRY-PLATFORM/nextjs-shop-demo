@@ -63,7 +63,7 @@ const TotalAmount = ({
 
   return (
     /** Wrap total amount with animation component for entrance effects */
-    <div className={className}>
+    <div className={className} data-testid="cart-total">
       {/** Display localized "Total" label and formatted total price */}
       {dict?.order_info_total?.value}:{' '}
       {UsePrice({

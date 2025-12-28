@@ -62,9 +62,10 @@ const PriceDisplay = ({
               : 'text-lg text-orange-500')
           }
           aria-label={`Original price: ${oldPrice}`}
-          data-testid="product-price"
+          // test id for e2e testing
+          data-testid={currentPrice ? '' : 'product-price'}
         >
-          {oldPrice}
+          {oldPrice} tesr
         </div>
       )}
     </div>

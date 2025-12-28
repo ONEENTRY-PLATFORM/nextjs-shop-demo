@@ -56,9 +56,11 @@ const IncreaseButton = memo(
 
     return (
       <button
-        onClick={onIncreaseHandle} // Call the handler when the button is clicked
+        onClick={onIncreaseHandle}
         className="relative m-1 box-border size-8 cursor-pointer rounded-full text-center text-slate-700 transition-all duration-500 hover:bg-slate-100 hover:text-orange-500 hover:shadow-inner"
-        aria-label="Increase quantity" // Accessibility label for the button
+        aria-label="Increase quantity"
+        // test id for e2e testing
+        data-testid="increase-quantity"
       >
         +
       </button>

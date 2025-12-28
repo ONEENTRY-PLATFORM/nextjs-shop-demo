@@ -1,7 +1,12 @@
 import { expect, test } from '@playwright/test';
 
 import { SELECTORS, TEST_USER } from './fixtures/test-data';
-import { clearCart, openCart, proceedToCheckout } from './helpers/cart-helpers';
+import {
+  clearCart,
+  getCartBadge,
+  openCart,
+  proceedToCheckout,
+} from './helpers/cart-helpers';
 import {
   completeCheckout,
   fillCheckoutForm,
@@ -28,7 +33,10 @@ test.describe('Checkout Process', () => {
     await goToFirstProduct(page);
     const addButton = page.locator(SELECTORS.addToCartButton).first();
     await addButton.click();
-    await page.waitForTimeout(1000);
+
+    // Wait for cart badge to show 1 item
+    const badge = getCartBadge(page);
+    await expect(badge).toHaveText('1', { timeout: 5000 });
 
     // Navigate to checkout
     await openCart(page);
@@ -194,7 +202,10 @@ test.describe('Checkout Process', () => {
 
       const addButton = page.locator(SELECTORS.addToCartButton).first();
       await addButton.click();
-      await page.waitForTimeout(1000);
+
+      // Wait for cart badge to show 2 items
+      const badge = getCartBadge(page);
+      await expect(badge).toHaveText('2', { timeout: 5000 });
     }
 
     // Go to checkout

@@ -27,6 +27,8 @@ const PaymentButton = ({
         onClick={() => {}}
         className={'btn btn-lg btn-primary mt-9 self-center px-16 ' + className}
         title={text}
+        // test id for e2e testing
+        data-testid="checkout-button"
       >
         {text}
       </button>

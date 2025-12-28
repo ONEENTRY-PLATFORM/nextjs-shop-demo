@@ -61,6 +61,7 @@ const ProductCard = ({
       <div className="z-10 mt-auto mb-5 flex w-full max-w-40 flex-col gap-2.5">
         <h2
           className="text-center text-sm leading-4 text-neutral-600"
+          // test id for e2e testing
           data-testid="product-title"
         >
           {title}
