@@ -24,7 +24,7 @@ export default function Error({
       <h2 className="text-lg font-semibold">
         There was an error loading the catalog.
       </h2>
-      <p className="text-gray-600 break-all">
+      <p className="break-all text-gray-600">
         {error?.message ?? 'Unknown error'}
       </p>
       <button

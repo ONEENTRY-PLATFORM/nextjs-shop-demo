@@ -3,6 +3,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
+import { getApi } from '@/app/api';
 import { getProductTitle } from '@/app/api/hooks/useProductsData';
 import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
 

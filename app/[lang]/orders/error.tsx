@@ -22,7 +22,7 @@ export default function Error({
   return (
     <div className="flex flex-col items-center gap-3 p-8 text-center">
       <h2 className="text-lg font-semibold">Error loading orders</h2>
-      <p className="text-gray-600 break-all">
+      <p className="break-all text-gray-600">
         {error?.message ?? 'Unknown error'}
       </p>
       <button

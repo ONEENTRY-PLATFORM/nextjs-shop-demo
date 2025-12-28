@@ -80,7 +80,7 @@ export default async function RootLayout({
 
   return (
     <html lang={lang}>
-      <body className={lato.className + ' flex flex-col min-h-screen'}>
+      <body className={lato.className + ' flex min-h-screen flex-col'}>
         <StoreProvider>
           <AuthProvider langCode={langCode}>
             <OpenDrawerProvider>

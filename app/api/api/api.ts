@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineOneEntry } from 'oneentry';
 
 const PROJECT_URL = process.env.NEXT_PUBLIC_PROJECT_URL as string;

@@ -44,7 +44,7 @@ const IntroAnimations = (): JSX.Element => {
 
   /** Render the intro animation overlay */
   return (
-    <div ref={ref} className="fixed left-0 top-0 z-50 size-full bg-white"></div>
+    <div ref={ref} className="fixed top-0 left-0 z-50 size-full bg-white"></div>
   );
 };
 
