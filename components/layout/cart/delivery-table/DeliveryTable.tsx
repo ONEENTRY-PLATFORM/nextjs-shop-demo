@@ -77,7 +77,6 @@ const DeliveryTable = ({
 
     /** Extract individual data fields */
     const date = deliveryData.date;
-    const time = deliveryData.time;
     const address = deliveryData.address || addressReg || '';
 
     /** Dispatch action to update date information in order data */
@@ -95,12 +94,21 @@ const DeliveryTable = ({
     );
 
     /** Dispatch action to update time information in order data */
+    const intervalValue =
+      deliveryData.interval && deliveryData.interval.length === 2
+        ? deliveryData.interval.map((date: Date) => ({
+            fullDate: new Date(date).toISOString(),
+            formattedValue: new Date(date).toDateString(),
+            formatString: 'YYYY-MM-DD',
+          }))
+        : [];
+
     dispatch(
       addData({
         marker: 'shipping_interval',
-        type: 'string',
-        value: time,
-        valid: time ? true : false,
+        type: 'timeInterval',
+        value: intervalValue,
+        valid: intervalValue.length > 0,
       }),
     );
 
