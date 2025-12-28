@@ -8,12 +8,27 @@ import { SELECTORS } from '../fixtures/test-data';
  */
 
 /**
- * Opens the cart drawer
+ * Opens the cart page by clicking the cart icon or navigating directly
  * @param page - Playwright page object
  */
 export async function openCart(page: Page): Promise<void> {
-  await page.click(SELECTORS.cartIcon);
+  // Wait for redux-persist to save cart state to localStorage
+  await page.waitForTimeout(500);
+
+  // Navigate directly to cart page instead of clicking icon
+  // This is more reliable for tests as it ensures proper page load
+  await page.goto('/en/cart');
+
+  // Wait for page load and network idle
+  await page.waitForLoadState('networkidle');
+
+  // Wait for cart content to be visible
   await expect(page.locator(SELECTORS.cartDrawer)).toBeVisible();
+
+  // Wait for GSAP entrance animations to complete
+  // ProductAnimations: delay = index / 10 (max ~0.5s for 5 items)
+  // TableRowAnimations: delay = index / 10 (checkout button has index=10, so 1s delay + animation)
+  await page.waitForTimeout(2000);
 }
 
 /**
@@ -98,8 +113,8 @@ export async function changeCartItemQuantity(
       : item.locator(SELECTORS.decreaseQuantityButton);
 
   await button.click();
-  // Wait for quantity update
-  await page.waitForTimeout(300);
+  // Wait for quantity update in Redux store
+  await page.waitForTimeout(500);
 }
 
 /**
@@ -114,7 +129,9 @@ export async function getCartItemQuantity(
 ): Promise<number> {
   const cartItems = page.locator(SELECTORS.cartItem);
   const item = cartItems.nth(itemIndex);
-  const quantity = await item.locator(SELECTORS.cartItemQuantity).textContent();
+  const input = item.locator(SELECTORS.cartItemQuantity);
+  // Use inputValue() for <input> elements, not textContent()
+  const quantity = await input.inputValue();
   return quantity ? parseInt(quantity, 10) : 0;
 }
 

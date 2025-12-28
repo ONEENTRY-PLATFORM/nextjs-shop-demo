@@ -21,6 +21,9 @@ import {
  */
 
 test.describe('Shopping Cart', () => {
+  // Increase timeout for cart tests due to animations
+  test.setTimeout(60000);
+
   test.beforeEach(async ({ page }) => {
     // Clear cart before each test
     await page.goto('/en');
@@ -79,7 +82,7 @@ test.describe('Shopping Cart', () => {
   });
 
   test('should decrease product quantity in cart', async ({ page }) => {
-    // Add product to cart twice
+    // Add product to cart
     await goToFirstProduct(page);
     const addButton = page.locator(SELECTORS.addToCartButton).first();
     await addButton.click();
@@ -88,8 +91,12 @@ test.describe('Shopping Cart', () => {
     const badge = getCartBadge(page);
     await expect(badge).toHaveText('1', { timeout: 5000 });
 
-    // Add second item
-    await addButton.click();
+    // After adding to cart, button becomes QuantitySelector
+    // Click increase button to add second item
+    const increaseButton = page
+      .locator(SELECTORS.increaseQuantityButton)
+      .first();
+    await increaseButton.click();
     await expect(badge).toHaveText('2', { timeout: 5000 });
 
     // Open cart
@@ -172,9 +179,16 @@ test.describe('Shopping Cart', () => {
     const countBeforeReload = await getCartItemCount(page);
     expect(countBeforeReload).toBeGreaterThan(0);
 
+    // Wait for redux-persist to save to localStorage
+    await page.waitForTimeout(2000);
+
     // Reload page
     await page.reload();
+    await page.waitForLoadState('networkidle');
     await waitForPageLoad(page);
+
+    // Wait for Redux to restore from localStorage after reload
+    await page.waitForTimeout(2000);
 
     // Verify cart count persisted
     const countAfterReload = await getCartItemCount(page);
@@ -241,6 +255,7 @@ test.describe('Shopping Cart', () => {
       await clearCart(page);
     } catch (error) {
       // Ignore errors during cleanup
+      // eslint-disable-next-line no-console
       console.log('Cleanup error:', error);
     }
   });

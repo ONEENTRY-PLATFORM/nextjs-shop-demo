@@ -41,6 +41,8 @@ const DeliveryForm = ({
         /** Navigate to payment page with transition animation */
         router.push('/payment');
       }}
+      // test id for e2e testing
+      data-testid="checkout-form"
     >
       {/** Delivery table with form fields for delivery information */}
       <DeliveryTable

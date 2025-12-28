@@ -1,6 +1,15 @@
-import { test, expect } from '@playwright/test';
-import { goToFirstProduct, waitForPageLoad } from './helpers/navigation-helpers';
+import { expect, test } from '@playwright/test';
+
 import { SELECTORS } from './fixtures/test-data';
+import { getCartBadge, getCartItemCount } from './helpers/cart-helpers';
+import {
+  getFavoritesBadge,
+  getFavoritesItemCount,
+} from './helpers/favorites-helpers';
+import {
+  goToFirstProduct,
+  waitForPageLoad,
+} from './helpers/navigation-helpers';
 
 /**
  * E2E tests for favorites/wishlist functionality
@@ -12,7 +21,7 @@ test.describe('Favorites', () => {
     await waitForPageLoad(page);
   });
 
-  test('should add product to favorites', async ({ page }) => {
+  test('!!! should add product to favorites', async ({ page }) => {
     // Navigate to a product
     await goToFirstProduct(page);
 
@@ -27,31 +36,23 @@ test.describe('Favorites', () => {
       .catch(() => false);
 
     if (isVisible) {
-      // Get initial favorites count if badge exists
-      const favoritesIcon = page.locator(SELECTORS.favoritesIcon);
-      const badge = favoritesIcon.locator('[data-testid="favorites-badge"]');
-      const initialCount = await badge
-        .textContent()
-        .then((text) => (text ? parseInt(text, 10) : 0))
-        .catch(() => 0);
+      // Get initial favorites count using helper
+      const initialCount = await getFavoritesItemCount(page);
 
       // Add to favorites
       await addToFavoritesButton.click();
-      await page.waitForTimeout(1000);
 
-      // Verify favorites count increased
-      const newCount = await badge
-        .textContent()
-        .then((text) => (text ? parseInt(text, 10) : 0))
-        .catch(() => 0);
-
-      expect(newCount).toBeGreaterThan(initialCount);
+      // Wait for Redux store update and badge to reflect new count
+      const badge = getFavoritesBadge(page);
+      await expect(badge).toHaveText(String(initialCount + 1), {
+        timeout: 5000,
+      });
     } else {
       test.skip();
     }
   });
 
-  test('should remove product from favorites', async ({ page }) => {
+  test('!!! should remove product from favorites', async ({ page }) => {
     // Navigate to a product
     await goToFirstProduct(page);
 
@@ -94,9 +95,7 @@ test.describe('Favorites', () => {
     if (count === 0) {
       // Look for empty state message
       const emptyMessage = page.getByText(/no favorites|empty|no items/i);
-      const hasEmptyMessage = await emptyMessage
-        .isVisible()
-        .catch(() => false);
+      const hasEmptyMessage = await emptyMessage.isVisible().catch(() => false);
       expect(hasEmptyMessage).toBeTruthy();
     } else {
       // Favorites should be displayed
@@ -104,7 +103,7 @@ test.describe('Favorites', () => {
     }
   });
 
-  test('should persist favorites after page reload', async ({ page }) => {
+  test('!!! should persist favorites after page reload', async ({ page }) => {
     // Navigate to a product and add to favorites
     await goToFirstProduct(page);
 
@@ -117,34 +116,39 @@ test.describe('Favorites', () => {
       .catch(() => false);
 
     if (isVisible) {
+      // Get initial count and add to favorites
+      const initialCount = await getFavoritesItemCount(page);
       await addToFavoritesButton.click();
-      await page.waitForTimeout(1000);
 
-      // Get favorites count
-      const favoritesIcon = page.locator(SELECTORS.favoritesIcon);
-      const badge = favoritesIcon.locator('[data-testid="favorites-badge"]');
-      const countBefore = await badge
-        .textContent()
-        .then((text) => (text ? parseInt(text, 10) : 0))
-        .catch(() => 0);
+      // Wait for badge to update
+      const badge = getFavoritesBadge(page);
+      await expect(badge).toHaveText(String(initialCount + 1), {
+        timeout: 5000,
+      });
+
+      const countBefore = await getFavoritesItemCount(page);
+
+      // Wait for redux-persist to save to localStorage
+      await page.waitForTimeout(1000);
 
       // Reload page
       await page.reload();
       await waitForPageLoad(page);
 
-      // Verify count persisted
-      const countAfter = await badge
-        .textContent()
-        .then((text) => (text ? parseInt(text, 10) : 0))
-        .catch(() => 0);
+      // Wait for Redux to restore from localStorage after reload
+      await page.waitForTimeout(1000);
 
+      // Verify count persisted
+      const countAfter = await getFavoritesItemCount(page);
       expect(countAfter).toBe(countBefore);
     } else {
       test.skip();
     }
   });
 
-  test('should add favorite to cart from favorites page', async ({ page }) => {
+  test('!!! should add favorite to cart from favorites page', async ({
+    page,
+  }) => {
     // Navigate to favorites
     await page.goto('/en/favorites');
     await waitForPageLoad(page);
@@ -156,34 +160,22 @@ test.describe('Favorites', () => {
     if (count > 0) {
       // Find add to cart button in first favorite
       const firstFavorite = favoriteItems.first();
-      const addToCartButton = firstFavorite.locator(
-        SELECTORS.addToCartButton,
-      );
+      const addToCartButton = firstFavorite.locator(SELECTORS.addToCartButton);
 
-      const isVisible = await addToCartButton
-        .isVisible()
-        .catch(() => false);
+      const isVisible = await addToCartButton.isVisible().catch(() => false);
 
       if (isVisible) {
-        // Get cart count before
-        const cartIcon = page.locator(SELECTORS.cartIcon);
-        const cartBadge = cartIcon.locator('[data-testid="cart-badge"]');
-        const cartCountBefore = await cartBadge
-          .textContent()
-          .then((text) => (text ? parseInt(text, 10) : 0))
-          .catch(() => 0);
+        // Get cart count before using helper
+        const cartCountBefore = await getCartItemCount(page);
 
         // Add to cart
         await addToCartButton.click();
-        await page.waitForTimeout(1000);
 
-        // Verify cart count increased
-        const cartCountAfter = await cartBadge
-          .textContent()
-          .then((text) => (text ? parseInt(text, 10) : 0))
-          .catch(() => 0);
-
-        expect(cartCountAfter).toBeGreaterThan(cartCountBefore);
+        // Wait for cart badge to update
+        const cartBadge = getCartBadge(page);
+        await expect(cartBadge).toHaveText(String(cartCountBefore + 1), {
+          timeout: 5000,
+        });
       }
     } else {
       test.skip();

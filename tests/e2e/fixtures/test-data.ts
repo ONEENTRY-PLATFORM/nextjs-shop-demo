@@ -35,9 +35,9 @@ export const SELECTORS = {
   productTitle: '[data-testid="product-title"]',
   cartBadge: '[data-testid="cart-badge"]',
 
-  // Cart
+  // Cart (clicking cart icon navigates to /cart page)
   cartIcon: '[data-testid="cart-icon"]',
-  cartDrawer: '[data-testid="cart-drawer"]',
+  cartDrawer: '[data-testid="cart-drawer"]', // Cart page content wrapper
   cartItem: '[data-testid="cart-item"]',
   cartItemQuantity: '[data-testid="cart-item-quantity"]',
   cartItemRemove: '[data-testid="cart-item-remove"]',

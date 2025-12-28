@@ -104,6 +104,12 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     return <MemoizedProductsGridLoader />;
   }
 
+  if (!Array.isArray(products) || !(products.length > 0)) {
+    return (
+      <EmptyFavorites lang={lang as string} dict={dict as IAttributeValues} />
+    );
+  }
+
   return (
     <div
       className="flex flex-col pb-5 max-md:max-w-full"
@@ -114,25 +120,18 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
         <section className="relative mx-auto box-border flex min-h-80 w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
           <div className="grid w-full grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 max-md:w-full">
             {/** Let's make sure products are an array before calling map */}
-            {Array.isArray(products) && products.length > 0 ? (
-              products.map((product: IProductsEntity, index: number) => {
-                return (
-                  <ProductCard
-                    key={product.id}
-                    product={product}
-                    index={index as number}
-                    lang={lang as string}
-                    dict={dict as IAttributeValues}
-                    pagesLimit={0}
-                  />
-                );
-              })
-            ) : (
-              <EmptyFavorites
-                lang={lang as string}
-                dict={dict as IAttributeValues}
-              />
-            )}
+            {products?.map((product: IProductsEntity, index: number) => {
+              return (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  index={index as number}
+                  lang={lang as string}
+                  dict={dict as IAttributeValues}
+                  pagesLimit={0}
+                />
+              );
+            })}
           </div>
         </section>
       </div>
