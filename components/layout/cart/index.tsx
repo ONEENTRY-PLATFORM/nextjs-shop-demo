@@ -176,7 +176,7 @@ const CartPage = ({
      * Provides entrance animations for the cart content
      */
     <CartAnimations className={'w-182.5 max-w-full'} index={0}>
-      <div className="cart">
+      <div className="cart" data-testid="cart-drawer">
         <div className="cart__container flex flex-col gap-4">
           <div className="cart__products flex flex-col gap-4">
             {

@@ -80,81 +80,83 @@ const ProductCard = ({
       product={product}
       index={index}
     >
-      {/** Product information section */}
-      <div className="relative flex justify-between gap-5">
-        {/** Checkbox for product selection */}
-        <div className="relative z-10 mb-auto box-border flex shrink-0 flex-row self-center overflow-hidden rounded-md">
-          <input
-            onChange={handleCheckboxChange}
-            type="checkbox"
-            name={'deselectProduct-' + id}
-            id={'deselectProduct-' + id}
-            checked={!isOutOfStock && selected}
-            disabled={isOutOfStock}
-            className={`size-5 border-spacing-3 accent-orange-500 ring-2 ring-orange-700 ${isOutOfStock ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
-            aria-label={
-              isOutOfStock
-                ? `Product ${title} is out of stock`
-                : selected
-                  ? `Deselect product ${title}`
-                  : `Select product ${title}`
-            }
-          />
-        </div>
-
-        {/** Product image */}
-        <div className="relative h-37.5 w-32.5 shrink-0 rounded-xl bg-slate-50">
-          <OptimizedImage
-            width={130}
-            height={150}
-            loading="lazy"
-            src={pic}
-            alt={title}
-            quality={75}
-            className="size-full shrink-0 self-start object-cover"
-          />
-        </div>
-
-        {/** Product details: title and price */}
-        <div className="flex flex-col gap-5 self-start text-neutral-600">
-          {/** Product title */}
-          <h2 className="text-base leading-8">{title}</h2>
-
-          {/** Price display with sale price if applicable */}
-          <PriceDisplay
-            currentPrice={sale?.value}
-            originalPrice={price?.value}
-            lang={lang}
-          />
-        </div>
-
-        {/** Link to product details page */}
-        <Link
-          href={`/shop/product/` + id}
-          className="absolute top-0 left-0 z-0 flex size-full"
-          aria-label={`${title}`}
-        ></Link>
-      </div>
-
-      {/** Product controls: quantity selector and delete button */}
-      <div className="z-10 flex items-center gap-5 self-start text-xl leading-8 font-bold text-neutral-600 max-sm:ml-8 max-sm:flex">
-        {/** Show out of stock message or quantity selector based on availability */}
-        {isOutOfStock ? (
-          <div className="flex h-10.5 items-center rounded-3xl bg-slate-100 px-5 text-base font-medium text-gray-500">
-            {out_of_stock_button?.value || 'Out of stock'}
+      <div data-testid="cart-item">
+        {/** Product information section */}
+        <div className="relative flex justify-between gap-5">
+          {/** Checkbox for product selection */}
+          <div className="relative z-10 mb-auto box-border flex shrink-0 flex-row self-center overflow-hidden rounded-md">
+            <input
+              onChange={handleCheckboxChange}
+              type="checkbox"
+              name={'deselectProduct-' + id}
+              id={'deselectProduct-' + id}
+              checked={!isOutOfStock && selected}
+              disabled={isOutOfStock}
+              className={`size-5 border-spacing-3 accent-orange-500 ring-2 ring-orange-700 ${isOutOfStock ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+              aria-label={
+                isOutOfStock
+                  ? `Product ${title} is out of stock`
+                  : selected
+                    ? `Deselect product ${title}`
+                    : `Select product ${title}`
+              }
+            />
           </div>
-        ) : (
-          /** Component for selecting product quantity */
-          <QuantitySelector
-            id={id}
-            units={units_product?.value}
-            title={title}
-            height={42}
-          />
-        )}
 
-        {/** Button to remove product from cart */}
-        <DeleteButton productId={id} dict={dict} />
+          {/** Product image */}
+          <div className="relative h-37.5 w-32.5 shrink-0 rounded-xl bg-slate-50">
+            <OptimizedImage
+              width={130}
+              height={150}
+              loading="lazy"
+              src={pic}
+              alt={title}
+              quality={75}
+              className="size-full shrink-0 self-start object-cover"
+            />
+          </div>
+
+          {/** Product details: title and price */}
+          <div className="flex flex-col gap-5 self-start text-neutral-600">
+            {/** Product title */}
+            <h2 className="text-base leading-8">{title}</h2>
+
+            {/** Price display with sale price if applicable */}
+            <PriceDisplay
+              currentPrice={sale?.value}
+              originalPrice={price?.value}
+              lang={lang}
+            />
+          </div>
+
+          {/** Link to product details page */}
+          <Link
+            href={`/shop/product/` + id}
+            className="absolute top-0 left-0 z-0 flex size-full"
+            aria-label={`${title}`}
+          ></Link>
+        </div>
+
+        {/** Product controls: quantity selector and delete button */}
+        <div className="z-10 flex items-center gap-5 self-start text-xl leading-8 font-bold text-neutral-600 max-sm:ml-8 max-sm:flex">
+          {/** Show out of stock message or quantity selector based on availability */}
+          {isOutOfStock ? (
+            <div className="flex h-10.5 items-center rounded-3xl bg-slate-100 px-5 text-base font-medium text-gray-500">
+              {out_of_stock_button?.value || 'Out of stock'}
+            </div>
+          ) : (
+            /** Component for selecting product quantity */
+            <QuantitySelector
+              id={id}
+              units={units_product?.value}
+              title={title}
+              height={42}
+            />
+          )}
+
+          {/** Button to remove product from cart */}
+          <DeleteButton productId={id} dict={dict} />
+        </div>
       </div>
     </ProductAnimations>
   );

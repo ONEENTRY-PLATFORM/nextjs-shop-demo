@@ -82,6 +82,7 @@ const NavItemCart = ({
       href={'/' + lang + '/' + pageUrl}
       title={localizeInfos.menuTitle}
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
+      data-testid="cart-icon"
     >
       {/** Cart icon component */}
       <CartAltIcon />

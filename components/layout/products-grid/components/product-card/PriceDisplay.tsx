@@ -48,6 +48,7 @@ const PriceDisplay = ({
         <div
           className="text-lg leading-6 text-orange-500"
           aria-label={`New price: ${newPrice}`}
+          data-testid="product-price"
         >
           {newPrice}
         </div>
@@ -61,6 +62,7 @@ const PriceDisplay = ({
               : 'text-lg text-orange-500')
           }
           aria-label={`Original price: ${oldPrice}`}
+          data-testid="product-price"
         >
           {oldPrice}
         </div>

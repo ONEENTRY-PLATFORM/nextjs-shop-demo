@@ -68,6 +68,7 @@ const QuantityInput = ({
       value={qty} // Current value of the input, reflecting the quantity already in the cart
       onChange={(e) => onChangeQtyHandle(e)} // Event handler triggered when the user changes the input value
       aria-label={`Quantity selector for product ${id}`} // Accessibility label describing the input purpose
+      data-testid="cart-item-quantity"
     />
   );
 };
