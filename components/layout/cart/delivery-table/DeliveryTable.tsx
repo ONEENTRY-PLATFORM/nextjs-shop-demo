@@ -137,10 +137,12 @@ const DeliveryTable = ({
 
           /** Render date row with calendar icon */
           if (marker === 'date') {
+            const dateObj = new Date(deliveryData.date);
+            const formattedDate = `${dateObj.getMonth() + 1}/${dateObj.getDate()}/${dateObj.getFullYear()}`;
             return (
               <DeliveryTableRow
                 key={marker}
-                value={new Date(deliveryData.date).toLocaleDateString('en-US')}
+                value={formattedDate}
                 icon={'/icons/calendar.svg'}
                 label={order_info_date_placeholder?.value}
                 placeholder={order_info_date_placeholder?.value}
