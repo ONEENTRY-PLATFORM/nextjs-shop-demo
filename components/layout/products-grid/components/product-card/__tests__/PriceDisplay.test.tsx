@@ -1,11 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
 
 import PriceDisplay from '../PriceDisplay';
 
 // Mock UsePrice utility
-vi.mock('@/components/utils/utils', () => ({
-  UsePrice: vi.fn(({ amount, lang }) => {
+jest.mock('@/components/utils/utils', () => ({
+  UsePrice: jest.fn(({ amount, lang }) => {
     if (lang === 'en') {
       return `$${amount.toFixed(2)}`;
     }
