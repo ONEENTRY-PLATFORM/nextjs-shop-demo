@@ -65,7 +65,7 @@ const PriceDisplay = ({
           // test id for e2e testing
           data-testid={currentPrice ? '' : 'product-price'}
         >
-          {oldPrice} tesr
+          {oldPrice}
         </div>
       )}
     </div>
