@@ -1,6 +1,5 @@
 'use client';
 
-import { useApiErrorHandler } from '@/app/utils/errorHandler';
 import type { JSX } from 'react';
 
 /**
