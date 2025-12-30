@@ -50,7 +50,7 @@ const ProductCard = ({
       pagesLimit={pagesLimit}
     >
       <article
-        className="flex size-full flex-col"
+        className="flex size-full flex-col items-center"
         aria-labelledby={`product-title-${id}`}
       >
         <div className="z-10 flex justify-between gap-5 self-stretch">
