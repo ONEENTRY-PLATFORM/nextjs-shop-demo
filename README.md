@@ -180,31 +180,126 @@ Scripts: Use npm run dev to start development, npm run build to compile the proj
 Environment Variables: Make sure to set up your .env file with the necessary environment variables to run the project smoothly.
 Internationalization: The project supports multiple languages, configured in i18n-config.ts.
 
-### Important files and folders
+## Testing
 
-| File(s) / Folder(s)             | Description                                |
-| ------------------------------- | ------------------------------------------ |
-| `.env`                          | OneEntry CMS project configuration         |
-| `i18n-config.ts`                | i18n config                                |
-|                                 |                                            |
-| `@/app`                         | Next.js app entry points                   |
-| `@/app/[lang]/layout.tsx`       | Main layout                                |
-| `@/app/[lang]/dictionaries.tsx` | Dictionaries for translations              |
-| `@/app/animations`              | Gsap animations transition providers       |
-| `@/app/api`                     | API, methods and hooks definition          |
-| `@/app/store`                   | Redux-Toolkit management and core reducers |
-| `@/app/store/providers`         | React contexts and providers               |
-| `@/app/types`                   | Types for TypeScript                       |
-|                                 |                                            |
-| `@/components`                  | All app components                         |
-| `@/components/forms`            | All app forms                              |
-| `@/components/icons`            | Svg icons with additional props            |
-| `@/components/layout`           | All app layouts                            |
-| `@/components/pages`            | Simple app pages                           |
-| `@/components/shared`           | Shared between layouts components          |
-|                                 |                                            |
-| `/public`                       | Public content folder                      |
-| ------------------------------- | ------------------------------------------ |
+The project includes comprehensive testing setup using modern testing frameworks.
+
+### Testing Frameworks
+
+- **Playwright** - End-to-end testing framework for browser automation
+- **Jest** - Unit testing framework with React Testing Library integration
+
+### E2E Tests (Playwright)
+
+End-to-end tests ensure that critical user flows work correctly across different browsers.
+
+#### Available E2E Commands
+
+```bash
+# Run all E2E tests
+npm run test:e2e
+
+# Run tests with UI mode (recommended for development)
+npm run test:e2e:ui
+
+# Run tests in headed mode (see browser)
+npm run test:e2e:headed
+
+# Debug tests
+npm run test:e2e:debug
+
+# Run tests in specific browser
+npm run test:e2e:chromium
+npm run test:e2e:firefox
+npm run test:e2e:webkit
+
+# View test report
+npm run test:e2e:report
+
+# Install Playwright browsers (first time setup)
+npm run test:e2e:install
+```
+
+#### E2E Test Configuration
+
+- Tests are located in [tests/e2e/](tests/e2e/)
+- Configuration file: [playwright.config.ts](playwright.config.ts)
+- Supports multiple browsers: Chromium, Firefox, WebKit
+- Mobile testing: Pixel 5, iPhone 12
+- Automatic dev server startup before tests
+- Screenshots and videos on failure
+- Traces for debugging failed tests
+
+### Unit Tests (Jest)
+
+Unit tests verify individual components and functions in isolation.
+
+#### Available Unit Test Commands
+
+```bash
+# Run all unit tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+```
+
+#### Unit Test Configuration
+
+- Jest configuration with React Testing Library
+- TypeScript support via ts-jest
+- jsdom environment for DOM testing
+- Test files: `*.test.ts` or `*.spec.ts` (outside node_modules)
+
+### Writing Tests
+
+When contributing to the project, please ensure:
+
+1. **E2E Tests** - Add tests for new user-facing features
+2. **Unit Tests** - Add tests for new utility functions and components
+3. **Test Coverage** - Maintain good test coverage for critical paths
+4. **Test Naming** - Use descriptive test names that explain the expected behavior
+
+### Important Files and Folders
+
+| File(s) / Folder(s)             | Description                                           |
+| ------------------------------- | ----------------------------------------------------- |
+| **Configuration Files**         |                                                       |
+| `.env`                          | OneEntry CMS project configuration and API tokens     |
+| `i18n-config.ts`                | Internationalization configuration and locales        |
+| `next.config.js`                | Next.js framework configuration                       |
+| `tailwind.config.js`            | Tailwind CSS configuration                            |
+| `tsconfig.json`                 | TypeScript compiler configuration                     |
+| `playwright.config.ts`          | Playwright E2E testing configuration                  |
+| `package.json`                  | Project dependencies and scripts                      |
+| **Application Structure**       |                                                       |
+| `app/`                          | Next.js app directory with entry points               |
+| `app/[lang]/layout.tsx`         | Root layout component with internationalization       |
+| `app/[lang]/dictionaries.tsx`   | Translation dictionaries loader                       |
+| `app/animations/`               | GSAP animation providers and transitions              |
+| `app/api/`                      | API endpoints, methods, and React Query hooks         |
+| `app/store/`                    | Redux Toolkit store, reducers, and slices             |
+| `app/store/providers/`          | React context providers and wrappers                  |
+| `app/types/`                    | TypeScript type definitions and interfaces            |
+| **Components**                  |                                                       |
+| `components/`                   | Reusable React components                             |
+| `components/forms/`             | Form components and input elements                    |
+| `components/icons/`             | SVG icon components with props                        |
+| `components/layout/`            | Layout components (header, footer, navigation)        |
+| `components/pages/`             | Page-specific components                              |
+| `components/shared/`            | Shared components used across multiple layouts        |
+| **Testing**                     |                                                       |
+| `tests/e2e/`                    | Playwright end-to-end tests                           |
+| `tests/e2e/helpers/`            | Test helper functions and utilities                   |
+| `tests/e2e/fixtures/`           | Test data and fixtures                                |
+| **Assets**                      |                                                       |
+| `public/`                       | Static assets (images, fonts, etc.)                   |
+| `styles/`                       | Global CSS and style files                            |
+| **Documentation**               |                                                       |
+| `docs/`                         | Detailed documentation for specific features          |
 
 ## Detailed docs
 
