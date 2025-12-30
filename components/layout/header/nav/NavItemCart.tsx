@@ -35,27 +35,21 @@ const NavItemCart = ({
    * Calculates the total number of items in the cart, excluding delivery item (id: 83)
    */
   const cartCount = useAppSelector((state) => {
-    /**
-     * Return 0 if there are no products in the cart
-     */
+    /** Return 0 if there are no products in the cart */
     if (state.cartReducer.productsData.length < 1) {
       return 0;
     }
 
     return state.cartReducer.productsData
       .map((item: { id: number; quantity: number }) => {
-        /**
-         * Exclude delivery item (id: 83) from the count
-         */
+        /** Exclude delivery item (id: 83) from the count */
         if (item.id === 83) {
           return 0;
         }
         return item.quantity;
       })
       .reduce((total: number, num: number) => {
-        /**
-         * Sum all quantities to get the total item count
-         */
+        /** Sum all quantities to get the total item count */
         return total + num;
       });
   });
@@ -68,9 +62,7 @@ const NavItemCart = ({
     setCount(cartCount);
   }, [cartCount]);
 
-  /**
-   * Destructure page URL and localized information from the menu item
-   */
+  /** Destructure page URL and localized information from the menu item */
   const { pageUrl, localizeInfos } = item;
 
   return (
@@ -82,6 +74,7 @@ const NavItemCart = ({
       href={'/' + lang + '/' + pageUrl}
       title={localizeInfos.menuTitle}
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
+      aria-label={`Shopping cart with ${count} ${count === 1 ? 'item' : 'items'}`}
       // test id for e2e testing
       data-testid="cart-icon"
     >
@@ -90,6 +83,8 @@ const NavItemCart = ({
       {/** Badge displaying the number of items in the cart */}
       <div
         className="absolute -top-1 -right-1.5 z-10 size-4 rounded-full bg-orange-500 text-center text-xs leading-4 text-white"
+        aria-live="polite"
+        aria-atomic="true"
         // test id for e2e testing
         data-testid="cart-badge"
       >

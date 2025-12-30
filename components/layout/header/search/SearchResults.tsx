@@ -50,11 +50,18 @@ const SearchResults = ({
    * Appears below the search bar with shadow and rounded corners for visual distinction
    */
   return state ? (
-    <div className="absolute top-full left-0 z-30 mt-px flex w-full flex-col gap-1 rounded-2xl bg-white p-5 shadow-lg">
+    <div
+      id="search-results"
+      role="region"
+      aria-live="polite"
+      aria-label="Search results"
+      className="absolute top-full left-0 z-30 mt-px flex w-full flex-col gap-1 rounded-2xl bg-white p-5 shadow-lg"
+    >
       {/** Close button to hide search results */}
       <button
         className="absolute top-3 right-3 size-4"
         onClick={() => setState(false)}
+        aria-label="Close search results"
       >
         &#10005;
       </button>

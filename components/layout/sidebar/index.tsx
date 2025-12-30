@@ -33,7 +33,7 @@ const SidebarMenu = async ({
   const pages = menu.pages as Array<IMenusPages & { isActive: boolean }>;
 
   return (
-    <nav className="flex w-full pr-5">
+    <nav className="flex w-full pr-5" aria-label="Sidebar navigation">
       {/** Animated container for the sidebar menu */}
       <SidebarAnimations className={''}>
         <ul className="sidebar-menu">

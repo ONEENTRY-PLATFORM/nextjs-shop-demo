@@ -62,6 +62,7 @@ const NavItemFavorites = ({
       href={'/' + lang + '/' + pageUrl}
       title={localizeInfos?.menuTitle}
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
+      aria-label={`Favorites with ${count} ${count === 1 ? 'item' : 'items'}`}
       // test id for e2e testing
       data-testid="favorites-icon"
     >
@@ -70,6 +71,8 @@ const NavItemFavorites = ({
       {/** Badge displaying the number of items in favorites */}
       <div
         className="absolute -top-1 -right-1.5 z-10 size-4 rounded-full bg-orange-500 text-center text-xs leading-4 text-white"
+        aria-live="polite"
+        aria-atomic="true"
         // test id for e2e testing
         data-testid="favorites-badge"
       >

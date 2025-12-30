@@ -49,43 +49,51 @@ const ProductCard = ({
       index={index}
       pagesLimit={pagesLimit}
     >
-      <div className="z-10 flex justify-between gap-5 self-stretch">
-        <Stickers attributeValues={attributeValues} />
-        <FavoritesButton {...product} />
-      </div>
+      <article
+        className="flex size-full flex-col"
+        aria-labelledby={`product-title-${id}`}
+      >
+        <div className="z-10 flex justify-between gap-5 self-stretch">
+          <Stickers attributeValues={attributeValues} />
+          <FavoritesButton {...product} />
+        </div>
 
-      {/** Product image display */}
-      <ProductImage attributeValues={attributeValues} alt={title} />
+        {/** Product image display */}
+        <ProductImage attributeValues={attributeValues} alt={title} />
 
-      {/** Product information section including title, price and add to cart button */}
-      <div className="z-10 mt-auto mb-5 flex w-full max-w-40 flex-col gap-2.5">
-        <h2
-          className="text-center text-sm leading-4 text-neutral-600"
-          // test id for e2e testing
-          data-testid="product-title"
-        >
-          {title}
-        </h2>
+        {/** Product information section including title, price and add to cart button */}
+        <div className="z-10 mt-auto mb-5 flex w-full max-w-40 flex-col gap-2.5">
+          <h2
+            id={`product-title-${id}`}
+            className="text-center text-sm leading-4 text-neutral-600"
+            // test id for e2e testing
+            data-testid="product-title"
+          >
+            {title}
+          </h2>
 
-        <PriceDisplay attributeValues={attributeValues} lang={lang} />
+          <PriceDisplay attributeValues={attributeValues} lang={lang} />
 
-        <AddToCartButton
-          id={id}
-          productTitle={title}
-          statusIdentifier={statusIdentifier || ''}
-          units={attributeValues?.units_product?.value}
-          dict={dict}
-          height={42}
-          className="btn btn-md btn-primary"
-        />
-      </div>
+          <AddToCartButton
+            id={id}
+            productTitle={title}
+            statusIdentifier={statusIdentifier || ''}
+            units={attributeValues?.units_product?.value}
+            dict={dict}
+            height={42}
+            className="btn btn-md btn-primary"
+          />
+        </div>
 
-      {/** Clickable overlay that navigates to the product detail page */}
-      <Link
-        prefetch={true}
-        href={'/' + lang + '/shop/product/' + id}
-        className="absolute top-0 left-0 z-0 flex size-full"
-      ></Link>
+        {/** Clickable overlay that navigates to the product detail page */}
+        <Link
+          prefetch={true}
+          href={'/' + lang + '/shop/product/' + id}
+          className="absolute top-0 left-0 z-0 flex size-full"
+          aria-label={`View details for ${title}`}
+          tabIndex={-1}
+        ></Link>
+      </article>
     </CardAnimations>
   );
 };

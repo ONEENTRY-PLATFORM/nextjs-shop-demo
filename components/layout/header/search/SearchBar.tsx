@@ -114,7 +114,7 @@ const SearchBar = ({
   return (
     <div className="fade-in relative my-auto ml-9 flex h-12.5 w-fit shrink-0 grow basis-0 flex-row items-center justify-end gap-5 rounded-[30px] border border-solid border-[#A8A9B5] bg-white text-slate-800 transition-all duration-500 max-md:ml-0 max-md:h-12.5 max-md:max-w-full max-md:px-0 max-sm:hidden max-sm:h-10 max-sm:gap-0 max-sm:px-4 max-sm:pr-1">
       {/** Search form containing input field and submit button */}
-      <form className="flex w-full" onSubmit={handleSubmit}>
+      <form className="flex w-full" onSubmit={handleSubmit} role="search">
         {/** Hidden label for accessibility. Provides context for screen readers about the search input */}
         <label htmlFor="quick-search" className="sr-only">
           {dict?.search_placeholder?.value}
@@ -130,11 +130,15 @@ const SearchBar = ({
           id="quick-search"
           name="quick-search"
           className="h-auto w-full self-stretch rounded-3xl border-none px-5 text-lg outline-none max-md:max-w-full max-md:px-3"
+          aria-controls="search-results"
+          aria-expanded={state}
+          aria-autocomplete="list"
         />
         {/** Search submit button with icon. Triggers form submission to navigate to the shop page with search results */}
         <button
           type="submit"
           className="group relative m-auto box-border flex shrink-0 cursor-pointer flex-col p-2.5"
+          aria-label="Submit search"
         >
           {/** Hidden text for accessibility. Provides context for screen readers about the search button */}
           <span className="sr-only">{dict?.search_placeholder?.value}</span>
