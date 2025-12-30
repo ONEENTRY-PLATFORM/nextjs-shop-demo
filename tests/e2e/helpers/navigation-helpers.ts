@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
-import { ROUTES, SELECTORS } from '../fixtures/test-data';
+import { ROUTES, SELECTORS } from '../settings';
 
 /**
  * Helper functions for navigation in E2E tests

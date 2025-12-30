@@ -50,7 +50,7 @@ export const SELECTORS = {
   // Favorites
   favoritesIcon: '[data-testid="favorites-icon"]',
   favoritesDrawer: '[data-testid="favorites-drawer"]',
-  favoriteItem: '.product-card',
+  productCard: '.product-card',
 
   // !!! Success/Error
   successMessage: '[data-testid="success-message"]',
@@ -66,4 +66,5 @@ export const ROUTES = {
   cart: '/en/cart',
   favorites: '/en/favorites',
   orders: '/en/orders',
+  product: '/en/shop/product/65',
 } as const;

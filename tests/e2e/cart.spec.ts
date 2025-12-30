@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-import { SELECTORS } from './fixtures/test-data';
+import { SELECTORS } from './settings';
 import {
   changeCartItemQuantity,
   clearCart,

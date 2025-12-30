@@ -1,6 +1,5 @@
 import { expect, test } from '@playwright/test';
 
-import { SELECTORS } from './fixtures/test-data';
 import { getCartBadge, getCartItemCount } from './helpers/cart-helpers';
 import {
   getFavoritesBadge,
@@ -10,6 +9,7 @@ import {
   goToFirstProduct,
   waitForPageLoad,
 } from './helpers/navigation-helpers';
+import { SELECTORS } from './settings';
 
 /**
  * E2E tests for favorites/wishlist functionality
@@ -88,7 +88,7 @@ test.describe('Favorites', () => {
     await expect(page).toHaveURL(/\/favorites/);
 
     // Check for favorites content or empty state
-    const favoriteItems = page.locator(SELECTORS.favoriteItem);
+    const favoriteItems = page.locator(SELECTORS.productCard);
     const count = await favoriteItems.count();
 
     if (count === 0) {
@@ -153,7 +153,7 @@ test.describe('Favorites', () => {
     await waitForPageLoad(page);
 
     // Check if there are favorites
-    const favoriteItems = page.locator(SELECTORS.favoriteItem);
+    const favoriteItems = page.locator(SELECTORS.productCard);
     const count = await favoriteItems.count();
 
     if (count > 0) {

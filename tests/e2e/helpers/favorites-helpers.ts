@@ -1,6 +1,6 @@
 import type { Locator, Page } from '@playwright/test';
 
-import { SELECTORS } from '../fixtures/test-data';
+import { SELECTORS } from '../settings';
 
 /**
  * Helper functions for favorites operations in E2E tests
