@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import parse from 'html-react-parser';
 
+import { sanitizeHTML } from '@/components/utils/sanitize';
+
 /**
  * Use String type
  * @param   {string}                  name            - Attribute name.
@@ -50,7 +52,7 @@ export const getText = (
       ('htmlValue' in text || 'plainValue' in text)
     ) {
       if (type === 'html' && typeof text.htmlValue === 'string') {
-        const val = parse(text.htmlValue);
+        const val = parse(sanitizeHTML(text.htmlValue));
         return val;
       }
       return typeof text.plainValue === 'string' ? text.plainValue : '';

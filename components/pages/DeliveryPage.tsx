@@ -3,6 +3,7 @@ import parse from 'html-react-parser';
 import type { JSX } from 'react';
 
 import type { SimplePageProps } from '@/app/types/global';
+import { sanitizeHTML } from '@/components/utils/sanitize';
 
 /**
  * DeliveryPage component that displays delivery information content.
@@ -37,7 +38,7 @@ const DeliveryPage = async ({
       <h1 className="mb-3">{title || 'Delivery Information'}</h1>
       {/** Display page content from CMS or fallback to default text */}
       {htmlContent && htmlContent !== '' ? (
-        <div className="mb-6">{parse(htmlContent)}</div>
+        <div className="mb-6">{parse(sanitizeHTML(htmlContent))}</div>
       ) : (
         <p>Delivery information page content.</p>
       )}

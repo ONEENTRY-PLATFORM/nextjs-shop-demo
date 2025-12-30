@@ -3,6 +3,7 @@ import parse from 'html-react-parser';
 import type { JSX } from 'react';
 
 import type { SimplePageProps } from '@/app/types/global';
+import { sanitizeHTML } from '@/components/utils/sanitize';
 
 /**
  * BookOnlinePage component that displays the online booking page content.
@@ -36,7 +37,9 @@ const BookOnlinePage = async ({
         <h1 className="mb-3">{localizeInfos?.title || 'Book Online'}</h1>
         {/** Display page content from CMS or fallback to default text */}
         {localizeInfos?.htmlContent ? (
-          <div className="mb-6">{parse(localizeInfos.htmlContent)}</div>
+          <div className="mb-6">
+            {parse(sanitizeHTML(localizeInfos.htmlContent))}
+          </div>
         ) : (
           <p>Online booking page content.</p>
         )}

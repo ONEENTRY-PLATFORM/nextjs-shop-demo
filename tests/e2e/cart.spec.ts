@@ -1,6 +1,5 @@
 import { expect, test } from '@playwright/test';
 
-import { SELECTORS } from './settings';
 import {
   changeCartItemQuantity,
   clearCart,
@@ -15,6 +14,7 @@ import {
   goToFirstProduct,
   waitForPageLoad,
 } from './helpers/navigation-helpers';
+import { SELECTORS } from './settings';
 
 /**
  * E2E tests for shopping cart functionality

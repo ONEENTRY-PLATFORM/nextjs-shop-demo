@@ -2,6 +2,8 @@
 import parse from 'html-react-parser';
 import type { JSX } from 'react';
 
+import { sanitizeHTML } from '@/components/utils/sanitize';
+
 /**
  * Product description component.
  * Displays the product description with HTML formatting support.
@@ -37,7 +39,7 @@ const ProductDescription = ({
 
   return (
     <div className="text-sm leading-5 text-neutral-600">
-      {descript && parse(descript)}
+      {descript && parse(sanitizeHTML(descript))}
     </div>
   );
 };

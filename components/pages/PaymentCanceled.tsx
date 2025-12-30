@@ -2,6 +2,8 @@ import parse from 'html-react-parser';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { JSX } from 'react';
 
+import { sanitizeHTML } from '@/components/utils/sanitize';
+
 /**
  * PaymentCanceled page component that displays when a payment has been canceled.
  * This component renders the payment canceled page with title and content from the CMS,
@@ -37,7 +39,7 @@ const PaymentCanceled = async ({
       <h1 className="mb-3">{title || 'Payment Canceled'}</h1>
       {/** Display page content from CMS or fallback to default text */}
       {htmlContent && htmlContent !== '' ? (
-        <div className="mb-6">{parse(htmlContent)}</div>
+        <div className="mb-6">{parse(sanitizeHTML(htmlContent))}</div>
       ) : (
         <p>Your payment has been canceled.</p>
       )}

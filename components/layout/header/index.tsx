@@ -27,7 +27,7 @@ const Header = (): JSX.Element => {
      */
     <header className="z-50 flex items-center justify-center bg-white px-5">
       {/** Header section container with maximum width constraint */}
-      <section className="mx-auto box-border flex w-full max-w-(--breakpoint-xl) grow flex-col justify-center self-stretch bg-white py-8">
+      <div className="mx-auto box-border flex w-full max-w-(--breakpoint-xl) grow flex-col justify-center self-stretch bg-white py-8">
         {/** Main header content area with responsive layout */}
         <div className="flex w-full max-w-(--breakpoint-xl) justify-between gap-8 max-md:flex-wrap max-md:gap-6 max-sm:gap-4">
           {/** Site logo component with link to homepage */}
@@ -37,7 +37,7 @@ const Header = (): JSX.Element => {
           {/** Navigation group containing user navigation elements */}
           <NavGroup lang={lang as string} />
         </div>
-      </section>
+      </div>
     </header>
   );
 };

@@ -20,7 +20,7 @@ test.describe('Favorites', () => {
     await waitForPageLoad(page);
   });
 
-  test('!!! should add product to favorites', async ({ page }) => {
+  test('should add product to favorites', async ({ page }) => {
     // Navigate to a product
     await goToFirstProduct(page);
 
@@ -51,7 +51,7 @@ test.describe('Favorites', () => {
     }
   });
 
-  test('!!! should remove product from favorites', async ({ page }) => {
+  test('should remove product from favorites', async ({ page }) => {
     // Navigate to a product
     await goToFirstProduct(page);
 
@@ -102,7 +102,7 @@ test.describe('Favorites', () => {
     }
   });
 
-  test('!!! should persist favorites after page reload', async ({ page }) => {
+  test('should persist favorites after page reload', async ({ page }) => {
     // Navigate to a product and add to favorites
     await goToFirstProduct(page);
 
@@ -145,9 +145,7 @@ test.describe('Favorites', () => {
     }
   });
 
-  test('!!! should add favorite to cart from favorites page', async ({
-    page,
-  }) => {
+  test('should add favorite to cart from favorites page', async ({ page }) => {
     // Navigate to favorites
     await page.goto('/en/favorites');
     await waitForPageLoad(page);

@@ -2,6 +2,8 @@ import parse from 'html-react-parser';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { JSX } from 'react';
 
+import { sanitizeHTML } from '@/components/utils/sanitize';
+
 /**
  * PaymentSuccess page component that displays when a payment has been processed successfully.
  * This component renders the payment success page with title and content from the CMS,
@@ -40,7 +42,7 @@ const PaymentSuccess = async ({
       <h1 className="mb-3">{title || 'Payment Success'}</h1>
       {/** Display page content from CMS if available */}
       {htmlContent && htmlContent !== '' && (
-        <div className="mb-6">{parse(htmlContent)}</div>
+        <div className="mb-6">{parse(sanitizeHTML(htmlContent))}</div>
       )}
     </div>
   );

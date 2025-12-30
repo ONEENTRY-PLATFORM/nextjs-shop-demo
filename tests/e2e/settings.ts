@@ -3,11 +3,23 @@
  */
 
 /**
+ * Routes used in tests
+ */
+export const ROUTES = {
+  home: '/en',
+  shop: '/en/shop',
+  cart: '/en/cart',
+  favorites: '/en/favorites',
+  orders: '/en/orders',
+  product: '/en/shop/product/65',
+} as const;
+
+/**
  * Test user data for checkout
  */
 export const TEST_USER = {
   name: 'Test User',
-  email: 'kvasssukr.net@gmail.com',
+  email: 'yout@mail.com',
   phone: '+1234567890',
   address: '123 Test Street',
   city: 'Test City',
@@ -55,16 +67,4 @@ export const SELECTORS = {
   // !!! Success/Error
   successMessage: '[data-testid="success-message"]',
   errorMessage: '[data-testid="error-message"]',
-} as const;
-
-/**
- * Routes used in tests
- */
-export const ROUTES = {
-  home: '/en',
-  shop: '/en/shop',
-  cart: '/en/cart',
-  favorites: '/en/favorites',
-  orders: '/en/orders',
-  product: '/en/shop/product/65',
 } as const;

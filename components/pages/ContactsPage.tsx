@@ -4,6 +4,7 @@ import type { JSX } from 'react';
 
 import type { SimplePageProps } from '@/app/types/global';
 import ContactUsForm from '@/components/forms/ContactUsForm';
+import { sanitizeHTML } from '@/components/utils/sanitize';
 
 /**
  * Contacts page component that displays contact information and a contact form.
@@ -43,7 +44,9 @@ const ContactsPage = async ({
         <h1 className="mb-3">{localizeInfos?.title || 'Contact Us'}</h1>
         {/** Display page content from CMS or fallback to default text */}
         {localizeInfos?.htmlContent ? (
-          <div className="mb-6">{parse(localizeInfos.htmlContent)}</div>
+          <div className="mb-6">
+            {parse(sanitizeHTML(localizeInfos.htmlContent))}
+          </div>
         ) : (
           <p>Contact information and form.</p>
         )}
