@@ -73,8 +73,6 @@
     "@types/react-redux": "^7.1.34",
     "@types/react-slick": "^0.23.13",
     "@types/sanitize-html": "^2.16.0",
-    "@typescript-eslint/eslint-plugin": "^8.54.0",
-    "@typescript-eslint/parser": "^8.54.0",
     "autoprefixer": "^10.4.23",
     "clsx": "^2.1.1",
     "critters": "^0.0.25",
