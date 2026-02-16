@@ -33,13 +33,13 @@ const ImagesCarousel = ({
       <div className="relative w-full">
         {/* Main image slider */}
         <Slider asNavFor={nav2 ?? undefined} ref={setNav1}>
-          {imagesData.map((image, i: Key) => (
+          {imagesData.map((image, i: string | Key) => (
             <div key={i} className="w-full items-center">
               <Image
                 width={600}
                 height={600}
                 src={image.original}
-                alt={`Review image ${i}`}
+                alt={`Review image ${i as string}`}
                 className="mx-auto self-center rounded-3xl"
               />
             </div>

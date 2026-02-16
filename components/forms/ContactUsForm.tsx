@@ -10,9 +10,8 @@ import { useAppSelector } from '@/app/store/hooks';
 import Loader from '../shared/Loader';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
+import FormReCaptcha from './inputs/FormReCaptcha';
 import FormSubmitButton from './inputs/FormSubmitButton';
-// import FormCaptcha from './inputs/FormCaptcha';
-// import FormReCaptcha from './inputs/FormReCaptcha';
 
 /**
  * ContactUs form.
@@ -25,6 +24,10 @@ const ContactUsForm = memo(
   ({ className, lang }: { className?: string; lang: string }): JSX.Element => {
     // const [token, setToken] = useState<string | null>();
     // const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
+    // Captcha
+    const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
+    const [isValid, setIsValid] = useState<boolean>(false);
+    const [token, setToken] = useState<string | null>(null);
 
     /** Use form submission hook for loading state and API calls */
     const { loading, sendData } = useFormsData();
@@ -213,16 +216,13 @@ const ContactUsForm = memo(
             } else if (field.type === 'spam') {
               return (
                 <div key={field.marker || index}>
-                  {/* <FormCaptcha
-                  setToken={setToken}
-                  setIsCaptcha={setIsCaptcha}
-                  captchaKey={field.settings?.captchaKey || ''}
-                /> */}
-                  {/* <FormReCaptcha
-                  setToken={setToken}
-                  setIsCaptcha={setIsCaptcha}
-                  captchaKey={field.settings?.captchaKey || ''}
-                /> */}
+                  <FormReCaptcha
+                    key={field.marker || index}
+                    setToken={setToken}
+                    setIsCaptcha={setIsCaptcha}
+                    siteKey={field.settings?.captcha.key || ''}
+                    setIsValid={setIsValid}
+                  />
                 </div>
               );
             } else {
@@ -242,7 +242,9 @@ const ContactUsForm = memo(
           })}
         </div>
 
-        {error && <ErrorMessage error={error} />}
+        {(error || !isValid || !token || !isCaptcha) && (
+          <ErrorMessage error={error} />
+        )}
       </form>
     );
   },

@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @reference "./styles/main.css";
 
+@theme {
+  --breakpoint-xs: 480px;
+}
+
 /* @import'./styles/components.scss'; */
 
 :root {
@@ -139,11 +143,11 @@ input:focus-visible {
     @apply 
       px-5
       py-4
-      h-[60px]
+      h-15
       text-xl
       font-semibold 
       uppercase
-      max-md:h-[50px]
+      max-md:h-12.5
       max-md:text-lg;
   }
 
@@ -151,7 +155,7 @@ input:focus-visible {
     @apply 
       px-5
       py-3
-      h-[50px]
+      h-12.5
       text-lg
       font-semibold
       uppercase;
@@ -161,7 +165,7 @@ input:focus-visible {
     @apply 
       px-5
       py-2
-      h-[42px]
+      h-10.5
       text-base
       font-semibold 
       uppercase;
@@ -175,7 +179,7 @@ input:focus-visible {
     @apply 
       px-5
       py-1.5
-      h-[36px]
+      h-9
       text-sm
       font-semibold 
       uppercase;
@@ -242,11 +246,11 @@ input:focus-visible {
   .animate-loader {
     @apply 
       /* animate-gradient  */
-      bg-gradient-to-r 
+      bg-linear-to-r 
       from-slate-50 
       via-slate-100 
       to-slate-50 
-      bg-[length:300%_100%];
+      bg-size-[300%_100%];
   }
 
   .product-card {
@@ -305,7 +309,7 @@ input:focus-visible {
       max-md:gap-6 
       max-md:px-2 
       max-sm:gap-3 
-      md:max-w-[165px] 
+      md:max-w-41.25 
       md:flex-col 
       md:justify-start 
       md:gap-5 
