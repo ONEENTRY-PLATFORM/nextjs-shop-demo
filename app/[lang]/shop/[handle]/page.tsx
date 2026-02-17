@@ -15,6 +15,8 @@ import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../../dictionaries';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * Shop catalog page
  * @async

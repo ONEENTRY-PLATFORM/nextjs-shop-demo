@@ -15,6 +15,8 @@ import ProductSingleServer from '@/components/layout/product/ProductSingleServer
 import type { Locale } from '@/i18n-config';
 import { i18n } from '@/i18n-config';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * Product page.
  * @param   {object}                                    props        - Page props.

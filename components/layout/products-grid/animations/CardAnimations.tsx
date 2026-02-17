@@ -7,6 +7,11 @@ import { useSearchParams } from 'next/navigation';
 import type { JSX, ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
+// Register ScrollTrigger plugin
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
 /**
  * CardAnimations component provides entrance animations for product cards using GSAP.
  * It animates cards with a staggered fade-in and scale effect based on their position in the grid.
@@ -51,7 +56,7 @@ const CardAnimations = ({
     }
 
     const checkInView = () => {
-      if (ref.current) {
+      if (ref.current && typeof window !== 'undefined') {
         setInView(ScrollTrigger.isInViewport(ref.current, 0.05));
       }
     };

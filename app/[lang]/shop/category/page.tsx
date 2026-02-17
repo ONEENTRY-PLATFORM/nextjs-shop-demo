@@ -11,6 +11,8 @@ import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import CategoriesGrid from '@/components/layout/categories';
 import { i18n } from '@/i18n-config';
 
+export const dynamic = 'force-dynamic';
+
 /**
  * Category page
  * @async
