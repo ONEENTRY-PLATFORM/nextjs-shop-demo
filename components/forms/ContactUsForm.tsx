@@ -5,7 +5,8 @@ import type { FormEvent, JSX, Key } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
 
 import { useFormsData, useGetFormByMarkerQuery } from '@/app/api';
-import { useAppSelector } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
+import { clearFields } from '@/app/store/reducers/FormFieldsSlice';
 
 import Loader from '../shared/Loader';
 import ErrorMessage from './inputs/ErrorMessage';
@@ -22,8 +23,6 @@ import FormSubmitButton from './inputs/FormSubmitButton';
  */
 const ContactUsForm = memo(
   ({ className, lang }: { className?: string; lang: string }): JSX.Element => {
-    // const [token, setToken] = useState<string | null>();
-    // const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
     // Captcha
     const [isCaptcha, setIsCaptcha] = useState<boolean>(false);
     const [isValid, setIsValid] = useState<boolean>(false);
@@ -34,6 +33,12 @@ const ContactUsForm = memo(
 
     /** Error state for form submission errors */
     const [error, setError] = useState<string>('');
+
+    /** Success message state */
+    const [successMessage, setSuccessMessage] = useState<string>('');
+
+    /** Dispatch for Redux actions */
+    const dispatch = useAppDispatch();
 
     /**
      * Fetch contact form data by marker using RTK Query
@@ -76,6 +81,7 @@ const ContactUsForm = memo(
     const onSubmitFormHandle = useCallback(
       async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         const emptyFormData: {
           marker: string;
           type: string;
@@ -178,14 +184,26 @@ const ContactUsForm = memo(
             if (result && typeof result === 'object' && 'error' in result) {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               setError((result as any).error);
+              setSuccessMessage('');
+            } else if (result && typeof result === 'object') {
+              /** Handle successful submission */
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              const actionMessage = (result as any).actionMessage;
+              if (actionMessage) {
+                setSuccessMessage(actionMessage);
+              }
+              setError('');
+              /** Clear form fields */
+              dispatch(clearFields());
             }
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           } catch (e: any) {
             setError(e.message);
+            setSuccessMessage('');
           }
         }
       },
-      [formFields, fieldsData, data, moduleFormConfig, sendData],
+      [formFields, fieldsData, data, moduleFormConfig, sendData, dispatch],
     );
 
     /** Show loader while form data is being fetched */
@@ -206,12 +224,18 @@ const ContactUsForm = memo(
             /** Render form fields based on their type */
             if (field.type === 'button') {
               return (
-                <FormSubmitButton
-                  key={field.marker || index}
-                  title={field.localizeInfos.title}
-                  isLoading={loading}
-                  index={10}
-                />
+                <div key={field.marker || index}>
+                  {successMessage && (
+                    <div className="mb-4 rounded-md bg-green-50 p-4 text-center text-green-800">
+                      {successMessage}
+                    </div>
+                  )}
+                  <FormSubmitButton
+                    title={field.localizeInfos.title}
+                    isLoading={loading}
+                    index={10}
+                  />
+                </div>
               );
             } else if (field.type === 'spam') {
               return (
@@ -222,6 +246,7 @@ const ContactUsForm = memo(
                     setIsCaptcha={setIsCaptcha}
                     siteKey={field.settings?.captcha.key || ''}
                     setIsValid={setIsValid}
+                    action={'verify'}
                   />
                 </div>
               );

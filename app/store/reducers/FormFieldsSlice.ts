@@ -67,11 +67,18 @@ const formFieldsSlice = createSlice({
         }
       }
     },
+    /**
+     * Clear all form fields.
+     * @param {WritableDraft<InitialStateType>} state - Current state
+     */
+    clearFields(state: WritableDraft<InitialStateType>) {
+      state.fields = {}; // Reset fields to empty object.
+    },
   },
 });
 
-/** Export the addField action for use in dispatching. */
-export const { addField } = formFieldsSlice.actions;
+/** Export the addField and clearFields actions for use in dispatching. */
+export const { addField, clearFields } = formFieldsSlice.actions;
 
 /** Export the reducer to be used in the store configuration. */
 export default formFieldsSlice.reducer;

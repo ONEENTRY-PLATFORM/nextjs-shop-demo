@@ -3,7 +3,7 @@
 import type { JSX } from 'react';
 import { useEffect, useState } from 'react';
 
-import { useAppDispatch } from '@/app/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { addField } from '@/app/store/reducers/FormFieldsSlice';
 import { FormFieldsEnum } from '@/app/types/enum';
 import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimations';
@@ -51,6 +51,11 @@ const FormInput = (field: {
   /* Redux dispatch function for updating form field values in the store */
   const dispatch = useAppDispatch();
 
+  /* Get field data from Redux store */
+  const fieldData = useAppSelector(
+    (state) => state.formFieldsReducer.fields[field.marker],
+  );
+
   /* Validation state (currently always true) */
   const valid = true;
 
@@ -79,6 +84,14 @@ const FormInput = (field: {
 
   /* Check if the field is required based on validators */
   const required = field?.validators?.['requiredValidator']?.strict || false;
+
+  /* Effect to sync local state with Redux store when fields are cleared */
+  useEffect(() => {
+    if (!fieldData) {
+      setValue(field.value || '');
+      setFiles([]);
+    }
+  }, [fieldData, field.value]);
 
   /* Effect to update the Redux store when field value or validation state changes */
   useEffect(() => {

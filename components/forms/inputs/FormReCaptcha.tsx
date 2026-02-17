@@ -16,7 +16,7 @@ import { getApi } from '@/app/api';
  */
 const FormReCaptcha = ({
   siteKey,
-  action = 'login',
+  action = 'verify',
   setToken,
   setIsCaptcha,
   setIsValid,
