@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import { unstable_noStore } from 'next/cache';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
-import { unstable_noStore } from 'next/cache';
 
 import { getApi } from '@/app/api';
 
@@ -13,10 +12,10 @@ import ReviewsSection from './ReviewsSection';
  *
  * This component uses unstable_noStore() to ensure reviews are always fetched fresh
  * from the API on each request, preventing stale data when reviews are deleted or modified.
- * @param   {object}           props         - Component properties
- * @param   {IProductsEntity}  props.product - Product entity object
- * @param   {IAttributeValues} props.dict    - Dictionary of attribute values from server API
- * @returns {Promise<JSX.Element>}           A Promise that resolves to ReviewsSection with fresh data
+ * @param   {object}               props         - Component properties
+ * @param   {IProductsEntity}      props.product - Product entity object
+ * @param   {IAttributeValues}     props.dict    - Dictionary of attribute values from server API
+ * @returns {Promise<JSX.Element>}               A Promise that resolves to ReviewsSection with fresh data
  */
 const ReviewsSectionServer = async ({
   dict,

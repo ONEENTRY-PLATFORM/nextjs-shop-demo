@@ -145,7 +145,7 @@ const FormReCaptcha = ({
           siteKey,
         };
 
-        const isValid = await System.validateCapcha(data);
+        const isValid = await System.validateCaptcha(data);
         setIsValid(isValid);
       } catch (error) {
         console.error('Token validation error:', error);

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
 import type { Dispatch, JSX, ReactNode } from 'react';
@@ -6,14 +6,14 @@ import { createContext, useState } from 'react';
 
 /**
  * Filter context for managing filter state
- * @property {number}               priceFrom    - Minimum price filter
- * @property {number}               priceTo      - Maximum price filter
- * @property {string}               color        - Color filter
- * @property {boolean}              inStock      - In stock filter
- * @property {Dispatch<number>}     setPriceFrom - Price from setter
- * @property {Dispatch<number>}     setPriceTo   - Price to setter
- * @property {Dispatch<string>}     setColor     - Color setter
- * @property {Dispatch<boolean>}    setInStock   - In stock setter
+ * @property {number}            priceFrom    - Minimum price filter
+ * @property {number}            priceTo      - Maximum price filter
+ * @property {string}            color        - Color filter
+ * @property {boolean}           inStock      - In stock filter
+ * @property {Dispatch<number>}  setPriceFrom - Price from setter
+ * @property {Dispatch<number>}  setPriceTo   - Price to setter
+ * @property {Dispatch<string>}  setColor     - Color setter
+ * @property {Dispatch<boolean>} setInStock   - In stock setter
  */
 export const FilterContext = createContext<{
   priceFrom: number | null;

@@ -34,7 +34,7 @@ let apiInstance = defineOneEntry(PROJECT_URL, {
 /**
  * API getter that returns current api instance
  * This ensures we always get the latest reDefineed instance
- * @returns Current api instance
+ * @returns {any} Current api instance
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
  */
 export const getApi = () => apiInstance;

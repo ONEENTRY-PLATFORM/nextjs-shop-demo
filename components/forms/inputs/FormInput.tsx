@@ -85,13 +85,18 @@ const FormInput = (field: {
   /* Check if the field is required based on validators */
   const required = field?.validators?.['requiredValidator']?.strict || false;
 
-  /* Effect to sync local state with Redux store when fields are cleared */
-  useEffect(() => {
-    if (!fieldData) {
-      setValue(field.value || '');
-      setFiles([]);
-    }
-  }, [fieldData, field.value]);
+  /**
+   * Sync local state when fieldData is cleared from the Redux store.
+   * Adjusting state during render (rather than in an effect) avoids a cascading
+   * render cycle and is the React-recommended pattern for prop-driven resets.
+   * See: https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes
+   */
+  const [prevFieldData, setPrevFieldData] = useState(fieldData);
+  if (prevFieldData !== fieldData && !fieldData) {
+    setPrevFieldData(fieldData);
+    setValue(field.value || '');
+    setFiles([]);
+  }
 
   /* Effect to update the Redux store when field value or validation state changes */
   useEffect(() => {

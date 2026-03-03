@@ -2,7 +2,7 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
-import type React, { ReactNode } from 'react';
+import type { React, ReactNode } from 'react';
 
 /**
  * Localize info.
