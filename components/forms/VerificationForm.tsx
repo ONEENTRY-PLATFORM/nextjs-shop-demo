@@ -128,10 +128,18 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
           if (result) {
             try {
               /** Log in the user with their credentials */
-              await logInUser({
+              const loginResult = await logInUser({
                 login: String(fields.email_reg?.value || ''),
                 password: String(fields.password_reg?.value || ''),
               });
+
+              /** Save refresh token before authenticating */
+              if (loginResult.data?.refreshToken) {
+                localStorage.setItem(
+                  'refresh-token',
+                  loginResult.data.refreshToken,
+                );
+              }
 
               /** Authenticate the user and redirect to profile page */
               authenticate();

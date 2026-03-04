@@ -102,7 +102,8 @@ const SignInForm = ({
         if (result && result.error) {
           setError(result.error);
           throw new Error(result.error);
-        } else if (result) {
+        } else if (result?.data?.refreshToken) {
+          localStorage.setItem('refresh-token', result.data.refreshToken);
           setOpen(false);
           authenticate();
           setError('');

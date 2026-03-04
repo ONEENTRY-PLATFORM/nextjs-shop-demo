@@ -6,8 +6,7 @@ const APP_TOKEN = process.env.NEXT_PUBLIC_APP_TOKEN as string;
 
 /**
  * This function used to update user JWT token and save to localStorage
- * @param   {string}        refreshToken - Refresh token from API
- * @returns {Promise<void>}              Promise that resolves when token is saved
+ * @param {string} refreshToken - Refresh token from API
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
  */
 const saveFunction = async (refreshToken: string): Promise<void> => {
@@ -17,9 +16,7 @@ const saveFunction = async (refreshToken: string): Promise<void> => {
   localStorage.setItem('refresh-token', refreshToken);
 };
 
-/**
- * Internal api instance that can be mutated
- */
+/** Internal api instance that can be mutated */
 let apiInstance = defineOneEntry(PROJECT_URL, {
   token: APP_TOKEN,
   langCode: 'en_US',
@@ -33,11 +30,10 @@ let apiInstance = defineOneEntry(PROJECT_URL, {
 
 /**
  * API getter that returns current api instance
- * This ensures we always get the latest reDefineed instance
- * @returns {any} Current api instance
+ * @returns {ReturnType<typeof defineOneEntry>} Current api instance
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
  */
-export const getApi = () => apiInstance;
+export const getApi = (): ReturnType<typeof defineOneEntry> => apiInstance;
 
 /**
  * Exported api for backward compatibility
@@ -45,18 +41,14 @@ export const getApi = () => apiInstance;
  */
 export const api = new Proxy({} as ReturnType<typeof defineOneEntry>, {
   get: (_target, prop) => {
-    // Always get the fresh value from current apiInstance
     const value = (apiInstance as any)[prop];
 
-    // If it's an object (Users, Products, etc.), wrap it in a proxy
     if (value && typeof value === 'object' && prop !== 'constructor') {
       return new Proxy(value, {
         get: (_subTarget, subProp) => {
-          // Always get the fresh value from current apiInstance
           const currentValue = (apiInstance as any)[prop];
           const method = currentValue[subProp];
 
-          // If it's a function, bind it to the current context
           if (typeof method === 'function') {
             return method.bind(currentValue);
           }
@@ -72,9 +64,8 @@ export const api = new Proxy({} as ReturnType<typeof defineOneEntry>, {
 
 /**
  * This function used to update api config
- * @param   {string}        refreshToken - Refresh token from localStorage
- * @param   {string}        langCode     - Current language code
- * @returns {Promise<void>}              Promise that resolves when api is redefined
+ * @param {string} refreshToken - Refresh token from localStorage
+ * @param {string} langCode     - Current language code
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry CMS docs}
  */
 export async function reDefine(

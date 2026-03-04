@@ -44,3 +44,4 @@ package-lock.json
 .vscode
 git-setup.sh
 nul
+CLAUDE.md

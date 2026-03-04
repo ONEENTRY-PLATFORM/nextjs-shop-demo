@@ -5,7 +5,7 @@ import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { JSX, ReactNode } from 'react';
 import { createContext, useEffect, useMemo, useState } from 'react';
 
-import { reDefine, useLazyGetMeQuery } from '@/app/api';
+import { getApi, reDefine, useLazyGetMeQuery } from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import type { IProducts } from '@/app/types/global';
 
@@ -108,8 +108,14 @@ export const AuthProvider = ({
       setIsAuth(false);
       return;
     }
-    /** Redefine user session with refresh token */
-    await reDefine(refresh, langCode);
+    /** Skip reDefine if SDK already has an active session (e.g. right after login) */
+    /** reDefine creates a new instance without accessToken, which forces an extra token exchange */
+    const hasActiveSession = !!(getApi().AuthProvider as any)?.state
+      ?.accessToken;
+    if (!hasActiveSession) {
+      await reDefine(refresh, langCode);
+      /** Explicitly refresh the token so the correct fingerprint is used for the /refresh call */
+    }
     /** Check token validity */
     await checkToken();
   };
@@ -134,8 +140,6 @@ export const AuthProvider = ({
       .then(async (res) => {
         /** Check if response has error or no user ID */
         if ((res.isError && !res.isLoading) || !res.data?.id) {
-          /** Clear refresh token and set auth to false */
-          localStorage.setItem('refresh-token', '');
           setIsAuth(false);
         } else {
           /** Set user data and auth status to true */
@@ -144,8 +148,6 @@ export const AuthProvider = ({
         }
       })
       .catch(async () => {
-        /** Clear refresh token and set auth to false on error */
-        localStorage.setItem('refresh-token', '');
         setIsAuth(false);
       });
   };
@@ -237,18 +239,10 @@ export const AuthProvider = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [refetch, langCode]);
 
-  /** Refetch if error and has refresh-token */
+  /** Set isAuth to false on RTK query error (e.g. polling failure) */
   useEffect(() => {
-    /** Get refresh token from localStorage */
-    const refresh = localStorage.getItem('refresh-token');
-    /** If error occurred and refresh token exists */
-    if (isError && refresh) {
-      /** Clear refresh token first */
-      localStorage.setItem('refresh-token', '');
-
-      /** Update state in batch */
+    if (isError) {
       setIsAuth(false);
-      setRefetch((prev) => !prev);
     }
   }, [isError]);
 

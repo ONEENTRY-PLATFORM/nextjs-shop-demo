@@ -198,6 +198,7 @@ if (isVisible) {
 Current test coverage:
 
 ### Cart Tests (8 tests)
+
 - ✅ Add product to cart
 - ✅ Increase quantity
 - ✅ Decrease quantity
@@ -208,6 +209,7 @@ Current test coverage:
 - ✅ Navigate to checkout
 
 ### Checkout Tests (9 tests)
+
 - ✅ Complete checkout with valid data
 - ✅ Form validation
 - ✅ Fill form fields
@@ -219,6 +221,7 @@ Current test coverage:
 - ✅ Multiple items checkout
 
 ### Favorites Tests (5 tests)
+
 - ✅ Add to favorites
 - ✅ Remove from favorites
 - ✅ View favorites page
@@ -254,6 +257,7 @@ test('slow test', async ({ page }) => {
 ## CI/CD Integration
 
 Tests are configured to run on CI with:
+
 - Automatic retries (2 attempts)
 - Video recording on failure
 - Screenshot on failure
