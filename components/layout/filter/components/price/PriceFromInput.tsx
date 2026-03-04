@@ -23,6 +23,7 @@ const PriceFromInput = ({
       value={price}
       onChange={(e) => setPrice(Number(e.target.value))}
       className="w-5/6 bg-transparent"
+      data-testid="price-from-input"
     />
   );
 };

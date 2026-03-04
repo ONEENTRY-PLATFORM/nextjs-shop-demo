@@ -89,4 +89,23 @@ export const SELECTORS = {
   phoneInput: '#phone_reg',
   modalSubmitButton: '#modalBody button[type="submit"]',
   modalError: '#modalBody .text-red-500',
+
+  // Search
+  searchInput: '#quick-search',
+  searchSubmitButton: '[aria-label="Submit search"]',
+  searchResults: '#search-results',
+  searchResultLink: '#search-results a',
+  closeSearchResults: '[aria-label="Close search results"]',
+
+  // Catalog / Filters
+  filterButton: '[aria-label="Filter"]',
+  filterModal: '#modalBody',
+  filterApplyButton: '[data-testid="filter-apply-button"]',
+  filterResetButton: '[data-testid="filter-reset-button"]',
+  priceFromInput: '[data-testid="price-from-input"]',
+  priceToInput: '[data-testid="price-to-input"]',
+
+  // Navigation
+  langSelector: 'select[name="lang-selector"]',
+  menuButton: '[aria-label="Open menu"]',
 } as const;

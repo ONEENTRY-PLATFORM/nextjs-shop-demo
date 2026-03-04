@@ -42,6 +42,7 @@ const ResetButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
     /** Reset button with styling and click handler */
     <button
       onClick={handleClick}
+      data-testid="filter-reset-button"
       className="btn btn-o btn-o-gray relative box-border flex h-12 w-full shrink-0 flex-col items-center justify-center rounded-3xl px-5 py-3 text-center text-base font-medium uppercase"
     >
       {/** Display localized reset button text or fallback to 'Reset' */}
