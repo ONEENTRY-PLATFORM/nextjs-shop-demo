@@ -46,7 +46,7 @@ const ProductDetails = ({
 
   return (
     <>
-      <h1 className="text-xl leading-6 text-neutral-600">{title}</h1>
+      <h1 className="text-xl leading-6 text-neutral-600" data-testid="product-title">{title}</h1>
 
       {/** Category */}
       {category && (
@@ -57,7 +57,7 @@ const ProductDetails = ({
         </p>
       )}
 
-      <div className="mt-4 mb-5 text-left text-xl leading-8 font-bold text-neutral-600">
+      <div className="mt-4 mb-5 text-left text-xl leading-8 font-bold text-neutral-600" data-testid="product-price">
         <PriceDisplay
           currentPrice={sale?.value}
           originalPrice={price?.value}

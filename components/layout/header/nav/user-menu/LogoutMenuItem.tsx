@@ -39,6 +39,7 @@ const LogoutMenuItem = (): JSX.Element => {
     /** Logout button with hover effects. Triggers logout process when clicked */
     <button
       className={`group flex justify-start p-2 text-slate-800 hover:text-orange-500`}
+      data-testid="logout-button"
       onClick={onLogoutHandle}
     >
       <div>Logout</div>

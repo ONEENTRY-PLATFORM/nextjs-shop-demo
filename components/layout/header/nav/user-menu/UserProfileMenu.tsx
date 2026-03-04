@@ -63,6 +63,7 @@ const UserProfileMenu = ({
           setState(true);
         }}
         title={title}
+        data-testid="user-menu-button"
         className="group relative box-border flex size-8 shrink-0 cursor-pointer max-sm:size-6"
       >
         <ProfileIcon />

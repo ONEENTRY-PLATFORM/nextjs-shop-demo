@@ -11,6 +11,7 @@ export const ROUTES = {
   cart: '/en/cart',
   favorites: '/en/favorites',
   orders: '/en/orders',
+  profile: '/en/profile',
   product: '/en/shop/product/65',
 } as const;
 
@@ -25,6 +26,15 @@ export const TEST_USER = {
   city: 'Test City',
   zip: '12345',
   country: 'Test Country',
+} as const;
+
+/**
+ * Test auth user credentials
+ * Set TEST_USER_EMAIL and TEST_USER_PASSWORD env vars to override
+ */
+export const TEST_AUTH_USER = {
+  email: process.env.TEST_USER_EMAIL || 'test@example.com',
+  password: process.env.TEST_USER_PASSWORD || 'TestPassword123!',
 } as const;
 
 /**
@@ -67,4 +77,16 @@ export const SELECTORS = {
   // !!! Success/Error
   successMessage: '[data-testid="success-message"]',
   errorMessage: '[data-testid="error-message"]',
+
+  // Auth
+  authButton: '[data-testid="auth-button"]',
+  userMenuButton: '[data-testid="user-menu-button"]',
+  logoutButton: '[data-testid="logout-button"]',
+  signInModal: '#modalBody',
+  emailInput: '#email_reg',
+  passwordInput: '#password_reg',
+  nameInput: '#name_reg',
+  phoneInput: '#phone_reg',
+  modalSubmitButton: '#modalBody button[type="submit"]',
+  modalError: '#modalBody .text-red-500',
 } as const;

@@ -58,6 +58,7 @@ const NavItemProfile = ({
         setComponent('SignInForm');
       }}
       title={item.localizeInfos.menuTitle}
+      data-testid="auth-button"
       className="group relative box-border flex size-8 shrink-0 cursor-pointer max-sm:size-6"
     >
       <ProfileAltIcon />
@@ -70,6 +71,7 @@ const NavItemProfile = ({
     <Link
       href={'/' + lang + '/profile'}
       title={item.localizeInfos.menuTitle}
+      data-testid="user-menu-button"
       className="group relative box-border flex size-8 shrink-0 cursor-pointer max-sm:size-6"
     >
       <ProfileAltIcon />
