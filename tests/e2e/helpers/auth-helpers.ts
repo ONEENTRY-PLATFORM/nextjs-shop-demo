@@ -8,9 +8,11 @@ import { ROUTES, SELECTORS } from '../settings';
  */
 
 /**
- * Opens the sign-in modal by clicking the auth button in the navbar
+ * Opens the sign-in modal by clicking the auth button in the navbar.
+ * Waits for both the modal container and the email input to be visible
+ * (GSAP animates fields from width:0, so we must wait for the animation).
  * @param   {Page}          page - Playwright page object
- * @returns {Promise<void>}      Promise that resolves when the modal is visible
+ * @returns {Promise<void>}      Promise that resolves when the modal and its fields are ready
  */
 export async function openSignInModal(page: Page): Promise<void> {
   await page.goto(ROUTES.home);
@@ -20,8 +22,14 @@ export async function openSignInModal(page: Page): Promise<void> {
   await expect(authButton).toBeVisible({ timeout: 10000 });
   await authButton.click();
 
+  // Wait for modal container
   await expect(page.locator(SELECTORS.signInModal)).toBeVisible({
     timeout: 5000,
+  });
+
+  // Wait for GSAP field animations to complete (fields animate from width:0 with delay)
+  await expect(page.locator(SELECTORS.emailInput)).toBeVisible({
+    timeout: 8000,
   });
 }
 
