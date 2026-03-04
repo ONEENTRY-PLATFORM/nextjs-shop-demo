@@ -55,23 +55,13 @@ test.describe('Navigation', () => {
     test('mobile menu button is visible on mobile viewport', async ({
       page,
     }) => {
-      // Set mobile viewport
       await page.setViewportSize({ width: 375, height: 812 });
       await page.goto(ROUTES.home);
       await waitForPageLoad(page);
 
-      const menuButton = page.locator(SELECTORS.menuButton);
-      const hasMenuButton = await menuButton.isVisible().catch(() => false);
-
-      if (hasMenuButton) {
-        await expect(menuButton).toBeVisible();
-      } else {
-        // Mobile menu button may have different selector or structure
-        const hamburger = page.locator(
-          '[aria-label="Open menu"], [aria-label="Menu"], button:has(svg)',
-        ).first();
-        await expect(hamburger).toBeVisible();
-      }
+      await expect(page.locator(SELECTORS.menuButton)).toBeVisible({
+        timeout: 5000,
+      });
     });
 
     test('clicking mobile menu opens navigation drawer', async ({ page }) => {
@@ -79,22 +69,10 @@ test.describe('Navigation', () => {
       await page.goto(ROUTES.home);
       await waitForPageLoad(page);
 
-      const menuButton = page.locator(SELECTORS.menuButton);
-      const hasMenuButton = await menuButton.isVisible().catch(() => false);
+      await page.locator(SELECTORS.menuButton).click();
 
-      if (hasMenuButton) {
-        await menuButton.click();
-        await page.waitForTimeout(500);
-
-        // Navigation drawer or menu should be visible
-        const mobileMenu = page.locator(
-          '[data-testid="mobile-menu"], nav[class*="mobile"], aside, [class*="drawer"]',
-        ).first();
-        const isOpen = await mobileMenu.isVisible().catch(() => false);
-        expect(isOpen).toBeTruthy();
-      } else {
-        test.skip();
-      }
+      // Mobile menu renders in the shared modal body
+      await expect(page.locator('#modalBody')).toBeVisible({ timeout: 5000 });
     });
   });
 

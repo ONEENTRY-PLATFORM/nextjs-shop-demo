@@ -90,11 +90,9 @@ test.describe('Catalog', () => {
 
       // Apply filters
       await page.locator(SELECTORS.filterApplyButton).click();
-      await page.waitForLoadState('networkidle');
 
-      const url = page.url();
-      expect(url).toContain('minPrice=20');
-      expect(url).toContain('maxPrice=80');
+      await expect(page).toHaveURL(/minPrice=100/, { timeout: 5000 });
+      await expect(page).toHaveURL(/maxPrice=500/, { timeout: 5000 });
     });
 
     test('resetting filters clears URL params', async ({ page }) => {
@@ -109,11 +107,9 @@ test.describe('Catalog', () => {
 
       // Reset filters
       await page.locator(SELECTORS.filterResetButton).click();
-      await page.waitForLoadState('networkidle');
 
-      const url = page.url();
-      expect(url).not.toContain('minPrice');
-      expect(url).not.toContain('maxPrice');
+      await expect(page).not.toHaveURL(/minPrice/, { timeout: 5000 });
+      await expect(page).not.toHaveURL(/maxPrice/, { timeout: 5000 });
     });
 
     test('URL price params are reflected in filter inputs', async ({
@@ -144,7 +140,6 @@ test.describe('Catalog', () => {
       await expect(filterModal).toBeVisible({ timeout: 5000 });
 
       await page.locator(SELECTORS.filterApplyButton).click();
-      await page.waitForLoadState('networkidle');
 
       // Modal should close after applying
       await expect(filterModal).not.toBeVisible({ timeout: 3000 });
@@ -164,10 +159,8 @@ test.describe('Catalog', () => {
       if (hasCheckbox) {
         await inStockCheckbox.click();
         await page.locator(SELECTORS.filterApplyButton).click();
-        await page.waitForLoadState('networkidle');
 
-        const url = page.url();
-        expect(url).toContain('in_stock=true');
+        await expect(page).toHaveURL(/in_stock=true/, { timeout: 5000 });
       } else {
         test.skip();
       }
@@ -186,13 +179,11 @@ test.describe('Catalog', () => {
       await expect(filterModal).toBeVisible({ timeout: 5000 });
 
       await page.locator(SELECTORS.filterResetButton).click();
-      await page.waitForLoadState('networkidle');
 
-      const url = page.url();
-      expect(url).not.toContain('minPrice');
-      expect(url).not.toContain('maxPrice');
-      expect(url).not.toContain('in_stock');
-      expect(url).not.toContain('color');
+      await expect(page).not.toHaveURL(/minPrice/, { timeout: 5000 });
+      await expect(page).not.toHaveURL(/maxPrice/, { timeout: 5000 });
+      await expect(page).not.toHaveURL(/in_stock/, { timeout: 5000 });
+      await expect(page).not.toHaveURL(/color/, { timeout: 5000 });
     });
   });
 
@@ -208,11 +199,9 @@ test.describe('Catalog', () => {
       await expect(filterModal).toBeVisible({ timeout: 5000 });
 
       await page.locator(SELECTORS.filterApplyButton).click();
-      await page.waitForLoadState('networkidle');
 
       // Should reset to page 1 (no page param)
-      const url = page.url();
-      expect(url).not.toContain('page=');
+      await expect(page).not.toHaveURL(/page=/, { timeout: 5000 });
     });
   });
 

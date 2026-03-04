@@ -110,10 +110,15 @@ test.describe('Product Page — Add to Cart', () => {
       return;
     }
 
+    // Capture count before click — page may have multiple variants each with their own button
+    const initialCount = await page.locator(SELECTORS.addToCartButton).count();
     await addToCartBtn.click();
 
-    // Add-to-cart button should disappear, quantity controls should appear
-    await expect(addToCartBtn).toBeHidden({ timeout: 5000 });
+    // One button replaced by quantity controls; count decreases by 1
+    await expect(page.locator(SELECTORS.addToCartButton)).toHaveCount(
+      initialCount - 1,
+      { timeout: 5000 },
+    );
     await expect(
       page.locator(SELECTORS.increaseQuantityButton).first(),
     ).toBeVisible({ timeout: 5000 });
@@ -221,17 +226,10 @@ test.describe('Product Page — Favorites', () => {
     // Remove from favorites (toggle)
     await favBtn.click();
 
-    // Count should return to initial value
-    const badgeAfter = getFavoritesBadge(page);
-    const isVisible = await badgeAfter.isVisible().catch(() => false);
-    if (initialCount === 0) {
-      // Badge should be hidden when no favorites
-      expect(isVisible).toBe(false);
-    } else {
-      await expect(badgeAfter).toHaveText(String(initialCount), {
-        timeout: 5000,
-      });
-    }
+    // Count should return to initial value (badge stays visible, showing 0 when empty)
+    await expect(getFavoritesBadge(page)).toHaveText(String(initialCount), {
+      timeout: 5000,
+    });
   });
 
   test('should show toast when adding to favorites', async ({ page }) => {

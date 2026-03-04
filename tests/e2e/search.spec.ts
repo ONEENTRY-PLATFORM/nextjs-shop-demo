@@ -84,10 +84,8 @@ test.describe('Search', () => {
 
       if (hasLink) {
         await firstLink.click();
-        await page.waitForLoadState('networkidle');
-
-        // Should navigate to product page
-        expect(page.url()).toContain('/shop/product/');
+        // Wait for navigation — link has no locale prefix, middleware may redirect to /en/shop/product/
+        await expect(page).toHaveURL(/\/shop\/product\//, { timeout: 10000 });
       } else {
         test.skip();
       }
@@ -134,28 +132,31 @@ test.describe('Search', () => {
       const searchInput = page.locator(SELECTORS.searchInput);
       const query = 'headphones';
       await searchInput.fill(query);
-      await page.waitForTimeout(300);
+
+      // Wait for handleSearch → router.replace to update the URL (proves component re-rendered
+      // with params containing the search term before we click submit)
+      await expect(page).toHaveURL(/search=headphones/, { timeout: 3000 });
 
       // Submit the form
       await page.locator(SELECTORS.searchSubmitButton).click();
-      await page.waitForLoadState('networkidle');
 
-      // Should redirect to shop page with search param
-      const url = page.url();
-      expect(url).toContain('/shop');
-      expect(url).toContain(`search=${encodeURIComponent(query)}`);
+      // handleSubmit calls router.replace('/en/shop?search=headphones')
+      await expect(page).toHaveURL(
+        new RegExp(`/shop.*search=${encodeURIComponent(query)}`),
+        { timeout: 5000 },
+      );
     });
 
     test('pressing Enter submits search form', async ({ page }) => {
       const searchInput = page.locator(SELECTORS.searchInput);
       const query = 'test';
       await searchInput.fill(query);
-      await searchInput.press('Enter');
-      await page.waitForLoadState('networkidle');
 
-      const url = page.url();
-      expect(url).toContain('/shop');
-      expect(url).toContain('search=');
+      // Wait for handleSearch → router.replace to update the URL before Enter submits
+      await expect(page).toHaveURL(/search=test/, { timeout: 3000 });
+      await searchInput.press('Enter');
+
+      await expect(page).toHaveURL(/\/shop.*search=/, { timeout: 5000 });
     });
 
     test('search results visible on shop page with search URL param', async ({
