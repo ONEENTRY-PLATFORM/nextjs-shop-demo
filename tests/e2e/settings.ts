@@ -9,6 +9,7 @@ export const ROUTES = {
   home: '/en',
   shop: '/en/shop',
   cart: '/en/cart',
+  checkout: '/en/checkout',
   favorites: '/en/favorites',
   orders: '/en/orders',
   profile: '/en/profile',
@@ -104,6 +105,14 @@ export const SELECTORS = {
   filterResetButton: '[data-testid="filter-reset-button"]',
   priceFromInput: '[data-testid="price-from-input"]',
   priceToInput: '[data-testid="price-to-input"]',
+
+  // Checkout
+  checkoutForm: '[data-testid="checkout-form"]',
+  checkoutSubmitButton: '[data-testid="place-order-button"]',
+  checkoutOrderSummary: '[data-testid="order-summary"]',
+  checkoutDatePicker: '[data-testid="date-picker"]',
+  checkoutTimeSlot: '[data-testid="time-slot"]',
+  checkoutPaymentSection: '[data-testid="payment-section"]',
 
   // Navigation
   langSelector: 'select[name="lang-selector"]',

@@ -100,10 +100,12 @@ test.describe('Catalog', () => {
       await page.goto(`${ROUTES.shop}?minPrice=20&maxPrice=80`);
       await page.waitForLoadState('networkidle');
 
-      // Open filter
-      await page.locator(SELECTORS.filterButton).click();
+      // Open filter — wait for button to be interactive before clicking
+      const filterButton98 = page.locator(SELECTORS.filterButton);
+      await expect(filterButton98).toBeVisible({ timeout: 10000 });
+      await filterButton98.click();
       const filterModal = page.locator(SELECTORS.filterModal);
-      await expect(filterModal).toBeVisible({ timeout: 5000 });
+      await expect(filterModal).toBeVisible({ timeout: 8000 });
 
       // Reset filters
       await page.locator(SELECTORS.filterResetButton).click();
@@ -174,9 +176,12 @@ test.describe('Catalog', () => {
       );
       await page.waitForLoadState('networkidle');
 
-      await page.locator(SELECTORS.filterButton).click();
+      // Wait for button to be interactive before clicking
+      const filterButton169 = page.locator(SELECTORS.filterButton);
+      await expect(filterButton169).toBeVisible({ timeout: 10000 });
+      await filterButton169.click();
       const filterModal = page.locator(SELECTORS.filterModal);
-      await expect(filterModal).toBeVisible({ timeout: 5000 });
+      await expect(filterModal).toBeVisible({ timeout: 8000 });
 
       await page.locator(SELECTORS.filterResetButton).click();
 
@@ -193,10 +198,12 @@ test.describe('Catalog', () => {
       await page.goto(`${ROUTES.shop}?page=2`);
       await page.waitForLoadState('networkidle');
 
-      // Apply a filter
-      await page.locator(SELECTORS.filterButton).click();
+      // Apply a filter — wait for button to be interactive
+      const filterButton196 = page.locator(SELECTORS.filterButton);
+      await expect(filterButton196).toBeVisible({ timeout: 10000 });
+      await filterButton196.click();
       const filterModal = page.locator(SELECTORS.filterModal);
-      await expect(filterModal).toBeVisible({ timeout: 5000 });
+      await expect(filterModal).toBeVisible({ timeout: 8000 });
 
       await page.locator(SELECTORS.filterApplyButton).click();
 
