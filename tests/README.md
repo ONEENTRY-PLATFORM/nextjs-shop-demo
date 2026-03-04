@@ -7,10 +7,23 @@ This directory contains End-to-End (E2E) tests for the OneEntry Next.js Shop usi
 The E2E tests cover critical user flows in the e-commerce application:
 
 - **Auth**: Sign in, sign out, registration form, protected routes
-- **Product**: Product page structure, add to cart, quantity selector, favorites on product page
+- **Product**: Product page structure, add to cart, quantity selector, favorites
 - **Cart**: Adding/removing products, changing quantities, cart persistence
-- **Checkout**: Order placement, form validation, payment flow
+- **Checkout**: Delivery form, validation, date/time slots, payment method
 - **Favorites**: Adding/removing favorites, wishlist management
+- **Catalog**: Product grid, filter modal, price/color/in-stock filters
+- **Orders**: Authenticated access, order list, empty state
+- **Profile**: Profile page, form fields, save button
+- **Search**: Search bar, results dropdown, submit behaviour
+- **Navigation**: Links, breadcrumbs, language switcher
+- **Localization**: Language switching, URL preservation, locale in content
+- **Error Pages**: 404, empty states, network resilience
+- **Accessibility**: Landmarks, keyboard navigation, ARIA labels, focus management
+- **Filter Combinations**: Combined filters, URL persistence, pagination reset
+- **Product Gallery**: Image rendering, thumbnail switching, lightbox, keyboard nav
+- **Toast Notifications**: Success/error toasts, auto-dismiss, auth feedback
+- **Mobile Flows**: Hamburger menu, mobile filters, responsive layout
+- **Form Submission**: CMS-driven forms, validation, select fields, reset
 
 ## Project Structure
 
@@ -18,19 +31,36 @@ The E2E tests cover critical user flows in the e-commerce application:
 tests/
 ├── e2e/
 │   ├── helpers/
-│   │   ├── auth-helpers.ts      # Auth-related helper functions
-│   │   ├── cart-helpers.ts      # Cart-related helper functions
-│   │   ├── checkout-helpers.ts  # Checkout-related helper functions
-│   │   ├── favorites-helpers.ts # Favorites helper functions
-│   │   └── navigation-helpers.ts # Navigation helper functions
-│   ├── settings.ts              # Test data, selectors and routes
-│   ├── auth.spec.ts             # Authentication tests
-│   ├── cart.spec.ts             # Cart functionality tests
-│   ├── checkout.spec.ts         # Checkout process tests
-│   ├── favorites.spec.ts        # Favorites/wishlist tests
-│   └── product.spec.ts          # Single product page tests
-└── README.md                     # This file
+│   │   ├── auth-helpers.ts          # Sign in, sign out, modal helpers
+│   │   ├── cart-helpers.ts          # Open cart, add/remove/quantity
+│   │   ├── favorites-helpers.ts     # Favorites badge and navigation
+│   │   └── navigation-helpers.ts   # Page navigation and load helpers
+│   ├── settings.ts                  # Test data, selectors, routes
+│   ├── auth.spec.ts                 # Authentication (13 tests)
+│   ├── cart.spec.ts                 # Cart functionality (8 tests)
+│   ├── catalog.spec.ts              # Product catalog and filters (11 tests)
+│   ├── checkout.spec.ts             # Checkout flow (13 tests)
+│   ├── error-pages.spec.ts          # 404 and error handling (6 tests)
+│   ├── favorites.spec.ts            # Favorites/wishlist (5 tests)
+│   ├── homepage.spec.ts             # Homepage structure (9 tests)
+│   ├── localization.spec.ts         # Language switching (6 tests)
+│   ├── navigation.spec.ts           # Navigation links and menu (8 tests)
+│   ├── orders.spec.ts               # Orders page (6 tests)
+│   ├── product.spec.ts              # Single product page (13 tests)
+│   ├── profile.spec.ts              # User profile page (5 tests)
+│   ├── search.spec.ts               # Search bar (9 tests)
+│   ├── accessibility.spec.ts        # A11y — landmarks, keyboard, ARIA (17 tests)
+│   ├── filter-combinations.spec.ts  # Combined filter scenarios (12 tests)
+│   ├── mobile-flows.spec.ts         # Mobile viewport flows (16 tests)
+│   ├── product-gallery.spec.ts      # Gallery, thumbnails, zoom (11 tests)
+│   ├── toast-notifications.spec.ts  # Toast/notification feedback (9 tests)
+│   └── form-submission.spec.ts      # CMS forms, validation, reset (10 tests)
+├── .env                             # Local test credentials (git-ignored)
+├── .env_example                     # Example env file
+└── README.md                        # This file
 ```
+
+**Total: ~171 tests across 20 spec files.**
 
 ## Prerequisites
 
@@ -39,6 +69,20 @@ Before running tests, ensure:
 1. Node.js >= 22.11.0 is installed
 2. Dependencies are installed: `npm install`
 3. Playwright browsers are installed: `npx playwright install`
+4. Create `tests/.env` from `tests/.env_example` and fill in credentials
+
+## Environment Setup
+
+```bash
+# tests/.env
+TEST_USER_EMAIL=your-test-user@example.com
+TEST_USER_PASSWORD=YourPassword123!
+BASE_URL=http://localhost:3000
+```
+
+> Auth tests require a real registered user in your OneEntry project.
+> Without credentials the defaults (`test@example.com` / `TestPassword123!`) are used,
+> which will cause sign-in tests to fail unless such a user exists.
 
 ## Running Tests
 
@@ -75,21 +119,22 @@ npm run test:e2e:report
 ### Run tests on specific browsers
 
 ```bash
-npm run test:e2e:chromium  # Run on Chrome only
-npm run test:e2e:firefox   # Run on Firefox only
-npm run test:e2e:webkit    # Run on Safari only
+npm run test:e2e:chromium  # Chrome only
+npm run test:e2e:firefox   # Firefox only
+npm run test:e2e:webkit    # Safari only
 ```
 
-### Run specific test file
+### Run a specific spec file
 
 ```bash
-npx playwright test cart.spec.ts
+npx playwright test checkout.spec.ts
+npx playwright test accessibility.spec.ts
 ```
 
-### Run specific test
+### Run a specific test by name
 
 ```bash
-npx playwright test -g "should add product to cart"
+npx playwright test -g "shows success toast after adding product to cart"
 ```
 
 ## Test Configuration
@@ -98,192 +143,119 @@ The Playwright configuration is in `playwright.config.ts` at the project root.
 
 Key settings:
 
-- **Base URL**: `http://localhost:3000` (configurable via `BASE_URL` env var)
-- **Browsers**: Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari
-- **Reporters**: HTML, List, JSON
-- **Retries**: 2 on CI, 0 locally
-- **Video**: Captured on failure
-- **Screenshots**: Captured on failure
-
-## Environment Variables
-
-You can customize test behavior with environment variables:
-
-```bash
-# Run against production
-BASE_URL=https://your-production-url.com npm run test:e2e
-
-# Run on CI (enables retries)
-CI=true npm run test:e2e
-
-# Auth test credentials (required for sign-in/sign-out tests)
-TEST_USER_EMAIL=your-test-user@example.com TEST_USER_PASSWORD=YourPassword123! npm run test:e2e
-```
-
-> Auth tests require a real registered user in your OneEntry project.
-> Without `TEST_USER_EMAIL` / `TEST_USER_PASSWORD` the defaults (`test@example.com` / `TestPassword123!`) are used, which will cause sign-in tests to fail unless such a user exists.
+| Setting | Value |
+| --- | --- |
+| Base URL | `http://localhost:3000` (override with `BASE_URL`) |
+| Browsers | Chromium, Firefox, WebKit, Mobile Chrome, Mobile Safari |
+| Reporters | HTML, List, JSON (`test-results/results.json`) |
+| Retries | 2 on CI, 0 locally |
+| Video | Captured on failure |
+| Screenshots | Captured on failure |
+| Traces | Captured on first retry |
 
 ## Writing New Tests
 
-### 1. Use Helper Functions
-
-Instead of writing low-level Playwright commands, use the helper functions:
+### 1. Use helper functions
 
 ```typescript
-import { openCart, addToCartFromCard } from './helpers/cart-helpers';
-import { goToFirstProduct } from './helpers/navigation-helpers';
-
-test('my test', async ({ page }) => {
-  await goToFirstProduct(page);
-  // ... test logic
-});
+import { signIn, clearAuthState } from './helpers/auth-helpers';
+import { openCart, proceedToCheckout } from './helpers/cart-helpers';
+import { waitForPageLoad } from './helpers/navigation-helpers';
 ```
 
-### 2. Use Test Data from Fixtures
+### 2. Import selectors and routes from settings
 
 ```typescript
-import { SELECTORS, TEST_USER, ROUTES } from './fixtures/test-data';
+import { SELECTORS, ROUTES, TEST_AUTH_USER } from './settings';
 
 await page.click(SELECTORS.addToCartButton);
-await fillCheckoutForm(page, TEST_USER);
+await page.goto(ROUTES.shop);
 ```
 
-### 3. Follow Test Structure
+### 3. Follow the standard test structure
 
 ```typescript
 test.describe('Feature Name', () => {
-  test.beforeEach(async ({ page }) => {
-    // Setup before each test
-  });
+  test.setTimeout(30000);
 
-  test('should do something', async ({ page }) => {
-    // Arrange
-    // Act
-    // Assert
+  test.beforeEach(async ({ page }) => {
+    await page.goto(ROUTES.home);
+    await page.waitForLoadState('networkidle');
   });
 
   test.afterEach(async ({ page }) => {
-    // Cleanup after each test
+    await clearAuthState(page); // if auth was used
+  });
+
+  test('does something', async ({ page }) => {
+    // Arrange → Act → Assert
   });
 });
 ```
 
-## Important Notes
+### 4. Handle optional elements gracefully
 
-### Data Test IDs
+```typescript
+// Use early return for optional features
+const isVisible = await element.isVisible().catch(() => false);
+if (!isVisible) return; // skip gracefully — not a hard failure
 
-The tests rely on `data-testid` attributes in the components. If you add new features, make sure to add appropriate test IDs:
+// Use || to accept multiple valid states
+expect(hasTable || hasEmptyState || hasMain).toBeTruthy();
+```
+
+### 5. Add `data-testid` attributes to new components
 
 ```tsx
-<button data-testid="add-to-cart-button">Add to Cart</button>
+<button data-testid="my-new-button">Click me</button>
 ```
 
-Update the `SELECTORS` object in `tests/e2e/fixtures/test-data.ts` accordingly.
-
-### Test Independence
-
-Each test should be independent and not rely on other tests. Use `beforeEach` and `afterEach` hooks for setup and cleanup.
-
-### Async/Await
-
-Always use `await` with Playwright commands. Most Playwright APIs are asynchronous.
-
-### Waiting Strategies
-
-Prefer automatic waiting over manual waits:
+Then add to `SELECTORS` in `tests/e2e/settings.ts`:
 
 ```typescript
-// Good - Playwright will wait automatically
-await expect(page.locator(SELECTORS.cartItem)).toBeVisible();
-
-// Avoid - Manual timeout
-await page.waitForTimeout(1000);
+myNewButton: '[data-testid="my-new-button"]',
 ```
 
-Use manual waits (`page.waitForTimeout()`) only when absolutely necessary (e.g., waiting for animations).
+## Timeouts Guide
 
-### Error Handling
+| Test type | Recommended timeout |
+| --- | --- |
+| Simple page load | 10 000 ms (default) |
+| Animated content (GSAP) | +2 000 ms `waitForTimeout` |
+| Auth flow (sign-in modal) | 40 000 ms |
+| Cart with animations | 60 000 ms |
+| Checkout (full flow) | 90 000 ms |
+| Orders (makeUserApi + fetch) | +4 000 ms `waitForTimeout` |
 
-Use `.catch()` for optional elements that might not exist:
+## Important Notes
+
+### GSAP Animations
+
+Several pages use GSAP entrance animations. Tests account for this with explicit waits:
 
 ```typescript
-const isVisible = await element.isVisible().catch(() => false);
-if (isVisible) {
-  // Handle visible case
-}
+await page.waitForTimeout(2000); // cart page animations
+await page.waitForTimeout(500);  // modal field animations
 ```
 
-## Test Coverage
+### Token Handling
 
-Current test coverage:
+Auth state is stored in `localStorage` as `refresh-token`. The `clearAuthState` helper removes it and reloads the page. Always call it in `afterEach` for authenticated tests.
 
-### Product Page Tests (13 tests)
+### Mobile Tests
 
-- ✅ Display product title
-- ✅ Display product image
-- ✅ Display product price
-- ✅ Add-to-cart button or out-of-stock indicator
-- ✅ Favorites button visible
-- ✅ Correct product URL
-- ✅ Add product to cart and update badge
-- ✅ Replace add-to-cart button with quantity selector
-- ✅ Increase quantity via + button
-- ✅ Decrease quantity to zero and restore button
-- ✅ Toast notification when adding to cart
-- ✅ Favorites toggle (add/remove) and badge update
-- ✅ Toast when adding to favorites
-- ✅ Navigate to product page from shop
-- ✅ Breadcrumbs or back navigation
-- ✅ Related products section
-- ✅ Direct URL navigation via ROUTES constant
+`mobile-flows.spec.ts` uses `test.use({ viewport: { width: 393, height: 851 } })` to simulate a Pixel 5. Tests run at this viewport in addition to the default desktop viewports from `playwright.config.ts`.
 
-### Auth Tests (11 tests)
+### Filter Tests
 
-- ✅ Open sign-in modal when clicking auth button
-- ✅ Close modal when clicking backdrop
-- ✅ Show error with invalid credentials
-- ✅ Show error when submitting empty form
-- ✅ Switch between email and phone tabs
-- ✅ Sign in with valid credentials
-- ✅ Persist session after page reload
-- ✅ Sign out successfully
-- ✅ Redirect to home after sign out
-- ✅ Open sign-up form from sign-in modal
-- ✅ Navigate back to sign-in from sign-up form
-- ✅ Show all required sign-up fields
-- ✅ Access profile page when authenticated
-- ✅ Access orders page when authenticated
+After navigating to a URL with query params (e.g. `?minPrice=50`), always wait for the filter button to be visible before clicking:
 
-### Cart Tests (8 tests)
-
-- ✅ Add product to cart
-- ✅ Increase quantity
-- ✅ Decrease quantity
-- ✅ Remove product
-- ✅ Empty cart state
-- ✅ Cart persistence
-- ✅ Cart total updates
-- ✅ Navigate to checkout
-
-### Checkout Tests (9 tests)
-
-- ✅ Complete checkout with valid data
-- ✅ Form validation
-- ✅ Fill form fields
-- ✅ Email validation
-- ✅ Phone validation
-- ✅ Order summary display
-- ✅ Order creation and redirect
-- ✅ Cart cleared after checkout
-- ✅ Multiple items checkout
-
-### Favorites Tests (5 tests)
-
-- ✅ Add to favorites
-- ✅ Remove from favorites
-- ✅ View favorites page
-- ✅ Favorites persistence
-- ✅ Add favorite to cart
+```typescript
+await expect(page.locator(SELECTORS.filterButton)).toBeVisible({ timeout: 10000 });
+await page.locator(SELECTORS.filterButton).click();
+const modal = page.locator(SELECTORS.filterModal);
+await expect(modal).toBeVisible({ timeout: 8000 });
+```
 
 ## Troubleshooting
 
@@ -291,31 +263,31 @@ Current test coverage:
 
 1. Ensure dev server is running: `npm run dev`
 2. Check if port 3000 is available
-3. Clear browser cache: `npx playwright clean`
+3. Clear Playwright cache: `npx playwright clean`
 4. Reinstall browsers: `npx playwright install`
 
-### Timeout errors
+### Element not found / timeout
 
-Increase timeout in `playwright.config.ts` or specific test:
+1. Check if `data-testid` attribute exists on the component
+2. Open Playwright Inspector to debug: `npm run test:e2e:debug`
+3. Increase timeout for that test: `test.setTimeout(60000)`
+4. Check for GSAP animations — add `waitForTimeout` after the trigger action
 
-```typescript
-test('slow test', async ({ page }) => {
-  test.setTimeout(60000); // 60 seconds
-  // ... test code
-});
-```
+### Sign-in tests fail
 
-### Element not found
+- Ensure `TEST_USER_EMAIL` and `TEST_USER_PASSWORD` in `tests/.env` match a real user
+- Check that the user's group has appropriate permissions in the OneEntry admin panel
 
-1. Check if `data-testid` attributes exist in components
-2. Update selectors in `test-data.ts`
-3. Use Playwright Inspector to debug: `npm run test:e2e:debug`
+### Orders/Profile tests fail with 401
+
+- The `makeUserApi` flow burns a `refreshToken` on each call. Ensure only one `makeUserApi` is used per Server Action.
+- Increase `waitForTimeout` to allow the token refresh to complete before assertions.
 
 ## CI/CD Integration
 
 Tests are configured to run on CI with:
 
-- Automatic retries (2 attempts)
+- Automatic retries (2 attempts on failure)
 - Video recording on failure
 - Screenshot on failure
 - JSON reporter for results parsing
@@ -329,29 +301,23 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - run: npm ci
       - run: npx playwright install --with-deps
       - run: npm run build
       - run: npm run test:e2e
-      - uses: actions/upload-artifact@v3
+        env:
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report
           path: playwright-report/
 ```
-
-## Best Practices
-
-1. **Keep tests focused**: Each test should verify one specific behavior
-2. **Use descriptive test names**: "should add product to cart" is better than "cart test 1"
-3. **Clean up after tests**: Remove test data in `afterEach` hooks
-4. **Handle flakiness**: Use proper waiting strategies, avoid hardcoded waits
-5. **Run tests before committing**: Ensure your changes don't break existing tests
-6. **Update tests with features**: When adding new features, add corresponding tests
 
 ## Resources
 
