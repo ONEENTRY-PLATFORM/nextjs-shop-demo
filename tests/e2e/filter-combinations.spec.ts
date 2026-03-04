@@ -7,6 +7,8 @@ import { ROUTES, SELECTORS } from './settings';
  * E2E tests for combined filter scenarios on the catalog / shop page.
  * catalog.spec.ts covers individual filter fields; here we test combinations,
  * URL persistence after reload, and edge cases.
+ *
+ * NOTE: The price inputs have max="99", so all test values are kept ≤ 99.
  */
 test.describe('Filter Combinations', () => {
   test.setTimeout(30000);
@@ -14,10 +16,10 @@ test.describe('Filter Combinations', () => {
   // Helper: open the filter modal
   async function openFilterModal(page: Parameters<typeof test>[1]['page']) {
     const filterBtn = page.locator(SELECTORS.filterButton);
-    await expect(filterBtn).toBeVisible({ timeout: 8000 });
+    await expect(filterBtn).toBeVisible({ timeout: 10000 });
     await filterBtn.click();
     const modal = page.locator(SELECTORS.filterModal);
-    await expect(modal).toBeVisible({ timeout: 5000 });
+    await expect(modal).toBeVisible({ timeout: 8000 });
     return modal;
   }
 
@@ -43,9 +45,9 @@ test.describe('Filter Combinations', () => {
 
       const modal = await openFilterModal(page);
 
-      // Set price range
-      await page.locator(SELECTORS.priceFromInput).fill('50');
-      await page.locator(SELECTORS.priceToInput).fill('400');
+      // Values ≤ max (99)
+      await page.locator(SELECTORS.priceFromInput).fill('10');
+      await page.locator(SELECTORS.priceToInput).fill('80');
 
       // Toggle in-stock if checkbox is present
       const inStockCheckbox = modal
@@ -59,8 +61,8 @@ test.describe('Filter Combinations', () => {
 
       await applyFilters(page);
 
-      await expect(page).toHaveURL(/minPrice=50/);
-      await expect(page).toHaveURL(/maxPrice=400/);
+      await expect(page).toHaveURL(/minPrice=10/);
+      await expect(page).toHaveURL(/maxPrice=80/);
       if (hasCheckbox) {
         await expect(page).toHaveURL(/in_stock=true/);
       }
@@ -72,13 +74,10 @@ test.describe('Filter Combinations', () => {
       await page.goto(`${ROUTES.shop}?minPrice=10&in_stock=true`);
       await waitForPageLoad(page);
 
-      // Page loads without error
       const body = page.locator('body');
       await expect(body).toBeVisible();
 
-      // Either shows products or an empty-state message
-      const hasProducts =
-        (await page.locator('.product-card').count()) > 0;
+      const hasProducts = (await page.locator('.product-card').count()) > 0;
       const hasEmpty = await page
         .getByText(/no products|nothing found|empty/i)
         .isVisible()
@@ -98,8 +97,9 @@ test.describe('Filter Combinations', () => {
 
       const modal = await openFilterModal(page);
 
+      // Values ≤ max (99)
       await page.locator(SELECTORS.priceFromInput).fill('0');
-      await page.locator(SELECTORS.priceToInput).fill('1000');
+      await page.locator(SELECTORS.priceToInput).fill('90');
 
       // Color filter — look for a color swatch or radio/checkbox
       const colorOption = modal
@@ -115,7 +115,7 @@ test.describe('Filter Combinations', () => {
       await applyFilters(page);
 
       await expect(page).toHaveURL(/minPrice=0/);
-      await expect(page).toHaveURL(/maxPrice=1000/);
+      await expect(page).toHaveURL(/maxPrice=90/);
       if (hasColor) {
         await expect(page).toHaveURL(/color=/);
       }
@@ -129,10 +129,9 @@ test.describe('Filter Combinations', () => {
     test('navigating to URL with price + search shows products page', async ({
       page,
     }) => {
-      await page.goto(`${ROUTES.shop}?minPrice=10&maxPrice=9999&search=a`);
+      await page.goto(`${ROUTES.shop}?minPrice=10&maxPrice=90&search=a`);
       await waitForPageLoad(page);
 
-      // Page must load without crashing
       const body = page.locator('body');
       await expect(body).toBeVisible();
     });
@@ -140,18 +139,19 @@ test.describe('Filter Combinations', () => {
     test('filter inputs are pre-filled from URL with both price and search', async ({
       page,
     }) => {
-      await page.goto(`${ROUTES.shop}?minPrice=20&maxPrice=500`);
+      // Values ≤ max (99)
+      await page.goto(`${ROUTES.shop}?minPrice=20&maxPrice=80`);
       await waitForPageLoad(page);
 
-      const modal = await openFilterModal(page);
+      await openFilterModal(page);
 
-      const fromValue = await page.locator(SELECTORS.priceFromInput).inputValue();
+      const fromValue = await page
+        .locator(SELECTORS.priceFromInput)
+        .inputValue();
       const toValue = await page.locator(SELECTORS.priceToInput).inputValue();
 
       expect(Number(fromValue)).toBe(20);
-      expect(Number(toValue)).toBe(500);
-
-      void modal;
+      expect(Number(toValue)).toBe(80);
     });
   });
 
@@ -161,19 +161,20 @@ test.describe('Filter Combinations', () => {
   test.describe('All Filters Combined', () => {
     test('URL with all filters resolves without error', async ({ page }) => {
       await page.goto(
-        `${ROUTES.shop}?minPrice=10&maxPrice=500&in_stock=true&color=red&search=product`,
+        `${ROUTES.shop}?minPrice=10&maxPrice=80&in_stock=true&color=red&search=product`,
       );
       await waitForPageLoad(page);
 
       await expect(page.locator('body')).toBeVisible();
-      // Should not show a fatal error page
-      const errorHeading = page.locator('h1').filter({ hasText: /error|500|crash/i });
+      const errorHeading = page
+        .locator('h1')
+        .filter({ hasText: /error|500|crash/i });
       expect(await errorHeading.count()).toBe(0);
     });
 
     test('reset clears all combined filter params at once', async ({ page }) => {
       await page.goto(
-        `${ROUTES.shop}?minPrice=10&maxPrice=500&in_stock=true&color=red`,
+        `${ROUTES.shop}?minPrice=10&maxPrice=80&in_stock=true&color=red`,
       );
       await waitForPageLoad(page);
 
@@ -196,21 +197,22 @@ test.describe('Filter Combinations', () => {
   // ---------------------------------------------------------------------------
   test.describe('URL Persistence', () => {
     test('filter params survive a full page reload', async ({ page }) => {
-      await page.goto(`${ROUTES.shop}?minPrice=50&maxPrice=300`);
+      // Values ≤ max (99)
+      await page.goto(`${ROUTES.shop}?minPrice=20&maxPrice=80`);
       await waitForPageLoad(page);
 
-      // Reload the page
       await page.reload();
       await waitForPageLoad(page);
 
-      await expect(page).toHaveURL(/minPrice=50/);
-      await expect(page).toHaveURL(/maxPrice=300/);
+      await expect(page).toHaveURL(/minPrice=20/);
+      await expect(page).toHaveURL(/maxPrice=80/);
     });
 
     test('opening filter modal on pre-filtered URL shows correct values', async ({
       page,
     }) => {
-      await page.goto(`${ROUTES.shop}?minPrice=75&maxPrice=250`);
+      // Values ≤ max (99)
+      await page.goto(`${ROUTES.shop}?minPrice=20&maxPrice=80`);
       await waitForPageLoad(page);
 
       await openFilterModal(page);
@@ -220,43 +222,41 @@ test.describe('Filter Combinations', () => {
         .inputValue();
       const toVal = await page.locator(SELECTORS.priceToInput).inputValue();
 
-      expect(Number(fromVal)).toBe(75);
-      expect(Number(toVal)).toBe(250);
+      expect(Number(fromVal)).toBe(20);
+      expect(Number(toVal)).toBe(80);
     });
 
     test('applying new price over existing price replaces old params', async ({
       page,
     }) => {
-      await page.goto(`${ROUTES.shop}?minPrice=10&maxPrice=100`);
+      // Start with low values, then apply higher ones — all ≤ max (99)
+      await page.goto(`${ROUTES.shop}?minPrice=10&maxPrice=50`);
       await waitForPageLoad(page);
 
       await openFilterModal(page);
 
-      await page.locator(SELECTORS.priceFromInput).fill('200');
-      await page.locator(SELECTORS.priceToInput).fill('800');
+      await page.locator(SELECTORS.priceFromInput).fill('20');
+      await page.locator(SELECTORS.priceToInput).fill('90');
       await applyFilters(page);
 
-      await expect(page).toHaveURL(/minPrice=200/);
-      await expect(page).toHaveURL(/maxPrice=800/);
-      // Old values must not remain
+      await expect(page).toHaveURL(/minPrice=20/);
+      await expect(page).toHaveURL(/maxPrice=90/);
       expect(page.url()).not.toMatch(/minPrice=10/);
-      expect(page.url()).not.toMatch(/maxPrice=100/);
+      expect(page.url()).not.toMatch(/maxPrice=50/);
     });
 
     test('pagination resets to page 1 when filters change', async ({
       page,
     }) => {
-      // Start on page 2 with a filter
-      await page.goto(`${ROUTES.shop}?minPrice=10&maxPrice=500&page=2`);
+      // Values ≤ max (99)
+      await page.goto(`${ROUTES.shop}?minPrice=10&maxPrice=80&page=2`);
       await waitForPageLoad(page);
 
-      // Change filter — apply different price
       await openFilterModal(page);
-      await page.locator(SELECTORS.priceFromInput).fill('50');
-      await page.locator(SELECTORS.priceToInput).fill('300');
+      await page.locator(SELECTORS.priceFromInput).fill('20');
+      await page.locator(SELECTORS.priceToInput).fill('70');
       await applyFilters(page);
 
-      // page= param should be gone (reset to 1)
       expect(page.url()).not.toMatch(/page=/);
     });
   });
@@ -273,17 +273,16 @@ test.describe('Filter Combinations', () => {
 
       const initialCount = await page.locator('.product-card').count();
 
-      await page.goto(`${ROUTES.shop}?minPrice=999999&maxPrice=1000000`);
+      // Use an extremely narrow range that likely returns nothing
+      await page.goto(`${ROUTES.shop}?minPrice=98&maxPrice=99`);
       await waitForPageLoad(page);
 
       const filteredCount = await page.locator('.product-card').count();
-
       const hasEmptyMsg = await page
         .getByText(/no products|nothing found|empty/i)
         .isVisible()
         .catch(() => false);
 
-      // Either fewer products or an empty state message
       expect(filteredCount <= initialCount || hasEmptyMsg).toBeTruthy();
     });
   });

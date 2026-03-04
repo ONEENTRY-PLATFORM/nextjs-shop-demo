@@ -16,7 +16,7 @@ The following has been configured and ready to use:
 
 ## 📁 Project Structure
 
-```
+```TEXT
 tests/
 ├── e2e/
 │   ├── fixtures/
@@ -138,7 +138,7 @@ npm run test:e2e:report      # View last test report
 
 When tests pass, you'll see:
 
-```
+```text
 ✓ tests/e2e/cart.spec.ts:10:5 › should add product to cart (5s)
 ```
 
@@ -146,7 +146,7 @@ When tests pass, you'll see:
 
 When tests fail, you'll see:
 
-```
+```text
 ✗ tests/e2e/cart.spec.ts:10:5 › should add product to cart (5s)
 
 Error: locator.click: Timeout 30000ms exceeded.
@@ -161,7 +161,7 @@ This means the element with `data-testid="add-to-cart-button"` was not found.
 
 Playwright captures screenshots and videos on failure:
 
-```
+```text
 test-results/
 ├── cart-should-add-product-to-cart/
 │   ├── test-failed-1.png      # Screenshot at failure

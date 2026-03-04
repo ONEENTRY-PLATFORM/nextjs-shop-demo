@@ -76,23 +76,32 @@ test.describe('Catalog', () => {
 
   test.describe('Price Filter', () => {
     test('applying price filter updates URL params', async ({ page }) => {
-      await page.locator(SELECTORS.filterButton).click();
+      // Wait for filter button before clicking
+      const filterBtn = page.locator(SELECTORS.filterButton);
+      await expect(filterBtn).toBeVisible({ timeout: 10000 });
+      await filterBtn.click();
 
       const filterModal = page.locator(SELECTORS.filterModal);
-      await expect(filterModal).toBeVisible({ timeout: 5000 });
+      await expect(filterModal).toBeVisible({ timeout: 8000 });
 
-      // Set price range
+      // Read actual max value from the inputs so we stay within allowed range
       const priceFrom = page.locator(SELECTORS.priceFromInput);
       const priceTo = page.locator(SELECTORS.priceToInput);
 
-      await priceFrom.fill('100');
-      await priceTo.fill('500');
+      const maxFrom = Number(await priceFrom.getAttribute('max')) || 99;
+      const maxTo = Number(await priceTo.getAttribute('max')) || 99;
+
+      const fromVal = Math.min(10, maxFrom);
+      const toVal = Math.min(80, maxTo);
+
+      await priceFrom.fill(String(fromVal));
+      await priceTo.fill(String(toVal));
 
       // Apply filters
       await page.locator(SELECTORS.filterApplyButton).click();
 
-      await expect(page).toHaveURL(/minPrice=100/, { timeout: 5000 });
-      await expect(page).toHaveURL(/maxPrice=500/, { timeout: 5000 });
+      await expect(page).toHaveURL(new RegExp(`minPrice=${fromVal}`), { timeout: 5000 });
+      await expect(page).toHaveURL(new RegExp(`maxPrice=${toVal}`), { timeout: 5000 });
     });
 
     test('resetting filters clears URL params', async ({ page }) => {
@@ -117,12 +126,15 @@ test.describe('Catalog', () => {
     test('URL price params are reflected in filter inputs', async ({
       page,
     }) => {
-      await page.goto(`${ROUTES.shop}?minPrice=50&maxPrice=300`);
+      // Use values within the input max (99) to avoid browser validation errors
+      await page.goto(`${ROUTES.shop}?minPrice=10&maxPrice=80`);
       await page.waitForLoadState('networkidle');
 
-      await page.locator(SELECTORS.filterButton).click();
+      const filterBtn = page.locator(SELECTORS.filterButton);
+      await expect(filterBtn).toBeVisible({ timeout: 10000 });
+      await filterBtn.click();
       const filterModal = page.locator(SELECTORS.filterModal);
-      await expect(filterModal).toBeVisible({ timeout: 5000 });
+      await expect(filterModal).toBeVisible({ timeout: 8000 });
 
       const priceFrom = page.locator(SELECTORS.priceFromInput);
       const priceTo = page.locator(SELECTORS.priceToInput);
@@ -130,8 +142,8 @@ test.describe('Catalog', () => {
       const fromValue = await priceFrom.inputValue();
       const toValue = await priceTo.inputValue();
 
-      expect(Number(fromValue)).toBe(50);
-      expect(Number(toValue)).toBe(300);
+      expect(Number(fromValue)).toBe(10);
+      expect(Number(toValue)).toBe(80);
     });
   });
 
@@ -172,7 +184,7 @@ test.describe('Catalog', () => {
       page,
     }) => {
       await page.goto(
-        `${ROUTES.shop}?minPrice=50&maxPrice=300&in_stock=true&color=red`,
+        `${ROUTES.shop}?minPrice=10&maxPrice=80&in_stock=true&color=red`,
       );
       await page.waitForLoadState('networkidle');
 

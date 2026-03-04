@@ -77,15 +77,17 @@ For detailed information about specific aspects of the project, please refer to 
 Before running the demo locally, you need to create a OneEntry account and generate your API credentials.  
 A detailed step-by-step setup guide is available on the template landing page:
 
-👉 https://oneentry-free-template-e-commerce-nextjs.vercel.app/
+👉 <https://oneentry-free-template-e-commerce-nextjs.vercel.app/>
 
 ### 1. Create a OneEntry Workspace
+
 If you don’t have an account yet, sign up here  
-👉 https://oneentry.cloud/
+👉 <https://oneentry.cloud/>
 
 Create your workspace — this will be the backend for the demo Next.js store.
 
 ### 2. Generate an App Token
+
 Once inside the admin panel:
 
 1. Navigate to **Settings → Access Tokens**
