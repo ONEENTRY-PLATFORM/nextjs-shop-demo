@@ -35,8 +35,11 @@ test.describe('Authentication — Sign In Modal', () => {
     await expect(page.locator(SELECTORS.signInModal)).toBeVisible();
 
     // Email and password inputs should be present
-    await expect(page.locator(SELECTORS.emailInput)).toBeVisible();
-    await expect(page.locator(SELECTORS.passwordInput)).toBeVisible();
+    // Use role selectors — raw <input> elements are CSS-hidden (floating label pattern)
+    await expect(page.getByRole('textbox', { name: /email/i })).toBeVisible();
+    await expect(
+      page.getByRole('textbox', { name: /password/i }),
+    ).toBeVisible();
 
     // Submit button should be present
     await expect(page.locator(SELECTORS.modalSubmitButton)).toBeVisible();
@@ -102,7 +105,7 @@ test.describe('Authentication — Sign In Modal', () => {
       // Switch back to email
       const emailTab = page
         .locator(SELECTORS.signInModal)
-        .getByRole('button', { name: /email/i });
+        .getByRole('button', { name: /e-?mail/i });
       await emailTab.click();
       await expect(page.locator(SELECTORS.emailInput)).toBeVisible();
     }

@@ -27,7 +27,7 @@ test.describe('Homepage', () => {
     });
 
     test('page has main content area', async ({ page }) => {
-      const main = page.locator('main');
+      const main = page.locator('main').first();
       await expect(main).toBeVisible();
     });
 
@@ -52,12 +52,12 @@ test.describe('Homepage', () => {
     });
 
     test('cart icon is visible', async ({ page }) => {
-      const cartIcon = page.locator(SELECTORS.cartIcon);
+      const cartIcon = page.locator(SELECTORS.cartIcon).first();
       await expect(cartIcon).toBeVisible();
     });
 
     test('favorites icon is visible', async ({ page }) => {
-      const favoritesIcon = page.locator(SELECTORS.favoritesIcon);
+      const favoritesIcon = page.locator(SELECTORS.favoritesIcon).first();
       await expect(favoritesIcon).toBeVisible();
     });
 
@@ -76,7 +76,7 @@ test.describe('Homepage', () => {
 
   test.describe('Homepage Content Blocks', () => {
     test('homepage renders content blocks from CMS', async ({ page }) => {
-      const main = page.locator('main');
+      const main = page.locator('main').first();
       await expect(main).toBeVisible();
 
       // Main section should have some content
@@ -113,16 +113,16 @@ test.describe('Homepage', () => {
     });
 
     test('clicking cart icon navigates to cart', async ({ page }) => {
-      const cartIcon = page.locator(SELECTORS.cartIcon);
+      const cartIcon = page.locator(SELECTORS.cartIcon).first();
       await cartIcon.click();
-      await page.waitForLoadState('networkidle');
+      await page.waitForURL('**/cart', { timeout: 5000 });
       expect(page.url()).toContain('/cart');
     });
 
     test('clicking favorites icon navigates to favorites', async ({ page }) => {
-      const favoritesIcon = page.locator(SELECTORS.favoritesIcon);
+      const favoritesIcon = page.locator(SELECTORS.favoritesIcon).first();
       await favoritesIcon.click();
-      await page.waitForLoadState('networkidle');
+      await page.waitForURL('**/favorites', { timeout: 5000 });
       expect(page.url()).toContain('/favorites');
     });
   });

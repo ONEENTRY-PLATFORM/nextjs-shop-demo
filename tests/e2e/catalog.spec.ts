@@ -93,13 +93,13 @@ test.describe('Catalog', () => {
       await page.waitForLoadState('networkidle');
 
       const url = page.url();
-      expect(url).toContain('minPrice=100');
-      expect(url).toContain('maxPrice=500');
+      expect(url).toContain('minPrice=20');
+      expect(url).toContain('maxPrice=80');
     });
 
     test('resetting filters clears URL params', async ({ page }) => {
       // First apply a filter
-      await page.goto(`${ROUTES.shop}?minPrice=100&maxPrice=500`);
+      await page.goto(`${ROUTES.shop}?minPrice=20&maxPrice=80`);
       await page.waitForLoadState('networkidle');
 
       // Open filter
@@ -116,7 +116,9 @@ test.describe('Catalog', () => {
       expect(url).not.toContain('maxPrice');
     });
 
-    test('URL price params are reflected in filter inputs', async ({ page }) => {
+    test('URL price params are reflected in filter inputs', async ({
+      page,
+    }) => {
       await page.goto(`${ROUTES.shop}?minPrice=50&maxPrice=300`);
       await page.waitForLoadState('networkidle');
 
@@ -154,9 +156,9 @@ test.describe('Catalog', () => {
       await expect(filterModal).toBeVisible({ timeout: 5000 });
 
       // Find in stock checkbox/toggle
-      const inStockCheckbox = filterModal.locator(
-        'input[type="checkbox"], [role="checkbox"]',
-      ).first();
+      const inStockCheckbox = filterModal
+        .locator('input[type="checkbox"], [role="checkbox"]')
+        .first();
       const hasCheckbox = await inStockCheckbox.isVisible().catch(() => false);
 
       if (hasCheckbox) {

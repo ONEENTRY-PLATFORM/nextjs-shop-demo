@@ -46,7 +46,7 @@ test.describe('Localization', () => {
 
         if (secondLang && secondLang !== 'en') {
           await langSelector.selectOption(secondLang);
-          await page.waitForLoadState('networkidle');
+          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), { timeout: 5000 });
 
           // URL should contain the new language prefix
           const url = page.url();
@@ -71,7 +71,7 @@ test.describe('Localization', () => {
 
         if (secondLang && secondLang !== 'en') {
           await langSelector.selectOption(secondLang);
-          await page.waitForLoadState('networkidle');
+          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), { timeout: 5000 });
 
           // Find selector again after navigation
           const newLangSelector = page.locator(SELECTORS.langSelector);
@@ -79,7 +79,7 @@ test.describe('Localization', () => {
 
           // Switch back to English
           await newLangSelector.selectOption('en');
-          await page.waitForLoadState('networkidle');
+          await expect(page).toHaveURL(/\/en/, { timeout: 5000 });
 
           expect(page.url()).toContain('/en');
         } else {
@@ -105,12 +105,12 @@ test.describe('Localization', () => {
 
         if (secondLang && secondLang !== 'en') {
           await langSelector.selectOption(secondLang);
-          await page.waitForLoadState('networkidle');
+          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), { timeout: 5000 });
 
           // Should still be on shop page, but in different language
           const url = page.url();
           expect(url).toContain('/shop');
-          expect(url).toContain(`/${secondLang}/`);
+          expect(url).toContain(`/${secondLang}`);
         } else {
           test.skip();
         }

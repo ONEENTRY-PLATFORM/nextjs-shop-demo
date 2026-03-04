@@ -19,15 +19,13 @@ test.describe('Navigation', () => {
     });
 
     test('cart icon navigates to cart page', async ({ page }) => {
-      await page.locator(SELECTORS.cartIcon).click();
-      await waitForPageLoad(page);
-      expect(page.url()).toContain('/cart');
+      await page.locator(SELECTORS.cartIcon).first().click();
+      await expect(page).toHaveURL(/\/cart/, { timeout: 5000 });
     });
 
     test('favorites icon navigates to favorites page', async ({ page }) => {
-      await page.locator(SELECTORS.favoritesIcon).click();
-      await waitForPageLoad(page);
-      expect(page.url()).toContain('/favorites');
+      await page.locator(SELECTORS.favoritesIcon).first().click();
+      await expect(page).toHaveURL(/\/favorites/, { timeout: 5000 });
     });
 
     test('logo link navigates to home page from shop', async ({ page }) => {

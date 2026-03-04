@@ -28,7 +28,8 @@ export async function openSignInModal(page: Page): Promise<void> {
   });
 
   // Wait for GSAP field animations to complete (fields animate from width:0 with delay)
-  await expect(page.locator(SELECTORS.emailInput)).toBeVisible({
+  // The raw <input> is CSS-hidden (floating label pattern) — wait for the visible textbox role instead
+  await expect(page.getByRole('textbox', { name: /email/i })).toBeVisible({
     timeout: 8000,
   });
 }
@@ -51,12 +52,18 @@ export async function signIn(
   await page.fill(SELECTORS.passwordInput, password);
   await page.click(SELECTORS.modalSubmitButton);
 
-  // Wait for either success (modal closes) or error message
-  await page
-    .waitForSelector(SELECTORS.signInModal, { state: 'hidden', timeout: 10000 })
-    .catch(() => {
-      // Modal may stay open if there's an error — that's checked in the test
-    });
+  // Modal must close — if it stays open, sign-in failed (wrong credentials or API error)
+  await page.waitForSelector(SELECTORS.signInModal, {
+    state: 'hidden',
+    timeout: 10000,
+  });
+
+  // Wait for auth token to land in localStorage and network to settle
+  // so AuthContext has time to complete getUser and flip isAuth=true
+  await page.waitForFunction(() => !!localStorage.getItem('refresh-token'), {
+    timeout: 5000,
+  });
+  await page.waitForLoadState('networkidle');
 }
 
 /**
