@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { defineOneEntry } from 'oneentry';
 
 const PROJECT_URL = process.env.NEXT_PUBLIC_PROJECT_URL as string;
@@ -38,11 +37,13 @@ export const getApi = (): ReturnType<typeof defineOneEntry> => apiInstance;
  */
 export const api = new Proxy({} as ReturnType<typeof defineOneEntry>, {
   get: (_target, prop) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const value = (apiInstance as any)[prop];
 
     if (value && typeof value === 'object' && prop !== 'constructor') {
       return new Proxy(value, {
         get: (_subTarget, subProp) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const currentValue = (apiInstance as any)[prop];
           const method = currentValue[subProp];
 

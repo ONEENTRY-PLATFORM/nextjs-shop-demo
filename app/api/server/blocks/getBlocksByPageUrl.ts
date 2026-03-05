@@ -1,5 +1,6 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
+import { cache } from 'react';
 
 import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
@@ -7,6 +8,7 @@ import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get all blocks by page url.
+ * Wrapped in React cache() to deduplicate requests within a single render.
  * @async
  * @param   {object}          props         - Handle props
  * @param   {string}          props.lang    - Current language shortcode
@@ -15,24 +17,26 @@ import { isIError } from '@/app/utils/errorHandler';
  * @see {@link https://doc.oneentry.cloud/docs/blocks OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  */
-export const getBlocksByPageUrl = async ({
-  lang,
-  pageUrl,
-}: {
-  lang: string;
-  pageUrl: string;
-}): Promise<{
-  isError: boolean;
-  error?: IError;
-  blocks?: IPositionBlock[];
-}> => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+export const getBlocksByPageUrl = cache(
+  async ({
+    lang,
+    pageUrl,
+  }: {
+    lang: string;
+    pageUrl: string;
+  }): Promise<{
+    isError: boolean;
+    error?: IError;
+    blocks?: IPositionBlock[];
+  }> => {
+    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  const data = await getApi().Pages.getBlocksByPageUrl(pageUrl, langCode);
+    const data = await getApi().Pages.getBlocksByPageUrl(pageUrl, langCode);
 
-  if (isIError(data)) {
-    return { isError: true, error: data };
-  }
+    if (isIError(data)) {
+      return { isError: true, error: data };
+    }
 
-  return { isError: false, blocks: data };
-};
+    return { isError: false, blocks: data };
+  },
+);

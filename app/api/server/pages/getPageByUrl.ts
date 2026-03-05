@@ -1,5 +1,6 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
+import { cache } from 'react';
 
 import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
@@ -7,6 +8,7 @@ import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get page object with information about forms, blocks, menus, linked to the page by URL.
+ * Wrapped in React cache() to deduplicate requests within a single render.
  * @async
  * @param   {string}          url  - Page URL.
  * @param   {string}          lang - Current language shortcode.
@@ -14,21 +16,23 @@ import { isIError } from '@/app/utils/errorHandler';
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  * @see {@link https://doc.oneentry.cloud/docs/pages OneEntry CMS docs}
  */
-export const getPageByUrl = async (
-  url: string,
-  lang: string,
-): Promise<{
-  isError: boolean;
-  error?: IError;
-  page?: IPagesEntity;
-}> => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+export const getPageByUrl = cache(
+  async (
+    url: string,
+    lang: string,
+  ): Promise<{
+    isError: boolean;
+    error?: IError;
+    page?: IPagesEntity;
+  }> => {
+    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  const data = await getApi().Pages.getPageByUrl(url, langCode);
+    const data = await getApi().Pages.getPageByUrl(url, langCode);
 
-  if (isIError(data)) {
-    return { isError: true, error: data };
-  }
+    if (isIError(data)) {
+      return { isError: true, error: data };
+    }
 
-  return { isError: false, page: data };
-};
+    return { isError: false, page: data };
+  },
+);

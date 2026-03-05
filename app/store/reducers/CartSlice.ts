@@ -402,22 +402,30 @@ export const selectDeliveryData = (state: {
 
 /**
  * Select cart total.
+ * Uses createSelector + Map for O(n) lookup instead of O(n²) find().
  * @param   {object}            state                          - The current state of the Redux store.
  * @param   {object}            state.cartReducer              - Cart reducer state.
  * @param   {IProducts[]}       state.cartReducer.productsData - Cart products data.
  * @param   {IProductsEntity[]} state.cartReducer.products     - Cart products.
  * @returns {number}                                           Total cost of selected products in the cart.
  */
-export const selectCartTotal = (state: {
-  cartReducer: {
-    productsData: IProducts[];
-    products: IProductsEntity[];
-  };
-}): number => {
-  return state.cartReducer.productsData.reduce((total, product) => {
-    if (product.selected) {
-      /** Find product by ID instead of using index */
-      const p = state.cartReducer.products.find((p) => p.id === product.id);
+export const selectCartTotal = createSelector(
+  (state: { cartReducer: { productsData: IProducts[] } }) =>
+    state.cartReducer.productsData,
+  (state: { cartReducer: { products: IProductsEntity[] } }) =>
+    state.cartReducer.products,
+  (productsData, products) => {
+    /** Build O(1) lookup map once per selector invocation */
+    const productMap = new Map<number, IProductsEntity>(
+      products.map((p) => [p.id, p]),
+    );
+
+    return productsData.reduce((total, product) => {
+      if (!product.selected) {
+        return total;
+      }
+
+      const p = productMap.get(product.id);
 
       /** Check if product is in stock */
       const isInStock =
@@ -432,12 +440,13 @@ export const selectCartTotal = (state: {
             p.price ||
             0
           : 0;
-        total += price * product.quantity;
+        return total + price * product.quantity;
       }
-    }
-    return total;
-  }, 0);
-};
+
+      return total;
+    }, 0);
+  },
+);
 
 /**
  * Select cart items.

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
@@ -91,7 +90,7 @@ export const AuthProvider = ({
    * This function checks for a refresh token in local storage and initiates
    */
   const [trigger, { isError }] = useLazyGetMeQuery({
-    pollingInterval: isAuth ? 3000 : 0,
+    pollingInterval: isAuth ? 30000 : 0,
   });
 
   /**
@@ -110,6 +109,7 @@ export const AuthProvider = ({
     }
     /** Skip reDefine if SDK already has an active session (e.g. right after login) */
     /** reDefine creates a new instance without accessToken, which forces an extra token exchange */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const hasActiveSession = !!(getApi().AuthProvider as any)?.state
       ?.accessToken;
     if (!hasActiveSession) {
@@ -269,6 +269,6 @@ export const AuthProvider = ({
 
   /** Return AuthContext Provider with value */
   return (
-    <AuthContext.Provider value={value as any}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
   );
 };
