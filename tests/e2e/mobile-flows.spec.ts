@@ -42,7 +42,9 @@ test.describe('Mobile Flows', () => {
       const mobileMenu = page.locator(
         '[data-testid="mobile-menu"], [class*="mobile-menu"], [class*="nav-drawer"], [class*="sidebar"]',
       );
-      const isOpen = await mobileMenu.isVisible({ timeout: 3000 }).catch(() => false);
+      const isOpen = await mobileMenu
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
 
       if (!isOpen) {
         // Fallback: nav links become visible
@@ -56,7 +58,9 @@ test.describe('Mobile Flows', () => {
 
     test('mobile menu contains navigation links', async ({ page }) => {
       const menuBtn = page.locator(SELECTORS.menuButton);
-      const isVisible = await menuBtn.isVisible({ timeout: 5000 }).catch(() => false);
+      const isVisible = await menuBtn
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
       if (!isVisible) return;
 
       await menuBtn.click();
@@ -79,7 +83,9 @@ test.describe('Mobile Flows', () => {
 
     test('closing mobile menu hides it', async ({ page }) => {
       const menuBtn = page.locator(SELECTORS.menuButton);
-      const isVisible = await menuBtn.isVisible({ timeout: 5000 }).catch(() => false);
+      const isVisible = await menuBtn
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
       if (!isVisible) return;
 
       await menuBtn.click();
@@ -89,7 +95,10 @@ test.describe('Mobile Flows', () => {
       const closeBtn = page.locator(
         '[aria-label="Close menu"], [data-testid="close-menu"], [class*="close"]',
       );
-      const hasClose = await closeBtn.first().isVisible({ timeout: 2000 }).catch(() => false);
+      const hasClose = await closeBtn
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
 
       if (hasClose) {
         await closeBtn.first().click();
@@ -100,7 +109,9 @@ test.describe('Mobile Flows', () => {
       await page.waitForTimeout(500);
 
       // Menu should be gone or hamburger visible again
-      const hamburgerAgain = await menuBtn.isVisible({ timeout: 2000 }).catch(() => false);
+      const hamburgerAgain = await menuBtn
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
       expect(hamburgerAgain).toBeTruthy();
     });
 
@@ -108,7 +119,9 @@ test.describe('Mobile Flows', () => {
       page,
     }) => {
       const menuBtn = page.locator(SELECTORS.menuButton);
-      const isVisible = await menuBtn.isVisible({ timeout: 5000 }).catch(() => false);
+      const isVisible = await menuBtn
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
       if (!isVisible) return;
 
       await menuBtn.click();
@@ -116,7 +129,9 @@ test.describe('Mobile Flows', () => {
 
       // Find a link to the shop page
       const shopLink = page.locator('a[href*="/shop"]').first();
-      const hasShop = await shopLink.isVisible({ timeout: 3000 }).catch(() => false);
+      const hasShop = await shopLink
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
       if (!hasShop) return;
 
       await shopLink.click();
@@ -156,10 +171,12 @@ test.describe('Mobile Flows', () => {
       await expect(modal).toBeVisible({ timeout: 5000 });
 
       const priceFrom = page.locator(SELECTORS.priceFromInput);
-      const isVisible = await priceFrom.isVisible({ timeout: 3000 }).catch(() => false);
+      const isVisible = await priceFrom
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
       if (!isVisible) return;
 
-      await priceFrom.tap();
+      await priceFrom.click();
       await priceFrom.fill('50');
 
       const value = await priceFrom.inputValue();
@@ -179,11 +196,11 @@ test.describe('Mobile Flows', () => {
       }
 
       await page.locator(SELECTORS.filterApplyButton).click();
-      await page.waitForTimeout(500);
 
-      // Modal should close
-      const isClosed = await modal.isHidden({ timeout: 3000 }).catch(() => false);
-      expect(isClosed).toBeTruthy();
+      // Modal should close after the GSAP exit animation (~750 ms).
+      // isHidden() in modern Playwright does not accept a timeout; use toBeHidden()
+      // which polls until the element is gone or the timeout elapses.
+      await expect(modal).toBeHidden({ timeout: 5000 });
     });
   });
 
@@ -196,7 +213,9 @@ test.describe('Mobile Flows', () => {
       await waitForPageLoad(page);
 
       const cartIcon = page.locator(SELECTORS.cartIcon);
-      const isVisible = await cartIcon.isVisible({ timeout: 5000 }).catch(() => false);
+      const isVisible = await cartIcon
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
 
       if (!isVisible) {
         // Some designs hide cart icon and show badge instead
@@ -241,7 +260,9 @@ test.describe('Mobile Flows', () => {
 
     test('product title is visible on mobile', async ({ page }) => {
       const title = page.locator(SELECTORS.productTitle);
-      const isVisible = await title.isVisible({ timeout: 5000 }).catch(() => false);
+      const isVisible = await title
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
 
       if (!isVisible) {
         // Fallback: any h1 on product page
@@ -253,10 +274,12 @@ test.describe('Mobile Flows', () => {
 
     test('add to cart button is tappable on mobile', async ({ page }) => {
       const addToCartBtn = page.locator(SELECTORS.addToCartButton);
-      const isVisible = await addToCartBtn.isVisible({ timeout: 5000 }).catch(() => false);
+      const isVisible = await addToCartBtn
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
       if (!isVisible) return;
 
-      await addToCartBtn.tap();
+      await addToCartBtn.click();
       await page.waitForTimeout(500);
 
       // Cart badge should update
@@ -268,8 +291,12 @@ test.describe('Mobile Flows', () => {
     test('product image is visible and not cropped off-screen', async ({
       page,
     }) => {
-      const image = page.locator('[class*="gallery"] img, [class*="product-image"] img').first();
-      const isVisible = await image.isVisible({ timeout: 5000 }).catch(() => false);
+      const image = page
+        .locator('[class*="gallery"] img, [class*="product-image"] img')
+        .first();
+      const isVisible = await image
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
       if (!isVisible) return;
 
       const box = await image.boundingBox();
@@ -292,7 +319,9 @@ test.describe('Mobile Flows', () => {
 
     test('search input is accessible on mobile', async ({ page }) => {
       const searchInput = page.locator(SELECTORS.searchInput);
-      const isVisible = await searchInput.isVisible({ timeout: 5000 }).catch(() => false);
+      const isVisible = await searchInput
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
 
       if (!isVisible) {
         // Search might be behind a search icon button on mobile
@@ -315,15 +344,19 @@ test.describe('Mobile Flows', () => {
 
     test('typing in mobile search shows results dropdown', async ({ page }) => {
       const searchInput = page.locator(SELECTORS.searchInput);
-      const isVisible = await searchInput.isVisible({ timeout: 5000 }).catch(() => false);
+      const isVisible = await searchInput
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
       if (!isVisible) return;
 
-      await searchInput.tap();
+      await searchInput.click();
       await searchInput.fill('a');
       await page.waitForTimeout(600); // debounce
 
       const results = page.locator(SELECTORS.searchResults);
-      const hasResults = await results.isVisible({ timeout: 3000 }).catch(() => false);
+      const hasResults = await results
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
       // Results may or may not appear depending on data — no hard assertion
       expect(typeof hasResults).toBe('boolean');
     });
@@ -351,7 +384,9 @@ test.describe('Mobile Flows', () => {
       await waitForPageLoad(page);
 
       const firstCard = page.locator('.product-card').first();
-      const isVisible = await firstCard.isVisible({ timeout: 8000 }).catch(() => false);
+      const isVisible = await firstCard
+        .isVisible({ timeout: 8000 })
+        .catch(() => false);
       if (!isVisible) return;
 
       const box = await firstCard.boundingBox();

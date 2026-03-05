@@ -1,6 +1,10 @@
 import { expect, test } from '@playwright/test';
 
-import { getCartBadge, getCartItemCount, clearCart } from './helpers/cart-helpers';
+import {
+  clearCart,
+  getCartBadge,
+  getCartItemCount,
+} from './helpers/cart-helpers';
 import {
   getFavoritesBadge,
   getFavoritesItemCount,
@@ -248,9 +252,7 @@ test.describe('Product Page — Favorites', () => {
   test.afterEach(async ({ page }) => {
     // Ensure favorites cleared via localStorage reset
     try {
-      const favBtn = page
-        .locator(SELECTORS.addToFavoritesButton)
-        .first();
+      const favBtn = page.locator(SELECTORS.addToFavoritesButton).first();
       const isFav = await favBtn
         .getAttribute('aria-label')
         .then((label) => label === 'Remove from favorites')
@@ -285,7 +287,11 @@ test.describe('Product Page — Navigation', () => {
     await goToFirstProduct(page);
 
     // Look for breadcrumbs or a back link to shop/home
-    const breadcrumb = page.locator('nav[aria-label*="breadcrumb"], .breadcrumb, [class*="breadcrumb"]').first();
+    const breadcrumb = page
+      .locator(
+        'nav[aria-label*="breadcrumb"], .breadcrumb, [class*="breadcrumb"]',
+      )
+      .first();
     const backLink = page.locator('a[href*="/shop"]').first();
 
     const hasBreadcrumb = await breadcrumb.isVisible().catch(() => false);

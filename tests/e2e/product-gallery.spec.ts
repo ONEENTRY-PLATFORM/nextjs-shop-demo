@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 import { waitForPageLoad } from './helpers/navigation-helpers';
-import { ROUTES, SELECTORS } from './settings';
+import { ROUTES } from './settings';
 
 /**
  * E2E tests for the product gallery (images, thumbnail switching, zoom/lightbox).
@@ -44,7 +44,9 @@ test.describe('Product Gallery', () => {
             .first(),
         );
 
-      const isVisible = await mainImage.isVisible({ timeout: 8000 }).catch(() => false);
+      const isVisible = await mainImage
+        .isVisible({ timeout: 8000 })
+        .catch(() => false);
       if (!isVisible) {
         // Fallback: any img on the page with a valid src
         const anyImg = page.locator('img[src]:not([src=""])').first();
@@ -66,7 +68,9 @@ test.describe('Product Gallery', () => {
         .first()
         .or(page.locator('[class*="product"] img').first());
 
-      const isVisible = await mainImage.isVisible({ timeout: 8000 }).catch(() => false);
+      const isVisible = await mainImage
+        .isVisible({ timeout: 8000 })
+        .catch(() => false);
       if (!isVisible) return;
 
       const alt = await mainImage.getAttribute('alt');
@@ -156,8 +160,11 @@ test.describe('Product Gallery', () => {
             el.getAttribute('aria-selected') === 'true' ||
             el.getAttribute('data-active') === 'true' ||
             // fallback: has a ring/border class typical for selected state
-            Array.from(el.classList).some((c) =>
-              c.includes('ring') || c.includes('border-') || c.includes('opacity-100'),
+            Array.from(el.classList).some(
+              (c) =>
+                c.includes('ring') ||
+                c.includes('border-') ||
+                c.includes('opacity-100'),
             )
           );
         })
@@ -186,7 +193,9 @@ test.describe('Product Gallery', () => {
         .first()
         .or(page.locator('[class*="product"] img').first());
 
-      const isVisible = await mainImage.isVisible({ timeout: 5000 }).catch(() => false);
+      const isVisible = await mainImage
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
       if (!isVisible) return;
 
       await mainImage.click();
@@ -204,7 +213,10 @@ test.describe('Product Gallery', () => {
         // Should be dismissable
         await page.keyboard.press('Escape');
         await page.waitForTimeout(500);
-        const afterEscape = await overlay.first().isVisible().catch(() => false);
+        const afterEscape = await overlay
+          .first()
+          .isVisible()
+          .catch(() => false);
         // Either closes on Escape or stays open — both are valid implementations
         expect(typeof afterEscape).toBe('boolean');
       }

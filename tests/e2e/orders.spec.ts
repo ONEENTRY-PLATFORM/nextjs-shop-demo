@@ -8,7 +8,9 @@ import { ROUTES, TEST_AUTH_USER } from './settings';
  */
 test.describe('Orders Page', () => {
   test.describe('Unauthenticated Access', () => {
-    test('orders page shows auth error when not logged in', async ({ page }) => {
+    test('orders page shows auth error when not logged in', async ({
+      page,
+    }) => {
       await page.goto(ROUTES.orders);
       await page.waitForLoadState('networkidle');
 
@@ -62,10 +64,18 @@ test.describe('Orders Page', () => {
       );
       // Empty state — any link to shop OR text indicating no orders
       const shopLink = page.locator('a[href*="/shop"]');
-      const emptyText = page.getByText(/no orders|empty|no results|haven't placed/i);
+      const emptyText = page.getByText(
+        /no orders|empty|no results|haven't placed/i,
+      );
 
-      const hasTable = await ordersTable.first().isVisible().catch(() => false);
-      const hasShopLink = await shopLink.first().isVisible().catch(() => false);
+      const hasTable = await ordersTable
+        .first()
+        .isVisible()
+        .catch(() => false);
+      const hasShopLink = await shopLink
+        .first()
+        .isVisible()
+        .catch(() => false);
       const hasEmptyText = await emptyText.isVisible().catch(() => false);
 
       // Page must show SOMETHING meaningful after loading
@@ -74,7 +84,10 @@ test.describe('Orders Page', () => {
         hasShopLink ||
         hasEmptyText ||
         // Fallback: at least the main content area rendered
-        (await page.locator('main').isVisible().catch(() => false));
+        (await page
+          .locator('main')
+          .isVisible()
+          .catch(() => false));
 
       expect(pageHasContent).toBeTruthy();
     });
@@ -121,7 +134,10 @@ test.describe('Orders Page', () => {
       );
       const mainContent = page.locator('main');
 
-      const hasShopLink = await shopLink.first().isVisible().catch(() => false);
+      const hasShopLink = await shopLink
+        .first()
+        .isVisible()
+        .catch(() => false);
       const hasEmptyText = await emptyText.isVisible().catch(() => false);
       const hasMain = await mainContent.isVisible().catch(() => false);
 

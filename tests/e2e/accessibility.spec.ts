@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test';
 
-import { openSignInModal, signIn, clearAuthState } from './helpers/auth-helpers';
+import { openSignInModal } from './helpers/auth-helpers';
 import { waitForPageLoad } from './helpers/navigation-helpers';
-import { ROUTES, SELECTORS, TEST_AUTH_USER } from './settings';
+import { ROUTES, SELECTORS } from './settings';
 
 /**
  * E2E accessibility tests
@@ -55,8 +55,9 @@ test.describe('Accessibility', () => {
       await waitForPageLoad(page);
 
       // Find <img> tags missing alt attribute
-      const imgsWithoutAlt = await page.$$eval('img', (imgs) =>
-        imgs.filter((img) => !img.hasAttribute('alt')).length,
+      const imgsWithoutAlt = await page.$$eval(
+        'img',
+        (imgs) => imgs.filter((img) => !img.hasAttribute('alt')).length,
       );
       expect(imgsWithoutAlt).toBe(0);
     });
@@ -82,9 +83,7 @@ test.describe('Accessibility', () => {
       const focused = await page.evaluate(
         () => document.activeElement?.tagName ?? '',
       );
-      expect(['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA']).toContain(
-        focused,
-      );
+      expect(['A', 'BUTTON', 'INPUT', 'SELECT', 'TEXTAREA']).toContain(focused);
     });
 
     test('search input is reachable by keyboard', async ({ page }) => {
@@ -116,7 +115,9 @@ test.describe('Accessibility', () => {
       await page.goto(ROUTES.shop);
       await waitForPageLoad(page);
 
-      const productLinks = page.locator('.product-card a[href*="/shop/product/"]');
+      const productLinks = page.locator(
+        '.product-card a[href*="/shop/product/"]',
+      );
       const count = await productLinks.count();
       if (count === 0) return;
 
@@ -129,7 +130,9 @@ test.describe('Accessibility', () => {
       expect(href).toMatch(/\/shop\/product\//);
     });
 
-    test('auth button is keyboard-reachable (no negative tabindex)', async ({ page }) => {
+    test('auth button is keyboard-reachable (no negative tabindex)', async ({
+      page,
+    }) => {
       await page.goto(ROUTES.home);
       await waitForPageLoad(page);
 
@@ -157,7 +160,8 @@ test.describe('Accessibility', () => {
 
       const ariaLabel = await cartIcon.getAttribute('aria-label');
       const title = await cartIcon.getAttribute('title');
-      const hasLabel = (ariaLabel && ariaLabel.length > 0) || (title && title.length > 0);
+      const hasLabel =
+        (ariaLabel && ariaLabel.length > 0) || (title && title.length > 0);
       expect(hasLabel).toBeTruthy();
     });
 
@@ -212,9 +216,7 @@ test.describe('Accessibility', () => {
   // Modal focus management
   // ---------------------------------------------------------------------------
   test.describe('Modal Focus Management', () => {
-    test('sign-in modal has focusable elements inside', async ({
-      page,
-    }) => {
+    test('sign-in modal has focusable elements inside', async ({ page }) => {
       await openSignInModal(page);
 
       const modal = page.locator(SELECTORS.signInModal);
@@ -284,7 +286,9 @@ test.describe('Accessibility', () => {
 
       // Page body text should not be transparent (opacity 0 = invisible)
       const hasInvisibleText = await page.evaluate(() => {
-        const bodyText = document.querySelector('main, [data-testid="cart-drawer"]');
+        const bodyText = document.querySelector(
+          'main, [data-testid="cart-drawer"]',
+        );
         if (!bodyText) return false;
         const style = window.getComputedStyle(bodyText);
         return style.opacity === '0' || style.visibility === 'hidden';

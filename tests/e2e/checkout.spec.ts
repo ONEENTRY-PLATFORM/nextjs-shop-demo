@@ -22,7 +22,7 @@ test.describe('Checkout', () => {
 
       const url = page.url();
 
-      if (url.includes('/checkout')) {
+      if (url.includes('/payment')) {
         // Still on checkout — check for any auth-gate UI
         const authText = page.getByText(
           /sign in|log in|please login|unauthorized|not authorized/i,
@@ -47,11 +47,11 @@ test.describe('Checkout', () => {
           hasAuthText ||
             hasAuthModal ||
             hasAuthButton ||
-            url.includes('/checkout'),
+            url.includes('/payment'),
         ).toBeTruthy();
       } else {
         // Redirected away — acceptable
-        expect(url).not.toContain('/checkout');
+        expect(url).not.toContain('/payment');
       }
     });
 
@@ -97,12 +97,15 @@ test.describe('Checkout', () => {
     });
 
     /**
-     * Returns true if the current page URL contains '/checkout'.
+     * Returns true if the current page URL contains '/payment'.
      * Used to skip tests when the app redirects away (e.g. empty cart).
-     * @param {Parameters<typeof waitForPageLoad>[0]} page - Playwright page object
+     * @param   {Parameters<typeof waitForPageLoad>[0]} page - Playwright page object
+     * @returns {Promise<boolean>}                           Promise resolving to true if the page URL contains '/payment'
      */
-    async function onCheckout(page: Parameters<typeof waitForPageLoad>[0]) {
-      return page.url().includes('/checkout');
+    async function onCheckout(
+      page: Parameters<typeof waitForPageLoad>[0],
+    ): Promise<boolean> {
+      return page.url().includes('/payment');
     }
 
     // -------------------------------------------------------------------------
@@ -113,7 +116,7 @@ test.describe('Checkout', () => {
     }) => {
       // Acceptable outcomes: checkout page OR redirect to cart (empty cart)
       const url = page.url();
-      expect(url.includes('/checkout') || url.includes('/cart')).toBeTruthy();
+      expect(url.includes('/payment') || url.includes('/cart')).toBeTruthy();
     });
 
     test('checkout page has a delivery form', async ({ page }) => {

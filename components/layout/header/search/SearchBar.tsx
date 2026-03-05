@@ -5,7 +5,7 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX } from 'react';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 
 import SearchIcon from '@/components/icons/search';
@@ -61,6 +61,9 @@ const SearchBar = ({
    */
   const [state, setState] = useState(false);
 
+  /** Ref to the search input element — used by handleSubmit to read the current DOM value */
+  const inputRef = useRef<HTMLInputElement>(null);
+
   /**
    * Debounced search value to prevent excessive API calls
    * Delays the search execution by 300ms after the user stops typing
@@ -98,11 +101,21 @@ const SearchBar = ({
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     /**
-     * Only update URL if we have pathname
-     * Prevents errors when pathname is not yet available
+     * Read the input value directly from the form element at submit time.
+     * This avoids a stale-closure issue: setState(true) in handleSearch triggers a
+     * re-render that reinitialises `params` from useSearchParams() BEFORE the router
+     * navigation from replace() has settled, so `params` can be empty when the user
+     * presses Enter immediately after typing.
      */
+    const term = inputRef.current?.value || '';
+    const submitParams = new URLSearchParams(params.toString());
+    if (term) {
+      submitParams.set('search', term);
+    } else {
+      submitParams.delete('search');
+    }
     if (pathname) {
-      replace(`/${lang}/shop?${params.toString()}`);
+      replace(`/${lang}/shop?${submitParams.toString()}`);
     }
     setState(false);
   };
@@ -122,6 +135,7 @@ const SearchBar = ({
         </label>
         {/** Search input field with real-time search functionality */}
         <input
+          ref={inputRef}
           defaultValue={value || ''}
           onChange={(e) => {
             handleSearch(e.target.value);

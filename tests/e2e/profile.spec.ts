@@ -79,7 +79,10 @@ test.describe('Profile Page', () => {
       const submitButton = page.locator(
         'button[type="submit"], button:has-text("Save"), button:has-text("Update")',
       );
-      const hasButton = await submitButton.first().isVisible().catch(() => false);
+      const hasButton = await submitButton
+        .first()
+        .isVisible()
+        .catch(() => false);
       expect(hasButton).toBeTruthy();
     });
 

@@ -100,8 +100,12 @@ test.describe('Catalog', () => {
       // Apply filters
       await page.locator(SELECTORS.filterApplyButton).click();
 
-      await expect(page).toHaveURL(new RegExp(`minPrice=${fromVal}`), { timeout: 5000 });
-      await expect(page).toHaveURL(new RegExp(`maxPrice=${toVal}`), { timeout: 5000 });
+      await expect(page).toHaveURL(new RegExp(`minPrice=${fromVal}`), {
+        timeout: 5000,
+      });
+      await expect(page).toHaveURL(new RegExp(`maxPrice=${toVal}`), {
+        timeout: 5000,
+      });
     });
 
     test('resetting filters clears URL params', async ({ page }) => {

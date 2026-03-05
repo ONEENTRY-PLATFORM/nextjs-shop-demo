@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
 
 import { ROUTES, SELECTORS } from './settings';
 
@@ -39,9 +39,12 @@ test.describe('Search', () => {
      * Shared helper: type a query and wait for the results dropdown.
      * Returns true if the dropdown appeared, false if the search returned
      * no results (dropdown stays hidden — valid behaviour, not a test failure).
+     * @param   {Page}             page  to test
+     * @param   {string}           query to type in the search input
+     * @returns {Promise<boolean>}       true if the results dropdown appeared, false otherwise
      */
     async function typeAndWaitForResults(
-      page: Parameters<typeof test>[1]['page'],
+      page: Page,
       query = 'a',
     ): Promise<boolean> {
       const searchInput = page.locator(SELECTORS.searchInput);

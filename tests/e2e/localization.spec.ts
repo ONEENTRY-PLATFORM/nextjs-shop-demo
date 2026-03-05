@@ -22,7 +22,9 @@ test.describe('Localization', () => {
       const currentValue = await langSelector.inputValue();
       expect(currentValue).toBeTruthy();
       // Default language is English ('en')
-      expect(['en', 'ru', 'de', 'fr']).toContain(currentValue.toLowerCase().slice(0, 2));
+      expect(['en', 'ru', 'de', 'fr']).toContain(
+        currentValue.toLowerCase().slice(0, 2),
+      );
     });
 
     test('language selector has multiple options', async ({ page }) => {
@@ -46,7 +48,9 @@ test.describe('Localization', () => {
 
         if (secondLang && secondLang !== 'en') {
           await langSelector.selectOption(secondLang);
-          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), { timeout: 5000 });
+          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), {
+            timeout: 5000,
+          });
 
           // URL should contain the new language prefix
           const url = page.url();
@@ -71,7 +75,9 @@ test.describe('Localization', () => {
 
         if (secondLang && secondLang !== 'en') {
           await langSelector.selectOption(secondLang);
-          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), { timeout: 5000 });
+          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), {
+            timeout: 5000,
+          });
 
           // Find selector again after navigation
           const newLangSelector = page.locator(SELECTORS.langSelector);
@@ -105,7 +111,9 @@ test.describe('Localization', () => {
 
         if (secondLang && secondLang !== 'en') {
           await langSelector.selectOption(secondLang);
-          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), { timeout: 5000 });
+          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), {
+            timeout: 5000,
+          });
 
           // Should still be on shop page, but in different language
           const url = page.url();

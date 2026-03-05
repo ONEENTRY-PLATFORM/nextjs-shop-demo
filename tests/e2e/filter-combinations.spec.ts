@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
 
 import { waitForPageLoad } from './helpers/navigation-helpers';
 import { ROUTES, SELECTORS } from './settings';
@@ -13,8 +13,12 @@ import { ROUTES, SELECTORS } from './settings';
 test.describe('Filter Combinations', () => {
   test.setTimeout(30000);
 
-  // Helper: open the filter modal
-  async function openFilterModal(page: Parameters<typeof test>[1]['page']) {
+  /**
+   * Helper: open the filter modal
+   * @param page Page
+   * @returns    modal
+   */
+  async function openFilterModal(page: Page) {
     const filterBtn = page.locator(SELECTORS.filterButton);
     await expect(filterBtn).toBeVisible({ timeout: 10000 });
     await filterBtn.click();
@@ -23,8 +27,12 @@ test.describe('Filter Combinations', () => {
     return modal;
   }
 
-  // Helper: apply filters and wait for URL to update
-  async function applyFilters(page: Parameters<typeof test>[1]['page']) {
+  /**
+   * Helper: apply filters and wait for URL to update
+   * @param page Page
+   * @returns    void
+   */
+  async function applyFilters(page: Page) {
     await page.locator(SELECTORS.filterApplyButton).click();
     // Modal must close after apply
     await expect(page.locator(SELECTORS.filterModal)).toBeHidden({
@@ -172,7 +180,9 @@ test.describe('Filter Combinations', () => {
       expect(await errorHeading.count()).toBe(0);
     });
 
-    test('reset clears all combined filter params at once', async ({ page }) => {
+    test('reset clears all combined filter params at once', async ({
+      page,
+    }) => {
       await page.goto(
         `${ROUTES.shop}?minPrice=10&maxPrice=80&in_stock=true&color=red`,
       );
@@ -182,6 +192,8 @@ test.describe('Filter Combinations', () => {
       void modal;
 
       await page.locator(SELECTORS.filterResetButton).click();
+      // Router update happens via replaceState — wait for URL to drop filter params
+      await page.waitForURL(url => !url.toString().includes('minPrice'), { timeout: 8000 }).catch(() => {});
       await waitForPageLoad(page);
 
       const url = page.url();
@@ -217,9 +229,7 @@ test.describe('Filter Combinations', () => {
 
       await openFilterModal(page);
 
-      const fromVal = await page
-        .locator(SELECTORS.priceFromInput)
-        .inputValue();
+      const fromVal = await page.locator(SELECTORS.priceFromInput).inputValue();
       const toVal = await page.locator(SELECTORS.priceToInput).inputValue();
 
       expect(Number(fromVal)).toBe(20);

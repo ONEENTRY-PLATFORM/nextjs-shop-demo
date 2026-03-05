@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
 
 import { clearAuthState, signIn } from './helpers/auth-helpers';
 import { waitForPageLoad } from './helpers/navigation-helpers';
@@ -13,8 +13,11 @@ import { ROUTES, SELECTORS, TEST_AUTH_USER } from './settings';
  * Selectors are written to match the most common patterns.
  */
 
-/** Generic toast locator — covers common library class names and roles. */
-const TOAST = (page: Parameters<typeof test>[1]['page']) =>
+/**
+ * Generic toast locator — covers common library class names and roles.
+ * @param page
+ */
+const TOAST = (page: Page) =>
   page.locator(
     '[data-testid="toast"], [class*="toast"], [class*="notification"], [role="alert"], [role="status"]',
   );
@@ -51,7 +54,10 @@ test.describe('Toast Notifications', () => {
       const toast = TOAST(page);
       const badge = page.locator(SELECTORS.cartBadge).first();
 
-      const toastVisible = await toast.first().isVisible({ timeout: 3000 }).catch(() => false);
+      const toastVisible = await toast
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
       const badgeUpdated =
         (await badge.isVisible().catch(() => false)) &&
         Number(await badge.textContent().catch(() => '0')) > 0;
@@ -71,7 +77,10 @@ test.describe('Toast Notifications', () => {
       await addToCartBtn.click();
 
       const toast = TOAST(page);
-      const appeared = await toast.first().isVisible({ timeout: 3000 }).catch(() => false);
+      const appeared = await toast
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
       if (!appeared) return; // No toast shown — skip timing test
 
       // Toast should auto-dismiss within ~6 seconds
@@ -88,7 +97,10 @@ test.describe('Toast Notifications', () => {
       await addToCartBtn.click();
 
       const toast = TOAST(page);
-      const appeared = await toast.first().isVisible({ timeout: 3000 }).catch(() => false);
+      const appeared = await toast
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
       if (!appeared) return;
 
       const text = await toast.first().textContent();
@@ -105,22 +117,35 @@ test.describe('Toast Notifications', () => {
       await waitForPageLoad(page);
 
       const favBtn = page.locator(SELECTORS.addToFavoritesButton);
-      const isVisible = await favBtn.isVisible({ timeout: 5000 }).catch(() => false);
+      const isVisible = await favBtn
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
       if (!isVisible) return;
 
       await favBtn.click();
       await page.waitForTimeout(300);
 
       const toast = TOAST(page);
-      const badge = page.locator(SELECTORS.favoritesIcon).locator('[data-testid="favorites-badge"]');
+      const badge = page
+        .locator(SELECTORS.favoritesIcon)
+        .locator('[data-testid="favorites-badge"]');
 
-      const toastVisible = await toast.first().isVisible({ timeout: 3000 }).catch(() => false);
-      const badgeVisible = await badge.isVisible({ timeout: 1000 }).catch(() => false);
+      const toastVisible = await toast
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
+      const badgeVisible = await badge
+        .isVisible({ timeout: 1000 })
+        .catch(() => false);
       const btnChanged = await favBtn
         .evaluate((el) => {
           const aria = el.getAttribute('aria-label') || '';
           const cls = el.className;
-          return aria.includes('remove') || cls.includes('active') || cls.includes('filled');
+          return (
+            aria.includes('remove') ||
+            cls.includes('active') ||
+            cls.includes('filled')
+          );
         })
         .catch(() => false);
 
@@ -132,7 +157,9 @@ test.describe('Toast Notifications', () => {
       await waitForPageLoad(page);
 
       const favBtn = page.locator(SELECTORS.addToFavoritesButton);
-      const isVisible = await favBtn.isVisible({ timeout: 5000 }).catch(() => false);
+      const isVisible = await favBtn
+        .isVisible({ timeout: 5000 })
+        .catch(() => false);
       if (!isVisible) return;
 
       // Add first
@@ -145,7 +172,10 @@ test.describe('Toast Notifications', () => {
 
       // Any visual feedback — toast or button state change
       const toast = TOAST(page);
-      const toastVisible = await toast.first().isVisible({ timeout: 3000 }).catch(() => false);
+      const toastVisible = await toast
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
       expect(typeof toastVisible).toBe('boolean');
       // Pass — we verified no JS crash
     });
@@ -175,20 +205,32 @@ test.describe('Toast Notifications', () => {
       const toast = TOAST(page);
       const modalError = page.locator(SELECTORS.modalError);
 
-      const toastVisible = await toast.first().isVisible({ timeout: 4000 }).catch(() => false);
-      const inlineError = await modalError.isVisible({ timeout: 1000 }).catch(() => false);
+      const toastVisible = await toast
+        .first()
+        .isVisible({ timeout: 4000 })
+        .catch(() => false);
+      const inlineError = await modalError
+        .isVisible({ timeout: 1000 })
+        .catch(() => false);
 
       expect(toastVisible || inlineError).toBeTruthy();
     });
 
-    test('shows success feedback after successful sign-in', async ({ page }) => {
+    test('shows success feedback after successful sign-in', async ({
+      page,
+    }) => {
       await signIn(page, TEST_AUTH_USER.email, TEST_AUTH_USER.password);
 
       const toast = TOAST(page);
       const userMenu = page.locator(SELECTORS.userMenuButton).first();
 
-      const toastVisible = await toast.first().isVisible({ timeout: 3000 }).catch(() => false);
-      const userMenuVisible = await userMenu.isVisible({ timeout: 3000 }).catch(() => false);
+      const toastVisible = await toast
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
+      const userMenuVisible = await userMenu
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
 
       // Either a success toast OR the user menu appearing confirms success
       expect(toastVisible || userMenuVisible).toBeTruthy();
@@ -221,8 +263,13 @@ test.describe('Toast Notifications', () => {
       const toast = TOAST(page);
       const errorEl = page.locator(SELECTORS.errorMessage);
 
-      const toastVisible = await toast.first().isVisible({ timeout: 3000 }).catch(() => false);
-      const errorVisible = await errorEl.isVisible({ timeout: 1000 }).catch(() => false);
+      const toastVisible = await toast
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
+      const errorVisible = await errorEl
+        .isVisible({ timeout: 1000 })
+        .catch(() => false);
 
       // If no toast/error shown — that's also acceptable (silent fail)
       expect(typeof toastVisible).toBe('boolean');

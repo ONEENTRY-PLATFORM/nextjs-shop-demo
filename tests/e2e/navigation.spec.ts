@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 
-import { ROUTES, SELECTORS } from './settings';
 import { waitForPageLoad } from './helpers/navigation-helpers';
+import { ROUTES, SELECTORS } from './settings';
 
 /**
  * E2E tests for site navigation
@@ -82,9 +82,11 @@ test.describe('Navigation', () => {
       await waitForPageLoad(page);
 
       // Look for breadcrumbs navigation
-      const breadcrumbs = page.locator(
-        'nav[aria-label*="breadcrumb"], [class*="breadcrumb"], [data-testid*="breadcrumb"]',
-      ).first();
+      const breadcrumbs = page
+        .locator(
+          'nav[aria-label*="breadcrumb"], [class*="breadcrumb"], [data-testid*="breadcrumb"]',
+        )
+        .first();
       const hasBreadcrumbs = await breadcrumbs.isVisible().catch(() => false);
 
       if (hasBreadcrumbs) {
@@ -112,9 +114,7 @@ test.describe('Navigation', () => {
         await expect(shopLinks.first()).toBeVisible();
       } else {
         // Page should at least have a back navigation mechanism
-        const backNav = page.locator(
-          '[class*="breadcrumb"], nav a',
-        ).first();
+        const backNav = page.locator('[class*="breadcrumb"], nav a').first();
         await expect(backNav).toBeVisible();
       }
     });
@@ -146,9 +146,7 @@ test.describe('Navigation', () => {
       const initialCount = navigationCount;
 
       // Click a nav link (SPA navigation should not increment load count significantly)
-      const shopLink = page
-        .locator('header a[href*="/shop"]')
-        .first();
+      const shopLink = page.locator('header a[href*="/shop"]').first();
       const hasLink = await shopLink.isVisible().catch(() => false);
 
       if (hasLink) {
