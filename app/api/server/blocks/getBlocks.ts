@@ -6,7 +6,7 @@ import type {
 
 import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
+import { isIError } from '@/app/utils/errorHandler';
 
 interface HandleProps {
   type: BlockType;
@@ -31,30 +31,13 @@ export const getBlocks = async ({
   error?: IError;
   blocks?: IBlocksResponse;
 }> => {
-  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  /** Fetch blocks by type and language from the API */
-  try {
-    /** Call the API to get blocks by type and language */
-    const data = await getApi().Blocks.getBlocks(type, langCode);
+  const data = await getApi().Blocks.getBlocks(type, langCode);
 
-    /** Check if the response is an error */
-    if (isIError(data)) {
-      return { isError: true, error: data };
-    } else {
-      return { isError: false, blocks: data };
-    }
-  } catch (error) {
-    /** Handle API errors */
-    const apiError = handleApiError('getBlocks', error);
-    /** Return error response */
-    return {
-      isError: true,
-      error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
-      } as IError,
-    };
+  if (isIError(data)) {
+    return { isError: true, error: data };
   }
+
+  return { isError: false, blocks: data };
 };

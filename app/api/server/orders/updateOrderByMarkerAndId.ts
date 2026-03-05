@@ -6,7 +6,7 @@ import type {
 
 import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
+import { isIError } from '@/app/utils/errorHandler';
 
 interface HandleProps {
   marker: string;
@@ -38,35 +38,18 @@ export const updateOrderByMarkerAndId = async ({
   error?: IError;
   order?: IBaseOrdersEntity;
 }> => {
-  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  /** Update order by marker and ID through the API */
-  try {
-    /** Call the API to update order by marker and ID */
-    const orderData = await getApi().Orders.updateOrderByMarkerAndId(
-      marker,
-      id,
-      data,
-      langCode,
-    );
+  const orderData = await getApi().Orders.updateOrderByMarkerAndId(
+    marker,
+    id,
+    data,
+    langCode,
+  );
 
-    /** Check if the response is an error */
-    if (isIError(orderData)) {
-      return { isError: true, error: orderData };
-    } else {
-      return { isError: false, order: orderData };
-    }
-  } catch (error) {
-    /** Handle API errors */
-    const apiError = handleApiError('updateOrderByMarkerAndId', error);
-    /** Return error response */
-    return {
-      isError: true,
-      error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
-      } as IError,
-    };
+  if (isIError(orderData)) {
+    return { isError: true, error: orderData };
   }
+
+  return { isError: false, order: orderData };
 };

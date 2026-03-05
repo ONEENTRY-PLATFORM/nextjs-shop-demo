@@ -3,7 +3,7 @@ import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
 
 import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
+import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get all blocks by page url.
@@ -26,30 +26,13 @@ export const getBlocksByPageUrl = async ({
   error?: IError;
   blocks?: IPositionBlock[];
 }> => {
-  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  /** Fetch blocks by page URL and language from the API */
-  try {
-    /** Call the API to get blocks by page URL and language */
-    const data = await getApi().Pages.getBlocksByPageUrl(pageUrl, langCode);
+  const data = await getApi().Pages.getBlocksByPageUrl(pageUrl, langCode);
 
-    /** Check if the response is an error */
-    if (isIError(data)) {
-      return { isError: true, error: data };
-    } else {
-      return { isError: false, blocks: data };
-    }
-  } catch (error) {
-    /** Handle API errors */
-    const apiError = handleApiError('getBlocksByPageUrl', error);
-    /** Return error response */
-    return {
-      isError: true,
-      error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
-      } as IError,
-    };
+  if (isIError(data)) {
+    return { isError: true, error: data };
   }
+
+  return { isError: false, blocks: data };
 };

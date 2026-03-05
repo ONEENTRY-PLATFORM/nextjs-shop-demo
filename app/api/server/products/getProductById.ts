@@ -3,7 +3,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 
 import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
+import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get product by id.
@@ -21,9 +21,7 @@ export const getProductById = async (
   error?: IError;
   product?: IProductsEntity;
 }> => {
-  /** Validate inputs */
   if (!id || id <= 0) {
-    /** Return error for invalid product ID */
     return {
       isError: true,
       error: {
@@ -33,9 +31,7 @@ export const getProductById = async (
     };
   }
 
-  /** Check if language parameter is provided */
   if (!lang) {
-    /** Return error for missing language parameter */
     return {
       isError: true,
       error: {
@@ -45,41 +41,17 @@ export const getProductById = async (
     };
   }
 
-  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  /** Validate language code */
   if (!langCode) {
-    return {
-      isError: true,
-      error: {
-        statusCode: 400,
-        message: `Unsupported language: ${lang}`,
-      } as IError,
-    };
+    return { isError: true, error: { statusCode: 400, message: '' } as IError };
   }
 
-  /** Fetch product by ID and language from the API */
-  try {
-    /** Call the API to get product by ID and language */
-    const data = await getApi().Products.getProductById(id, langCode);
+  const data = await getApi().Products.getProductById(id, langCode);
 
-    /** Check if the response is an error */
-    if (isIError(data)) {
-      return { isError: true, error: data };
-    } else {
-      return { isError: false, product: data };
-    }
-  } catch (error) {
-    /** Handle API errors */
-    const apiError = handleApiError('getProductById', error);
-    /** Return error response */
-    return {
-      isError: true,
-      error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
-      } as IError,
-    };
+  if (isIError(data)) {
+    return { isError: true, error: data };
   }
+
+  return { isError: false, product: data };
 };

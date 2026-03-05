@@ -2,7 +2,7 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 
 import { getApi } from '@/app/api';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
+import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Getting all orders from the orders storage object created by the user.
@@ -33,37 +33,18 @@ export const getAllOrdersByMarker = async ({
   orders?: IOrderByMarkerEntity[];
   total: number;
 }> => {
-  /** Convert language code to uppercase */
   const langCode = lang.toUpperCase();
 
-  /** Fetch orders by marker with pagination from the API */
-  try {
-    /** Call the API to get orders by marker with offset and limit */
-    const data = await getApi().Orders.getAllOrdersByMarker(
-      marker,
-      langCode,
-      offset,
-      limit,
-    );
+  const data = await getApi().Orders.getAllOrdersByMarker(
+    marker,
+    langCode,
+    offset,
+    limit,
+  );
 
-    /** Check if the response is an error */
-    if (isIError(data)) {
-      return { isError: true, error: data, total: 0 };
-    } else {
-      return { isError: false, orders: data.items, total: data.total };
-    }
-  } catch (error) {
-    /** Handle API errors */
-    const apiError = handleApiError('getAllOrdersByMarker', error);
-
-    /** Return error response with zero total */
-    return {
-      isError: true,
-      error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
-      } as IError,
-      total: 0,
-    };
+  if (isIError(data)) {
+    return { isError: true, error: data, total: 0 };
   }
+
+  return { isError: false, orders: data.items, total: data.total };
 };

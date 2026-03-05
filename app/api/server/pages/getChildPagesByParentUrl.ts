@@ -3,7 +3,7 @@ import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 
 import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
+import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get child pages object with information as an array.
@@ -20,32 +20,15 @@ export const getChildPagesByParentUrl = async (
 ): Promise<{
   isError: boolean;
   error?: IError;
-  pages?: IPagesEntity[] | IError;
+  pages?: IPagesEntity[];
 }> => {
-  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  /** Fetch child pages by parent URL and language from the API */
-  try {
-    /** Call the API to get child pages by parent URL and language */
-    const data = await getApi().Pages.getChildPagesByParentUrl(url, langCode);
+  const data = await getApi().Pages.getChildPagesByParentUrl(url, langCode);
 
-    /** Check if the response is an error */
-    if (isIError(data)) {
-      return { isError: true, error: data };
-    } else {
-      return { isError: false, pages: data };
-    }
-  } catch (error) {
-    /** Handle API errors */
-    const apiError = handleApiError('getChildPagesByParentUrl', error);
-    /** Return error response */
-    return {
-      isError: true,
-      error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
-      } as IError,
-    };
+  if (isIError(data)) {
+    return { isError: true, error: data };
   }
+
+  return { isError: false, pages: data };
 };

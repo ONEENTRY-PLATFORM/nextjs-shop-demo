@@ -23,9 +23,6 @@ let apiInstance = defineOneEntry(PROJECT_URL, {
   auth: {
     saveFunction,
   },
-  errors: {
-    isShell: false,
-  },
 });
 
 /**
@@ -82,9 +79,6 @@ export async function reDefine(
     auth: {
       refreshToken,
       saveFunction,
-    },
-    errors: {
-      isShell: false,
     },
   });
 }

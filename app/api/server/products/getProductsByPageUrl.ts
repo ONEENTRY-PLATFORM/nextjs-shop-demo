@@ -4,7 +4,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import { getApi } from '@/app/api';
 import getSearchParams from '@/app/api/utils/getSearchParams';
 import { LanguageEnum } from '@/app/types/enum';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
+import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get all products with pagination for the selected category.
@@ -45,51 +45,25 @@ export const getProductsByPageUrl = async (props: {
   products: IProductsEntity[] | [];
   total: number;
 }> => {
-  /** Destructure props to get limit, offset, params, and lang */
   const { limit, offset, params, lang } = props;
-  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-  /** Prepare search parameters body for the API request */
   const body = getSearchParams(params.searchParams);
 
-  /** Fetch products by page URL with pagination and search parameters from the API */
-  try {
-    /** Call the API to get products by page URL with filters, pagination, and sorting */
-    const data = await getApi().Products.getProductsByPageUrl(
-      params.handle,
-      body,
-      langCode,
-      {
-        sortOrder: 'DESC',
-        sortKey: 'date',
-        offset: offset,
-        limit: limit,
-      },
-    );
+  const data = await getApi().Products.getProductsByPageUrl(
+    params.handle,
+    body,
+    langCode,
+    { sortOrder: 'DESC', sortKey: 'date', offset, limit },
+  );
 
-    /** Check if the response is an error */
-    if (isIError(data)) {
-      return { isError: true, error: data, products: [], total: 0 };
-    } else {
-      return {
-        isError: false,
-        error: {} as IError,
-        products: data.items,
-        total: data.total,
-      };
-    }
-  } catch (error) {
-    /** Handle API errors */
-    const apiError = handleApiError('getProductsByPageUrl', error);
-    /** Return error response with empty products array and zero total */
-    return {
-      isError: true,
-      error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
-      } as IError,
-      products: [],
-      total: 0,
-    };
+  if (isIError(data)) {
+    return { isError: true, error: data, products: [], total: 0 };
   }
+
+  return {
+    isError: false,
+    error: {} as IError,
+    products: data.items,
+    total: data.total,
+  };
 };

@@ -1,7 +1,7 @@
 import type { IAuthPostBody } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 
 import { getApi } from '@/app/api';
-import { handleApiError } from '@/app/utils/errorHandler';
+import { isIError } from '@/app/utils/errorHandler';
 
 type LogInProps = { login: string; password: string };
 
@@ -22,33 +22,22 @@ export const logInUser = async ({
   data?: any;
   error?: string;
 }> => {
-  /** Attempt to authenticate user with provided credentials */
-  try {
-    /** Prepare authentication data with email and password */
-    const preparedData: IAuthPostBody = {
-      authData: [
-        {
-          marker: 'email_reg',
-          value: login,
-        },
-        {
-          marker: 'password_reg',
-          value: password,
-        },
-      ],
-    };
-    /** Call the authentication API with prepared data */
-    const result = await getApi().AuthProvider.auth('email', preparedData);
-    /** Check if authentication was successful by verifying tokens */
-    if (result && result.accessToken && result.refreshToken) {
-      return { data: result };
-    }
-    /** Handle case where result exists but doesn't have required tokens */
-    return { error: 'Authentication failed' };
-  } catch (error) {
-    /** Handle API errors during authentication */
-    const apiError = handleApiError('auth', error);
-    /** Return error message */
-    return { error: apiError.message };
+  const preparedData: IAuthPostBody = {
+    authData: [
+      { marker: 'email_reg', value: login },
+      { marker: 'password_reg', value: password },
+    ],
+  };
+
+  const result = await getApi().AuthProvider.auth('email', preparedData);
+
+  if (isIError(result)) {
+    return { error: result.message };
   }
+
+  if (result && result.accessToken && result.refreshToken) {
+    return { data: result };
+  }
+
+  return { error: 'Authentication failed' };
 };

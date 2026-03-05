@@ -3,7 +3,7 @@ import type { IError } from 'oneentry/dist/base/utils';
 
 import { getApi } from '@/app/api';
 import { LanguageEnum } from '@/app/types/enum';
-import { handleApiError, isIError } from '@/app/utils/errorHandler';
+import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get a single attribute with data from the attribute sets with API AttributesSets.
@@ -29,35 +29,17 @@ export const getSingleAttributeByMarkerSet: any = async ({
   error?: IError;
   attribute?: IAttributesSetsEntity;
 }> => {
-  /** Get language code from LanguageEnum */
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
-  /** Fetch single attribute by marker set from the API */
-  try {
-    /** Call the API to get single attribute by marker set */
-    const attribute =
-      await getApi().AttributesSets.getSingleAttributeByMarkerSet(
-        setMarker,
-        attributeMarker,
-        langCode,
-      );
+  const attribute = await getApi().AttributesSets.getSingleAttributeByMarkerSet(
+    setMarker,
+    attributeMarker,
+    langCode,
+  );
 
-    /** Check if the response is an error */
-    if (isIError(attribute)) {
-      return { isError: true, error: attribute as IError };
-    } else {
-      return { isError: false, attribute: attribute };
-    }
-  } catch (error) {
-    /** Handle API errors */
-    const apiError = handleApiError('getSingleAttributeByMarkerSet', error);
-    /** Return error response */
-    return {
-      isError: true,
-      error: {
-        statusCode: apiError.statusCode,
-        message: apiError.message,
-      } as IError,
-    };
+  if (isIError(attribute)) {
+    return { isError: true, error: attribute as IError };
   }
+
+  return { isError: false, attribute };
 };
