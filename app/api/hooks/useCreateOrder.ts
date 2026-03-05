@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
@@ -22,10 +21,10 @@ export const useCreateOrder = ({
 }: {
   langCode: string;
 }): {
-  onConfirmOrder: any;
-  isLoading: any;
-  error: any;
-  setError: any;
+  onConfirmOrder: () => Promise<void>;
+  isLoading: boolean;
+  error: string;
+  setError: (error: string) => void;
 } => {
   /** Initialize router for navigation */
   const router = useTransitionRouter();
@@ -94,6 +93,7 @@ export const useCreateOrder = ({
       const orderFormData = order.formData
         .slice()
         .filter((element) => element.marker !== 'time')
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .map((data: { marker: string; type: string; value: any }) => {
           return {
             marker: data.marker,

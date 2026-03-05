@@ -103,7 +103,7 @@ const ProductSingle = async ({
 
       {/** Reviews */}
       <ProductAnimations className={''} index={3}>
-        <ReviewsSectionServer dict={dict} product={product} />
+        <ReviewsSectionServer dict={dict} product={product} lang={lang} />
       </ProductAnimations>
 
       {/** blocks */}

@@ -42,7 +42,7 @@ export const updateUserState = async ({
   const phone = user.formData.find((item) => item.marker === 'phone_reg');
 
   const res = await getApi().Users.updateUser({
-    formIdentifier: 'reg',
+    formIdentifier: user.formIdentifier,
     formData: formData,
     state: {
       favorites: favorites.length > 0 ? favorites : user.state.favorites,
