@@ -260,7 +260,7 @@ export const AuthProvider = ({
     () => ({
       isAuth,
       isLoading,
-      user,
+      ...(user !== undefined && { user }),
       authenticate: () => setRefetch(!refetch),
       refreshUser: () => setRefetchUser(!refetchUser),
     }),
@@ -268,7 +268,5 @@ export const AuthProvider = ({
   );
 
   /** Return AuthContext Provider with value */
-  return (
-    <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
