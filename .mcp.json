@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "oneentry": {
+      "command": "npx",
+      "args": ["-y", "@oneentry/mcp-server@latest"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    }
+  }
+}
