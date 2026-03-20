@@ -176,6 +176,49 @@ To deploy this project run
 `types`: Includes TypeScript type definitions.
 `components`: Features reusable components like forms, icons, and layout elements.
 
+## Testing
+
+The project uses two testing layers:
+
+| Layer            | Tool                   | Scope                                                    |
+|------------------|------------------------|----------------------------------------------------------|
+| Unit / Component | Jest + Testing Library | Redux slices, UI components in isolation                 |
+| End-to-End       | Playwright             | Full user flows across Chromium, Firefox, WebKit, Mobile |
+
+### Unit tests (Jest)
+
+```bash
+npm test                # run once
+npm run test:watch      # watch mode
+npm run test:coverage   # with coverage report
+```
+
+Unit test files live next to the source in `__tests__/` folders. Coverage is collected from `app/` and `components/`.
+
+### E2E tests (Playwright)
+
+~171 tests across 20 spec files covering: auth, cart, checkout, catalog, favorites, orders, profile, search, navigation, localization, accessibility, mobile flows, and more.
+
+```bash
+npm run test:e2e              # headless (all browsers)
+npm run test:e2e:ui           # Playwright UI mode (recommended for development)
+npm run test:e2e:headed       # visible browser window
+npm run test:e2e:debug        # Playwright Inspector
+npm run test:e2e:report       # open HTML report
+npm run test:e2e:chromium     # Chrome only
+npm run test:e2e:firefox      # Firefox only
+npm run test:e2e:webkit       # Safari only
+npm run test:e2e:install      # install Playwright browsers
+```
+
+E2E tests require a `tests/.env` file with test user credentials — copy from `tests/.env_example`:
+
+    TEST_USER_EMAIL=your-test-user@example.com
+    TEST_USER_PASSWORD=YourPassword123!
+    BASE_URL=http://localhost:3000
+
+For full E2E documentation, test structure, writing guidelines, and CI/CD setup see [tests/README.md](tests/README.md).
+
 ## Development Tools
 
 Scripts: Use npm run dev to start development, npm run build to compile the project, and npm run start to run the production build. The npm run lint script helps maintain code quality.
@@ -212,25 +255,40 @@ Internationalization: The project supports multiple languages, configured in i18
 
 This is the central hub for all documentation. Below are links to specific sections.
 
+### Animations
+
+- [Animations Documentation](./docs/Animations.md)
+- Describes the GSAP animation system and transition components.
+
 ### Authorization
 
-- [Authorization Documentation](./documentation/Authorization.md)
+- [Authorization Documentation](./docs/Authorization.md)
 - Covers login, sign-up, token management, and account activation.
 
-### Orders
+### Error Handling
 
-- [Orders Documentation](./documentation/OrderFlow.md)
-- Details order creation, tracking, and transaction handling.
+- [Error Handling Documentation](./docs/ErrorHandling.md)
+- Describes the centralized error handling approach used across the project.
 
 ### Events
 
-- [Events Documentation](./documentation/Events.md)
-- Explains real-time updates and event triggers.
+- [Events Documentation](./docs/Events.md)
+- Explains real-time updates and event triggers via WebSocket.
 
-### State
+### Order Flow
 
-- [State Documentation](./documentation/UserState.md)
-- Describes user state management and synchronization.
+- [Order Flow Documentation](./docs/OrderFlow.md)
+- Details the appointment booking and order creation process.
+
+### State Management
+
+- [State Management Documentation](./docs/StateManagement.md)
+- Describes the Redux Toolkit state management approach.
+
+### User State
+
+- [User State Documentation](./docs/UserState.md)
+- Describes user state implementation and synchronization.
 
 ---
 
