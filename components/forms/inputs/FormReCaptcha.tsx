@@ -139,14 +139,14 @@ const FormReCaptcha = ({
           checkToken();
         });
 
-        const data = {
-          token,
-          expectedAction: action,
-          siteKey,
-        };
+        // const data = {
+        //   token,
+        //   expectedAction: action,
+        //   siteKey,
+        // };
 
-        const isValid = await System.validateCaptcha(data);
-        setIsValid(isValid);
+        // const isValid = await System.validateCaptcha(data);
+        // setIsValid(isValid);
       } catch (error) {
         console.error('Token validation error:', error);
         setIsValid(false);

@@ -265,7 +265,7 @@ export const RTKApi = createApi({
     getOrderStorageByMarker: build.query<IOrdersEntity, { marker: string }>({
       queryFn: async ({ marker }) => {
         const result = await handleApiResponse(
-          getApi().Orders.getOrderByMarker(marker),
+          getApi().Orders.getOrdersStorageByMarker(marker),
         );
         if (!result || (result as IError)?.statusCode) {
           return { error: result as IError };

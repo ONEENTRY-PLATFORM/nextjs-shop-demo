@@ -22,10 +22,8 @@ import { ROUTES, SELECTORS } from './settings';
 test.describe('Product Page — Structure', () => {
   test.setTimeout(30000);
 
-  let productUrl: string;
-
   test.beforeEach(async ({ page }) => {
-    productUrl = await goToFirstProduct(page);
+    await goToFirstProduct(page);
   });
 
   test('should display product title', async ({ page }) => {

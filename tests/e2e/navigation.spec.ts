@@ -143,7 +143,6 @@ test.describe('Navigation', () => {
       page.on('load', () => navigationCount++);
 
       await page.goto(ROUTES.home);
-      const initialCount = navigationCount;
 
       // Click a nav link (SPA navigation should not increment load count significantly)
       const shopLink = page.locator('header a[href*="/shop"]').first();
