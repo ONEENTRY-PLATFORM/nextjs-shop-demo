@@ -116,7 +116,7 @@ const OrderDataTable = ({
       {/* Payment account information */}
       <div className="flex gap-2">
         <b>{payment_account_title.value}:</b>{' '}
-        {paymentAccountLocalizeInfos?.title}
+        {paymentAccountLocalizeInfos?.title as string | undefined}
       </div>
 
       {/* Formatted total amount with larger text */}

@@ -2,6 +2,13 @@
 
 import type { JSX } from 'react';
 
+/**
+ * Error component
+ * @param   {object}                      props       - The props object
+ * @param   {Error & { digest?: string }} props.error - The error object
+ * @param   {void}                        props.reset - The reset function
+ * @returns {JSX.Element}                             The error component
+ */
 export default function Error({
   error,
   reset,

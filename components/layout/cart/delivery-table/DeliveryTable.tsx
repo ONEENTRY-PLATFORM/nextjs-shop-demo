@@ -57,9 +57,11 @@ const DeliveryTable = ({
   } = dict;
 
   /** Filter form attributes and sort by position */
-  const attrs = data?.attributes
-    ?.slice()
-    .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
+  const attrs = Array.isArray(data?.attributes)
+    ? (data.attributes as IAttributes[])
+        .slice()
+        .sort((a, b) => a.position - b.position)
+    : undefined;
 
   /** Get registered address from user form data if available */
   const addressReg =

@@ -124,7 +124,8 @@ const FormReCaptcha = ({
 
     const validateToken = async () => {
       try {
-        const token = await new Promise<string>((resolve) => {
+        // const token = await new Promise<string>((resolve) => {
+        await new Promise<string>((resolve) => {
           const checkToken = () => {
             if (window.grecaptcha?.enterprise) {
               window.grecaptcha.enterprise.ready(async () => {

@@ -118,19 +118,20 @@ export const ForgotPasswordForm = ({
         {/** Form input fields container */}
         <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
           {/** Map through form attributes to render only the email input field */}
-          {data?.attributes.map((field: any, index: Key | number) => {
-            /** Only render the email registration field for password reset */
-            if (field.marker === 'email_reg') {
-              return (
-                <FormInput
-                  key={field.marker || index}
-                  index={index as number}
-                  {...field}
-                />
-              );
-            }
-            return;
-          })}
+          {Array.isArray(data?.attributes) &&
+            data.attributes.map((field: any, index: Key | number) => {
+              /** Only render the email registration field for password reset */
+              if (field.marker === 'email_reg') {
+                return (
+                  <FormInput
+                    key={field.marker || index}
+                    index={index as number}
+                    {...field}
+                  />
+                );
+              }
+              return;
+            })}
         </div>
 
         {/** Submit button for forgot password form */}

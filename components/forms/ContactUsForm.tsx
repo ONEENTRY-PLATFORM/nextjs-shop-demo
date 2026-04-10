@@ -62,10 +62,12 @@ const ContactUsForm = memo(
      * This ensures fields are displayed in the correct order
      */
     const formFields = useMemo(() => {
-      return data?.attributes
-        ?.slice()
-        .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
-    }, [data?.attributes]);
+      return Array.isArray(data?.attributes)
+        ? (data.attributes as IAttributes[])
+            .slice()
+            .sort((a, b) => a.position - b.position)
+        : undefined;
+    }, [data]);
 
     /**
      * Get the first module form configuration
@@ -98,8 +100,9 @@ const ContactUsForm = memo(
            * Each field is processed according to its type to create the correct data structure
            */
           const transformedFormData = propertiesArray?.reduce((formData, i) => {
-            const type = formFields[i].type;
-            const marker = formFields[i].marker;
+            const field = formFields[Number(i)]!;
+            const type = field.type;
+            const marker = field.marker;
             const value = fieldsData[marker as keyof typeof fieldsData]?.value;
             let newData = {
               marker: marker,

@@ -72,10 +72,12 @@ const SignInForm = ({
    * This ensures fields are displayed in the correct order
    */
   const formFields = useMemo(() => {
-    return data?.attributes
-      ?.slice()
-      .sort((a: IAttributes, b: IAttributes) => a.position - b.position);
-  }, [data?.attributes]);
+    return Array.isArray(data?.attributes)
+      ? (data.attributes as IAttributes[])
+          .slice()
+          .sort((a, b) => a.position - b.position)
+      : undefined;
+  }, [data]);
 
   /**
    * Handles the sign-in form submission

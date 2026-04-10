@@ -86,7 +86,7 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
   });
 
   /** Extract time intervals and holidays from API response */
-  const schedule = data?.value?.[0]?.values;
+  const schedule = (data?.value as any)?.[0]?.values;
 
   /** Extract holidays from schedule */
   const holidays = useMemo(() => {

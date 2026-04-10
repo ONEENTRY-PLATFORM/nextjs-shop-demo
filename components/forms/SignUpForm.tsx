@@ -245,20 +245,21 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         {/** Form input fields container */}
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {/** Map through form attributes to render input fields */}
-          {data?.attributes.map((field: IAttributes, index: Key | number) => {
-            /** Exclude email notifications field from regular input rendering */
-            if (field.marker !== 'email_notifications') {
-              return (
-                <FormInput
-                  index={index as number}
-                  key={field.marker}
-                  {...field}
-                  value={field.value}
-                />
-              );
-            }
-            return;
-          })}
+          {Array.isArray(data?.attributes) &&
+            data.attributes.map((field: IAttributes, index: Key | number) => {
+              /** Exclude email notifications field from regular input rendering */
+              if (field.marker !== 'email_notifications') {
+                return (
+                  <FormInput
+                    index={index as number}
+                    key={field.marker}
+                    {...field}
+                    value={field.value}
+                  />
+                );
+              }
+              return;
+            })}
         </div>
 
         {/** Submit button for registration form */}

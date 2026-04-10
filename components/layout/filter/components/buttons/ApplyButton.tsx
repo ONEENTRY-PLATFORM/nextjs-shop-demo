@@ -74,7 +74,11 @@ const ApplyButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
 
   return (
     /* Apply button with styling and click handler to apply filters and close the modal */
-    <button onClick={handleApply} data-testid="filter-apply-button" className="btn btn-xl btn-primary w-full">
+    <button
+      onClick={handleApply}
+      data-testid="filter-apply-button"
+      className="btn btn-xl btn-primary w-full"
+    >
       {/** Display localized apply button text or fallback to 'Apply' */}
       {apply_button_placeholder?.value || 'Apply'}
     </button>
