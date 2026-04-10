@@ -17,7 +17,7 @@ import Placeholder from './Placeholder';
  * @param   {number}      props.height    - Image height.
  * @param   {string}      props.sizes     - Image sizes.
  * @param   {boolean}     props.fill      - Fill parent container.
- * @param   {string}      props.priority  - Priority loading flag.
+ * @param   {boolean}     props.priority  - Priority loading flag.
  * @param   {string}      props.className - Additional CSS classes.
  * @param   {number}      props.quality   - Image quality (1-100).
  * @param   {string}      props.type      - Image type ("next" | "custom").
@@ -30,7 +30,7 @@ const OptimizedImage = ({
   width,
   height,
   sizes,
-  priority = '',
+  priority = false,
   className = '',
   quality,
   type = 'next',
@@ -43,11 +43,11 @@ const OptimizedImage = ({
   height?: number;
   sizes?: string;
   fill?: boolean;
-  priority?: string;
+  priority?: boolean;
   className?: string;
   quality?: number;
   type?: string;
-  loading?: string;
+  loading?: 'eager' | 'lazy';
 }): JSX.Element => {
   /** Track image loading state for animations */
   const [isImageLoading, setImageLoading] = useState(true);
@@ -79,7 +79,12 @@ const OptimizedImage = ({
       ...(height !== undefined && { height }),
       priority,
       quality,
-      loading,
+      /**
+       * Only set `loading` when it's explicitly provided. When `priority` is
+       * true Next.js requires `loading` to be unset (or 'eager'), otherwise
+       * it logs a conflict warning.
+       */
+      ...(loading !== undefined && { loading }),
       className: `
         duration-300 ease-in-out
         ${isImageLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0 object-cover'}

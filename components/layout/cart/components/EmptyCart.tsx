@@ -36,6 +36,7 @@ const EmptyCart = ({
         height={100}
         src={'/icons/cart.svg'}
         alt={empty_cart_plug?.value}
+        priority
         className="mb-5 size-20 opacity-20"
       />
 

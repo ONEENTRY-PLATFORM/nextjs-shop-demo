@@ -27,6 +27,7 @@ const ProductsNotFound = async ({
         height={100}
         src={'/icons/cart.svg'}
         alt="..."
+        priority
         className="mx-auto mb-5 size-20"
       />
       <div className="text-center text-lg">Products not found</div>

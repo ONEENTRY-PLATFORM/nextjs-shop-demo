@@ -49,15 +49,33 @@ const PriceFilter = memo(
 
     /** Constants for working with price range */
     const STEP = 10;
-    const MIN = prices?.min || 0;
-    const MAX = prices?.max || 100;
+    const RAW_MIN = prices?.min || 0;
+    const RAW_MAX = prices?.max || 100;
+
+    /**
+     * Align bounds to the STEP grid so that `values` are always reachable via
+     * `min + n*step` — otherwise react-range logs a "values in conflict with
+     * step/min/max" warning.
+     */
+    const MIN = Math.floor(RAW_MIN / STEP) * STEP;
+    const MAX = Math.max(MIN + STEP, Math.ceil(RAW_MAX / STEP) * STEP);
+
+    /**
+     * Snap a raw value to the STEP grid and clamp it into [MIN, MAX]
+     * @param   {number} value - raw value to snap
+     * @returns {number}       snapped value
+     */
+    const snap = (value: number): number => {
+      const snapped = Math.round((value - MIN) / STEP) * STEP + MIN;
+      return Math.min(MAX, Math.max(MIN, snapped));
+    };
 
     /** Local states for storing "from" and "to" values of price range */
     const [priceFrom, setPriceFrom] = useState(
-      params.get('minPrice') ? Number(params.get('minPrice')) : MIN,
+      snap(params.get('minPrice') ? Number(params.get('minPrice')) : MIN),
     );
     const [priceTo, setPriceTo] = useState(
-      params.get('maxPrice') ? Number(params.get('maxPrice')) : MAX,
+      snap(params.get('maxPrice') ? Number(params.get('maxPrice')) : MAX),
     );
 
     /** Sync local state with context on mount and when values change */
@@ -215,7 +233,7 @@ const PriceFilter = memo(
             step={STEP}
             min={MIN}
             max={MAX}
-            values={[priceFrom, priceTo]}
+            values={[snap(priceFrom), snap(priceTo)]}
             onChange={handlePriceChange}
             renderMark={renderMark}
             renderTrack={renderTrack}

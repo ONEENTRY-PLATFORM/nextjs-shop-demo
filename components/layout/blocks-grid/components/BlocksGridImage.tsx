@@ -26,7 +26,7 @@ const BlocksGridImage = async ({
     <OptimizedImage
       src={bg_web}
       alt={title.value}
-      priority={'high'}
+      priority
       quality={75}
       sizes="(min-width: 1024px) 66vw, 100vw"
       className="absolute top-0 left-0 z-0 size-full rounded-3xl object-cover transition-transform duration-500 group-hover:scale-125"

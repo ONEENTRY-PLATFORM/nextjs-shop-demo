@@ -68,30 +68,40 @@ const CartAnimations = ({
       ? (ref.current as HTMLElement).querySelectorAll('#total')
       : [];
 
-    /** Only create timeline if elements exist */
-    if (
-      productElements.length > 0 ||
-      trElements.length > 0 ||
-      totalElement.length > 0
-    ) {
-      /** Set initial state for all elements (hidden and shifted down) */
-      tl.set([productElements, trElements, totalElement], {
+    /** Collect only non-empty targets to avoid GSAP "target not found" warnings */
+    const initialTargets = [productElements, trElements, totalElement].filter(
+      (els) => els.length > 0,
+    );
+    const secondaryTargets = [trElements, totalElement].filter(
+      (els) => els.length > 0,
+    );
+
+    /** Only create timeline if at least one element set exists */
+    if (initialTargets.length > 0) {
+      /** Set initial state for all existing elements (hidden and shifted down) */
+      tl.set(initialTargets, {
         autoAlpha: 0,
         yPercent: 100,
-      })
-        /** Animate product elements with staggered delay */
-        .to(productElements, {
+      });
+
+      /** Animate product elements with staggered delay (only if present) */
+      if (productElements.length > 0) {
+        tl.to(productElements, {
           autoAlpha: 1,
           yPercent: 0,
           stagger: 0.1,
           delay: 0.35,
-        })
-        /** Animate table rows and total element */
-        .to([trElements, totalElement], {
+        });
+      }
+
+      /** Animate table rows and total element (only if any exist) */
+      if (secondaryTargets.length > 0) {
+        tl.to(secondaryTargets, {
           autoAlpha: 1,
           yPercent: 0,
           stagger: 0.1,
         });
+      }
 
       /** Execute leaving animation when transitioning from 'none' to 'leaving' */
       if (stage === 'leaving' && prevStage === 'none') {

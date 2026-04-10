@@ -32,6 +32,7 @@
     "next-transition-router": "^0.2.11",
     "nuqs": "^2.8.9",
     "oneentry": "^1.0.145",
+    "playwright": "^1.59.1",
     "react": "^19.2.5",
     "react-calendar": "^6.0.1",
     "react-dom": "^19.2.5",

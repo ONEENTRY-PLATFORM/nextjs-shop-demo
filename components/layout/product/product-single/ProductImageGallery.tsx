@@ -107,6 +107,7 @@ const ProductImageGallery = ({
                       src={image.original}
                       alt={imageAlt}
                       sizes="(min-width: 1024px) 66vw, 100vw"
+                      style={{ width: 'auto', height: 'auto' }}
                       className="mx-auto self-center"
                     />
                   </div>
@@ -130,6 +131,7 @@ const ProductImageGallery = ({
                       height={80}
                       src={image.thumbnail}
                       alt={imageAlt}
+                      style={{ width: 'auto', height: 'auto' }}
                       className="mx-auto self-center"
                     />
                   </div>
@@ -145,6 +147,8 @@ const ProductImageGallery = ({
               height={280}
               src={imagesData[0]?.original || '/placeholder.jpg'}
               alt={imageAlt}
+              sizes="(min-width: 1024px) 66vw, 100vw"
+              style={{ width: 'auto', height: 'auto' }}
               className="mx-auto self-center"
             />
           </div>
