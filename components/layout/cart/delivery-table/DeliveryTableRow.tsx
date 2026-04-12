@@ -70,7 +70,7 @@ const DeliveryTableRow = ({
             loading="lazy"
             src={icon}
             alt={placeholder}
-            className="aspect-square h-auto w-5 cursor-pointer"
+            className="size-5 cursor-pointer"
             onClick={() => {
               /** Open drawer and set component to CalendarForm when icon is clicked */
               setOpen(true);

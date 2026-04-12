@@ -58,13 +58,27 @@ export async function goToProduct(
 }
 
 /**
- * Waits for the page to be fully loaded
+ * Waits for the page to be fully loaded.
+ *
+ * Note: `networkidle` is intentionally NOT used — it is officially discouraged
+ * by Playwright and is unreliable against Next.js dev server, where HMR
+ * websockets and background polling keep the network permanently busy
+ * (this previously caused 30s timeouts in Firefox).
+ * Instead we wait for `domcontentloaded` plus the `<main>` landmark, which
+ * every page in this app renders inside the root layout, so it is a stable
+ * signal that hydration has actually produced the page shell.
  * @param   {Page}          page - Playwright page object
  * @returns {Promise<void>}      Promise that resolves when the page is fully loaded
  */
 export async function waitForPageLoad(page: Page): Promise<void> {
-  await page.waitForLoadState('networkidle');
   await page.waitForLoadState('domcontentloaded');
+  await page
+    .locator('main')
+    .first()
+    .waitFor({ state: 'visible', timeout: 15000 })
+    .catch(() => {
+      // Some routes (e.g. modals/redirects) may not render a <main> — don't fail here.
+    });
 }
 
 /**

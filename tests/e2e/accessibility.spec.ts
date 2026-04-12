@@ -9,7 +9,9 @@ import { ROUTES, SELECTORS } from './settings';
  * Covers keyboard navigation, ARIA roles, focus management, and semantic HTML.
  */
 test.describe('Accessibility', () => {
-  test.setTimeout(30000);
+  // Firefox + Next.js dev server hydrates noticeably slower than Chromium,
+  // so the default 30s timeout is too tight for nav-heavy a11y tests.
+  test.setTimeout(60000);
 
   // ---------------------------------------------------------------------------
   // Page-level landmarks and semantic structure
@@ -71,15 +73,17 @@ test.describe('Accessibility', () => {
       await page.goto(ROUTES.home);
       await waitForPageLoad(page);
 
-      // Focus the body first
-      await page.locator('body').press('Tab');
+      // Make sure the header is actually rendered before pressing Tab — otherwise
+      // Firefox can keep focus on <body> and the loop below never moves it.
+      await expect(page.locator('header').first()).toBeVisible();
 
-      // After a few Tabs the cart icon or search should be focused
-      for (let i = 0; i < 5; i++) {
+      // Press Tab from the page itself (more reliable cross-browser than
+      // locator('body').press('Tab'), which doesn't always shift focus in Firefox).
+      for (let i = 0; i < 6; i++) {
         await page.keyboard.press('Tab');
       }
 
-      // At least one interactive element is focused
+      // At least one interactive element should be focused.
       const focused = await page.evaluate(
         () => document.activeElement?.tagName ?? '',
       );
