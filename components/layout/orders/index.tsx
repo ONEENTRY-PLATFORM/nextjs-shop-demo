@@ -92,6 +92,7 @@ const OrdersPage = ({
   useEffect(() => {
     /** If user is not authenticated, stop loading and return */
     if (!isAuth) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setOrderState((prev) => ({ ...prev, loading: false }));
       return;
     }

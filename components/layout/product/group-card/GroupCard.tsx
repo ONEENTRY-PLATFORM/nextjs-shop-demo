@@ -1,4 +1,4 @@
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues, ILocalizeInfo } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
@@ -32,22 +32,24 @@ const GroupCard = ({
   const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
 
   /** Get attribute values for the current language or fallback to default */
-  const attributeValues =
-    product.attributeValues[langCode] || product.attributeValues;
+  const attributeValues = ((
+    product.attributeValues as unknown as Record<string, IAttributeValues>
+  )[langCode] || product.attributeValues) as IAttributeValues;
 
   /** Get localized product title or fallback to default */
-  const title =
-    product.localizeInfos[langCode]?.title || product.localizeInfos?.title;
+  const localizeInfos = product.localizeInfos as ILocalizeInfo;
+  const title = localizeInfos?.title;
 
   /** Extract product images from attribute values */
-  const images =
-    attributeValues.more_pic?.value || attributeValues.more_pic?.value;
+  const images = attributeValues.more_pic?.value as
+    | Array<{ downloadLink: string }>
+    | undefined;
 
   /** Get first product image download link */
-  const pic1 = images && images[0].downloadLink;
+  const pic1 = images && images[0]?.downloadLink;
 
   /** Get second product image download link */
-  const pic2 = images && images[1].downloadLink;
+  const pic2 = images && images[1]?.downloadLink;
 
   return (
     <div className="flex min-h-45.5 flex-row justify-between rounded-xl bg-[#F6F7F9] p-4 transition-shadow hover:shadow-lg max-md:flex-col">
@@ -55,7 +57,7 @@ const GroupCard = ({
         <div className="flex w-[37%] flex-col">
           <h3 className="mb-5 text-sm leading-4 text-neutral-600">{title}</h3>
           <PriceDisplay
-            currentPrice={attributeValues?.sale?.value}
+            currentPrice={attributeValues?.sale?.value as number}
             originalPrice={product.price as number}
             lang={lang}
           />

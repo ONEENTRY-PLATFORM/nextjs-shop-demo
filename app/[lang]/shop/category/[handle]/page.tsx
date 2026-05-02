@@ -13,6 +13,9 @@ import ProductsGridLoader from '@/components/layout/products-grid/components/Pro
 import type { Locale } from '@/i18n-config';
 import { i18n } from '@/i18n-config';
 
+/** Memoized loader component to prevent unnecessary re-renders */
+const MemoizedProductsGridLoader = memo(ProductsGridLoader);
+
 /**
  * Shop category page layout
  * @param   {object}               props              - Page props
@@ -43,9 +46,6 @@ const ShopCategoryLayout = async (props: {
   /** Set products per page limit */
   // TODO: Extract products per page limit from global settings
   const pagesLimit = 10;
-
-  /** Memoize the loader component to prevent unnecessary re-renders */
-  const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
   /** Show 404 page if category page not found */
   if (!page) {
@@ -161,7 +161,7 @@ export async function generateMetadata({
   return generatePageMetadata({
     handle: handle,
     title: localizeInfos.title,
-    description: localizeInfos.plainContent,
+    description: localizeInfos.plainValue as string,
     isVisible: isVisible,
     imageUrl: getImageUrl('opengraph_image', attributeValues),
     imageAlt: localizeInfos.title,

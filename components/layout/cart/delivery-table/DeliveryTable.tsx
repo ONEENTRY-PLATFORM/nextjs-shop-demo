@@ -58,7 +58,7 @@ const DeliveryTable = ({
 
   /** Filter form attributes and sort by position */
   const attrs = Array.isArray(data?.attributes)
-    ? (data.attributes as IAttributes[])
+    ? (data.attributes as unknown as IAttributes[])
         .slice()
         .sort((a, b) => a.position - b.position)
     : undefined;
@@ -146,8 +146,8 @@ const DeliveryTable = ({
                 key={marker}
                 value={formattedDate}
                 icon={'/icons/calendar.svg'}
-                label={order_info_date_placeholder?.value}
-                placeholder={order_info_date_placeholder?.value}
+                label={order_info_date_placeholder?.value as string}
+                placeholder={order_info_date_placeholder?.value as string}
               />
             );
           }
@@ -159,8 +159,8 @@ const DeliveryTable = ({
                 key={marker}
                 value={deliveryData.time}
                 icon={'/icons/time.svg'}
-                label={order_info_time_placeholder?.value}
-                placeholder={order_info_time_placeholder?.value}
+                label={order_info_time_placeholder?.value as string}
+                placeholder={order_info_time_placeholder?.value as string}
               />
             );
           }
@@ -170,7 +170,7 @@ const DeliveryTable = ({
             return (
               <AddressRow
                 key={marker}
-                placeholder={order_info_address_placeholder?.value}
+                placeholder={order_info_address_placeholder?.value as string}
               />
             );
           }

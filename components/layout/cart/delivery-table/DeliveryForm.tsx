@@ -63,7 +63,7 @@ const DeliveryForm = ({
 
         {/** Payment button to proceed to payment page */}
         <PaymentButton
-          text={dict.go_to_pay_placeholder?.value}
+          text={dict.go_to_pay_placeholder?.value as string}
           className="self-end max-lg:self-center"
         />
       </div>

@@ -78,7 +78,7 @@ const DeleteButton = memo(
           <div className="flex items-center justify-between gap-3">
             <span>
               {productInfo?.localizeInfos?.title || 'Product'}{' '}
-              {removed_text?.value || 'removed from cart'}
+              {(removed_text?.value as string) || 'removed from cart'}
             </span>
             <button
               onClick={async () => {
@@ -100,7 +100,7 @@ const DeleteButton = memo(
               }}
               className="w-20 cursor-pointer rounded bg-orange-500 px-3 py-1 text-sm font-semibold text-white hover:bg-orange-600"
             >
-              {undo_text?.value || 'Undo'}
+              {(undo_text?.value as string) || 'Undo'}
             </button>
           </div>
         ),

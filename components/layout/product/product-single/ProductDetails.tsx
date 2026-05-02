@@ -42,7 +42,7 @@ const ProductDetails = ({
     statusIdentifier,
     attributeValues: { sale, price, units_product },
   } = product;
-  const units = units_product?.value || 0;
+  const units = units_product?.value as number;
 
   return (
     <>
@@ -67,8 +67,8 @@ const ProductDetails = ({
         data-testid="product-price"
       >
         <PriceDisplay
-          currentPrice={sale?.value}
-          originalPrice={price?.value}
+          currentPrice={sale?.value as number}
+          originalPrice={price?.value as number}
           lang={lang}
         />
       </div>

@@ -77,7 +77,9 @@ const OrderProductsTable = ({
         /** Check if product is in stock */
         const isInStock =
           actualProduct.statusIdentifier === 'in_stock' &&
-          (actualProduct.attributeValues?.units_product?.value ?? 0) >= 1;
+          ((actualProduct.attributeValues?.units_product?.value as
+            | number
+            | undefined) ?? 0) >= 1;
 
         /** Don't show out of stock products in order */
         if (!isInStock) {
@@ -96,8 +98,8 @@ const OrderProductsTable = ({
             <div className="w-1/4">
               {UsePrice({
                 amount:
-                  attributeValues?.sale?.value ||
-                  attributeValues?.price?.value ||
+                  (attributeValues?.sale?.value as number) ||
+                  (attributeValues?.price?.value as number) ||
                   price ||
                   0,
                 lang,
@@ -119,9 +121,9 @@ const OrderProductsTable = ({
           <div className="w-1/4">
             {UsePrice({
               amount:
-                delivery?.attributeValues?.price?.value ||
-                delivery?.price ||
-                d?.attributeValues?.price?.value ||
+                (delivery?.attributeValues?.price?.value as number) ||
+                (delivery?.price as number) ||
+                (d?.attributeValues?.price?.value as number) ||
                 d?.price ||
                 0,
               lang,

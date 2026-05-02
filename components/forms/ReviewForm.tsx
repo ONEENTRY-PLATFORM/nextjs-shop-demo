@@ -115,7 +115,7 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
     if (!data?.attributes || !Array.isArray(data.attributes)) {
       return undefined;
     }
-    return [...data.attributes].sort(
+    return ([...data.attributes] as unknown as IAttributes[]).sort(
       (a: IAttributes, b: IAttributes) => a.position - b.position,
     );
   }, [data]);
@@ -224,7 +224,9 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
   }
 
   if (!productData || !data) {
-    return form_error_text?.value || 'Error. Some data not found.';
+    return (
+      <>{(form_error_text?.value as string) || 'Error. Some data not found.'}</>
+    );
   }
 
   return (
@@ -274,13 +276,13 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
         {/* Submit button */}
         <FormSubmitButton
           index={formFields?.length || 5}
-          title={dict.leave_review?.value || 'Leave review'}
+          title={(dict.leave_review?.value as string) || 'Leave review'}
           isLoading={loading}
         />
         {/* Error message */}
         {error && <ErrorMessage error={error} />}
         {/* Success message */}
-        {response?.actionMessage && (
+        {response && 'actionMessage' in response && response.actionMessage && (
           <div className="text-center text-green-600">
             {response.actionMessage}
           </div>

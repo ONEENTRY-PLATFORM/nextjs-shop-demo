@@ -50,7 +50,9 @@ const TotalAmount = ({
   const cartTotal = useMemo(() => {
     /** Extract delivery price from delivery object (handle different data structures) */
     const deliveryPrice =
-      delivery?.attributeValues?.price?.value || delivery?.price || 0;
+      (delivery?.attributeValues?.price?.value as number) ||
+      delivery?.price ||
+      0;
 
     /** Reset total to 0 if no products are selected */
     if (!hasProducts) {
@@ -64,8 +66,7 @@ const TotalAmount = ({
   return (
     /** Wrap total amount with animation component for entrance effects */
     <div className={className} data-testid="cart-total">
-      {/** Display localized "Total" label and formatted total price */}
-      {dict?.order_info_total?.value}:{' '}
+      {dict?.order_info_total?.value as string}:{' '}
       {UsePrice({
         amount: cartTotal,
         lang,

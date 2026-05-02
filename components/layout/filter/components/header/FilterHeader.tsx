@@ -22,7 +22,9 @@ const FilterHeader = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
         {/** Back navigation button */}
         <HistoryBack />
         {/** Filter title text from dictionary or fallback to 'Filter' */}
-        <div className="my-auto">{open_filters_button?.value || 'Filter'}</div>
+        <div className="my-auto">
+          {(open_filters_button?.value as string) || 'Filter'}
+        </div>
         {/** Close modal button */}
         <CloseModal />
       </div>

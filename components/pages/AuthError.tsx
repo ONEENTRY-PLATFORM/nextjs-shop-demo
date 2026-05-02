@@ -23,7 +23,7 @@ const AuthError = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
       <h1 className="mb-6 text-6xl text-slate-700">401</h1>
       {/** Authentication required message */}
       <p className="mb-6 text-2xl text-slate-700">
-        {auth_required_text?.value}
+        {auth_required_text?.value as string}
       </p>
       {/** Sign-in button to allow user authentication */}
       <SignInButton dict={dict} />

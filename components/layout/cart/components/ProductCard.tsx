@@ -57,7 +57,8 @@ const ProductCard = ({
 
   /* Check if product is out of stock */
   const isOutOfStock =
-    statusIdentifier !== 'in_stock' || (units_product?.value ?? 0) < 1;
+    statusIdentifier !== 'in_stock' ||
+    ((units_product?.value as number | undefined) ?? 0) < 1;
 
   /**
    * Handle checkbox toggle to select/deselect product in the cart
@@ -124,8 +125,8 @@ const ProductCard = ({
 
           {/** Price display with sale price if applicable */}
           <PriceDisplay
-            currentPrice={sale?.value}
-            originalPrice={price?.value}
+            currentPrice={sale?.value as number}
+            originalPrice={price?.value as number}
             lang={lang}
           />
         </div>
@@ -143,13 +144,13 @@ const ProductCard = ({
         {/** Show out of stock message or quantity selector based on availability */}
         {isOutOfStock ? (
           <div className="flex h-10.5 items-center rounded-3xl bg-slate-100 px-5 text-base font-medium text-gray-500">
-            {out_of_stock_button?.value || 'Out of stock'}
+            {(out_of_stock_button?.value as string) || 'Out of stock'}
           </div>
         ) : (
           /** Component for selecting product quantity */
           <QuantitySelector
             id={id}
-            units={units_product?.value}
+            units={units_product?.value as number}
             title={title}
             height={42}
           />

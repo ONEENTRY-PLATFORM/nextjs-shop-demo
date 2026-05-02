@@ -131,7 +131,7 @@ const SearchBar = ({
       <form className="flex w-full" onSubmit={handleSubmit} role="search">
         {/** Hidden label for accessibility. Provides context for screen readers about the search input */}
         <label htmlFor="quick-search" className="sr-only">
-          {dict?.search_placeholder?.value}
+          {dict?.search_placeholder?.value as string}
         </label>
         {/** Search input field with real-time search functionality */}
         <input
@@ -156,7 +156,9 @@ const SearchBar = ({
           aria-label="Submit search"
         >
           {/** Hidden text for accessibility. Provides context for screen readers about the search button */}
-          <span className="sr-only">{dict?.search_placeholder?.value}</span>
+          <span className="sr-only">
+            {dict?.search_placeholder?.value as string}
+          </span>
           <SearchIcon />
         </button>
       </form>

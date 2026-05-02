@@ -1,3 +1,4 @@
+import type { Locator } from '@playwright/test';
 import { expect, type Page, test } from '@playwright/test';
 
 import { clearAuthState, signIn } from './helpers/auth-helpers';
@@ -15,9 +16,10 @@ import { ROUTES, SELECTORS, TEST_AUTH_USER } from './settings';
 
 /**
  * Generic toast locator — covers common library class names and roles.
- * @param page
+ * @param   {Page}    page -
+ * @returns {Locator}      Toast locator
  */
-const TOAST = (page: Page) =>
+const TOAST = (page: Page): Locator =>
   page.locator(
     '[data-testid="toast"], [class*="toast"], [class*="notification"], [role="alert"], [role="status"]',
   );

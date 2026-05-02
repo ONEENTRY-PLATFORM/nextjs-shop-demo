@@ -134,7 +134,9 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
         /** Check if product is in stock */
         const isInStock =
           product.statusIdentifier === 'in_stock' &&
-          (product.attributeValues?.units_product?.value ?? 0) >= 1;
+          ((product.attributeValues?.units_product?.value as
+            | number
+            | undefined) ?? 0) >= 1;
 
         return isInStock;
       })

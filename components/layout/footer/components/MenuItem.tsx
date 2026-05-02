@@ -5,8 +5,6 @@ import { usePathname } from 'next/navigation';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { JSX } from 'react';
 
-import { LanguageEnum } from '@/app/types/enum';
-
 /**
  * Footer menu item component for rendering individual navigation links in the footer.
  * Displays a single menu item with localized title and active state styling.
@@ -37,12 +35,6 @@ const MenuItem = ({
   }
 
   /**
-   * Convert language shortcode to language enum value
-   * This is used to access localized menu item titles
-   */
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-
-  /**
    * Determine if this menu item is currently active
    * Compares current path with the menu item's target path
    */
@@ -62,8 +54,7 @@ const MenuItem = ({
         href={'/' + lang + '/' + page.pageUrl}
       >
         {/** Display localized menu title or fallback to default title */}
-        {page.localizeInfos[langCode]?.menuTitle ||
-          page.localizeInfos?.menuTitle}
+        {page.localizeInfos?.menuTitle as string}
       </Link>
     </li>
   );

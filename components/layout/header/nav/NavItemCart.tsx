@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import type { JSX } from 'react';
-import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import CartAltIcon from '@/components/icons/cart';
@@ -25,16 +24,10 @@ const NavItemCart = ({
   lang: string;
 }): JSX.Element => {
   /**
-   * State to store the cart item count
-   * This is updated when the cart reducer data changes
-   */
-  const [count, setCount] = useState(0);
-
-  /**
    * Get cart item count from Redux cart reducer
    * Calculates the total number of items in the cart, excluding delivery item (id: 83)
    */
-  const cartCount = useAppSelector((state) => {
+  const count = useAppSelector((state) => {
     /** Return 0 if there are no products in the cart */
     if (state.cartReducer.productsData.length < 1) {
       return 0;
@@ -53,14 +46,6 @@ const NavItemCart = ({
         return total + num;
       });
   });
-
-  /**
-   * Update local count state when cartCount changes
-   * This effect ensures the displayed count stays in sync with the Redux store
-   */
-  useEffect(() => {
-    setCount(cartCount);
-  }, [cartCount]);
 
   /** Destructure page URL and localized information from the menu item */
   const { pageUrl, localizeInfos } = item;

@@ -3,7 +3,6 @@
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
-import { useEffect, useState } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import {
@@ -33,22 +32,11 @@ const ApplyButton = ({
   /** Redux dispatch function for state updates */
   const dispatch = useAppDispatch();
 
-  /** Local state to track if product is in cart */
-  const [productInCart, setInCart] = useState(false);
-
   /** Extract localized text values from dictionary */
   const { apply_button_placeholder, cancel_text } = dict;
 
   /** Check if product is currently in cart using Redux selector */
   const inCart = useAppSelector((state) => selectIsInCart(state, product.id));
-
-  /**
-   * Update local state when Redux cart status changes.
-   * Keeps local state synchronized with global Redux state.
-   */
-  useEffect(() => {
-    setInCart(inCart);
-  }, [inCart]);
 
   /**
    * Add product to cart handler.
@@ -67,19 +55,19 @@ const ApplyButton = ({
   };
 
   /* Render button with different text and actions based on cart status */
-  return !productInCart || !inCart ? (
+  return !inCart ? (
     <button
       onClick={() => addToCartHandle()}
       className="btn btn-md btn-o btn-o-primary mt-auto text-sm font-bold"
     >
-      {apply_button_placeholder?.value}
+      {apply_button_placeholder?.value as string}
     </button>
   ) : (
     <button
       onClick={() => removeFromCartHandle()}
       className="btn btn-md btn-o btn-o-primary mt-auto text-sm font-bold"
     >
-      {cancel_text?.value}
+      {cancel_text?.value as string}
     </button>
   );
 };

@@ -190,13 +190,15 @@ export const AuthProvider = ({
     }
 
     /** Add each product from user state to Redux cart */
-    user.state.cart?.forEach((product: IProducts) => {
-      const productInCart = productsInCart?.find((p) => p.id === product.id);
-      /** If product not in cart, add to cart */
-      if (!productInCart) {
-        dispatch(addProductToCart(product));
-      }
-    });
+    (user.state.cart as IProducts[] | undefined)?.forEach(
+      (product: IProducts) => {
+        const productInCart = productsInCart?.find((p) => p.id === product.id);
+        /** If product not in cart, add to cart */
+        if (!productInCart) {
+          dispatch(addProductToCart(product));
+        }
+      },
+    );
 
     /** Mark cart as loaded */
     dispatch(setCartVersion(1));
@@ -209,7 +211,7 @@ export const AuthProvider = ({
       return;
     }
     /** Add each favorite from user state to Redux favorites */
-    user.state.favorites.forEach((element: number) => {
+    (user.state.favorites as number[]).forEach((element: number) => {
       dispatch(addFavorites(element));
     });
     /** Mark favorites as loaded */
@@ -242,6 +244,7 @@ export const AuthProvider = ({
   /** Set isAuth to false on RTK query error (e.g. polling failure) */
   useEffect(() => {
     if (isError) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsAuth(false);
     }
   }, [isError]);

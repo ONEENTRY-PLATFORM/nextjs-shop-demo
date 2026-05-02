@@ -35,14 +35,14 @@ const EmptyCart = ({
         width={100}
         height={100}
         src={'/icons/cart.svg'}
-        alt={empty_cart_plug?.value}
+        alt={empty_cart_plug?.value as string}
         priority
         className="mb-5 size-20 opacity-20"
       />
 
       {/** Empty cart message from localized dictionary */}
       <h1 className="mb-5 text-lg font-bold text-slate-600 uppercase">
-        {empty_cart_plug?.value}
+        {empty_cart_plug?.value as string}
       </h1>
 
       {/** Link to continue shopping, directing user to the shop page */}
@@ -50,7 +50,7 @@ const EmptyCart = ({
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"
       >
-        {go_to_shop?.value}
+        {go_to_shop?.value as string}
       </Link>
     </FadeTransition>
   );

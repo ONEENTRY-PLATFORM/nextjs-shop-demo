@@ -111,7 +111,7 @@ export const ForgotPasswordForm = ({
             {data.localizeInfos?.titleForSite}
           </h2>
           <p className="text-xs text-gray-400 max-md:max-w-full">
-            {reset_descr?.value}
+            {reset_descr?.value as string}
           </p>
         </div>
 
@@ -137,7 +137,7 @@ export const ForgotPasswordForm = ({
         {/** Submit button for forgot password form */}
         <FormSubmitButton
           index={10}
-          title={send_text?.value}
+          title={send_text?.value as string}
           isLoading={isLoading}
         />
         {/** Display error message if present */}

@@ -155,8 +155,7 @@ const FormReCaptcha = ({
     };
 
     validateToken();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [executedRef.current, action, siteKey, System, setIsValid]);
+  }, [action, siteKey, System, setIsValid]);
 
   /**
    * reCAPTCHA v3 is invisible, so no UI is rendered

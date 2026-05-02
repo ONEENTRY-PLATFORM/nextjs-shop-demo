@@ -111,7 +111,9 @@ const CartPage = ({
         );
         const isOutOfStock =
           product.statusIdentifier !== 'in_stock' ||
-          (product.attributeValues?.units_product?.value ?? 0) < 1;
+          ((product.attributeValues?.units_product?.value as
+            | number
+            | undefined) ?? 0) < 1;
 
         /** If product is out of stock but still selected, deselect it */
         if (isOutOfStock && cartItem?.selected) {

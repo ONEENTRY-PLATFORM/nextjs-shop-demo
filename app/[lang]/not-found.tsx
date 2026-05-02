@@ -32,7 +32,13 @@ const NotFound = async (): Promise<JSX.Element> => {
     <div className="mx-auto flex min-h-96 w-full max-w-(--breakpoint-xl) flex-col items-center justify-center py-8 text-neutral-700">
       <h1 className="mb-10 text-6xl">{localizeInfos?.title}</h1>
       <p className="mb-4">
-        {attributeValues?.error_description?.value[0]?.plainValue}
+        {
+          (
+            attributeValues?.error_description?.value as
+              | Array<{ plainValue?: string }>
+              | undefined
+          )?.[0]?.plainValue
+        }
       </p>
       <Link href="/" className="btn btn-o btn-sm btn-o-primary">
         Return home

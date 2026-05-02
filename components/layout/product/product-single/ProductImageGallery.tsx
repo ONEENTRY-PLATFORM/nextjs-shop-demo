@@ -44,7 +44,7 @@ const ProductImageGallery = ({
 
   /** Extract images from attributeValues with safety checks */
   const imageSrc = attributeValues?.pic?.value;
-  const morePic = attributeValues?.more_pic?.value || [];
+  const morePic = attributeValues?.more_pic?.value as [];
   const isGallery = morePic.length > 1;
 
   /**

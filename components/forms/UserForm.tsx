@@ -3,6 +3,7 @@
 
 import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { IFormAttribute } from 'oneentry/dist/forms/formsInterfaces';
 import type { FormDataType } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { FormEvent, JSX, Key } from 'react';
 import { useCallback, useContext, useMemo, useState } from 'react';
@@ -93,10 +94,10 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
 
         /** Prepare form data for submission. Maps through form attributes and creates data objects for each field */
         const attributes = Array.isArray(data?.attributes)
-          ? (data.attributes as IAttributes[])
+          ? (data.attributes as IFormAttribute[])
           : [];
         const formData: IAuthFormData[] = attributes
-          .map((field: IAttributes) => {
+          .map((field: IFormAttribute) => {
             if (field.marker !== 'email_notifications') {
               const fieldData = fields[field.marker as keyof typeof fields];
               if (fieldData) {
@@ -163,28 +164,30 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {/** Map through form attributes and render FormInput components Each input is populated with user's current data */}
           {Array.isArray(data?.attributes) &&
-            data.attributes.map((field: IAttributes, index: Key | number) => {
-              const marker = field.marker as string;
-              const fieldData =
-                (formDataMap as Record<string, FormDataType>)[marker] || {};
+            (data.attributes as unknown as IAttributes[]).map(
+              (field: IAttributes, index: Key | number) => {
+                const marker = field.marker as string;
+                const fieldData =
+                  (formDataMap as Record<string, FormDataType>)[marker] || {};
 
-              if (field.marker !== 'email_notifications') {
-                return (
-                  <FormInput
-                    key={field.marker}
-                    index={index as number}
-                    {...field}
-                    {...fieldData}
-                    value={fieldData.value}
-                  />
-                );
-              }
-              return;
-            })}
+                if (field.marker !== 'email_notifications') {
+                  return (
+                    <FormInput
+                      key={field.marker}
+                      index={index as number}
+                      {...field}
+                      {...fieldData}
+                      value={fieldData.value as string}
+                    />
+                  );
+                }
+                return;
+              },
+            )}
         </div>
 
         <SubmitButton
-          title={dict?.save_button_text?.value}
+          title={dict?.save_button_text?.value as string}
           isLoading={loading}
           index={10}
         />

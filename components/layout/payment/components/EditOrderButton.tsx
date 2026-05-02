@@ -39,7 +39,7 @@ const EditOrderButton = ({
       className="btn btn-o btn-sm btn-o-primary mt-5 px-12 max-md:w-full"
     >
       {isLoading && <Loader />}
-      {edit_order_text?.value}
+      {edit_order_text?.value as string}
     </button>
   );
 };

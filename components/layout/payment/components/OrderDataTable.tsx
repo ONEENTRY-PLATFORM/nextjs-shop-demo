@@ -75,7 +75,8 @@ const OrderDataTable = ({
                 key={field.marker}
                 className="flex flex-col max-md:flex-row max-md:gap-2"
               >
-                <b>{order_info_address_placeholder?.value}:</b> {field.value}
+                <b>{order_info_address_placeholder?.value as string}:</b>{' '}
+                {field.value}
               </div>
             );
           }
@@ -87,7 +88,7 @@ const OrderDataTable = ({
                 key={field.marker}
                 className="flex flex-col max-md:flex-row max-md:gap-2"
               >
-                <b>{delivery_date_text?.value}: </b>{' '}
+                <b>{delivery_date_text?.value as string}: </b>{' '}
                 {UseDate({
                   fullDate: field.value.fullDate,
                   format: 'en',
@@ -103,7 +104,7 @@ const OrderDataTable = ({
                 key={field.marker}
                 className="flex flex-col max-md:flex-row max-md:gap-2"
               >
-                <b>{delivery_time_text?.value}: </b> {field.value}
+                <b>{delivery_time_text?.value as string}: </b> {field.value}
               </div>
             );
           }

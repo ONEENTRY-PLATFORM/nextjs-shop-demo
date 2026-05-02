@@ -73,7 +73,7 @@ const SignInForm = ({
    */
   const formFields = useMemo(() => {
     return Array.isArray(data?.attributes)
-      ? (data.attributes as IAttributes[])
+      ? (data.attributes as unknown as IAttributes[])
           .slice()
           .sort((a, b) => a.position - b.position)
       : undefined;
@@ -148,7 +148,7 @@ const SignInForm = ({
             index={0}
             className="max-w-full text-xl font-bold text-neutral-600"
           >
-            <h2>{sign_in_text?.value}</h2>
+            <h2>{sign_in_text?.value as string}</h2>
           </FormFieldAnimations>
 
           <FormFieldAnimations
@@ -160,7 +160,7 @@ const SignInForm = ({
               className={tab === 'email' ? 'font-bold' : ''}
               type="button"
             >
-              {email_text?.value}
+              {email_text?.value as string}
             </button>
             /
             <button
@@ -168,7 +168,7 @@ const SignInForm = ({
               className={tab === 'phone' ? 'font-bold' : ''}
               type="button"
             >
-              {phone_text?.value}
+              {phone_text?.value as string}
             </button>
           </FormFieldAnimations>
         </div>
@@ -181,7 +181,7 @@ const SignInForm = ({
                   key={field.marker || index}
                   index={2}
                   {...field}
-                  value={field.value}
+                  value={(field as unknown as { value: string }).value}
                 />
               );
             }
@@ -191,7 +191,7 @@ const SignInForm = ({
                   key={field.marker || index}
                   index={3}
                   {...field}
-                  value={field.value}
+                  value={(field as unknown as { value: string }).value}
                 />
               );
             }
@@ -201,7 +201,7 @@ const SignInForm = ({
                   key={field.marker || index}
                   index={4}
                   {...field}
-                  value={field.value}
+                  value={(field as unknown as { value: string }).value}
                 />
               );
             }
@@ -211,7 +211,7 @@ const SignInForm = ({
 
         <FormSubmitButton
           index={5}
-          title={sign_in_text?.value}
+          title={sign_in_text?.value as string}
           isLoading={loading}
         />
 
@@ -220,12 +220,12 @@ const SignInForm = ({
           className="mx-auto mb-5 flex w-95 max-w-full justify-center gap-5 text-sm"
         >
           <div className="font-bold text-gray-800">
-            {forgot_password_text?.value}
+            {forgot_password_text?.value as string}
           </div>
-          <ResetPasswordButton title={reset_password_text?.value} />
+          <ResetPasswordButton title={reset_password_text?.value as string} />
         </FormFieldAnimations>
         <FormFieldAnimations index={7} className="w-full">
-          <CreateAccountButton title={create_account_text?.value} />
+          <CreateAccountButton title={create_account_text?.value as string} />
         </FormFieldAnimations>
         {error && <ErrorMessage error={error} />}
       </form>

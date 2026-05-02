@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { JSX } from 'react';
-import { useEffect, useState } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
@@ -25,27 +24,13 @@ const NavItemFavorites = ({
   lang: string;
 }): JSX.Element => {
   /**
-   * State to store the favorites item count
-   * This is updated when the favorites reducer data changes
-   */
-  const [count, setCount] = useState(0);
-
-  /**
    * Get favorites count from Redux favorites reducer
    * Gets the array of favorite product IDs and returns its length
    */
-  const favoritesCount = useAppSelector((state) => {
+  const count = useAppSelector((state) => {
     const favorites = selectFavoritesItems(state);
     return favorites.length;
   });
-
-  /**
-   * Update local count state when favoritesCount changes
-   * This effect ensures the displayed count stays in sync with the Redux store
-   */
-  useEffect(() => {
-    setCount(favoritesCount);
-  }, [favoritesCount]);
 
   /**
    * Destructure page URL and localized information from the menu item
@@ -60,7 +45,7 @@ const NavItemFavorites = ({
      */
     <Link
       href={'/' + lang + '/' + pageUrl}
-      title={localizeInfos?.menuTitle}
+      title={localizeInfos?.menuTitle as string}
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
       aria-label={`Favorites with ${count} ${count === 1 ? 'item' : 'items'}`}
       // test id for e2e testing

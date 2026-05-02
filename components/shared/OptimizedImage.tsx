@@ -90,6 +90,7 @@ const OptimizedImage = ({
         ${isImageLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0 object-cover'}
         ${isImageLoading ? 'opacity-0' : 'opacity-100'}
       `,
+      // eslint-disable-next-line react-hooks/refs
       ref,
       onLoad: () => setImageLoading(false),
       onError: () => {

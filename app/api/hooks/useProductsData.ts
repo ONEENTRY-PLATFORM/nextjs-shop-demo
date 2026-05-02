@@ -1,4 +1,4 @@
-import type { AttributeType } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 /**
@@ -19,14 +19,18 @@ export const getProductTitle = (
   }
 
   /** Check for title in specific language code */
+  const localizeInfos = product.localizeInfos as unknown as Record<
+    string,
+    { title?: unknown }
+  >;
   if (
     langCode &&
-    product.localizeInfos[langCode] &&
-    typeof product.localizeInfos[langCode] === 'object' &&
-    'title' in product.localizeInfos[langCode] &&
-    typeof product.localizeInfos[langCode].title === 'string'
+    localizeInfos[langCode] &&
+    typeof localizeInfos[langCode] === 'object' &&
+    'title' in localizeInfos[langCode] &&
+    typeof localizeInfos[langCode].title === 'string'
   ) {
-    return product.localizeInfos[langCode].title;
+    return localizeInfos[langCode].title as string;
   }
 
   /** Check for title in default localizeInfos */
@@ -93,11 +97,11 @@ export const getProductImageUrl = (
 
 /**
  * Safely extracts the price from attribute values
- * @param   {AttributeType}      attributes - The product attributes
+ * @param   {IAttributeValues}   attributes - The product attributes
  * @returns {number | undefined}            The price value or undefined
  */
 export const getProductPrice = (
-  attributes: AttributeType,
+  attributes: IAttributeValues,
 ): number | undefined => {
   /** Extract price value from attributes */
   if (
@@ -113,11 +117,11 @@ export const getProductPrice = (
 
 /**
  * Safely extracts the sale price from attribute values
- * @param   {AttributeType}      attributes - The product attributes
+ * @param   {IAttributeValues}   attributes - The product attributes
  * @returns {number | undefined}            The sale price value or undefined
  */
 export const getProductSalePrice = (
-  attributes: AttributeType,
+  attributes: IAttributeValues,
 ): number | undefined => {
   /** Extract sale price value from attributes */
   if (

@@ -1,7 +1,11 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
-import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
+import type {
+  IBaseOrdersEntity,
+  IOrderProductData,
+} from 'oneentry/dist/orders/ordersInterfaces';
+import type { ISessionEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import { useState } from 'react';
 
 import { getApi } from '@/app/api';
@@ -55,10 +59,10 @@ export const useCreateOrder = ({
     /** Handle payment session creation */
     try {
       /** Create payment session using Payments API */
-      const { paymentUrl } = await getApi().Payments.createSession(
+      const { paymentUrl } = (await getApi().Payments.createSession(
         id,
         'session',
-      );
+      )) as ISessionEntity;
       /** Handle cash payment method */
       if (order?.paymentAccountIdentifier === 'cash') {
         router.push('/orders');
@@ -105,7 +109,7 @@ export const useCreateOrder = ({
       try {
         /** Create order with Orders API */
         const { id, paymentAccountIdentifier } =
-          await getApi().Orders.createOrder(
+          (await getApi().Orders.createOrder(
             'order',
             {
               // ...order,
@@ -115,7 +119,7 @@ export const useCreateOrder = ({
               formIdentifier: order.formIdentifier,
             },
             langCode,
-          );
+          )) as IBaseOrdersEntity;
 
         /** remove all ordered products from cart */
         order.products.forEach((product: IOrderProductData) => {

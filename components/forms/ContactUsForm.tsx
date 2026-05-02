@@ -63,7 +63,7 @@ const ContactUsForm = memo(
      */
     const formFields = useMemo(() => {
       return Array.isArray(data?.attributes)
-        ? (data.attributes as IAttributes[])
+        ? (data.attributes as unknown as IAttributes[])
             .slice()
             .sort((a, b) => a.position - b.position)
         : undefined;
@@ -247,7 +247,10 @@ const ContactUsForm = memo(
                     key={field.marker || index}
                     setToken={setToken}
                     setIsCaptcha={setIsCaptcha}
-                    siteKey={field.settings?.captcha.key || ''}
+                    siteKey={
+                      (field.settings?.captcha as { key?: string } | undefined)
+                        ?.key as string
+                    }
                     setIsValid={setIsValid}
                     action={'verify'}
                   />
@@ -258,7 +261,7 @@ const ContactUsForm = memo(
                 <FormInput
                   key={field.marker || index}
                   index={index as number}
-                  value={field.value}
+                  value={(field as unknown as { value: string }).value}
                   marker={field.marker}
                   type={field.type}
                   localizeInfos={field.localizeInfos}

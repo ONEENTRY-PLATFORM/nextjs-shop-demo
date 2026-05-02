@@ -170,7 +170,11 @@ const CommentForm = memo(
 
     /** Show error if product or review data is missing */
     if (!product || !review) {
-      return form_error_text?.value || 'Error. Some data not found.';
+      return (
+        <>
+          {(form_error_text?.value as string) || 'Error. Some data not found.'}
+        </>
+      );
     }
 
     return (
@@ -182,7 +186,7 @@ const CommentForm = memo(
           <input
             type="text"
             name="comment_text"
-            placeholder={placeholderText}
+            placeholder={placeholderText as string}
             value={value}
             onChange={handleInputChange}
             disabled={loading}
@@ -192,8 +196,8 @@ const CommentForm = memo(
             type="submit"
             className="group cursor-pointer rounded-full disabled:cursor-not-allowed disabled:opacity-50"
             disabled={loading || isValueEmpty}
-            title={buttonTitle}
-            aria-label={buttonTitle}
+            title={buttonTitle as string}
+            aria-label={buttonTitle as string}
           >
             <ArrowUpIcon />
           </button>
@@ -201,11 +205,14 @@ const CommentForm = memo(
         {/* Error message */}
         {error && <ErrorMessage error={error} />}
         {/* Success message */}
-        {response?.actionMessage && !error && (
-          <div className="w-full text-center text-green-600">
-            {response.actionMessage}
-          </div>
-        )}
+        {response &&
+          'actionMessage' in response &&
+          response.actionMessage &&
+          !error && (
+            <div className="w-full text-center text-green-600">
+              {response.actionMessage}
+            </div>
+          )}
       </form>
     );
   },

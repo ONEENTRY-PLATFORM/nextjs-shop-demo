@@ -80,7 +80,7 @@ const ApplyButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
       className="btn btn-xl btn-primary w-full"
     >
       {/** Display localized apply button text or fallback to 'Apply' */}
-      {apply_button_placeholder?.value || 'Apply'}
+      {(apply_button_placeholder?.value as string) || 'Apply'}
     </button>
   );
 };

@@ -32,14 +32,14 @@ const EmptyOrders = ({
       {/* Heading with empty cart icon and localized message */}
       <h1 className="mb-5 text-lg font-bold text-slate-600 uppercase">
         <EmptyCartIcon />
-        {empty_cart_plug?.value}
+        {empty_cart_plug?.value as string}
       </h1>
       {/* Link to shop page with localized text */}
       <Link
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"
       >
-        {go_to_shop?.value}
+        {go_to_shop?.value as string}
       </Link>
     </FadeTransition>
   );

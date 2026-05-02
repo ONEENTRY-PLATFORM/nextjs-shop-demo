@@ -32,7 +32,7 @@ const NavigationMenu = async ({
             >
               {/* Navigation menu item with potential dropdown */}
               <NavigationMenuItem
-                label={item.localizeInfos.menuTitle}
+                label={item.localizeInfos.menuTitle as string}
                 href={'/' + lang + '/shop/' + item.pageUrl}
                 hasDropdown={item.children ? true : false}
               />

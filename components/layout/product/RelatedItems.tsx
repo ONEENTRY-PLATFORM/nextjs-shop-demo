@@ -13,7 +13,6 @@ import ProductAnimations from './animations/ProductAnimations';
  * @param   {object}            props                               - Component properties
  * @param   {string}            props.lang                          - Current language shortcode for localization
  * @param   {IAttributeValues}  props.dict                          - Dictionary of attribute values from server API
- * @param   {string}            props.langCode                      - The language code for accessing localized attribute values
  * @param   {object}            props.block                         - The block data containing similar products
  * @param   {IAttributeValues}  props.block.attributeValues         - The attribute values for the block, including title information
  * @param   {object}            props.block.similarProducts         - The similar products data container
@@ -23,7 +22,6 @@ import ProductAnimations from './animations/ProductAnimations';
 const RelatedItems = ({
   lang,
   dict,
-  langCode,
   block,
 }: {
   lang: string;
@@ -46,8 +44,7 @@ const RelatedItems = ({
       {/* Heading */}
       <ProductAnimations className={''} index={0}>
         <h3 className="mb-5 text-base leading-5 text-neutral-600 uppercase max-md:max-w-full">
-          {block?.attributeValues?.[langCode]?.block_title?.value ||
-            block?.attributeValues?.block_title?.value}
+          {block?.attributeValues?.block_title?.value as string}
         </h3>
       </ProductAnimations>
       {/* Products cards grid with animation */}

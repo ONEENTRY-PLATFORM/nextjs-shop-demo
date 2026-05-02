@@ -17,6 +17,9 @@ import { getDictionary } from '../../dictionaries';
 
 export const dynamic = 'force-dynamic';
 
+/** Memoized loader component to prevent unnecessary re-renders */
+const MemoizedProductsGridLoader = memo(ProductsGridLoader);
+
 /**
  * Shop catalog page
  * @async
@@ -44,9 +47,6 @@ const ShopCatalogPage = async (props: {
   /** Set the number of products to display per page */
   // TODO: Extract products per page limit from global settings
   const pagesLimit = 10;
-
-  /** Memoize the loader component to prevent unnecessary re-renders */
-  const MemoizedProductsGridLoader = memo(ProductsGridLoader);
 
   /** Render the shop catalog page layout */
   return (
@@ -122,7 +122,7 @@ export async function generateMetadata({
   return generatePageMetadata({
     handle: handle,
     title: localizeInfos.title,
-    description: localizeInfos.plainContent,
+    description: localizeInfos.plainValue as string,
     isVisible: isVisible,
     imageUrl: getImageUrl('opengraph_image', attributeValues),
     imageAlt: localizeInfos.title,

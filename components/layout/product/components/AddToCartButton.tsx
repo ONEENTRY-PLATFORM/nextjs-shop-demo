@@ -80,7 +80,7 @@ const AddToCartButton = ({
   if (notInStock || units < 1) {
     return (
       <div className={'btn btn-o btn-o-gray ' + className}>
-        {out_of_stock_button?.value || 'Out of stock'}
+        {(out_of_stock_button?.value as string) || 'Out of stock'}
       </div>
     );
   }
@@ -144,7 +144,7 @@ const AddToCartButton = ({
       // test id for e2e testing
       data-testid="add-to-cart-button"
     >
-      {add_to_cart_button?.value}
+      {add_to_cart_button?.value as string}
     </button>
   ) : (
     <QuantitySelector

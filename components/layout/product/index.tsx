@@ -89,7 +89,13 @@ const ProductSingle = async ({
               lang={lang}
             />
           </div>
-          <ProductDescription description={attributeValues?.description} />
+          <ProductDescription
+            description={
+              attributeValues?.description as {
+                value: { htmlValue: string; plainValue: string }[];
+              }
+            }
+          />
         </ProductAnimations>
 
         {/** ProductDetails - col-3 */}

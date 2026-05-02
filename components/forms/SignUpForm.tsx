@@ -181,7 +181,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           );
 
           /** Handle successful registration based on user activation status */
-          if (res && res.isActive) {
+          if (res && !typeError(res) && res.isActive) {
             /** Automatically log in and authenticate active user */
             await logInUser({
               login: res.identifier,
@@ -190,7 +190,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
             authenticate();
           }
           // Handle inactive user requiring verification
-          else if (res && !res.isActive && !typeError(res)) {
+          else if (res && !typeError(res) && !res.isActive) {
             /** Open verification form for new user activation */
             setOpen(true);
             setComponent('VerificationForm');
@@ -201,7 +201,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
           setError('');
           /** Handle API error responses */
           if (typeError(res)) {
-            setError('Error ' + res.status);
+            setError('Error ' + res.statusCode);
           }
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
@@ -226,7 +226,7 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         {/** Form header with title and sign-in link */}
         <div className="relative box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="slide-up text-xl font-bold text-neutral-600 max-md:max-w-full">
-            {sign_up_text?.value}
+            {sign_up_text?.value as string}
           </h2>
 
           <p className="slide-up text-xs text-gray-400 max-md:max-w-full">
@@ -236,9 +236,9 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
               className="underline"
               type="button"
             >
-              {sign_in_text?.value}
+              {sign_in_text?.value as string}
             </button>{' '}
-            {create_account_desc?.value}
+            {create_account_desc?.value as string}
           </p>
         </div>
 
@@ -246,25 +246,27 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {/** Map through form attributes to render input fields */}
           {Array.isArray(data?.attributes) &&
-            data.attributes.map((field: IAttributes, index: Key | number) => {
-              /** Exclude email notifications field from regular input rendering */
-              if (field.marker !== 'email_notifications') {
-                return (
-                  <FormInput
-                    index={index as number}
-                    key={field.marker}
-                    {...field}
-                    value={field.value}
-                  />
-                );
-              }
-              return;
-            })}
+            (data.attributes as unknown as IAttributes[]).map(
+              (field: IAttributes, index: Key | number) => {
+                /** Exclude email notifications field from regular input rendering */
+                if (field.marker !== 'email_notifications') {
+                  return (
+                    <FormInput
+                      index={index as number}
+                      key={field.marker}
+                      {...field}
+                      value={(field as unknown as { value: string }).value}
+                    />
+                  );
+                }
+                return;
+              },
+            )}
         </div>
 
         {/** Submit button for registration form */}
         <SubmitButton
-          title={sign_up_text?.value}
+          title={sign_up_text?.value as string}
           isLoading={loading || isLoading}
           index={10}
         />

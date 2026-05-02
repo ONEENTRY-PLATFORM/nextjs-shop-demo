@@ -1,3 +1,4 @@
+import type { Locator } from '@playwright/test';
 import { expect, type Page, test } from '@playwright/test';
 
 import { waitForPageLoad } from './helpers/navigation-helpers';
@@ -15,10 +16,10 @@ test.describe('Filter Combinations', () => {
 
   /**
    * Helper: open the filter modal
-   * @param page Page
-   * @returns    modal
+   * @param   {Page}    page Page
+   * @returns {Locator}      modal
    */
-  async function openFilterModal(page: Page) {
+  async function openFilterModal(page: Page): Promise<Locator> {
     const filterBtn = page.locator(SELECTORS.filterButton);
     await expect(filterBtn).toBeVisible({ timeout: 10000 });
     await filterBtn.click();
@@ -29,10 +30,10 @@ test.describe('Filter Combinations', () => {
 
   /**
    * Helper: apply filters and wait for URL to update
-   * @param page Page
-   * @returns    void
+   * @param   {Page} page Page
+   * @returns {void}
    */
-  async function applyFilters(page: Page) {
+  async function applyFilters(page: Page): Promise<void> {
     await page.locator(SELECTORS.filterApplyButton).click();
     // Modal must close after apply
     await expect(page.locator(SELECTORS.filterModal)).toBeHidden({
@@ -193,7 +194,11 @@ test.describe('Filter Combinations', () => {
 
       await page.locator(SELECTORS.filterResetButton).click();
       // Router update happens via replaceState — wait for URL to drop filter params
-      await page.waitForURL(url => !url.toString().includes('minPrice'), { timeout: 8000 }).catch(() => {});
+      await page
+        .waitForURL((url) => !url.toString().includes('minPrice'), {
+          timeout: 8000,
+        })
+        .catch(() => {});
       await waitForPageLoad(page);
 
       const url = page.url();

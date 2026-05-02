@@ -5,7 +5,6 @@ import type {
 import type { JSX } from 'react';
 
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
-import { LanguageEnum } from '@/app/types/enum';
 
 import MenuItem from './MenuItem';
 
@@ -30,12 +29,6 @@ const Menu = ({ menu }: { menu: IMenusEntity }): JSX.Element => {
   const pages = menu.pages as Array<IMenusPages>;
 
   /**
-   * Convert language shortcode to language enum value
-   * This is used to access localized menu titles
-   */
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-
-  /**
    * Return empty fragment if no pages are available
    * Prevents rendering empty menus
    */
@@ -47,7 +40,7 @@ const Menu = ({ menu }: { menu: IMenusEntity }): JSX.Element => {
    * Get localized menu title or fallback to default title
    * Displays the appropriate title based on the current language
    */
-  const title = menu.localizeInfos[langCode]?.title || menu.localizeInfos.title;
+  const title = menu.localizeInfos.title;
 
   return (
     /**

@@ -430,17 +430,18 @@ export const selectCartTotal = createSelector(
       /** Check if product is in stock */
       const isInStock =
         p?.statusIdentifier === 'in_stock' &&
-        (p?.attributeValues?.units_product?.value ?? 0) >= 1;
+        ((p?.attributeValues?.units_product?.value as number | undefined) ??
+          0) >= 1;
 
       /** Only add to total if product is in stock */
       if (isInStock) {
         const price = p
-          ? p.attributeValues?.sale?.value ||
-            p.attributeValues?.price?.value ||
+          ? (p.attributeValues?.sale?.value as number | undefined) ||
+            (p.attributeValues?.price?.value as number | undefined) ||
             p.price ||
             0
           : 0;
-        return total + price * product.quantity;
+        return total + (price as number) * product.quantity;
       }
 
       return total;

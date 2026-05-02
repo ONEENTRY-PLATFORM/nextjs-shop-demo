@@ -200,10 +200,10 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
         {/** Form header with title and description */}
         <div className="relative mb-5 box-border flex shrink-0 flex-col gap-2.5">
           <h2 className="text-xl font-bold text-neutral-600 max-md:max-w-full">
-            {verification?.value}
+            {verification?.value as string}
           </h2>
           <p className="text-xs text-gray-400 max-md:max-w-full">
-            {enter_otp_code?.value}
+            {enter_otp_code?.value as string}
           </p>
         </div>
 
@@ -225,21 +225,23 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
 
           {/** Resend code section */}
           <div className="self-end text-xs text-orange-500 max-md:mr-2.5">
-            <span className="text-gray-400">{receive_otp_text?.value} </span>
+            <span className="text-gray-400">
+              {receive_otp_text?.value as string}{' '}
+            </span>
             {/** Resend button to request a new OTP */}
             <button
               className="font-bold text-orange-500"
               type="button"
               onClick={onResendHandle}
             >
-              {resend_text?.value}
+              {resend_text?.value as string}
             </button>
           </div>
         </div>
 
         {/** Submit button for OTP verification */}
         <FormSubmitButton
-          title={verify_now_text?.value}
+          title={verify_now_text?.value as string}
           isLoading={isLoading}
           index={0}
         />

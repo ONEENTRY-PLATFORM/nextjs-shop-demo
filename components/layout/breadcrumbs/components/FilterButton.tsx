@@ -48,7 +48,7 @@ const FilterButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
       }}
     >
       {/** Filter icon and localized button text */}
-      <FilterIcon /> {open_filters_button?.value}
+      <FilterIcon /> {open_filters_button?.value as string}
     </button>
   );
 };

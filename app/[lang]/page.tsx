@@ -156,7 +156,7 @@ export async function generateMetadata({
   /** Return metadata object */
   return generatePageMetadata({
     title: localizeInfos.title,
-    description: localizeInfos.plainContent,
+    description: localizeInfos?.plainValue as string,
     isVisible: isVisible,
     imageUrl: getImageUrl('opengraph_image', attributeValues),
     imageAlt: localizeInfos.title,

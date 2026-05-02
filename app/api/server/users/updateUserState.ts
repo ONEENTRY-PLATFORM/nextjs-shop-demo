@@ -49,9 +49,9 @@ export const updateUserState = async ({
       cart: cart.length > 0 ? cart : user.state.cart,
     },
     notificationData: {
-      email: email?.value || '',
+      email: (email?.value as string) || '',
       phonePush: [],
-      phoneSMS: phone?.value || '',
+      phoneSMS: (phone?.value as string) || '',
     },
   });
 

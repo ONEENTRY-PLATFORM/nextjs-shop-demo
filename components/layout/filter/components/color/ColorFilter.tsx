@@ -66,7 +66,7 @@ const ColorFilter = memo(
 
     /** Extract color options from attributes data */
     const colors: Color[] =
-      attributes && !('error' in attributes)
+      attributes && 'listTitles' in attributes
         ? attributes.listTitles.map((item: IListTitle) => ({
             code: item.value.toString(),
             name: item.title,
@@ -74,7 +74,7 @@ const ColorFilter = memo(
         : [];
 
     /** Display skeleton loader if attributes data is not available or contains an error */
-    if (!attributes || 'error' in attributes) {
+    if (!attributes || !('listTitles' in attributes)) {
       return (
         <div>
           {/** Title skeleton */}

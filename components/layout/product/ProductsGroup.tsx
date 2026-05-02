@@ -36,8 +36,10 @@ const ProductsGroup = ({
     >
       {/* together_title */}
       <h2 className="mb-5 text-base leading-5 text-neutral-600 uppercase max-md:max-w-full">
-        {block?.attributeValues?.[lang]?.together_title?.value ||
-          block?.attributeValues?.together_title?.value}
+        {((
+          block?.attributeValues as unknown as Record<string, IAttributeValues>
+        )?.[lang]?.together_title?.value as string) ||
+          (block?.attributeValues?.together_title?.value as string)}
       </h2>
 
       {/** GroupCards */}

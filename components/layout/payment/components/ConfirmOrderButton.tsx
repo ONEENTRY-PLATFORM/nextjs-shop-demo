@@ -38,8 +38,8 @@ const ConfirmOrderButton = ({
     >
       {isLoading && <Loader />}
       {account.identifier === 'cash'
-        ? apply_button_placeholder?.value
-        : pay_with_stripe?.value}
+        ? (apply_button_placeholder?.value as string)
+        : (pay_with_stripe?.value as string)}
     </button>
   );
 };

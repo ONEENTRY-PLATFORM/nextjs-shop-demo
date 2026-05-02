@@ -47,14 +47,15 @@ const EmptyFavorites = ({
       </svg>
       {/** Message indicating that the favorites list is empty */}
       <h1 className="mb-5 text-lg font-bold text-slate-600 uppercase">
-        {empty_favorites_plug?.value || 'Your favorite list is empty'}
+        {(empty_favorites_plug?.value as string) ||
+          'Your favorite list is empty'}
       </h1>
       {/** Link to shop page with localized text */}
       <Link
         href={'/' + lang + '/shop/'}
         className="btn btn-sm btn-o btn-o-primary"
       >
-        {go_to_shop?.value || 'Go to shop'}
+        {(go_to_shop?.value as string) || 'Go to shop'}
       </Link>
     </FadeTransition>
   );

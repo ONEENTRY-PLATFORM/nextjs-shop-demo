@@ -57,7 +57,7 @@ const NavItemProfile = ({
         setOpen(!open);
         setComponent('SignInForm');
       }}
-      title={item.localizeInfos.menuTitle}
+      title={item.localizeInfos.menuTitle as string}
       data-testid="auth-button"
       className="group relative box-border flex size-8 shrink-0 cursor-pointer max-sm:size-6"
     >
@@ -70,7 +70,7 @@ const NavItemProfile = ({
      */
     <Link
       href={'/' + lang + '/profile'}
-      title={item.localizeInfos.menuTitle}
+      title={item.localizeInfos.menuTitle as string}
       data-testid="user-menu-button"
       className="group relative box-border flex size-8 shrink-0 cursor-pointer max-sm:size-6"
     >
@@ -84,7 +84,7 @@ const NavItemProfile = ({
     <UserProfileMenu
       lang={lang}
       userMenu={userMenu}
-      title={item.localizeInfos.menuTitle}
+      title={item.localizeInfos.menuTitle as string}
     />
   );
 };

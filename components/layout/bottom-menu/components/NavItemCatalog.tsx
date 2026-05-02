@@ -27,7 +27,7 @@ const NavItemCatalog = ({
     /** Link to the catalog/shop page with localized title attribute for accessibility */
     <Link
       href={'/' + lang + '/' + pageUrl}
-      title={localizeInfos.menuTitle}
+      title={localizeInfos.menuTitle as string}
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
     >
       {/** Catalog icon component */}

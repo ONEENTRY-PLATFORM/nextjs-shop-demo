@@ -52,7 +52,7 @@ const RatingButton = ({
         }
       >
         <div className={state ? 'text-orange-500' : ''}>
-          {reviews_title?.value || ''}
+          {reviews_title?.value as string}
         </div>
         <svg
           width="26"

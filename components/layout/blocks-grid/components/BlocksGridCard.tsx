@@ -2,6 +2,7 @@
 import { Baloo_2 as Baloo } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { ReactElement } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
@@ -58,10 +59,22 @@ const BlocksGridCard = async ({
   }
 
   /** Extract content data from block attribute values */
-  const { title = '', link = '', stickers } = attributeValues;
+  const {
+    title = '',
+    link = '',
+    stickers,
+  } = attributeValues as IAttributeValues;
+
+  /** Extract link URL if available */
+  const linkValue =
+    typeof link === 'object' ? (link.value as string | undefined) : undefined;
 
   /** Extract sticker image URL if available */
-  const stickerImage = stickers?.value[0]?.extended?.value?.downloadLink;
+  const stickerImage = (
+    stickers?.value as
+      | Array<{ extended?: { value?: { downloadLink?: string } } }>
+      | undefined
+  )?.[0]?.extended?.value?.downloadLink;
   // const quoteValue = quote?.value;
 
   /** Return error message if block data is missing or API returned an error */
@@ -80,10 +93,10 @@ const BlocksGridCard = async ({
     >
       {/** Link wrapper with dynamic target and href based on link type */}
       <Link
-        target={link.value?.indexOf('http') === -1 ? '' : '_blank'}
+        target={(linkValue?.indexOf('http') === -1 ? '' : '_blank') as string}
         href={
-          (link.value?.indexOf('http') === -1 ? '/' + lang + '/shop/' : '') +
-            link?.value || ''
+          (linkValue?.indexOf('http') === -1 ? '/' + lang + '/shop/' : '') +
+            (linkValue ?? '') || ''
         }
         className={'size-full'}
       >
@@ -99,7 +112,14 @@ const BlocksGridCard = async ({
           )}
 
           {/** Block title component that renders either YouTube icon or text title */}
-          <BlocksGridTitle identifier={block.identifier} title={title} />
+          {typeof title === 'object' ? (
+            <BlocksGridTitle
+              identifier={block.identifier}
+              title={title as { value?: string }}
+            />
+          ) : (
+            <BlocksGridTitle identifier={block.identifier} />
+          )}
 
           {/** Block image component that renders optimized background image */}
           <BlocksGridImage attributeValues={attributeValues} />
