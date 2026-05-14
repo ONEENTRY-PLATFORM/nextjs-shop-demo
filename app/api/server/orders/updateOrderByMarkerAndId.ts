@@ -5,7 +5,7 @@ import type {
 } from 'oneentry/dist/orders/ordersInterfaces';
 
 import { getApi } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import { isIError } from '@/app/utils/errorHandler';
 
 interface HandleProps {
@@ -38,7 +38,7 @@ export const updateOrderByMarkerAndId = async ({
   error?: IError;
   order?: IBaseOrdersEntity;
 }> => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const langCode = toLangCode(lang ?? '');
 
   const orderData = await getApi().Orders.updateOrderByMarkerAndId(
     marker,

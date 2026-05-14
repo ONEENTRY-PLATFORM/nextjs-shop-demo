@@ -6,7 +6,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { ReactElement } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import BlockCardAnimations from '@/components/layout/blocks-grid/animations/BlockCardAnimations';
 
 import BlocksGridImage from './BlocksGridImage';
@@ -43,8 +43,8 @@ const BlocksGridCard = async ({
   index: number;
   blocksColors: any;
 }): Promise<ReactElement> => {
-  /** Convert language shortcode to language code for API requests */
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  /** Convert short locale to SDK langCode */
+  const langCode = toLangCode(lang);
 
   /** Fetch block data from API using the provided marker and language */
   const { block, isError } = await getBlockByMarker(marker, lang);

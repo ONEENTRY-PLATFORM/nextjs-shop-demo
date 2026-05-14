@@ -5,7 +5,7 @@ import type {
 } from 'oneentry/dist/blocks/blocksInterfaces';
 
 import { getApi } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import { isIError } from '@/app/utils/errorHandler';
 
 interface HandleProps {
@@ -31,7 +31,7 @@ export const getBlocks = async ({
   error?: IError;
   blocks?: IBlocksResponse;
 }> => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const langCode = toLangCode(lang);
 
   const data = await getApi().Blocks.getBlocks(type, langCode);
 

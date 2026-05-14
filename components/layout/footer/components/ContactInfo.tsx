@@ -2,7 +2,7 @@ import type { JSX } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 
 /**
  * Contact Info component for displaying company contact information in the footer.
@@ -16,11 +16,8 @@ const ContactInfo = async (): Promise<JSX.Element> => {
    */
   const [lang] = ServerProvider('lang');
 
-  /**
-   * Convert language shortcode to language enum value
-   * This is used to access localized attribute values
-   */
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  /** Convert short locale to SDK langCode for accessing localized attribute values */
+  const langCode = toLangCode(lang);
 
   /**
    * Fetch contact information block from CMS by marker

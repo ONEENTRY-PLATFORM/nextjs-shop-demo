@@ -18,7 +18,7 @@ import NavigationMenu from '@/components/layout/main-menu';
 import Modal from '@/components/layout/modal';
 import type { Locale } from '@/i18n-config';
 
-import { LanguageEnum } from '../types/enum';
+import { toLangCode } from '../types/enum';
 import { getDictionary } from './dictionaries';
 
 /** Fonts settings */
@@ -70,10 +70,7 @@ export default async function RootLayout({
   ServerProvider('lang', lang);
 
   /** set current langCode to server provider */
-  const [langCode] = ServerProvider(
-    'langCode',
-    LanguageEnum[lang as keyof typeof LanguageEnum],
-  );
+  const [langCode] = ServerProvider('langCode', toLangCode(lang));
 
   /** Get dictionary and set to server provider */
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));

@@ -5,7 +5,7 @@ import type {
 } from 'oneentry/dist/products/productsInterfaces';
 
 import { getApi } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import { isIError } from '@/app/utils/errorHandler';
 
 interface RelatedProductsResult {
@@ -50,7 +50,7 @@ export const getRelatedProductsById = async (
     };
   }
 
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const langCode = toLangCode(lang);
 
   if (!langCode) {
     return {

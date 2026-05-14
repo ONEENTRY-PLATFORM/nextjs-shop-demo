@@ -2,7 +2,7 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 
 import { getApi } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import { isIError } from '@/app/utils/errorHandler';
 
 /**
@@ -22,7 +22,7 @@ export const getChildPagesByParentUrl = async (
   error?: IError;
   pages?: IPagesEntity[];
 }> => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const langCode = toLangCode(lang);
 
   const data = await getApi().Pages.getChildPagesByParentUrl(url, langCode);
 

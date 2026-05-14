@@ -3,7 +3,7 @@ import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import { cache } from 'react';
 
 import { getApi } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import { isIError } from '@/app/utils/errorHandler';
 
 /**
@@ -25,7 +25,7 @@ export const getMenuByMarker = cache(
     error?: IError;
     menu?: IMenusEntity;
   }> => {
-    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+    const langCode = toLangCode(lang);
 
     const data = await getApi().Menus.getMenusByMarker(marker, langCode);
 

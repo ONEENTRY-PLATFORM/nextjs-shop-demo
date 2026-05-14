@@ -4,7 +4,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 
 import { getProductTitle } from '@/app/api/hooks/useProductsData';
-import { CurrencyEnum, LanguageEnum } from '@/app/types/enum';
+import { CurrencyEnum, toLangCode } from '@/app/types/enum';
 
 import ProductAnimations from './animations/ProductAnimations';
 import ProductDescription from './product-single/ProductDescription';
@@ -53,8 +53,8 @@ const ProductSingle = async ({
   /** Get the formatted product title using helper function */
   const productTitle = getProductTitle(product);
 
-  /** Convert language shortcode to language code using enum */
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  /** Convert short locale to SDK langCode */
+  const langCode = toLangCode(lang);
   const currencyCode = CurrencyEnum[lang as keyof typeof CurrencyEnum];
 
   /** Create a mock block object with similar products data for the RelatedItems component */

@@ -3,7 +3,7 @@ import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import { cache } from 'react';
 
 import { getApi } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import { isIError } from '@/app/utils/errorHandler';
 
 /**
@@ -25,7 +25,7 @@ export const getPageByUrl = cache(
     error?: IError;
     page?: IPagesEntity;
   }> => {
-    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+    const langCode = toLangCode(lang);
 
     const data = await getApi().Pages.getPageByUrl(url, langCode);
 

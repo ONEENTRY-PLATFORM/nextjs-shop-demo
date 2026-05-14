@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 
 import { useCreateOrder } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 
 /**
@@ -25,8 +25,8 @@ const PayOrderButton = ({
   loading: boolean;
   title: string;
 }): JSX.Element => {
-  /** Convert language shortcode to enum value for API requests */
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  /** Convert short locale to SDK langCode */
+  const langCode = toLangCode(lang);
 
   /** Get payment session creation function and loading state from custom hook */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

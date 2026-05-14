@@ -109,7 +109,6 @@ const AddToCartButton = ({
     await updateUserState({
       favorites: favoritesIds,
       cart: updatedItems,
-      user: user,
     });
 
     /** Subscribe to events for this product */

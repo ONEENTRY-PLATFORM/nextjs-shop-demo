@@ -3,7 +3,7 @@ import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import { cache } from 'react';
 
 import { getApi } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import { isIError } from '@/app/utils/errorHandler';
 
 /**
@@ -24,7 +24,7 @@ export const getBlockByMarker = cache(
     error?: IError;
     block?: IBlockEntity;
   }> => {
-    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+    const langCode = toLangCode(lang);
 
     const data = await getApi().Blocks.getBlockByMarker(marker, langCode);
 

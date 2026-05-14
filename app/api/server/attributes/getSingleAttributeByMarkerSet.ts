@@ -2,7 +2,7 @@ import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attribu
 import type { IError } from 'oneentry/dist/base/utils';
 
 import { getApi } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import { isIError } from '@/app/utils/errorHandler';
 
 /**
@@ -29,7 +29,7 @@ export const getSingleAttributeByMarkerSet: any = async ({
   error?: IError;
   attribute?: IAttributesSetsEntity;
 }> => {
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const langCode = toLangCode(lang);
 
   const attribute = await getApi().AttributesSets.getSingleAttributeByMarkerSet(
     setMarker,

@@ -12,7 +12,7 @@ import { getApi } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import type { FormProps } from '@/app/types/global';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
@@ -171,8 +171,8 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
 
         /** Attempt to sign up user via API AuthProvider */
         try {
-          /** Get language code for API request */
-          const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+          /** Convert short locale to SDK langCode */
+          const langCode = toLangCode(lang);
           /** Submit registration data to the API */
           const res = await getApi().AuthProvider.signUp(
             'email',

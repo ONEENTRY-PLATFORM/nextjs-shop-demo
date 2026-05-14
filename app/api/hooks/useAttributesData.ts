@@ -1,64 +1,55 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import parse from 'html-react-parser';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 
 import { sanitizeHTML } from '@/components/utils/sanitize';
 
+/** Optional attribute values map — accepts `undefined` so callers can pass `entity.attributeValues` directly. */
+type Attrs = IAttributeValues | undefined;
+
 /**
- * Use String type
- * @param   {string}                  name            - Attribute name.
- * @param   {Record<string, unknown>} attributeValues - The attribute values.
- * @returns {string}                                  String value or undefined
+ * Read a `string`-typed attribute value.
+ * @param   {string} name            - Attribute marker.
+ * @param   {Attrs}  attributeValues - Entity `attributeValues`.
+ * @returns {string}                 The string value, or `''` when missing or wrong shape.
  */
-export const getString = (
-  name: string,
-  attributeValues: Record<string, any>,
-): string => {
-  if (
-    attributeValues?.[name] &&
-    typeof attributeValues[name] === 'object' &&
-    'value' in attributeValues[name] &&
-    typeof attributeValues[name].value === 'string'
-  ) {
-    return attributeValues[name].value;
+export const getString = (name: string, attributeValues: Attrs): string => {
+  const attr = attributeValues?.[name];
+  if (attr && typeof attr.value === 'string') {
+    return attr.value;
   }
   return '';
 };
 
+/** Possible payload shape inside `text`-typed attribute `value` arrays. */
+type TextValueItem = { htmlValue?: string; plainValue?: string };
+
 /**
- * Use Text type.
- * @param   {string}                name            - The name of the attribute.
- * @param   {object}                attributeValues - The attribute values object.
- * @param   {string}                type            - Type of the content.
- * @returns {string | [] | unknown}                 HTML content.
+ * Read a `text`-typed attribute value (CMS rich text).
+ *
+ * The CMS stores text attributes as `value: [{ htmlValue, plainValue }]`.
+ * Returns sanitized parsed HTML (when `type === 'html'`) or the plain string.
+ * @param   {string}                            name            - Attribute marker.
+ * @param   {Attrs}                             attributeValues - Entity `attributeValues`.
+ * @param   {string}                            type            - Output mode: `'plain'` (default) or `'html'`.
+ * @returns {string | ReturnType<typeof parse>}                 Plain string, parsed JSX, or `''`.
  */
 export const getText = (
   name: string,
-  attributeValues: any,
+  attributeValues: Attrs,
   type: 'html' | 'plain' = 'plain',
-): string | [] | any => {
-  const data = attributeValues?.[name];
-  if (
-    data &&
-    typeof data === 'object' &&
-    'value' in data &&
-    Array.isArray(data.value) &&
-    data.value.length > 0
-  ) {
-    const text = data.value[0];
-
-    if (
-      text &&
-      typeof text === 'object' &&
-      ('htmlValue' in text || 'plainValue' in text)
-    ) {
-      if (type === 'html' && typeof text.htmlValue === 'string') {
-        const val = parse(sanitizeHTML(text.htmlValue));
-        return val;
-      }
-      return typeof text.plainValue === 'string' ? text.plainValue : '';
-    }
+): string | ReturnType<typeof parse> => {
+  const attr = attributeValues?.[name];
+  if (!attr || !Array.isArray(attr.value) || attr.value.length === 0) {
+    return '';
   }
-  return '';
+  const text = attr.value[0] as TextValueItem | undefined;
+  if (!text || typeof text !== 'object') {
+    return '';
+  }
+  if (type === 'html' && typeof text.htmlValue === 'string') {
+    return parse(sanitizeHTML(text.htmlValue));
+  }
+  return typeof text.plainValue === 'string' ? text.plainValue : '';
 };
 
 // /**
@@ -165,37 +156,42 @@ export const getText = (
 //   type: '' | '' = '',
 // ): any => {};
 
+/** Possible payload shape inside `image` / `groupOfImages` attribute values. */
+type ImageValueItem = { downloadLink?: string; previewLink?: string };
+
 /**
- * Use image type - extract image URL from attribute values
- * @param   {string}  name            - The name of the attribute
- * @param   {unknown} attributeValues - The attribute values
- * @param   {string}  type            - The type of the image
- * @returns {string}                  The image URL or empty string
+ * Read an `image` attribute value and return its URL.
+ *
+ * The SDK normalizes `image` differently per entity:
+ * - **Products** → `value` is an object;
+ * - **Pages / Blocks / `groupOfImages`** → `value` is an array of objects.
+ *
+ * This helper handles both shapes transparently.
+ * @param   {string} name            - Attribute marker.
+ * @param   {Attrs}  attributeValues - Entity `attributeValues`.
+ * @param   {string} type            - Which URL to return: `'image'` (full) or `'preview'`.
+ * @returns {string}                 Image URL or `''` when missing.
  */
 export const getImageUrl = (
   name: string,
-  attributeValues: any,
+  attributeValues: Attrs,
   type: 'image' | 'preview' = 'image',
 ): string => {
-  const data = attributeValues?.[name];
-  if (data && typeof data === 'object' && 'value' in data) {
-    const firstImage = data.value[0] || data.value;
-
-    if (
-      firstImage &&
-      typeof firstImage === 'object' &&
-      'downloadLink' in firstImage &&
-      typeof firstImage.downloadLink === 'string'
-    ) {
-      if (type === 'preview') {
-        return firstImage.previewLink;
-      } else {
-        return firstImage.downloadLink;
-      }
-    }
+  const attr = attributeValues?.[name];
+  if (!attr || attr.value == null) {
     return '';
   }
-  return '';
+  const value = attr.value as ImageValueItem | ImageValueItem[];
+  const first: ImageValueItem | undefined = Array.isArray(value)
+    ? value[0]
+    : value;
+  if (!first || typeof first !== 'object') {
+    return '';
+  }
+  if (type === 'preview' && typeof first.previewLink === 'string') {
+    return first.previewLink;
+  }
+  return typeof first.downloadLink === 'string' ? first.downloadLink : '';
 };
 
 // /**

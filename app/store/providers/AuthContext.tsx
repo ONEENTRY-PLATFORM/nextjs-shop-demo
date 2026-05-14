@@ -2,9 +2,17 @@
 
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { JSX, ReactNode } from 'react';
-import { createContext, useEffect, useMemo, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 
-import { getApi, reDefine, useLazyGetMeQuery } from '@/app/api';
+import { hasActiveSession, reDefine, useLazyGetMeQuery } from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import type { IProducts } from '@/app/types/global';
 
@@ -59,189 +67,140 @@ export const AuthProvider = ({
   children: ReactNode;
   langCode: string;
 }): JSX.Element => {
-  /** Initialize Redux dispatch function */
   const dispatch = useAppDispatch();
-  /** Track authentication status */
   const [isAuth, setIsAuth] = useState<boolean>(false);
-  /** Track loading status */
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  /** Store user data */
   const [user, setUser] = useState<IUserEntity | undefined>();
-  /** Trigger refetch of user data */
-  const [refetch, setRefetch] = useState<boolean>(false);
-  /** Trigger user refresh */
-  const [refetchUser, setRefetchUser] = useState<boolean>(false);
 
-  /** Get user data from redux AppSelector */
+  /**
+   * Monotonic counters used as effect triggers. A counter-based reducer is
+   * safer than a boolean toggle — rapid successive calls always produce a new
+   * value, whereas `setRefetch(!refetch)` would capture a stale closure value
+   * and may collapse two calls into a single re-render.
+   */
+  const [reinitTick, bumpReinit] = useReducer((n: number) => n + 1, 0);
+  const [recheckTick, bumpRecheck] = useReducer((n: number) => n + 1, 0);
+
   const cartVersion = useAppSelector(selectCartVersion) as number;
-  /** Get favorites version from redux store */
   const favoritesVersion = useAppSelector(selectFavoritesVersion) as number;
-  /** Get products in cart from redux store */
   const productsInCart = useAppSelector(selectCartData);
-  /** Get favorite product IDs from redux store */
   const favoritesIds = useAppSelector(
     (state: { favoritesReducer: { products: number[] } }) =>
       selectFavoritesItems(state),
   );
 
-  /**
-   * Check user data loop with polling interval
-   *
-   * This function checks for a refresh token in local storage and initiates
-   */
   const [trigger, { isError }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 30000 : 0,
   });
 
   /**
-   * Initialize authorization by checking refresh token
-   *
-   * This function checks for a refresh token in local storage and initiates
+   * Re-fetches the current user via RTK Query and updates auth state.
+   * Memoized so it can be safely listed as an effect dep.
+   * @returns {Promise<void>} Resolves once auth state is reconciled.
    */
-  const onInit = async (): Promise<void> => {
-    /** Get refresh token from localStorage */
-    const refresh = localStorage.getItem('refresh-token');
-
-    /** If no refresh token, set auth to false */
-    if (!refresh) {
-      setIsAuth(false);
-      return;
-    }
-    /** Skip reDefine if SDK already has an active session (e.g. right after login) */
-    /** reDefine creates a new instance without accessToken, which forces an extra token exchange */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const hasActiveSession = !!(getApi().AuthProvider as any)?.state
-      ?.accessToken;
-    if (!hasActiveSession) {
-      await reDefine(refresh, langCode);
-      /** Explicitly refresh the token so the correct fingerprint is used for the /refresh call */
-    }
-    /** Check token validity */
-    await checkToken();
-  };
-
-  /**
-   * Check refresh token and validate user authentication
-   *
-   * This function triggers the user data fetch and validates the authentication
-   * status based on the response. It updates the authentication state accordingly.
-   * @async
-   */
-  const checkToken = async () => {
-    /** Check if refresh token exists before triggering */
+  const checkToken = useCallback(async (): Promise<void> => {
     const refresh = localStorage.getItem('refresh-token');
     if (!refresh) {
       setIsAuth(false);
       return;
     }
-
-    /** Trigger user data fetch */
-    trigger({ langCode })
-      .then(async (res) => {
-        /** Check if response has error or no user ID */
-        if ((res.isError && !res.isLoading) || !res.data?.id) {
-          setIsAuth(false);
-        } else {
-          /** Set user data and auth status to true */
-          setUser(res.data);
-          setIsAuth(true);
-        }
-      })
-      .catch(async () => {
+    try {
+      const res = await trigger({ langCode });
+      if ((res.isError && !res.isLoading) || !res.data?.id) {
         setIsAuth(false);
-      });
-  };
+      } else {
+        setUser(res.data);
+        setIsAuth(true);
+      }
+    } catch {
+      setIsAuth(false);
+    }
+  }, [langCode, trigger]);
 
   /**
-   * Update user state on server with cart and favorites data
-   *
-   * This function sends the updated user state to the server,
-   * including the cart and favorites data.
+   * Always-current ref to {@link checkToken}. Used by the manual-recheck
+   * effect below so a `langCode` change does not double-fire it (the init
+   * effect already covers the lang-change path).
    */
-  const updateUserData = async (): Promise<void> => {
-    /** Exit if no user data */
-    if (!user) {
-      return;
-    }
-    /** Send updated user state to server */
-    await updateUserState({
-      cart: productsInCart,
-      favorites: favoritesIds,
-      user: user,
-    });
-  };
-
-  /** Update user data on auth state change */
+  const checkTokenRef = useRef(checkToken);
   useEffect(() => {
-    /** Exit if not authenticated or no user */
+    checkTokenRef.current = checkToken;
+  }, [checkToken]);
+
+  /** Push the latest cart and favorites to the server when they change. */
+  useEffect(() => {
     if (!isAuth || !user) {
       return;
     }
-    /** Update user data with current cart and favorites */
-    updateUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    updateUserState({
+      cart: productsInCart,
+      favorites: favoritesIds,
+    });
   }, [isAuth, user, productsInCart, favoritesIds]);
 
-  /** Load cart from user state to Redux store */
+  /** Hydrate the cart in Redux from the user's stored state on first auth. */
   useEffect(() => {
-    /** Exit if no user cart data or cart already loaded */
     if (!user?.state.cart || cartVersion > 0) {
       return;
     }
-
-    /** Add each product from user state to Redux cart */
     (user.state.cart as IProducts[] | undefined)?.forEach(
       (product: IProducts) => {
         const productInCart = productsInCart?.find((p) => p.id === product.id);
-        /** If product not in cart, add to cart */
         if (!productInCart) {
           dispatch(addProductToCart(product));
         }
       },
     );
-
-    /** Mark cart as loaded */
     dispatch(setCartVersion(1));
   }, [isAuth, user, cartVersion, productsInCart, dispatch]);
 
-  /** Load favorites from user state to Redux store */
+  /** Hydrate favorites in Redux from the user's stored state on first auth. */
   useEffect(() => {
-    /** Exit if no user favorites data or favorites already loaded */
     if (!user?.state.favorites || favoritesVersion > 0) {
       return;
     }
-    /** Add each favorite from user state to Redux favorites */
     (user.state.favorites as number[]).forEach((element: number) => {
       dispatch(addFavorites(element));
     });
-    /** Mark favorites as loaded */
     dispatch(setFavoritesVersion(1));
   }, [isAuth, user, favoritesVersion, dispatch]);
 
-  /** Refetch user data when refetch flag changes */
+  /**
+   * Full re-init: read the refresh token from localStorage, sync the SDK,
+   * then verify the token. Re-runs on `reinitTick` (login/logout) or langCode.
+   */
   useEffect(() => {
     let cancelled = false;
-
     const initAuth = async () => {
-      /** Set loading state to true */
       if (!cancelled) setIsLoading(true);
 
-      /** Initialize auth process */
-      await onInit();
-
-      /** Set loading state to false after init */
-      if (!cancelled) setIsLoading(false);
+      const refresh = localStorage.getItem('refresh-token');
+      if (!refresh) {
+        if (!cancelled) {
+          setIsAuth(false);
+          setIsLoading(false);
+        }
+        return;
+      }
+      if (!hasActiveSession()) {
+        await reDefine(refresh, langCode);
+      }
+      if (!cancelled) {
+        await checkToken();
+        if (!cancelled) setIsLoading(false);
+      }
     };
-
     initAuth();
-
     return () => {
       cancelled = true;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetch, langCode]);
+  }, [reinitTick, langCode, checkToken]);
 
-  /** Set isAuth to false on RTK query error (e.g. polling failure) */
+  /**
+   * Drop auth on RTK Query polling errors (e.g. expired session).
+   * setState-in-effect is intentional: this reacts to a derived change in the
+   * polling result, not to a user-driven event.
+   */
   useEffect(() => {
     if (isError) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -249,27 +208,28 @@ export const AuthProvider = ({
     }
   }, [isError]);
 
-  /** Check token on refetch */
+  /**
+   * Manual re-check on `refreshUser()` calls (e.g. after profile edit).
+   * Uses {@link checkTokenRef} to avoid re-firing when `checkToken`'s identity
+   * changes — that path is already covered by the init effect above.
+   */
   useEffect(() => {
-    /** Only check token if already authenticated */
-    if (isAuth) {
-      checkToken();
+    if (recheckTick === 0) {
+      return;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refetch, refetchUser, isAuth]);
+    checkTokenRef.current();
+  }, [recheckTick]);
 
-  /** Memoize context value to prevent unnecessary re-renders */
   const value = useMemo(
     () => ({
       isAuth,
       isLoading,
       ...(user !== undefined && { user }),
-      authenticate: () => setRefetch(!refetch),
-      refreshUser: () => setRefetchUser(!refetchUser),
+      authenticate: bumpReinit,
+      refreshUser: bumpRecheck,
     }),
-    [isAuth, isLoading, user, refetch, refetchUser],
+    [isAuth, isLoading, user],
   );
 
-  /** Return AuthContext Provider with value */
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

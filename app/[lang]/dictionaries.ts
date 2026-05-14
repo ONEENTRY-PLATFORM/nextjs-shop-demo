@@ -3,7 +3,7 @@ import 'server-only';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 
 import { getBlockByMarker } from '@/app/api/';
-import { LanguageEnum } from '@/app/types/enum.ts';
+import { toLangCode } from '@/app/types/enum.ts';
 
 import { i18n, type Locale } from '../../i18n-config.ts';
 
@@ -19,8 +19,8 @@ const dict = async (lang: string): Promise<IAttributeValues> => {
       lang = i18n.defaultLocale;
     }
 
-    /** Get language code from LanguageEnum */
-    const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+    /** Convert short locale to SDK langCode */
+    const langCode = toLangCode(lang);
 
     /** get block by marker from api */
     const { block } = await getBlockByMarker('system_content', lang);

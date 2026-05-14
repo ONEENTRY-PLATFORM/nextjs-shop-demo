@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
-import type { IError } from 'oneentry/dist/base/utils';
 import { toast } from 'react-toastify';
+
+import { isError } from '@/app/api/api/api';
 
 /**
  * Custom error class for API errors
@@ -20,18 +21,11 @@ export class ApiError extends Error {
 }
 
 /**
- * Type guard to check if an object is of type IError
- * @param   {unknown} error - The error object to check
- * @returns {boolean}       True if the object is an IError, false otherwise
+ * Type guard alias kept for backward compatibility with existing call sites.
+ * Prefer importing {@link isError} from `@/app/api` in new code.
+ * @deprecated Use `isError` from `@/app/api` instead.
  */
-export function isIError(error: unknown): error is IError {
-  return (
-    typeof error === 'object' &&
-    error !== null &&
-    'statusCode' in error &&
-    'message' in error
-  );
-}
+export const isIError = isError;
 
 /**
  * Centralized error handling function

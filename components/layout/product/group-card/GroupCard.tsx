@@ -2,7 +2,7 @@ import type { IAttributeValues, ILocalizeInfo } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 
 import ApplyButton from './ApplyButton';
 import PriceDisplay from './PriceDisplay';
@@ -28,8 +28,8 @@ const GroupCard = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
-  /** Map language code to enum value for attribute values */
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  /** Convert short locale to SDK langCode */
+  const langCode = toLangCode(lang);
 
   /** Get attribute values for the current language or fallback to default */
   const attributeValues = ((

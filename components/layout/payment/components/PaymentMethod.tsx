@@ -8,7 +8,7 @@ import { useCallback, useMemo } from 'react';
 import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { addPaymentMethod } from '@/app/store/reducers/OrderSlice';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 
 import TotalAmount from '../../cart/components/TotalAmount';
 import PaymentMethodAnimations from '../animations/PaymentMethodAnimations';
@@ -46,8 +46,8 @@ const PaymentMethod = ({
   products?: IProductsEntity[];
   delivery?: IProductsEntity;
 }): JSX.Element => {
-  /** Map language code to enum value for API calls */
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  /** Convert short locale to SDK langCode */
+  const langCode = toLangCode(lang);
 
   /** Redux dispatch function for state updates */
   const dispatch = useAppDispatch();

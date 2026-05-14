@@ -1,4 +1,3 @@
-/* eslint-disable jsdoc/reject-any-type */
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
@@ -17,10 +16,9 @@ import type {
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 
-import { LanguageEnum } from '@/app/types/enum';
-import type { ApiResponse } from '@/app/types/hooks';
+import { toLangCode } from '@/app/types/enum';
 
-import { getApi } from './api';
+import { getApi, isError } from './api';
 
 interface AttributeByMarkerProps {
   setMarker: string;
@@ -44,19 +42,35 @@ interface SingleOrderProps {
   activeLang: string;
 }
 
+/** Shape of a `queryFn` result for `fakeBaseQuery<IError>()`. */
+type QueryResult<T> = { data: T } | { error: IError };
+
 /**
- * Generic function to handle API responses
- * @param   {any} apiCall - Promise to be handled.
- * @returns {any}         Promise with API response
+ * Awaits an SDK call and converts it to RTK Query's `{ data | error }` shape.
+ *
+ * Replaces the per-endpoint pattern of `handleApiResponse` + manual
+ * `(result as IError)?.statusCode` checks. Uses the canonical {@link isError}
+ * type guard from `./api`.
+ * @template           T
+ * @param    {Promise} call - Promise returned by any SDK method.
+ * @returns  {Promise}      Result narrowed for RTK Query (`{ data | error }`).
  */
-const handleApiResponse = async <T>(
-  apiCall: Promise<T | IError>,
-): Promise<ApiResponse<T>> => {
+const toQueryResult = async <T>(
+  call: Promise<T | IError>,
+): Promise<QueryResult<T>> => {
   try {
-    const result = await apiCall;
-    return result;
+    const result = await call;
+    if (!result || isError(result)) {
+      return {
+        error: (result ?? {
+          statusCode: 500,
+          message: 'Empty response',
+        }) as IError,
+      };
+    }
+    return { data: result as T };
   } catch (error) {
-    return error as IError;
+    return { error: error as IError };
   }
 };
 
@@ -74,15 +88,10 @@ export const RTKApi = createApi({
      * @returns          Query result with position blocks
      */
     getBlocksByPageUrl: build.query<IPositionBlock[], BlocksByPageUrlProps>({
-      queryFn: async ({ pageUrl, activeLang }) => {
-        const result = await handleApiResponse(
+      queryFn: async ({ pageUrl, activeLang }) =>
+        toQueryResult<IPositionBlock[]>(
           getApi().Pages.getBlocksByPageUrl(pageUrl, activeLang),
-        );
-        if (!result || (result as IError)?.statusCode) {
-          return { error: result as IError };
-        }
-        return { data: result as IPositionBlock[] };
-      },
+        ),
     }),
     /**
      * Get block by Marker.
@@ -91,15 +100,10 @@ export const RTKApi = createApi({
      * @returns          Query result with block
      */
     getBlockByMarker: build.query<IBlockEntity, BlockByMarkerProps>({
-      queryFn: async ({ marker, activeLang }) => {
-        const result = await handleApiResponse(
+      queryFn: async ({ marker, activeLang }) =>
+        toQueryResult<IBlockEntity>(
           getApi().Blocks.getBlockByMarker(marker, activeLang),
-        );
-        if (!result || (result as IError)?.statusCode) {
-          return { error: result as IError };
-        }
-        return { data: result as IBlockEntity };
-      },
+        ),
     }),
     /**
      * Get single attribute by marker set.
@@ -107,24 +111,18 @@ export const RTKApi = createApi({
      * @param attributeMarker - Marker of attribute.
      * @returns               Query result with attribute
      */
-
     getSingleAttributeByMarkerSet: build.query<
       IAttributesSetsEntity,
       AttributeByMarkerProps
     >({
-      queryFn: async ({ setMarker, attributeMarker, activeLang }) => {
-        const result = await handleApiResponse(
+      queryFn: async ({ setMarker, attributeMarker, activeLang }) =>
+        toQueryResult<IAttributesSetsEntity>(
           getApi().AttributesSets.getSingleAttributeByMarkerSet(
             setMarker,
             attributeMarker,
             activeLang,
           ),
-        );
-        if (!result || (result as IError)?.statusCode) {
-          return { error: result as IError };
-        }
-        return { data: result as IAttributesSetsEntity };
-      },
+        ),
     }),
     /**
      * Get Product By Id.
@@ -141,13 +139,9 @@ export const RTKApi = createApi({
             } as IError,
           };
         }
-        const result = await handleApiResponse(
+        return toQueryResult<IProductsEntity>(
           getApi().Products.getProductById(id),
         );
-        if (!result || (result as IError)?.statusCode) {
-          return { error: result as IError };
-        }
-        return { data: result as IProductsEntity };
       },
     }),
     /**
@@ -160,14 +154,9 @@ export const RTKApi = createApi({
         if (!items || items.length < 1) {
           return { data: [] };
         }
-        const result = await handleApiResponse(
+        return toQueryResult<IProductsEntity[]>(
           getApi().Products.getProductsByIds(items),
         );
-        if (!result || (result as IError).statusCode >= 400) {
-          return { error: result as IError };
-        } else {
-          return { data: result as IProductsEntity[] };
-        }
       },
     }),
     /**
@@ -176,15 +165,10 @@ export const RTKApi = createApi({
      * @returns        Query result with auth providers
      */
     getAuthProviders: build.query<IAuthProvidersEntity[], string>({
-      queryFn: async (langCode) => {
-        const result = await handleApiResponse(
+      queryFn: async (langCode) =>
+        toQueryResult<IAuthProvidersEntity[]>(
           getApi().AuthProvider.getAuthProviders(langCode),
-        );
-        if (!result || (result as IError)?.statusCode) {
-          return { error: result as IError };
-        }
-        return { data: result as IAuthProvidersEntity[] };
-      },
+        ),
     }),
     /**
      * Get form by marker.
@@ -192,22 +176,14 @@ export const RTKApi = createApi({
      * @param lang   - Language code. Default "en_US"
      * @returns      Query result with form
      */
-
     getFormByMarker: build.query<
       IFormsEntity,
       { marker: string; lang: string }
     >({
-      queryFn: async ({ marker, lang }) => {
-        const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
-        const result = await handleApiResponse(
-          getApi().Forms.getFormByMarker(marker, langCode),
-        );
-
-        if (!result || (result as IError)?.statusCode) {
-          return { error: result as IError };
-        }
-        return { data: result as IFormsEntity };
-      },
+      queryFn: async ({ marker, lang }) =>
+        toQueryResult<IFormsEntity>(
+          getApi().Forms.getFormByMarker(marker, toLangCode(lang)),
+        ),
     }),
     /**
      * Getting the data of an authorized user.
@@ -216,32 +192,20 @@ export const RTKApi = createApi({
      */
     getMe: build.query<IUserEntity, { langCode: string }>({
       queryFn: async ({ langCode }) => {
-        try {
-          /** Check if refresh token exists before making request */
-          const refreshToken =
-            typeof window !== 'undefined'
-              ? localStorage.getItem('refresh-token')
-              : null;
-
-          /** Skip request if no refresh token */
-          if (!refreshToken) {
-            return {
-              error: {
-                statusCode: 401,
-                message: 'No refresh token',
-              } as IError,
-            };
-          }
-
-          const result = await getApi().Users.getUser(langCode);
-
-          if (!result || (result as IError)?.statusCode) {
-            return { error: result as IError };
-          }
-          return { data: result as IUserEntity };
-        } catch (error) {
-          return { error: error as IError };
+        /** Skip request if no refresh token in localStorage */
+        const refreshToken =
+          typeof window !== 'undefined'
+            ? localStorage.getItem('refresh-token')
+            : null;
+        if (!refreshToken) {
+          return {
+            error: {
+              statusCode: 401,
+              message: 'No refresh token',
+            } as IError,
+          };
         }
+        return toQueryResult<IUserEntity>(getApi().Users.getUser(langCode));
       },
     }),
     /**
@@ -249,13 +213,8 @@ export const RTKApi = createApi({
      * @returns Query result with payment accounts
      */
     getAccounts: build.query<IAccountsEntity[], object>({
-      queryFn: async () => {
-        const result = await handleApiResponse(getApi().Payments.getAccounts());
-        if (!result || (result as IError)?.statusCode) {
-          return { error: result as IError };
-        }
-        return { data: result as IAccountsEntity[] };
-      },
+      queryFn: async () =>
+        toQueryResult<IAccountsEntity[]>(getApi().Payments.getAccounts()),
     }),
     /**
      * Retrieve one order storage object by marker.
@@ -263,15 +222,10 @@ export const RTKApi = createApi({
      * @returns      Query result with order storage
      */
     getOrderStorageByMarker: build.query<IOrdersEntity, { marker: string }>({
-      queryFn: async ({ marker }) => {
-        const result = await handleApiResponse(
+      queryFn: async ({ marker }) =>
+        toQueryResult<IOrdersEntity>(
           getApi().Orders.getOrdersStorageByMarker(marker),
-        );
-        if (!result || (result as IError)?.statusCode) {
-          return { error: result as IError };
-        }
-        return { data: result as IOrdersEntity };
-      },
+        ),
     }),
     /**
      * Get a single payment session object by its identifier.
@@ -279,48 +233,21 @@ export const RTKApi = createApi({
      * @returns  Query result with payment session
      */
     getPaymentSessionById: build.query<ISessionEntity, { id: number }>({
-      queryFn: async ({ id }) => {
-        const result = await handleApiResponse(
-          getApi().Payments.getSessionById(id),
-        );
-        if (!result || (result as IError)?.statusCode) {
-          return { error: result as IError };
-        }
-        return { data: result as ISessionEntity };
-      },
+      queryFn: async ({ id }) =>
+        toQueryResult<ISessionEntity>(getApi().Payments.getSessionById(id)),
     }),
     /**
-     * Getting a single order from the order storage object created by the user
+     * Getting a single order from the order storage object created by the user.
      * @param id         - ID of the order object.
      * @param marker     - The text identifier of the order storage object.
      * @param activeLang - Optional language field.
      * @returns          Query result with single order
      */
     getSingleOrder: build.query<IOrderByMarkerEntity, SingleOrderProps>({
-      queryFn: async ({ id, marker, activeLang }) => {
-        try {
-          const result = await handleApiResponse(
-            getApi().Orders.getOrderByMarkerAndId(marker, id, activeLang),
-          );
-          if (!result || (result as IError)?.statusCode) {
-            return { error: result as IError };
-          }
-          return { data: result as IOrderByMarkerEntity };
-        } catch (error) {
-          /** Handle SDK errors (e.g., scheduleGroup.values.forEach) */
-          // eslint-disable-next-line no-console
-          console.error(`Error fetching order ${id}:`, error);
-          return {
-            error: {
-              statusCode: 500,
-              message:
-                error instanceof Error
-                  ? error.message
-                  : 'Failed to fetch order data',
-            } as IError,
-          };
-        }
-      },
+      queryFn: async ({ id, marker, activeLang }) =>
+        toQueryResult<IOrderByMarkerEntity>(
+          getApi().Orders.getOrderByMarkerAndId(marker, id, activeLang),
+        ),
     }),
   }),
 });

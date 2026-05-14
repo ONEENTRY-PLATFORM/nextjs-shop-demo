@@ -4,7 +4,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import { useEffect, useState } from 'react';
 
 import { getApi } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 
 /**
  * Search products with Products API
@@ -25,8 +25,8 @@ export const useSearchProducts = ({
   products: IProductsEntity[];
   refetch: () => void;
 } => {
-  /** Get language code from LanguageEnum */
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  /** Convert short locale to SDK langCode */
+  const langCode = toLangCode(lang);
   /** Loading state for search operation */
   const [loading, setLoading] = useState<boolean>(false);
   /** Store searched products */

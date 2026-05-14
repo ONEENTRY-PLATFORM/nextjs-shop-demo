@@ -5,7 +5,7 @@
 import type { JSX } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 
 import OrderAnimations from '../animations/OrderAnimations';
@@ -36,8 +36,8 @@ const OrderPage = ({
   lang: string;
   isActive: boolean;
 }): JSX.Element => {
-  /** Convert language shortcode to enum value for API requests */
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  /** Convert short locale to SDK langCode */
+  const langCode = toLangCode(lang);
 
   /** Fetch order data using RTK Query hook */
   const { data, isLoading, refetch, error } = useGetSingleOrderQuery({

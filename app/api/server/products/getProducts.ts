@@ -3,7 +3,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 
 import { getApi } from '@/app/api';
 import getSearchParams from '@/app/api/utils/getSearchParams';
-import { LanguageEnum } from '@/app/types/enum';
+import { toLangCode } from '@/app/types/enum';
 import { isIError } from '@/app/utils/errorHandler';
 
 /**
@@ -46,7 +46,7 @@ export const getProducts = async (props: {
   total: number;
 }> => {
   const { limit, offset, params, lang } = props;
-  const langCode = LanguageEnum[lang as keyof typeof LanguageEnum];
+  const langCode = toLangCode(lang);
   const body = getSearchParams(params?.searchParams, params?.handle) || [];
 
   const data = await getApi().Products.getProducts(body, langCode, {
