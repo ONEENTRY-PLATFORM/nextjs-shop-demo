@@ -4,6 +4,7 @@ import Link from 'next/link';
 import type { JSX } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
+import { useHydrated } from '@/components/hooks/useHydrated';
 import CartAltIcon from '@/components/icons/cart';
 
 /**
@@ -47,6 +48,15 @@ const NavItemCart = ({
       });
   });
 
+  /**
+   * The cart is a redux-persist store hydrated from localStorage, so the count
+   * is only known on the client. Render `0` during SSR and the first client
+   * render (to match the server HTML), then switch to the real count once
+   * hydrated — otherwise React throws a hydration mismatch.
+   */
+  const hydrated = useHydrated();
+  const displayCount = hydrated ? count : 0;
+
   /** Destructure page URL and localized information from the menu item */
   const { pageUrl, localizeInfos } = item;
 
@@ -59,7 +69,7 @@ const NavItemCart = ({
       href={'/' + lang + '/' + pageUrl}
       title={localizeInfos.menuTitle}
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
-      aria-label={`Shopping cart with ${count} ${count === 1 ? 'item' : 'items'}`}
+      aria-label={`Shopping cart with ${displayCount} ${displayCount === 1 ? 'item' : 'items'}`}
       // test id for e2e testing
       data-testid="cart-icon"
     >
@@ -73,7 +83,7 @@ const NavItemCart = ({
         // test id for e2e testing
         data-testid="cart-badge"
       >
-        {count}
+        {displayCount}
       </div>
     </Link>
   );

@@ -6,6 +6,7 @@ import type { JSX } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
 import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
+import { useHydrated } from '@/components/hooks/useHydrated';
 import FavoritesAltIcon from '@/components/icons/favorites';
 
 /**
@@ -33,6 +34,15 @@ const NavItemFavorites = ({
   });
 
   /**
+   * Favorites live in a redux-persist store hydrated from localStorage, so the
+   * count is only known on the client. Render `0` during SSR and the first
+   * client render (to match the server HTML), then switch to the real count
+   * once hydrated — otherwise React throws a hydration mismatch.
+   */
+  const hydrated = useHydrated();
+  const displayCount = hydrated ? count : 0;
+
+  /**
    * Destructure page URL and localized information from the menu item
    * pageUrl is used for navigation and localizeInfos contains the menu title
    */
@@ -47,7 +57,7 @@ const NavItemFavorites = ({
       href={'/' + lang + '/' + pageUrl}
       title={localizeInfos?.menuTitle as string}
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
-      aria-label={`Favorites with ${count} ${count === 1 ? 'item' : 'items'}`}
+      aria-label={`Favorites with ${displayCount} ${displayCount === 1 ? 'item' : 'items'}`}
       // test id for e2e testing
       data-testid="favorites-icon"
     >
@@ -61,7 +71,7 @@ const NavItemFavorites = ({
         // test id for e2e testing
         data-testid="favorites-badge"
       >
-        {count}
+        {displayCount}
       </div>
     </Link>
   );

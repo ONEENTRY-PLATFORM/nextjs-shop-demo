@@ -12,7 +12,12 @@ import {
   useState,
 } from 'react';
 
-import { hasActiveSession, reDefine, useLazyGetMeQuery } from '@/app/api';
+import {
+  hasActiveSession,
+  reDefine,
+  RTKApi,
+  useLazyGetMeQuery,
+} from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 import type { IProducts } from '@/app/types/global';
 
@@ -94,6 +99,34 @@ export const AuthProvider = ({
   });
 
   /**
+   * True once an authenticated session has been established. Gates the RTK
+   * cache reset so it fires only on a real authed→unauthed transition (logout /
+   * expiry) — NOT for a guest with no session, where a global `resetApiState`
+   * would abort in-flight PUBLIC queries (e.g. product breadcrumbs) and trigger
+   * a redundant double-fetch. Effects flush child-first, so the parent reset
+   * would otherwise land on a child's just-started public query.
+   */
+  const hadSessionRef = useRef(false);
+
+  /**
+   * Clears all client-side auth state. Used whenever the session ends or a
+   * token check fails (logout, expired session) so no stale `user` lingers in
+   * the context after `isAuth` flips to false.
+   * @returns {void} Nothing.
+   */
+  const resetAuth = useCallback((): void => {
+    setIsAuth(false);
+    setUser(undefined);
+    // Drop cached authed data (getMe, orders, accounts, …) so a stale private
+    // payload can't be read after the session ends — but only if we actually
+    // had a session, otherwise we'd needlessly abort a guest's public queries.
+    if (hadSessionRef.current) {
+      hadSessionRef.current = false;
+      dispatch(RTKApi.util.resetApiState());
+    }
+  }, [dispatch]);
+
+  /**
    * Re-fetches the current user via RTK Query and updates auth state.
    * Memoized so it can be safely listed as an effect dep.
    * @returns {Promise<void>} Resolves once auth state is reconciled.
@@ -101,21 +134,22 @@ export const AuthProvider = ({
   const checkToken = useCallback(async (): Promise<void> => {
     const refresh = localStorage.getItem('refresh-token');
     if (!refresh) {
-      setIsAuth(false);
+      resetAuth();
       return;
     }
     try {
       const res = await trigger({ langCode });
       if ((res.isError && !res.isLoading) || !res.data?.id) {
-        setIsAuth(false);
+        resetAuth();
       } else {
         setUser(res.data);
         setIsAuth(true);
+        hadSessionRef.current = true;
       }
     } catch {
-      setIsAuth(false);
+      resetAuth();
     }
-  }, [langCode, trigger]);
+  }, [langCode, trigger, resetAuth]);
 
   /**
    * Always-current ref to {@link checkToken}. Used by the manual-recheck
@@ -166,18 +200,39 @@ export const AuthProvider = ({
   }, [isAuth, user, favoritesVersion, dispatch]);
 
   /**
+   * Tracks the init trigger currently being processed (`reinitTick:langCode`).
+   * Two jobs: (1) dedupe React StrictMode's dev double-invoke so one logical
+   * init never fires two reDefine/refresh calls — correctness no longer depends
+   * on the SDK's internal /refresh single-flight; (2) guard async setState so a
+   * superseded run (rapid re-init) can't overwrite the newer run. Replaces the
+   * previous per-run `cancelled` flag.
+   */
+  const initKeyRef = useRef<string | null>(null);
+
+  /**
    * Full re-init: read the refresh token from localStorage, sync the SDK,
    * then verify the token. Re-runs on `reinitTick` (login/logout) or langCode.
    */
   useEffect(() => {
-    let cancelled = false;
-    const initAuth = async () => {
-      if (!cancelled) setIsLoading(true);
+    const initKey = `${reinitTick}:${langCode}`;
+    if (initKeyRef.current === initKey) {
+      return; // StrictMode double-invoked the effect with identical deps.
+    }
+    initKeyRef.current = initKey;
+
+    /**
+     * Whether this run is still the latest init (not superseded by a newer one).
+     * @returns {boolean} True while `initKeyRef` still matches this run's key.
+     */
+    const isCurrent = (): boolean => initKeyRef.current === initKey;
+
+    const initAuth = async (): Promise<void> => {
+      setIsLoading(true);
 
       const refresh = localStorage.getItem('refresh-token');
       if (!refresh) {
-        if (!cancelled) {
-          setIsAuth(false);
+        if (isCurrent()) {
+          resetAuth();
           setIsLoading(false);
         }
         return;
@@ -185,16 +240,13 @@ export const AuthProvider = ({
       if (!hasActiveSession()) {
         await reDefine(refresh, langCode);
       }
-      if (!cancelled) {
+      if (isCurrent()) {
         await checkToken();
-        if (!cancelled) setIsLoading(false);
+        if (isCurrent()) setIsLoading(false);
       }
     };
     initAuth();
-    return () => {
-      cancelled = true;
-    };
-  }, [reinitTick, langCode, checkToken]);
+  }, [reinitTick, langCode, checkToken, resetAuth]);
 
   /**
    * Drop auth on RTK Query polling errors (e.g. expired session).
@@ -204,9 +256,9 @@ export const AuthProvider = ({
   useEffect(() => {
     if (isError) {
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsAuth(false);
+      resetAuth();
     }
-  }, [isError]);
+  }, [isError, resetAuth]);
 
   /**
    * Manual re-check on `refreshUser()` calls (e.g. after profile edit).

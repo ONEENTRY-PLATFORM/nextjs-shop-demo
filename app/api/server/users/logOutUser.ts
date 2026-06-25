@@ -28,6 +28,12 @@ export const logOutUser = async ({
 
   const result = await getApi().AuthProvider.logout(marker, token);
 
+  // Always drop the local session, even if the server logout failed. On success
+  // the SDK already clears it via saveFunction(''); on failure it does not, and
+  // a leftover token would be re-used on the next re-init and burned on a doomed
+  // proactive /refresh (400 → 401). The user clicked logout — log them out locally.
+  localStorage.removeItem('refresh-token');
+
   if (isIError(result)) {
     return { error: result.message };
   }
