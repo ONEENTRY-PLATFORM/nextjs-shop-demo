@@ -8,11 +8,14 @@ import type {
 import type { ISessionEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import { useState } from 'react';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { removeProduct } from '@/app/store/reducers/CartSlice';
 import { removeOrder } from '@/app/store/reducers/OrderSlice';
 import { handleApiError } from '@/app/utils/errorHandler';
+
+/** Whitelist of online gateways — extend when adding new ones (orders rule) */
+const ONLINE_PAYMENT_IDENTIFIERS = ['stripe', 'paypal'];
 
 /**
  * Custom hook to handle order creation and payment session
@@ -59,20 +62,47 @@ export const useCreateOrder = ({
     /** Handle payment session creation */
     try {
       /** Create payment session using Payments API */
-      const { paymentUrl } = (await getApi().Payments.createSession(
-        id,
-        'session',
-      )) as ISessionEntity;
-      /** Handle cash payment method */
-      if (order?.paymentAccountIdentifier === 'cash') {
-        router.push('/orders');
-        return 'payment_success';
+      const session = await getApi().Payments.createSession(id, 'session');
+      if (isError(session)) {
+        setError(session.message);
+        return '';
       }
-      /** Redirect to payment URL if available */
-      if (paymentUrl) {
-        router.push(paymentUrl);
+
+      /** Stripe — synchronous flow: paymentUrl is returned immediately */
+      if (order?.paymentAccountIdentifier === 'stripe') {
+        if (session.paymentUrl) {
+          router.push(session.paymentUrl);
+          return 'payment_method';
+        }
+        return '';
+      }
+
+      /**
+       * PayPal / other async online gateways — paymentUrl may be null on
+       * creation, so poll getSessionByOrderId until the URL is ready.
+       */
+      if (session.paymentUrl) {
+        router.push(session.paymentUrl);
         return 'payment_method';
       }
+
+      for (let attempt = 0; attempt < 4; attempt++) {
+        await new Promise((r) => setTimeout(r, 1500));
+        const sessions = await getApi().Payments.getSessionByOrderId(id);
+        if (isError(sessions)) {
+          continue;
+        }
+        const polled: ISessionEntity | undefined = Array.isArray(sessions)
+          ? sessions[0]
+          : sessions;
+        if (polled?.paymentUrl) {
+          router.push(polled.paymentUrl);
+          return 'payment_method';
+        }
+      }
+
+      /** No payment URL became available within the polling window */
+      setError('Payment link is not ready yet. Please try again later.');
       return '';
     } catch (error) {
       /** Handle API errors */
@@ -97,8 +127,7 @@ export const useCreateOrder = ({
       const orderFormData = order.formData
         .slice()
         .filter((element) => element.marker !== 'time')
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .map((data: { marker: string; type: string; value: any }) => {
+        .map((data) => {
           return {
             marker: data.marker,
             type: data.type,
@@ -129,7 +158,9 @@ export const useCreateOrder = ({
         /** remove order */
         dispatch(removeOrder());
 
-        if (paymentAccountIdentifier !== 'cash') {
+        if (
+          ONLINE_PAYMENT_IDENTIFIERS.includes(paymentAccountIdentifier ?? '')
+        ) {
           await createSession(id);
         } else {
           router.push('/orders');

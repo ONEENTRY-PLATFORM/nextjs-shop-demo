@@ -1,9 +1,8 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
-import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get product by id.
@@ -49,7 +48,7 @@ export const getProductById = async (
 
   const data = await getApi().Products.getProductById(id, langCode);
 
-  if (isIError(data)) {
+  if (isError(data)) {
     return { isError: true, error: data };
   }
 

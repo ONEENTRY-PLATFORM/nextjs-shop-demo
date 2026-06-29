@@ -1,5 +1,4 @@
-import { getApi } from '@/app/api';
-import { isIError } from '@/app/utils/errorHandler';
+import { getApi, isError } from '@/app/api';
 
 type LogOutProps = { marker: string; token?: string };
 
@@ -34,7 +33,7 @@ export const logOutUser = async ({
   // proactive /refresh (400 → 401). The user clicked logout — log them out locally.
   localStorage.removeItem('refresh-token');
 
-  if (isIError(result)) {
+  if (isError(result)) {
     return { error: result.message };
   }
 

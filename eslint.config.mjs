@@ -61,6 +61,12 @@ const eslintConfig = defineConfig([
       react: {
         version: 'detect',
       },
+      // eslint-plugin-tailwindcss v4 needs the path to the Tailwind CSS entry
+      // (the file with `@import "tailwindcss"`) to read the theme. Mandatory in v4;
+      // it otherwise looks for the default `./src/style.css` and crashes with ENOENT.
+      tailwindcss: {
+        cssConfigPath: './app/globals.css',
+      },
       // import/resolver settings are useful if you use path aliases (adjust if needed)
       'import/resolver': {
         node: {
@@ -85,7 +91,7 @@ const eslintConfig = defineConfig([
       ...nextPlugin.configs.recommended.rules,
       ...reactPlugin.configs.flat.rules,
       ...reactHooksPlugin.configs['recommended-latest'].rules,
-      ...tailwindcssPlugin.configs['flat/recommended'].rules,
+      ...tailwindcssPlugin.configs.recommended.rules,
       ...jsdocPlugin.configs['flat/recommended'].rules,
 
       // Prettier
@@ -135,6 +141,14 @@ const eslintConfig = defineConfig([
       
       // JSDoc rules
       'jsdoc/check-line-alignment': ['warn', 'always'],
+
+      // Tailwind: this project ships a custom CSS design system (`btn`, `td`,
+      // `slide-up`, `block-card`, …) and delegates class ordering to
+      // prettier-plugin-tailwindcss. Disable the two tailwind rules that fight
+      // those choices; keep the genuinely useful ones (enforces-shorthand,
+      // no-unnecessary-arbitrary-value, no-contradicting-classname).
+      'tailwindcss/no-custom-classname': 'off',
+      'tailwindcss/classnames-order': 'off',
     },
   },
 ]);

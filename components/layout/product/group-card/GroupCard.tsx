@@ -42,8 +42,7 @@ const GroupCard = ({
 
   /** Extract product images from attribute values */
   const images = attributeValues.more_pic?.value as
-    | Array<{ downloadLink: string }>
-    | undefined;
+    Array<{ downloadLink: string }> | undefined;
 
   /** Get first product image download link */
   const pic1 = images && images[0]?.downloadLink;

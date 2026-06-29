@@ -4,9 +4,8 @@ import type {
   IProductsResponse,
 } from 'oneentry/dist/products/productsInterfaces';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
-import { isIError } from '@/app/utils/errorHandler';
 
 interface RelatedProductsResult {
   isError: boolean;
@@ -65,7 +64,7 @@ export const getRelatedProductsById = async (
 
   const data = await getApi().Products.getRelatedProductsById(id, langCode);
 
-  if (isIError(data)) {
+  if (isError(data)) {
     return { isError: true, error: data as IError, total: 0 };
   }
 

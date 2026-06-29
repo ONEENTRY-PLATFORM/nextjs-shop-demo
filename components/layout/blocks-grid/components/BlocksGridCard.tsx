@@ -72,8 +72,7 @@ const BlocksGridCard = async ({
   /** Extract sticker image URL if available */
   const stickerImage = (
     stickers?.value as
-      | Array<{ extended?: { value?: { downloadLink?: string } } }>
-      | undefined
+      Array<{ extended?: { value?: { downloadLink?: string } } }> | undefined
   )?.[0]?.extended?.value?.downloadLink;
   // const quoteValue = quote?.value;
 

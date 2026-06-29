@@ -7,7 +7,7 @@ import type { FormEvent, JSX } from 'react';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 
-import { getApi, logInUser } from '@/app/api';
+import { getApi, isError, logInUser } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -17,6 +17,10 @@ import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import ErrorMessage from './inputs/ErrorMessage';
 import FormSubmitButton from './inputs/FormSubmitButton';
+
+// ⚠️ DO NOT guess — verify these event markers in OneEntry admin panel → Events.
+const EVENT_CHECK_CODE = 'reg';
+const EVENT_GENERATE_CODE = 'generate_code';
 
 /**
  * VerificationForm props
@@ -50,6 +54,12 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
   const [otp, setOtp] = useState('');
   /** State for storing error messages */
   const [error, setError] = useState('');
+  /**
+   * Resend cooldown countdown in seconds. Seeded to the SDK default (~80s)
+   * because a code was just sent in the previous step; the exact
+   * `systemCodeTlsSec` is applied after the first resend.
+   */
+  const [cooldown, setCooldown] = useState(80);
 
   /** Extract localized text values from the dictionary */
   const {
@@ -78,6 +88,17 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
     }
   }, [dispatch, otp]);
 
+  /** Decrement the cooldown every second while it is active */
+  useEffect(() => {
+    if (cooldown <= 0) {
+      return;
+    }
+    const timer = setInterval(() => {
+      setCooldown((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [cooldown]);
+
   /**
    * Submit form handle for checkCode/activateUser
    * Processes the OTP based on the current action (registration verification or password reset)
@@ -105,7 +126,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
           const result = await getApi().AuthProvider.checkCode(
             'email',
             String(fields.email_reg?.value || ''),
-            'reg', // Registration context
+            EVENT_CHECK_CODE, // Registration context
             otp,
           );
 
@@ -177,8 +198,20 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
         await getApi().AuthProvider.generateCode(
           'email',
           String(fields.email_reg?.value || ''),
-          'generate_code',
+          EVENT_GENERATE_CODE,
         );
+
+        /** Fetch the provider config to start the resend cooldown */
+        const provider =
+          await getApi().AuthProvider.getAuthProviderByMarker('email');
+        if (!isError(provider)) {
+          setCooldown(
+            Number(
+              (provider as { config?: { systemCodeTlsSec?: string | number } })
+                ?.config?.systemCodeTlsSec,
+            ) || 80,
+          );
+        }
       } catch (e: any) {
         setError(e.message);
       }
@@ -230,11 +263,14 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
             </span>
             {/** Resend button to request a new OTP */}
             <button
-              className="font-bold text-orange-500"
+              className="font-bold text-orange-500 disabled:cursor-not-allowed disabled:opacity-50"
               type="button"
               onClick={onResendHandle}
+              disabled={cooldown > 0 || isLoading}
             >
-              {resend_text?.value as string}
+              {cooldown > 0
+                ? `${resend_text?.value as string} (${cooldown})`
+                : (resend_text?.value as string)}
             </button>
           </div>
         </div>

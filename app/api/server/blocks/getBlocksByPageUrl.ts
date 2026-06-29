@@ -2,9 +2,8 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
 import { cache } from 'react';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
-import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get all blocks by page url.
@@ -33,7 +32,7 @@ export const getBlocksByPageUrl = cache(
 
     const data = await getApi().Pages.getBlocksByPageUrl(pageUrl, langCode);
 
-    if (isIError(data)) {
+    if (isError(data)) {
       return { isError: true, error: data };
     }
 

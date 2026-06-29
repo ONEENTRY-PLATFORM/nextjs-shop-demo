@@ -1,8 +1,7 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 
-import { getApi } from '@/app/api';
-import { isIError } from '@/app/utils/errorHandler';
+import { getApi, isError } from '@/app/api';
 
 /**
  * Getting all orders from the orders storage object created by the user.
@@ -42,7 +41,7 @@ export const getAllOrdersByMarker = async ({
     limit,
   );
 
-  if (isIError(data)) {
+  if (isError(data)) {
     return { isError: true, error: data, total: 0 };
   }
 

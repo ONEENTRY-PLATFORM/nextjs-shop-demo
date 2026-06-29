@@ -1,7 +1,6 @@
 import type { IAuthPostBody } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 
-import { getApi } from '@/app/api';
-import { isIError } from '@/app/utils/errorHandler';
+import { getApi, isError } from '@/app/api';
 
 type LogInProps = { login: string; password: string };
 
@@ -31,7 +30,7 @@ export const logInUser = async ({
 
   const result = await getApi().AuthProvider.auth('email', preparedData);
 
-  if (isIError(result)) {
+  if (isError(result)) {
     return { error: result.message };
   }
 

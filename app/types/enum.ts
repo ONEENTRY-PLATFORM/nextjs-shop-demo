@@ -64,6 +64,8 @@ export enum FormFieldsEnum {
   password = 'password',
   phone = 'tel',
   date = 'date',
+  dateTime = 'datetime-local',
+  time = 'time',
   text = 'textarea',
   list = 'list',
   spam = 'spam',

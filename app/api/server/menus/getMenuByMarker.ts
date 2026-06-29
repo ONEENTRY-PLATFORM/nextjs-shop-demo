@@ -2,9 +2,8 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
 import { cache } from 'react';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
-import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get pages includes in menu by marker.
@@ -29,7 +28,7 @@ export const getMenuByMarker = cache(
 
     const data = await getApi().Menus.getMenusByMarker(marker, langCode);
 
-    if (isIError(data)) {
+    if (isError(data)) {
       return { isError: true, error: data };
     }
 

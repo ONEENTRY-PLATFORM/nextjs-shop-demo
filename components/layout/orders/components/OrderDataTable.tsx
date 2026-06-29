@@ -4,6 +4,7 @@
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import type { JSX } from 'react';
 
+import { getOrderStatusLabel } from '@/app/utils/orderStatusLabels';
 import Loader from '@/components/shared/Loader';
 import { UseDate, UsePrice } from '@/components/utils/utils';
 
@@ -110,7 +111,8 @@ const OrderDataTable = ({
 
       {/* Payment status */}
       <div className="flex gap-2">
-        <b>{status_of_payment_title.value}:</b> {statusIdentifier}
+        <b>{status_of_payment_title.value}:</b>{' '}
+        {getOrderStatusLabel(statusIdentifier)}
       </div>
 
       {/* Payment account information */}

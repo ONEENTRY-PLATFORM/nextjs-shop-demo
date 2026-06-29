@@ -1,10 +1,9 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import getSearchParams from '@/app/api/utils/getSearchParams';
 import { toLangCode } from '@/app/types/enum';
-import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get all products with pagination and filter.
@@ -56,7 +55,7 @@ export const getProducts = async (props: {
     sortKey: 'date',
   });
 
-  if (isIError(data)) {
+  if (isError(data)) {
     return { isError: true, error: data, total: 0 };
   }
 

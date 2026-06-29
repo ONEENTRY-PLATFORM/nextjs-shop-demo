@@ -1,9 +1,8 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
-import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get child pages object with information as an array.
@@ -26,7 +25,7 @@ export const getChildPagesByParentUrl = async (
 
   const data = await getApi().Pages.getChildPagesByParentUrl(url, langCode);
 
-  if (isIError(data)) {
+  if (isError(data)) {
     return { isError: true, error: data };
   }
 

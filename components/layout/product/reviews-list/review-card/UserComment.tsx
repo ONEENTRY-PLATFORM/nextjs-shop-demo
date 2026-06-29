@@ -100,7 +100,7 @@ const UserComment = ({
                   alt={`Review image ${index + 1}`}
                   width={200}
                   height={200}
-                  className="h-full w-full object-cover"
+                  className="size-full object-cover"
                 />
               </div>
             ))}

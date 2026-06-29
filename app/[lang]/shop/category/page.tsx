@@ -94,12 +94,10 @@ export async function generateStaticParams(): Promise<
   /** Loop through all available locales */
   for (const lang of i18n.locales) {
     /** Fetch the category page by URL for the current language */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { page }: any = await getPageByUrl('category', lang);
+    const { page } = await getPageByUrl('category', lang);
     /** Check if page exists */
     if (page) {
-      const handle =
-        'pageUrl' in page ? (page as { pageUrl: string }).pageUrl : '';
+      const handle = page.pageUrl;
 
       params.push({ lang, handle });
     }

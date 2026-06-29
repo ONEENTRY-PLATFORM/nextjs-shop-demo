@@ -267,6 +267,13 @@ const ContactUsForm = memo(
                   localizeInfos={field.localizeInfos}
                   validators={field.validators}
                   listTitles={field.listTitles}
+                  additionalFields={
+                    (
+                      field as {
+                        additionalFields?: Record<string, { value?: unknown }>;
+                      }
+                    ).additionalFields
+                  }
                 />
               );
             }

@@ -16,16 +16,17 @@ import StarRating from './StarRating';
 /**
  * FormInput component for rendering various types of form fields.
  * Handles text inputs, textareas, select dropdowns, and password fields with show/hide functionality.
- * @param   {object}              field                 - Field properties.
- * @param   {string}              field.marker          - Field marker.
- * @param   {string}              field.type            - Field type.
- * @param   {string | number}     field.value           - Field value.
- * @param   {Record<string, any>} [field.validators]    - Field validators.
- * @param   {number}              [field.index]         - Field index.
- * @param   {Record<string, any>} [field.listTitles]    - List titles.
- * @param   {Record<string, any>} [field.localizeInfos] - Localize info.
- * @param   {string}              [field.className]     - Class name.
- * @returns {JSX.Element}                               Form input.
+ * @param   {object}              field                    - Field properties.
+ * @param   {string}              field.marker             - Field marker.
+ * @param   {string}              field.type               - Field type.
+ * @param   {string | number}     field.value              - Field value.
+ * @param   {Record<string, any>} [field.validators]       - Field validators.
+ * @param   {number}              [field.index]            - Field index.
+ * @param   {Record<string, any>} [field.listTitles]       - List titles.
+ * @param   {Record<string, any>} [field.localizeInfos]    - Localize info.
+ * @param   {Record<string, any>} [field.additionalFields] - Admin-configured extra fields (placeholder, hint).
+ * @param   {string}              [field.className]        - Class name.
+ * @returns {JSX.Element}                                  Form input.
  */
 const FormInput = (field: {
   marker: string;
@@ -35,9 +36,17 @@ const FormInput = (field: {
   index?: number;
   listTitles?: Record<string, any>;
   localizeInfos?: Record<string, any>;
+  additionalFields?: Record<string, any> | undefined;
   className?: string;
 }): JSX.Element => {
-  const { localizeInfos } = field;
+  const { localizeInfos, additionalFields } = field;
+
+  /* Placeholder/hint sourced from admin-configured additionalFields, falling back to the label */
+  const placeholder =
+    (additionalFields?.placeholder?.value as string) ||
+    localizeInfos?.title ||
+    '';
+  const hint = additionalFields?.hint?.value as string | undefined;
 
   /* State for storing the current value of the input field */
   const [value, setValue] = useState<string | number>(field.value || '');
@@ -163,7 +172,7 @@ const FormInput = (field: {
       {field.type === 'textarea' && (
         <textarea
           id={field.marker}
-          placeholder={localizeInfos?.title}
+          placeholder={placeholder}
           className={cn}
           required={required}
           onChange={(val) => setValue(val.currentTarget.value)}
@@ -177,7 +186,7 @@ const FormInput = (field: {
           <input
             type="file"
             id={field.marker}
-            placeholder={localizeInfos?.title}
+            placeholder={placeholder}
             // className={cn}
             required={required}
             onChange={async (val) => {
@@ -217,7 +226,7 @@ const FormInput = (field: {
           <input
             type={type}
             id={field.marker}
-            placeholder={localizeInfos?.title}
+            placeholder={placeholder}
             className={cn}
             required={required}
             onChange={(val) => setValue(val.currentTarget.value)}
@@ -231,6 +240,8 @@ const FormInput = (field: {
             value={value}
           />
         )}
+      {/** Render admin-configured hint text below the input */}
+      {hint && <span className="text-xs text-gray-400">{hint}</span>}
       {/** Render password visibility toggle button for password fields */}
       {field.type === 'password' && (
         <button

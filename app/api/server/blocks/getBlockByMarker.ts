@@ -2,9 +2,8 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import { cache } from 'react';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
-import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get block by marker.
@@ -28,7 +27,7 @@ export const getBlockByMarker = cache(
 
     const data = await getApi().Blocks.getBlockByMarker(marker, langCode);
 
-    if (isIError(data)) {
+    if (isError(data)) {
       return { isError: true, error: data };
     }
 

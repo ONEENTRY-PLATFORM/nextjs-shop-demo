@@ -2,9 +2,8 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import { cache } from 'react';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
-import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get page object with information about forms, blocks, menus, linked to the page by URL.
@@ -29,7 +28,7 @@ export const getPageByUrl = cache(
 
     const data = await getApi().Pages.getPageByUrl(url, langCode);
 
-    if (isIError(data)) {
+    if (isError(data)) {
       return { isError: true, error: data };
     }
 

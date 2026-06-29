@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { JSX } from 'react';
@@ -79,7 +78,7 @@ export async function generateStaticParams(): Promise<
   /** Loop through all available locales */
   for (const lang of i18n.locales) {
     /** Fetch child pages for the shop parent URL in the current language */
-    const { pages }: any = await getChildPagesByParentUrl('shop', lang);
+    const { pages } = await getChildPagesByParentUrl('shop', lang);
 
     /** Check if pages exist and are in array format */
     if (pages && Array.isArray(pages)) {

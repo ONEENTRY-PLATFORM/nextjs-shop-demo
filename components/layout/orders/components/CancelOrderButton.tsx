@@ -39,8 +39,7 @@ const CancelOrderButton = ({
     /** Prepare form data with updated status */
     const formData = {
       ...data,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      products: data.products?.map((product: any) => ({
+      products: data.products?.map((product) => ({
         productId: product.id,
         quantity: product.quantity,
       })),

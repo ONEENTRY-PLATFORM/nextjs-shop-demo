@@ -72,7 +72,7 @@ const ContactInfo = async (): Promise<JSX.Element> => {
         {/** Address section with title and value */}
         <div className="mb-2 flex w-full flex-col gap-1">
           <div className="font-bold">{info_address_title?.value as string}</div>
-          <div className="text-[1rem] font-normal">
+          <div className="text-base font-normal">
             {address?.value as string}
           </div>
         </div>
@@ -81,13 +81,13 @@ const ContactInfo = async (): Promise<JSX.Element> => {
           <div className="font-bold">{info_phones_title?.value as string}</div>
           <a
             href={'tel:' + (phone_1?.value as string)}
-            className="relative box-border text-[1rem] font-normal transition-colors hover:text-orange-500"
+            className="relative box-border text-base font-normal transition-colors hover:text-orange-500"
           >
             {phone_1?.value as string}
           </a>
           <a
             href={'tel:' + (phone_2?.value as string)}
-            className="relative box-border text-[1rem] font-normal transition-colors hover:text-orange-500"
+            className="relative box-border text-base font-normal transition-colors hover:text-orange-500"
           >
             {phone_2?.value as string}
           </a>
@@ -97,13 +97,13 @@ const ContactInfo = async (): Promise<JSX.Element> => {
           <div className="font-bold">{info_emails_title?.value as string}</div>
           <a
             href={'mailto:' + (email_1?.value as string)}
-            className="relative box-border text-[1rem] font-normal transition-colors hover:text-orange-500"
+            className="relative box-border text-base font-normal transition-colors hover:text-orange-500"
           >
             {email_1?.value as string}
           </a>
           <a
             href={'mailto:' + (email_2?.value as string)}
-            className="relative box-border text-[1rem] font-normal transition-colors hover:text-orange-500"
+            className="relative box-border text-base font-normal transition-colors hover:text-orange-500"
           >
             {email_2?.value as string}
           </a>

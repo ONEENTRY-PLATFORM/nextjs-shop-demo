@@ -17,6 +17,7 @@ import {
   selectDeliveryData,
   setDeliveryData,
 } from '@/app/store/reducers/CartSlice';
+import { toLangCode } from '@/app/types/enum';
 
 import CalendarAnimations from './animations/CalendarAnimations';
 import TimeSlots from './calendar/TimeSlots';
@@ -82,7 +83,7 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
   const { data, error, isLoading } = useGetSingleAttributeByMarkerSetQuery({
     setMarker: 'order',
     attributeMarker: 'shipping_interval',
-    activeLang: lang,
+    activeLang: toLangCode(lang),
   });
 
   /** Extract time intervals and holidays from API response */

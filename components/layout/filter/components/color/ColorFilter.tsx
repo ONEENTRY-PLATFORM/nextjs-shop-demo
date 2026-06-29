@@ -13,12 +13,14 @@ import { FilterContext } from '@/app/store/providers/FilterContext';
 
 /**
  * Color filter interface representing a single color option.
- * @param {string} code - Color code in hex format (e.g., "#FF0000")
- * @param {string} name - Human-readable color name (e.g., "Red")
+ * @param {string} code  - Option ID used for selection and the `color` URL param
+ * @param {string} name  - Human-readable color name (e.g., "Red")
+ * @param {string} color - CSS swatch color in hex format (e.g., "#FF0000")
  */
 type Color = {
   code: string;
   name: string;
+  color: string;
 };
 
 /**
@@ -70,6 +72,7 @@ const ColorFilter = memo(
         ? attributes.listTitles.map((item: IListTitle) => ({
             code: item.value.toString(),
             name: item.title,
+            color: (item.extended?.value as string) ?? '',
           }))
         : [];
 
@@ -107,7 +110,7 @@ const ColorFilter = memo(
               <div
                 className={'my-auto size-6 rounded-full'}
                 style={{
-                  backgroundColor: color.code,
+                  backgroundColor: color.color,
                 }}
               ></div>
               {/** Color name label */}

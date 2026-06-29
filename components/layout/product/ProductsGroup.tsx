@@ -47,7 +47,7 @@ const ProductsGroup = ({
         {block?.products?.map((product: IProductsEntity) => (
           <div
             key={product.id}
-            className="relative box-border flex h-full w-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%]"
+            className="relative box-border flex size-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%]"
           >
             <GroupCard product={product} lang={lang} dict={dict} />
           </div>

@@ -4,9 +4,8 @@ import type {
   IOrderData,
 } from 'oneentry/dist/orders/ordersInterfaces';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
-import { isIError } from '@/app/utils/errorHandler';
 
 interface HandleProps {
   marker: string;
@@ -47,7 +46,7 @@ export const updateOrderByMarkerAndId = async ({
     langCode,
   );
 
-  if (isIError(orderData)) {
+  if (isError(orderData)) {
     return { isError: true, error: orderData };
   }
 

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
@@ -47,8 +46,8 @@ const RepeatOrderButton = ({
   const repeatOrderHandle = async (): Promise<void> => {
     /** Filter out product with ID 83 */
     products
-      .filter((product: any) => product.id !== 83)
-      .forEach(async (product: any) => {
+      .filter((product) => product.id !== 83)
+      .forEach(async (product) => {
         /** Add product to cart with specified quantity */
         dispatch(
           addProductToCart({

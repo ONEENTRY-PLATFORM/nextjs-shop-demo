@@ -1,9 +1,8 @@
 import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
 import type { IError } from 'oneentry/dist/base/utils';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
-import { isIError } from '@/app/utils/errorHandler';
 
 /**
  * Get a single attribute with data from the attribute sets with API AttributesSets.
@@ -15,8 +14,7 @@ import { isIError } from '@/app/utils/errorHandler';
  * @see {@link https://doc.oneentry.cloud/docs/attributes OneEntry CMS docs}
  * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getSingleAttributeByMarkerSet: any = async ({
+export const getSingleAttributeByMarkerSet = async ({
   setMarker,
   attributeMarker,
   lang,
@@ -37,7 +35,7 @@ export const getSingleAttributeByMarkerSet: any = async ({
     langCode,
   );
 
-  if (isIError(attribute)) {
+  if (isError(attribute)) {
     return { isError: true, error: attribute as IError };
   }
 

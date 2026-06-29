@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/no-html-link-for-pages */
+import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import type { JSX } from 'react';
@@ -49,9 +49,9 @@ const OrderDataTable = ({
     return (
       <div className="p-4 text-center">
         No order data available, go to{' '}
-        <a href="/cart/" className="text-orange-500">
+        <Link href="/cart/" className="text-orange-500">
           cart page
-        </a>
+        </Link>
       </div>
     );
   }

@@ -2,6 +2,7 @@ import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces
 import type { JSX } from 'react';
 import { useState } from 'react';
 
+import { getOrderStatusLabel } from '@/app/utils/orderStatusLabels';
 import { UsePrice } from '@/components/utils/utils';
 
 import OrderRowAnimations from '../animations/OrderRowAnimations';
@@ -70,7 +71,7 @@ const OrderRow = ({
         {/** Display formatted order total */}
         <div className="w-1/4">{formattedPrice}</div>
         {/** Display order status */}
-        <div className="w-1/4">{statusIdentifier}</div>
+        <div className="w-1/4">{getOrderStatusLabel(statusIdentifier)}</div>
       </button>
       {/** Expanded order details page, shown when state is true */}
       <OrderPage

@@ -1,8 +1,7 @@
 import type { IError } from 'oneentry/dist/base/utils';
 import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
 
-import { getApi } from '@/app/api';
-import { isIError } from '@/app/utils/errorHandler';
+import { getApi, isError } from '@/app/api';
 
 /**
  * Get all active language localization objects.
@@ -18,7 +17,7 @@ export const getLocales = async (): Promise<{
 }> => {
   const data = await getApi().Locales.getLocales();
 
-  if (isIError(data)) {
+  if (isError(data)) {
     return { isError: true, error: data };
   }
 

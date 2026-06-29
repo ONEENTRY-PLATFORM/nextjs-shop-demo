@@ -34,7 +34,7 @@ export const isIError = isError;
  * @returns {ApiError}        An ApiError with standardized format
  */
 export function handleApiError(handle: string, error: unknown): ApiError {
-  if (isIError(error)) {
+  if (isError(error)) {
     /** Log the error for debugging purposes */
     console.log('API Error:', {
       handle: handle,
@@ -94,7 +94,7 @@ export function formatErrorMessage(
   error: unknown,
   defaultMessage: string = 'An error occurred',
 ): string {
-  if (isIError(error)) {
+  if (isError(error)) {
     switch (error.statusCode) {
       case 400:
         return 'Bad Request: Please check your input';

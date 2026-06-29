@@ -78,8 +78,7 @@ const OrderProductsTable = ({
         const isInStock =
           actualProduct.statusIdentifier === 'in_stock' &&
           ((actualProduct.attributeValues?.units_product?.value as
-            | number
-            | undefined) ?? 0) >= 1;
+            number | undefined) ?? 0) >= 1;
 
         /** Don't show out of stock products in order */
         if (!isInStock) {

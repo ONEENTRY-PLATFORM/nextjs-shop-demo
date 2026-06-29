@@ -53,7 +53,7 @@ const Menu = ({ menu }: { menu: IMenusEntity }): JSX.Element => {
         {/** Menu title from CMS with styling */}
         <h2 className="mb-5 text-xl font-bold">{title}</h2>
         {/** List of menu items. Maps through pages and renders MenuItem components */}
-        <ul className="flex flex-col gap-1.5 text-[1rem] font-semibold">
+        <ul className="flex flex-col gap-1.5 text-base font-semibold">
           {pages.map((page) => {
             return <MenuItem key={page.id} page={page} lang={lang as string} />;
           })}

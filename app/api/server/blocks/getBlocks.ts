@@ -4,9 +4,8 @@ import type {
   IBlocksResponse,
 } from 'oneentry/dist/blocks/blocksInterfaces';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
-import { isIError } from '@/app/utils/errorHandler';
 
 interface HandleProps {
   type: BlockType;
@@ -35,7 +34,7 @@ export const getBlocks = async ({
 
   const data = await getApi().Blocks.getBlocks(type, langCode);
 
-  if (isIError(data)) {
+  if (isError(data)) {
     return { isError: true, error: data };
   }
 

@@ -52,6 +52,16 @@ const FIELD_TRANSFORMERS: Record<string, FieldTransformer> = {
       id: productId,
     },
   }),
+  list: (marker, value) => ({
+    marker,
+    type: 'list',
+    value: (value === '' || value == null ? [] : [String(value)]) as never,
+  }),
+  radioButton: (marker, value) => ({
+    marker,
+    type: 'radioButton',
+    value: (value === '' || value == null ? [] : [String(value)]) as never,
+  }),
 };
 
 /**

@@ -16,14 +16,14 @@ const ModalHeading = ({ product }: { product: any }): JSX.Element => {
 
   return (
     <div className="flex items-center gap-4">
-      <div className="flex h-16 w-16 items-center justify-center overflow-hidden">
+      <div className="flex size-16 items-center justify-center overflow-hidden">
         {productImageUrl ? (
           <Image
             src={productImageUrl}
             alt={productTitle}
             width={64}
             height={64}
-            className="h-full w-full object-cover"
+            className="size-full object-cover"
           />
         ) : (
           <Placeholder />
