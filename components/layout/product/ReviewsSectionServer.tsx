@@ -9,9 +9,6 @@ import ReviewsSection from './ReviewsSection';
 
 /**
  * Server wrapper component for ReviewsSection that handles async data fetching without caching.
- *
- * This component uses unstable_noStore() to ensure reviews are always fetched fresh
- * from the API on each request, preventing stale data when reviews are deleted or modified.
  * @param   {object}               props         - Component properties
  * @param   {IProductsEntity}      props.product - Product entity object
  * @param   {IAttributeValues}     props.dict    - Dictionary of attribute values from server API

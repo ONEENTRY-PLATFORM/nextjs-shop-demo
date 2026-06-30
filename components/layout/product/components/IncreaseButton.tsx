@@ -6,8 +6,6 @@ import { increaseProductQty } from '@/app/store/reducers/CartSlice';
 
 /**
  * Increase button component.
- * Provides functionality to increase product quantity in the cart up to the available units.
- * Uses memoization for performance optimization and disables when maximum quantity is reached.
  * @param   {object}      props       - The component props.
  * @param   {number}      props.id    - The product ID for identification and cart operations.
  * @param   {number}      props.qty   - The current cart quantity for the product.

@@ -28,20 +28,23 @@ const PayOrderButton = ({
   /** Convert short locale to SDK langCode */
   const langCode = toLangCode(lang);
 
-  /** Get payment session creation function and loading state from custom hook */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { createSession, isLoading }: any = useCreateOrder({ langCode });
+  /** Get payment session creation function, loading and error state from custom hook */
+  const { createSession, isLoading, error } = useCreateOrder({ langCode });
 
   /* Render the payment button */
   return (
-    <button
-      onClick={() => createSession(id)}
-      type="button"
-      className="btn btn-sm btn-o btn-o-primary"
-    >
-      {/* Display button title and loading spinner when processing */}
-      {title} {(isLoading || loading) && <Loader />}
-    </button>
+    <div className="flex flex-col gap-1">
+      <button
+        onClick={() => createSession(id)}
+        type="button"
+        className="btn btn-sm btn-o btn-o-primary"
+      >
+        {/* Display button title and loading spinner when processing */}
+        {title} {(isLoading || loading) && <Loader />}
+      </button>
+      {/* Surface payment session errors instead of failing silently */}
+      {error && <span className="text-sm text-red-500">{error}</span>}
+    </div>
   );
 };
 

@@ -8,7 +8,6 @@ import TableRowAnimations from '../animations/TableRowAnimations';
 
 /**
  * Delivery table row component that displays a single row in the delivery information table
- * Provides interaction to open calendar form when clicked
  * @param   {object}      props             - component props
  * @param   {string}      props.label       - label text displayed next to the input field
  * @param   {string}      props.value       - current value displayed in the input field
@@ -62,7 +61,7 @@ const DeliveryTableRow = ({
       </div>
 
       {/** Icon cell - displays optional icon that also opens calendar form when clicked */}
-      <div className="td w-1/12 pl-5 align-middle">
+      <div className="td flex w-1/12 items-center pl-5 align-middle">
         {icon && (
           <Image
             width={20}

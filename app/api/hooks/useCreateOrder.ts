@@ -29,6 +29,7 @@ export const useCreateOrder = ({
   langCode: string;
 }): {
   onConfirmOrder: () => Promise<void>;
+  createSession: (id: number) => Promise<string>;
   isLoading: boolean;
   error: string;
   setError: (error: string) => void;
@@ -61,6 +62,24 @@ export const useCreateOrder = ({
 
     /** Handle payment session creation */
     try {
+      /**
+       * An order placed with an online gateway already has a payment session
+       * created during checkout (see onConfirmOrder below). Re-creating a
+       * session for the same order is rejected by the API with 400, so when the
+       * user pays an already-created order, reuse the existing session's
+       * paymentUrl instead of creating a duplicate.
+       */
+      const existing = await getApi().Payments.getSessionByOrderId(id);
+      if (!isError(existing)) {
+        const current: ISessionEntity | undefined = Array.isArray(existing)
+          ? existing[0]
+          : existing;
+        if (current?.paymentUrl) {
+          router.push(current.paymentUrl);
+          return 'payment_method';
+        }
+      }
+
       /** Create payment session using Payments API */
       const session = await getApi().Payments.createSession(id, 'session');
       if (isError(session)) {
@@ -178,6 +197,7 @@ export const useCreateOrder = ({
 
   return {
     onConfirmOrder,
+    createSession,
     isLoading,
     error,
     setError,

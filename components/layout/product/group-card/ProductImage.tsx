@@ -5,7 +5,6 @@ import Placeholder from '@/components/shared/Placeholder';
 
 /**
  * Group product image component.
- * Displays a product image with optimized loading and responsive sizing.
  * @param   {object}      props          - Component props.
  * @param   {string}      props.imageSrc - Image source URL.
  * @returns {JSX.Element}                Group product image.

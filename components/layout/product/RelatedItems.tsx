@@ -8,8 +8,6 @@ import ProductAnimations from './animations/ProductAnimations';
 
 /**
  * RelatedItems component displays a section of similar or related products.
- * It renders a titled grid of product cards based on the provided block data.
- * This component is typically used at the bottom of a product page to show related items.
  * @param   {object}            props                               - Component properties
  * @param   {string}            props.lang                          - Current language shortcode for localization
  * @param   {IAttributeValues}  props.dict                          - Dictionary of attribute values from server API

@@ -52,8 +52,6 @@ const totalRating = (reviewsData: any): number => {
 
 /**
  * ReviewsSection component.
- * Displays the product reviews section including rating summary, toggle button, and review list.
- * This component manages the state for showing/hiding the detailed reviews list.
  * @param   {object}           props             - Component props.
  * @param   {IAttributeValues} props.dict        - Dictionary containing localized texts from the server API.
  * @param   {IProductsEntity}  props.product     - Product data.

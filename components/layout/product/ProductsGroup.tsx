@@ -7,8 +7,6 @@ import GroupCard from './group-card/GroupCard';
 
 /**
  * ProductsGroup component displays a group of products in a grid layout.
- * It renders a section with a title and a collection of product cards.
- * This component is typically used to showcase related or recommended products.
  * @param   {object}            props                       - Component properties
  * @param   {string}            props.lang                  - Current language shortcode for localization
  * @param   {IAttributeValues}  props.dict                  - Dictionary of attribute values from server API
@@ -43,11 +41,11 @@ const ProductsGroup = ({
       </h2>
 
       {/** GroupCards */}
-      <div className="flex w-full flex-row flex-wrap items-stretch justify-start gap-2.5">
+      <div className="grid w-full auto-rows-fr grid-cols-1 gap-2.5 md:grid-cols-2 xl:grid-cols-3">
         {block?.products?.map((product: IProductsEntity) => (
           <div
             key={product.id}
-            className="relative box-border flex size-full shrink-0 flex-col md:w-[45%] xl:w-[32.5%]"
+            className="relative box-border flex h-full flex-col"
           >
             <GroupCard product={product} lang={lang} dict={dict} />
           </div>

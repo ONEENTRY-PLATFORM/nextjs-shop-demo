@@ -7,9 +7,6 @@ import { setProductQty } from '@/app/store/reducers/CartSlice';
 
 /**
  * Product quantity input component.
- * Allows users to directly input a specific quantity for a product in their cart.
- * Validates input to ensure it stays within acceptable limits (1 to available units).
- * Updates the Redux store with the new quantity value when changed.
  * @param   {object}      props       - Component properties.
  * @param   {number}      props.id    - Product ID for identification and cart operations.
  * @param   {number}      props.qty   - Current cart quantity for the product.

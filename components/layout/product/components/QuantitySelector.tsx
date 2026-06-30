@@ -12,10 +12,6 @@ import QuantityInput from './QuantityInput';
 
 /**
  * Quantity selector component.
- * Provides a complete quantity selection interface with decrease button, input field, and increase button.
- * Manages local state for quantity value and synchronizes with Redux store.
- * Uses memoization for performance optimization.
- * Only displays when the product is in the cart (quantity > 0).
  * @param   {object}      props           - Component properties.
  * @param   {number}      props.id        - Product ID for identification and cart operations.
  * @param   {number}      props.units     - Count of product available in shop (maximum allowed quantity).

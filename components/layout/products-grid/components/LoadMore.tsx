@@ -13,10 +13,6 @@ import Spinner from '@/components/shared/Spinner';
 
 /**
  * LoadMore component provides infinite scrolling functionality for paginated content.
- * It automatically loads the next page when the user scrolls to the bottom of the page
- * and also provides a manual button for loading more content.
- * The component uses GSAP ScrollTrigger to detect when the user reaches the bottom
- * and automatically navigates to the next page.
  * @param   {object}      props            - Component properties
  * @param   {number}      props.totalPages - Total number of pages available for pagination
  * @returns {JSX.Element}                  A button element for manual loading or an automatic scroll-triggered loader

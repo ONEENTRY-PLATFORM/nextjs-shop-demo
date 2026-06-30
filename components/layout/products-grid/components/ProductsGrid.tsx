@@ -6,9 +6,6 @@ import ProductCard from './product-card/ProductCard';
 
 /**
  * ProductsGrid component renders a responsive grid of product cards.
- * It takes an array of product entities and displays them in a grid layout
- * with responsive columns that adapt to different screen sizes.
- * Only visible products are displayed in the grid.
  * @param   {object}            props            - Component properties
  * @param   {string}            props.lang       - Language code for localization
  * @param   {IAttributeValues}  props.dict       - Dictionary of attribute values from server API for labels and messages

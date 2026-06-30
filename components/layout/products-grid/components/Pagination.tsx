@@ -7,9 +7,6 @@ import { useCallback } from 'react';
 
 /**
  * Pagination component renders a set of page navigation buttons for paginated content.
- * It creates a button for each page and allows users to navigate between pages.
- * The component uses URL parameters to track the current page and update the route
- * when a different page is selected.
  * @param   {object}      props            - Component properties
  * @param   {number}      props.totalPages - Total number of pages available for pagination
  * @returns {JSX.Element}                  A div element containing page navigation buttons

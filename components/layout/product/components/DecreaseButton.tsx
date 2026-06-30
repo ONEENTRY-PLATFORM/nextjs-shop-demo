@@ -11,8 +11,6 @@ import {
 
 /**
  * Decrease quantity button component.
- * Provides functionality to decrease product quantity in the cart or remove it entirely when quantity reaches 1.
- * Uses memoization for performance optimization and includes user state synchronization.
  * @param   {object}      props       - The component props.
  * @param   {number}      props.id    - The product ID.
  * @param   {number}      props.qty   - The current cart count for the product.

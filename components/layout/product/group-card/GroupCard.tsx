@@ -10,9 +10,6 @@ import ProductImage from './ProductImage';
 
 /**
  * Products group card component.
- * Displays a product group card with product information, images, price and apply button.
- * Handles localization of product information and displays multiple product images.
- * Provides functionality to add/remove products from cart through the ApplyButton component.
  * @param   {object}           props         - Component properties.
  * @param   {IProductsEntity}  props.product - Product entity object containing product information.
  * @param   {string}           props.lang    - Current language shortcode for localization.

@@ -4,9 +4,6 @@ import { UsePrice } from '../../../utils/utils';
 
 /**
  * Price display component.
- * Displays product prices with proper formatting based on the current language.
- * Shows both current and original prices when available, with appropriate styling.
- * Handles cases where prices may be missing or zero.
  * @param   {object}      props               - Component properties
  * @param   {number}      props.currentPrice  - Current price value to display
  * @param   {number}      props.originalPrice - Original price value (for strikethrough pricing)
@@ -22,10 +19,6 @@ const PriceDisplay = ({
   originalPrice: number;
   lang: string;
 }): JSX.Element => {
-  /**
-   * Return empty fragment if both prices are missing or zero
-   * This prevents displaying unnecessary price elements when no pricing information is available
-   */
   if (!currentPrice && !originalPrice) {
     return <></>;
   }

@@ -2,9 +2,6 @@ import type { JSX } from 'react';
 
 /**
  * ProductSingleLoader — skeleton placeholder for the single product page.
- * Mirrors the three-column layout of {@link ../index.tsx ProductSingle}
- * (image gallery, variations + description, details) followed by reviews and
- * a related-products row, so the layout doesn't jump when real data arrives.
  * @returns {JSX.Element} Animated skeleton for the product page.
  */
 const ProductSingleLoader = (): JSX.Element => {

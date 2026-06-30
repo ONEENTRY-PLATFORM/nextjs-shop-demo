@@ -13,9 +13,6 @@ import {
 
 /**
  * Apply button component.
- * Provides functionality to add or remove group products from the cart.
- * Displays different text based on whether the product is already in the cart.
- * Uses local state to track cart status and Redux for actual cart operations.
  * @param   {object}           props         - Component properties.
  * @param   {any}              props.product - Product entity object containing product information.
  * @param   {IAttributeValues} props.dict    - Dictionary from server API containing localized text values.

@@ -63,10 +63,6 @@ const ProductSingleServer = async ({
     );
   }
 
-  /**
-   * Fetch related products using the current product's ID and language
-   * Initialize with empty data structure for type safety and fallback
-   */
   let relatedProductsData = {
     products: [] as IProductsEntity[],
     total: 0,
@@ -84,33 +80,18 @@ const ProductSingleServer = async ({
       };
     }
   } catch (error) {
-    /**
-     * Log warning for debugging purposes without blocking execution
-     * This allows the main product to still render even if related products fail to load
-     */
     // eslint-disable-next-line no-console
     console.warn('Failed to load related products:', error);
-    /** Continue with empty related products (graceful degradation) */
   }
 
-  /** Destructure the final related products data for passing to child component */
   const { products, total } = relatedProductsData;
 
-  /**
-   * Prepare block data for specified block markers
-   * Using any type temporarily due to unknown block structure - should be typed properly
-   */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const blocksData: Record<string, any> = {};
 
   /** Only process blocks if they exist and are an array */
   if (Array.isArray(blocks)) {
-    /** Iterate through each block marker to fetch corresponding block data */
     for (const blockMarker of blocks) {
-      /**
-       * Only process specific block types that are supported
-       * Currently supports 'multiply_items_offer' (bulk purchase offers) and 'similar' (similar products section)
-       */
       if (blockMarker === 'multiply_items_offer' || blockMarker === 'similar') {
         /** Fetch block data by marker and language */
         const { isError, block } = await getBlockByMarker(blockMarker, lang);

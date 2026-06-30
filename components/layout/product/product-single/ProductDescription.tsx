@@ -6,9 +6,6 @@ import { sanitizeHTML } from '@/components/utils/sanitize';
 
 /**
  * Product description component.
- * Displays the product description with HTML formatting support.
- * Handles cases where description may be missing or empty.
- * Parses HTML content for proper rendering in the UI.
  * @param   {object}        props                                     - Component properties.
  * @param   {object}        props.description                         - Product description object containing formatted text.
  * @param   {Array<object>} props.description.value                   - Array of product description objects.
@@ -26,7 +23,6 @@ const ProductDescription = ({
     }[];
   };
 }): JSX.Element => {
-  /** Return empty element if no description is provided */
   if (!description) {
     return <></>;
   }

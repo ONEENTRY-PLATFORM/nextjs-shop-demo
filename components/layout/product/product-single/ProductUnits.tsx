@@ -7,10 +7,6 @@ import type { JSX } from 'react';
  * @returns {JSX.Element}             Product units component.
  */
 const ProductUnits = ({ units }: { units: number }): JSX.Element => {
-  /**
-   * Set the maximum width of the progress bar
-   * If units are less than 50, set max to 50, otherwise set to 120% of units
-   */
   const maxUnits = units < 50 ? 50 : units * 1.2;
 
   /** Calculate the percentage width of the progress bar based on units */

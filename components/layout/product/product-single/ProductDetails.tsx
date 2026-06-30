@@ -14,9 +14,6 @@ import ProductUnits from './ProductUnits';
 
 /**
  * Product details component.
- * Displays comprehensive product information including title, category, price, availability and add to cart functionality.
- * Uses utility functions to safely extract product data and handles localization.
- * Integrates with other components like PriceDisplay, ProductUnits, and AddToCartButton.
  * @param   {object}           props         - Component properties.
  * @param   {IProductsEntity}  props.product - Product entity object containing all product information.
  * @param   {string}           props.lang    - Current language shortcode for localization.

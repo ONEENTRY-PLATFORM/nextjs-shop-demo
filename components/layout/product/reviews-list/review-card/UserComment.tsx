@@ -12,8 +12,7 @@ import AnswerButton from './AnswerButton';
 import ChildReviews from './ChildReviews';
 
 /**
- * UserComment component.
- * Displays a single user review with their name, rating, comment, and engagement metrics.
+ * User Comment component.
  * @param   {object}           props              - UserCommentProps.
  * @param   {IAttributeValues} props.dict         - Dictionary object.
  * @param   {IProductsEntity}  props.product      - product object entity.

@@ -25,6 +25,13 @@ import TimeSlots from './calendar/TimeSlots';
 dayjs.extend(utc);
 dayjs.extend(dayOfYear);
 
+/** A single point of a delivery time window. */
+type TimePoint = { hours: number; minutes: number };
+/** A delivery time window expressed as a [start, end] pair of points. */
+type TimeWindow = [TimePoint, TimePoint];
+/** A concrete [start, end] pair of dates for a selectable slot. */
+type DateRange = [Date, Date];
+
 /**
  * Filter time intervals by a specific date.
  *
@@ -96,30 +103,71 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
       .filter((h: any) => h && dayjs(h.date).dayOfYear());
   }, [schedule]);
 
-  /** Generate and format time intervals based on selected date */
+  /**
+   * Build the selectable time slots for the currently selected date.
+   *
+   * The schedule's `times` array defines the recurring daily delivery windows
+   * (e.g. 10:00–11:00, 14:00–15:00 …, in UTC). We materialize those windows
+   * onto the selected calendar day rather than relying on the server's
+   * pre-expanded `timeIntervals`, which only span a fixed ~1-year window and
+   * therefore yield no slots once that window has elapsed — the cause of the
+   * "calendar opens but no time can be picked" bug. Falls back to the server
+   * intervals when a schedule defines no recurring `times`.
+   */
   const timeIntervals = useMemo(() => {
+    if (!date || Number.isNaN(date.getTime())) {
+      return [];
+    }
+
+    /**
+     * Selected calendar day, used as the UTC wall-clock day for each slot.
+     * Slot labels intentionally mirror the schedule's UTC hours (no local-time
+     * conversion) — the stored interval is UTC too, so both stay consistent.
+     */
+    const day = dayjs(date).format('YYYY-MM-DD');
+    const pad = (n: number): string => String(n).padStart(2, '0');
+    const toSlotDate = (t: TimePoint): Date =>
+      dayjs.utc(`${day}T${pad(t.hours)}:${pad(t.minutes)}:00`).toDate();
+
+    /**
+     * Recurring daily delivery windows. The schedule may repeat the same windows
+     * across several recurrence objects, so de-duplicate by start time.
+     */
+    const times: TimeWindow[] =
+      schedule?.flatMap((interval: any) => interval.times || []) ?? [];
+
+    const seen = new Set<string>();
+    const uniqueTimes = times.filter(([start]) => {
+      const key = `${start.hours}:${start.minutes}`;
+      if (seen.has(key)) {
+        return false;
+      }
+      seen.add(key);
+      return true;
+    });
+
+    if (uniqueTimes.length > 0) {
+      return uniqueTimes.map(([start, end]) => ({
+        interval: [toSlotDate(start), toSlotDate(end)] as DateRange,
+        time: `${start.hours}:${pad(start.minutes)}`,
+        isDisabled: false,
+        isSelected: false,
+      }));
+    }
+
+    /** Fallback: server pre-expanded intervals filtered to the selected day. */
     const intervals = schedule?.flatMap(
       (interval: any) => interval.timeIntervals,
     );
-
-    const filteredIntervals = filterIntervalsByDate(intervals, date);
-
-    return filteredIntervals
-      ?.map((interval: any) => {
-        const d = dayjs(interval[0]).toDate();
-        return {
-          interval: interval,
-          time: `${d.getUTCHours()}:${d.getUTCMinutes() === 0 ? '00' : d.getUTCMinutes()}`,
-        };
-      })
-      ?.map((data: any) => {
-        return {
-          interval: data.interval,
-          time: data.time,
-          isDisabled: false,
-          isSelected: false,
-        };
-      });
+    return filterIntervalsByDate(intervals, date)?.map((interval: any) => {
+      const d = dayjs(interval[0]).toDate();
+      return {
+        interval: [new Date(interval[0]), new Date(interval[1])] as DateRange,
+        time: `${d.getUTCHours()}:${pad(d.getUTCMinutes())}`,
+        isDisabled: false,
+        isSelected: false,
+      };
+    });
   }, [schedule, date]);
 
   /**

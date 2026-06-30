@@ -9,8 +9,6 @@ import UserComment from './UserComment';
 
 /**
  * ReviewCard component.
- * Displays a single product review with animation support.
- * Wraps the UserComment component with ReviewAnimations for staggered entrance effects.
  * @param   {object}           props              - Component props.
  * @param   {IAttributeValues} props.dict         - Dictionary object.
  * @param   {IProductsEntity}  props.product      - Product object entity.

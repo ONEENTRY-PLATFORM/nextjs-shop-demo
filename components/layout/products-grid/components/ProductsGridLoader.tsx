@@ -8,8 +8,6 @@ import ProductsGridLoaderAnimations from '../animations/ProductsGridLoaderAnimat
 
 /**
  * ProductsGridLoader component displays a loading skeleton for the products grid.
- * It renders placeholder cards with a pulsing animation while the actual product data is being fetched.
- * This provides a better user experience by showing content layout before the real data loads.
  * @param   {LoaderProps} props       - Component properties
  * @param   {number}      props.limit - Number of placeholder cards to render (defaults to 10)
  * @returns {JSX.Element}             A section containing animated placeholder cards for products

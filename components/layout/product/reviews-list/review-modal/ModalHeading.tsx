@@ -8,7 +8,7 @@ import {
 } from '@/app/api/hooks/useProductsData';
 import Placeholder from '@/components/shared/Placeholder';
 
-// Heading.tsx
+// ModalHeading
 const ModalHeading = ({ product }: { product: any }): JSX.Element => {
   /** Get product data */
   const productImageUrl = getProductImageUrl('pic', product);

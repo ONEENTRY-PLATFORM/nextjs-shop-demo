@@ -19,9 +19,6 @@ import QuantitySelector from './QuantitySelector';
 
 /**
  * AddToCart button with quantity selector component.
- * Displays either an "Add to Cart" button or a quantity selector based on product availability and cart status.
- * Handles product addition to cart with user state synchronization and event subscriptions.
- * Shows "Out of Stock" button when product is not available.
  * @param   {object}           props                  - Component properties.
  * @param   {number}           props.id               - Product ID for identification.
  * @param   {number}           props.units            - Available product units/quantity.

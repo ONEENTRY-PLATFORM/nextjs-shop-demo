@@ -21,7 +21,6 @@ import TotalComments from './TotalComments';
 
 /**
  * ReviewModal component.
- * Displays a detailed review in a modal with images, comments, and interactions.
  * @param   {object}           props      - Component props.
  * @param   {IAttributeValues} props.dict - Dictionary object.
  * @returns {JSX.Element}                 ReviewModal component.

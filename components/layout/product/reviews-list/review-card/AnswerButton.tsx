@@ -1,5 +1,3 @@
-// AnswerButton
-
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { Dispatch, JSX, SetStateAction } from 'react';
 
