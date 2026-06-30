@@ -38,8 +38,13 @@ const DeliveryForm = ({
       onSubmit={(e) => {
         /** Prevent default form submission behavior */
         e.preventDefault();
-        /** Navigate to payment page with transition animation */
-        router.push('/payment');
+        /**
+         * Navigate to the locale-prefixed payment page. The leading-slash path
+         * must include `lang` — pushing a bare `/payment` matches the single
+         * `[lang]` segment (lang="payment") and flashes the home page skeleton
+         * before the locale redirect kicks in.
+         */
+        router.push(`/${lang}/payment`);
       }}
       // test id for e2e testing
       data-testid="checkout-form"

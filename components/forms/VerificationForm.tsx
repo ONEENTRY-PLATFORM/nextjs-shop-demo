@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
+import { useParams } from 'next/navigation';
 import { useTransitionRouter } from 'next-transition-router';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX } from 'react';
@@ -41,6 +42,9 @@ interface VerificationFormProps extends FormProps {
 const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
   /** Router for navigation with transitions */
   const router = useTransitionRouter();
+  /** Current locale for building locale-prefixed navigation paths */
+  const params = useParams();
+  const lang = (params.lang as string) || 'en';
   /** Redux dispatch function for updating state */
   const dispatch = useAppDispatch();
   /** Authentication context for user authentication */
@@ -162,9 +166,12 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
                 );
               }
 
-              /** Authenticate the user and redirect to profile page */
+              /**
+               * Authenticate the user and redirect to the locale-prefixed
+               * profile page (a bare `/profile` flashes the home skeleton).
+               */
               authenticate();
-              router.push('/profile');
+              router.push(`/${lang}/profile`);
               setOpen(false);
             } catch (e: any) {
               setError(e.message);
@@ -179,7 +186,7 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
         setLoading(false);
       }
     },
-    [otp, action, fields, setComponent, authenticate, router, setOpen],
+    [otp, action, fields, setComponent, authenticate, router, setOpen, lang],
   );
 
   /**

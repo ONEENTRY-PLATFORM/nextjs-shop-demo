@@ -1,3 +1,4 @@
+import { useParams } from 'next/navigation';
 import { useTransitionRouter } from 'next-transition-router';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
@@ -23,13 +24,18 @@ const EditOrderButton = ({
   const router = useTransitionRouter();
   const { edit_order_text } = dict;
 
+  /** Current locale for building locale-prefixed navigation paths */
+  const params = useParams();
+  const lang = (params.lang as string) || 'en';
+
   /**
    * Handles the edit order button click event.
    * Navigates the user back to the cart page to make changes to their order.
    * @returns {Promise<void>} Promise that resolves when navigation is complete.
    */
   const onEditOrder = async (): Promise<void> => {
-    router.push('/cart');
+    /** Locale-prefixed path — a bare `/cart` flashes the home page skeleton. */
+    router.push(`/${lang}/cart`);
   };
 
   return (

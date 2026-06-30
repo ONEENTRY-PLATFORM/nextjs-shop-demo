@@ -1,5 +1,6 @@
 'use client';
 
+import { useParams } from 'next/navigation';
 import { useTransitionRouter } from 'next-transition-router';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import type { JSX } from 'react';
@@ -28,6 +29,10 @@ const RepeatOrderButton = ({
 }): JSX.Element => {
   /** Get router instance for navigation with transitions */
   const router = useTransitionRouter();
+
+  /** Current locale for building locale-prefixed navigation paths */
+  const params = useParams();
+  const lang = (params.lang as string) || 'en';
 
   /** Get dispatch function for Redux actions */
   const dispatch = useAppDispatch();
@@ -59,8 +64,11 @@ const RepeatOrderButton = ({
         return product;
       });
 
-    /** Navigate to cart page */
-    router.push('/cart');
+    /**
+     * Navigate to the locale-prefixed cart page (a bare `/cart` matches the
+     * `[lang]` segment and flashes the home page skeleton before redirecting).
+     */
+    router.push(`/${lang}/cart`);
     return;
   };
 
