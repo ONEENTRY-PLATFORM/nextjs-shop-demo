@@ -52,15 +52,21 @@ const UserProfileMenu = ({
   }
 
   return (
-    /**
-     * Container for the user profile menu with relative positioning
-     * This allows the dropdown to be positioned absolutely relative to this container
+    /*
+     * Container for the user profile menu with relative positioning.
+     * Hover opens/closes the dropdown (standard desktop behaviour); because the
+     * dropdown is a DOM child of this container, moving the cursor onto the menu
+     * does not trigger onMouseLeave.
      */
-    <div className="relative">
-      {/** Profile icon button that toggles the dropdown menu */}
+    <div
+      className="relative"
+      onMouseEnter={() => setState(true)}
+      onMouseLeave={() => setState(false)}
+    >
+      {/** Profile icon button — toggles the dropdown for touch devices (no hover) */}
       <button
         onClick={() => {
-          setState(true);
+          setState((prev) => !prev);
         }}
         title={title}
         data-testid="user-menu-button"
@@ -72,7 +78,6 @@ const UserProfileMenu = ({
       <ProfileMenuAnimations
         className="absolute top-8 left-0 h-0 w-48 overflow-hidden rounded-md bg-white px-4 text-slate-800 shadow-lg"
         state={state}
-        setState={setState}
       >
         {/** Dropdown menu content with user navigation links */}
         {pages && (

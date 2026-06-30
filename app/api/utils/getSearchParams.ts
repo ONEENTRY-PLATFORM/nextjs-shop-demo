@@ -24,10 +24,20 @@ const getSearchParams = (
   /** Initialize array to store expanded filters with optional status marker */
   const expandedFilters: Array<IFilterParams & { statusMarker?: string }> = [];
 
-  /** Check if product has SKU or this is service product - exclude service products from results */
+  /**
+   * Exclude service products (e.g. the delivery product, id 83) from the catalog.
+   *
+   * In the current OneEntry data real products have NO `sku` attribute, while
+   * the service product is the only entity matching `sku nin null`. So we keep
+   * products whose `sku` is null (`in null`) and drop the service one.
+   *
+   * ⚠️ This is admin-config dependent (see mismatch-log B.3 / C.7.5). If real
+   * products get a populated `sku` again, this condition must be revisited —
+   * historically it was `nin null` (keep products that HAVE a sku).
+   */
   const servicesFilter: IFilterParams = {
     attributeMarker: 'sku',
-    conditionMarker: 'nin',
+    conditionMarker: 'in',
     conditionValue: null,
     title: searchParams?.search || '',
     isNested: false,

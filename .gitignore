@@ -45,3 +45,4 @@ package-lock.json
 git-setup.sh
 nul
 CLAUDE.md
+.playwright-mcp
