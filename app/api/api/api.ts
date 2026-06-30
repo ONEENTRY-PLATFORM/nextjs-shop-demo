@@ -8,14 +8,7 @@ const APP_TOKEN = process.env.NEXT_PUBLIC_APP_TOKEN as string;
 const DEFAULT_LANG = 'en_US';
 
 /**
- * Fails fast with an actionable message when the SDK credentials are missing.
- *
- * Without this guard a missing `NEXT_PUBLIC_PROJECT_URL` reaches the SDK as
- * `undefined` and crashes the whole app at import time with the cryptic
- * `Cannot read properties of undefined (reading 'endsWith')` (the SDK calls
- * `url.endsWith('/')` internally). Reading `.env*` happens only at process
- * start, so the usual cause is a dev server launched before the variables
- * existed — restart it after fixing `.env.local`.
+ * Fails fast with a project-specific message when the SDK credentials are missing.
  * @throws {Error} When `NEXT_PUBLIC_PROJECT_URL` or `NEXT_PUBLIC_APP_TOKEN` is unset.
  */
 const missingEnv = [
@@ -33,15 +26,6 @@ if (missingEnv.length > 0) {
 
 /**
  * SDK callback that syncs the refresh token with localStorage.
- *
- * The SDK calls this on every token rotation with the new token, AND on
- * `logout()` / `logoutAll()` with an **empty string** — the empty value is the
- * SDK's signal to drop the stored session. Treating `''` as a no-op (instead of
- * a remove) leaves a dead token in localStorage, which the next re-init re-uses
- * and burns on a doomed proactive `/refresh` (400 → 401).
- *
- * Guarded by a `window` check: the SDK may rotate the token during an
- * SSR/Server Action request, where `localStorage` does not exist.
  * @param   {string}        refreshToken - New refresh token, or `''` to clear.
  * @returns {Promise<void>}              Resolved once localStorage is updated.
  * @see {@link https://js-sdk.oneentry.cloud/docs/index/ OneEntry CMS docs}
@@ -129,9 +113,6 @@ export const getLang = (): string => getState().lang || DEFAULT_LANG;
 
 /**
  * Type guard: narrows an SDK response to {@link IError} when the call failed.
- *
- * Co-located with `getApi`/`reDefine` so all SDK helpers live in one file
- * (per MCP convention `lib/oneentry.ts`).
  * @param   {unknown} result - Value returned by any SDK method.
  * @returns {boolean}        True when `result` is an {@link IError}.
  */
@@ -144,11 +125,6 @@ export const isError = (result: unknown): result is IError =>
 /**
  * Updates the SDK with a new refresh token and language code by **mutating**
  * the singleton — preserves the device fingerprint within the session.
- *
- * Recreating the instance via `defineOneEntry()` here would generate a new
- * `instanceId`, which would change the fingerprint sent in `x-device-metadata`
- * and force the API to reject the existing refresh token. See `MEMORY.md`
- * (bug #4 / #5) for context.
  * @param   {string}        refreshToken - Refresh token from localStorage.
  * @param   {string}        [langCode]   - Current language code (defaults to {@link DEFAULT_LANG}).
  * @returns {Promise<void>}              Resolved once the SDK state is updated.

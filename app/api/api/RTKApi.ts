@@ -49,8 +49,7 @@ type QueryResult<T> = { data: T } | { error: IError };
  * Awaits an SDK call and converts it to RTK Query's `{ data | error }` shape.
  *
  * Replaces the per-endpoint pattern of `handleApiResponse` + manual
- * `(result as IError)?.statusCode` checks. Uses the canonical {@link isError}
- * type guard from `./api`.
+ * `(result as IError)?.statusCode` checks. Uses the canonical {@link isError} type guard from `./api`.
  * @template           T
  * @param    {Promise} call - Promise returned by any SDK method.
  * @returns  {Promise}      Result narrowed for RTK Query (`{ data | error }`).

@@ -1,10 +1,7 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
-import type {
-  IBaseOrdersEntity,
-  IOrderProductData,
-} from 'oneentry/dist/orders/ordersInterfaces';
+import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
 import type { ISessionEntity } from 'oneentry/dist/payments/paymentsInterfaces';
 import { useState } from 'react';
 
@@ -142,6 +139,16 @@ export const useCreateOrder = ({
   const onConfirmOrder = async (): Promise<void> => {
     setIsLoading(true);
     if (order?.formIdentifier && order?.paymentAccountIdentifier) {
+      /**
+       * Capture the gateway the user actually selected before the Redux order
+       * is cleared below. The online-vs-offline decision must rely on this
+       * value, NOT on the `paymentAccountIdentifier` echoed back by
+       * createOrder: that field is not reliably populated in the response, and
+       * gating on it routed every Stripe order straight to /orders without a
+       * payment redirect (regression from the `!== 'cash'` → whitelist switch).
+       */
+      const selectedPaymentIdentifier = order.paymentAccountIdentifier;
+
       /** prepare order data */
       const orderFormData = order.formData
         .slice()
@@ -156,18 +163,26 @@ export const useCreateOrder = ({
 
       try {
         /** Create order with Orders API */
-        const { id, paymentAccountIdentifier } =
-          (await getApi().Orders.createOrder(
-            'order',
-            {
-              // ...order,
-              formData: orderFormData,
-              products: order.products,
-              paymentAccountIdentifier: order.paymentAccountIdentifier,
-              formIdentifier: order.formIdentifier,
-            },
-            langCode,
-          )) as IBaseOrdersEntity;
+        const createdOrder = await getApi().Orders.createOrder(
+          'order',
+          {
+            // ...order,
+            formData: orderFormData,
+            products: order.products,
+            paymentAccountIdentifier: order.paymentAccountIdentifier,
+            formIdentifier: order.formIdentifier,
+          },
+          langCode,
+        );
+
+        /** Stop here on a failed creation — do not clear the cart or redirect */
+        if (isError(createdOrder)) {
+          setError(createdOrder.message);
+          setIsLoading(false);
+          return;
+        }
+
+        const { id } = createdOrder;
 
         /** remove all ordered products from cart */
         order.products.forEach((product: IOrderProductData) => {
@@ -177,9 +192,7 @@ export const useCreateOrder = ({
         /** remove order */
         dispatch(removeOrder());
 
-        if (
-          ONLINE_PAYMENT_IDENTIFIERS.includes(paymentAccountIdentifier ?? '')
-        ) {
+        if (ONLINE_PAYMENT_IDENTIFIERS.includes(selectedPaymentIdentifier)) {
           await createSession(id);
         } else {
           router.push('/orders');

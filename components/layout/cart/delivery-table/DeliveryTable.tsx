@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { selectDeliveryData } from '@/app/store/reducers/CartSlice';
 import { addData } from '@/app/store/reducers/OrderSlice';
+import { buildTimeIntervalValue } from '@/app/utils/orderFormData';
 
 import TableRowAnimations from '../animations/TableRowAnimations';
 import AddressRow from './AddressRow';
@@ -95,15 +96,15 @@ const DeliveryTable = ({
       }),
     );
 
-    /** Dispatch action to update time information in order data */
-    const intervalValue =
-      deliveryData.interval && deliveryData.interval.length === 2
-        ? deliveryData.interval.map((date: Date) => ({
-            fullDate: new Date(date).toISOString(),
-            formattedValue: new Date(date).toDateString(),
-            formatString: 'YYYY-MM-DD',
-          }))
-        : [];
+    /**
+     * Dispatch action to update time information in order data.
+     *
+     * `buildTimeIntervalValue` shapes the interval into the `[[startISO,
+     * endISO], ...]` form the Orders API requires for a `timeInterval`
+     * attribute — sending date objects instead makes `createOrder` fail with
+     * `400 formData's marker 'shipping_interval' value must be an array`.
+     */
+    const intervalValue = buildTimeIntervalValue(deliveryData.interval);
 
     dispatch(
       addData({

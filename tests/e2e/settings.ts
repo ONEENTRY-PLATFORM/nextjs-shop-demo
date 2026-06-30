@@ -10,10 +10,32 @@ export const ROUTES = {
   shop: '/en/shop',
   cart: '/en/cart',
   checkout: '/en/checkout',
+  payment: '/en/payment',
   favorites: '/en/favorites',
   orders: '/en/orders',
   profile: '/en/profile',
   product: '/en/shop/product/65',
+} as const;
+
+/**
+ * Payment-flow fixtures.
+ *
+ * The E2E suite asserts the app's own responsibility: confirming a Stripe order
+ * creates the order and hands off to hosted Stripe Checkout (`checkout.stripe.com`).
+ *
+ * Completing the payment ON Stripe and the subsequent redirect are intentionally
+ * NOT automated — the card inputs live in cross-origin Stripe iframes and the
+ * `success_url` is configured on the OneEntry payment account (currently the
+ * hosted demo `oneentry-nextjs-e-commerce-demo.vercel.app`, so the browser
+ * leaves `localhost`). See the note in payment-flow.spec.ts.
+ */
+export const PAYMENT = {
+  /** Hosted Stripe Checkout host the app redirects to for online gateways. */
+  stripeCheckoutHost: 'checkout.stripe.com',
+  /** Order-storage createOrder endpoint (POST) — used for network assertions. */
+  createOrderUrlPart: '/orders-storage/marker/order/orders',
+  /** Delivery address used to ensure the order has non-empty formData. */
+  deliveryAddress: 'Test street 1',
 } as const;
 
 /**
