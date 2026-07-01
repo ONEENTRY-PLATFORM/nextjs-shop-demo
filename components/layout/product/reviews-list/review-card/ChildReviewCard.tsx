@@ -4,6 +4,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type JSX, useState } from 'react';
 
+import { getReviewAuthorName } from '@/app/utils/getReviewAuthorName';
 import CommentForm from '@/components/forms/CommentForm';
 
 import RatingBlock from '../LikesBlock';
@@ -34,8 +35,8 @@ const ChildReviewCard = ({
 
   /** formData */
   const childFormData = review.formData;
-  /** User name - can be from userIdentifier or from a form field */
-  const userName = review.userIdentifier || 'Anonymous';
+  /** Display name derived from the author's identifier (email → readable name) */
+  const userName = getReviewAuthorName(review.userIdentifier);
   /** Find content by marker - could be 'comment_description' or at index 2 */
   const contentField = childFormData?.find(
     (field: any) => field.marker === 'comment_description',

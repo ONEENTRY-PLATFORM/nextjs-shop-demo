@@ -9,6 +9,7 @@ import { useContext, useState } from 'react';
 import type Slider from 'react-slick';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { getReviewAuthorName } from '@/app/utils/getReviewAuthorName';
 import CommentForm from '@/components/forms/CommentForm';
 
 import StarRating from '../../rating-block/StarRating';
@@ -35,7 +36,7 @@ const ReviewModal = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   // Extract data from review
   const { product, review, allReviews, childReviews } = reviewData;
   const formData = review?.formData || [];
-  const userName = review?.userIdentifier || 'Anonymous';
+  const userName = getReviewAuthorName(review?.userIdentifier);
 
   // Extract rating
   const rating = formData[0]?.value || 0;
