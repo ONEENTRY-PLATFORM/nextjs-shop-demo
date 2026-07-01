@@ -61,7 +61,7 @@ const RatingButton = ({
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           className={
-            'origin-center fill-[#4C4D56] transition-transform group-hover:fill-orange-500 ' +
+            'fill-foreground origin-center transition-transform group-hover:fill-orange-500 ' +
             (state ? 'rotate-180 fill-orange-500' : '')
           }
         >

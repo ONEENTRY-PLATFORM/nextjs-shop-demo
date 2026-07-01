@@ -60,7 +60,7 @@ const OrderProductsTable = ({
   return (
     <>
       {/** Table header row */}
-      <div className="flex border-b border-solid border-[#B0BCCE] p-2">
+      <div className="border-muted flex border-b border-solid p-2">
         <div className="w-1/2 font-bold">Product</div>
         <div className="w-1/4 font-bold">Price</div>
         <div className="w-1/4 font-bold">Quantity</div>
@@ -91,7 +91,7 @@ const OrderProductsTable = ({
         return (
           <div
             key={actualProduct.id}
-            className="-mt-px flex border-b border-solid border-[#B0BCCE] p-2"
+            className="border-muted -mt-px flex border-b border-solid p-2"
           >
             <div className="w-1/2">{localizeInfos?.title}</div>
             <div className="w-1/4">
@@ -111,7 +111,7 @@ const OrderProductsTable = ({
 
       {/** Delivery row */}
       {hasDelivery && (
-        <div className="-mt-px flex border-b border-solid border-[#B0BCCE] p-2">
+        <div className="border-muted -mt-px flex border-b border-solid p-2">
           <div className="w-1/2">
             {delivery?.localizeInfos?.title ||
               d?.localizeInfos?.title ||

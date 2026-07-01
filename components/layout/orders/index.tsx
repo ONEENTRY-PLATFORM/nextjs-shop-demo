@@ -187,7 +187,7 @@ const OrdersPage = ({
         <div className="orders-table">
           {/* Orders table header with column titles */}
           <OrderRowAnimations className="w-full" index={0}>
-            <div className="-mb-px flex w-full border-collapse gap-4 border-y border-[#B0BCCE] p-4 text-slate-700">
+            <div className="border-muted -mb-px flex w-full border-collapse gap-4 border-y p-4 text-slate-700">
               <div className="w-1/2">{date_title?.value || 'Date'}</div>
               <div className="w-1/4">{total_title?.value || 'Total'}</div>
               <div className="w-1/4">{status_title?.value || 'Status'}</div>

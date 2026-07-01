@@ -268,7 +268,7 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
                 index={index}
                 {...field}
                 value={value}
-                className="mt-2.5 min-h-20 cursor-pointer rounded-[20px] border border-solid border-gray-300 p-5"
+                className="rounded-card mt-2.5 min-h-20 cursor-pointer border border-solid border-gray-300 p-5"
               />
             );
           })}

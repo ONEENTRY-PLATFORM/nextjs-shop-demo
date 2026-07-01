@@ -91,7 +91,7 @@ const ColorFilter = memo(
     return (
       <div>
         {/** Filter title */}
-        <div className="mb-5 text-lg text-[#4C4D56]">{title}</div>
+        <div className="text-foreground mb-5 text-lg">{title}</div>
         {/** Color options list */}
         <div className="mb-9 flex flex-wrap gap-1 text-sm leading-8 whitespace-nowrap text-slate-400">
           {colors.map((color: Color) => (

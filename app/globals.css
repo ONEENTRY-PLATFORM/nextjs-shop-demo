@@ -3,6 +3,19 @@
 
 @theme {
   --breakpoint-xs: 480px;
+
+  /* --- Design tokens (extracted from repeated arbitrary values) --- */
+
+  /* Colors — each generates text-/bg-/border-/fill-/… utilities */
+  --color-foreground: #4c4d56; /* primary text & dark icons — was text-[#4C4D56] / fill-[#4C4D56] / body color */
+  --color-muted: #b0bcce;      /* muted borders & secondary icons — was border-[#B0BCCE] / fill-[#B0BCCE] */
+  --color-surface: #f6f7f9;    /* light panel background — was bg-[#F6F7F9] / filter scrollbar track */
+  --color-icon: #817e80;       /* nav & menu icon gray — was fill-[#817E80] */
+  --color-accent: #ec722b;     /* heart & star accent orange — was fill-[#EC722B] */
+
+  /* Radii */
+  --radius-btn: 30px;  /* pill buttons — was rounded-[30px] */
+  --radius-card: 20px; /* cards — was rounded-[20px] */
 }
 
 :root {
@@ -20,7 +33,7 @@
 }
 
 body {
-  color: #4C4D56;
+  color: var(--color-foreground);
 }
 
 /* Smooth fade-in for the page-transition skeleton overlay */
@@ -48,7 +61,7 @@ body {
 }
 
 #filter::-webkit-scrollbar-track {
-  background-color: #F6F7F9;
+  background-color: var(--color-surface);
 }
 
 #filter::-webkit-scrollbar-thumb {
@@ -148,7 +161,7 @@ input:focus-visible {
       text-center
       whitespace-nowrap
       cursor-pointer
-      rounded-[30px];
+      rounded-btn;
   }
 
   .btn-xl {
@@ -228,9 +241,9 @@ input:focus-visible {
       text-xl 
       font-bold 
       tracking-wide 
-      uppercase 
+      uppercase
       border-2
-      rounded-[30px];
+      rounded-btn;
   }
 
   .btn-o-primary {
@@ -271,9 +284,9 @@ input:focus-visible {
       flex 
       size-full 
       flex-col 
-      items-center 
-      rounded-[20px] 
-      bg-slate-50 
+      items-center
+      rounded-card
+      bg-slate-50
       p-4 
       transition-shadow 
       duration-500

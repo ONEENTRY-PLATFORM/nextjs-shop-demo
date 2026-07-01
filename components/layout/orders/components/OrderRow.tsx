@@ -65,7 +65,7 @@ const OrderRow = ({
           setState(!state);
         }}
         className={
-          '-mb-px flex w-full cursor-pointer gap-4 border-y border-[#B0BCCE] p-4 text-left ' +
+          'border-muted -mb-px flex w-full cursor-pointer gap-4 border-y p-4 text-left ' +
           rowClass
         }
       >

@@ -193,14 +193,14 @@ const PriceFilter = memo(
     return (
       <div className="relative box-border flex shrink-0 flex-col">
         {/** Price filter title */}
-        <div className="mb-5 self-start text-lg leading-8 font-medium text-[#4C4D56]">
+        <div className="text-foreground mb-5 self-start text-lg leading-8 font-medium">
           {filter_price_title?.value as string}
         </div>
 
         {/** Input fields for minimum and maximum price */}
         <div className="mb-6 flex w-full gap-5 self-center">
           {/** Minimum price input field */}
-          <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-1.5">
+          <div className="bg-surface flex flex-1 gap-2.5 rounded-3xl px-3 py-1.5">
             <span className="text-base leading-8 text-slate-300">
               {price_from?.value as string}
             </span>
@@ -209,7 +209,7 @@ const PriceFilter = memo(
             </span>
           </div>
           {/** Maximum price input field */}
-          <div className="flex flex-1 gap-2.5 rounded-3xl bg-[#F6F7F9] px-3 py-1.5">
+          <div className="bg-surface flex flex-1 gap-2.5 rounded-3xl px-3 py-1.5">
             <span className="self-start text-base leading-8 text-slate-300">
               {price_to?.value as string}
             </span>

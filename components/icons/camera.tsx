@@ -8,7 +8,7 @@ const CameraIcon = (props?: { active?: boolean }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={
         'transition-colors duration-300 group-hover:fill-orange-500 ' +
-        (props?.active ? 'fill-orange-500' : 'fill-[#B0BCCE]')
+        (props?.active ? 'fill-orange-500' : 'fill-muted')
       }
     >
       <path

@@ -17,7 +17,7 @@ const FilterHeader = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
 
   return (
     /** Header container with background styling and padding */
-    <header className="flex w-full flex-col justify-center bg-[#F6F7F9] p-8 text-2xl font-bold whitespace-nowrap text-neutral-600 max-md:px-6 max-md:py-4">
+    <header className="bg-surface flex w-full flex-col justify-center p-8 text-2xl font-bold whitespace-nowrap text-neutral-600 max-md:px-6 max-md:py-4">
       <div className="flex justify-between gap-5">
         {/** Back navigation button */}
         <HistoryBack />

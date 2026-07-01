@@ -8,7 +8,7 @@ const PaymentIcon = (props?: { active?: boolean }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={
         'size-full transition-colors duration-300 group-hover:fill-orange-500 ' +
-        (props?.active ? 'fill-orange-500' : 'fill-[#817E80]')
+        (props?.active ? 'fill-orange-500' : 'fill-icon')
       }
     >
       <path

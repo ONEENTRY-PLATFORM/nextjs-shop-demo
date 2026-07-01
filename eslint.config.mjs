@@ -1,6 +1,3 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-
 import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import reactPlugin from 'eslint-plugin-react';
@@ -15,9 +12,6 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
@@ -29,6 +23,18 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated / tooling output — these hold large minified bundles (Playwright
+    // trace resources up to ~1 MB single-line) that made `eslint .` take minutes
+    // per file and effectively never finish. Never lint them.
+    "coverage/**",
+    "playwright-report/**",
+    "test-results/**",
+    ".playwright-mcp/**",
+    ".swc/**",
+    ".vercel/**",
+    ".vscode/**",
+    "docs/**",
+    "public/**",
   ]),
 
   // Main ruleset for JS/TS/JSX/TSX
@@ -50,8 +56,12 @@ const eslintConfig = defineConfig([
       ecmaVersion: 'latest',
       sourceType: 'module',
       parserOptions: {
-        project: './tsconfig.json',
-        tsconfigRootDir: __dirname,
+        // NOTE: no `project`/type-aware linting on purpose. None of the enabled
+        // rules need type information (typescript-eslint `recommended`, not
+        // `recommended-type-checked`; `consistent-type-imports` is syntactic), so
+        // setting `project` only forced eslint to build the full TS program on
+        // every run — tens of seconds of pure overhead. `tsc` covers types.
+        // If you add a type-checked rule, re-add `project` + `tsconfigRootDir`.
         ecmaFeatures: {
           jsx: true,
         },
@@ -141,6 +151,12 @@ const eslintConfig = defineConfig([
       
       // JSDoc rules
       'jsdoc/check-line-alignment': ['warn', 'always'],
+      // `no-undefined-types` doesn't know ambient DOM lib types (TS validates
+      // these anyway). Whitelist DOM globals referenced in JSDoc @param types.
+      'jsdoc/no-undefined-types': [
+        'warn',
+        { definedTypes: ['IntersectionObserverInit'] },
+      ],
 
       // Tailwind: this project ships a custom CSS design system (`btn`, `td`,
       // `slide-up`, `block-card`, …) and delegates class ordering to

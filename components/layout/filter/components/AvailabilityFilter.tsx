@@ -51,7 +51,7 @@ const AvailabilityFilter = memo(
       <div className="mb-9 flex gap-5">
         <label
           htmlFor="availability"
-          className="flex-auto text-lg leading-8 text-[#4C4D56]"
+          className="text-foreground flex-auto text-lg leading-8"
         >
           {title || 'Availability'}
         </label>

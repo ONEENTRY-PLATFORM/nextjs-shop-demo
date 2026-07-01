@@ -56,7 +56,7 @@ const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
   return (
     /* Wrap row with animation component for staggered entrance effects */
     <TableRowAnimations
-      className="tr -mb-px h-12.5 border-y border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
+      className="tr border-muted -mb-px h-12.5 border-y border-solid max-md:max-w-full max-md:flex-wrap"
       index={7}
     >
       {/** Address label cell */}

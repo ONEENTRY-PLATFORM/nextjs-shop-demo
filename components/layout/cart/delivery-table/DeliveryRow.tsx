@@ -24,7 +24,7 @@ const DeliveryRow = ({
   return (
     /** Wrap delivery row with animation component for staggered entrance effects */
     <TableRowAnimations
-      className="tr h-25 border-b border-solid border-[#B0BCCE] max-md:max-w-full max-md:flex-wrap"
+      className="tr border-muted h-25 border-b border-solid max-md:max-w-full max-md:flex-wrap"
       index={10}
     >
       {/** Delivery icon cell */}
