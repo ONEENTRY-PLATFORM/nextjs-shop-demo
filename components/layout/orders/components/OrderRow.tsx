@@ -14,24 +14,27 @@ interface OrderRowProps {
   settings: Record<string, any> | undefined;
   lang: string;
   index: number;
+  onStatusChange: (id: number, statusIdentifier: string) => void;
 }
 
 /**
  * Order row component.
  * Represents a single order in a list view with expandable details.
  * Displays basic order information and allows expanding to show full order details.
- * @param   {OrderRowProps}                       props          - Order row component props
- * @param   {IOrderByMarkerEntity}                props.order    - Order entity containing order data
- * @param   {Record<string, unknown> | undefined} props.settings - Settings for localization and configuration
- * @param   {string}                              props.lang     - Current language shortcode for formatting
- * @param   {number}                              props.index    - Index of the row for staggered animations
- * @returns {JSX.Element}                                        Order row with expandable details
+ * @param   {OrderRowProps}                                  props                - Order row component props
+ * @param   {IOrderByMarkerEntity}                           props.order          - Order entity containing order data
+ * @param   {Record<string, unknown> | undefined}            props.settings       - Settings for localization and configuration
+ * @param   {string}                                         props.lang           - Current language shortcode for formatting
+ * @param   {number}                                         props.index          - Index of the row for staggered animations
+ * @param   {(id: number, statusIdentifier: string) => void} props.onStatusChange - Callback to sync the list row status when the order status changes
+ * @returns {JSX.Element}                                                         Order row with expandable details
  */
 const OrderRow = ({
   order,
   settings,
   lang,
   index,
+  onStatusChange,
 }: OrderRowProps): JSX.Element => {
   /** Extract relevant order data */
   const { id, createdDate, statusIdentifier, totalSum } = order;
@@ -79,6 +82,7 @@ const OrderRow = ({
         settings={settings}
         isActive={state}
         lang={lang}
+        onStatusChange={onStatusChange}
       />
     </OrderRowAnimations>
   );

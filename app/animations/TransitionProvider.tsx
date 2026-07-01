@@ -5,17 +5,21 @@ import { TransitionRouter } from 'next-transition-router';
 import type { JSX, ReactNode } from 'react';
 import { useCallback, useRef, useState } from 'react';
 
-import { NavigationContext } from './NavigationContext';
 import { isSidebarRoute } from './navigationRoutes';
 import RouteSkeleton from './RouteSkeleton';
 
 /**
  * Transition provider - main 'stage' transition provider
  *
- * On top of the GSAP enter/leave page animations, it renders a route-aware
- * skeleton overlay as soon as navigation starts (the `leaving` stage), so the
- * user sees the destination's skeleton immediately on click — before the next
- * page has loaded — instead of only after the transition completes.
+ * Orchestrates the page transition so it reads as a clear sequence:
+ * 1. the page's own exit animations play on the still-visible content;
+ * 2. the old content is then hidden (not covered) and the destination skeleton
+ * fades in over the empty space, while navigation starts;
+ * 3. the enter animation reveals the real (or streaming) next page.
+ *
+ * On sidebar routes only the content column is hidden — the already-loaded left
+ * menu is left untouched, so it doesn't disappear or flash a skeleton between
+ * sidebar pages.
  * @param   {object}      props          - props
  * @param   {ReactNode}   props.children - children ReactNode
  * @returns {JSX.Element}                TransitionRouter
@@ -27,8 +31,10 @@ export default function TransitionProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  /** Reference to the container DOM element */
-  const ref = useRef(null);
+  /** Reference to the container DOM element (drives the height animation) */
+  const ref = useRef<HTMLDivElement>(null);
+  /** Wrapper around the page content — the target we hide during navigation */
+  const contentRef = useRef<HTMLDivElement>(null);
 
   /** Whether a page transition is in progress (controls the skeleton overlay) */
   const [isNavigating, setIsNavigating] = useState(false);
@@ -36,11 +42,30 @@ export default function TransitionProvider({
   const [targetPath, setTargetPath] = useState<string | null>(null);
 
   /**
-   * Leave animation. The page's own exit animations (cards fading/scaling out,
-   * etc.) play first on the still-visible content during the `leaving` stage;
-   * only once they've finished do we hide the old content and reveal the
-   * destination skeleton — right as navigation starts. Memoized so state
-   * updates don't recreate the callback and churn the router's click delegation.
+   * Hide the old page content. On sidebar routes only the content column
+   * (marked `data-transition-content`) is hidden so the left menu stays put;
+   * otherwise the whole content wrapper is hidden. Uses GSAP `autoAlpha`
+   * (opacity + visibility) which reliably hides the subtree even when child
+   * elements carry their own inline visibility from exit animations.
+   * @param {string} [to] - Destination href.
+   */
+  const hideContent = useCallback((to?: string) => {
+    const wrapper = contentRef.current;
+    if (!wrapper) {
+      return;
+    }
+    const marked = wrapper.querySelectorAll('[data-transition-content]');
+    const targets =
+      isSidebarRoute(to ?? null) && marked.length > 0 ? marked : wrapper;
+    gsap.set(targets, { autoAlpha: 0 });
+  }, []);
+
+  /**
+   * Leave animation. The page's own exit animations play first on the visible
+   * content during the `leaving` stage; once they've played we hide the old
+   * content and reveal the destination skeleton, right as navigation starts.
+   * Memoized so state updates don't recreate the callback and churn the
+   * router's click delegation.
    */
   const leave = useCallback(
     async (next: () => void, _from?: string, to?: string) => {
@@ -70,9 +95,10 @@ export default function TransitionProvider({
         .call(
           () => {
             /**
-             * Exit animations have played — now hide the old content and show
-             * the destination skeleton, then start the actual navigation.
+             * Exit animations have played — hide the old content first, then
+             * reveal the destination skeleton (it fades in) and navigate.
              */
+            hideContent(to);
             setTargetPath(to ?? null);
             setIsNavigating(true);
             next();
@@ -86,16 +112,19 @@ export default function TransitionProvider({
         tl.kill();
       };
     },
-    [],
+    [hideContent],
   );
 
   /**
-   * Enter animation — runs once the destination page is mounted. Hides the
-   * skeleton overlay at the start so the enter animation reveals the real
-   * (or still-streaming) page content.
+   * Enter animation — runs once the destination page is mounted. Restores the
+   * content wrapper (in case it was hidden) and hides the skeleton overlay so
+   * the enter animation reveals the real (or still-streaming) page content.
    */
   const enter = useCallback(async (next: () => void) => {
-    /** Destination is mounted: hide the skeleton overlay */
+    /** Destination is mounted: reveal content, hide the skeleton overlay */
+    if (contentRef.current) {
+      gsap.set(contentRef.current, { autoAlpha: 1 });
+    }
     setIsNavigating(false);
 
     /** Exit early if ref is not available */
@@ -128,39 +157,24 @@ export default function TransitionProvider({
     };
   }, []);
 
-  /**
-   * Keep the sidebar menu visible when navigating between sidebar routes — the
-   * page content is hidden, but the already-loaded menu must stay on screen.
-   */
-  const keepSidebar = isNavigating && isSidebarRoute(targetPath);
-
   /* Render the transition router with enter and leave animations */
   return (
-    <NavigationContext.Provider value={{ keepSidebar }}>
-      <TransitionRouter auto={true} leave={leave} enter={enter}>
-        <div ref={ref} className="relative">
-          {/*
-           * Old page content. While navigating it's hidden (not covered) so it
-           * is removed cleanly without a background — the overlay below shows
-           * the destination skeleton in its place. `visibility: hidden` keeps
-           * the box height for the GSAP collapse/expand animation.
-           */}
-          <div style={{ visibility: isNavigating ? 'hidden' : undefined }}>
-            {children}
-          </div>
+    <TransitionRouter auto={true} leave={leave} enter={enter}>
+      <div ref={ref} className="relative">
+        {/* Page content — hidden (only the content column on sidebar routes) while navigating */}
+        <div ref={contentRef}>{children}</div>
 
-          {/*
-           * Route-aware skeleton overlay shown the moment navigation starts.
-           * Transparent — the old content is hidden, not painted over, so on
-           * sidebar routes the real menu shows through the empty sidebar slot.
-           */}
-          {isNavigating && (
-            <div className="absolute inset-0 z-30 overflow-hidden">
-              <RouteSkeleton path={targetPath} />
-            </div>
-          )}
-        </div>
-      </TransitionRouter>
-    </NavigationContext.Provider>
+        {/*
+         * Route-aware skeleton overlay. Transparent and fades in — the old
+         * content is already hidden, so on sidebar routes the untouched left
+         * menu shows through the skeleton's empty sidebar slot.
+         */}
+        {isNavigating && (
+          <div className="skeleton-fade-in absolute inset-0 z-30 overflow-hidden">
+            <RouteSkeleton path={targetPath} />
+          </div>
+        )}
+      </div>
+    </TransitionRouter>
   );
 }

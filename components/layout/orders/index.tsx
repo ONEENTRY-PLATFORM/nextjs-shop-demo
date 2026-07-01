@@ -148,6 +148,24 @@ const OrdersPage = ({
     fetchOrders();
   }, [isAuth, currentPage, pageLimit, lang]);
 
+  /**
+   * Update the status of a single order in the local list state.
+   * Keeps the list row status in sync with an order updated from the expanded
+   * details view (e.g. after cancellation), since the list is held in local
+   * state rather than refetched.
+   * @param   {number} id               - Order id whose status changed.
+   * @param   {string} statusIdentifier - New order status marker.
+   * @returns {void}
+   */
+  const handleStatusChange = (id: number, statusIdentifier: string): void => {
+    setOrderState((prev) => ({
+      ...prev,
+      orders: prev.orders?.map((order) =>
+        order.id === id ? { ...order, statusIdentifier } : order,
+      ),
+    }));
+  };
+
   /** Destructure order state for easier access */
   const { orders, total, loading, error } = orderState;
 
@@ -190,6 +208,7 @@ const OrdersPage = ({
                     settings={settings}
                     lang={lang}
                     index={index}
+                    onStatusChange={handleStatusChange}
                   />
                 </OrderRowAnimations>
               ))

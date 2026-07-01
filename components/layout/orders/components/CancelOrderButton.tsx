@@ -11,24 +11,27 @@ import Loader from '@/components/shared/Loader';
 /**
  * Cancel order button component.
  * Provides a button that allows users to cancel their orders by updating the order status to 'canceled'.
- * @param   {object}               props           - Component props
- * @param   {IOrderByMarkerEntity} props.data      - Order data to be canceled
- * @param   {boolean}              props.isLoading - Loading state to show spinner when processing
- * @param   {unknown}              props.refetch   - Function to refetch orders after cancellation
- * @param   {string}               props.title     - Button title text
- * @returns {JSX.Element}                          Button element with cancel order functionality
+ * @param   {object}                                         props                - Component props
+ * @param   {IOrderByMarkerEntity}                           props.data           - Order data to be canceled
+ * @param   {boolean}                                        props.isLoading      - Loading state to show spinner when processing
+ * @param   {unknown}                                        props.refetch        - Function to refetch orders after cancellation
+ * @param   {string}                                         props.title          - Button title text
+ * @param   {(id: number, statusIdentifier: string) => void} props.onStatusChange - Callback to sync the parent list row status after cancellation
+ * @returns {JSX.Element}                                                         Button element with cancel order functionality
  */
 const CancelOrderButton = ({
   data,
   isLoading,
   refetch,
   title,
+  onStatusChange,
 }: {
   data: IOrderByMarkerEntity;
   isLoading: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   refetch: any;
   title: string;
+  onStatusChange: (id: number, statusIdentifier: string) => void;
 }): JSX.Element => {
   /**
    * Handle order cancellation by updating the order status on the server.
@@ -59,6 +62,9 @@ const CancelOrderButton = ({
         console.log('Failed to cancel order:', order.error);
         return null;
       }
+
+      /** Sync the parent list row status so the orders table reflects the cancellation */
+      onStatusChange(data.id, 'canceled');
 
       /** Refetch orders to update the UI after successful cancellation */
       refetch();

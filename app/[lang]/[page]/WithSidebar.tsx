@@ -1,10 +1,7 @@
 import type { JSX, ReactNode } from 'react';
-import { Suspense } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
 import SidebarMenu from '@/components/layout/sidebar';
-import SidebarMenuLoader from '@/components/layout/sidebar/components/SidebarMenuLoader';
-import SidebarSlot from '@/components/layout/sidebar/components/SidebarSlot';
 
 /**
  * Sidebar layout component that provides a responsive layout with a sidebar menu
@@ -31,24 +28,26 @@ const WithSidebar = async ({
        */}
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-row max-md:flex-row max-md:flex-wrap">
         {/*
-         * Sidebar container with fixed width on desktop and full width on mobile.
-         * The menu loads independently behind its own Suspense skeleton, and
-         * SidebarSlot keeps it visible across transitions between sidebar routes.
+         * Sidebar container. The menu is server-rendered (resolved in the RSC),
+         * so it's already present when a page mounts — during a transition only
+         * the content column is hidden, never this sidebar, so the menu doesn't
+         * disappear or flash a skeleton between sidebar pages.
          */}
-        <SidebarSlot>
-          <Suspense fallback={<SidebarMenuLoader />}>
-            <SidebarMenu lang={lang} />
-          </Suspense>
-        </SidebarSlot>
+        <aside className="w-52.5 pb-8 max-md:w-full">
+          <SidebarMenu lang={lang} />
+        </aside>
         {/*
-         * Main content area with fade transition animation
-         * Takes remaining space after sidebar and has responsive width behavior
+         * Main content area with fade transition animation. Marked
+         * `data-transition-content` so the transition provider hides only this
+         * column (not the sidebar) while navigating.
          */}
         <FadeTransition
           className="flex w-[calc(100%-210px)] grow flex-col overflow-hidden max-md:w-full"
           index={0}
         >
-          <div className="flex w-full flex-col pb-5">{children}</div>
+          <div className="flex w-full flex-col pb-5" data-transition-content="">
+            {children}
+          </div>
         </FadeTransition>
       </div>
     </div>

@@ -18,23 +18,26 @@ import RepeatOrderButton from './RepeatOrderButton';
 /**
  * Order page component.
  * Displays detailed information about a single order including products, order data, and action buttons.
- * @param   {object}      props          - Order page props
- * @param   {number}      props.id       - Order id to fetch and display
- * @param   {object}      props.settings - Settings containing localized texts and configurations
- * @param   {string}      props.lang     - Current language shortcode for localization
- * @param   {boolean}     props.isActive - Whether this order page is currently active/visible
- * @returns {JSX.Element}                Order page with products, data table, and action buttons
+ * @param   {object}                                         props                - Order page props
+ * @param   {number}                                         props.id             - Order id to fetch and display
+ * @param   {object}                                         props.settings       - Settings containing localized texts and configurations
+ * @param   {string}                                         props.lang           - Current language shortcode for localization
+ * @param   {boolean}                                        props.isActive       - Whether this order page is currently active/visible
+ * @param   {(id: number, statusIdentifier: string) => void} props.onStatusChange - Callback to sync the parent list row status when the order status changes
+ * @returns {JSX.Element}                                                         Order page with products, data table, and action buttons
  */
 const OrderPage = ({
   id,
   settings,
   lang,
   isActive,
+  onStatusChange,
 }: {
   id: number;
   settings: any;
   lang: string;
   isActive: boolean;
+  onStatusChange: (id: number, statusIdentifier: string) => void;
 }): JSX.Element => {
   /** Convert short locale to SDK langCode */
   const langCode = toLangCode(lang);
@@ -139,6 +142,7 @@ const OrderPage = ({
             title={cancel_order_title.value}
             isLoading={isLoading}
             refetch={refetch}
+            onStatusChange={onStatusChange}
           />
         )}
 
