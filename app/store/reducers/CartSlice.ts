@@ -4,12 +4,15 @@ import type { PayloadAction, WritableDraft } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
+import type { CartLedger } from '@/app/store/utils/ledger';
+import { cartActiveProducts } from '@/app/store/utils/ledger';
 import type { IProducts } from '@/app/types/global';
 
 /**
  * Defining the shape of the initial state for the cart slice
  * @property {IProductsEntity[]} products     - Array of product entities.
  * @property {IProducts[]}       productsData - Array of product data with additional properties like quantity.
+ * @property {CartLedger}        meta         - Tombstone ledger (id → last mutation) used to merge with the server without resurrecting deletions.
  * @property {string}            [currency]   - Currency type.
  * @property {IProductsEntity}   delivery     - Delivery product entity.
  * @property {object}            deliveryData - Details about delivery.
@@ -20,6 +23,7 @@ import type { IProducts } from '@/app/types/global';
 type InitialStateType = {
   products: IProductsEntity[];
   productsData: IProducts[];
+  meta: CartLedger;
   currency?: string;
   delivery: IProductsEntity;
   deliveryData: {
@@ -35,17 +39,19 @@ type InitialStateType = {
 
 /**
  * Initial state setup for the cart slice.
- * @property {Array}  products     - Array of product entities.
- * @property {Array}  productsData - Array of product data with additional properties like quantity.
- * @property {object} delivery     - Delivery product entity.
- * @property {object} deliveryData - Details about delivery.
- * @property {number} transitionId - ID used for transitions/animations.
- * @property {number} total        - Total cost of items in the cart.
- * @property {number} version      - Version of the cart, useful for updates.
+ * @property {Array}      products     - Array of product entities.
+ * @property {Array}      productsData - Array of product data with additional properties like quantity.
+ * @property {CartLedger} meta         - Tombstone ledger (empty by default).
+ * @property {object}     delivery     - Delivery product entity.
+ * @property {object}     deliveryData - Details about delivery.
+ * @property {number}     transitionId - ID used for transitions/animations.
+ * @property {number}     total        - Total cost of items in the cart.
+ * @property {number}     version      - Version of the cart, useful for updates.
  */
 const initialState: InitialStateType = {
   products: [],
   productsData: [],
+  meta: {},
   delivery: {} as IProductsEntity,
   deliveryData: {
     date: new Date().getTime(),
@@ -59,6 +65,33 @@ const initialState: InitialStateType = {
 };
 
 /**
+ * Record a cart mutation in the tombstone ledger.
+ *
+ * For an active line it snapshots the current `productsData` entry (so the
+ * merged cart can be rebuilt from the ledger alone); for a removal it leaves a
+ * tombstone with the removal timestamp so the deletion wins a later merge.
+ * @param {WritableDraft<InitialStateType>} state   - Current draft state.
+ * @param {number}                          id      - Affected product id.
+ * @param {number}                          ts      - Mutation timestamp (ms).
+ * @param {boolean}                         removed - Whether the line was removed.
+ */
+const touchCart = (
+  state: WritableDraft<InitialStateType>,
+  id: number,
+  ts: number,
+  removed: boolean,
+): void => {
+  if (removed) {
+    state.meta[id] = { ts, removed: true };
+    return;
+  }
+  const product = state.productsData.find((p) => p.id === id);
+  if (product) {
+    state.meta[id] = { ts, removed: false, product: { ...product } };
+  }
+};
+
+/**
  * Creating a Redux slice for cart management.
  * @param {string}  name         - Name of the slice.
  * @param {unknown} initialState - Initial state for the cart slice.
@@ -69,43 +102,49 @@ export const cartSlice = createSlice({
   initialState, // Initial state defined above
   reducers: {
     /**
-     * Add a product to the cart
-     * @param {WritableDraft<InitialStateType>} state  - Current state
-     * @param {PayloadAction<string>}           action - Payload with product id, selection status and quantity
+     * Add a product to the cart. The timestamp is injected by `prepare` so the
+     * reducer stays pure while enabling last-write-wins merges with the server.
      */
-    addProductToCart(
-      state: WritableDraft<InitialStateType>,
-      action: PayloadAction<{
-        id: number;
-        selected: boolean;
-        quantity: number;
-      }>,
-    ) {
-      /** This function checks if the product is already in the cart */
-      const index = state.productsData.findIndex(
-        (product: { id: number }) => product.id === action.payload.id,
-      );
+    addProductToCart: {
+      reducer(
+        state: WritableDraft<InitialStateType>,
+        action: PayloadAction<{
+          id: number;
+          selected: boolean;
+          quantity: number;
+          ts: number;
+        }>,
+      ) {
+        /** This function checks if the product is already in the cart */
+        const index = state.productsData.findIndex(
+          (product: { id: number }) => product.id === action.payload.id,
+        );
 
-      /** If the product is not in the cart, we add it */
-      if (index === -1) {
-        /** Add the product to the cart with the specified quantity (minimum 1) */
-        state.productsData.push({
-          id: action.payload.id,
-          selected: action.payload.selected,
-          quantity: Math.max(1, action.payload.quantity),
-        });
-      } else {
-        /** If the product is already in the cart, we increase its quantity */
-        state.productsData[index] = {
-          id: state.productsData[index]?.id || action.payload.id,
-          selected: state.productsData[index]?.selected ?? true,
-          quantity: Math.max(
-            1,
-            (state.productsData[index]?.quantity || 0) +
-              action.payload.quantity,
-          ),
-        };
-      }
+        /** If the product is not in the cart, we add it */
+        if (index === -1) {
+          /** Add the product to the cart with the specified quantity (minimum 1) */
+          state.productsData.push({
+            id: action.payload.id,
+            selected: action.payload.selected,
+            quantity: Math.max(1, action.payload.quantity),
+          });
+        } else {
+          /** If the product is already in the cart, we increase its quantity */
+          state.productsData[index] = {
+            id: state.productsData[index]?.id || action.payload.id,
+            selected: state.productsData[index]?.selected ?? true,
+            quantity: Math.max(
+              1,
+              (state.productsData[index]?.quantity || 0) +
+                action.payload.quantity,
+            ),
+          };
+        }
+        touchCart(state, action.payload.id, action.payload.ts, false);
+      },
+      prepare(input: { id: number; selected: boolean; quantity: number }) {
+        return { payload: { ...input, ts: Date.now() } };
+      },
     },
     /**
      * Add multiple products to the cart
@@ -119,154 +158,212 @@ export const cartSlice = createSlice({
       state.products = action.payload;
     },
     /**
-     * Increase the quantity of a product in the cart
-     * @param {WritableDraft<InitialStateType>} state  - Current state
-     * @param {PayloadAction<string>}           action - Payload with units, id and quantity
+     * Increase the quantity of a product in the cart.
      */
-    increaseProductQty(
-      state: WritableDraft<InitialStateType>,
-      action: PayloadAction<{ units: number; id: number; quantity: number }>,
-    ) {
-      const index = state.productsData.findIndex(
-        (product: { id: number }) => product.id === action.payload.id,
-      );
+    increaseProductQty: {
+      reducer(
+        state: WritableDraft<InitialStateType>,
+        action: PayloadAction<{
+          units: number;
+          id: number;
+          quantity: number;
+          ts: number;
+        }>,
+      ) {
+        const index = state.productsData.findIndex(
+          (product: { id: number }) => product.id === action.payload.id,
+        );
 
-      if (index === -1) {
-        /** If the product is not in the cart, add it with a quantity of 1 */
-        state.productsData.push({
-          id: action.payload.id,
-          quantity: 1,
-          selected: true,
-        });
-        return;
-      }
+        if (index === -1) {
+          /** If the product is not in the cart, add it with a quantity of 1 */
+          state.productsData.push({
+            id: action.payload.id,
+            quantity: 1,
+            selected: true,
+          });
+          touchCart(state, action.payload.id, action.payload.ts, false);
+          return;
+        }
 
-      const qty =
-        (state.productsData[index]?.quantity || 0) + action.payload.quantity;
+        const qty =
+          (state.productsData[index]?.quantity || 0) + action.payload.quantity;
 
-      /** Limit the number to the maximum available */
-      const clampedQty = Math.min(qty, action.payload.units);
+        /** Limit the number to the maximum available */
+        const clampedQty = Math.min(qty, action.payload.units);
 
-      state.productsData[index] = {
-        id: state.productsData[index]?.id || action.payload.id,
-        selected: state.productsData[index]?.selected || true,
-        quantity: clampedQty,
-      };
+        state.productsData[index] = {
+          id: state.productsData[index]?.id || action.payload.id,
+          selected: state.productsData[index]?.selected || true,
+          quantity: clampedQty,
+        };
+        touchCart(state, action.payload.id, action.payload.ts, false);
+      },
+      prepare(input: { units: number; id: number; quantity: number }) {
+        return { payload: { ...input, ts: Date.now() } };
+      },
     },
     /**
-     * Decrease the quantity of a product in the cart
-     * @param {WritableDraft<InitialStateType>} state  - Current state
-     * @param {PayloadAction<string>}           action - Payload with id and quantity
+     * Decrease the quantity of a product in the cart.
      */
-    decreaseProductQty(
-      state: WritableDraft<InitialStateType>,
-      action: PayloadAction<{ id: number; quantity: number }>,
-    ) {
-      const index = state.productsData.findIndex(
-        (product: { id: number }) => product.id === action.payload.id,
-      );
-
-      if (index === -1) {
-        return;
-      }
-
-      const qty =
-        (state.productsData[index]?.quantity || 0) - action.payload.quantity;
-
-      /** If the quantity is less than or equal to 0, remove the item from the cart */
-      if (qty <= 0) {
-        state.productsData = state.productsData.filter(
-          (item: IProducts) => item.id !== action.payload.id,
+    decreaseProductQty: {
+      reducer(
+        state: WritableDraft<InitialStateType>,
+        action: PayloadAction<{ id: number; quantity: number; ts: number }>,
+      ) {
+        const index = state.productsData.findIndex(
+          (product: { id: number }) => product.id === action.payload.id,
         );
-        return;
-      }
 
-      state.productsData[index] = {
-        id: state.productsData[index]?.id || action.payload.id,
-        selected: state.productsData[index]?.selected ?? true,
-        quantity: qty,
-      };
-    },
-    /**
-     * Set the quantity of a product in the cart
-     * @param {WritableDraft<InitialStateType>} state  - Current state
-     * @param {PayloadAction<string>}           action - Payload with units, id and quantity
-     */
-    setProductQty(
-      state: WritableDraft<InitialStateType>,
-      action: PayloadAction<{ units: number; id: number; quantity: number }>,
-    ) {
-      const index = state.productsData.findIndex(
-        (product: { id: number }) => product.id === action.payload.id,
-      );
+        if (index === -1) {
+          return;
+        }
 
-      const qty = action.payload.quantity;
+        const qty =
+          (state.productsData[index]?.quantity || 0) - action.payload.quantity;
 
-      /** If the quantity is less than or equal to 0, remove the item from the cart */
-      if (qty <= 0) {
-        state.productsData = state.productsData.filter(
-          (item: IProducts) => item.id !== action.payload.id,
-        );
-        return;
-      }
+        /** If the quantity is less than or equal to 0, remove the item from the cart */
+        if (qty <= 0) {
+          state.productsData = state.productsData.filter(
+            (item: IProducts) => item.id !== action.payload.id,
+          );
+          touchCart(state, action.payload.id, action.payload.ts, true);
+          return;
+        }
 
-      /** Limit the number to the maximum available */
-      const clampedQty = Math.min(qty, action.payload.units);
-
-      if (index !== -1) {
         state.productsData[index] = {
           id: state.productsData[index]?.id || action.payload.id,
           selected: state.productsData[index]?.selected ?? true,
-          quantity: clampedQty,
+          quantity: qty,
         };
-      } else {
-        /** If the product is not yet in the cart, add it */
-        state.productsData.push({
-          id: action.payload.id,
-          quantity: clampedQty,
-          selected: true,
-        });
-      }
+        touchCart(state, action.payload.id, action.payload.ts, false);
+      },
+      prepare(input: { id: number; quantity: number }) {
+        return { payload: { ...input, ts: Date.now() } };
+      },
     },
     /**
-     * Remove a product from the cart
-     * @param {WritableDraft<InitialStateType>} state  - Current state
-     * @param {PayloadAction<string>}           action - Payload with product id
+     * Set the quantity of a product in the cart.
      */
-    removeProduct(
-      state: WritableDraft<InitialStateType>,
-      action: PayloadAction<number>,
-    ) {
-      state.productsData = state.productsData.filter(
-        (item: IProducts) => item.id !== action.payload,
-      );
-    },
-    /**
-     * Toggle the selection status of a product in the cart
-     * @param {WritableDraft<InitialStateType>} state  - Current state
-     * @param {PayloadAction<string>}           action - Payload with product id
-     */
-    deselectProduct(
-      state: WritableDraft<InitialStateType>,
-      action: PayloadAction<number>,
-    ) {
-      state.productsData = state.productsData.map((product) => {
-        if (product.id === action.payload) {
-          return {
-            ...product,
-            selected: !product.selected,
-          };
+    setProductQty: {
+      reducer(
+        state: WritableDraft<InitialStateType>,
+        action: PayloadAction<{
+          units: number;
+          id: number;
+          quantity: number;
+          ts: number;
+        }>,
+      ) {
+        const index = state.productsData.findIndex(
+          (product: { id: number }) => product.id === action.payload.id,
+        );
+
+        const qty = action.payload.quantity;
+
+        /** If the quantity is less than or equal to 0, remove the item from the cart */
+        if (qty <= 0) {
+          state.productsData = state.productsData.filter(
+            (item: IProducts) => item.id !== action.payload.id,
+          );
+          touchCart(state, action.payload.id, action.payload.ts, true);
+          return;
         }
-        return product;
-      });
+
+        /** Limit the number to the maximum available */
+        const clampedQty = Math.min(qty, action.payload.units);
+
+        if (index !== -1) {
+          state.productsData[index] = {
+            id: state.productsData[index]?.id || action.payload.id,
+            selected: state.productsData[index]?.selected ?? true,
+            quantity: clampedQty,
+          };
+        } else {
+          /** If the product is not yet in the cart, add it */
+          state.productsData.push({
+            id: action.payload.id,
+            quantity: clampedQty,
+            selected: true,
+          });
+        }
+        touchCart(state, action.payload.id, action.payload.ts, false);
+      },
+      prepare(input: { units: number; id: number; quantity: number }) {
+        return { payload: { ...input, ts: Date.now() } };
+      },
     },
     /**
-     * Remove all products from the cart
-     * @param {WritableDraft<InitialStateType>} state - Current state
+     * Remove a product from the cart, leaving a tombstone in the ledger so the
+     * removal is propagated to the server instead of resurrecting on merge.
      */
-    removeAllProducts(state: WritableDraft<InitialStateType>) {
-      state.productsData = initialState.productsData;
-      state.products = initialState.products;
+    removeProduct: {
+      reducer(
+        state: WritableDraft<InitialStateType>,
+        action: PayloadAction<{ id: number; ts: number }>,
+      ) {
+        state.productsData = state.productsData.filter(
+          (item: IProducts) => item.id !== action.payload.id,
+        );
+        touchCart(state, action.payload.id, action.payload.ts, true);
+      },
+      prepare(id: number) {
+        return { payload: { id, ts: Date.now() } };
+      },
+    },
+    /**
+     * Toggle the selection status of a product in the cart.
+     */
+    deselectProduct: {
+      reducer(
+        state: WritableDraft<InitialStateType>,
+        action: PayloadAction<{ id: number; ts: number }>,
+      ) {
+        state.productsData = state.productsData.map((product) => {
+          if (product.id === action.payload.id) {
+            return {
+              ...product,
+              selected: !product.selected,
+            };
+          }
+          return product;
+        });
+        touchCart(state, action.payload.id, action.payload.ts, false);
+      },
+      prepare(id: number) {
+        return { payload: { id, ts: Date.now() } };
+      },
+    },
+    /**
+     * Remove all products from the cart, tombstoning each line so the clear is
+     * propagated to the server.
+     */
+    removeAllProducts: {
+      reducer(
+        state: WritableDraft<InitialStateType>,
+        action: PayloadAction<{ ts: number }>,
+      ) {
+        for (const item of state.productsData) {
+          state.meta[item.id] = { ts: action.payload.ts, removed: true };
+        }
+        state.productsData = initialState.productsData;
+        state.products = initialState.products;
+      },
+      prepare() {
+        return { payload: { ts: Date.now() } };
+      },
+    },
+    /**
+     * Replace the ledger with a merged one (server + local) and recompute the
+     * active cart from it. Dispatched once per session after authentication.
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<CartLedger>}       action - Payload with the merged ledger
+     */
+    mergeCart(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<CartLedger>,
+    ) {
+      state.meta = action.payload;
+      state.productsData = cartActiveProducts(action.payload);
     },
     /**
      * Add delivery information to the cart
@@ -335,6 +432,17 @@ export const cartSlice = createSlice({
 export const selectCartVersion = (state: {
   cartReducer: { version: number };
 }): number => state.cartReducer.version;
+
+/**
+ * Select the cart tombstone ledger.
+ * @param   {object}     state                  - The current state of the Redux store.
+ * @param   {object}     state.cartReducer      - Cart reducer state.
+ * @param   {CartLedger} state.cartReducer.meta - The cart ledger.
+ * @returns {CartLedger}                        The cart tombstone ledger.
+ */
+export const selectCartMeta = (state: {
+  cartReducer: { meta: CartLedger };
+}): CartLedger => state.cartReducer.meta;
 
 /**
  * Get cart transition.
@@ -490,6 +598,7 @@ export const {
   removeProduct,
   deselectProduct,
   removeAllProducts,
+  mergeCart,
   addDeliveryToCart,
   setDeliveryData,
   setCartTransition,

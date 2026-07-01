@@ -6,14 +6,12 @@ import { useContext, useMemo } from 'react';
 import { toast } from 'react-toastify';
 
 import { onSubscribeEvents } from '@/app/api/hooks/useEvents';
-import { updateUserState } from '@/app/api/server/users/updateUserState';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
   addProductToCart,
   selectIsInCart,
 } from '@/app/store/reducers/CartSlice';
-import { selectFavoritesItems } from '@/app/store/reducers/FavoritesSlice';
 
 import QuantitySelector from './QuantitySelector';
 
@@ -52,15 +50,6 @@ const AddToCartButton = ({
   /** Check if product is already in cart */
   const inCart = useAppSelector((state) => selectIsInCart(state, id));
 
-  /** Retrieve current cart items from Redux store */
-  const items = useAppSelector((state) => state.cartReducer.productsData);
-
-  /** Retrieve favorite items IDs from Redux store */
-  const favoritesIds: number[] = useAppSelector(
-    (state: { favoritesReducer: { products: number[] } }) =>
-      selectFavoritesItems(state),
-  );
-
   /** Get user authentication context */
   const { user, isAuth } = useContext(AuthContext);
 
@@ -83,39 +72,24 @@ const AddToCartButton = ({
   }
 
   /**
-   * Update user state and subscribe to events.
-   * Synchronizes the user's cart state with the backend and subscribes to product events.
-   * @returns {Promise<void>} Promise that resolves when user state is updated.
+   * Subscribe to this product's events for an authenticated user.
+   *
+   * Server-side cart sync is handled centrally by the {@link AuthContext} push
+   * effect (it writes the merged tombstone ledger whenever the cart changes),
+   * so this only needs to register the event subscription.
+   * @returns {Promise<void>} Promise that resolves once subscribed.
    */
-  const updateUserCartState = async (): Promise<void> => {
-    /** Exit early if no user is available */
+  const subscribeToCartProduct = async (): Promise<void> => {
     if (!user) {
       return;
     }
-
-    /** Update cart items with either incremented quantity or new item */
-    const updatedItems = items.some((product) => product.id === id)
-      ? items.map((product) => ({
-          id: product.id,
-          quantity: product.id === id ? product.quantity + 1 : product.quantity,
-          selected: true,
-        }))
-      : [...items, { id, quantity: 1, selected: true }];
-
-    /** Update user state with new cart and favorites data */
-    await updateUserState({
-      favorites: favoritesIds,
-      cart: updatedItems,
-    });
-
-    /** Subscribe to events for this product */
     await onSubscribeEvents(id);
   };
 
   /**
    * Add product to cart handler.
    * Dispatches action to add product to cart, shows toast notification,
-   * and updates user state if authenticated.
+   * and subscribes to product events if authenticated.
    * @returns {Promise<void>} Promise that resolves when product is added to cart.
    */
   const addToCartHandle = async (): Promise<void> => {
@@ -125,9 +99,9 @@ const AddToCartButton = ({
     /** Show toast notification confirming product addition */
     toast('Product ' + productTitle + ' added to cart!');
 
-    /** Update user state and subscribe to events if user is authenticated */
+    /** Subscribe to events if user is authenticated */
     if (user && isAuth) {
-      updateUserCartState();
+      subscribeToCartProduct();
     }
   };
 

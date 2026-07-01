@@ -4,10 +4,13 @@ import { persistReducer } from 'redux-persist';
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 
 import { RTKApi } from '../api';
+import type { IProducts } from '../types/global';
 import cartSlice from './reducers/CartSlice';
 import favoritesSlice from './reducers/FavoritesSlice';
 import formFieldsSlice from './reducers/FormFieldsSlice';
 import orderSlice from './reducers/OrderSlice';
+import type { CartLedger, FavLedger } from './utils/ledger';
+import { cartLedgerFromProducts, favLedgerFromIds } from './utils/ledger';
 
 /**
  * Creates a no-operation storage object for server-side rendering compatibility
@@ -47,9 +50,25 @@ const cartReducer = persistReducer(
   {
     key: 'cart-slice',
     storage: storage,
-    version: version,
+    version: 2,
+    // Seed the tombstone ledger from a legacy persisted cart (v1 had no `meta`)
+    // so existing guests don't lose their cart when the merge logic kicks in.
+    migrate: async (persisted) => {
+      if (!persisted) {
+        return persisted;
+      }
+      const state = persisted as unknown as {
+        productsData?: IProducts[];
+        meta?: CartLedger;
+      };
+      if (!state.meta && Array.isArray(state.productsData)) {
+        state.meta = cartLedgerFromProducts(state.productsData, 0);
+      }
+      return persisted;
+    },
     whitelist: [
       'productsData',
+      'meta',
       'currency',
       'deliveryData',
       'delivery',
@@ -67,8 +86,23 @@ const favoritesReducer = persistReducer(
   {
     key: 'favorites-slice',
     storage: storage,
-    version: version,
-    whitelist: ['products'],
+    version: 2,
+    // Seed the tombstone ledger from a legacy persisted list (v1 had no `meta`)
+    // so existing guests don't lose their favorites when the merge logic runs.
+    migrate: async (persisted) => {
+      if (!persisted) {
+        return persisted;
+      }
+      const state = persisted as unknown as {
+        products?: number[];
+        meta?: FavLedger;
+      };
+      if (!state.meta && Array.isArray(state.products)) {
+        state.meta = favLedgerFromIds(state.products, 0);
+      }
+      return persisted;
+    },
+    whitelist: ['products', 'meta'],
   },
   favoritesSlice,
 );

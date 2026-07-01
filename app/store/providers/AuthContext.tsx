@@ -19,21 +19,25 @@ import {
   useLazyGetMeQuery,
 } from '@/app/api';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
-import type { IProducts } from '@/app/types/global';
 
 import { useAppDispatch, useAppSelector } from '../hooks';
 import {
-  addProductToCart,
-  selectCartData,
+  mergeCart,
+  selectCartMeta,
   selectCartVersion,
   setCartVersion,
 } from '../reducers/CartSlice';
 import {
-  addFavorites,
-  selectFavoritesItems,
+  mergeFavorites,
+  selectFavoritesMeta,
   selectFavoritesVersion,
   setFavoritesVersion,
 } from '../reducers/FavoritesSlice';
+import {
+  mergeLedger,
+  normalizeCartLedger,
+  normalizeFavLedger,
+} from '../utils/ledger';
 
 /**
  * Authentication context
@@ -88,11 +92,8 @@ export const AuthProvider = ({
 
   const cartVersion = useAppSelector(selectCartVersion) as number;
   const favoritesVersion = useAppSelector(selectFavoritesVersion) as number;
-  const productsInCart = useAppSelector(selectCartData);
-  const favoritesIds = useAppSelector(
-    (state: { favoritesReducer: { products: number[] } }) =>
-      selectFavoritesItems(state),
-  );
+  const favoritesMeta = useAppSelector(selectFavoritesMeta);
+  const cartMeta = useAppSelector(selectCartMeta);
 
   const [trigger, { isError }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 30000 : 0,
@@ -161,43 +162,57 @@ export const AuthProvider = ({
     checkTokenRef.current = checkToken;
   }, [checkToken]);
 
-  /** Push the latest cart and favorites to the server when they change. */
+  /**
+   * Hydrate favorites + cart from the server on first auth by **merging** the
+   * server and local (guest) tombstone ledgers (see {@link mergeLedger}). This
+   * keeps the union across devices while letting newer deletions win — removed
+   * items no longer resurrect on login. Runs once per session: the version
+   * flags reset to 0 on every reload, so we always re-merge with the server.
+   */
   useEffect(() => {
     if (!isAuth || !user) {
       return;
     }
-    updateUserState({
-      cart: productsInCart,
-      favorites: favoritesIds,
-    });
-  }, [isAuth, user, productsInCart, favoritesIds]);
+    const serverState = user.state as Record<string, unknown>;
+    if (favoritesVersion === 0) {
+      dispatch(
+        mergeFavorites(
+          mergeLedger(favoritesMeta, normalizeFavLedger(serverState)),
+        ),
+      );
+      dispatch(setFavoritesVersion(1));
+    }
+    if (cartVersion === 0) {
+      dispatch(
+        mergeCart(mergeLedger(cartMeta, normalizeCartLedger(serverState))),
+      );
+      dispatch(setCartVersion(1));
+    }
+  }, [
+    isAuth,
+    user,
+    favoritesVersion,
+    cartVersion,
+    favoritesMeta,
+    cartMeta,
+    dispatch,
+  ]);
 
-  /** Hydrate the cart in Redux from the user's stored state on first auth. */
+  /**
+   * Push the merged favorites/cart ledgers to the server whenever they change.
+   * Gated until after hydration (version > 0) so a pre-merge empty state never
+   * overwrites the server. {@link updateUserState} re-merges with the freshest
+   * server snapshot before writing, so concurrent changes are not clobbered.
+   */
   useEffect(() => {
-    if (!user?.state.cart || cartVersion > 0) {
+    if (!isAuth || !user) {
       return;
     }
-    (user.state.cart as IProducts[] | undefined)?.forEach(
-      (product: IProducts) => {
-        const productInCart = productsInCart?.find((p) => p.id === product.id);
-        if (!productInCart) {
-          dispatch(addProductToCart(product));
-        }
-      },
-    );
-    dispatch(setCartVersion(1));
-  }, [isAuth, user, cartVersion, productsInCart, dispatch]);
-
-  /** Hydrate favorites in Redux from the user's stored state on first auth. */
-  useEffect(() => {
-    if (!user?.state.favorites || favoritesVersion > 0) {
+    if (favoritesVersion === 0 || cartVersion === 0) {
       return;
     }
-    (user.state.favorites as number[]).forEach((element: number) => {
-      dispatch(addFavorites(element));
-    });
-    dispatch(setFavoritesVersion(1));
-  }, [isAuth, user, favoritesVersion, dispatch]);
+    updateUserState({ favoritesMeta, cartMeta });
+  }, [isAuth, user, favoritesVersion, cartVersion, favoritesMeta, cartMeta]);
 
   /**
    * Tracks the init trigger currently being processed (`reinitTick:langCode`).

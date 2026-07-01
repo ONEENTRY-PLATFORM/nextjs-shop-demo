@@ -1,23 +1,30 @@
 import type { PayloadAction, WritableDraft } from '@reduxjs/toolkit'; // Importing the PayloadAction type from Redux Toolkit for type-safe actions.
 import { createSlice } from '@reduxjs/toolkit'; // Importing the createSlice function from Redux Toolkit to create a slice of the Redux state.
 
+import type { FavLedger } from '@/app/store/utils/ledger';
+import { favActiveIds } from '@/app/store/utils/ledger';
+
 /**
  * The initial state for the favorites slice.
- * @property {number[]} products - An array of product IDs representing favorite items.
- * @property {number}   version  - A version number to track changes in the favorites list.
+ * @property {number[]}  products - An array of product IDs representing favorite items.
+ * @property {FavLedger} meta     - Tombstone ledger (id → last add/remove) used to merge with the server without resurrecting deletions.
+ * @property {number}    version  - A version number to track changes in the favorites list.
  */
 type InitialStateType = {
   products: number[]; // An array of product IDs representing favorite items.
+  meta: FavLedger; // Tombstone ledger keyed by product id.
   version: number; // A version number to track changes in the favorites list.
 };
 
 /**
  * Define the initial state for the favorites slice.
- * @property {Array}  products - An array of product IDs representing favorite items.
- * @property {number} version  - A version number to track changes in the favorites list.
+ * @property {Array}     products - An array of product IDs representing favorite items.
+ * @property {FavLedger} meta     - Tombstone ledger (empty by default).
+ * @property {number}    version  - A version number to track changes in the favorites list.
  */
 const initialState: InitialStateType = {
   products: [],
+  meta: {},
   version: 0,
 };
 
@@ -32,48 +39,81 @@ export const favoritesSlice = createSlice({
   initialState,
   reducers: {
     /**
-     * Add a product to the favorites list.
-     * @param {WritableDraft<InitialStateType>} state  - Current state
-     * @param {PayloadAction<string>}           action - Payload with product ID
+     * Add a product to the favorites list and record the add in the ledger.
+     * The timestamp is injected by the `prepare` callback so the reducer stays
+     * pure while still enabling last-write-wins merges with the server.
      */
-    addFavorites(
-      state: WritableDraft<InitialStateType>,
-      action: PayloadAction<number>,
-    ) {
-      /** Check if the product ID is already in the favorites list. */
-      const isUnique = state.products.findIndex((productId: number) => {
-        return productId === action.payload;
-      });
-      /** If the product ID is not found, add it to the list. */
-      if (isUnique === -1) {
-        state.products.push(action.payload);
-      }
+    addFavorites: {
+      reducer(
+        state: WritableDraft<InitialStateType>,
+        action: PayloadAction<{ id: number; ts: number }>,
+      ) {
+        const { id, ts } = action.payload;
+        /** Add to the active list only if it is not already there. */
+        if (!state.products.includes(id)) {
+          state.products.push(id);
+        }
+        /** Record the add — overrides any previous tombstone for this id. */
+        state.meta[id] = { ts, removed: false };
+      },
+      prepare(id: number) {
+        return { payload: { id, ts: Date.now() } };
+      },
     },
     /**
-     * Remove a product from the favorites list.
-     * @param {WritableDraft<InitialStateType>} state  - Current state
-     * @param {PayloadAction<string>}           action - Payload with product ID
+     * Remove a product from the favorites list and leave a tombstone in the
+     * ledger so the deletion survives a later merge with the server.
      */
-    removeFavorites(
-      state: WritableDraft<InitialStateType>,
-      action: PayloadAction<number>,
-    ) {
-      /** Filter out the product ID to be removed. */
-      state.products = state.products.filter(
-        (product: number) => product !== action.payload,
-      );
+    removeFavorites: {
+      reducer(
+        state: WritableDraft<InitialStateType>,
+        action: PayloadAction<{ id: number; ts: number }>,
+      ) {
+        const { id, ts } = action.payload;
+        state.products = state.products.filter((product) => product !== id);
+        /** Tombstone: keep the id with `removed: true` and the removal time. */
+        state.meta[id] = { ts, removed: true };
+      },
+      prepare(id: number) {
+        return { payload: { id, ts: Date.now() } };
+      },
     },
     /**
-     * Remove all products from the favorites list.
-     * @param {WritableDraft<InitialStateType>} state - Current state
+     * Remove all products from the favorites list, tombstoning each one so the
+     * clear is propagated to the server instead of being ignored.
      */
-    removeAllFavorites(state: WritableDraft<InitialStateType>) {
-      state.products = initialState.products; // Reset to initial empty state.
+    removeAllFavorites: {
+      reducer(
+        state: WritableDraft<InitialStateType>,
+        action: PayloadAction<{ ts: number }>,
+      ) {
+        const { ts } = action.payload;
+        for (const id of state.products) {
+          state.meta[id] = { ts, removed: true };
+        }
+        state.products = [];
+      },
+      prepare() {
+        return { payload: { ts: Date.now() } };
+      },
+    },
+    /**
+     * Replace the ledger with a merged one (server + local) and recompute the
+     * active list from it. Dispatched once per session after authentication.
+     * @param {WritableDraft<InitialStateType>} state  - Current state
+     * @param {PayloadAction<FavLedger>}        action - Payload with the merged ledger
+     */
+    mergeFavorites(
+      state: WritableDraft<InitialStateType>,
+      action: PayloadAction<FavLedger>,
+    ) {
+      state.meta = action.payload;
+      state.products = favActiveIds(action.payload);
     },
     /**
      * Set the version of the favorites list.
      * @param {WritableDraft<InitialStateType>} state  - Current state
-     * @param {PayloadAction<string>}           action - Payload with version number
+     * @param {PayloadAction<number>}           action - Payload with version number
      */
     setFavoritesVersion(
       state: WritableDraft<InitialStateType>,
@@ -89,6 +129,7 @@ export const {
   addFavorites,
   removeFavorites,
   removeAllFavorites,
+  mergeFavorites,
   setFavoritesVersion,
 } = favoritesSlice.actions;
 
@@ -102,6 +143,17 @@ export const {
 export const selectFavoritesItems = (state: {
   favoritesReducer: { products: number[] };
 }): number[] => state.favoritesReducer.products;
+
+/**
+ * Selector to get the favorites tombstone ledger.
+ * @param   {object}    state                       - The global state object.
+ * @param   {object}    state.favoritesReducer      - The favorites reducer slice.
+ * @param   {FavLedger} state.favoritesReducer.meta - The favorites ledger.
+ * @returns {FavLedger}                             The favorites tombstone ledger.
+ */
+export const selectFavoritesMeta = (state: {
+  favoritesReducer: { meta: FavLedger };
+}): FavLedger => state.favoritesReducer.meta;
 
 /**
  * Selector to check if a specific product ID is in the favorites list.
