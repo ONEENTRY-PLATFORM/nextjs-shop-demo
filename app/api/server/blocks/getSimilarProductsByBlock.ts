@@ -21,11 +21,13 @@ interface SimilarProductsResult {
 }
 
 /**
- * Portion size for the similar products infinite scroll (first server-rendered
- * portion and every client-loaded page). Must stay below the block's
- * `quantity` — the API caps `total` at quantity and rejects offsets beyond it
- * (400, verified on live API 2026-07-02) — otherwise there is nothing left to
- * load. The feed depth is raised via the block's quantity in admin.
+ * Fallback portion size for the similar products infinite scroll — used only
+ * when the block has no `quantity`. The actual portion size (first
+ * server-rendered portion and every client-loaded page) is the block's
+ * Quantity from admin. Note: the API caps `total` at quantity and rejects
+ * offsets beyond it (400, verified on live API 2026-07-02), so with
+ * portion = quantity the whole pool arrives with SSR and the client loads
+ * more only if the API ever reports `total` above the first portion.
  */
 export const SIMILAR_PRODUCTS_PAGE_SIZE = 5;
 

@@ -19,8 +19,6 @@ import VariationsCarousel from './variations/VariationsCarousel';
 /**
  * ProductSingle component displays a complete product page with images, variations,
  * description, details, reviews, and related products.
- * It organizes the product information in a three-column layout on larger screens
- * and stacks the sections on smaller screens.
  * @param   {object}                                       props                      - Component properties
  * @param   {string}                                       props.lang                 - Language code for product
  * @param   {IAttributeValues}                             props.dict                 - Dictionary of attribute values from server API

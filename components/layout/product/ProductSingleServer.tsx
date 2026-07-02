@@ -13,17 +13,6 @@ import ProductSingle from './index';
 
 /**
  * Server wrapper component for ProductSingle that handles all async data fetching and validation.
- *
- * This component serves as a server-side container that:
- * 1. Validates required input props
- * 2. Extracts necessary data from the product entity
- * 3. Fetches related products based on the current product ID
- * 4. Retrieves block data for specific block markers
- * 5. Handles errors gracefully and provides fallback UI
- *
- * The component ensures all necessary data is loaded before rendering the client-side ProductSingle component,
- * improving performance by reducing client-side data fetching and providing a better user experience
- * with proper error handling.
  * @param   {object}                                       props         - Component properties containing product data and configuration
  * @param   {IProductsEntity & { blocks?: Array<string> }} props.product - Product entity object containing all product information including optional blocks array
  * @param   {string}                                       props.lang    - Current language shortcode used for localization and API requests
@@ -97,7 +86,7 @@ const ProductSingleServer = async ({
   /** Only process blocks if they exist and are an array */
   if (Array.isArray(blocks)) {
     for (const blockMarker of blocks) {
-      if (blockMarker === 'multiply_items_offer' || blockMarker === 'similar') {
+      if (blockMarker === 'multiply_items_offer') {
         /** Fetch block data by marker and language */
         const { isError, block } = await getBlockByMarker(blockMarker, lang);
 
@@ -110,20 +99,24 @@ const ProductSingleServer = async ({
   }
 
   /**
-   * The SDK enriches the 'similar' block without product context — re-fetch
-   * its similar products with the current product id so the block rules are
-   * evaluated against this product and the product itself is excluded.
-   * Only the first portion is fetched — the rest is loaded by the client on
-   * scroll (RelatedItemsGrid) up to the block's quantity cap.
-   * On error the block keeps the SDK-enriched (generic) list as a fallback.
+   * The 'similar' block is loaded for every product.
    */
-  const similarBlock = blocksData['similar'];
-  if (similarBlock) {
+  const { isError: isSimilarBlockError, block: similarBlock } =
+    await getBlockByMarker('similar', lang);
+
+  if (!isSimilarBlockError && similarBlock) {
+    /** On re-fetch error the SDK-enriched (generic) list stays as a fallback */
+    blocksData['similar'] = similarBlock;
+
+    /**
+     * SSR portion = the block's Quantity from admin (RelatedItems derives the
+     * client portion size with the same formula, constant as a fallback)
+     */
     const similar = await getSimilarProductsByBlock(
       'similar',
       lang,
       id,
-      SIMILAR_PRODUCTS_PAGE_SIZE,
+      similarBlock.quantity || SIMILAR_PRODUCTS_PAGE_SIZE,
     );
 
     if (!similar.isError && similar.products) {

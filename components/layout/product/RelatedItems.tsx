@@ -8,15 +8,14 @@ import ProductAnimations from './animations/ProductAnimations';
 import RelatedItemsGrid from './RelatedItemsGrid';
 
 /**
- * RelatedItems component displays a section of similar or related products
- * with infinite scroll — the first portion is server-rendered, next portions
- * load as the user scrolls down, up to the block's quantity cap.
+ * RelatedItems component displays a section of similar or related products.
  * @param   {object}            props                               - Component properties
  * @param   {string}            props.lang                          - Current language shortcode for localization
  * @param   {IAttributeValues}  props.dict                          - Dictionary of attribute values from server API
  * @param   {number}            props.productId                     - Current product id — block rules context, excluded from the grid
  * @param   {object}            props.block                         - The block data containing similar products
  * @param   {string}            props.block.identifier              - Block marker used to load next portions
+ * @param   {number}            [props.block.quantity]              - Portion size configured on the block in admin (Quantity)
  * @param   {IAttributeValues}  props.block.attributeValues         - The attribute values for the block, including title information
  * @param   {object}            props.block.similarProducts         - The similar products data container
  * @param   {IProductsEntity[]} [props.block.similarProducts.items] - The first portion of similar products
@@ -35,6 +34,7 @@ const RelatedItems = ({
   productId: number;
   block: {
     identifier: string;
+    quantity?: number;
     attributeValues: IAttributeValues;
     similarProducts?: {
       items?: IProductsEntity[];
@@ -55,8 +55,11 @@ const RelatedItems = ({
     (product) => product.id !== productId,
   );
 
-  /** Portion size — the same constant drives the server-side first fetch */
-  const pageSize = SIMILAR_PRODUCTS_PAGE_SIZE;
+  /**
+   * Portion size = the block's Quantity from admin (same formula drives the
+   * server-side first fetch in ProductSingleServer), constant as a fallback
+   */
+  const pageSize = block.quantity || SIMILAR_PRODUCTS_PAGE_SIZE;
 
   return (
     <section className="flex flex-col max-md:max-w-full">
