@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 
+import { waitForPageLoad } from './helpers/navigation-helpers';
 import { ROUTES, SELECTORS } from './settings';
 
 /**
@@ -8,7 +9,7 @@ import { ROUTES, SELECTORS } from './settings';
 test.describe('Homepage', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(ROUTES.home);
-    await page.waitForLoadState('networkidle');
+    await waitForPageLoad(page);
   });
 
   test.describe('Page Structure', () => {
@@ -103,7 +104,9 @@ test.describe('Homepage', () => {
 
       if (hasShopLink) {
         await shopLink.click();
-        await page.waitForLoadState('networkidle');
+        // Client-side navigation — wait for the URL to change, not for the
+        // network to idle (which may resolve before the router updates the URL).
+        await page.waitForURL(/\/shop/, { timeout: 10000 });
         expect(page.url()).toContain('/shop');
       } else {
         // Navigate directly
@@ -129,7 +132,11 @@ test.describe('Homepage', () => {
 
   test.describe('Structured Data', () => {
     test('page has JSON-LD structured data', async ({ page }) => {
+      // The JSON-LD script may be injected after hydration — wait for it to be
+      // attached instead of counting immediately (scripts are never "visible").
       const jsonLd = page.locator('script[type="application/ld+json"]');
+      await expect(jsonLd.first()).toBeAttached({ timeout: 10000 });
+
       const count = await jsonLd.count();
       expect(count).toBeGreaterThan(0);
     });

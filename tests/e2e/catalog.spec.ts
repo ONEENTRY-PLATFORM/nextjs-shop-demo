@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 
+import { waitForPageLoad } from './helpers/navigation-helpers';
 import { ROUTES, SELECTORS } from './settings';
 
 /**
@@ -8,7 +9,7 @@ import { ROUTES, SELECTORS } from './settings';
 test.describe('Catalog', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(ROUTES.shop);
-    await page.waitForLoadState('networkidle');
+    await waitForPageLoad(page);
   });
 
   test.describe('Catalog Page Structure', () => {
@@ -18,8 +19,10 @@ test.describe('Catalog', () => {
     });
 
     test('filter button is visible on shop page', async ({ page }) => {
+      // The breadcrumbs bar starts as `hidden` (display:none) and is revealed by a
+      // GSAP animation only after hydration, so allow time for that reveal.
       const filterButton = page.locator(SELECTORS.filterButton);
-      await expect(filterButton).toBeVisible();
+      await expect(filterButton).toBeVisible({ timeout: 12000 });
     });
 
     test('product cards have expected structure', async ({ page }) => {
@@ -111,7 +114,7 @@ test.describe('Catalog', () => {
     test('resetting filters clears URL params', async ({ page }) => {
       // First apply a filter
       await page.goto(`${ROUTES.shop}?minPrice=20&maxPrice=80`);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       // Open filter — wait for button to be interactive before clicking
       const filterButton98 = page.locator(SELECTORS.filterButton);
@@ -132,7 +135,7 @@ test.describe('Catalog', () => {
     }) => {
       // Use values within the input max (99) to avoid browser validation errors
       await page.goto(`${ROUTES.shop}?minPrice=10&maxPrice=80`);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       const filterBtn = page.locator(SELECTORS.filterButton);
       await expect(filterBtn).toBeVisible({ timeout: 10000 });
@@ -190,7 +193,7 @@ test.describe('Catalog', () => {
       await page.goto(
         `${ROUTES.shop}?minPrice=10&maxPrice=80&in_stock=true&color=red`,
       );
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       // Wait for button to be interactive before clicking
       const filterButton169 = page.locator(SELECTORS.filterButton);
@@ -212,7 +215,7 @@ test.describe('Catalog', () => {
     test('page param is removed when filters change', async ({ page }) => {
       // Start on page 2
       await page.goto(`${ROUTES.shop}?page=2`);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       // Apply a filter — wait for button to be interactive
       const filterButton196 = page.locator(SELECTORS.filterButton);
@@ -233,7 +236,7 @@ test.describe('Catalog', () => {
       const initialCount = await page.locator('.product-card').count();
 
       await page.goto(`${ROUTES.shop}?search=notavalidproduct12345`);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       const filteredCount = await page.locator('.product-card').count();
       // Filtered count should be less than or equal to initial count

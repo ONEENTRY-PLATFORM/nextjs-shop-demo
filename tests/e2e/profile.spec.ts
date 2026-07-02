@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 import { clearAuthState, signIn } from './helpers/auth-helpers';
+import { waitForPageLoad } from './helpers/navigation-helpers';
 import { ROUTES, SELECTORS, TEST_AUTH_USER } from './settings';
 
 /**
@@ -12,24 +13,25 @@ test.describe('Profile Page', () => {
       page,
     }) => {
       await page.goto(ROUTES.profile);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       // Should show auth error or redirect to home
       const url = page.url();
       const isOnProfile = url.includes('/profile');
 
       if (isOnProfile) {
-        // If still on profile page, should show an auth error message
-        const authError = page.locator(
-          '[data-testid="auth-error"], .auth-error, [class*="auth"]',
-        );
-        const loginPrompt = page.getByText(
-          /sign in|log in|please login|unauthorized/i,
-        );
-        const hasError =
-          (await authError.isVisible().catch(() => false)) ||
-          (await loginPrompt.isVisible().catch(() => false));
-        expect(hasError).toBeTruthy();
+        // If still on profile page, should show an auth error message. The auth
+        // check happens client-side (AuthContext) and the error fades in via
+        // GSAP, so use an auto-retrying assertion instead of an instant check.
+        const authError = page
+          .locator('[data-testid="auth-error"], .auth-error, [class*="auth"]')
+          .first();
+        const loginPrompt = page
+          .getByText(/sign in|log in|please login|unauthorized/i)
+          .first();
+        await expect(authError.or(loginPrompt).first()).toBeVisible({
+          timeout: 10000,
+        });
       } else {
         // Redirected away from profile — acceptable behavior
         expect(url).not.toContain('/profile');
@@ -48,7 +50,7 @@ test.describe('Profile Page', () => {
 
     test('authenticated user can access profile page', async ({ page }) => {
       await page.goto(ROUTES.profile);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       // Should be on profile page
       expect(page.url()).toContain('/profile');
@@ -60,7 +62,7 @@ test.describe('Profile Page', () => {
 
     test('profile page contains user form', async ({ page }) => {
       await page.goto(ROUTES.profile);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       // Profile page should have form elements
       const form = page.locator('form');
@@ -74,7 +76,7 @@ test.describe('Profile Page', () => {
 
     test('profile page has save/submit button', async ({ page }) => {
       await page.goto(ROUTES.profile);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       const submitButton = page.locator(
         'button[type="submit"], button:has-text("Save"), button:has-text("Update")',
@@ -88,7 +90,7 @@ test.describe('Profile Page', () => {
 
     test('profile page displays navigation', async ({ page }) => {
       await page.goto(ROUTES.profile);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       // Header navigation should be visible
       const nav = page.locator('nav, header');
@@ -99,7 +101,7 @@ test.describe('Profile Page', () => {
       page,
     }) => {
       await page.goto(ROUTES.home);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       const userMenuButton = page.locator(SELECTORS.userMenuButton).first();
       await expect(userMenuButton).toBeVisible({ timeout: 10000 });

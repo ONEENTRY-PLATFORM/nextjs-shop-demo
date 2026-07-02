@@ -18,7 +18,7 @@ test.describe('Checkout', () => {
       page,
     }) => {
       await page.goto(ROUTES.checkout);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       const url = page.url();
 
@@ -59,7 +59,7 @@ test.describe('Checkout', () => {
       page,
     }) => {
       await page.goto(ROUTES.cart);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
       await page.waitForTimeout(2000); // GSAP animations
 
       // Checkout button should either be absent or disabled when cart is empty
@@ -88,7 +88,7 @@ test.describe('Checkout', () => {
       await signIn(page, TEST_AUTH_USER.email, TEST_AUTH_USER.password);
       // Navigate directly — more reliable than UI add-to-cart → checkout flow
       await page.goto(ROUTES.checkout);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
       await waitForPageLoad(page);
     });
 
@@ -97,15 +97,28 @@ test.describe('Checkout', () => {
     });
 
     /**
-     * Returns true if the current page URL contains '/payment'.
-     * Used to skip tests when the app redirects away (e.g. empty cart).
+     * Returns true if the current page shows actual checkout content.
+     * Used to skip tests when there is nothing to assert against: the URL is not
+     * the payment page, or the cart is empty — PaymentPage then renders the
+     * EmptyCart plug (cart icon + go-to-shop link) instead of checkout content.
      * @param   {Parameters<typeof waitForPageLoad>[0]} page - Playwright page object
-     * @returns {Promise<boolean>}                           Promise resolving to true if the page URL contains '/payment'
+     * @returns {Promise<boolean>}                           Promise resolving to true when checkout content is present
      */
     async function onCheckout(
       page: Parameters<typeof waitForPageLoad>[0],
     ): Promise<boolean> {
-      return page.url().includes('/payment');
+      if (!page.url().includes('/payment')) {
+        return false;
+      }
+      // EmptyCart is identified by its stable icon path (its heading text is
+      // CMS-localized). It fades in via GSAP, so give it a moment to appear.
+      // NB: isVisible() ignores its timeout option — use waitFor() instead.
+      const emptyCart = page.locator('img[src*="cart.svg"]').first();
+      const isEmpty = await emptyCart
+        .waitFor({ state: 'visible', timeout: 8000 })
+        .then(() => true)
+        .catch(() => false);
+      return !isEmpty;
     }
 
     // -------------------------------------------------------------------------
@@ -120,7 +133,12 @@ test.describe('Checkout', () => {
     });
 
     test('checkout page has a delivery form', async ({ page }) => {
-      if (!(await onCheckout(page))) return;
+      // In this app the delivery form (data-testid="checkout-form") lives on the
+      // CART step of the checkout flow, not on /payment — the cart page renders
+      // it unconditionally (DeliveryForm below the products list).
+      await page.goto(ROUTES.cart);
+      await waitForPageLoad(page);
+
       const form = page.locator('[data-testid="checkout-form"]').first();
       await expect(form).toBeVisible({ timeout: 10000 });
     });

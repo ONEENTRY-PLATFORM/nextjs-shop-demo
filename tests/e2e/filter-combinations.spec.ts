@@ -86,6 +86,14 @@ test.describe('Filter Combinations', () => {
       const body = page.locator('body');
       await expect(body).toBeVisible();
 
+      // Products render after a client-side fetch — give the grid time to settle
+      // before counting so an empty count doesn't just mean "not loaded yet".
+      await page
+        .locator('.product-card')
+        .first()
+        .waitFor({ state: 'visible', timeout: 12000 })
+        .catch(() => {});
+
       const hasProducts = (await page.locator('.product-card').count()) > 0;
       const hasEmpty = await page
         .getByText(/no products|nothing found|empty/i)
@@ -106,8 +114,9 @@ test.describe('Filter Combinations', () => {
 
       const modal = await openFilterModal(page);
 
-      // Values ≤ max (99)
-      await page.locator(SELECTORS.priceFromInput).fill('0');
+      // Values ≤ max (99). Use a non-zero lower bound: the app treats minPrice=0
+      // as "no lower bound" and omits it from the URL, so 0 would never appear.
+      await page.locator(SELECTORS.priceFromInput).fill('10');
       await page.locator(SELECTORS.priceToInput).fill('90');
 
       // Color filter — look for a color swatch or radio/checkbox
@@ -123,7 +132,7 @@ test.describe('Filter Combinations', () => {
 
       await applyFilters(page);
 
-      await expect(page).toHaveURL(/minPrice=0/);
+      await expect(page).toHaveURL(/minPrice=10/);
       await expect(page).toHaveURL(/maxPrice=90/);
       if (hasColor) {
         await expect(page).toHaveURL(/color=/);
@@ -272,7 +281,9 @@ test.describe('Filter Combinations', () => {
       await page.locator(SELECTORS.priceToInput).fill('70');
       await applyFilters(page);
 
-      expect(page.url()).not.toMatch(/page=/);
+      // The router.replace() lands after the modal closes — use an auto-retrying
+      // URL assertion instead of an instant check.
+      await expect(page).not.toHaveURL(/page=/, { timeout: 5000 });
     });
   });
 

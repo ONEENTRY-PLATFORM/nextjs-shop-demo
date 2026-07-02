@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 
 import { clearAuthState, signIn } from './helpers/auth-helpers';
+import { waitForPageLoad } from './helpers/navigation-helpers';
 import { ROUTES, TEST_AUTH_USER } from './settings';
 
 /**
@@ -12,18 +13,19 @@ test.describe('Orders Page', () => {
       page,
     }) => {
       await page.goto(ROUTES.orders);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       const url = page.url();
       const isOnOrders = url.includes('/orders');
 
       if (isOnOrders) {
-        // Should show auth error or login prompt
-        const loginPrompt = page.getByText(
-          /sign in|log in|please login|unauthorized|you must be/i,
-        );
-        const hasPrompt = await loginPrompt.isVisible().catch(() => false);
-        expect(hasPrompt).toBeTruthy();
+        // Should show auth error or login prompt. The auth check happens
+        // client-side (AuthContext) and the error fades in via GSAP, so use an
+        // auto-retrying assertion instead of an instant isVisible check.
+        const loginPrompt = page
+          .getByText(/sign in|log in|please login|unauthorized|you must be/i)
+          .first();
+        await expect(loginPrompt).toBeVisible({ timeout: 10000 });
       } else {
         // Redirected away
         expect(url).not.toContain('/orders');
@@ -42,7 +44,7 @@ test.describe('Orders Page', () => {
 
     test('authenticated user can access orders page', async ({ page }) => {
       await page.goto(ROUTES.orders);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       expect(page.url()).toContain('/orders');
 
@@ -53,7 +55,7 @@ test.describe('Orders Page', () => {
 
     test('orders page shows table or empty state', async ({ page }) => {
       await page.goto(ROUTES.orders);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       // Wait for async orders fetch (makeUserApi + /refresh + getAllOrdersByMarker)
       await page.waitForTimeout(4000);
@@ -94,7 +96,7 @@ test.describe('Orders Page', () => {
 
     test('orders table has column headers', async ({ page }) => {
       await page.goto(ROUTES.orders);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
       await page.waitForTimeout(2000);
 
       // Check for table column headers (Date, Total, Status)
@@ -113,7 +115,7 @@ test.describe('Orders Page', () => {
 
     test('empty orders state shows link to shop', async ({ page }) => {
       await page.goto(ROUTES.orders);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
       await page.waitForTimeout(4000);
 
       const ordersTable = page.locator(
@@ -146,7 +148,7 @@ test.describe('Orders Page', () => {
 
     test('orders page has navigation', async ({ page }) => {
       await page.goto(ROUTES.orders);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       const nav = page.locator('nav, header');
       await expect(nav.first()).toBeVisible();

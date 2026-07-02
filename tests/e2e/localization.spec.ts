@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 
+import { waitForPageLoad } from './helpers/navigation-helpers';
 import { ROUTES, SELECTORS } from './settings';
 
 /**
@@ -8,7 +9,7 @@ import { ROUTES, SELECTORS } from './settings';
 test.describe('Localization', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(ROUTES.home);
-    await page.waitForLoadState('networkidle');
+    await waitForPageLoad(page);
   });
 
   test.describe('Language Selector', () => {
@@ -99,7 +100,7 @@ test.describe('Localization', () => {
     test('language switch preserves current page path', async ({ page }) => {
       // Navigate to shop first
       await page.goto(ROUTES.shop);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       const langSelector = page.locator(SELECTORS.langSelector);
       const options = langSelector.locator('option');
@@ -131,13 +132,13 @@ test.describe('Localization', () => {
   test.describe('Localized Routes', () => {
     test('/en route loads English homepage', async ({ page }) => {
       await page.goto('/en');
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
       await expect(page).toHaveURL('/en');
     });
 
     test('redirect from root to localized route', async ({ page }) => {
       await page.goto('/');
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       // Should redirect to a localized route like /en
       const url = page.url();

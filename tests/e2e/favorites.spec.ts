@@ -92,10 +92,12 @@ test.describe('Favorites', () => {
     const count = await favoriteItems.count();
 
     if (count === 0) {
-      // Look for empty state message
-      const emptyMessage = page.getByText(/no favorites|empty|no items/i);
-      const hasEmptyMessage = await emptyMessage.isVisible().catch(() => false);
-      expect(hasEmptyMessage).toBeTruthy();
+      // Empty state (EmptyFavorites) fades in via GSAP autoAlpha, so an instant
+      // isVisible() check races the animation — wait for the message instead.
+      const emptyMessage = page
+        .getByText(/no favorites|empty|no items/i)
+        .first();
+      await expect(emptyMessage).toBeVisible({ timeout: 8000 });
     } else {
       // Favorites should be displayed
       expect(count).toBeGreaterThan(0);

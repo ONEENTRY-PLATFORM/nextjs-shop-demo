@@ -2,6 +2,7 @@ import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
 import { PAYMENT, ROUTES, SELECTORS } from '../settings';
+import { waitForPageLoad } from './navigation-helpers';
 
 /**
  * Helpers for driving the checkout → payment flow in E2E tests.
@@ -16,7 +17,7 @@ import { PAYMENT, ROUTES, SELECTORS } from '../settings';
  */
 export async function goToPayment(page: Page): Promise<boolean> {
   await page.goto(ROUTES.cart);
-  await page.waitForLoadState('networkidle');
+  await waitForPageLoad(page);
   await page.waitForTimeout(1500); // GSAP entrance animations
 
   const checkoutButton = page.locator(SELECTORS.checkoutButton);
@@ -37,7 +38,7 @@ export async function goToPayment(page: Page): Promise<boolean> {
 
   await checkoutButton.click();
   await page.waitForURL('**/payment', { timeout: 15000 });
-  await page.waitForLoadState('networkidle');
+  await waitForPageLoad(page);
   return true;
 }
 

@@ -90,6 +90,15 @@ export async function goToFirstProduct(page: Page): Promise<string> {
   await goToShop(page);
   await waitForPageLoad(page);
 
+  // Products are rendered after a client-side fetch and fade in via GSAP, so they
+  // are NOT in the DOM the instant `<main>` appears. The skeleton loader shares the
+  // `.product-card` class but has no product link, so wait for a real product card
+  // (one that contains a link to a product page) before counting.
+  await page
+    .locator('.product-card a[href*="/shop/product/"]')
+    .first()
+    .waitFor({ state: 'visible', timeout: 20000 });
+
   // Get all product cards
   const productCards = page.locator('.product-card');
   const count = await productCards.count();

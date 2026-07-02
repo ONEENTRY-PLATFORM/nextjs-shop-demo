@@ -151,8 +151,10 @@ test.describe('Mobile Flows', () => {
     });
 
     test('filter button is visible on mobile shop page', async ({ page }) => {
+      // The breadcrumbs bar starts as `hidden` (display:none) and is revealed by a
+      // GSAP animation only after hydration, so allow time for that reveal.
       const filterBtn = page.locator(SELECTORS.filterButton);
-      await expect(filterBtn).toBeVisible({ timeout: 8000 });
+      await expect(filterBtn).toBeVisible({ timeout: 12000 });
     });
 
     test('tapping filter button opens filter panel on mobile', async ({
@@ -166,7 +168,10 @@ test.describe('Mobile Flows', () => {
     });
 
     test('price inputs are usable on mobile filter', async ({ page }) => {
-      await page.locator(SELECTORS.filterButton).click();
+      // Wait for the GSAP-revealed filter button before tapping it.
+      const filterBtn = page.locator(SELECTORS.filterButton);
+      await expect(filterBtn).toBeVisible({ timeout: 12000 });
+      await filterBtn.click();
       const modal = page.locator(SELECTORS.filterModal);
       await expect(modal).toBeVisible({ timeout: 5000 });
 
@@ -280,12 +285,14 @@ test.describe('Mobile Flows', () => {
       if (!isVisible) return;
 
       await addToCartBtn.click();
-      await page.waitForTimeout(500);
 
-      // Cart badge should update
-      const badge = page.locator(SELECTORS.cartBadge).first();
-      const badgeVisible = await badge.isVisible().catch(() => false);
-      expect(badgeVisible).toBeTruthy();
+      // On mobile the header collapses to a hamburger menu, so the cart badge is
+      // NOT visible. Assert the tap worked via the button itself: AddToCartButton
+      // is replaced by the quantity selector after adding.
+      const increaseBtn = page
+        .locator(SELECTORS.increaseQuantityButton)
+        .first();
+      await expect(increaseBtn).toBeVisible({ timeout: 5000 });
     });
 
     test('product image is visible and not cropped off-screen', async ({

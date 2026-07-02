@@ -60,7 +60,7 @@ test.describe('Form Submission', () => {
       let found = false;
       for (const url of candidates) {
         await page.goto(url);
-        await page.waitForLoadState('networkidle');
+        await waitForPageLoad(page);
 
         const status = await page.evaluate(() => document.readyState);
         const is404 = await page

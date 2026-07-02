@@ -184,7 +184,7 @@ test.describe('Shopping Cart', () => {
 
     // Reload page
     await page.reload();
-    await page.waitForLoadState('networkidle');
+    await waitForPageLoad(page);
     await waitForPageLoad(page);
 
     // Wait for Redux to restore from localStorage after reload

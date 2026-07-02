@@ -2,6 +2,7 @@ import type { Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
 import { ROUTES, SELECTORS } from '../settings';
+import { waitForPageLoad } from './navigation-helpers';
 
 /**
  * Helper functions for authentication in E2E tests
@@ -16,16 +17,20 @@ import { ROUTES, SELECTORS } from '../settings';
  */
 export async function openSignInModal(page: Page): Promise<void> {
   await page.goto(ROUTES.home);
-  await page.waitForLoadState('networkidle');
+  await waitForPageLoad(page);
 
   const authButton = page.locator(SELECTORS.authButton).first();
   await expect(authButton).toBeVisible({ timeout: 10000 });
-  await authButton.click();
 
-  // Wait for modal container
-  await expect(page.locator(SELECTORS.signInModal)).toBeVisible({
-    timeout: 5000,
-  });
+  // The header is a client component; a click dispatched before hydration is a
+  // no-op and the modal never opens. Retry the click until the modal appears.
+  // toPass stops as soon as the inner assertion passes, so a hydrated first click
+  // opens the modal without a second (toggling) click.
+  const modal = page.locator(SELECTORS.signInModal);
+  await expect(async () => {
+    await authButton.click();
+    await expect(modal).toBeVisible({ timeout: 3000 });
+  }).toPass({ timeout: 20000 });
 
   // Wait for GSAP field animations to complete (fields animate from width:0 with delay)
   // The raw <input> is CSS-hidden (floating label pattern) — wait for the visible textbox role instead
@@ -63,7 +68,7 @@ export async function signIn(
   await page.waitForFunction(() => !!localStorage.getItem('refresh-token'), {
     timeout: 5000,
   });
-  await page.waitForLoadState('networkidle');
+  await waitForPageLoad(page);
 }
 
 /**
@@ -74,13 +79,18 @@ export async function signIn(
 export async function signOut(page: Page): Promise<void> {
   const userMenuButton = page.locator(SELECTORS.userMenuButton).first();
   await expect(userMenuButton).toBeVisible({ timeout: 5000 });
-  await userMenuButton.click();
+
+  // Open the dropdown by HOVERING, not clicking. On desktop Playwright hovers
+  // before a click (onMouseEnter opens the menu), then the click's onClick toggles
+  // it straight back closed, leaving the logout item clipped inside the
+  // h-0/overflow-hidden wrapper so the click never lands. Hovering just opens it.
+  await userMenuButton.hover();
 
   const logoutButton = page.locator(SELECTORS.logoutButton).first();
   await expect(logoutButton).toBeVisible({ timeout: 3000 });
   await logoutButton.click();
 
-  await page.waitForLoadState('networkidle');
+  await waitForPageLoad(page);
 }
 
 /**
@@ -127,5 +137,5 @@ export async function clearAuthState(page: Page): Promise<void> {
     localStorage.removeItem('authProviderMarker');
   });
   await page.reload();
-  await page.waitForLoadState('networkidle');
+  await waitForPageLoad(page);
 }

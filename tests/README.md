@@ -180,7 +180,9 @@ test.describe('Feature Name', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.goto(ROUTES.home);
-    await page.waitForLoadState('networkidle');
+    // Do NOT use waitForLoadState('networkidle') — it is discouraged by
+    // Playwright and unreliable in this app (HMR/polling keep the network busy).
+    await waitForPageLoad(page);
   });
 
   test.afterEach(async ({ page }) => {

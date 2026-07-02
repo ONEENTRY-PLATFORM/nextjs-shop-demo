@@ -1,6 +1,7 @@
 import type { Locator, Page } from '@playwright/test';
 
 import { SELECTORS } from '../settings';
+import { waitForPageLoad } from './navigation-helpers';
 
 /**
  * Helper functions for favorites operations in E2E tests
@@ -51,5 +52,5 @@ export async function openFavorites(
   await page.goto(`/${lang}/favorites`);
 
   // Wait for page load
-  await page.waitForLoadState('networkidle');
+  await waitForPageLoad(page);
 }

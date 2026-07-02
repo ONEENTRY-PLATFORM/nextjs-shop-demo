@@ -9,12 +9,17 @@ export const ROUTES = {
   home: '/en',
   shop: '/en/shop',
   cart: '/en/cart',
-  checkout: '/en/checkout',
+  // The checkout flow lives on the CMS 'payment' page ([page] catch-all route).
+  // '/en/checkout' resolves to an empty CMS stub (no component mapped), so the
+  // checkout tests must target /en/payment.
+  checkout: '/en/payment',
   payment: '/en/payment',
   favorites: '/en/favorites',
   orders: '/en/orders',
   profile: '/en/profile',
-  product: '/en/shop/product/65',
+  // NB: points at live CMS data — update if this product is removed/unpublished
+  // (id 65 was removed 2026-07-02; its page renders the 404 UI with HTTP 200).
+  product: '/en/shop/product/103',
 } as const;
 
 /**

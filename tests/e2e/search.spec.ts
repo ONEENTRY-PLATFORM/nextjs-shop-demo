@@ -1,5 +1,6 @@
 import { expect, type Page, test } from '@playwright/test';
 
+import { waitForPageLoad } from './helpers/navigation-helpers';
 import { ROUTES, SELECTORS } from './settings';
 
 /**
@@ -8,7 +9,7 @@ import { ROUTES, SELECTORS } from './settings';
 test.describe('Search', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(ROUTES.home);
-    await page.waitForLoadState('networkidle');
+    await waitForPageLoad(page);
   });
 
   test.describe('Search Bar UI', () => {
@@ -52,7 +53,7 @@ test.describe('Search', () => {
 
       // debounce 300 ms + API latency
       await page.waitForTimeout(600);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       return page
         .locator(SELECTORS.searchResults)
@@ -167,7 +168,7 @@ test.describe('Search', () => {
       page,
     }) => {
       await page.goto(`${ROUTES.shop}?search=a`);
-      await page.waitForLoadState('networkidle');
+      await waitForPageLoad(page);
 
       // Products grid should be visible (filtered results)
       const productCards = page.locator('.product-card');

@@ -2,6 +2,7 @@ import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
 import { SELECTORS } from '../settings';
+import { waitForPageLoad } from './navigation-helpers';
 
 /**
  * Helper functions for cart operations in E2E tests
@@ -20,11 +21,16 @@ export async function openCart(page: Page): Promise<void> {
   // This is more reliable for tests as it ensures proper page load
   await page.goto('/en/cart');
 
-  // Wait for page load and network idle
-  await page.waitForLoadState('networkidle');
+  // Wait for the page shell (domcontentloaded + <main>); networkidle is unreliable
+  // against the Next.js dev server (HMR sockets + polling never go idle).
+  await waitForPageLoad(page);
 
-  // Wait for cart content to be visible
-  await expect(page.locator(SELECTORS.cartDrawer)).toBeVisible();
+  // Wait for cart content to be visible. The cart-drawer is wrapped in
+  // CartAnimations (GSAP autoAlpha) and needs hydration + redux-persist rehydration,
+  // so give it room beyond the default 5s.
+  await expect(page.locator(SELECTORS.cartDrawer)).toBeVisible({
+    timeout: 15000,
+  });
 
   // Wait for GSAP entrance animations to complete
   // ProductAnimations: delay = index / 10 (max ~0.5s for 5 items)
@@ -158,7 +164,7 @@ export async function getCartTotal(page: Page): Promise<number> {
 export async function proceedToCheckout(page: Page): Promise<void> {
   await page.click(SELECTORS.checkoutButton);
   // Wait for navigation or checkout form to appear
-  await page.waitForLoadState('networkidle');
+  await waitForPageLoad(page);
 }
 
 /**

@@ -34,12 +34,11 @@ test.describe('Authentication — Sign In Modal', () => {
     // Modal should open
     await expect(page.locator(SELECTORS.signInModal)).toBeVisible();
 
-    // Email and password inputs should be present
-    // Use role selectors — raw <input> elements are CSS-hidden (floating label pattern)
+    // Email and password inputs should be present.
+    // NB: a <input type="password"> has NO ARIA `textbox` role, so it can only be
+    // matched by its id (#password_reg), not getByRole('textbox').
     await expect(page.getByRole('textbox', { name: /email/i })).toBeVisible();
-    await expect(
-      page.getByRole('textbox', { name: /password/i }),
-    ).toBeVisible();
+    await expect(page.locator(SELECTORS.passwordInput)).toBeVisible();
 
     // Submit button should be present
     await expect(page.locator(SELECTORS.modalSubmitButton)).toBeVisible();
