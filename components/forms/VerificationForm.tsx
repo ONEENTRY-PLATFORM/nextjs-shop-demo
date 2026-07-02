@@ -14,6 +14,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { addField } from '@/app/store/reducers/FormFieldsSlice';
 import type { FormProps } from '@/app/types/global';
+import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import ErrorMessage from './inputs/ErrorMessage';
@@ -134,9 +135,14 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
             otp,
           );
 
-          /** If verification is successful, show reset password form */
-          if (result) {
+          /** The SDK returns errors as IError instead of throwing */
+          if (isError(result)) {
+            setError(getApiErrorMessage(result));
+          } else if (result) {
+            /** If verification is successful, show reset password form */
             setComponent('ResetPasswordForm');
+          } else {
+            setError('Invalid or expired code. Please try again.');
           }
           setLoading(false);
         }
@@ -149,8 +155,11 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
             otp,
           );
 
-          /** If user activation is successful, log in the user */
-          if (result) {
+          /** The SDK returns errors as IError instead of throwing */
+          if (isError(result)) {
+            setError(getApiErrorMessage(result));
+          } else if (result) {
+            /** If user activation is successful, log in the user */
             try {
               /** Log in the user with their credentials */
               const loginResult = await logInUser({
@@ -174,15 +183,15 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
               router.push(`/${lang}/profile`);
               setOpen(false);
             } catch (e: any) {
-              setError(e.message);
+              setError(getApiErrorMessage(e));
             }
           } else {
-            setError('Error');
+            setError('Invalid or expired code. Please try again.');
           }
         }
         setLoading(false);
       } catch (e: any) {
-        setError(e.message);
+        setError(getApiErrorMessage(e));
         setLoading(false);
       }
     },
@@ -202,29 +211,37 @@ const VerificationForm = ({ dict }: VerificationFormProps): JSX.Element => {
 
       try {
         /** Request a new verification code from the API */
-        await getApi().AuthProvider.generateCode(
+        const result = await getApi().AuthProvider.generateCode(
           'email',
           String(fields.email_reg?.value || ''),
           EVENT_GENERATE_CODE,
         );
 
-        /** Fetch the provider config to start the resend cooldown */
-        const provider =
-          await getApi().AuthProvider.getAuthProviderByMarker('email');
-        if (!isError(provider)) {
-          setCooldown(
-            Number(
-              (provider as { config?: { systemCodeTlsSec?: string | number } })
-                ?.config?.systemCodeTlsSec,
-            ) || 80,
-          );
+        /** The SDK returns errors as IError instead of throwing */
+        if (isError(result)) {
+          setError(getApiErrorMessage(result));
+        } else {
+          /** Fetch the provider config to start the resend cooldown */
+          const provider =
+            await getApi().AuthProvider.getAuthProviderByMarker('email');
+          if (!isError(provider)) {
+            setCooldown(
+              Number(
+                (
+                  provider as {
+                    config?: { systemCodeTlsSec?: string | number };
+                  }
+                )?.config?.systemCodeTlsSec,
+              ) || 80,
+            );
+          }
         }
       } catch (e: any) {
-        setError(e.message);
+        setError(getApiErrorMessage(e));
       }
       setLoading(false);
     } catch (e: any) {
-      setError(e.message);
+      setError(getApiErrorMessage(e));
       setLoading(false);
     }
   }, [fields]);

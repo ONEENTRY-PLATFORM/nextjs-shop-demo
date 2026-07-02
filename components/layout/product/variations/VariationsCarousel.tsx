@@ -53,7 +53,7 @@ const VariationsCarousel = ({
         /** Render simple grid for 2 or fewer items */
         items.map((item: IProductsEntity, idx: number) => (
           <CarouselItem
-            key={item.id}
+            key={item.id + idx}
             item={item}
             index={idx}
             lang={lang}
@@ -106,7 +106,7 @@ const VariationsCarousel = ({
         >
           {items.map((item: IProductsEntity, idx: number) => (
             <CarouselItem
-              key={item.id}
+              key={item.id + idx}
               item={item}
               index={idx}
               lang={lang}

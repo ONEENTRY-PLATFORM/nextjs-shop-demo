@@ -9,6 +9,7 @@ import { logInUser, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 import FormFieldAnimations from '@/components/forms/animations/FormFieldAnimations';
 
@@ -103,7 +104,6 @@ const SignInForm = ({
         });
         if (result && result.error) {
           setError(result.error);
-          throw new Error(result.error);
         } else if (result?.data?.refreshToken) {
           localStorage.setItem('refresh-token', result.data.refreshToken);
           setOpen(false);
@@ -111,13 +111,12 @@ const SignInForm = ({
           setError('');
           toast('You sign in!');
         } else {
-          setError('Login or password incorrect');
+          setError('Login or password is incorrect. Please try again.');
         }
         setLoading(false);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (e: any) {
+      } catch (e) {
         setLoading(false);
-        setError(e.message);
+        setError(getApiErrorMessage(e));
       }
     },
     [email_reg, password_reg, setOpen, authenticate],

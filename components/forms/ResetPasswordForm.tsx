@@ -5,9 +5,10 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX } from 'react';
 import { useCallback, useContext, useState } from 'react';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import ErrorMessage from './inputs/ErrorMessage';
@@ -68,7 +69,7 @@ const ResetPasswordForm = ({
   /** State for managing loading status during form submission */
   const [isLoading, setLoading] = useState(false);
   /** State for storing error messages */
-  const [isError, setError] = useState('');
+  const [error, setError] = useState('');
 
   /** Extract localized text values from the dictionary */
   const { reset_password_text, new_password_desc, change_password_text } = dict;
@@ -106,16 +107,23 @@ const ResetPasswordForm = ({
           password_confirm.value as string,
         );
 
+        /** The SDK returns errors as IError instead of throwing */
+        if (isError(result)) {
+          setError(getApiErrorMessage(result));
+        }
         /** If result is successful, open SignIn form for user to log in with new password */
-        if (result) {
+        else if (result) {
+          setError('');
           setComponent('SignInForm');
           setAction('');
+        } else {
+          setError('Invalid or expired code. Please try again.');
         }
         /** Reset loading state after form submission */
         setLoading(false);
       } catch (e: any) {
         /** Set error message from exception */
-        setError(e.message);
+        setError(getApiErrorMessage(e));
         /** Reset loading state after form submission */
         setLoading(false);
       }
@@ -177,7 +185,7 @@ const ResetPasswordForm = ({
           index={10}
         />
         {/** Display error message if present */}
-        {isError && <ErrorMessage error={isError} />}
+        {error && <ErrorMessage error={error} />}
       </form>
     </FormAnimations>
   );

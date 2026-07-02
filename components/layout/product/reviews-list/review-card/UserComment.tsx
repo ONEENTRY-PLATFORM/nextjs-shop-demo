@@ -5,6 +5,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import { type JSX, useContext, useState } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { getReviewFormData } from '@/app/utils/getReviewFormData';
 import CommentForm from '@/components/forms/CommentForm';
 
 import RatingBlock from '../LikesBlock';
@@ -37,14 +38,14 @@ const UserComment = ({
   const { open, setOpen, setComponent, setData } =
     useContext(OpenDrawerContext);
   const [state, setState] = useState(false);
-  const formData = review.formData;
 
-  const attachments = formData[1]?.value || [];
-  const content = formData[2]?.value;
-
-  /** Filter and prepare images */
-  const reviewImages = attachments?.filter(
-    (img: any) => img && typeof img === 'object' && 'downloadLink' in img,
+  /**
+   * Extract review fields by marker — formData order varies per review
+   * (a review without photos has no attachments item at all).
+   * Attachments are already narrowed to images with a downloadLink.
+   */
+  const { attachments: reviewImages, content } = getReviewFormData(
+    review.formData,
   );
 
   /**

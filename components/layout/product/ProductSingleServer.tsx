@@ -2,7 +2,12 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-import { getBlockByMarker, getRelatedProductsById } from '@/app/api';
+import {
+  getBlockByMarker,
+  getRelatedProductsById,
+  getSimilarProductsByBlock,
+} from '@/app/api';
+import { SIMILAR_PRODUCTS_PAGE_SIZE } from '@/app/api/server/blocks/getSimilarProductsByBlock';
 
 import ProductSingle from './index';
 
@@ -101,6 +106,31 @@ const ProductSingleServer = async ({
           blocksData[blockMarker] = block;
         }
       }
+    }
+  }
+
+  /**
+   * The SDK enriches the 'similar' block without product context — re-fetch
+   * its similar products with the current product id so the block rules are
+   * evaluated against this product and the product itself is excluded.
+   * Only the first portion is fetched — the rest is loaded by the client on
+   * scroll (RelatedItemsGrid) up to the block's quantity cap.
+   * On error the block keeps the SDK-enriched (generic) list as a fallback.
+   */
+  const similarBlock = blocksData['similar'];
+  if (similarBlock) {
+    const similar = await getSimilarProductsByBlock(
+      'similar',
+      lang,
+      id,
+      SIMILAR_PRODUCTS_PAGE_SIZE,
+    );
+
+    if (!similar.isError && similar.products) {
+      blocksData['similar'] = {
+        ...similarBlock,
+        similarProducts: { items: similar.products, total: similar.total },
+      };
     }
   }
 

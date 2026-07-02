@@ -1,6 +1,7 @@
 import type { IAuthPostBody } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
 
 import { getApi, isError } from '@/app/api';
+import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';
 
 type LogInProps = { login: string; password: string };
 
@@ -31,12 +32,12 @@ export const logInUser = async ({
   const result = await getApi().AuthProvider.auth('email', preparedData);
 
   if (isError(result)) {
-    return { error: result.message };
+    return { error: getApiErrorMessage(result) };
   }
 
   if (result && result.accessToken && result.refreshToken) {
     return { data: result };
   }
 
-  return { error: 'Authentication failed' };
+  return { error: 'Login or password is incorrect. Please try again.' };
 };

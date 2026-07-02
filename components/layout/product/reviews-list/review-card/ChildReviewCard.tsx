@@ -5,6 +5,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import { type JSX, useState } from 'react';
 
 import { getReviewAuthorName } from '@/app/utils/getReviewAuthorName';
+import { getReviewFormData } from '@/app/utils/getReviewFormData';
 import CommentForm from '@/components/forms/CommentForm';
 
 import RatingBlock from '../LikesBlock';
@@ -33,19 +34,10 @@ const ChildReviewCard = ({
 }): JSX.Element => {
   const [state, setState] = useState(false);
 
-  /** formData */
-  const childFormData = review.formData;
   /** Display name derived from the author's identifier (email → readable name) */
   const userName = getReviewAuthorName(review.userIdentifier);
-  /** Find content by marker - could be 'comment_description' or at index 2 */
-  const contentField = childFormData?.find(
-    (field: any) => field.marker === 'comment_description',
-  );
-  const content =
-    contentField?.value ||
-    childFormData?.find((field: any) => field.type === 'string')?.value ||
-    childFormData?.[2]?.value ||
-    '';
+  /** Extract the reply text by marker — a reply's formData holds only content */
+  const { content } = getReviewFormData(review.formData);
   /** Review date */
   const reviewDate = review.time
     ? new Date(review.time).toLocaleDateString('en-US')

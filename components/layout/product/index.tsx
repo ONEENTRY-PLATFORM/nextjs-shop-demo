@@ -64,14 +64,6 @@ const ProductSingle = async ({
   const langCode = toLangCode(lang);
   const currencyCode = CurrencyEnum[lang as keyof typeof CurrencyEnum];
 
-  /** Create a mock block object with similar products data for the RelatedItems component */
-  const relatedItemsBlock = {
-    attributeValues: {},
-    similarProducts: {
-      items: relatedProducts,
-    },
-  };
-
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       {/** Product */}
@@ -143,15 +135,18 @@ const ProductSingle = async ({
           return null;
         })}
 
-      {/** Related products */}
-      <ProductAnimations className={'mb-10'} index={4}>
-        <RelatedItems
-          block={relatedItemsBlock}
-          lang={lang}
-          dict={dict}
-          langCode={langCode}
-        />
-      </ProductAnimations>
+      {/** Related products from the 'similar' block (configured in admin) */}
+      {blocksData?.similar && (
+        <ProductAnimations className={'mb-10'} index={4}>
+          <RelatedItems
+            block={blocksData.similar}
+            lang={lang}
+            dict={dict}
+            langCode={langCode}
+            productId={product.id}
+          />
+        </ProductAnimations>
+      )}
     </section>
   );
 };

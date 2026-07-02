@@ -4,6 +4,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 
 import { getApi } from '@/app/api';
+import { toLangCode } from '@/app/types/enum';
 
 import ReviewsSection from './ReviewsSection';
 
@@ -12,7 +13,7 @@ import ReviewsSection from './ReviewsSection';
  * @param   {object}               props         - Component properties
  * @param   {IProductsEntity}      props.product - Product entity object
  * @param   {IAttributeValues}     props.dict    - Dictionary of attribute values from server API
- * @param   {string}               props.lang    - Language code
+ * @param   {string}               props.lang    - Short route language code (`'en'`, `'fr'`)
  * @returns {Promise<JSX.Element>}               A Promise that resolves to ReviewsSection with fresh data
  */
 const ReviewsSectionServer = async ({
@@ -39,7 +40,7 @@ const ReviewsSectionServer = async ({
       dateTo: '',
     }, // body - Request body.
     1, // isNested - Flag for getting hierarchical data.
-    lang, // langCode - Language code.
+    toLangCode(lang), // langCode - Language code ('en' → 'en_US'; the API returns 0 items for short codes).
     0, // offset — Parameter for pagination. Default: 0.
     500, // limit — Parameter for pagination. Default: 30.
   );

@@ -10,6 +10,7 @@ import type Slider from 'react-slick';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { getReviewAuthorName } from '@/app/utils/getReviewAuthorName';
+import { getReviewFormData } from '@/app/utils/getReviewFormData';
 import CommentForm from '@/components/forms/CommentForm';
 
 import StarRating from '../../rating-block/StarRating';
@@ -35,15 +36,14 @@ const ReviewModal = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   const { data: reviewData } = useContext(OpenDrawerContext);
   // Extract data from review
   const { product, review, allReviews, childReviews } = reviewData;
-  const formData = review?.formData || [];
   const userName = getReviewAuthorName(review?.userIdentifier);
 
-  // Extract rating
-  const rating = formData[0]?.value || 0;
-  /** Extract review images from formData */
-  const reviewImages = formData[1]?.value || [];
-  // Extract content
-  const content = formData[2]?.value || '';
+  /** Extract review fields by marker — formData order varies per review */
+  const {
+    rating,
+    attachments: reviewImages,
+    content,
+  } = getReviewFormData(review?.formData);
 
   const reviewDate = review?.time
     ? new Date(review.time).toLocaleDateString('en-US', {

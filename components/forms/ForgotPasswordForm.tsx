@@ -5,9 +5,10 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX, Key } from 'react';
 import { useCallback, useContext, useState } from 'react';
 
-import { getApi, useGetFormByMarkerQuery } from '@/app/api';
+import { getApi, isError, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import Loader from '../shared/Loader';
@@ -35,7 +36,7 @@ export const ForgotPasswordForm = ({
   /** Modal context for controlling form modal state */
   const { setComponent, setAction } = useContext(OpenDrawerContext);
   /** State for storing error messages */
-  const [isError, setError] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   /** Extract localized text values from the dictionary */
   const { reset_descr, send_text } = dict;
@@ -69,24 +70,25 @@ export const ForgotPasswordForm = ({
 
       try {
         /** Generate verification code with API and send to user's email */
-        await getApi().AuthProvider.generateCode(
+        const result = await getApi().AuthProvider.generateCode(
           'email',
           fields.email_reg.value as string,
           'generate_code',
         );
+
+        /** The SDK returns errors as IError instead of throwing */
+        if (isError(result)) {
+          setError(getApiErrorMessage(result));
+          return;
+        }
+
         /** Open Verification form for the next step in password reset process */
+        setError('');
         setComponent('VerificationForm');
         setAction('checkCode');
       } catch (e: any) {
         /** Set error message from exception */
-        setError(e.message);
-        /** Handle bad request errors (e.g., invalid email) */
-        if (e.statusCode === 400) {
-          /** Delay opening verification form to show error message first */
-          setTimeout(() => {
-            setComponent('VerificationForm');
-          }, 800);
-        }
+        setError(getApiErrorMessage(e));
       }
     },
     [fields, setComponent, setAction],
@@ -141,7 +143,7 @@ export const ForgotPasswordForm = ({
           isLoading={isLoading}
         />
         {/** Display error message if present */}
-        {isError && <ErrorMessage error={isError} />}
+        {error && <ErrorMessage error={error} />}
       </form>
     </FormAnimations>
   );

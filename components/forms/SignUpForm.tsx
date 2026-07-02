@@ -14,6 +14,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { toLangCode } from '@/app/types/enum';
 import type { FormProps } from '@/app/types/global';
+import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';
 import FormAnimations from '@/components/forms/animations/FormAnimations';
 
 import { typeError } from '../utils/utils';
@@ -180,33 +181,33 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
             langCode,
           );
 
+          /** Handle API error responses with a human-readable message */
+          if (typeError(res)) {
+            setError(getApiErrorMessage(res));
+          }
           /** Handle successful registration based on user activation status */
-          if (res && !typeError(res) && res.isActive) {
+          else if (res && res.isActive) {
             /** Automatically log in and authenticate active user */
             await logInUser({
               login: res.identifier,
               password: (fields.password_reg?.value as string) || '',
             });
             authenticate();
+            /** Clear previous errors */
+            setError('');
           }
           // Handle inactive user requiring verification
-          else if (res && !typeError(res) && !res.isActive) {
+          else if (res && !res.isActive) {
             /** Open verification form for new user activation */
             setOpen(true);
             setComponent('VerificationForm');
             setAction('activateUser');
+            /** Clear previous errors */
+            setError('');
           }
-
-          /** Clear previous errors */
-          setError('');
-          /** Handle API error responses */
-          if (typeError(res)) {
-            setError('Error ' + res.statusCode);
-          }
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (e: any) {
+        } catch (e) {
           /** Set error message from exception */
-          setError(e.message);
+          setError(getApiErrorMessage(e));
         }
         /** Reset loading state after form submission */
         setIsLoading(false);

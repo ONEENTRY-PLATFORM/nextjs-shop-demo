@@ -4,6 +4,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 
 import { getReviewAuthorName } from '@/app/utils/getReviewAuthorName';
+import { getReviewFormData } from '@/app/utils/getReviewFormData';
 
 import ReviewAnimations from '../../animations/ReviewAnimations';
 import StarRating from '../../rating-block/StarRating';
@@ -38,11 +39,10 @@ const ReviewCard = ({
   index: number;
   state: boolean;
 }): JSX.Element => {
-  /** Extract necessary data from the review object */
-  const formData = review.formData;
   /** Display name derived from the author's identifier (email → readable name) */
   const userName = getReviewAuthorName(review.userIdentifier);
-  const rating = formData[0].value;
+  /** Extract review fields by marker — formData order varies per review */
+  const { rating } = getReviewFormData(review.formData);
   const reviewDate = review.time
     ? new Date(review.time).toLocaleDateString('en-US')
     : '';
