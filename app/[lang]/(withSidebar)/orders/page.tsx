@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import type { JSX } from 'react';
 import { Suspense } from 'react';
 
-import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
 import { getBlockByMarker } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
@@ -10,7 +9,7 @@ import OrdersPage from '@/components/layout/orders';
 import Loader from '@/components/shared/Loader';
 import { i18n, type Locale } from '@/i18n-config';
 
-import { getDictionary } from '../dictionaries';
+import { getDictionary } from '../../dictionaries';
 
 /**
  * Orders page
@@ -36,21 +35,11 @@ const OrdersPageLayout = async ({
     return <div className="text-center">Block Error</div>;
   }
 
-  /** Render the orders page with sidebar and settings */
+  /** Render the orders page content (the sidebar is provided by the group layout) */
   return (
-    <section className="relative mx-auto box-border flex min-h-80 w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
-      <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <WithSidebar lang={lang}>
-          <Suspense fallback={<Loader />}>
-            <OrdersPage
-              lang={lang}
-              dict={dict}
-              settings={block.attributeValues}
-            />
-          </Suspense>
-        </WithSidebar>
-      </div>
-    </section>
+    <Suspense fallback={<Loader />}>
+      <OrdersPage lang={lang} dict={dict} settings={block.attributeValues} />
+    </Suspense>
   );
 };
 

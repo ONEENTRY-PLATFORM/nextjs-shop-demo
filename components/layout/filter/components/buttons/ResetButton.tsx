@@ -3,16 +3,21 @@
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
+import { useContext } from 'react';
+
+import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 
 /**
  * Reset button component for clearing all filter parameters and returning to default state.
  * This component renders a button that, when clicked, removes all filter-related query
- * parameters from the URL, effectively resetting all applied filters.
+ * parameters from the URL and closes the filter modal, effectively resetting all applied filters.
  * @param   {object}           props      - Component properties
  * @param   {IAttributeValues} props.dict - Dictionary with localized values from server API
  * @returns {JSX.Element}                 ResetButton component with localized text
  */
 const ResetButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
+  /** Get the transition setter from the OpenDrawerContext to control modal state */
+  const { setTransition } = useContext(OpenDrawerContext);
   /** Get current path and navigation functions for URL manipulation */
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -36,6 +41,14 @@ const ResetButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
 
     /** Navigate to the same path with cleared filter parameters */
     replace(`${pathname}?${params.toString()}`);
+
+    /**
+     * Close the filter modal (same flow as Apply). The form unmounts on close,
+     * so the filter inputs re-seed from the cleared URL on the next open —
+     * otherwise their local state would keep the old values and an Apply right
+     * after Reset would re-apply the just-cleared filter.
+     */
+    setTransition('close');
   };
 
   return (

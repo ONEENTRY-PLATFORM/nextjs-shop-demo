@@ -57,12 +57,19 @@ const getSearchParams = (
     expandedFilters.push(stickersFilter);
   }
 
-  /** Add stock availability filter if in_stock parameter is provided */
+  /**
+   * Add stock availability filter if in_stock parameter is provided.
+   *
+   * The UI treats a product as out of stock when its status is not `in_stock`
+   * OR its `units_product` is < 1 (see AddToCartButton), so the filter must
+   * match both: the status marker alone still returns zero-unit products.
+   */
   if (searchParams?.in_stock) {
     expandedFilters.push({
       statusMarker: 'in_stock',
-      attributeMarker: 'price',
-      conditionValue: null,
+      attributeMarker: 'units_product',
+      conditionMarker: 'mth',
+      conditionValue: 0,
       title: searchParams.search || '',
       isNested: false,
     });

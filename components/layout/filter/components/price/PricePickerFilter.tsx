@@ -47,10 +47,35 @@ const PriceFilter = memo(
     /** Extract localized values from dictionary for UI labels */
     const { filter_price_title, price_from, price_to } = dict;
 
+    /**
+     * Parse a price URL parameter into a finite number
+     * @param   {string | null} value - raw URL parameter value
+     * @returns {number | null}       parsed value or null when absent/invalid
+     */
+    const parsePrice = (value: string | null): number | null => {
+      if (value === null) return null;
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : null;
+    };
+
+    /**
+     * Price bounds already applied in the URL. Kept exact (not snapped to the
+     * STEP grid): they are the user's active filter and must survive remounts —
+     * snapping/clamping them would silently rewrite the filter on the next
+     * Apply (e.g. maxPrice=95 → 100 → treated as "not set" and dropped).
+     */
+    const urlMinPrice = parsePrice(params.get('minPrice'));
+    const urlMaxPrice = parsePrice(params.get('maxPrice'));
+
     /** Constants for working with price range */
     const STEP = 10;
-    const RAW_MIN = prices?.min || 0;
-    const RAW_MAX = prices?.max || 100;
+    /**
+     * Expand the raw bounds so the applied URL values always fit the slider
+     * scale — ProductsNotFound renders this modal with placeholder prices
+     * {min: 0, max: 1}, which would otherwise clamp the applied filter away.
+     */
+    const RAW_MIN = Math.min(prices?.min || 0, urlMinPrice ?? Infinity);
+    const RAW_MAX = Math.max(prices?.max || 100, urlMaxPrice ?? -Infinity);
 
     /**
      * Align bounds to the STEP grid so that `values` are always reachable via
@@ -70,13 +95,13 @@ const PriceFilter = memo(
       return Math.min(MAX, Math.max(MIN, snapped));
     };
 
-    /** Local states for storing "from" and "to" values of price range */
-    const [priceFrom, setPriceFrom] = useState(
-      snap(params.get('minPrice') ? Number(params.get('minPrice')) : MIN),
-    );
-    const [priceTo, setPriceTo] = useState(
-      snap(params.get('maxPrice') ? Number(params.get('maxPrice')) : MAX),
-    );
+    /**
+     * Local states for storing "from" and "to" values of price range.
+     * Seeded with the exact URL values (the slider snaps them for display
+     * only), so an applied filter round-trips through remounts unchanged.
+     */
+    const [priceFrom, setPriceFrom] = useState(urlMinPrice ?? MIN);
+    const [priceTo, setPriceTo] = useState(urlMaxPrice ?? MAX);
 
     /** Sync local state with context on mount and when values change */
     useEffect(() => {

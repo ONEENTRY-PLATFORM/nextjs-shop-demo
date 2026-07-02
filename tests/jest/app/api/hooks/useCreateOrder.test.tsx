@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from '@jest/globals';
 import { act, renderHook, waitFor } from '@testing-library/react';
 
-import { useCreateOrder } from './useCreateOrder';
+import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 
 /*
  * Unit tests for useCreateOrder — the core of the payment flow.

@@ -28,10 +28,10 @@ const WithSidebar = async ({
        */}
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-row max-md:flex-row max-md:flex-wrap">
         {/*
-         * Sidebar container. The menu is server-rendered (resolved in the RSC),
-         * so it's already present when a page mounts — during a transition only
-         * the content column is hidden, never this sidebar, so the menu doesn't
-         * disappear or flash a skeleton between sidebar pages.
+         * Sidebar container. Rendered from the persistent `(withSidebar)`
+         * layout, so its DOM survives navigations between sidebar pages —
+         * during a transition only the content column is hidden, never this
+         * sidebar, so the menu doesn't disappear or flash a skeleton.
          */}
         <aside className="w-52.5 pb-8 max-md:w-full">
           <SidebarMenu lang={lang} />

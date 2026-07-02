@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { buildTimeIntervalValue } from './orderFormData';
+import { buildTimeIntervalValue } from '@/app/utils/orderFormData';
 
 /*
  * Unit tests for buildTimeIntervalValue — guards the `shipping_interval`

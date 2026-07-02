@@ -124,6 +124,17 @@ export default function TransitionProvider({
     /** Destination is mounted: reveal content, hide the skeleton overlay */
     if (contentRef.current) {
       gsap.set(contentRef.current, { autoAlpha: 1 });
+      /**
+       * Also restore the marked content columns: on sidebar routes they live
+       * in the persistent `(withSidebar)` layout, so the node hidden by
+       * `hideContent` survives the navigation and must be shown again.
+       */
+      const marked = contentRef.current.querySelectorAll(
+        '[data-transition-content]',
+      );
+      if (marked.length > 0) {
+        gsap.set(marked, { autoAlpha: 1 });
+      }
     }
     setIsNavigating(false);
 

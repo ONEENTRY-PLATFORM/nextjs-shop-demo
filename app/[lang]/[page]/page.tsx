@@ -4,8 +4,6 @@ import type { JSX } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
-import PaymentPage from '@/components/layout/payment';
-import ProfilePage from '@/components/layout/profile';
 import AboutPage from '@/components/pages/AboutPage';
 import BookOnlinePage from '@/components/pages/BookOnlinePage';
 import ContactsPage from '@/components/pages/ContactsPage';
@@ -36,7 +34,7 @@ const PageLayout = async ({
   const { page: p, lang } = await params;
 
   /** Get dictionary and set to server provider for internationalization */
-  const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
+  ServerProvider('dict', await getDictionary(lang as Locale));
 
   /** Get page data by current url */
   const { page, isError } = await getPageByUrl(p, lang);
@@ -49,18 +47,12 @@ const PageLayout = async ({
   /** extract data from page */
   const { pageUrl, templateIdentifier } = page;
 
-  /** array of pages components with additional settings for next router */
+  /**
+   * array of pages components with additional settings for next router.
+   * NOTE: profile and payment have dedicated routes in `(withSidebar)` (they
+   * live in the persistent sidebar layout) and are not served by this route.
+   */
   const pages = [
-    {
-      templateType: templateIdentifier,
-      name: 'profile',
-      component: <ProfilePage lang={lang} dict={dict} />,
-    },
-    {
-      templateType: templateIdentifier,
-      name: 'payment',
-      component: <PaymentPage lang={lang} dict={dict} />,
-    },
     {
       templateType: templateIdentifier,
       name: 'about_us',

@@ -1,13 +1,12 @@
 import type { Metadata } from 'next';
 import type { JSX } from 'react';
 
-import WithSidebar from '@/app/[lang]/[page]/WithSidebar';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
 import FavoritesPage from '@/components/layout/favorites';
 import { i18n, type Locale } from '@/i18n-config';
 
-import { getDictionary } from '../dictionaries';
+import { getDictionary } from '../../dictionaries';
 
 /**
  * Favorites page
@@ -24,16 +23,8 @@ const FavoritesPageLayout = async ({
   /** Get dictionary and set to server provider */
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
-  /** Render the favorites page layout with sidebar */
-  return (
-    <section className="relative mx-auto box-border flex min-h-80 w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
-      <div className="flex w-full flex-col items-center gap-5 bg-white">
-        <WithSidebar lang={lang}>
-          <FavoritesPage lang={lang} dict={dict} />
-        </WithSidebar>
-      </div>
-    </section>
-  );
+  /** Render the favorites page content (the sidebar is provided by the group layout) */
+  return <FavoritesPage lang={lang} dict={dict} />;
 };
 
 export default FavoritesPageLayout;

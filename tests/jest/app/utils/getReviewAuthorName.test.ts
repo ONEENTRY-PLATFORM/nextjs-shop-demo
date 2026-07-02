@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { getReviewAuthorName } from './getReviewAuthorName';
+import { getReviewAuthorName } from '@/app/utils/getReviewAuthorName';
 
 /*
  * Unit tests for getReviewAuthorName — derives a review author's display name
