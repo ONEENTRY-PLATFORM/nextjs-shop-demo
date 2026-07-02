@@ -69,9 +69,9 @@ export async function generateMetadata({
   /** Extract language parameter from params */
   const { lang } = await params;
   /** Set page title for SEO */
-  const title = 'My orders';
+  const title = 'Favorites';
   /** Set page description for SEO */
-  const description = 'Order history and processing statuses.';
+  const description = 'Products you have marked as favorites.';
 
   /** Return metadata object with SEO information */
   return {
@@ -80,11 +80,11 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `/${lang}/orders`,
+      url: `/${lang}/favorites`,
       type: 'website',
     },
     alternates: {
-      canonical: `/${lang}/orders`,
+      canonical: `/${lang}/favorites`,
     },
   };
 }

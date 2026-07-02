@@ -156,8 +156,21 @@ export const getText = (
 //   type: '' | '' = '',
 // ): any => {};
 
-/** Possible payload shape inside `image` / `groupOfImages` attribute values. */
-type ImageValueItem = { downloadLink?: string; previewLink?: string };
+/**
+ * CMS-generated preview payload attached to an `image` value once previews exist.
+ * Each tuple is `[base64DataURI, previewUrl]`; `default[0]` is a tiny base64 blur.
+ */
+type PreviewLinkObject = { default?: string[]; preview?: string[] };
+
+/**
+ * Possible payload shape inside `image` / `groupOfImages` attribute values.
+ * `previewLink` is `''` (or absent) when no preview has been generated, or a
+ * {@link PreviewLinkObject} once the CMS has produced low-quality previews.
+ */
+type ImageValueItem = {
+  downloadLink?: string;
+  previewLink?: string | PreviewLinkObject;
+};
 
 /**
  * Read an `image` attribute value and return its URL.
@@ -192,6 +205,40 @@ export const getImageUrl = (
     return first.previewLink;
   }
   return typeof first.downloadLink === 'string' ? first.downloadLink : '';
+};
+
+/**
+ * Read the CMS-generated low-quality preview (base64 data URI) of an `image`.
+ *
+ * When the CMS has generated previews, an `image` value carries
+ * `previewLink: { default: [dataURI, previewUrl], preview: [...] }`; the first
+ * `default` entry is a tiny base64 data URI — the ideal Next.js `blurDataURL`.
+ * Returns `''` when no preview exists (`previewLink` is `''` or absent), which
+ * signals callers to fall back to a generated LQIP.
+ * @param   {string} name            - Attribute marker.
+ * @param   {Attrs}  attributeValues - Entity `attributeValues`.
+ * @returns {string}                 Base64 data-URI blur, or `''` when absent.
+ */
+export const getImagePreview = (
+  name: string,
+  attributeValues: Attrs,
+): string => {
+  const attr = attributeValues?.[name];
+  if (!attr || attr.value == null) {
+    return '';
+  }
+  const value = attr.value as ImageValueItem | ImageValueItem[];
+  const first: ImageValueItem | undefined = Array.isArray(value)
+    ? value[0]
+    : value;
+  const preview = first?.previewLink;
+  if (preview && typeof preview === 'object') {
+    const base64 = preview.default?.[0];
+    if (typeof base64 === 'string') {
+      return base64;
+    }
+  }
+  return '';
 };
 
 // /**

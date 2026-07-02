@@ -5,6 +5,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
+import SlideUpTransition from '@/app/animations/SlideUpTransition';
 import PaymentButton from '@/components/layout/cart/components/PaymentButton';
 import TotalAmount from '@/components/layout/cart/components/TotalAmount';
 import DeliveryTable from '@/components/layout/cart/delivery-table/DeliveryTable';
@@ -58,13 +59,14 @@ const DeliveryForm = ({
 
       {/** Total amount and payment button section */}
       <div id="total" className="mt-4 flex w-full flex-col">
-        {/** Display total order amount */}
-        <TotalAmount
-          lang={lang}
-          dict={dict}
-          // deliveryData={deliveryData}
-          className="flex self-center text-lg leading-6 font-bold text-slate-700"
-        />
+        {/** Display total order amount with slide-up entrance on page transitions */}
+        <SlideUpTransition className="flex self-center" index={10}>
+          <TotalAmount
+            lang={lang}
+            dict={dict}
+            className="flex text-lg leading-6 font-bold text-slate-700"
+          />
+        </SlideUpTransition>
 
         {/** Payment button to proceed to payment page */}
         <PaymentButton

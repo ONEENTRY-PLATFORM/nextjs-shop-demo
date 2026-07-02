@@ -3,6 +3,7 @@ import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
 import type { JSX } from 'react';
 
 import SlideUpTransition from '@/app/animations/SlideUpTransition';
+import { getBlurDataURL } from '@/app/api/utils/getBlurDataURL';
 
 import {
   getImageUrl,
@@ -14,11 +15,16 @@ import {
  * About page component that displays information about the company.
  * This component renders the about page content including title, image, and descriptive content
  * with animations for a smooth user experience.
- * @param   {object}       props      - Component properties
- * @param   {IPagesEntity} props.page - Represents a page entity object containing about page data from CMS
- * @returns {JSX.Element}             About page with content and animations
+ * @async
+ * @param   {object}               props      - Component properties
+ * @param   {IPagesEntity}         props.page - Represents a page entity object containing about page data from CMS
+ * @returns {Promise<JSX.Element>}            About page with content and animations
  */
-const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
+const AboutPage = async ({
+  page,
+}: {
+  page: IPagesEntity;
+}): Promise<JSX.Element> => {
   /** Safely check if page exists and has attribute values */
   if (!page || !page.attributeValues) {
     /** Fallback content if page data is not available */
@@ -36,6 +42,10 @@ const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
   const pageTitle = getString('title', attributeValues);
   /** Extract image source URL from attribute values */
   const imageSrc = getImageUrl('img', attributeValues);
+  /** Resolve blur placeholder server-side: CMS preview, else a generated LQIP */
+  const blurDataURL = imageSrc
+    ? await getBlurDataURL('img', attributeValues)
+    : '';
   /** Extract main content text from attribute values */
   const contentData = getText('content', attributeValues, 'html');
   /** Extract list title from attribute values */
@@ -59,6 +69,8 @@ const AboutPage = ({ page }: { page: IPagesEntity }): JSX.Element => {
             src={imageSrc}
             alt={pageTitle}
             className="flex h-auto w-full"
+            /** `placeholder="blur"` requires a non-empty blurDataURL */
+            {...(blurDataURL && { placeholder: 'blur', blurDataURL })}
           />
         </SlideUpTransition>
 

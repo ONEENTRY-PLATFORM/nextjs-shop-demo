@@ -10,19 +10,20 @@ import Placeholder from './Placeholder';
 
 /**
  * Optimized image component with LQIP placeholder and lazy loading.
- * @param   {object}      props           - OptimizedImage component props.
- * @param   {object}      props.src       - Image source data.
- * @param   {string}      props.alt       - Image alt text.
- * @param   {number}      props.width     - Image width.
- * @param   {number}      props.height    - Image height.
- * @param   {string}      props.sizes     - Image sizes.
- * @param   {boolean}     props.fill      - Fill parent container.
- * @param   {boolean}     props.priority  - Priority loading flag.
- * @param   {string}      props.className - Additional CSS classes.
- * @param   {number}      props.quality   - Image quality (1-100).
- * @param   {string}      props.type      - Image type ("next" | "custom").
- * @param   {string}      props.loading   - Image loading behavior ("eager" | "lazy").
- * @returns {JSX.Element}                 JSX.Element - Optimized image.
+ * @param   {object}      props             - OptimizedImage component props.
+ * @param   {object}      props.src         - Image source data.
+ * @param   {string}      props.alt         - Image alt text.
+ * @param   {number}      props.width       - Image width.
+ * @param   {number}      props.height      - Image height.
+ * @param   {string}      props.sizes       - Image sizes.
+ * @param   {boolean}     props.fill        - Fill parent container.
+ * @param   {boolean}     props.priority    - Priority loading flag.
+ * @param   {string}      props.className   - Additional CSS classes.
+ * @param   {number}      props.quality     - Image quality (1-100).
+ * @param   {string}      props.type        - Image type ("next" | "custom").
+ * @param   {string}      props.loading     - Image loading behavior ("eager" | "lazy").
+ * @param   {string}      props.blurDataURL - Precomputed blur placeholder (base64 data URI); overrides the CMS preview when provided.
+ * @returns {JSX.Element}                   JSX.Element - Optimized image.
  */
 const OptimizedImage = ({
   src,
@@ -35,6 +36,7 @@ const OptimizedImage = ({
   quality,
   type = 'next',
   loading,
+  blurDataURL,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   src: any;
@@ -48,17 +50,37 @@ const OptimizedImage = ({
   quality?: number;
   type?: string;
   loading?: 'eager' | 'lazy';
+  blurDataURL?: string | undefined;
 }): JSX.Element => {
   /** Track image loading state for animations */
   const [isImageLoading, setImageLoading] = useState(true);
   const ref = useRef<HTMLImageElement>(null);
 
-  /** Extract image URL from source data structure */
+  /**
+   * Resolve the image URL. `src` is either a raw OneEntry image attribute
+   * (`{ value }`, object- or array-shaped), or a plain URL string (e.g. category
+   * cards, which receive a pre-resolved URL from `getImageUrl`).
+   */
   const optimizedSrc =
-    src?.value?.downloadLink || src?.value?.[0]?.downloadLink;
+    typeof src === 'string'
+      ? src
+      : src?.value?.downloadLink || src?.value?.[0]?.downloadLink;
 
-  /** Extract low-quality placeholder image for blur effect */
-  const blurDataURL = src?.value?.previewLink?.default?.[0] || '';
+  /**
+   * Resolve the blur placeholder. Priority: an explicit `blurDataURL` prop
+   * (computed server-side — CMS preview or generated LQIP) wins; otherwise fall
+   * back to the CMS-generated preview embedded in the attribute value
+   * (`previewLink.default[0]`, a base64 data URI). Handles both object- and
+   * array-shaped image values.
+   */
+  const attrValue = typeof src === 'string' ? undefined : src?.value;
+  const attrFirst = Array.isArray(attrValue) ? attrValue[0] : attrValue;
+  const attrPreview = attrFirst?.previewLink;
+  const cmsBlur =
+    attrPreview && typeof attrPreview === 'object'
+      ? attrPreview.default?.[0]
+      : undefined;
+  const resolvedBlur = blurDataURL || cmsBlur || '';
 
   /** Show placeholder if no image source is available */
   if (!optimizedSrc) {
@@ -105,11 +127,11 @@ const OptimizedImage = ({
     };
 
     /** Conditionally add placeholder and blurDataURL only when they exist */
-    if (blurDataURL) {
+    if (resolvedBlur) {
       return {
         ...baseProps,
         placeholder: 'blur',
-        blurDataURL: blurDataURL,
+        blurDataURL: resolvedBlur,
       };
     } else {
       return {

@@ -145,17 +145,32 @@ export const RTKApi = createApi({
     }),
     /**
      * Get Products By Ids.
+     *
+     * For every id that no longer exists in the CMS the API returns a stub
+     * object (`{ productPages, blocks, ... }` without `id`/`attributeValues`)
+     * instead of omitting it, so the response is filtered down to real
+     * product entities before it reaches consumers (favorites/cart/payment
+     * would otherwise render them as empty "ghost" cards).
      * @param items - Array of product IDs as string.
-     * @returns     Query result with products
+     * @returns     Query result with products (stub entries filtered out)
      */
     getProductsByIds: build.query<IProductsEntity[], { items: string }>({
       queryFn: async ({ items }) => {
         if (!items || items.length < 1) {
           return { data: [] };
         }
-        return toQueryResult<IProductsEntity[]>(
+        const result = await toQueryResult<IProductsEntity[]>(
           getApi().Products.getProductsByIds(items),
         );
+        if ('error' in result) {
+          return result;
+        }
+        /** Keep only entities that are actual products (stubs have no id) */
+        return {
+          data: result.data.filter(
+            (product) => typeof product?.id === 'number',
+          ),
+        };
       },
     }),
     /**

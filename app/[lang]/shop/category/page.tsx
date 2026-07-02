@@ -6,6 +6,7 @@ import type { JSX } from 'react';
 import { getPageByUrl } from '@/app/api';
 import { getChildPagesByParentUrl } from '@/app/api';
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
+import { getBlurDataURL } from '@/app/api/utils/getBlurDataURL';
 import type { PageProps } from '@/app/types/global';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import CategoriesGrid from '@/components/layout/categories';
@@ -33,14 +34,23 @@ const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
     return notFound();
   }
 
-  /** Extract categories data from pages for display in the grid */
-  const categories = pages?.map((page: IPagesEntity) => {
-    return {
+  /**
+   * Extract categories data for the grid. Each card's `blurDataURL` is resolved
+   * server-side (CMS preview, else a generated LQIP) via {@link getBlurDataURL},
+   * because OptimizedImage is a Client Component and cannot run the sharp-based
+   * generator itself. Resolved in parallel across all categories.
+   */
+  const categories = await Promise.all(
+    pages.map(async (page: IPagesEntity) => ({
       title: page.localizeInfos.title,
       link: '/' + lang + '/shop/category/' + page.pageUrl,
       imgSrc: getImageUrl('opengraph_image', page.attributeValues),
-    };
-  });
+      blurDataURL: await getBlurDataURL(
+        'opengraph_image',
+        page.attributeValues,
+      ),
+    })),
+  );
 
   /** Generate structured data for breadcrumbs to improve SEO */
   const breadcrumbStructuredData = {

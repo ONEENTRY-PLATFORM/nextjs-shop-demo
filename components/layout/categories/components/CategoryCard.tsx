@@ -14,22 +14,24 @@ const baloo = Baloo({
 /**
  * Category card component that displays a single category with image and title
  * Wrapped with animation component for staggered entrance/exit effects
- * @param   {object}      props                 - props
- * @param   {object}      props.category        - category object containing display data
- * @param   {string}      props.category.title  - category title to display
- * @param   {string}      props.category.link   - link to category page
- * @param   {unknown}     props.category.imgSrc - category image source URL
- * @param   {number}      props.index           - index of element in array for staggered animation timing
- * @returns {JSX.Element}                       category card with animations
+ * @param   {object}      props                      - props
+ * @param   {object}      props.category             - category object containing display data
+ * @param   {string}      props.category.title       - category title to display
+ * @param   {string}      props.category.link        - link to category page
+ * @param   {string}      props.category.imgSrc      - category image source URL
+ * @param   {string}      props.category.blurDataURL - server-resolved blur placeholder (CMS preview or generated LQIP)
+ * @param   {number}      props.index                - index of element in array for staggered animation timing
+ * @returns {JSX.Element}                            category card with animations
  */
 const CategoryCard = ({
-  category: { imgSrc, title, link },
+  category: { imgSrc, title, link, blurDataURL },
   index,
 }: {
   category: {
-    imgSrc: unknown;
+    imgSrc: string;
     title: string;
     link: string;
+    blurDataURL?: string;
   };
   index: number;
 }): JSX.Element => {
@@ -47,11 +49,12 @@ const CategoryCard = ({
         {/** Category title overlay on the image */}
         <h2 className="z-10 mt-auto uppercase">{title}</h2>
 
-        {/** Category image with hover zoom effect */}
+        {/** Category image with hover zoom effect. Empty `imgSrc` → OptimizedImage renders its Placeholder. */}
         <OptimizedImage
           fill
           sizes="(min-width: 1024px) 66vw, 100vw"
-          src={imgSrc ? imgSrc : '/images/card.svg'}
+          src={imgSrc}
+          blurDataURL={blurDataURL}
           alt={title}
           quality={75}
           className="absolute top-0 left-0 z-0 size-full rounded-3xl object-cover transition-all duration-500 group-hover:scale-125"

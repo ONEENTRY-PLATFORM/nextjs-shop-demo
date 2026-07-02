@@ -4,6 +4,7 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 
 import { getProductTitle } from '@/app/api/hooks/useProductsData';
+import { getBlurDataURL } from '@/app/api/utils/getBlurDataURL';
 import { CurrencyEnum, toLangCode } from '@/app/types/enum';
 
 import ProductAnimations from './animations/ProductAnimations';
@@ -53,6 +54,12 @@ const ProductSingle = async ({
   /** Get the formatted product title using helper function */
   const productTitle = getProductTitle(product);
 
+  /**
+   * Resolve the main image blur placeholder server-side (CMS preview, else a
+   * generated LQIP) — the gallery is a Client Component and cannot run sharp.
+   */
+  const picBlurDataURL = await getBlurDataURL('pic', attributeValues);
+
   /** Convert short locale to SDK langCode */
   const langCode = toLangCode(lang);
   const currencyCode = CurrencyEnum[lang as keyof typeof CurrencyEnum];
@@ -74,7 +81,11 @@ const ProductSingle = async ({
           className="relative mb-10 flex min-h-70 w-[30%] grow flex-col max-md:mb-4 max-md:w-4/12 max-md:max-w-[48%] max-sm:w-full max-sm:max-w-full"
           index={0}
         >
-          <ProductImageGallery product={product} alt={productTitle} />
+          <ProductImageGallery
+            product={product}
+            alt={productTitle}
+            blurDataURL={picBlurDataURL}
+          />
         </ProductAnimations>
 
         {/** VariationsCarousel + ProductDescription - col-2 */}

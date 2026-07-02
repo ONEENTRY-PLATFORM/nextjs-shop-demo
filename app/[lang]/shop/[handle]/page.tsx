@@ -47,7 +47,15 @@ const ShopCatalogPage = async (props: {
   // TODO: Extract products per page limit from global settings
   const pagesLimit = 10;
 
-  /** Render the shop catalog page layout */
+  /**
+   * Render the shop catalog page layout.
+   *
+   * `handle` is a category pageUrl (a direct child of `shop`), so products are
+   * scoped to that category via `getProductsByPageUrl` — same as
+   * `/shop/category/[handle]`. Passing `isCategory` avoids the global
+   * `getProducts` path, which would treat `handle` as a `stickers` filter and
+   * return products from other categories that merely share the sticker.
+   */
   return (
     <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
       <div className="flex w-full flex-col items-center gap-5 bg-white">
@@ -57,6 +65,7 @@ const ShopCatalogPage = async (props: {
             searchParams={searchParams}
             pagesLimit={pagesLimit}
             dict={dict}
+            isCategory={true}
           />
         </Suspense>
       </div>

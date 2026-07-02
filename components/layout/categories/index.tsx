@@ -11,6 +11,8 @@ interface CategoryCardProps {
   title: string;
   link: string;
   imgSrc: string;
+  /** Server-resolved blur placeholder (CMS preview or generated LQIP). */
+  blurDataURL?: string;
 }
 
 /**

@@ -64,7 +64,7 @@ const TotalAmount = ({
   }, [total, delivery, hasProducts]);
 
   return (
-    /** Wrap total amount with animation component for entrance effects */
+    /** Total amount container; entrance animation is applied by the parent (e.g. SlideUpTransition in DeliveryForm) */
     <div className={className} data-testid="cart-total">
       {dict?.order_info_total?.value as string}:{' '}
       {UsePrice({

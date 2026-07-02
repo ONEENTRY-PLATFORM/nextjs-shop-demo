@@ -2,6 +2,7 @@
 // import Image from 'next/image';
 import type { JSX } from 'react';
 
+import { getBlurDataURL } from '@/app/api/utils/getBlurDataURL';
 import OptimizedImage from '@/components/shared/OptimizedImage';
 
 /**
@@ -21,10 +22,17 @@ const BlocksGridImage = async ({
   /** Extract title and background image data from block attribute values */
   const { title = '', bg_web } = attributeValues;
 
+  /**
+   * Resolve the blur placeholder server-side: CMS preview when present,
+   * otherwise a generated LQIP (sharp cannot run in the client OptimizedImage).
+   */
+  const blurDataURL = await getBlurDataURL('bg_web', attributeValues);
+
   /** Render optimized image with responsive sizes, high priority loading and hover zoom effect */
   return (
     <OptimizedImage
       src={bg_web}
+      blurDataURL={blurDataURL}
       alt={title.value}
       priority
       quality={75}
