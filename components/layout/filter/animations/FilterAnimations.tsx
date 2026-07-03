@@ -37,18 +37,25 @@ const FilterAnimations = ({
    * Creates staggered entrance effect based on element index
    */
   useGSAP(() => {
+    /**
+     * Hide synchronously, before first paint: a timeline's set() only
+     * applies on the next GSAP tick, which can land after paint under
+     * main-thread jank — the visible element would flash before being
+     * hidden.
+     */
+    gsap.set(ref.current, {
+      autoAlpha: 0,
+      yPercent: 100,
+      height: 0,
+    });
+
     /** Create GSAP timeline for entrance animation */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    /** Set initial state before animation */
-    tl.set(ref.current, {
-      autoAlpha: 0,
-      yPercent: 100,
-      height: 0,
-      /** Animate to final state with staggered delay based on index */
-    }).to(ref.current, {
+    /** Animate to final state with staggered delay based on index */
+    tl.to(ref.current, {
       autoAlpha: 1,
       yPercent: 0,
       height: 'auto',

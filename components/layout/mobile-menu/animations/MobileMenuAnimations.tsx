@@ -58,14 +58,20 @@ const MobileMenuAnimations = ({
     }
     // Handle opening animation
     else if (open) {
-      tl.set('#modalBg, #modalBody', {
+      /**
+       * Hide synchronously, before first paint: a timeline's set() only
+       * applies on the next GSAP tick, which can land after paint under
+       * main-thread jank — the fully visible menu would flash before
+       * being hidden and re-animated.
+       */
+      gsap.set('#modalBg, #modalBody', {
         xPercent: -150, // Initially position elements off-screen
         autoAlpha: 0, // Initially hide elements
+      });
+      tl.to('#modalBg, #modalBody', {
+        xPercent: -50, // Move elements to their final position
+        autoAlpha: 1, // Fade in elements
       })
-        .to('#modalBg, #modalBody', {
-          xPercent: -50, // Move elements to their final position
-          autoAlpha: 1, // Fade in elements
-        })
         .to('#modalBg', {
           backdropFilter: 'blur(10px)', // Apply blur effect to background
           delay: -0.35, // Overlap with previous animation

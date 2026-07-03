@@ -49,10 +49,17 @@ const BlockCardAnimations = ({
 
     /** Animate card entrance when in initial 'none' stage */
     if (stage === 'none' && prevStage === '') {
-      tl.set(ref.current, {
+      /**
+       * Hide synchronously, before first paint: a timeline's set() only
+       * applies on the next GSAP tick, which can land after paint under
+       * main-thread jank — the already visible card would flash before
+       * being hidden and re-animated.
+       */
+      gsap.set(ref.current, {
         scale: 0, // Start scaled down to 0
         autoAlpha: 0, // Start hidden (0 opacity and visibility)
-      }).to(ref.current, {
+      });
+      tl.to(ref.current, {
         scale: 1, // Scale to full size
         autoAlpha: 1, // Fade in to visible
         duration: 0.5, // Animation duration in seconds

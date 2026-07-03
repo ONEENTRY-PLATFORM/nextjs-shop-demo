@@ -245,6 +245,7 @@ const FormInput = (field: {
       {/** Render password visibility toggle button for password fields */}
       {field.type === 'password' && (
         <button
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             setShowPassword((prev) => !prev);

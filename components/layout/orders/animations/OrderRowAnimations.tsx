@@ -39,21 +39,25 @@ const OrderRowAnimations = ({
       return;
     }
 
+    /**
+     * Hide synchronously, before first paint: a timeline's set() only
+     * applies on the next GSAP tick, which can land after paint under
+     * main-thread jank — the visible row would flash before being hidden.
+     */
+    gsap.set(ref.current, {
+      autoAlpha: 0,
+    });
+
     /** Create a GSAP timeline for coordinated animations */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    /** Set initial state to hidden */
-    tl.set(ref.current, {
-      autoAlpha: 0,
-    })
-      /** Animate to visible with staggered delay based on index */
-      .to(ref.current, {
-        autoAlpha: 1,
-        delay: index / 10,
-      })
-      .play();
+    /** Animate to visible with staggered delay based on index */
+    tl.to(ref.current, {
+      autoAlpha: 1,
+      delay: index / 10,
+    }).play();
 
     /** Cleanup function to kill the timeline on unmount */
     return () => {

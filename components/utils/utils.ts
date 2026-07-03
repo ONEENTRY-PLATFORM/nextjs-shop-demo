@@ -27,7 +27,7 @@ export const UsePrice = ({
 }: {
   amount: number | string;
   lang: string;
-  currency?: string;
+  currency?: string | undefined;
 }): string => {
   // Get locale code with fallback to en-US if language not found in enum
   const intlEnum = IntlEnum[lang as keyof typeof IntlEnum] || 'en-US';

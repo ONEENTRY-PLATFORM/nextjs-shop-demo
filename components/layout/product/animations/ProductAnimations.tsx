@@ -40,15 +40,23 @@ const ProductAnimations = ({
    * Runs once when the component is mounted.
    */
   useGSAP(() => {
+    /**
+     * Hide synchronously, before first paint: a timeline's set() only
+     * applies on the next GSAP tick, which can land after paint under
+     * main-thread jank — the visible element would flash before being
+     * hidden.
+     */
+    gsap.set(ref.current, {
+      autoAlpha: 0,
+    });
+
     /** Create a GSAP timeline for coordinated animations */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    /** Set initial state to hidden and animate to visible with staggered delay */
-    tl.set(ref.current, {
-      autoAlpha: 0,
-    }).to(ref.current, {
+    /** Animate to visible with staggered delay */
+    tl.to(ref.current, {
       autoAlpha: 1,
       delay: index / 10,
     });

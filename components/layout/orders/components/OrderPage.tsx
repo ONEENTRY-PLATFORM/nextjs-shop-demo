@@ -116,6 +116,7 @@ const OrderPage = ({
               settings={settings}
               product={product}
               lang={lang}
+              currency={data.currency}
             />
           );
         })}

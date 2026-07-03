@@ -11,6 +11,8 @@ interface ProductCardProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   product: any;
   lang: string;
+  /** Parent order currency — order line items share it (orders rule). */
+  currency?: string;
   settings: {
     product_qty_title: {
       value: string;
@@ -32,7 +34,7 @@ interface ProductCardProps {
  * @returns {JSX.Element}                     Product card with image, details, and link to product page
  */
 const ProductCard = memo(
-  ({ product, lang, settings }: ProductCardProps): JSX.Element => {
+  ({ product, lang, currency, settings }: ProductCardProps): JSX.Element => {
     /** Extract product data with fallback values */
     const id = product.id || 0;
     const title = product.title || '';
@@ -45,12 +47,14 @@ const ProductCard = memo(
     const formattedPrice = UsePrice({
       amount: price,
       lang,
+      currency,
     });
 
     /** Calculate and format the subtotal (price * quantity) */
     const formattedSubtotal = UsePrice({
       amount: price * Number(quantity),
       lang,
+      currency,
     });
 
     /** Extract localized settings with fallback values */

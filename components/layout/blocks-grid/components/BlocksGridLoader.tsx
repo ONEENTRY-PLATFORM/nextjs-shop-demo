@@ -38,19 +38,24 @@ const BlocksGridLoader = ({
    * Applies a staggered fade-in effect to all block cards
    */
   useGSAP(() => {
+    /**
+     * Hide synchronously, before first paint: a timeline's set() only
+     * applies on the next GSAP tick, which can land after paint under
+     * main-thread jank — the visible skeleton would flash before being
+     * hidden. Uses autoAlpha for combined opacity and visibility control.
+     */
+    gsap.set('.block-card', {
+      autoAlpha: 0,
+    });
+
     /** Create a GSAP timeline for the block loader animations */
     const tl = gsap.timeline({
       paused: true,
       id: 'BlocksGridTL',
     });
 
-    /**
-     * Set initial state and animate block cards into view
-     * Uses autoAlpha for combined opacity and visibility control
-     */
-    tl.set('.block-card', {
-      autoAlpha: 0,
-    }).to('.block-card', {
+    /** Animate block cards into view */
+    tl.to('.block-card', {
       autoAlpha: 1,
       stagger: 0.1,
     });

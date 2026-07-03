@@ -89,16 +89,24 @@ const ProductAnimations = memo(
         return;
       }
 
+      /**
+       * Hide synchronously, before first paint: a timeline's set() only
+       * applies on the next GSAP tick, which can land after paint under
+       * main-thread jank — the visible product would flash before being
+       * hidden.
+       */
+      gsap.set(ref.current, {
+        opacity: 0,
+        yPercent: 100,
+      });
+
       /** Create GSAP timeline for entrance animation */
       const tl = gsap.timeline({
         paused: true,
       });
 
-      /** Set initial state (hidden and shifted down) and animate to visible state */
-      tl.set(ref.current, {
-        opacity: 0,
-        yPercent: 100,
-      }).to(ref.current, {
+      /** Animate to visible state */
+      tl.to(ref.current, {
         opacity: 1,
         yPercent: 0,
         delay: index / 10, // Staggered delay based on index

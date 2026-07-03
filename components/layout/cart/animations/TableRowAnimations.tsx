@@ -37,16 +37,23 @@ const TableRowAnimations = ({
       return;
     }
 
+    /**
+     * Hide synchronously, before first paint: a timeline's set() only
+     * applies on the next GSAP tick, which can land after paint under
+     * main-thread jank — the visible row would flash before being hidden.
+     */
+    gsap.set(ref.current, {
+      opacity: 0,
+      yPercent: 200, // Start position below the viewport
+    });
+
     /** Create GSAP timeline for entrance animation */
     const tl = gsap.timeline({
       paused: true,
     });
 
-    /** Set initial state (hidden and shifted down) and animate to visible state */
-    tl.set(ref.current, {
-      opacity: 0,
-      yPercent: 200, // Start position below the viewport
-    }).to(ref.current, {
+    /** Animate to visible state */
+    tl.to(ref.current, {
       opacity: 1,
       yPercent: 0, // End position at original location
       delay: index / 10, // Staggered delay based on index for sequential animation

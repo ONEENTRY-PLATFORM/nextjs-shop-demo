@@ -67,18 +67,23 @@ const ModalAnimations = ({
     }
     // Handle opening animation
     else {
-      tl.set([modalBg, modalBody], {
+      /**
+       * Hide synchronously, before first paint: a timeline's set() only
+       * applies on the next GSAP tick, which can land after paint under
+       * main-thread jank — the fully visible modal would flash before
+       * being hidden and re-animated.
+       */
+      gsap.set([modalBg, modalBody], {
         scaleX: 0,
         autoAlpha: 0,
-      })
-        .to([modalBg, modalBody], {
-          scaleX: 1,
-          autoAlpha: 1,
-        })
-        .to(modalBg, {
-          backdropFilter: 'blur(10px)',
-          delay: -0.35,
-        });
+      });
+      tl.to([modalBg, modalBody], {
+        scaleX: 1,
+        autoAlpha: 1,
+      }).to(modalBg, {
+        backdropFilter: 'blur(10px)',
+        delay: -0.35,
+      });
       tl.play();
     }
 
