@@ -57,9 +57,10 @@ const ProductPageLayout = async ({
     image: getImageUrl('pic', attributeValues),
     offers: {
       '@type': 'AggregateOffer',
-      availability: statusIdentifier
-        ? 'https://schema.org/InStock'
-        : 'https://schema.org/OutOfStock',
+      availability:
+        statusIdentifier === 'in_stock'
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
       priceCurrency: getString('currency', attributeValues),
       highPrice: additional?.prices?.max || 1,
       lowPrice: additional?.prices?.min || 1,

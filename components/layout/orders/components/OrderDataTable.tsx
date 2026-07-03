@@ -46,13 +46,19 @@ const OrderDataTable = ({
   }
 
   /** Extract relevant order data */
-  const { formData, statusIdentifier, totalSum, paymentAccountLocalizeInfos } =
-    data;
+  const {
+    formData,
+    statusIdentifier,
+    totalSum,
+    currency,
+    paymentAccountLocalizeInfos,
+  } = data;
 
   /** Format the total amount using the UsePrice utility */
   const formattedTotal = UsePrice({
     amount: totalSum,
     lang,
+    currency,
   });
 
   /** Extract localized titles from settings */

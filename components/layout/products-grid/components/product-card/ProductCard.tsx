@@ -53,6 +53,25 @@ const ProductCard = ({
         className="flex size-full flex-col items-center"
         aria-labelledby={`product-title-${id}`}
       >
+        {/*
+          SSR-paint marker. The inline script executes ONLY while the
+          browser parses the initially-streamed HTML document (scripts from
+          innerHTML fragments are inert, so RSC-payload inserts — client
+          navigations, load-more appends — never run it). It marks itself,
+          not a React-managed node, to avoid hydration-diff warnings; React
+          skips hydration diffing inside dangerouslySetInnerHTML content.
+          CardAnimations skips the entrance animation for cards containing
+          `script[data-painted]`: they are already visible, and hiding them
+          at hydration time makes the whole catalog flash. Requires CSP to
+          allow inline scripts.
+        */}
+        <span
+          hidden
+          dangerouslySetInnerHTML={{
+            __html:
+              '<script>document.currentScript.setAttribute("data-painted","")</script>',
+          }}
+        />
         <div className="z-10 flex justify-between gap-5 self-stretch">
           <Stickers attributeValues={attributeValues} />
           <FavoritesButton {...product} />

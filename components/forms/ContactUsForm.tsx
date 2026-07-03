@@ -1,12 +1,14 @@
 'use client';
 
 import type { IAttributes } from 'oneentry/dist/base/utils';
+import type { IPostFormResponse } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { FormEvent, JSX, Key } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
 
-import { useFormsData, useGetFormByMarkerQuery } from '@/app/api';
+import { isError, useFormsData, useGetFormByMarkerQuery } from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { clearFields } from '@/app/store/reducers/FormFieldsSlice';
+import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';
 
 import Loader from '../shared/Loader';
 import ErrorMessage from './inputs/ErrorMessage';
@@ -183,15 +185,19 @@ const ContactUsForm = memo(
               status: 'sent',
             });
 
-            /** Handle errors from sendData */
-            if (result && typeof result === 'object' && 'error' in result) {
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              setError((result as any).error);
+            /**
+             * The SDK returns errors as an `IError` object (it does not throw),
+             * so `catch` only handles unexpected exceptions — inspect the
+             * resolved value for an error before treating it as a success.
+             * The previous code read a non-existent `.error` field, so the
+             * message was always `undefined` and never shown to the user.
+             */
+            if (isError(result)) {
+              setError(getApiErrorMessage(result));
               setSuccessMessage('');
             } else if (result && typeof result === 'object') {
               /** Handle successful submission */
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              const actionMessage = (result as any).actionMessage;
+              const { actionMessage } = result as IPostFormResponse;
               if (actionMessage) {
                 setSuccessMessage(actionMessage);
               }
@@ -199,9 +205,8 @@ const ContactUsForm = memo(
               /** Clear form fields */
               dispatch(clearFields());
             }
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          } catch (e: any) {
-            setError(e.message);
+          } catch (e) {
+            setError(getApiErrorMessage(e));
             setSuccessMessage('');
           }
         }

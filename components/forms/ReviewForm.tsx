@@ -14,10 +14,12 @@ import type { FormEvent, JSX } from 'react';
 import { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { useFormsData, useGetFormByMarkerQuery } from '@/app/api';
+import { isError, useFormsData, useGetFormByMarkerQuery } from '@/app/api';
+import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';
 
 import AuthError from '../pages/AuthError';
 import FormAnimations from './animations/FormAnimations';
@@ -185,26 +187,30 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
           status: FORM_STATUS,
         });
 
-        const typedResponse = responseData as IPostFormResponse | IError;
+        /**
+         * The SDK returns errors as an `IError` object instead of throwing, so
+         * `catch` never fires on a rejected submission — guard explicitly, or a
+         * failed review would still show the success toast and close the drawer.
+         */
+        if (isError(responseData)) {
+          setError(getApiErrorMessage(responseData));
+          return;
+        }
+
+        const typedResponse = responseData as IPostFormResponse;
         setResponse(typedResponse);
 
         // Close drawer and show success message
         setTimeout(() => {
           setOpen(false);
-          if (
-            typedResponse &&
-            'actionMessage' in typedResponse &&
-            typedResponse.actionMessage
-          ) {
+          if (typedResponse.actionMessage) {
             toast(typedResponse.actionMessage);
           } else {
             toast('Review sent successfully.');
           }
         }, 500);
       } catch (err) {
-        const errorMessage =
-          err instanceof Error ? err.message : 'Failed to submit review';
-        setError(errorMessage);
+        setError(getApiErrorMessage(err, 'Failed to submit review'));
       }
     },
     [
@@ -243,7 +249,7 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
           >
             {/* Product image */}
             <Image
-              src={productData.attributeValues?.pic.value.downloadLink}
+              src={getImageUrl('pic', productData.attributeValues)}
               alt={productTitle}
               width={80}
               height={90}

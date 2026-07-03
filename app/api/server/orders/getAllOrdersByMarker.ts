@@ -2,6 +2,7 @@ import type { IError } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 
 import { getApi, isError } from '@/app/api';
+import { toLangCode } from '@/app/types/enum';
 
 /**
  * Getting all orders from the orders storage object created by the user.
@@ -32,7 +33,7 @@ export const getAllOrdersByMarker = async ({
   orders?: IOrderByMarkerEntity[];
   total: number;
 }> => {
-  const langCode = lang.toUpperCase();
+  const langCode = toLangCode(lang);
 
   const data = await getApi().Orders.getAllOrdersByMarker(
     marker,

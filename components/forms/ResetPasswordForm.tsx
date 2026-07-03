@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
@@ -16,33 +15,30 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 
 /**
- * Form field configurations for the reset password form
+ * Password fields for the reset-password step.
  *
- * This array defines the structure and properties of form fields used in
- * the reset password functionality. Each field includes type, visibility,
- * localization, placeholder, marker, and required status information.
- * @type {Array<object>}
+ * This is an auth flow (not a CMS form submission), so the two inputs are
+ * defined locally rather than fetched via `getFormByMarker` — the confirm field
+ * is a client-only duplicate the CMS does not model. `FormInput` derives the
+ * input type from the marker (`password_*` → password) and falls back to the
+ * title for the placeholder, so no hardcoded placeholder is needed here.
  */
-export const resetPasswordFormFields: Array<object> = [
+interface ResetPasswordField {
+  marker: string;
+  type: string;
+  localizeInfos: { title: string };
+}
+
+const RESET_PASSWORD_FIELDS: ResetPasswordField[] = [
   {
-    fieldType: 'password',
-    isVisible: true,
-    localizeInfos: {
-      title: 'Password',
-    },
-    placeholder: '•••••',
     marker: 'password_reg',
-    required: true,
+    type: 'password',
+    localizeInfos: { title: 'Password' },
   },
   {
-    fieldType: 'password',
-    isVisible: true,
-    localizeInfos: {
-      title: 'Confirm password',
-    },
-    placeholder: '•••••',
     marker: 'password_confirm',
-    required: true,
+    type: 'password',
+    localizeInfos: { title: 'Confirm password' },
   },
 ];
 
@@ -121,7 +117,7 @@ const ResetPasswordForm = ({
         }
         /** Reset loading state after form submission */
         setLoading(false);
-      } catch (e: any) {
+      } catch (e) {
         /** Set error message from exception */
         setError(getApiErrorMessage(e));
         /** Reset loading state after form submission */
@@ -160,19 +156,15 @@ const ResetPasswordForm = ({
         {/** Form input fields container */}
         <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
           {/** Map through reset password form fields to render input components */}
-          {resetPasswordFormFields.map((field: any, index: any) => {
+          {RESET_PASSWORD_FIELDS.map((field, index) => {
             return (
               <FormInput
-                localizeInfos={field.localizeInfos}
-                marker={''}
-                isVisible={false}
+                key={field.marker}
                 index={index}
-                listTitles={[]}
-                position={0}
-                type={''}
-                validators={{}}
-                key={field.marker || index}
-                {...field}
+                marker={field.marker}
+                type={field.type}
+                value=""
+                localizeInfos={field.localizeInfos}
               />
             );
           })}

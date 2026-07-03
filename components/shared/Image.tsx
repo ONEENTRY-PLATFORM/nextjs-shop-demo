@@ -53,9 +53,7 @@ const Image = ({
           aria-hidden="true"
           className={
             'absolute inset-0 z-0 size-full scale-110 object-cover blur-xl transition-opacity duration-300 ' +
-            isImageLoading
-              ? 'hidden'
-              : ''
+            (isImageLoading ? 'hidden' : '')
           }
         />
       )}

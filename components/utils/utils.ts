@@ -9,10 +9,11 @@ import { CurrencyEnum, IntlEnum } from '@/app/types/enum';
  * This function takes a numeric amount and formats it as a localized currency
  * string using Intl.NumberFormat. It determines the appropriate currency and
  * locale settings based on the provided language code.
- * @param   {object}          options        - Configuration options.
- * @param   {number | string} options.amount - The numeric amount to format.
- * @param   {string}          options.lang   - The language code to determine currency and formatting.
- * @returns {string}                         Formatted currency string (e.g., "$123.45", "€123,45").
+ * @param   {object}          options            - Configuration options.
+ * @param   {number | string} options.amount     - The numeric amount to format.
+ * @param   {string}          options.lang       - The language code to determine currency and formatting.
+ * @param   {string}          [options.currency] - Optional ISO 4217 currency code from the entity itself (e.g. `order.currency`); takes precedence over the language default.
+ * @returns {string}                             Formatted currency string (e.g., "$123.45", "€123,45").
  * @example
  * ```typescript
  * const price = UsePrice({ amount: 123.45, lang: 'en' });
@@ -22,18 +23,30 @@ import { CurrencyEnum, IntlEnum } from '@/app/types/enum';
 export const UsePrice = ({
   amount,
   lang,
+  currency,
 }: {
   amount: number | string;
   lang: string;
+  currency?: string;
 }): string => {
-  // Get currency code with fallback to USD if language not found in enum
-  const currency = CurrencyEnum[lang as keyof typeof CurrencyEnum] || 'USD';
   // Get locale code with fallback to en-US if language not found in enum
   const intlEnum = IntlEnum[lang as keyof typeof IntlEnum] || 'en-US';
 
+  /**
+   * Prefer the entity's own currency (e.g. `order.currency`) so an order priced
+   * in another currency is not mislabeled by the UI language. The SDK often
+   * returns an empty string, and `Intl.NumberFormat` throws on anything that is
+   * not a valid ISO 4217 code, so only trust a 3-letter code and otherwise fall
+   * back to the language default.
+   */
+  const currencyCode =
+    currency && /^[A-Za-z]{3}$/.test(currency)
+      ? currency.toUpperCase()
+      : CurrencyEnum[lang as keyof typeof CurrencyEnum] || 'USD';
+
   const formattedPrice = new Intl.NumberFormat(intlEnum, {
     style: 'currency',
-    currency: currency,
+    currency: currencyCode,
   }).format(Number(amount));
 
   return formattedPrice;

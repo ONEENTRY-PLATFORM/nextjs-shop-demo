@@ -75,23 +75,49 @@ const CardAnimations = ({
 
   /** Entering animations using GSAP timeline */
   useGSAP(() => {
-    /** Create a timeline for coordinated animations */
-    const tl = gsap.timeline({});
+    const el = ref.current as HTMLDivElement | null;
+    if (!el) {
+      return;
+    }
+
+    /**
+     * Cards containing a `script[data-painted]` marker arrived with the
+     * initially-streamed HTML document and are already visible on screen
+     * (React attaches to them long after first paint). Running the entrance
+     * animation would reset the whole painted catalog to
+     * `autoAlpha: 0 / scale: 0` and replay the stagger — users see the
+     * entire grid flash (worst with slow hydration: reload with ?page=N,
+     * dev mode). The marker script (see ProductCard) only executes during
+     * HTML parsing, so cards mounted client-side (load-more appends, client
+     * navigations) still animate.
+     */
+    if (el.querySelector('script[data-painted]')) {
+      return;
+    }
 
     /** Get image elements within the card for separate animation */
-    const img =
-      ref.current &&
-      (ref.current as HTMLDivElement).getElementsByTagName('img');
+    const img = el.getElementsByTagName('img');
 
-    /** Set initial state and execute animation sequence */
-    tl.set(ref.current, {
+    /**
+     * Hide the card synchronously, inside this pre-paint layout effect.
+     * A timeline's `.set()` only applies on the next GSAP tick — under a
+     * busy main thread (RSC payload rendering, dev compilation) that tick
+     * lands well after the browser has painted the mounted card, so the
+     * card flashes visible before being hidden and re-animated. A direct
+     * `gsap.set()` renders immediately, before first paint.
+     */
+    gsap.set(el, {
       autoAlpha: 0,
       scale: 0,
-    })
-      .set(img, {
-        autoAlpha: 0,
-      })
-      .to(ref.current, {
+    });
+    gsap.set(img, {
+      autoAlpha: 0,
+    });
+
+    /** Create a timeline for the coordinated entrance sequence */
+    const tl = gsap
+      .timeline({})
+      .to(el, {
         autoAlpha: 1,
         scale: 1,
         delay: delay > 0 ? delay : 0,

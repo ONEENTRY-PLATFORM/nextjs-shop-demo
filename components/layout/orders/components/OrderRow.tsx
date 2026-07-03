@@ -37,12 +37,13 @@ const OrderRow = ({
   onStatusChange,
 }: OrderRowProps): JSX.Element => {
   /** Extract relevant order data */
-  const { id, createdDate, statusIdentifier, totalSum } = order;
+  const { id, createdDate, statusIdentifier, totalSum, currency } = order;
 
   /** Format the total amount using the UsePrice utility */
   const formattedPrice = UsePrice({
     amount: totalSum,
     lang,
+    currency,
   });
 
   /** Format the order creation date */

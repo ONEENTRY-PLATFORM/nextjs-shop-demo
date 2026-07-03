@@ -73,8 +73,26 @@ export const getApiErrorMessage = (
     if (error.localizeMessage) {
       return error.localizeMessage;
     }
-    if (typeof error.message === 'string' && error.message.trim()) {
-      return humanize(error.message);
+    /**
+     * The SDK types `message` as `string`, but `postFormsData` validator
+     * failures arrive as `string[]` (one entry per field) — normalize both
+     * shapes before humanizing, otherwise array messages fall through to the
+     * generic per-status fallback and the user never sees the real reason.
+     */
+    const rawMessage: unknown = error.message;
+    if (Array.isArray(rawMessage)) {
+      const joined = rawMessage
+        .filter(
+          (part): part is string =>
+            typeof part === 'string' && part.trim() !== '',
+        )
+        .map(humanize)
+        .join('; ');
+      if (joined) {
+        return joined;
+      }
+    } else if (typeof rawMessage === 'string' && rawMessage.trim()) {
+      return humanize(rawMessage);
     }
     return STATUS_FALLBACKS[error.statusCode] || fallback;
   }
