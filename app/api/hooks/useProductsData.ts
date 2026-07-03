@@ -46,56 +46,6 @@ export const getProductTitle = (
 };
 
 /**
- * Safely extracts the product image URL from attribute values
- * @param   {string}          name    - The attribute name.
- * @param   {IProductsEntity} product - The product entity.
- * @param   {string}          type    - The attribute type. 'image' | 'preview'
- * @returns {string}                  The product image URL or undefined.
- */
-export const getProductImageUrl = (
-  name: string,
-  product: IProductsEntity,
-  type: 'image' | 'preview' = 'image',
-): string => {
-  /** Get attribute data by name */
-  const data = product?.attributeValues?.[name];
-
-  /** Return empty string if data is missing */
-  if (!data) {
-    return '';
-  }
-
-  /** Extract picture value from data */
-  const picValue = data.value;
-
-  /** Handle array of images or single image */
-  if (Array.isArray(picValue) && picValue.length > 0) {
-    const firstImage = picValue[0];
-    if (
-      firstImage &&
-      typeof firstImage === 'object' &&
-      'downloadLink' in firstImage &&
-      typeof firstImage.downloadLink === 'string'
-    ) {
-      return firstImage.downloadLink;
-    }
-  } else if (
-    picValue &&
-    typeof picValue === 'object' &&
-    'downloadLink' in picValue &&
-    typeof picValue.downloadLink === 'string'
-  ) {
-    if (type === 'image') {
-      return picValue.downloadLink;
-    } else {
-      return picValue.downloadLink;
-    }
-  }
-
-  return '';
-};
-
-/**
  * Safely extracts the price from attribute values
  * @param   {IAttributeValues}   attributes - The product attributes
  * @returns {number | undefined}            The price value or undefined

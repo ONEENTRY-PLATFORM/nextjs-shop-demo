@@ -51,6 +51,7 @@ const OrderDataTable = ({
     statusIdentifier,
     totalSum,
     currency,
+    paymentAccountIdentifier,
     paymentAccountLocalizeInfos,
   } = data;
 
@@ -124,7 +125,8 @@ const OrderDataTable = ({
       {/* Payment account information */}
       <div className="flex gap-2">
         <b>{payment_account_title.value}:</b>{' '}
-        {paymentAccountLocalizeInfos?.title as string | undefined}
+        {(paymentAccountLocalizeInfos?.title as string | undefined) ||
+          paymentAccountIdentifier}
       </div>
 
       {/* Formatted total amount with larger text */}

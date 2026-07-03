@@ -2,16 +2,14 @@
 import Image from 'next/image';
 import type { JSX } from 'react';
 
-import {
-  getProductImageUrl,
-  getProductTitle,
-} from '@/app/api/hooks/useProductsData';
+import { getImageUrl } from '@/app/api/hooks/useAttributesData';
+import { getProductTitle } from '@/app/api/hooks/useProductsData';
 import Placeholder from '@/components/shared/Placeholder';
 
 // ModalHeading
 const ModalHeading = ({ product }: { product: any }): JSX.Element => {
   /** Get product data */
-  const productImageUrl = getProductImageUrl('pic', product);
+  const productImageUrl = getImageUrl('pic', product.attributeValues);
   const productTitle = getProductTitle(product);
 
   return (
