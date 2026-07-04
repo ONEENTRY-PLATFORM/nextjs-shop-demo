@@ -2,6 +2,7 @@ import type { Locator, Page } from '@playwright/test';
 import { expect } from '@playwright/test';
 
 import { ROUTES } from '../settings';
+import { discoverProductId, rendersNotFoundUI } from './fixture-helpers';
 import { waitForPageLoad } from './navigation-helpers';
 
 /**
@@ -61,21 +62,48 @@ export function getLeaveReviewTrigger(page: Page): Locator {
  * (it renders the 404 UI), so a spec must verify the reviews UI is actually
  * present rather than trust the status code. The RatingButton toggle is the
  * only reviews control on the page before expansion, so it is the signal.
+ *
+ * With no explicit `productId` the navigation is resilient: it uses the fast
+ * hardcoded fixture (`ROUTES.product`) when that renders a real product — the
+ * normal case, behaviour unchanged — and only falls back to a live product
+ * discovered from the catalog when the fixture renders the 404 UI, so a
+ * removed/renamed fixture no longer mass-skips the suite.
  * @param   {Page}             page        - Playwright page object
- * @param   {string}           [productId] - Product id path segment (default: the ROUTES fixture)
+ * @param   {string}           [productId] - Product id path segment (default: the resilient fixture)
  * @returns {Promise<boolean>}             True when the reviews toggle is on the page
  */
 export async function goToProductReviews(
   page: Page,
   productId?: string,
 ): Promise<boolean> {
+  const waitForToggle = (): Promise<boolean> =>
+    getReviewsToggle(page)
+      .waitFor({ state: 'visible', timeout: 25000 })
+      .then(() => true)
+      .catch(() => false);
+
   await page.goto(productId ? `/en/shop/product/${productId}` : ROUTES.product);
   await waitForPageLoad(page);
 
-  return getReviewsToggle(page)
-    .waitFor({ state: 'visible', timeout: 25000 })
-    .then(() => true)
-    .catch(() => false);
+  // Happy path — unchanged: the fixture (or explicit) product renders and its
+  // reviews toggle appears. Nothing below runs while ROUTES.product is valid.
+  if (await waitForToggle()) {
+    return true;
+  }
+
+  // Fallback (default fixture only): the toggle never rendered. If the page is
+  // the shared 404 UI, the fixture product was removed/unpublished — discover a
+  // live product from the catalog and retry once instead of mass-skipping.
+  if (!productId && (await rendersNotFoundUI(page))) {
+    const discovered = await discoverProductId(page);
+    if (discovered) {
+      await page.goto(`/en/shop/product/${discovered}`);
+      await waitForPageLoad(page);
+      return waitForToggle();
+    }
+  }
+
+  return false;
 }
 
 /**

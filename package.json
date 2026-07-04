@@ -49,6 +49,7 @@
     "socket.io-client": "^4.8.3"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@formatjs/intl-localematcher": "^0.8.10",
     "@gsap/react": "^2.1.2",
     "@next/env": "^16.2.9",

@@ -1,0 +1,82 @@
+# Playwright E2E CI
+#
+# Runs the project's Playwright end-to-end suite (tests/e2e) against a fresh
+# production build of the app. Playwright's own `webServer` (playwright.config.ts)
+# builds and starts the app on port 3100 — this workflow only runs the tests with
+# the right env; it must NOT start a server itself.
+#
+# ── Required GitHub secrets (Settings → Secrets and variables → Actions) ────────
+#   NEXT_PUBLIC_PROJECT_URL  OneEntry project URL. REQUIRED — app/api/api/api.ts
+#                            throws at import if unset, so both build and tests fail.
+#   NEXT_PUBLIC_APP_TOKEN    OneEntry app token. REQUIRED — same hard-fail as above.
+#   TEST_USER_EMAIL          Login used by the E2E auth flow (tests/e2e/settings.ts
+#                            → TEST_AUTH_USER). tests/.env is gitignored, so CI must
+#                            provide it as a secret.
+#   TEST_USER_PASSWORD       Password for TEST_USER_EMAIL.
+#
+# ── Optional secrets (app has fallbacks; set only if you need real values) ──────
+#   NEXT_PUBLIC_SITE_URL     Canonical site URL for metadata/sitemap
+#                            (falls back to http://localhost:3000).
+#   NEXT_PUBLIC_VERCEL_URL   Alt base URL used by sitemap/layout fallbacks.
+# ────────────────────────────────────────────────────────────────────────────────
+
+name: E2E
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    name: Playwright (chromium)
+    runs-on: ubuntu-latest
+    # Live OneEntry cloud API + full prod build; give it room beyond the default 6h cap.
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Node 22 — package.json engines requires ">=22.11.0".
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # BASE_URL is intentionally left unset so playwright.config.ts computes
+      # http://localhost:3100 and its webServer builds + starts the app itself.
+      - name: Run Playwright tests
+        run: npx playwright test --project=chromium
+        env:
+          CI: true
+          NEXT_PUBLIC_PROJECT_URL: ${{ secrets.NEXT_PUBLIC_PROJECT_URL }}
+          NEXT_PUBLIC_APP_TOKEN: ${{ secrets.NEXT_PUBLIC_APP_TOKEN }}
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          NEXT_PUBLIC_VERCEL_URL: ${{ secrets.NEXT_PUBLIC_VERCEL_URL }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 14
+
+      - name: Upload test results (traces, screenshots, videos)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 14

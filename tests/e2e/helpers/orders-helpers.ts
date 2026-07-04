@@ -44,11 +44,14 @@ export function getOrderRowToggles(page: Page): Locator {
  * @returns {Promise<number>}      Count of order rows
  */
 export async function getOrderCount(page: Page): Promise<number> {
-  // The list loads client-side after auth; wait for either a row or the empty state.
-  await page
-    .locator(`${ROW_TOGGLE}, .orders-table__body:has-text("")`)
+  // The list loads client-side after auth. Wait for a real ROW toggle to appear
+  // (not just the table body — `.orders-table__body` renders immediately, before
+  // the client-side orders fetch resolves, so waiting on it reports 0 rows and
+  // masks an account that actually has orders). If the account is genuinely
+  // empty, this simply times out and returns 0.
+  await getOrderRowToggles(page)
     .first()
-    .waitFor({ state: 'visible', timeout: 15000 })
+    .waitFor({ state: 'visible', timeout: 20000 })
     .catch(() => {});
   return getOrderRowToggles(page).count();
 }
