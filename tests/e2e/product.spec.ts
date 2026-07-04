@@ -86,12 +86,11 @@ test.describe('Product Page — Add to Cart', () => {
 
   test('should add product to cart and update badge', async ({ page }) => {
     const addToCartBtn = page.locator(SELECTORS.addToCartButton).first();
-    const isVisible = await addToCartBtn.isVisible().catch(() => false);
 
-    if (!isVisible) {
-      test.skip();
-      return;
-    }
+    // goToFirstProduct deliberately opens an IN-STOCK product, so the add-to-cart
+    // button is guaranteed to render. It fades in via GSAP autoAlpha, so wait for
+    // visibility rather than an instant isVisible() check.
+    await expect(addToCartBtn).toBeVisible({ timeout: 10000 });
 
     const initialCount = await getCartItemCount(page);
     await addToCartBtn.click();
@@ -105,12 +104,9 @@ test.describe('Product Page — Add to Cart', () => {
     page,
   }) => {
     const addToCartBtn = page.locator(SELECTORS.addToCartButton).first();
-    const isVisible = await addToCartBtn.isVisible().catch(() => false);
 
-    if (!isVisible) {
-      test.skip();
-      return;
-    }
+    // In-stock product (goToFirstProduct) → button guaranteed present.
+    await expect(addToCartBtn).toBeVisible({ timeout: 10000 });
 
     await addToCartBtn.click();
 
@@ -130,12 +126,9 @@ test.describe('Product Page — Add to Cart', () => {
     page,
   }) => {
     const addToCartBtn = page.locator(SELECTORS.addToCartButton).first();
-    const isVisible = await addToCartBtn.isVisible().catch(() => false);
 
-    if (!isVisible) {
-      test.skip();
-      return;
-    }
+    // In-stock product (goToFirstProduct) → button guaranteed present.
+    await expect(addToCartBtn).toBeVisible({ timeout: 10000 });
 
     // Add product
     await addToCartBtn.click();
@@ -154,12 +147,9 @@ test.describe('Product Page — Add to Cart', () => {
     page,
   }) => {
     const addToCartBtn = page.locator(SELECTORS.addToCartButton).first();
-    const isVisible = await addToCartBtn.isVisible().catch(() => false);
 
-    if (!isVisible) {
-      test.skip();
-      return;
-    }
+    // In-stock product (goToFirstProduct) → button guaranteed present.
+    await expect(addToCartBtn).toBeVisible({ timeout: 10000 });
 
     // Add product
     await addToCartBtn.click();
@@ -181,12 +171,9 @@ test.describe('Product Page — Add to Cart', () => {
     page,
   }) => {
     const addToCartBtn = page.locator(SELECTORS.addToCartButton).first();
-    const isVisible = await addToCartBtn.isVisible().catch(() => false);
 
-    if (!isVisible) {
-      test.skip();
-      return;
-    }
+    // In-stock product (goToFirstProduct) → button guaranteed present.
+    await expect(addToCartBtn).toBeVisible({ timeout: 10000 });
 
     await addToCartBtn.click();
 
@@ -265,6 +252,10 @@ test.describe('Product Page — Navigation', () => {
   test.setTimeout(20000);
 
   test('should navigate to product page from shop', async ({ page }) => {
+    // Two full navigations (shop → product) plus a client-side CMS fetch for the
+    // product details can exceed the describe-level 20s budget under load.
+    test.setTimeout(45000);
+
     await page.goto(ROUTES.shop);
     await waitForPageLoad(page);
 
@@ -275,7 +266,12 @@ test.describe('Product Page — Navigation', () => {
     await waitForPageLoad(page);
 
     await expect(page).toHaveURL(/\/shop\/product\//);
-    await expect(page.locator(SELECTORS.productTitle).first()).toBeVisible();
+    // The product page renders its details via a client-side fetch to the remote
+    // CMS, so the title can lag past the default 5s expect timeout under load —
+    // give it the same budget the direct-load navigation test uses (15s).
+    await expect(page.locator(SELECTORS.productTitle).first()).toBeVisible({
+      timeout: 15000,
+    });
   });
 
   test('should have breadcrumbs or back navigation', async ({ page }) => {

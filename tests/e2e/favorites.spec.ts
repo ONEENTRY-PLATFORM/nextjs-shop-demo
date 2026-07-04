@@ -24,59 +24,52 @@ test.describe('Favorites', () => {
     // Navigate to a product
     await goToFirstProduct(page);
 
-    // Find and click add to favorites button
+    // The favorites toggle renders on EVERY product page, so it must be present.
+    // It reveals via GSAP autoAlpha — wait for visibility, don't probe instantly.
     const addToFavoritesButton = page
       .locator(SELECTORS.addToFavoritesButton)
       .first();
+    await expect(addToFavoritesButton).toBeVisible({ timeout: 10000 });
 
-    // Check if favorites feature exists
-    const isVisible = await addToFavoritesButton
-      .isVisible({ timeout: 5000 })
-      .catch(() => false);
+    // Get initial favorites count using helper
+    const initialCount = await getFavoritesItemCount(page);
 
-    if (isVisible) {
-      // Get initial favorites count using helper
-      const initialCount = await getFavoritesItemCount(page);
+    // Add to favorites
+    await addToFavoritesButton.click();
 
-      // Add to favorites
-      await addToFavoritesButton.click();
-
-      // Wait for Redux store update and badge to reflect new count
-      const badge = getFavoritesBadge(page);
-      await expect(badge).toHaveText(String(initialCount + 1), {
-        timeout: 5000,
-      });
-    } else {
-      test.skip();
-    }
+    // Wait for Redux store update and badge to reflect new count
+    const badge = getFavoritesBadge(page);
+    await expect(badge).toHaveText(String(initialCount + 1), {
+      timeout: 5000,
+    });
   });
 
   test('should remove product from favorites', async ({ page }) => {
     // Navigate to a product
     await goToFirstProduct(page);
 
-    // Add to favorites first
+    // The favorites toggle renders on every product page — assert it is present.
     const addToFavoritesButton = page
       .locator(SELECTORS.addToFavoritesButton)
       .first();
+    await expect(addToFavoritesButton).toBeVisible({ timeout: 10000 });
 
-    const isVisible = await addToFavoritesButton
-      .isVisible({ timeout: 5000 })
-      .catch(() => false);
+    const initialCount = await getFavoritesItemCount(page);
+    const badge = getFavoritesBadge(page);
 
-    if (isVisible) {
-      await addToFavoritesButton.click();
-      await page.waitForTimeout(1000);
+    // Add to favorites — badge reflects the increment.
+    await addToFavoritesButton.click();
+    await expect(badge).toHaveText(String(initialCount + 1), { timeout: 5000 });
 
-      // Click again to remove (toggle behavior)
-      await addToFavoritesButton.click();
-      await page.waitForTimeout(1000);
+    // Toggle again to remove — badge settles back to the original count.
+    await addToFavoritesButton.click();
+    await expect(badge).toHaveText(String(initialCount), { timeout: 5000 });
 
-      // Verify it was removed (button state changed)
-      // This depends on your implementation - might check for class, icon, or text change
-    } else {
-      test.skip();
-    }
+    // The button aria-label also flips back to the "add" state after removal.
+    await expect(addToFavoritesButton).toHaveAttribute(
+      'aria-label',
+      'Add to favorites',
+    );
   });
 
   test('should view favorites page', async ({ page }) => {
@@ -111,73 +104,93 @@ test.describe('Favorites', () => {
     const addToFavoritesButton = page
       .locator(SELECTORS.addToFavoritesButton)
       .first();
+    await expect(addToFavoritesButton).toBeVisible({ timeout: 10000 });
 
-    const isVisible = await addToFavoritesButton
-      .isVisible({ timeout: 5000 })
-      .catch(() => false);
+    // Get initial count and add to favorites
+    const initialCount = await getFavoritesItemCount(page);
+    await addToFavoritesButton.click();
 
-    if (isVisible) {
-      // Get initial count and add to favorites
-      const initialCount = await getFavoritesItemCount(page);
-      await addToFavoritesButton.click();
+    // Wait for badge to update
+    const badge = getFavoritesBadge(page);
+    await expect(badge).toHaveText(String(initialCount + 1), {
+      timeout: 5000,
+    });
 
-      // Wait for badge to update
-      const badge = getFavoritesBadge(page);
-      await expect(badge).toHaveText(String(initialCount + 1), {
-        timeout: 5000,
-      });
+    const countBefore = await getFavoritesItemCount(page);
 
-      const countBefore = await getFavoritesItemCount(page);
+    // Wait for redux-persist to flush the new state to localStorage
+    await page.waitForTimeout(1000);
 
-      // Wait for redux-persist to save to localStorage
-      await page.waitForTimeout(1000);
+    // Reload page
+    await page.reload();
+    await waitForPageLoad(page);
 
-      // Reload page
-      await page.reload();
-      await waitForPageLoad(page);
+    // After rehydration the badge briefly renders its empty state before Redux
+    // restores from localStorage — wait for it to settle back to the persisted
+    // count instead of reading during the transient 0 window.
+    await expect(getFavoritesBadge(page)).toHaveText(String(countBefore), {
+      timeout: 8000,
+    });
 
-      // Wait for Redux to restore from localStorage after reload
-      await page.waitForTimeout(1000);
-
-      // Verify count persisted
-      const countAfter = await getFavoritesItemCount(page);
-      expect(countAfter).toBe(countBefore);
-    } else {
-      test.skip();
-    }
+    // Verify count persisted
+    const countAfter = await getFavoritesItemCount(page);
+    expect(countAfter).toBe(countBefore);
   });
 
   test('should add favorite to cart from favorites page', async ({ page }) => {
+    // SEED from the shop so the favorites page is guaranteed non-empty AND holds a
+    // genuinely purchasable product. NB: goToFirstProduct can land on a product
+    // that is status=in_stock but units_product=0 (e.g. id 49 — see mismatch-log
+    // B.5), which renders "Out of stock" with NO add-to-cart button. So select a
+    // card that ACTUALLY renders the add-to-cart button — filtering by that button
+    // is what proves real stock — and favorite THAT product.
+    await page.goto('/en/shop');
+    await waitForPageLoad(page);
+
+    const inStockCard = page
+      .locator(SELECTORS.productCard)
+      .filter({ has: page.locator(SELECTORS.addToCartButton) })
+      .first();
+    await expect(inStockCard).toBeVisible({ timeout: 20000 });
+
+    const initialFavCount = await getFavoritesItemCount(page);
+    await inStockCard.locator(SELECTORS.addToFavoritesButton).click();
+    await expect(getFavoritesBadge(page)).toHaveText(
+      String(initialFavCount + 1),
+      { timeout: 5000 },
+    );
+
+    // Give redux-persist time to flush to localStorage before the full navigation
+    // (page.goto reboots the app, which rehydrates favorites from localStorage).
+    await page.waitForTimeout(1000);
+
     // Navigate to favorites
     await page.goto('/en/favorites');
     await waitForPageLoad(page);
+    await expect(page).toHaveURL(/\/favorites/);
 
-    // Check if there are favorites
-    const favoriteItems = page.locator(SELECTORS.productCard);
-    const count = await favoriteItems.count();
+    // The seeded (in-stock) favorite must render its add-to-cart button. Filtering
+    // by the button also skips the skeleton loader, which shares .product-card but
+    // renders no button.
+    const favoriteCard = page
+      .locator(SELECTORS.productCard)
+      .filter({ has: page.locator(SELECTORS.addToCartButton) })
+      .first();
+    const addToCartButton = favoriteCard
+      .locator(SELECTORS.addToCartButton)
+      .first();
+    await expect(addToCartButton).toBeVisible({ timeout: 15000 });
 
-    if (count > 0) {
-      // Find add to cart button in first favorite
-      const firstFavorite = favoriteItems.first();
-      const addToCartButton = firstFavorite.locator(SELECTORS.addToCartButton);
+    // Get cart count before using helper
+    const cartCountBefore = await getCartItemCount(page);
 
-      const isVisible = await addToCartButton.isVisible().catch(() => false);
+    // Add to cart
+    await addToCartButton.click();
 
-      if (isVisible) {
-        // Get cart count before using helper
-        const cartCountBefore = await getCartItemCount(page);
-
-        // Add to cart
-        await addToCartButton.click();
-
-        // Wait for cart badge to update
-        const cartBadge = getCartBadge(page);
-        await expect(cartBadge).toHaveText(String(cartCountBefore + 1), {
-          timeout: 5000,
-        });
-      }
-    } else {
-      test.skip();
-    }
+    // Wait for cart badge to update
+    const cartBadge = getCartBadge(page);
+    await expect(cartBadge).toHaveText(String(cartCountBefore + 1), {
+      timeout: 5000,
+    });
   });
 });

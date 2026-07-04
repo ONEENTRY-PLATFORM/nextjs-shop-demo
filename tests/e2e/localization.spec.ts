@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, type Page, test } from '@playwright/test';
 
 import { waitForPageLoad } from './helpers/navigation-helpers';
 import { ROUTES, SELECTORS } from './settings';
@@ -37,95 +37,74 @@ test.describe('Localization', () => {
   });
 
   test.describe('Language Switching', () => {
-    test('switching language changes URL prefix', async ({ page }) => {
+    /**
+     * Reads the available locale shortcodes from the language selector.
+     * Options are driven by the CMS active-locales list, so a spec must tolerate
+     * a project where French is not enabled.
+     * @param   {Page}              page - Playwright page object
+     * @returns {Promise<string[]>}      Locale shortcodes offered by the selector
+     */
+    async function getLangOptions(page: Page): Promise<string[]> {
       const langSelector = page.locator(SELECTORS.langSelector);
-      const options = langSelector.locator('option');
-      const count = await options.count();
+      await expect(langSelector).toBeVisible({ timeout: 10000 });
+      return langSelector
+        .locator('option')
+        .evaluateAll((opts) => opts.map((o) => (o as HTMLOptionElement).value));
+    }
 
-      if (count >= 2) {
-        // Get the second language option
-        const secondOption = options.nth(1);
-        const secondLang = await secondOption.getAttribute('value');
+    /**
+     * Selects a locale and waits for the route to reflect it.
+     * The native select's change event can be missed while a heavier page is
+     * still hydrating (React's onChange handler not yet attached), so the
+     * selection is retried until the URL flips to the new locale.
+     * @param   {Page}          page   - Playwright page object
+     * @param   {string}        target - Locale shortcode to switch to (e.g. 'fr')
+     * @param   {RegExp}        urlRe  - Expected URL pattern after the switch
+     * @returns {Promise<void>}        Resolves once the URL matches
+     */
+    async function switchLang(
+      page: Page,
+      target: string,
+      urlRe: RegExp,
+    ): Promise<void> {
+      await expect(async () => {
+        await page.selectOption(SELECTORS.langSelector, target);
+        await expect(page).toHaveURL(urlRe, { timeout: 2000 });
+      }).toPass({ timeout: 15000 });
+    }
 
-        if (secondLang && secondLang !== 'en') {
-          await langSelector.selectOption(secondLang);
-          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), {
-            timeout: 5000,
-          });
+    test('selecting French navigates to a /fr-prefixed URL', async ({
+      page,
+    }) => {
+      const options = await getLangOptions(page);
+      test.skip(!options.includes('fr'), 'French locale not enabled in CMS');
 
-          // URL should contain the new language prefix
-          const url = page.url();
-          expect(url).toContain(`/${secondLang}`);
-        } else {
-          test.skip();
-        }
-      } else {
-        test.skip();
-      }
+      await switchLang(page, 'fr', /^.*\/fr(\/|$)/);
     });
 
-    test('switching back to English works', async ({ page }) => {
-      const langSelector = page.locator(SELECTORS.langSelector);
-      const options = langSelector.locator('option');
-      const count = await options.count();
+    test('switching from French back to English returns to a /en URL', async ({
+      page,
+    }) => {
+      const options = await getLangOptions(page);
+      test.skip(!options.includes('fr'), 'French locale not enabled in CMS');
 
-      if (count >= 2) {
-        // Switch to second language first
-        const secondOption = options.nth(1);
-        const secondLang = await secondOption.getAttribute('value');
-
-        if (secondLang && secondLang !== 'en') {
-          await langSelector.selectOption(secondLang);
-          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), {
-            timeout: 5000,
-          });
-
-          // Find selector again after navigation
-          const newLangSelector = page.locator(SELECTORS.langSelector);
-          await expect(newLangSelector).toBeVisible({ timeout: 5000 });
-
-          // Switch back to English
-          await newLangSelector.selectOption('en');
-          await expect(page).toHaveURL(/\/en/, { timeout: 5000 });
-
-          expect(page.url()).toContain('/en');
-        } else {
-          test.skip();
-        }
-      } else {
-        test.skip();
-      }
+      // Switch to French first, then back to English.
+      await switchLang(page, 'fr', /^.*\/fr(\/|$)/);
+      await switchLang(page, 'en', /^.*\/en(\/|$)/);
     });
 
-    test('language switch preserves current page path', async ({ page }) => {
-      // Navigate to shop first
+    test('language switch preserves the current page path', async ({
+      page,
+    }) => {
+      // Start on the shop listing instead of the home page.
       await page.goto(ROUTES.shop);
       await waitForPageLoad(page);
 
-      const langSelector = page.locator(SELECTORS.langSelector);
-      const options = langSelector.locator('option');
-      const count = await options.count();
+      const options = await getLangOptions(page);
+      test.skip(!options.includes('fr'), 'French locale not enabled in CMS');
 
-      if (count >= 2) {
-        const secondOption = options.nth(1);
-        const secondLang = await secondOption.getAttribute('value');
-
-        if (secondLang && secondLang !== 'en') {
-          await langSelector.selectOption(secondLang);
-          await expect(page).toHaveURL(new RegExp(`/${secondLang}`), {
-            timeout: 5000,
-          });
-
-          // Should still be on shop page, but in different language
-          const url = page.url();
-          expect(url).toContain('/shop');
-          expect(url).toContain(`/${secondLang}`);
-        } else {
-          test.skip();
-        }
-      } else {
-        test.skip();
-      }
+      // Only the locale segment changes: /en/shop -> /fr/shop.
+      await switchLang(page, 'fr', /\/fr\/shop/);
     });
   });
 

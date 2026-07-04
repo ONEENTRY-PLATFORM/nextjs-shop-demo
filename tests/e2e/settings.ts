@@ -20,7 +20,29 @@ export const ROUTES = {
   // NB: points at live CMS data — update if this product is removed/unpublished
   // (id 65 was removed 2026-07-02; its page renders the 404 UI with HTTP 200).
   product: '/en/shop/product/103',
+  // Category index (children of CMS page 'category').
+  categoryIndex: '/en/shop/category',
+  // Generic CMS content pages served by the [page] catch-all. These are CMS
+  // pageUrl markers (see mismatch-log A.1) — a spec must tolerate a 404 when the
+  // marker is not configured in this project's admin.
+  paymentSuccess: '/en/payment_success',
+  paymentCanceled: '/en/payment_canceled',
+  bookOnline: '/en/book_online',
+  delivery: '/en/delivery',
 } as const;
+
+/**
+ * Master switch for tests that PERSIST data to the live OneEntry CMS
+ * (posting a review/comment, cancelling an order, sending a real reset code…).
+ *
+ * The E2E suite runs against live CMS data with no mocks, so a "successful
+ * submit" test writes real, often irreversible, records — e.g. a posted review
+ * is `status: 'approved'` and shows on the product forever. Those side-effecting
+ * assertions are gated behind this flag so the default run stays read-only and
+ * repeatable. Enable deliberately (against a dedicated test tenant) with:
+ * E2E_WRITE_TESTS=1 npx playwright test
+ */
+export const ALLOW_WRITES = process.env.E2E_WRITE_TESTS === '1';
 
 /**
  * Payment-flow fixtures.
