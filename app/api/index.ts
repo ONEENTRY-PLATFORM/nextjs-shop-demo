@@ -42,3 +42,4 @@ export { getProductsByPageUrl } from './server/products/getProductsByPageUrl';
 export { getRelatedProductsById } from './server/products/getRelatedProductsById';
 export { logInUser } from './server/users/logInUser';
 export { logOutUser } from './server/users/logOutUser';
+export { oauthLogInUser } from './server/users/oauthLogInUser';

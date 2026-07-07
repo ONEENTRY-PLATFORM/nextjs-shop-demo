@@ -17,6 +17,7 @@ import CreateAccountButton from './inputs/CreateAccountButton';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
+import GoogleSignInButton from './inputs/GoogleSignInButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
 
 /**
@@ -42,7 +43,6 @@ const SignInForm = ({
   const { authenticate } = useContext(AuthContext);
   const { setOpen } = useContext(OpenDrawerContext);
 
-  const [tab, setTab] = useState<string>('email');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
 
@@ -51,9 +51,12 @@ const SignInForm = ({
     forgot_password_text,
     create_account_text,
     sign_in_text,
-    email_text,
-    phone_text,
+    google_sign_in_text,
   } = dict;
+
+  /** Localized label for the Google OAuth button, with a safe fallback. */
+  const googleLabel =
+    (google_sign_in_text?.value as string) || 'Sign in with Google';
 
   /** Get form by marker with RTK */
   const { data, isLoading } = useGetFormByMarkerQuery({
@@ -122,20 +125,6 @@ const SignInForm = ({
     [email_reg, password_reg, setOpen, authenticate],
   );
 
-  /**
-   * Handler for switching to email tab
-   */
-  const handleEmailTabClick = useCallback(() => {
-    setTab('email');
-  }, []);
-
-  /**
-   * Handler for switching to phone tab
-   */
-  const handlePhoneTabClick = useCallback(() => {
-    setTab('phone');
-  }, []);
-
   return (
     <FormAnimations isLoading={isLoading || !formFields}>
       <form
@@ -149,46 +138,15 @@ const SignInForm = ({
           >
             <h2>{sign_in_text?.value as string}</h2>
           </FormFieldAnimations>
-
-          <FormFieldAnimations
-            index={1}
-            className="max-w-full text-xs text-gray-400"
-          >
-            <button
-              onClick={handleEmailTabClick}
-              className={tab === 'email' ? 'font-bold' : ''}
-              type="button"
-            >
-              {email_text?.value as string}
-            </button>
-            /
-            <button
-              onClick={handlePhoneTabClick}
-              className={tab === 'phone' ? 'font-bold' : ''}
-              type="button"
-            >
-              {phone_text?.value as string}
-            </button>
-          </FormFieldAnimations>
         </div>
 
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {formFields?.map((field: IAttributes, index: Key | number) => {
-            if (field.marker === 'email_reg' && tab === 'email') {
+            if (field.marker === 'email_reg') {
               return (
                 <FormInput
                   key={field.marker || index}
-                  index={2}
-                  {...field}
-                  value={(field as unknown as { value: string }).value}
-                />
-              );
-            }
-            if (field.marker === 'phone_reg' && tab === 'phone') {
-              return (
-                <FormInput
-                  key={field.marker || index}
-                  index={3}
+                  index={1}
                   {...field}
                   value={(field as unknown as { value: string }).value}
                 />
@@ -198,7 +156,7 @@ const SignInForm = ({
               return (
                 <FormInput
                   key={field.marker || index}
-                  index={4}
+                  index={2}
                   {...field}
                   value={(field as unknown as { value: string }).value}
                 />
@@ -209,10 +167,21 @@ const SignInForm = ({
         </div>
 
         <FormSubmitButton
-          index={5}
+          index={3}
           title={sign_in_text?.value as string}
           isLoading={loading}
         />
+
+        <FormFieldAnimations
+          index={4}
+          className="mx-auto flex w-full max-w-70 items-center gap-3 text-xs text-gray-400"
+        >
+          <span className="h-px flex-1 bg-gray-200" />
+          or
+          <span className="h-px flex-1 bg-gray-200" />
+        </FormFieldAnimations>
+
+        <GoogleSignInButton index={5} lang={lang} title={googleLabel} />
 
         <FormFieldAnimations
           index={6}
