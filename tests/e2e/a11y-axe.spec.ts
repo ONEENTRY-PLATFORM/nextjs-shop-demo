@@ -103,7 +103,12 @@ async function runAxeGate(
 ): Promise<void> {
   // Auto-retry that the page shell is actually painted before scanning, so a
   // GSAP entrance animation can't have axe run against a half-rendered DOM.
-  await expect(page.locator('main').first()).toBeVisible();
+  // Every page renders <main> in the root layout, so its absence means the live
+  // CMS shell simply hasn't painted yet — under load that can exceed expect's 5s
+  // default and surface as a spurious "element(s) not found". Give it the same
+  // live-API headroom the rest of this suite uses (waitForPageLoad already waits
+  // 15s but swallows the failure) so a slow shell degrades to a pass, not a flake.
+  await expect(page.locator('main').first()).toBeVisible({ timeout: 20000 });
 
   const results = await new AxeBuilder({ page })
     .withTags(['wcag2a', 'wcag2aa'])

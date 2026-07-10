@@ -92,6 +92,8 @@ const LoadMore = ({ totalPages }: { totalPages: number }): JSX.Element => {
 
   return (
     <button
+      type="button"
+      aria-label="Load more products"
       onClick={() => {
         goToNextPage();
       }}

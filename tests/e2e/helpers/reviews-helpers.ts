@@ -120,11 +120,17 @@ export async function expandReviewsList(page: Page): Promise<void> {
   }
   const toggle = getReviewsToggle(page);
   await toggle.scrollIntoViewIfNeeded();
-  // RatingButton toggles state (setState(!state)), so a blind retry-click would
-  // COLLAPSE a section that expanded slowly under load. Only click while still
-  // collapsed; once "Leave review" is visible, stop without re-clicking.
+  // RatingButton toggles state (setState(!state)). The "Leave review" button is
+  // ALWAYS in the DOM — ReviewAnimations only fades/collapses it via GSAP — so
+  // its visibility stays false DURING the ~0.75s expand animation even though the
+  // section is already expanding. Gating the retry-click on that visibility
+  // re-COLLAPSES a slowly-expanding section (the root cause of the intermittent
+  // timeouts). Gate on the toggle's own expanded state instead: the chevron gains
+  // `rotate-180` the moment `state` flips true, so we click only while still
+  // collapsed, then simply wait the animation out.
+  const expandedChevron = page.locator(`${REVIEWS.toggleChevron}.rotate-180`);
   await expect(async () => {
-    if (!(await leave.isVisible().catch(() => false))) {
+    if ((await expandedChevron.count()) === 0) {
       await toggle.click();
     }
     await expect(leave).toBeVisible({ timeout: 4000 });
@@ -142,17 +148,26 @@ export async function expandReviewsList(page: Page): Promise<void> {
 export async function openReviewForm(page: Page): Promise<void> {
   await expandReviewsList(page);
   const trigger = getLeaveReviewTrigger(page);
-  await trigger.scrollIntoViewIfNeeded();
+  // Best-effort pre-scroll: while the freshly-expanded section is still settling
+  // its GSAP height/translate, scrollIntoViewIfNeeded can wait for stability and
+  // time out under load. The trigger click inside the toPass loop below
+  // auto-scrolls anyway, so a failed pre-scroll must not fail the whole flow.
+  await trigger.scrollIntoViewIfNeeded().catch(() => {});
   const drawer = page.locator(REVIEWS.drawer);
-  // "Leave review" toggles the drawer (setOpen(!open)), so a blind retry-click
-  // would CLOSE a drawer that opened slowly under load — the root cause of the
-  // intermittent openReviewForm timeouts. Click only while the drawer is not yet
-  // open; once it is visible, stop.
+  // "Leave review" toggles the drawer via setOpen(!open). The drawer host
+  // (#modalBody) is REMOVED from the DOM while closed and only mounts once
+  // open===true — but it then animates from visibility:hidden→visible over ~0.5s
+  // (GSAP autoAlpha). So `isVisible()` is false DURING the open animation even
+  // though `open` is already true; gating the retry-click on visibility
+  // re-toggles a slowly-opening drawer CLOSED — the root cause of the
+  // intermittent openReviewForm timeouts. Gate on DOM PRESENCE instead: click
+  // only while the host is absent (open===false); once it mounts, stop clicking
+  // and just wait for the open animation to finish.
   await expect(async () => {
-    if (!(await drawer.isVisible().catch(() => false))) {
+    if ((await drawer.count()) === 0) {
       await trigger.click();
     }
-    await expect(drawer).toBeVisible({ timeout: 4000 });
+    await expect(drawer).toBeVisible({ timeout: 6000 });
   }).toPass({ timeout: 25000 });
 }
 
