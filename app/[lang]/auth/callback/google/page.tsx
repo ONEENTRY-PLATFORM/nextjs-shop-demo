@@ -55,8 +55,9 @@ const GoogleCallback = (): JSX.Element => {
       // Browser fingerprint the API binds the refresh token to (SDK ≥ 1.0.155).
       // getDeviceMetadata() is a per-module method — not on the root getApi() object.
       const deviceMetadata = getApi().AuthProvider.getDeviceMetadata();
-      // Must byte-for-byte match the redirect URI the button used.
-      const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/${lang}/auth/callback`;
+      // Must byte-for-byte match the redirect URI the button used AND the one
+      // registered in Google Cloud Console (…/auth/callback/google).
+      const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/${lang}/auth/callback/google`;
 
       const result = await oauthLogInUser({
         code,

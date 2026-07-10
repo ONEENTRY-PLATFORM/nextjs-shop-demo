@@ -84,30 +84,24 @@ test.describe('Authentication — Sign In Modal', () => {
     });
   });
 
-  test('should switch to phone tab and back to email tab', async ({ page }) => {
+  test('should offer Google OAuth instead of the phone tab', async ({
+    page,
+  }) => {
     await openSignInModal(page);
 
-    // Email input should be visible by default
+    // Email input is the default credential field.
     await expect(page.locator(SELECTORS.emailInput)).toBeVisible();
 
-    // Click phone tab
-    const phoneTab = page
-      .locator(SELECTORS.signInModal)
-      .getByRole('button', { name: /phone/i });
-    const hasPhoneTab = await phoneTab.isVisible().catch(() => false);
+    // The "Sign in with Google" button replaced the old Phone tab.
+    await expect(page.locator(SELECTORS.googleLoginButton)).toBeVisible();
 
-    if (hasPhoneTab) {
-      await phoneTab.click();
-      await expect(page.locator(SELECTORS.emailInput)).toBeHidden();
-      await expect(page.locator('#phone_reg')).toBeVisible();
-
-      // Switch back to email
-      const emailTab = page
-        .locator(SELECTORS.signInModal)
-        .getByRole('button', { name: /e-?mail/i });
-      await emailTab.click();
-      await expect(page.locator(SELECTORS.emailInput)).toBeVisible();
-    }
+    // The phone tab / field must no longer exist.
+    await expect(page.locator(SELECTORS.phoneInput)).toHaveCount(0);
+    await expect(
+      page.locator(SELECTORS.signInModal).getByRole('button', {
+        name: /phone/i,
+      }),
+    ).toHaveCount(0);
   });
 });
 

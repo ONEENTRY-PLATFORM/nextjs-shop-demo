@@ -53,8 +53,9 @@ const GoogleSignInButton = ({
 
     // Must match EXACTLY the URI registered in Google Cloud Console and the one
     // used by the server-side code exchange (oauthLogInUser). Lang-prefixed
-    // because every route lives under `app/[lang]/`.
-    const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/${lang}/auth/callback`;
+    // because every route lives under `app/[lang]/`; `/google` namespaces the
+    // provider (registered as …/auth/callback/google in Google Console).
+    const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/${lang}/auth/callback/google`;
 
     window.location.href =
       `${provider.config.oauthAuthUrl}` +

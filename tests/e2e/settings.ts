@@ -22,6 +22,9 @@ export const ROUTES = {
   product: '/en/shop/product/103',
   // Category index (children of CMS page 'category').
   categoryIndex: '/en/shop/category',
+  // Google OAuth callback (lang-prefixed — every route lives under app/[lang]/;
+  // `/google` namespaces the provider, matching the registered redirect URI).
+  authCallback: '/en/auth/callback/google',
   // Generic CMS content pages served by the [page] catch-all. These are CMS
   // pageUrl markers (see mismatch-log A.1) — a spec must tolerate a 404 when the
   // marker is not configured in this project's admin.
@@ -139,6 +142,12 @@ export const SELECTORS = {
   phoneInput: '#phone_reg',
   modalSubmitButton: '#modalBody button[type="submit"]',
   modalError: '#modalBody .text-red-500',
+
+  // Google OAuth
+  googleLoginButton: '[data-testid="google-login-button"]',
+  oauthCallback: '[data-testid="oauth-callback"]',
+  oauthError: '[data-testid="oauth-error"]',
+  oauthLoading: '[data-testid="oauth-loading"]',
 
   // Search
   searchInput: '#quick-search',
