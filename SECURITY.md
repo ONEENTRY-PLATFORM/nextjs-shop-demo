@@ -11,7 +11,7 @@ If you discover a security vulnerability, please **do not open a public Issue**.
 
 Instead, report it responsibly by:
 
-- Using [GitHub Security Advisories](https://github.com/ONEENTRY-PLATFORM/nextjs-restaurant-demo/security/advisories/new), **or**
+- Using [GitHub Security Advisories](https://github.com/ONEENTRY-PLATFORM/nextjs-shop-demo/security/advisories/new), **or**
 - Contacting the maintainers directly via the OneEntry website: <https://oneentry.cloud>
 
 Please include:
