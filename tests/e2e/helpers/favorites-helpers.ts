@@ -16,7 +16,7 @@ export function getFavoritesBadge(page: Page): Locator {
   // Use .first() to handle cases where badge appears multiple times (desktop + mobile)
   return page
     .locator(SELECTORS.favoritesIcon)
-    .locator('[data-testid="favorites-badge"]')
+    .locator('[data-testid="favorites-badge"]:visible')
     .first();
 }
 

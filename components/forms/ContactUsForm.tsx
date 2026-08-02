@@ -1,6 +1,5 @@
 'use client';
 
-import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IPostFormResponse } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { FormEvent, JSX, Key } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
@@ -15,6 +14,8 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormReCaptcha from './inputs/FormReCaptcha';
 import FormSubmitButton from './inputs/FormSubmitButton';
+import { getFormAttributes } from './utils/getFormAttributes';
+import { transformFormField } from './utils/transformFormData';
 
 /**
  * ContactUs form.
@@ -64,10 +65,9 @@ const ContactUsForm = memo(
      * This ensures fields are displayed in the correct order
      */
     const formFields = useMemo(() => {
-      return Array.isArray(data?.attributes)
-        ? (data.attributes as unknown as IAttributes[])
-            .slice()
-            .sort((a, b) => a.position - b.position)
+      const attributes = getFormAttributes(data);
+      return attributes.length > 0
+        ? attributes.sort((a, b) => a.position - b.position)
         : undefined;
     }, [data]);
 
@@ -86,86 +86,42 @@ const ContactUsForm = memo(
       async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const emptyFormData: {
-          marker: string;
-          type: string;
-          value: string | object;
-        }[] = [];
-
         /** transform and send form data */
         if (formFields) {
-          /** Get all form field property keys */
-          const propertiesArray = Object.keys(formFields);
+          /**
+           * A spam (reCAPTCHA) field must be submitted with a captured token —
+           * posting without one is guaranteed to fail the server-side captcha
+           * validation, so block the submit until the token arrives.
+           */
+          const spamField = formFields.find(
+            (field) => field.type === 'spam' || field.marker === 'spam',
+          );
+          if (spamField && !token) {
+            setError('Captcha verification is not complete yet');
+            return;
+          }
 
           /**
            * Transform form data based on field types
-           * Each field is processed according to its type to create the correct data structure
+           * Each field is processed according to its type (taken from the form
+           * attributes) to create the correct data structure; the spam field
+           * gets the captured reCAPTCHA token/siteKey object.
            */
-          const transformedFormData = propertiesArray?.reduce((formData, i) => {
-            const field = formFields[Number(i)]!;
-            const type = field.type;
-            const marker = field.marker;
-            const value = fieldsData[marker as keyof typeof fieldsData]?.value;
-            let newData = {
-              marker: marker,
-              type: 'string',
-              value: value,
-            } as {
-              marker: string;
-              type: string;
-              value: string | object;
-            };
-
-            /** Handle special field types with specific data structures */
-            if (marker === 'spam') {
-              newData = {
-                marker: marker,
-                type: 'spam',
-                value: '',
-              };
-            }
-            if (marker === 'send') {
-              newData = {
-                marker: marker,
-                type: 'button',
-                value: '',
-              };
-            }
-            if (type === 'list') {
-              newData = {
-                marker: marker,
-                type: 'list',
-                value: [value],
-              };
-              // newData = {
-              //   marker: marker,
-              //   type: 'list',
-              //   value: [
-              //     {
-              //       title: value,
-              //       value: value,
-              //     },
-              //   ],
-              // };
-            }
-            if (type === 'text') {
-              newData = {
-                marker: marker,
-                type: 'text',
-                value: [
-                  {
-                    // htmlValue: value,
-                    plainValue: value,
-                  },
-                ],
-              };
-            }
-
-            if (newData) {
-              formData.push(newData);
-            }
-            return formData;
-          }, emptyFormData);
+          const transformedFormData = formFields.map((field) =>
+            transformFormField({
+              marker: field.marker,
+              type: field.type,
+              value: fieldsData[field.marker]?.value,
+              captcha: token
+                ? {
+                    token,
+                    siteKey:
+                      (field.settings?.captcha as { key?: string } | undefined)
+                        ?.key ?? '',
+                  }
+                : undefined,
+            }),
+          );
 
           /** Send transformed form data to OneEntry API using hook */
           try {
@@ -211,7 +167,15 @@ const ContactUsForm = memo(
           }
         }
       },
-      [formFields, fieldsData, data, moduleFormConfig, sendData, dispatch],
+      [
+        formFields,
+        token,
+        fieldsData,
+        data,
+        moduleFormConfig,
+        sendData,
+        dispatch,
+      ],
     );
 
     /** Show loader while form data is being fetched */
@@ -228,7 +192,7 @@ const ContactUsForm = memo(
         onSubmit={onSubmitFormHandle}
       >
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-          {formFields?.map((field: IAttributes, index: Key | number) => {
+          {formFields?.map((field, index: Key | number) => {
             /** Render form fields based on their type */
             if (field.type === 'button') {
               return (
@@ -266,19 +230,8 @@ const ContactUsForm = memo(
                 <FormInput
                   key={field.marker || index}
                   index={index as number}
-                  value={(field as unknown as { value: string }).value}
-                  marker={field.marker}
-                  type={field.type}
-                  localizeInfos={field.localizeInfos}
-                  validators={field.validators}
-                  listTitles={field.listTitles}
-                  additionalFields={
-                    (
-                      field as {
-                        additionalFields?: Record<string, { value?: unknown }>;
-                      }
-                    ).additionalFields
-                  }
+                  {...field}
+                  value={(field.value as string | number | undefined) ?? ''}
                 />
               );
             }

@@ -1,6 +1,5 @@
-/* eslint-disable jsdoc/reject-any-type */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IFormByMarkerDataEntity } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type JSX, useState } from 'react';
 
@@ -14,12 +13,12 @@ import ChildReviews from './ChildReviews';
 
 /**
  * Child review
- * @param   {object}           props            - Child review props
- * @param   {IAttributeValues} props.dict       - Dictionary
- * @param   {IProductsEntity}  props.product    - Product
- * @param   {object}           props.review     - Review
- * @param   {any[]}            props.allReviews - All reviews for recursive lookup
- * @returns {JSX.Element}                       Child review
+ * @param   {object}                    props            - Child review props
+ * @param   {IAttributeValues}          props.dict       - Dictionary
+ * @param   {IProductsEntity}           props.product    - Product
+ * @param   {IFormByMarkerDataEntity}   props.review     - Review
+ * @param   {IFormByMarkerDataEntity[]} props.allReviews - All reviews for recursive lookup
+ * @returns {JSX.Element}                                Child review
  */
 const ChildReviewCard = ({
   dict,
@@ -29,8 +28,8 @@ const ChildReviewCard = ({
 }: {
   dict: IAttributeValues;
   product: IProductsEntity;
-  review: any;
-  allReviews?: any[];
+  review: IFormByMarkerDataEntity;
+  allReviews?: IFormByMarkerDataEntity[];
 }): JSX.Element => {
   const [state, setState] = useState(false);
 
@@ -47,7 +46,7 @@ const ChildReviewCard = ({
 
   /** Find child reviews of this review (replies to this reply) */
   const nestedChildReviews = allReviews.filter(
-    (r: any) => r.parentId == review.id && r.id !== review.id,
+    (r) => r.parentId === review.id && r.id !== review.id,
   );
 
   return (

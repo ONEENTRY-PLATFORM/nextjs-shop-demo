@@ -1,9 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { JSX } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';
+import { DELIVERY_PRODUCT_ID } from '@/app/utils/constants';
 import { useHydrated } from '@/components/hooks/useHydrated';
 import CartAltIcon from '@/components/icons/cart';
 
@@ -20,13 +22,12 @@ const NavItemCart = ({
   item,
   lang,
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  item: any;
+  item: IMenusPages;
   lang: string;
 }): JSX.Element => {
   /**
    * Get cart item count from Redux cart reducer
-   * Calculates the total number of items in the cart, excluding delivery item (id: 83)
+   * Calculates the total number of items in the cart, excluding the delivery product
    */
   const count = useAppSelector((state) => {
     /** Return 0 if there are no products in the cart */
@@ -36,8 +37,8 @@ const NavItemCart = ({
 
     return state.cartReducer.productsData
       .map((item: { id: number; quantity: number }) => {
-        /** Exclude delivery item (id: 83) from the count */
-        if (item.id === 83) {
+        /** Exclude the delivery product from the count */
+        if (item.id === DELIVERY_PRODUCT_ID) {
           return 0;
         }
         return item.quantity;
@@ -67,7 +68,7 @@ const NavItemCart = ({
      */
     <Link
       href={'/' + lang + '/' + pageUrl}
-      title={localizeInfos.menuTitle}
+      title={localizeInfos?.menuTitle ?? undefined}
       className="group relative box-border flex size-8 shrink-0 flex-col max-sm:size-6"
       aria-label={`Shopping cart with ${displayCount} ${displayCount === 1 ? 'item' : 'items'}`}
       // test id for e2e testing

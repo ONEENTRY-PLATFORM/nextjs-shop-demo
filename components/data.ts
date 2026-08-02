@@ -1,11 +1,28 @@
 /**
+ * A social sign-in button configuration entry.
+ * @property {string} src - Path to the provider icon.
+ * @property {string} alt - Accessible alt text for the icon.
+ */
+export type SocialProviderButton = {
+  src: string;
+  alt: string;
+};
+
+/**
+ * Layout configuration for a single home-page block card.
+ * @property {string} className - Tailwind classes defining the card's grid sizing.
+ */
+export type BlockData = {
+  className: string;
+};
+
+/**
  * Configuration for social provider buttons
  *
  * This array contains the source paths and alt text for social sign-in
  * option icons. Used to render social authentication buttons.
- * @type {Array<{src: string, alt: string}>}
  */
-export const socialProvidersButtons = [
+export const socialProvidersButtons: SocialProviderButton[] = [
   {
     src: '/icons/google.svg',
     alt: 'Social sign-in option 1',
@@ -19,7 +36,7 @@ export const socialProvidersButtons = [
 /**
  * Configuration data for different block types used in the application
  */
-export const blocksData = [
+export const blocksData: BlockData[] = [
   // home_banner:
   {
     className: 'w-full max-sm:flex-col h-[175px]',
@@ -56,7 +73,7 @@ export const blocksData = [
  * classes and additional styling. Used to apply consistent color schemes
  * across different sections of the application.
  */
-export const blocksColors = {
+export const blocksColors: Record<string, string> = {
   home_banner: 'bg-purple-200 w-full max-sm:flex-col',
   offer_best_seller: 'bg-orange-300',
   offer_promotion: 'bg-blue-200',

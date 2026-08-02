@@ -1,24 +1,25 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import type { JSX } from 'react';
 
+import type { BlockData } from '@/components/data';
+
 /**
  * Blocks grid loader component for displaying skeleton loaders for content blocks.
  * Renders a grid of placeholder blocks with animations while content is loading.
- * @param   {object}      props              - Props for the component
- * @param   {object}      props.blocksData   - Data for the blocks
- * @param   {object}      props.blocksColors - Colors for the blocks
- * @returns {JSX.Element}                    Loader component
+ * @param   {object}                 props              - Props for the component
+ * @param   {BlockData[]}            props.blocksData   - Layout data for the blocks
+ * @param   {Record<string, string>} props.blocksColors - Background color classes per block marker
+ * @returns {JSX.Element}                               Loader component
  */
 const BlocksGridLoader = ({
   blocksData,
   blocksColors,
 }: {
-  blocksData: any;
-  blocksColors: object;
+  blocksData: BlockData[];
+  blocksColors: Record<string, string>;
 }): JSX.Element => {
   /**
    * Array of block names representing different content sections
@@ -84,11 +85,10 @@ const BlocksGridLoader = ({
          */
         blocks.map((block, index) => {
           /** Get CSS classes for block by index */
-          const className =
-            blocksData[index as keyof typeof blocksData].className;
+          const className = blocksData[index]?.className ?? '';
 
           /** Get background color class based on block name */
-          const bgColor = blocksColors[block as keyof typeof blocksColors];
+          const bgColor = blocksColors[block] ?? '';
 
           return (
             <div key={block} className={`block-card ${className}`}>

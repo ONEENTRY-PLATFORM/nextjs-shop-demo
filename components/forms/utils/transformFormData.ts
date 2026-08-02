@@ -1,39 +1,56 @@
 import type { FormDataType } from 'oneentry/dist/forms-data/formsDataInterfaces';
 
+/**
+ * Captured reCAPTCHA verification data required to submit a `spam` field
+ * @property {string} token   - reCAPTCHA token captured on the client
+ * @property {string} siteKey - reCAPTCHA site key from the field settings (settings.captcha.key)
+ */
+export interface CaptchaData {
+  token: string;
+  siteKey: string;
+}
+
 // Parameters for transforming a single field
 export interface TransformFieldParams {
   marker: string;
   type: string;
   value: unknown;
-  productId: number;
+  productId?: number | undefined;
+  captcha?: CaptchaData | undefined;
 }
 
 /**
  * Field transformer function type
- * Takes marker, value, and productId, returns transformed FormDataType
+ * Takes the full field params, returns transformed FormDataType
  */
-type FieldTransformer = (
-  marker: string,
-  value: unknown,
-  productId: number,
-) => FormDataType;
+type FieldTransformer = (params: TransformFieldParams) => FormDataType;
 
 /**
  * Map of field transformers by marker or type
  * Each transformer handles a specific field type/marker
  */
 const FIELD_TRANSFORMERS: Record<string, FieldTransformer> = {
-  spam: (marker) => ({
+  spam: ({ marker, captcha }) => ({
     marker,
     type: 'spam',
-    value: '',
+    /**
+     * A spam field must be posted as the reCAPTCHA event object
+     * `{ event: { token, siteKey } }` — a plain string fails the
+     * server-side captcha validation.
+     */
+    value: {
+      event: {
+        token: captcha?.token ?? '',
+        siteKey: captcha?.siteKey ?? '',
+      },
+    },
   }),
-  send: (marker) => ({
+  send: ({ marker }) => ({
     marker,
     type: 'button',
     value: '',
   }),
-  text: (marker, value) => ({
+  text: ({ marker, value }) => ({
     marker,
     type: 'text',
     value: [
@@ -42,22 +59,22 @@ const FIELD_TRANSFORMERS: Record<string, FieldTransformer> = {
       },
     ],
   }),
-  groupOfImages: (marker, value, productId) => ({
+  groupOfImages: ({ marker, value, productId }) => ({
     marker,
     type: 'groupOfImages',
     value: value || [],
     fileQuery: {
       type: 'catalog',
       entity: 'editor',
-      id: productId,
+      id: productId ?? 0,
     },
   }),
-  list: (marker, value) => ({
+  list: ({ marker, value }) => ({
     marker,
     type: 'list',
     value: (value === '' || value == null ? [] : [String(value)]) as never,
   }),
-  radioButton: (marker, value) => ({
+  radioButton: ({ marker, value }) => ({
     marker,
     type: 'radioButton',
     value: (value === '' || value == null ? [] : [String(value)]) as never,
@@ -66,27 +83,27 @@ const FIELD_TRANSFORMERS: Record<string, FieldTransformer> = {
 
 /**
  * Transform a single form field based on its type or marker
- * @param   {TransformFieldParams} params           - Field parameters
- * @param   {string}               params.marker    - Field marker identifier
- * @param   {string}               params.type      - Field type
- * @param   {unknown}              params.value     - Field value
- * @param   {number}               params.productId - Product ID for file uploads
- * @returns {FormDataType}                          Transformed form field data
+ * @param   {TransformFieldParams} params             - Field parameters
+ * @param   {string}               params.marker      - Field marker identifier
+ * @param   {string}               params.type        - Field type
+ * @param   {unknown}              params.value       - Field value
+ * @param   {number}               [params.productId] - Product ID for file uploads
+ * @param   {CaptchaData}          [params.captcha]   - Captured reCAPTCHA token/siteKey for `spam` fields
+ * @returns {FormDataType}                            Transformed form field data
  */
-export const transformFormField = ({
-  marker,
-  type,
-  value,
-  productId,
-}: TransformFieldParams): FormDataType => {
+export const transformFormField = (
+  params: TransformFieldParams,
+): FormDataType => {
+  const { marker, type, value } = params;
+
   // Check if there's a marker-specific transformer first (higher priority)
   if (FIELD_TRANSFORMERS[marker]) {
-    return FIELD_TRANSFORMERS[marker](marker, value, productId);
+    return FIELD_TRANSFORMERS[marker](params);
   }
 
   // Then check for type-specific transformer
   if (FIELD_TRANSFORMERS[type]) {
-    return FIELD_TRANSFORMERS[type](marker, value, productId);
+    return FIELD_TRANSFORMERS[type](params);
   }
 
   // Default case: return field data as-is with proper type

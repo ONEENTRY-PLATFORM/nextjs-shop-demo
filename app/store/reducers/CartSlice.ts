@@ -387,7 +387,7 @@ export const cartSlice = createSlice({
         date: number;
         time: string;
         address: string;
-        interval?: Date[];
+        interval?: Date[] | undefined;
       }>,
     ) {
       state.deliveryData.date = action.payload.date;
@@ -488,14 +488,14 @@ export const selectIsInCart = (
 
 /**
  * Select delivery data.
- * @param   {object}  state                                   - The current state of the Redux store.
- * @param   {object}  state.cartReducer                       - Cart reducer state.
- * @param   {object}  state.cartReducer.deliveryData          - Delivery data object.
- * @param   {number}  state.cartReducer.deliveryData.date     - Delivery date.
- * @param   {string}  state.cartReducer.deliveryData.time     - Delivery time.
- * @param   {string}  state.cartReducer.deliveryData.address  - Delivery address.
- * @param   {Date[]}  state.cartReducer.deliveryData.interval - Delivery time interval.
- * @returns {unknown}                                         Delivery data object containing date, time and address.
+ * @param   {object} state                                   - The current state of the Redux store.
+ * @param   {object} state.cartReducer                       - Cart reducer state.
+ * @param   {object} state.cartReducer.deliveryData          - Delivery data object.
+ * @param   {number} state.cartReducer.deliveryData.date     - Delivery date.
+ * @param   {string} state.cartReducer.deliveryData.time     - Delivery time.
+ * @param   {string} state.cartReducer.deliveryData.address  - Delivery address.
+ * @param   {Date[]} state.cartReducer.deliveryData.interval - Delivery time interval.
+ * @returns {object}                                         Delivery data object containing date, time, address and interval.
  */
 export const selectDeliveryData = (state: {
   cartReducer: {
@@ -506,7 +506,12 @@ export const selectDeliveryData = (state: {
       interval?: Date[];
     };
   };
-}): unknown => state.cartReducer.deliveryData;
+}): {
+  date: number;
+  time: string;
+  address: string;
+  interval?: Date[] | undefined;
+} => state.cartReducer.deliveryData;
 
 /**
  * Select cart total.

@@ -8,11 +8,16 @@ import { getChildPagesByParentUrl } from '@/app/api';
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import { getBlurDataURL } from '@/app/api/utils/getBlurDataURL';
 import type { PageProps } from '@/app/types/global';
+import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import CategoriesGrid from '@/components/layout/categories';
 import { i18n } from '@/i18n-config';
 
-export const dynamic = 'force-dynamic';
+/**
+ * ISR: CMS content — revalidate every 5 minutes instead of force-dynamic
+ * (performance rule: never force-dynamic for CMS pages).
+ */
+export const revalidate = 300;
 
 /**
  * Category page
@@ -42,7 +47,7 @@ const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
    */
   const categories = await Promise.all(
     pages.map(async (page: IPagesEntity) => ({
-      title: page.localizeInfos.title,
+      title: page.localizeInfos?.title ?? NO_TITLE,
       link: '/' + lang + '/shop/category/' + page.pageUrl,
       imgSrc: getImageUrl('opengraph_image', page.attributeValues),
       blurDataURL: await getBlurDataURL(
@@ -142,11 +147,11 @@ export async function generateMetadata({
   /** Return metadata object */
   return generatePageMetadata({
     handle: handle,
-    title: localizeInfos.title,
-    description: localizeInfos.plainValue as string,
+    title: localizeInfos?.title ?? NO_TITLE,
+    description: (localizeInfos?.plainValue as string | undefined) ?? '',
     isVisible: isVisible,
     imageUrl: getImageUrl('opengraph_image', attributeValues),
-    imageAlt: localizeInfos.title,
+    imageAlt: localizeInfos?.title ?? NO_TITLE,
     lang: lang,
     baseUrl: '',
   });

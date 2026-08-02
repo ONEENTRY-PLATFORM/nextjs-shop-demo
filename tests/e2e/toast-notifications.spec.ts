@@ -130,7 +130,7 @@ test.describe('Toast Notifications', () => {
       const toast = TOAST(page);
       const badge = page
         .locator(SELECTORS.favoritesIcon)
-        .locator('[data-testid="favorites-badge"]');
+        .locator('[data-testid="favorites-badge"]:visible');
 
       const toastVisible = await toast
         .first()

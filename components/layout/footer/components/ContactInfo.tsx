@@ -2,7 +2,6 @@ import type { JSX } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
-import { toLangCode } from '@/app/types/enum';
 
 /**
  * Contact Info component for displaying company contact information in the footer.
@@ -16,9 +15,6 @@ const ContactInfo = async (): Promise<JSX.Element> => {
    */
   const [lang] = ServerProvider('lang');
 
-  /** Convert short locale to SDK langCode for accessing localized attribute values */
-  const langCode = toLangCode(lang);
-
   /**
    * Fetch contact information block from CMS by marker
    * This retrieves all the contact data stored in the CMS
@@ -31,15 +27,10 @@ const ContactInfo = async (): Promise<JSX.Element> => {
   }
 
   /**
-   * Get attribute values for the current language or fallback to default
-   * This ensures we display localized content when available
+   * Block attribute values — the SDK already unwraps the requested locale,
+   * so this is the flat marker→value map.
    */
-  const attributeValues = ((
-    block.attributeValues as unknown as Record<
-      string,
-      typeof block.attributeValues
-    >
-  )?.[langCode] || block?.attributeValues) as typeof block.attributeValues;
+  const attributeValues = block.attributeValues;
 
   /** Return error message if attribute values are not found */
   if (!attributeValues) {

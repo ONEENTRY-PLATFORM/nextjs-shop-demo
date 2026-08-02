@@ -1,11 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-// import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
 import type { JSX } from 'react';
 
 import { useGetSingleOrderQuery } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
+import { DELIVERY_PRODUCT_ID } from '@/app/utils/constants';
+import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';
 import Loader from '@/components/shared/Loader';
 
 import OrderAnimations from '../animations/OrderAnimations';
@@ -20,7 +22,7 @@ import RepeatOrderButton from './RepeatOrderButton';
  * Displays detailed information about a single order including products, order data, and action buttons.
  * @param   {object}                                         props                - Order page props
  * @param   {number}                                         props.id             - Order id to fetch and display
- * @param   {object}                                         props.settings       - Settings containing localized texts and configurations
+ * @param   {IAttributeValues}                               props.settings       - Block attribute values with localized texts (may be incomplete — every read is guarded)
  * @param   {string}                                         props.lang           - Current language shortcode for localization
  * @param   {boolean}                                        props.isActive       - Whether this order page is currently active/visible
  * @param   {(id: number, statusIdentifier: string) => void} props.onStatusChange - Callback to sync the parent list row status when the order status changes
@@ -34,7 +36,7 @@ const OrderPage = ({
   onStatusChange,
 }: {
   id: number;
-  settings: any;
+  settings: IAttributeValues | undefined;
   lang: string;
   isActive: boolean;
   onStatusChange: (id: number, statusIdentifier: string) => void;
@@ -76,24 +78,18 @@ const OrderPage = ({
       >
         <div className="text-red-500">
           Failed to load order details.{' '}
-          {error && 'message' in error && (error as any).message
-            ? (error as any).message
-            : 'Unknown error'}
+          {error ? getApiErrorMessage(error, 'Unknown error') : 'Unknown error'}
         </div>
       </OrderAnimations>
     );
   }
 
-  /** Return empty element if settings are not available */
-  if (!settings) {
-    return <></>;
-  }
-
   /** Extract relevant data from the order */
   const { products, statusIdentifier, paymentAccountIdentifier } = data;
 
-  /** Extract button titles from settings */
-  const { go_to_pay_title, repeat_order_title, cancel_order_title } = settings;
+  /** Extract button titles from settings with English fallbacks — the CMS block may be incomplete */
+  const { go_to_pay_title, repeat_order_title, cancel_order_title } =
+    settings ?? {};
 
   /** Render the order page with animations */
   return (
@@ -105,9 +101,9 @@ const OrderPage = ({
     >
       {/* Product cards section */}
       <div className="flex flex-col gap-4 pb-5 max-md:max-w-full">
-        {products?.map((product: any) => {
-          /** Skip product with id 83 (possibly a special case or placeholder) */
-          if (product.id === 83) {
+        {products?.map((product: IOrderProducts) => {
+          /** Skip the delivery product — it is rendered as order data, not as a product card */
+          if (product.id === DELIVERY_PRODUCT_ID) {
             return;
           }
           return (
@@ -131,7 +127,7 @@ const OrderPage = ({
         {statusIdentifier !== 'created' && (
           <RepeatOrderButton
             data={data}
-            title={repeat_order_title.value}
+            title={(repeat_order_title?.value as string) || 'Repeat order'}
             isLoading={isLoading}
           />
         )}
@@ -140,7 +136,7 @@ const OrderPage = ({
         {statusIdentifier === 'created' && (
           <CancelOrderButton
             data={data}
-            title={cancel_order_title.value}
+            title={(cancel_order_title?.value as string) || 'Cancel order'}
             isLoading={isLoading}
             refetch={refetch}
             onStatusChange={onStatusChange}
@@ -153,7 +149,7 @@ const OrderPage = ({
             <PayOrderButton
               id={data.id}
               lang={lang}
-              title={go_to_pay_title.value}
+              title={(go_to_pay_title?.value as string) || 'Go to pay'}
               loading={isLoading}
             />
           )}

@@ -26,12 +26,17 @@ const AddressRow = ({ placeholder }: { placeholder: string }): JSX.Element => {
   /** Get user data from authentication context */
   const { user } = useContext(AuthContext);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const deliveryData: any = useAppSelector(selectDeliveryData);
+  const deliveryData = useAppSelector(selectDeliveryData);
 
-  /** Get registered address from user form data if available */
-  const addressReg =
-    user?.formData.find((el) => el.marker === 'address_reg')?.value || '';
+  /**
+   * Get registered address from user form data if available. `formData`
+   * values are `unknown` by SDK design — accept the value only when it really
+   * is a string, so a non-string field cannot leak into the input.
+   */
+  const rawAddressReg = user?.formData.find(
+    (el) => el.marker === 'address_reg',
+  )?.value;
+  const addressReg = typeof rawAddressReg === 'string' ? rawAddressReg : '';
 
   /**
    * Effect to synchronize address data between delivery data and order data

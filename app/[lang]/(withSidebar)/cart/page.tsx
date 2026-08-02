@@ -4,20 +4,11 @@ import type { JSX } from 'react';
 import { getProductById } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
+import { DELIVERY_PRODUCT_ID } from '@/app/utils/constants';
 import CartPage from '@/components/layout/cart';
 import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../../dictionaries';
-
-/** Define the response type */
-type ProductResponse = {
-  isError: boolean;
-  error?: {
-    statusCode: number;
-    message: string;
-  };
-  product?: IProductsEntity;
-};
 
 /**
  * Cart page component that renders the shopping cart page.
@@ -36,12 +27,10 @@ const CartPageLayout = async ({ params }: PageProps): Promise<JSX.Element> => {
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   /** Get delivery(product) data by product id */
-  const response = await getProductById(83, lang);
+  const response = await getProductById(DELIVERY_PRODUCT_ID, lang);
 
-  /** Check if response has error */
-  const deliveryData = response.isError
-    ? undefined
-    : (response as ProductResponse).product;
+  /** Check if response has error — the envelope is already fully typed */
+  const deliveryData = response.isError ? undefined : response.product;
 
   /** Render cart page content (the sidebar is provided by the group layout) */
   return (

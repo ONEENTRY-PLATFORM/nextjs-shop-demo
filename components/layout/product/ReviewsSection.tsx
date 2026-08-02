@@ -1,10 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IFormsByMarkerDataEntity } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 import { useState } from 'react';
+
+import { getReviewFormData } from '@/app/utils/getReviewFormData';
 
 import RatingBlock from './rating-block/RatingBlock';
 import RatingButton from './rating-block/RatingButton';
@@ -12,51 +14,41 @@ import ReviewsList from './reviews-list/ReviewsList';
 
 /**
  * Calculate the average rating from parent reviews only (with parentId: null).
- * @param   {object} reviewsData - Reviews data object containing items array.
- * @returns {number}             Average value of all formData values, or 0 if no data.
+ *
+ * The per-review rating is read by marker through the shared
+ * {@link getReviewFormData} helper — the `formData` array order varies per
+ * review, so positional access breaks on real data. Replies (`parentId` set)
+ * carry no rating and are excluded.
+ * @param   {IFormsByMarkerDataEntity | undefined} reviewsData - Reviews response from the FormsData API.
+ * @returns {number}                                           Average rating, or 0 when there is no rated review.
  */
-const totalRating = (reviewsData: any): number => {
-  if (!reviewsData?.items || reviewsData.items.length === 0) {
+const totalRating = (reviewsData?: IFormsByMarkerDataEntity): number => {
+  const items = reviewsData?.items ?? [];
+  if (items.length === 0) {
     return 0;
   }
 
-  let totalSum = 0;
-  let totalCount = 0;
+  const ratings = items
+    .filter((item) => item.parentId === null)
+    .map((item) => getReviewFormData(item.formData).rating)
+    .filter((rating) => rating > 0);
 
-  // Filter only parent reviews (with parentId: null)
-  const parentReviews = reviewsData.items.filter(
-    (item: any) => item.parentId === null,
-  );
+  if (ratings.length === 0) {
+    return 0;
+  }
 
-  parentReviews.forEach((item: any) => {
-    if (item?.formData && Array.isArray(item.formData)) {
-      item.formData.forEach((formItem: any) => {
-        if (formItem?.marker === 'rating') {
-          const value = Number(formItem?.value);
-          if (
-            !isNaN(value) &&
-            formItem?.value !== undefined &&
-            formItem?.value !== null
-          ) {
-            totalSum += value;
-            totalCount++;
-          }
-        }
-      });
-    }
-  });
-
-  const average = totalCount > 0 ? totalSum / totalCount : 0;
-  return isNaN(average) ? 0 : Number(average.toFixed(1));
+  const average =
+    ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
+  return Number(average.toFixed(1));
 };
 
 /**
  * ReviewsSection component.
- * @param   {object}           props             - Component props.
- * @param   {IAttributeValues} props.dict        - Dictionary containing localized texts from the server API.
- * @param   {IProductsEntity}  props.product     - Product data.
- * @param   {object}           props.reviewsData - Reviews data.
- * @returns {JSX.Element}                        Reviews section component with rating information and reviews list.
+ * @param   {object}                               props             - Component props.
+ * @param   {IAttributeValues}                     props.dict        - Dictionary containing localized texts from the server API.
+ * @param   {IProductsEntity}                      props.product     - Product data.
+ * @param   {IFormsByMarkerDataEntity | undefined} props.reviewsData - Reviews data.
+ * @returns {JSX.Element}                                            Reviews section component with rating information and reviews list.
  */
 const ReviewsSection = ({
   dict,
@@ -65,7 +57,7 @@ const ReviewsSection = ({
 }: {
   dict: IAttributeValues;
   product: IProductsEntity;
-  reviewsData: any;
+  reviewsData?: IFormsByMarkerDataEntity | undefined;
 }): JSX.Element => {
   /** State to control the visibility of the reviews list */
   const [state, setState] = useState(false);
@@ -75,8 +67,8 @@ const ReviewsSection = ({
 
   /** Count only parent reviews (with parentId: null) */
   const parentReviewsCount =
-    reviewsData?.items?.filter((review: any) => review.parentId === null)
-      .length || 0;
+    reviewsData?.items?.filter((review) => review.parentId === null).length ||
+    0;
 
   return (
     <div className="flex justify-between overflow-hidden max-md:flex-wrap">

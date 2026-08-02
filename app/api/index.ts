@@ -1,5 +1,9 @@
 export {
+  AUTH_PROVIDER_MARKER_KEY,
+  clearTokens,
+  DEFAULT_AUTH_PROVIDER,
   getApi,
+  getAuthProviderMarker,
   getLang,
   hasActiveSession,
   isError,

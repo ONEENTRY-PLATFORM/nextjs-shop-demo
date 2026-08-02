@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import type { JSX } from 'react';
 import { Suspense } from 'react';
 
-import { getBlockByMarker } from '@/app/api';
+import { getBlockByMarker, getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
 import OrdersPage from '@/components/layout/orders';
@@ -10,6 +10,9 @@ import Loader from '@/components/shared/Loader';
 import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../../dictionaries';
+
+/** OneEntry page marker for the orders page (metadata source). */
+const PAGE_MARKER = 'orders';
 
 /**
  * Orders page
@@ -28,17 +31,20 @@ const OrdersPageLayout = async ({
   const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   /** Get block by marker from the API. */
-  const { block, isError } = await getBlockByMarker('orders_settings', lang);
+  const { block } = await getBlockByMarker('orders_settings', lang);
 
-  /** Return nothing if block data is not available or an error occurred */
-  if (!block || isError) {
-    return <div className="text-center">Block Error</div>;
-  }
-
-  /** Render the orders page content (the sidebar is provided by the group layout) */
+  /**
+   * Render the orders page content (the sidebar is provided by the group
+   * layout). A missing/incomplete `orders_settings` block must not kill the
+   * page — the components degrade to English fallback labels.
+   */
   return (
     <Suspense fallback={<Loader />}>
-      <OrdersPage lang={lang} dict={dict} settings={block.attributeValues} />
+      <OrdersPage
+        lang={lang}
+        dict={dict}
+        settings={block?.attributeValues ?? {}}
+      />
     </Suspense>
   );
 };
@@ -73,10 +79,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   /** Extract the language parameter from the route params */
   const { lang } = await params;
-  /** Define the page title for SEO purposes */
-  const title = 'My orders';
-  /** Define the page description for SEO purposes */
-  const description = 'Order history and processing statuses.';
+
+  /** Get localized page content from the CMS (marker `orders`), if the page exists */
+  const { page } = await getPageByUrl(PAGE_MARKER, lang);
+
+  /** Page title from CMS localize infos with an English code fallback */
+  const title = page?.localizeInfos?.title || 'My orders';
+  /** Page description from CMS plain content with an English code fallback */
+  const description =
+    page?.localizeInfos?.plainValue || 'Order history and processing statuses.';
 
   /** Return metadata object with SEO information */
   return {

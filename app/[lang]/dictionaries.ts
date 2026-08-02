@@ -3,7 +3,6 @@ import 'server-only';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 
 import { getBlockByMarker } from '@/app/api/';
-import { toLangCode } from '@/app/types/enum.ts';
 
 import { i18n, type Locale } from '../../i18n-config.ts';
 
@@ -19,18 +18,14 @@ const dict = async (lang: string): Promise<IAttributeValues> => {
       lang = i18n.defaultLocale;
     }
 
-    /** Convert short locale to SDK langCode */
-    const langCode = toLangCode(lang);
-
     /** get block by marker from api */
     const { block } = await getBlockByMarker('system_content', lang);
 
-    /** extract block attribute values */
-    const blockValues =
-      block?.attributeValues[langCode] || block?.attributeValues;
-
-    /** Return the values or an empty object as fallback */
-    return (blockValues as IAttributeValues) || {};
+    /**
+     * The SDK already unwraps the requested locale, so `attributeValues` is
+     * the flat marker→value map — no per-locale indexing needed.
+     */
+    return block?.attributeValues || {};
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(e);

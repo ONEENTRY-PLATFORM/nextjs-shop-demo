@@ -1,6 +1,7 @@
-/* eslint-disable jsdoc/reject-any-type */
 import Image from 'next/image';
 import Link from 'next/link';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
 import type { JSX } from 'react';
 import { memo } from 'react';
 
@@ -8,19 +9,11 @@ import Placeholder from '@/components/shared/Placeholder';
 import { UsePrice } from '@/components/utils/utils';
 
 interface ProductCardProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  product: any;
+  product: IOrderProducts;
   lang: string;
   /** Parent order currency — order line items share it (orders rule). */
   currency?: string;
-  settings: {
-    product_qty_title: {
-      value: string;
-    };
-    product_card_title: {
-      value: string;
-    };
-  };
+  settings: IAttributeValues | undefined;
 }
 
 /**
@@ -28,9 +21,9 @@ interface ProductCardProps {
  * Displays a product item in an order with its image, title, price, quantity, and subtotal.
  * Memoized to prevent unnecessary re-renders.
  * @param   {ProductCardProps} props          - Component props
- * @param   {any}              props.product  - Product entity object containing product details
+ * @param   {IOrderProducts}   props.product  - Order product line item containing product details
  * @param   {string}           props.lang     - Current language shortcode for price formatting
- * @param   {object}           props.settings - Settings object with localized titles for quantity and subtotal
+ * @param   {IAttributeValues} props.settings - Block attribute values with localized titles for quantity and subtotal
  * @returns {JSX.Element}                     Product card with image, details, and link to product page
  */
 const ProductCard = memo(
@@ -40,8 +33,16 @@ const ProductCard = memo(
     const title = product.title || '';
     const price = product.price || 0;
     const quantity = product.quantity || 0;
-    const previewImage = product.previewImage || [];
-    const productImage = previewImage?.[0]?.downloadLink || '';
+
+    /**
+     * Preview image — the SDK types it as a single picture object, but older
+     * responses returned an array, so unwrap both shapes defensively.
+     */
+    const previewImage = product.previewImage;
+    const productImage =
+      (Array.isArray(previewImage)
+        ? previewImage[0]?.downloadLink
+        : previewImage?.downloadLink) || '';
 
     /** Format the product price using the UsePrice utility */
     const formattedPrice = UsePrice({
@@ -57,15 +58,17 @@ const ProductCard = memo(
       currency,
     });
 
-    /** Extract localized settings with fallback values */
-    const product_qty_title = settings?.product_qty_title || { value: '' };
-    const product_card_title = settings?.product_card_title || { value: '' };
+    /** Extract localized settings with fallback values — the CMS block may be incomplete */
+    const productQtyTitle =
+      (settings?.product_qty_title?.value as string) || 'Quantity';
+    const productCardTitle =
+      (settings?.product_card_title?.value as string) || 'Subtotal';
 
     /** Render the product card */
     return (
       <div className="relative flex w-full flex-row gap-4 py-2">
         {/** Product image container */}
-        <div className="relative h-37.5 w-[320px]">
+        <div className="relative h-37.5 w-80">
           {productImage ? (
             /** Display product image if available */
             <Image
@@ -89,17 +92,17 @@ const ProductCard = memo(
           <div className="text-base">{formattedPrice}</div>
           {/** Quantity with localized label */}
           <div className="text-base">
-            <b>{product_qty_title.value}:</b> {quantity}
+            <b>{productQtyTitle}:</b> {quantity}
           </div>
           {/** Subtotal with localized label */}
           <div className="text-base">
-            <b>{product_card_title.value}:</b> {formattedSubtotal}
+            <b>{productCardTitle}:</b> {formattedSubtotal}
           </div>
         </div>
 
-        {/** Link to product page for more details */}
+        {/** Link to product page for more details — no prefetch on repeating list cards */}
         <Link
-          prefetch={true}
+          prefetch={false}
           href={'/' + lang + '/shop/product/' + id}
           className="absolute top-0 left-0 z-0 flex size-full rounded-lg transition-shadow duration-500 hover:shadow-xl"
           aria-label={`View details for ${title}`}

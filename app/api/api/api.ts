@@ -61,6 +61,51 @@ type SdkState = {
   accessToken?: string;
   refreshToken?: string;
   lang?: string;
+  providerMarker?: string;
+};
+
+/**
+ * localStorage key holding the auth provider marker of the current session.
+ * Written on every login (email form, OTP activation, Google OAuth callback)
+ * and read by {@link reDefine} — the SDK builds the proactive refresh URL
+ * `/marker/{providerMarker}/users/refresh` from it, so a `google_web` refresh
+ * token must never be posted to the default `email` route.
+ */
+export const AUTH_PROVIDER_MARKER_KEY = 'authProviderMarker';
+
+/** Default auth provider marker (matches the SDK's internal default). */
+export const DEFAULT_AUTH_PROVIDER = 'email';
+
+/**
+ * Returns the auth provider marker of the current session from localStorage,
+ * falling back to the default `email` provider (SSR-safe).
+ * @returns {string} Provider marker for token refresh / logout calls.
+ */
+export const getAuthProviderMarker = (): string => {
+  if (typeof window === 'undefined') {
+    return DEFAULT_AUTH_PROVIDER;
+  }
+  return (
+    localStorage.getItem(AUTH_PROVIDER_MARKER_KEY) || DEFAULT_AUTH_PROVIDER
+  );
+};
+
+/**
+ * Removes the persisted session tokens from localStorage.
+ *
+ * Clearing a dead refresh token is the application's responsibility: on a
+ * failed refresh the SDK only returns an error envelope and never touches the
+ * storage (`saveFunction` fires on success only), so a stale token would
+ * repeat a doomed `POST /refresh 400` + 401 pair on every page load. Call this
+ * only on a confirmed 401/403 — not on transient network/5xx errors.
+ * @returns {void} Nothing.
+ */
+export const clearTokens = (): void => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  localStorage.removeItem('refresh-token');
+  localStorage.removeItem(AUTH_PROVIDER_MARKER_KEY);
 };
 
 /**
@@ -125,6 +170,12 @@ export const isError = (result: unknown): result is IError =>
 /**
  * Updates the SDK with a new refresh token and language code by **mutating**
  * the singleton — preserves the device fingerprint within the session.
+ *
+ * Also applies the session's auth provider marker from localStorage: the SDK
+ * builds the proactive refresh URL `/marker/{providerMarker}/users/refresh`
+ * from `state.providerMarker` (default `email`), so without this a Google
+ * OAuth session could never refresh — its token would be posted to the email
+ * provider route and rejected.
  * @param   {string}        refreshToken - Refresh token from localStorage.
  * @param   {string}        [langCode]   - Current language code (defaults to {@link DEFAULT_LANG}).
  * @returns {Promise<void>}              Resolved once the SDK state is updated.
@@ -140,6 +191,7 @@ export async function reDefine(
 
   const state = getState();
   state.lang = langCode || DEFAULT_LANG;
+  state.providerMarker = getAuthProviderMarker();
   apiInstance.AuthProvider.setRefreshToken(refreshToken);
   // Force the SDK to fetch a fresh access token on the next request.
   apiInstance.AuthProvider.setAccessToken('');

@@ -5,6 +5,7 @@ import type { JSX } from 'react';
 import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
+import { SITE_NAME } from '@/app/utils/constants';
 import { blocksColors, blocksData } from '@/components/data';
 import BlocksGrid from '@/components/layout/blocks-grid';
 import BlocksGridLoader from '@/components/layout/blocks-grid/components/BlocksGridLoader';
@@ -153,13 +154,17 @@ export async function generateMetadata({
   /** Extract page information from the page object */
   const { localizeInfos, isVisible, attributeValues } = page;
 
-  /** Return metadata object */
+  /**
+   * The home page keeps the layout's site-name title when the CMS record has
+   * none — unlike inner pages, an untitled home page has a meaningful default
+   * ("OneEntry Shop") and must not advertise the `NO_TITLE` placeholder.
+   */
   return generatePageMetadata({
-    title: localizeInfos.title,
+    title: localizeInfos?.title || SITE_NAME,
     description: localizeInfos?.plainValue as string,
     isVisible: isVisible,
     imageUrl: getImageUrl('opengraph_image', attributeValues),
-    imageAlt: localizeInfos.title,
+    imageAlt: localizeInfos?.title || SITE_NAME,
     lang: lang,
     handle: '',
     baseUrl: '',

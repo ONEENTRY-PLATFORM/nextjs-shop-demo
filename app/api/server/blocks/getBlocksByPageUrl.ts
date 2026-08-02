@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache';
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
 import { cache } from 'react';
@@ -6,8 +7,40 @@ import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
 
 /**
+ * Cross-request Data Cache layer: stores the page blocks in the Next.js Data
+ * Cache with a TTL and tags so repeat requests skip the OneEntry round-trip.
+ * Takes positional primitives for a stable cache key.
+ * @param   {string}          pageUrl - Page URL.
+ * @param   {string}          lang    - Current language shortcode.
+ * @returns {Promise<object>}         Envelope with position blocks.
+ */
+const fetchBlocksByPageUrl = unstable_cache(
+  async (
+    pageUrl: string,
+    lang: string,
+  ): Promise<{
+    isError: boolean;
+    error?: IError;
+    blocks?: IPositionBlock[];
+  }> => {
+    const langCode = toLangCode(lang);
+
+    const data = await getApi().Pages.getBlocksByPageUrl(pageUrl, langCode);
+
+    if (isError(data)) {
+      return { isError: true, error: data };
+    }
+
+    return { isError: false, blocks: data };
+  },
+  ['oneentry-getBlocksByPageUrl'],
+  { revalidate: 60, tags: ['oneentry', 'oneentry-blocks'] },
+);
+
+/**
  * Get all blocks by page url.
- * Wrapped in React cache() to deduplicate requests within a single render.
+ * React cache() deduplicates within a single render; the inner unstable_cache
+ * layer deduplicates between requests (performance rule).
  * @async
  * @param   {object}          props         - Handle props
  * @param   {string}          props.lang    - Current language shortcode
@@ -27,15 +60,5 @@ export const getBlocksByPageUrl = cache(
     isError: boolean;
     error?: IError;
     blocks?: IPositionBlock[];
-  }> => {
-    const langCode = toLangCode(lang);
-
-    const data = await getApi().Pages.getBlocksByPageUrl(pageUrl, langCode);
-
-    if (isError(data)) {
-      return { isError: true, error: data };
-    }
-
-    return { isError: false, blocks: data };
-  },
+  }> => fetchBlocksByPageUrl(pageUrl, lang),
 );

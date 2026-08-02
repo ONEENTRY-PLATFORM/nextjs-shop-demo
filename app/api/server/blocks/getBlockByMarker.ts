@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache';
 import type { IError } from 'oneentry/dist/base/utils';
 import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import { cache } from 'react';
@@ -6,15 +7,13 @@ import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
 
 /**
- * Get block by marker.
- * Wrapped in React cache() to deduplicate requests within a single render.
+ * Cross-request Data Cache layer: stores the block in the Next.js Data Cache
+ * with a TTL and tags so repeat requests skip the OneEntry round-trip.
  * @param   {string}          marker - Marker of Block.
  * @param   {string}          lang   - Current language shortcode.
- * @returns {Promise<object>}        Return array of BlocksEntity object Promise.
- * @see {@link https://doc.oneentry.cloud/docs/blocks OneEntry CMS docs}
- * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
+ * @returns {Promise<object>}        Envelope with block object.
  */
-export const getBlockByMarker = cache(
+const fetchBlockByMarker = unstable_cache(
   async (
     marker: string,
     lang: string,
@@ -33,4 +32,27 @@ export const getBlockByMarker = cache(
 
     return { isError: false, block: data };
   },
+  ['oneentry-getBlockByMarker'],
+  { revalidate: 60, tags: ['oneentry', 'oneentry-blocks'] },
+);
+
+/**
+ * Get block by marker.
+ * React cache() deduplicates within a single render; the inner unstable_cache
+ * layer deduplicates between requests (performance rule).
+ * @param   {string}          marker - Marker of Block.
+ * @param   {string}          lang   - Current language shortcode.
+ * @returns {Promise<object>}        Return array of BlocksEntity object Promise.
+ * @see {@link https://doc.oneentry.cloud/docs/blocks OneEntry CMS docs}
+ * @see {@link https://oneentry.cloud/instructions/npm OneEntry SDK docs}
+ */
+export const getBlockByMarker = cache(
+  async (
+    marker: string,
+    lang: string,
+  ): Promise<{
+    isError: boolean;
+    error?: IError;
+    block?: IBlockEntity;
+  }> => fetchBlockByMarker(marker, lang),
 );

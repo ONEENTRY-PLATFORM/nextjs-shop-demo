@@ -6,8 +6,8 @@ import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import ModalAnimations from '@/components/layout/modal/animations/ModalAnimations';
+import { formRegistry } from '@/components/layout/modal/formRegistry';
 
-import * as forms from '../../forms';
 import CloseModal from './components/CloseModal';
 import ModalBackdrop from './components/ModalBackdrop';
 
@@ -34,8 +34,11 @@ const Modal = ({
       ? 'lg:w-[980px] lg:h-[70vh]'
       : 'lg:w-[550px] lg:h-auto';
 
-  /** Dynamically select the form component based on the component name from context */
-  const Form = forms[component as keyof typeof forms] || null;
+  /**
+   * Select the form by the name from context. Entries are `dynamic()` chunks
+   * ({@link formRegistry}), so only the opened form is ever downloaded.
+   */
+  const Form = formRegistry[component] || null;
 
   /** Don't render anything if no form component is found */
   if (!Form) {

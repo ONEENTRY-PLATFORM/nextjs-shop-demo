@@ -1,11 +1,13 @@
 /* eslint-disable jsdoc/reject-any-type */
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
 import { getProductTitle } from '@/app/api/hooks/useProductsData';
 import { getBlurDataURL } from '@/app/api/utils/getBlurDataURL';
 import { CurrencyEnum, toLangCode } from '@/app/types/enum';
+import { NO_TITLE } from '@/app/utils/constants';
 
 import ProductAnimations from './animations/ProductAnimations';
 import ProductDescription from './product-single/ProductDescription';
@@ -43,14 +45,13 @@ const ProductSingle = async ({
   };
   relatedProducts: IProductsEntity[];
   relatedProductsTotal: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  blocksData?: Record<string, any>;
+  blocksData?: Record<string, IBlockEntity>;
 }): Promise<JSX.Element> => {
   /** Extract necessary data from product entity */
   const { attributeValues, blocks } = product;
 
   /** Get the formatted product title using helper function */
-  const productTitle = getProductTitle(product);
+  const productTitle = getProductTitle(product, NO_TITLE);
 
   /**
    * Resolve the main image blur placeholder server-side (CMS preview, else a

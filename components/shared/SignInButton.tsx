@@ -5,6 +5,7 @@ import type { JSX } from 'react';
 import { useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { prefetchModalForm } from '@/components/layout/modal/formRegistry';
 
 /**
  * SignIn button component that opens the SignIn form in a modal.
@@ -27,6 +28,12 @@ const SignInButton = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
         /** Open the modal and set its content to the SignInForm component */
         setOpen(true);
         setComponent('SignInForm');
+      }}
+      onPointerEnter={() => {
+        prefetchModalForm('SignInForm');
+      }}
+      onFocus={() => {
+        prefetchModalForm('SignInForm');
       }}
       type="button"
       className="btn btn-sm btn-o btn-o-primary mx-auto w-auto"

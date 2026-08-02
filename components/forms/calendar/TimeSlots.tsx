@@ -45,7 +45,7 @@ const TimeSlots = ({
 
   return (
     /** Container for time slots grid */
-    <div className="mx-auto mb-5 grid max-w-[320px] grid-cols-4 gap-2.5 rounded-3xl bg-white text-base font-bold tracking-wide text-orange-500">
+    <div className="mx-auto mb-5 grid max-w-80 grid-cols-4 gap-2.5 rounded-3xl bg-white text-base font-bold tracking-wide text-orange-500">
       {/*
        * Map through time slots and render TimeSlot component for each
        * Passes down slot data, current time, and handler for time/interval selection

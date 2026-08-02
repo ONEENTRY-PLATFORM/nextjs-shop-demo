@@ -2,7 +2,6 @@
 'use client';
 
 import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX, Key } from 'react';
 import { useCallback, useContext, useMemo, useState } from 'react';
 
@@ -21,6 +20,7 @@ import { typeError } from '../utils/utils';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import SubmitButton from './inputs/FormSubmitButton';
+import { getFormAttributes } from './utils/getFormAttributes';
 
 /**
  * SignUp form component that handles user registration.
@@ -246,23 +246,20 @@ const SignUpForm = ({ lang, dict }: FormProps): JSX.Element => {
         {/** Form input fields container */}
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
           {/** Map through form attributes to render input fields */}
-          {Array.isArray(data?.attributes) &&
-            (data.attributes as unknown as IAttributes[]).map(
-              (field: IAttributes, index: Key | number) => {
-                /** Exclude email notifications field from regular input rendering */
-                if (field.marker !== 'email_notifications') {
-                  return (
-                    <FormInput
-                      index={index as number}
-                      key={field.marker}
-                      {...field}
-                      value={(field as unknown as { value: string }).value}
-                    />
-                  );
-                }
-                return;
-              },
-            )}
+          {getFormAttributes(data).map((field, index: Key | number) => {
+            /** Exclude email notifications field from regular input rendering */
+            if (field.marker !== 'email_notifications') {
+              return (
+                <FormInput
+                  index={index as number}
+                  key={field.marker}
+                  {...field}
+                  value={(field.value as string | number | undefined) ?? ''}
+                />
+              );
+            }
+            return;
+          })}
         </div>
 
         {/** Submit button for registration form */}

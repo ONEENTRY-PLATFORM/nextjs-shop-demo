@@ -1,4 +1,3 @@
-import type { IAttributes } from 'oneentry/dist/base/utils';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
@@ -10,6 +9,7 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 import { selectDeliveryData } from '@/app/store/reducers/CartSlice';
 import { addData } from '@/app/store/reducers/OrderSlice';
 import { buildTimeIntervalValue } from '@/app/utils/orderFormData';
+import { getFormAttributes } from '@/components/forms/utils/getFormAttributes';
 
 import TableRowAnimations from '../animations/TableRowAnimations';
 import AddressRow from './AddressRow';
@@ -41,8 +41,7 @@ const DeliveryTable = ({
   /** Get user data from authentication context */
   const { user } = useContext(AuthContext);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const deliveryData: any = useAppSelector(selectDeliveryData);
+  const deliveryData = useAppSelector(selectDeliveryData);
 
   /** Fetch order form data by marker using RTK Query */
   const { data } = useGetFormByMarkerQuery({
@@ -57,12 +56,8 @@ const DeliveryTable = ({
     order_info_address_placeholder,
   } = dict;
 
-  /** Filter form attributes and sort by position */
-  const attrs = Array.isArray(data?.attributes)
-    ? (data.attributes as unknown as IAttributes[])
-        .slice()
-        .sort((a, b) => a.position - b.position)
-    : undefined;
+  /** Normalize form attributes and sort by position */
+  const attrs = getFormAttributes(data).sort((a, b) => a.position - b.position);
 
   /** Get registered address from user form data if available */
   const addressReg =
@@ -135,7 +130,7 @@ const DeliveryTable = ({
     >
       <div>
         {/** Map through form attributes to render appropriate form rows */}
-        {attrs?.map((attr: IAttributes) => {
+        {attrs.map((attr) => {
           const marker = attr.marker;
 
           /** Render date row with calendar icon */

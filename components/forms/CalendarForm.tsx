@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import '@/app/styles/calendar.css';
@@ -6,6 +5,11 @@ import '@/app/styles/calendar.css';
 import dayjs from 'dayjs';
 import dayOfYear from 'dayjs/plugin/dayOfYear';
 import utc from 'dayjs/plugin/utc';
+import {
+  expandAttributeTimeIntervals,
+  isTimeIntervalAttribute,
+} from 'oneentry';
+import type { IAttributeValue } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';
@@ -33,33 +37,12 @@ type TimeWindow = [TimePoint, TimePoint];
 type DateRange = [Date, Date];
 
 /**
- * Filter time intervals by a specific date.
- *
- * This function filters an array of time intervals to only include those
- * that overlap with the specified target date.
- * @param   {[string, string][]} intervals  - Array of time intervals as string tuples [start, end].
- * @param   {Date}               targetDate - Date to filter intervals by.
- * @returns {[string, string][]}            Filtered array of intervals that match the target date.
+ * Holiday entry attached to a schedule group by the admin panel.
+ * Not part of the SDK's `ITimeIntervalEntitySchedule` — kept as a local
+ * extension for backward compatibility with older API responses.
+ * @property {string} date - ISO date of the holiday.
  */
-const filterIntervalsByDate = (
-  intervals: [string, string][],
-  targetDate: Date,
-): [string, string][] => {
-  if (!intervals) return [];
-
-  /** Create start and end of day in UTC using dayjs */
-  const startOfDay = dayjs(targetDate).startOf('day').utc();
-  const endOfDay = dayjs(targetDate).endOf('day').utc();
-
-  return intervals.filter(([start, end]) => {
-    /** Parse interval start and end as UTC */
-    const intervalStart = dayjs(start).utc();
-    const intervalEnd = dayjs(end).utc();
-
-    /** Check if the interval overlaps with the target day */
-    return intervalStart.isBefore(endOfDay) && intervalEnd.isAfter(startOfDay);
-  });
-};
+type HolidayEntry = { date: string };
 
 /**
  * Calendar form component for selecting delivery date and time.
@@ -75,7 +58,7 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
   const { setTransition } = useContext(OpenDrawerContext);
 
   /** Delivery data from Redux store including current date and time selection */
-  const deliveryData: any = useAppSelector(selectDeliveryData);
+  const deliveryData = useAppSelector(selectDeliveryData);
 
   /** State for storing selected delivery date */
   const [date, setDate] = useState<Date>(new Date(deliveryData?.date));
@@ -93,14 +76,32 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
     activeLang: toLangCode(lang),
   });
 
-  /** Extract time intervals and holidays from API response */
-  const schedule = (data?.value as any)?.[0]?.values;
+  /**
+   * The `shipping_interval` attribute normalized to the SDK attribute-value
+   * shape, so the SDK narrowing guard and interval resolver can consume it.
+   */
+  const scheduleAttr = useMemo<IAttributeValue | undefined>(
+    () => (data ? { type: data.type, value: data.value ?? null } : undefined),
+    [data],
+  );
 
-  /** Extract holidays from schedule */
+  /** Extract the schedule entries (recurrence rules) from the API response */
+  const schedule = useMemo(() => {
+    if (!isTimeIntervalAttribute(scheduleAttr)) {
+      return undefined;
+    }
+    return scheduleAttr.value[0]?.values;
+  }, [scheduleAttr]);
+
+  /** Extract holidays from schedule as day-of-year numbers */
   const holidays = useMemo(() => {
     return schedule
-      ?.flatMap((interval: any) => interval.external)
-      .filter((h: any) => h && dayjs(h.date).dayOfYear());
+      ?.flatMap(
+        (interval) =>
+          (interval as { external?: HolidayEntry[] }).external ?? [],
+      )
+      .filter((h) => h && dayjs(h.date).dayOfYear())
+      .map((h) => dayjs(h.date).dayOfYear());
   }, [schedule]);
 
   /**
@@ -111,8 +112,9 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
    * onto the selected calendar day rather than relying on the server's
    * pre-expanded `timeIntervals`, which only span a fixed ~1-year window and
    * therefore yield no slots once that window has elapsed — the cause of the
-   * "calendar opens but no time can be picked" bug. Falls back to the server
-   * intervals when a schedule defines no recurring `times`.
+   * "calendar opens but no time can be picked" bug. Falls back to the SDK's
+   * `expandAttributeTimeIntervals` resolver when a schedule defines no
+   * recurring `times`.
    */
   const timeIntervals = useMemo(() => {
     if (!date || Number.isNaN(date.getTime())) {
@@ -134,7 +136,9 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
      * across several recurrence objects, so de-duplicate by start time.
      */
     const times: TimeWindow[] =
-      schedule?.flatMap((interval: any) => interval.times || []) ?? [];
+      schedule?.flatMap(
+        (interval) => (interval.times as TimeWindow[] | undefined) ?? [],
+      ) ?? [];
 
     const seen = new Set<string>();
     const uniqueTimes = times.filter(([start]) => {
@@ -155,20 +159,25 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
       }));
     }
 
-    /** Fallback: server pre-expanded intervals filtered to the selected day. */
-    const intervals = schedule?.flatMap(
-      (interval: any) => interval.timeIntervals,
-    );
-    return filterIntervalsByDate(intervals, date)?.map((interval: any) => {
-      const d = dayjs(interval[0]).toDate();
+    /**
+     * Fallback: no recurring `times` in the schedule — resolve concrete slots
+     * for the selected day with the SDK's `expandAttributeTimeIntervals`
+     * (the server-side pre-expanded `timeIntervals` field was removed in
+     * SDK 1.0.156 and no longer exists on the response).
+     */
+    return expandAttributeTimeIntervals(scheduleAttr, {
+      from: day,
+      to: day,
+    }).map(([start, end]) => {
+      const d = dayjs(start).toDate();
       return {
-        interval: [new Date(interval[0]), new Date(interval[1])] as DateRange,
+        interval: [new Date(start), new Date(end)] as DateRange,
         time: `${d.getUTCHours()}:${pad(d.getUTCMinutes())}`,
         isDisabled: false,
         isSelected: false,
       };
     });
-  }, [schedule, date]);
+  }, [schedule, scheduleAttr, date]);
 
   /**
    * Get today's date at midnight (memoized)
@@ -182,8 +191,9 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
 
   /**
    * Handler function for date change
+   * @param {unknown} value - Value emitted by react-calendar (a single Date in month view)
    */
-  const handleDateChange = useCallback((value: any) => {
+  const handleDateChange = useCallback((value: unknown) => {
     setDate(value as Date);
   }, []);
 
@@ -240,7 +250,9 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
         onChange={handleDateChange}
         value={new Date(date)}
         minDate={minDate}
-        tileDisabled={({ date }) => holidays?.includes(dayjs(date).dayOfYear())}
+        tileDisabled={({ date }) =>
+          holidays?.includes(dayjs(date).dayOfYear()) ?? false
+        }
       />
       {timeIntervals && (
         <TimeSlots

@@ -2,8 +2,6 @@ import type { IAttributeValues, ILocalizeInfo } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-import { toLangCode } from '@/app/types/enum';
-
 import ApplyButton from './ApplyButton';
 import PriceDisplay from './PriceDisplay';
 import ProductImage from './ProductImage';
@@ -25,13 +23,11 @@ const GroupCard = ({
   lang: string;
   dict: IAttributeValues;
 }): JSX.Element => {
-  /** Convert short locale to SDK langCode */
-  const langCode = toLangCode(lang);
-
-  /** Get attribute values for the current language or fallback to default */
-  const attributeValues = ((
-    product.attributeValues as unknown as Record<string, IAttributeValues>
-  )[langCode] || product.attributeValues) as IAttributeValues;
+  /**
+   * Product attribute values — the SDK already unwraps the requested locale,
+   * so this is the flat marker→value map (empty object when absent).
+   */
+  const attributeValues: IAttributeValues = product.attributeValues || {};
 
   /** Get localized product title or fallback to default */
   const localizeInfos = product.localizeInfos as ILocalizeInfo;

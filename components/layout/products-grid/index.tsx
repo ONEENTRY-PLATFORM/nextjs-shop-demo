@@ -10,8 +10,6 @@ import LoadMore from './components/LoadMore';
 import ProductsGrid from './components/ProductsGrid';
 import ProductsNotFound from './components/ProductsNotFound';
 
-export const dynamic = 'force-dynamic';
-
 /**
  * Products grid layout page component
  * @param   {object}               props                      - Products GridLayout props.

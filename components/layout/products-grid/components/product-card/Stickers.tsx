@@ -1,11 +1,13 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { JSX, Key } from 'react';
+import type { JSX } from 'react';
 
+import type { StickerOption } from './Sticker';
 import Sticker from './Sticker';
 
 /**
  * Stickers component renders an array of product stickers.
- * It maps through the stickers data from product attributes and creates Sticker components for each.
+ * The `stickers` list attribute value is an array of selected options —
+ * iterate it so every selected sticker renders, not just the first one.
  * Stickers are typically used to display badges, special offers, or other product indicators.
  * @param   {object}           props                 - Component properties
  * @param   {IAttributeValues} props.attributeValues - Product attributes containing stickers data
@@ -16,27 +18,13 @@ const Stickers = ({
 }: {
   attributeValues: IAttributeValues;
 }): JSX.Element[] => {
-  /** Map through stickers array and create Sticker component for each sticker */
-  /** If stickers don't exist in attributeValues, use empty array as fallback */
-  return [attributeValues?.stickers || []].map((sticker, i: Key) => {
-    return (
-      <Sticker
-        key={i}
-        sticker={
-          sticker as {
-            value: {
-              value: string;
-              title: string;
-              extended: {
-                value: {
-                  downloadLink: string;
-                };
-              };
-            };
-          }
-        }
-      />
-    );
+  /** Selected options of the list attribute; empty array when the attribute is absent or empty */
+  const options =
+    (attributeValues?.stickers?.value as StickerOption[] | undefined) ?? [];
+
+  /** Map through selected options and create a Sticker component for each */
+  return options.map((sticker, i) => {
+    return <Sticker key={i} sticker={sticker} />;
   });
 };
 

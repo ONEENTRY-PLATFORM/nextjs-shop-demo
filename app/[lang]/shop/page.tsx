@@ -7,6 +7,7 @@ import { getPageByUrl } from '@/app/api';
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
+import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
@@ -14,7 +15,12 @@ import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from '../dictionaries';
 
-export const dynamic = 'force-dynamic';
+/**
+ * ISR: CMS content — revalidate every 5 minutes instead of force-dynamic
+ * (performance rule: never force-dynamic for CMS pages; search params still
+ * opt the request into dynamic rendering when present).
+ */
+export const revalidate = 300;
 
 /** Memoized loader component to prevent unnecessary re-renders */
 const MemoizedProductsGridLoader = memo(ProductsGridLoader);
@@ -62,7 +68,7 @@ const ShopPageLayout = async (props: PageProps): Promise<JSX.Element> => {
       {
         '@type': 'ListItem',
         position: 2,
-        name: page.localizeInfos.title,
+        name: page.localizeInfos?.title ?? NO_TITLE,
         item: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}/shop`,
       },
     ],
@@ -136,11 +142,11 @@ export async function generateMetadata({
   /** Return metadata object */
   return generatePageMetadata({
     handle: handle,
-    title: localizeInfos.title,
-    description: localizeInfos.plainValue as string,
+    title: localizeInfos?.title ?? NO_TITLE,
+    description: (localizeInfos?.plainValue as string | undefined) ?? '',
     isVisible: isVisible,
     imageUrl: getImageUrl('opengraph_image', attributeValues),
-    imageAlt: localizeInfos.title,
+    imageAlt: localizeInfos?.title ?? NO_TITLE,
     lang: lang,
     baseUrl: '',
   });

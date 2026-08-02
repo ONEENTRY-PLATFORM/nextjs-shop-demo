@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import ProfileAltIcon from '@/components/icons/profile';
+import { prefetchModalForm } from '@/components/layout/modal/formRegistry';
 
 import UserProfileMenu from './user-menu/UserProfileMenu';
 
@@ -56,6 +57,12 @@ const NavItemProfile = ({
       onClick={() => {
         setOpen(!open);
         setComponent('SignInForm');
+      }}
+      onPointerEnter={() => {
+        prefetchModalForm('SignInForm');
+      }}
+      onFocus={() => {
+        prefetchModalForm('SignInForm');
       }}
       title={item.localizeInfos.menuTitle as string}
       data-testid="auth-button"

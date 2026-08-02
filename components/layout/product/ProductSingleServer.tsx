@@ -1,4 +1,5 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
@@ -44,18 +45,7 @@ const ProductSingleServer = async ({
   }
 
   /** Extract essential product information needed for data fetching */
-  const { localizeInfos, blocks, id } = product;
-
-  /** Validate required product data */
-  if (!localizeInfos?.title) {
-    return (
-      <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
-        <div className="flex min-h-100 items-center justify-center">
-          <p>Invalid product data</p>
-        </div>
-      </section>
-    );
-  }
+  const { blocks, id } = product;
 
   let relatedProductsData = {
     products: [] as IProductsEntity[],
@@ -80,8 +70,7 @@ const ProductSingleServer = async ({
 
   const { products, total } = relatedProductsData;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const blocksData: Record<string, any> = {};
+  const blocksData: Record<string, IBlockEntity> = {};
 
   /** Only process blocks if they exist and are an array */
   if (Array.isArray(blocks)) {

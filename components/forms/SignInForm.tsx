@@ -1,11 +1,16 @@
 'use client';
 
-import type { IAttributes, IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { FormEvent, JSX, Key } from 'react';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { logInUser, useGetFormByMarkerQuery } from '@/app/api';
+import {
+  AUTH_PROVIDER_MARKER_KEY,
+  DEFAULT_AUTH_PROVIDER,
+  logInUser,
+  useGetFormByMarkerQuery,
+} from '@/app/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
@@ -19,6 +24,7 @@ import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import GoogleSignInButton from './inputs/GoogleSignInButton';
 import ResetPasswordButton from './inputs/ResetPasswordButton';
+import { getFormAttributes } from './utils/getFormAttributes';
 
 /**
  * SignInForm component that handles user authentication
@@ -65,23 +71,42 @@ const SignInForm = ({
   });
 
   /** get fields from formFieldsReducer */
-  const { email_reg, password_reg } = useAppSelector(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (state: { formFieldsReducer: { fields: any } }) =>
-      state.formFieldsReducer.fields,
-  );
+  const fields = useAppSelector((state) => state.formFieldsReducer.fields);
 
   /**
    * Sort fields by position (memoized)
    * This ensures fields are displayed in the correct order
    */
   const formFields = useMemo(() => {
-    return Array.isArray(data?.attributes)
-      ? (data.attributes as unknown as IAttributes[])
-          .slice()
-          .sort((a, b) => a.position - b.position)
+    const attributes = getFormAttributes(data);
+    return attributes.length > 0
+      ? attributes.sort((a, b) => a.position - b.position)
       : undefined;
   }, [data]);
+
+  /**
+   * Login field resolved by its SDK flag (`isLogin === true`), NOT by marker
+   * name (auth-provider rule); the marker-name fallback covers forms whose
+   * flags are not configured in the admin panel (mismatch-log C.2.3).
+   */
+  const loginField = useMemo(
+    () =>
+      formFields?.find((field) => field.isLogin === true) ??
+      formFields?.find((field) => field.marker === 'email_reg'),
+    [formFields],
+  );
+
+  /** Password field resolved by its SDK flag (`isPassword === true`), same fallback. */
+  const passwordField = useMemo(
+    () =>
+      formFields?.find((field) => field.isPassword === true) ??
+      formFields?.find((field) => field.marker === 'password_reg'),
+    [formFields],
+  );
+
+  /** Current values of the credential fields from the Redux form state */
+  const email_reg = fields[loginField?.marker ?? 'email_reg'];
+  const password_reg = fields[passwordField?.marker ?? 'password_reg'];
 
   /**
    * Handles the sign-in form submission
@@ -102,13 +127,22 @@ const SignInForm = ({
       try {
         setLoading(true);
         const result = await logInUser({
-          login: email_reg.value,
-          password: password_reg.value,
+          login: String(email_reg.value),
+          password: String(password_reg.value),
+          ...(loginField?.marker && { loginMarker: loginField.marker }),
+          ...(passwordField?.marker && {
+            passwordMarker: passwordField.marker,
+          }),
         });
         if (result && result.error) {
           setError(result.error);
         } else if (result?.data?.refreshToken) {
-          localStorage.setItem('refresh-token', result.data.refreshToken);
+          /**
+           * `auth()` has already persisted both tokens via the SDK's
+           * saveFunction — only the provider marker needs saving so the
+           * proactive refresh hits the right provider route (tokens rule).
+           */
+          localStorage.setItem(AUTH_PROVIDER_MARKER_KEY, DEFAULT_AUTH_PROVIDER);
           setOpen(false);
           authenticate();
           setError('');
@@ -122,7 +156,7 @@ const SignInForm = ({
         setError(getApiErrorMessage(e));
       }
     },
-    [email_reg, password_reg, setOpen, authenticate],
+    [email_reg, password_reg, loginField, passwordField, setOpen, authenticate],
   );
 
   return (
@@ -141,14 +175,14 @@ const SignInForm = ({
         </div>
 
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-          {formFields?.map((field: IAttributes, index: Key | number) => {
+          {formFields?.map((field, index: Key | number) => {
             if (field.marker === 'email_reg') {
               return (
                 <FormInput
                   key={field.marker || index}
                   index={1}
                   {...field}
-                  value={(field as unknown as { value: string }).value}
+                  value={(field.value as string | number | undefined) ?? ''}
                 />
               );
             }
@@ -158,7 +192,7 @@ const SignInForm = ({
                   key={field.marker || index}
                   index={2}
                   {...field}
-                  value={(field as unknown as { value: string }).value}
+                  value={(field.value as string | number | undefined) ?? ''}
                 />
               );
             }

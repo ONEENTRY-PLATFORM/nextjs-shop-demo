@@ -21,16 +21,12 @@ export type IAppOrder = {
 
 /**
  * Defining the shape of the initial state for the order slice.
- * @property {IAppOrder}                    order          - The current order.
- * @property {string}                       currency       - Optional currency type for the order.
- * @property {Array<{identifier: string;}>} paymentMethods - Optional array of payment methods.
+ * @property {IAppOrder} order    - The current order.
+ * @property {string}    currency - Optional currency type for the order.
  */
 type InitialStateType = {
   order: IAppOrder;
   currency?: string;
-  paymentMethods?: Array<{
-    identifier: string;
-  }>;
 };
 
 /**
@@ -128,24 +124,6 @@ const orderReducer = createSlice({
       state.order.products = action.payload;
     },
     /**
-     * Add payment methods to the order
-     * @param {WritableDraft<InitialStateType>} state  - Current state
-     * @param {PayloadAction<string>}           action - Payload with array of payment methods
-     */
-    addPaymentMethods(
-      state: WritableDraft<InitialStateType>,
-      action: PayloadAction<
-        Array<{
-          identifier: string;
-        }>
-      >,
-    ) {
-      if (!state.paymentMethods) {
-        /** Set the payment methods if they don't exist */
-        state.paymentMethods = action.payload;
-      }
-    },
-    /**
      * Set the payment account identifier for the order
      * @param {WritableDraft<InitialStateType>} state  - Current state
      * @param {PayloadAction<string>}           action - Payload with payment method identifier
@@ -190,8 +168,6 @@ export const {
   addData,
   /** Action to add products */
   addProducts,
-  /** Action to add payment methods */
-  addPaymentMethods,
   /** Action to set payment account identifier */
   addPaymentMethod,
   /** Action to set currency */

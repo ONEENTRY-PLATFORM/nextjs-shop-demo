@@ -1,13 +1,22 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from 'next/image';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import { getProductTitle } from '@/app/api/hooks/useProductsData';
 import Placeholder from '@/components/shared/Placeholder';
 
-// ModalHeading
-const ModalHeading = ({ product }: { product: any }): JSX.Element => {
+/**
+ * ModalHeading — the product row (photo + title) atop the review modal.
+ * @param   {object}          props         - Component props
+ * @param   {IProductsEntity} props.product - Product the reviews belong to
+ * @returns {JSX.Element}                   Product heading
+ */
+const ModalHeading = ({
+  product,
+}: {
+  product: IProductsEntity;
+}): JSX.Element => {
   /** Get product data */
   const productImageUrl = getImageUrl('pic', product.attributeValues);
   const productTitle = getProductTitle(product);

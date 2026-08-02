@@ -3,7 +3,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
-import { getApi } from '@/app/api';
+import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';
 
 import ReviewsSection from './ReviewsSection';
@@ -45,8 +45,17 @@ const ReviewsSectionServer = async ({
     500, // limit — Parameter for pagination. Default: 30.
   );
 
+  /**
+   * `getFormsDataByMarker` returns an error as a VALUE, not a throw — a closed
+   * or misconfigured reviews form must degrade to "no reviews yet" instead of
+   * being passed on as review data.
+   */
   return (
-    <ReviewsSection dict={dict} reviewsData={reviewsData} product={product} />
+    <ReviewsSection
+      dict={dict}
+      reviewsData={isError(reviewsData) ? undefined : reviewsData}
+      product={product}
+    />
   );
 };
 

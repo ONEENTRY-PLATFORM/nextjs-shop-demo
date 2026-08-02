@@ -1,7 +1,7 @@
-/* eslint-disable jsdoc/reject-any-type */
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
@@ -14,7 +14,7 @@ import {
 /**
  * Apply button component.
  * @param   {object}           props         - Component properties.
- * @param   {any}              props.product - Product entity object containing product information.
+ * @param   {IProductsEntity}  props.product - Product entity object containing product information.
  * @param   {IAttributeValues} props.dict    - Dictionary from server API containing localized text values.
  * @returns {JSX.Element}                    Apply button that adds/removes group product to/from cart.
  */
@@ -22,8 +22,7 @@ const ApplyButton = ({
   product,
   dict,
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  product: any;
+  product: IProductsEntity;
   dict: IAttributeValues;
 }): JSX.Element => {
   /** Redux dispatch function for state updates */

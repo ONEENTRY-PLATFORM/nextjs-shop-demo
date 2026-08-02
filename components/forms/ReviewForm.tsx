@@ -1,11 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import type {
-  IAttributes,
-  IAttributeValues,
-  IError,
-} from 'oneentry/dist/base/utils';
+import type { IAttributeValues, IError } from 'oneentry/dist/base/utils';
 import type {
   FormDataType,
   IPostFormResponse,
@@ -27,6 +23,7 @@ import FormFieldAnimations from './animations/FormFieldAnimations';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
+import { getFormAttributes } from './utils/getFormAttributes';
 import {
   transformFormField,
   validateFormData,
@@ -114,12 +111,10 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
    * This ensures fields are displayed in the correct order
    */
   const formFields = useMemo(() => {
-    if (!data?.attributes || !Array.isArray(data.attributes)) {
-      return undefined;
-    }
-    return ([...data.attributes] as unknown as IAttributes[]).sort(
-      (a: IAttributes, b: IAttributes) => a.position - b.position,
-    );
+    const attributes = getFormAttributes(data);
+    return attributes.length > 0
+      ? attributes.sort((a, b) => a.position - b.position)
+      : undefined;
   }, [data]);
 
   /**
@@ -261,7 +256,7 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
         </div>
         {/* Form fields map */}
         <div className="relative mb-4 box-border flex shrink-0 flex-col gap-4">
-          {formFields?.map((field: IAttributes, index: number) => {
+          {formFields?.map((field, index: number) => {
             const fieldValue = fieldsData[field.marker]?.value ?? '';
             // Ensure value is string or number (files are handled internally by FormInput)
             const value =

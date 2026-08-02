@@ -59,8 +59,8 @@ const LangSelector = ({
       name="lang-selector"
     >
       {/** Map through active locales and create option elements */}
-      {locales
-        ?.filter((locale: { isActive: boolean }) => locale.isActive && locale)
+      {(Array.isArray(locales) ? locales : [])
+        .filter((locale: { isActive: boolean }) => locale.isActive && locale)
         .map((locale: ILocalEntity) => {
           return (
             <option key={locale.shortCode} value={locale.shortCode}>

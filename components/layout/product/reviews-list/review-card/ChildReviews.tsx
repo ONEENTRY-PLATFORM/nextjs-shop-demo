@@ -1,6 +1,5 @@
-/* eslint-disable jsdoc/reject-any-type */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IFormByMarkerDataEntity } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
@@ -8,12 +7,12 @@ import ChildReviewCard from './ChildReviewCard';
 
 /**
  * Child reviews
- * @param   {object}           props              - Component props
- * @param   {IAttributeValues} props.dict         - Dictionary
- * @param   {IProductsEntity}  props.product      - Product data
- * @param   {any[]}            props.childReviews - Child reviews data
- * @param   {any[]}            props.allReviews   - All reviews data for recursive lookup
- * @returns {JSX.Element}                         ChildReviews
+ * @param   {object}                    props              - Component props
+ * @param   {IAttributeValues}          props.dict         - Dictionary
+ * @param   {IProductsEntity}           props.product      - Product data
+ * @param   {IFormByMarkerDataEntity[]} props.childReviews - Child reviews data
+ * @param   {IFormByMarkerDataEntity[]} props.allReviews   - All reviews data for recursive lookup
+ * @returns {JSX.Element}                                  ChildReviews
  */
 const ChildReviews = ({
   dict,
@@ -23,8 +22,8 @@ const ChildReviews = ({
 }: {
   dict: IAttributeValues;
   product: IProductsEntity;
-  childReviews?: any[];
-  allReviews?: any[];
+  childReviews?: IFormByMarkerDataEntity[];
+  allReviews?: IFormByMarkerDataEntity[];
 }): JSX.Element => {
   /** If there are no child reviews, return an empty fragment */
   if (childReviews.length < 1) {
@@ -34,7 +33,7 @@ const ChildReviews = ({
   /** If there are child reviews, map through them and return a ChildReview component for each */
   return (
     <div className="mt-5 flex flex-col gap-5">
-      {childReviews.map((childReview: any) => (
+      {childReviews.map((childReview) => (
         <ChildReviewCard
           key={childReview.id}
           product={product}

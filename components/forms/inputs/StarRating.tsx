@@ -1,16 +1,15 @@
-/* eslint-disable jsdoc/reject-any-type */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { JSX } from 'react';
 
 /**
  * StarRating.
- * @param   {object}      props          - Star rating props.
- * @param   {number}      props.value    - rating value.
- * @param   {any}         props.setValue - set rating value.
- * @param   {string}      props.type     - input type.
- * @param   {any}         props.field    - field.
- * @param   {boolean}     props.required - required.
- * @returns {JSX.Element}                StarRating component.
+ * @param   {object}                           props              - Star rating props.
+ * @param   {string | number}                  props.value        - rating value.
+ * @param   {(value: string | number) => void} props.setValue     - set rating value.
+ * @param   {string}                           props.type         - input type.
+ * @param   {object}                           props.field        - form field (only `marker` is used).
+ * @param   {string}                           props.field.marker - CMS marker of the field.
+ * @param   {boolean}                          props.required     - required.
+ * @returns {JSX.Element}                                         StarRating component.
  */
 const StarRating = ({
   value,
@@ -20,9 +19,9 @@ const StarRating = ({
   required,
 }: {
   value: string | number;
-  setValue: any;
+  setValue: (value: string | number) => void;
   type: string;
-  field: any;
+  field: { marker: string };
   required: boolean;
 }): JSX.Element => {
   return (

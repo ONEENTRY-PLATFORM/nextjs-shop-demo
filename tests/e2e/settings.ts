@@ -102,16 +102,26 @@ export const TEST_AUTH_USER = {
  * - Text: 'text=Button Text'
  * - Role: 'role=button[name="Submit"]'
  */
+/**
+ * Navigation controls (profile / favorites / cart, with their badges) are
+ * rendered TWICE: once in the desktop header (`NavGroup`, hidden below the
+ * `xs` breakpoint) and once in the mobile bottom bar (`BottomMobileMenu`,
+ * hidden from `xs` up). Exactly one of the two is visible at any viewport, so
+ * these selectors carry `:visible` — a bare `.first()` would otherwise resolve
+ * to the CSS-hidden desktop copy on a phone and never become clickable.
+ */
+const VISIBLE = ':visible';
+
 export const SELECTORS = {
   // Product page
   addToCartButton: '[data-testid="add-to-cart-button"]',
   addToFavoritesButton: '[data-testid="add-to-favorites-button"]',
   productPrice: '[data-testid="product-price"]',
   productTitle: '[data-testid="product-title"]',
-  cartBadge: '[data-testid="cart-badge"]',
+  cartBadge: `[data-testid="cart-badge"]${VISIBLE}`,
 
   // Cart (clicking cart icon navigates to /cart page)
-  cartIcon: '[data-testid="cart-icon"]',
+  cartIcon: `[data-testid="cart-icon"]${VISIBLE}`,
   // Cart page content wrapper
   cartDrawer: '[data-testid="cart-drawer"]',
   cartItem: '[data-testid="cart-item"]',
@@ -123,7 +133,7 @@ export const SELECTORS = {
   decreaseQuantityButton: '[data-testid="decrease-quantity"]',
 
   // Favorites
-  favoritesIcon: '[data-testid="favorites-icon"]',
+  favoritesIcon: `[data-testid="favorites-icon"]${VISIBLE}`,
   favoritesDrawer: '[data-testid="favorites-drawer"]',
   productCard: '.product-card',
 
@@ -132,8 +142,8 @@ export const SELECTORS = {
   errorMessage: '[data-testid="error-message"]',
 
   // Auth
-  authButton: '[data-testid="auth-button"]',
-  userMenuButton: '[data-testid="user-menu-button"]',
+  authButton: `[data-testid="auth-button"]${VISIBLE}`,
+  userMenuButton: `[data-testid="user-menu-button"]${VISIBLE}`,
   logoutButton: '[data-testid="logout-button"]',
   signInModal: '#modalBody',
   emailInput: '#email_reg',

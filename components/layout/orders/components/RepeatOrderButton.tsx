@@ -7,6 +7,7 @@ import type { JSX } from 'react';
 
 import { useAppDispatch } from '@/app/store/hooks';
 import { addProductToCart } from '@/app/store/reducers/CartSlice';
+import { DELIVERY_PRODUCT_ID } from '@/app/utils/constants';
 import Loader from '@/components/shared/Loader';
 
 /**
@@ -43,15 +44,15 @@ const RepeatOrderButton = ({
   /**
    * Repeat order handler - extract products from order and add to cart
    *
-   * This function processes all products in an order (except product ID 83) by:
+   * This function processes all products in an order (except the delivery product) by:
    * 1. Adding valid products to the shopping cart
    * 2. Redirecting user to the cart page
    * @returns {Promise<void>} resolves when all products are processed and user is redirected
    */
   const repeatOrderHandle = async (): Promise<void> => {
-    /** Filter out product with ID 83 */
+    /** Filter out the delivery product */
     products
-      .filter((product) => product.id !== 83)
+      .filter((product) => product.id !== DELIVERY_PRODUCT_ID)
       .forEach(async (product) => {
         /** Add product to cart with specified quantity */
         dispatch(

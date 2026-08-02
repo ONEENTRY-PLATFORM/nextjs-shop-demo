@@ -14,7 +14,7 @@ import Loader from '@/components/shared/Loader';
  * @param   {object}                                         props                - Component props
  * @param   {IOrderByMarkerEntity}                           props.data           - Order data to be canceled
  * @param   {boolean}                                        props.isLoading      - Loading state to show spinner when processing
- * @param   {unknown}                                        props.refetch        - Function to refetch orders after cancellation
+ * @param   {() => void}                                     props.refetch        - Function to refetch orders after cancellation
  * @param   {string}                                         props.title          - Button title text
  * @param   {(id: number, statusIdentifier: string) => void} props.onStatusChange - Callback to sync the parent list row status after cancellation
  * @returns {JSX.Element}                                                         Button element with cancel order functionality
@@ -28,8 +28,7 @@ const CancelOrderButton = ({
 }: {
   data: IOrderByMarkerEntity;
   isLoading: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  refetch: any;
+  refetch: () => void;
   title: string;
   onStatusChange: (id: number, statusIdentifier: string) => void;
 }): JSX.Element => {

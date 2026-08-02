@@ -1,37 +1,47 @@
-/* eslint-disable jsdoc/reject-any-type */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IFormsByMarkerDataEntity } from 'oneentry/dist/forms-data/formsDataInterfaces';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type JSX, useContext } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { getReviewFormData } from '@/app/utils/getReviewFormData';
 
 import ReviewAnimations from '../animations/ReviewAnimations';
 import RatingRow from './RatingRow';
 import StarRating from './StarRating';
 
 /**
- * Calculate rating distribution from reviews data.
- * @param   {any}   reviewsData - Reviews data object containing items array.
- * @returns {any[]}             Array of rating distribution objects with value, barValue, and starCount.
+ * One bar of the rating histogram.
+ * @property {number} value     - How many reviews carry this star count.
+ * @property {number} barValue  - Bar width in percent of the most frequent rating.
+ * @property {number} starCount - The star count this row represents (5…1).
  */
-const calculateRatingDistribution = (reviewsData: any): any[] => {
+type RatingDistributionRow = {
+  value: number;
+  barValue: number;
+  starCount: number;
+};
+
+/**
+ * Calculate rating distribution from reviews data.
+ *
+ * Ratings are read by marker through the shared {@link getReviewFormData}
+ * helper — the `formData` array order varies per review.
+ * @param   {IFormsByMarkerDataEntity | undefined} reviewsData - Reviews response from the FormsData API.
+ * @returns {RatingDistributionRow[]}                          Histogram rows from 5 stars down to 1.
+ */
+const calculateRatingDistribution = (
+  reviewsData?: IFormsByMarkerDataEntity,
+): RatingDistributionRow[] => {
   /** Initialize counters for each rating (1-5 stars) */
   const ratingCounts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
   /** Count ratings from reviewsData */
-  if (reviewsData?.items && Array.isArray(reviewsData.items)) {
-    reviewsData.items.forEach((item: any) => {
-      if (item?.formData && Array.isArray(item.formData)) {
-        item.formData.forEach((formItem: any) => {
-          if (formItem?.marker === 'rating') {
-            const rating = Number(formItem?.value);
-            if (!isNaN(rating) && rating >= 1 && rating <= 5) {
-              ratingCounts[rating as keyof typeof ratingCounts]++;
-            }
-          }
-        });
-      }
-    });
+  for (const item of reviewsData?.items ?? []) {
+    const rating = getReviewFormData(item.formData).rating;
+    if (rating >= 1 && rating <= 5) {
+      ratingCounts[rating as keyof typeof ratingCounts]++;
+    }
   }
 
   /** Calculate bar values based on maximum count */
@@ -52,13 +62,13 @@ const calculateRatingDistribution = (reviewsData: any): any[] => {
 
 /**
  * Rating block.
- * @param   {object}           props             - Rating block props.
- * @param   {IAttributeValues} props.dict        - dictionary
- * @param   {object}           props.totalRating - product rating data.
- * @param   {boolean}          props.state       - animation state
- * @param   {any}              props.product     - product data
- * @param   {any}              props.reviewsData - reviews data
- * @returns {JSX.Element}                        RatingBlock component.
+ * @param   {object}                               props             - Rating block props.
+ * @param   {IAttributeValues}                     props.dict        - dictionary
+ * @param   {number}                               props.totalRating - product rating data.
+ * @param   {boolean}                              props.state       - animation state
+ * @param   {IProductsEntity}                      props.product     - product data
+ * @param   {IFormsByMarkerDataEntity | undefined} props.reviewsData - reviews data
+ * @returns {JSX.Element}                                            RatingBlock component.
  */
 const RatingBlock = ({
   // dict,
@@ -70,8 +80,8 @@ const RatingBlock = ({
   totalRating: number;
   state: boolean;
   dict: IAttributeValues;
-  product: any;
-  reviewsData: any;
+  product: IProductsEntity;
+  reviewsData?: IFormsByMarkerDataEntity | undefined;
 }): JSX.Element => {
   /**
    * Get drawer state and control functions from OpenDrawerContext

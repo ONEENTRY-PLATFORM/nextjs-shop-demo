@@ -15,8 +15,7 @@ type LogOutProps = { marker: string; token?: string };
 export const logOutUser = async ({
   marker,
 }: LogOutProps): Promise<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data?: any;
+  data?: boolean;
   error?: string;
 }> => {
   const token = localStorage.getItem('refresh-token');

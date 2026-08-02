@@ -5,7 +5,11 @@ import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces'
 import type { JSX } from 'react';
 import { useContext, useEffect, useMemo } from 'react';
 
-import { useGetAccountsQuery, useGetProductsByIdsQuery } from '@/app/api';
+import {
+  useGetAccountsQuery,
+  useGetOrderStorageByMarkerQuery,
+  useGetProductsByIdsQuery,
+} from '@/app/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {
@@ -40,11 +44,6 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   /** Authentication context to check if user is logged in */
   const { isAuth, isLoading: isAuthLoading } = useContext(AuthContext);
 
-  /** Retrieve payment methods from Redux order slice */
-  const paymentMethods = useAppSelector(
-    (state) => state.orderReducer.paymentMethods,
-  );
-
   /** Retrieve products data from cart slice */
   const productsCartData = useAppSelector(selectCartData) as Array<{
     id: number;
@@ -68,11 +67,21 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
   /** Fetch all available payment accounts from the API */
   const { data, error, isLoading: isAccountsLoading } = useGetAccountsQuery({});
 
+  /**
+   * Fetch the order storage config — the payment accounts linked to it in the
+   * admin (`paymentAccountIdentifiers`) are the primary source of allowed
+   * checkout methods per the orders rule.
+   */
+  const { data: orderStorage } = useGetOrderStorageByMarkerQuery({
+    marker: 'order',
+  });
+
   /** Fetch products by their IDs from the cart */
   const { data: productsData, isLoading: isProductsLoading } =
     useGetProductsByIdsQuery(
       {
         items: productsCartData.map((p) => p.id.toString()).toString(),
+        lang: (lang as string) || 'en',
       },
       {
         skip: productsCartData.length === 0,
@@ -101,22 +110,32 @@ const PaymentPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
     return productsData;
   }, [productsData, productsItems]);
 
-  /** Filter payment methods based on whitelist from order slice */
+  /**
+   * Payment methods offered at checkout.
+   * Primary source: accounts linked to the order storage in the admin
+   * (`storage.paymentAccountIdentifiers`). Only when that list is empty fall
+   * back to all fetched accounts filtered by `isVisible && isUsed`, so hidden
+   * or unlinked accounts are never offered.
+   */
   const whitelistMethods = useMemo(() => {
     if (!data) return [];
 
-    /** If no payment methods restriction, show all */
-    if (!paymentMethods || paymentMethods.length === 0) {
-      return data;
+    /** Identifiers of accounts linked to the order storage */
+    const storageIdentifiers =
+      orderStorage?.paymentAccountIdentifiers?.map(
+        (account) => account.identifier,
+      ) ?? [];
+
+    /** Restrict to storage-linked accounts when the whitelist is configured */
+    if (storageIdentifiers.length > 0) {
+      return data.filter((method) =>
+        storageIdentifiers.includes(method.identifier),
+      );
     }
 
-    /** Filter by allowed payment methods */
-    return data.filter((method) => {
-      return paymentMethods.some(
-        (whitelistMethod) => method.identifier === whitelistMethod.identifier,
-      );
-    });
-  }, [data, paymentMethods]);
+    /** Fallback: only visible accounts that are enabled for use */
+    return data.filter((method) => method.isVisible && method.isUsed);
+  }, [data, orderStorage]);
 
   /** Prepare products for order creation */
   const productsInOrder = useMemo(() => {

@@ -1,3 +1,4 @@
+import { useParams } from 'next/navigation';
 import type { JSX } from 'react';
 
 import { useGetProductByIdQuery } from '@/app/api/api/RTKApi';
@@ -11,8 +12,12 @@ import { useGetProductByIdQuery } from '@/app/api/api/RTKApi';
  * @returns {JSX.Element}            Breadcrumb item with product title or loading state
  */
 const BreadcrumbProductItem = ({ link }: { link: string }): JSX.Element => {
+  /** Current locale from the route params — the query must be locale-aware */
+  const params = useParams();
+  const lang = (params?.lang as string) || 'en';
+
   /** Fetch product data by ID using RTK Query hook */
-  const productData = useGetProductByIdQuery({ id: Number(link) });
+  const productData = useGetProductByIdQuery({ id: Number(link), lang });
 
   return (
     /** Breadcrumb item container with separator and product title */

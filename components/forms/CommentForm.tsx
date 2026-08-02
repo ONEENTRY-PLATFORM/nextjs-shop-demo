@@ -1,44 +1,38 @@
+import { useParams } from 'next/navigation';
 import type { IAttributeValues, IError } from 'oneentry/dist/base/utils';
-import type { IPostFormResponse } from 'oneentry/dist/forms-data/formsDataInterfaces';
+import type {
+  IFormByMarkerDataEntity,
+  IPostFormResponse,
+} from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { ChangeEvent, FormEvent, JSX } from 'react';
 import { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { useFormsData } from '@/app/api';
+import { useFormsData, useGetFormByMarkerQuery } from '@/app/api';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
 import ArrowUpIcon from '../icons/arrow-up';
 import AuthError from '../pages/AuthError';
 import ErrorMessage from './inputs/ErrorMessage';
-
-/**
- * Review data interface
- * Represents a product review that can be replied to
- * @property {number | string} id - Unique identifier of the review
- */
-export interface ReviewData {
-  id: number | string;
-  [key: string]: unknown;
-}
+import { getFormAttributes } from './utils/getFormAttributes';
 
 /**
  * CommentForm component props
- * @property {IAttributeValues} dict    - Dictionary object containing localized strings for UI text
- * @property {ReviewData}       review  - Review data object being replied to, contains the review ID
- * @property {IProductsEntity}  product - Product entity containing product details and form configuration
+ * @property {IAttributeValues}        dict    - Dictionary object containing localized strings for UI text
+ * @property {IFormByMarkerDataEntity} review  - Review being replied to (the SDK FormsData entity; only `id` is used)
+ * @property {IProductsEntity}         product - Product entity containing product details and form configuration
  */
 export interface CommentFormProps {
   /** Dictionary for localized text strings */
   dict: IAttributeValues;
   /** Review being replied to */
-  review: ReviewData;
+  review: IFormByMarkerDataEntity;
   /** Product entity with form configuration */
   product: IProductsEntity;
 }
 
-const DEFAULT_MODULE_CONFIG_ID = 5;
-const DEFAULT_FORM_IDENTIFIER = 'comment_to_product';
+const FORM_MARKER = 'comment_to_product';
 const COMMENT_MARKER = 'comment_description';
 const FORM_STATUS = 'approved';
 
@@ -65,6 +59,33 @@ const CommentForm = memo(
   ({ dict, review, product }: CommentFormProps): JSX.Element => {
     /** Authentication context providing user authentication status and methods */
     const { isAuth } = useContext(AuthContext);
+
+    /** Current locale from the route params — the form query must be locale-aware */
+    const params = useParams();
+    const lang = (params?.lang as string) || 'en';
+
+    /**
+     * Fetch the comment form configuration from the CMS — all submission
+     * identifiers (formIdentifier, formModuleConfigId) and the comment field
+     * definition come from this response, never from guessed literals.
+     */
+    const { data: formData } = useGetFormByMarkerQuery({
+      marker: FORM_MARKER,
+      lang,
+    });
+
+    /**
+     * The comment field definition from the form attributes. Prefer the field
+     * with the known marker; otherwise fall back to the first field, so the
+     * marker and type always come from the CMS schema.
+     */
+    const commentField = useMemo(() => {
+      const attributes = getFormAttributes(formData);
+      return (
+        attributes.find((attr) => attr.marker === COMMENT_MARKER) ||
+        attributes[0]
+      );
+    }, [formData]);
 
     /** Use form submission hook for loading state and API calls */
     const { loading, sendData } = useFormsData();
@@ -122,21 +143,28 @@ const CommentForm = memo(
           return;
         }
 
-        try {
-          const moduleFormConfig = product?.moduleFormConfigs?.[0];
+        /**
+         * All identifiers must come from the getFormByMarker response — fail
+         * gracefully instead of posting with guessed literals when the form
+         * is not (yet) available from the CMS.
+         */
+        const moduleFormConfig = formData?.moduleFormConfigs?.[0];
+        if (!formData?.identifier || !moduleFormConfig?.id || !commentField) {
+          setError('Comment form is not available. Please try again later.');
+          return;
+        }
 
+        try {
           const responseData = await sendData({
-            formIdentifier:
-              moduleFormConfig?.formIdentifier || DEFAULT_FORM_IDENTIFIER,
+            formIdentifier: formData.identifier,
             formData: [
               {
-                marker: COMMENT_MARKER,
-                type: 'string',
+                marker: commentField.marker,
+                type: commentField.type,
                 value: value.trim(),
               },
             ],
-            formModuleConfigId:
-              moduleFormConfig?.id || DEFAULT_MODULE_CONFIG_ID,
+            formModuleConfigId: moduleFormConfig.id,
             moduleEntityIdentifier: product.id.toString(),
             replayTo: review.id.toString(),
             status: FORM_STATUS,
@@ -160,7 +188,7 @@ const CommentForm = memo(
           setError(errorMessage);
         }
       },
-      [value, product, review, sendData],
+      [value, product, review, formData, commentField, sendData],
     );
 
     /** Show authentication error if user is not logged in */

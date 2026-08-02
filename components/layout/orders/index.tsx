@@ -21,19 +21,11 @@ import OrdersTableLoader from './components/OrdersTableLoader';
 /**
  * Orders page component.
  * Displays a list of user orders with pagination and loading states.
- * @param   {object}           props                             - Component props
- * @param   {string}           props.lang                        - Current language shortcode (e.g., 'en', 'ru')
- * @param   {IAttributeValues} props.dict                        - Dictionary containing localized texts
- * @param   {object}           props.settings                    - Settings from server API
- * @param   {object}           props.settings.orders_limit       - Orders limit configuration
- * @param   {number}           props.settings.orders_limit.value - Number of orders per page
- * @param   {object}           props.settings.date_title         - Date column title configuration
- * @param   {string}           props.settings.date_title.value   - Date column title text
- * @param   {object}           props.settings.total_title        - Total column title configuration
- * @param   {string}           props.settings.total_title.value  - Total column title text
- * @param   {object}           props.settings.status_title       - Status column title configuration
- * @param   {string}           props.settings.status_title.value - Status column title text
- * @returns {JSX.Element}                                        Orders page with list of orders and pagination
+ * @param   {object}           props          - Component props
+ * @param   {string}           props.lang     - Current language shortcode (e.g., 'en', 'ru')
+ * @param   {IAttributeValues} props.dict     - Dictionary containing localized texts
+ * @param   {IAttributeValues} props.settings - Block attribute values from server API (may be incomplete — every read is guarded)
+ * @returns {JSX.Element}                     Orders page with list of orders and pagination
  */
 const OrdersPage = ({
   lang,
@@ -42,20 +34,7 @@ const OrdersPage = ({
 }: {
   lang: string;
   dict: IAttributeValues;
-  settings: {
-    orders_limit?: {
-      value: number;
-    };
-    date_title?: {
-      value: string;
-    };
-    total_title?: {
-      value: string;
-    };
-    status_title?: {
-      value: string;
-    };
-  };
+  settings: IAttributeValues | undefined;
 }): JSX.Element => {
   /** Handle useSearchParams in a try/catch to prevent build errors during SSR */
   let currentPage = 1;
@@ -86,7 +65,7 @@ const OrdersPage = ({
   });
 
   /** Determine page limit from settings or default to 10 */
-  const pageLimit = settings?.orders_limit?.value || 10;
+  const pageLimit = (settings?.orders_limit?.value as number | undefined) || 10;
 
   /** Fetch orders when authentication status, current page, page limit, or language changes */
   useEffect(() => {
@@ -169,8 +148,8 @@ const OrdersPage = ({
   /** Destructure order state for easier access */
   const { orders, total, loading, error } = orderState;
 
-  /** Destructure block attributes for easier access */
-  const { date_title, total_title, status_title } = settings;
+  /** Destructure block attributes for easier access — the CMS block may be incomplete */
+  const { date_title, total_title, status_title } = settings ?? {};
 
   /** Show authentication error if user is not logged in */
   if (!isAuth) {
@@ -188,9 +167,15 @@ const OrdersPage = ({
           {/* Orders table header with column titles */}
           <OrderRowAnimations className="w-full" index={0}>
             <div className="border-muted -mb-px flex w-full border-collapse gap-4 border-y p-4 text-slate-700">
-              <div className="w-1/2">{date_title?.value || 'Date'}</div>
-              <div className="w-1/4">{total_title?.value || 'Total'}</div>
-              <div className="w-1/4">{status_title?.value || 'Status'}</div>
+              <div className="w-1/2">
+                {(date_title?.value as string) || 'Date'}
+              </div>
+              <div className="w-1/4">
+                {(total_title?.value as string) || 'Total'}
+              </div>
+              <div className="w-1/4">
+                {(status_title?.value as string) || 'Status'}
+              </div>
             </div>
           </OrderRowAnimations>
 

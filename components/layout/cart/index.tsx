@@ -70,6 +70,7 @@ const CartPage = ({
    */
   const { data, isLoading } = useGetProductsByIdsQuery({
     items: productsCartData.map((p) => p.id.toString()).toString(),
+    lang,
   });
 
   /**

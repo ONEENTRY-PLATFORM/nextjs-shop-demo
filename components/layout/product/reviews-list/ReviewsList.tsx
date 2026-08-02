@@ -1,8 +1,10 @@
-/* eslint-disable jsdoc/reject-any-type */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type {
+  IFormByMarkerDataEntity,
+  IFormsByMarkerDataEntity,
+} from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 import { useState } from 'react';
@@ -14,12 +16,12 @@ import ViewAllButton from './ViewAllButton';
  * ReviewsList component.
  * Displays a list of product reviews with conditional styling based on visibility state.
  * Renders individual ReviewCard components for each review and includes a ViewAllButton.
- * @param   {object}           props             - Component props.
- * @param   {IAttributeValues} props.dict        - Dictionary object containing translations.
- * @param   {boolean}          props.state       - Visibility state that controls the layout spacing and ReviewCard animations.
- * @param   {any}              props.reviewsData - Array of review objects.
- * @param   {IProductsEntity}  props.product     - Product object.
- * @returns {JSX.Element}                        Reviews list section with all reviews and a view all button.
+ * @param   {object}                               props             - Component props.
+ * @param   {IAttributeValues}                     props.dict        - Dictionary object containing translations.
+ * @param   {boolean}                              props.state       - Visibility state that controls the layout spacing and ReviewCard animations.
+ * @param   {IFormsByMarkerDataEntity | undefined} props.reviewsData - Reviews response from the FormsData API.
+ * @param   {IProductsEntity}                      props.product     - Product object.
+ * @returns {JSX.Element}                                            Reviews list section with all reviews and a view all button.
  */
 const ReviewsList = ({
   dict,
@@ -30,7 +32,7 @@ const ReviewsList = ({
   dict: IAttributeValues;
   state: boolean;
   product: IProductsEntity;
-  reviewsData: any;
+  reviewsData?: IFormsByMarkerDataEntity | undefined;
 }): JSX.Element => {
   const [showAll, setShowAll] = useState(false);
   const { no_reviews_text } = dict;
@@ -53,17 +55,19 @@ const ReviewsList = ({
 
   /** Filter parent reviews (with parentId: null) */
   const parentReviews = reviewsData.items?.filter(
-    (review: any) => review.parentId === null,
+    (review) => review.parentId === null,
   );
 
   /** Group direct child reviews by their parent ID */
   const childReviewsByParentId = reviewsData.items?.reduce(
-    (acc: any, review: any) => {
+    (acc: Record<number, IFormByMarkerDataEntity[]>, review) => {
       if (review.parentId !== null && review.parentId !== undefined) {
-        if (!acc[review.parentId]) {
-          acc[review.parentId] = [];
+        const bucket = acc[review.parentId];
+        if (bucket) {
+          bucket.push(review);
+        } else {
+          acc[review.parentId] = [review];
         }
-        acc[review.parentId].push(review);
       }
       return acc;
     },
@@ -88,7 +92,7 @@ const ReviewsList = ({
         }
       >
         {/** Map through displayed reviews and render a ReviewCard for each one */}
-        {displayedReviews?.map((review: any, index: number) => (
+        {displayedReviews?.map((review, index: number) => (
           <ReviewCard
             key={review.id}
             review={review}

@@ -1,38 +1,24 @@
-/* eslint-disable jsdoc/reject-any-type */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IFormByMarkerDataEntity } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { JSX } from 'react';
 
+import { countReviewReplies } from '@/app/utils/countReviewReplies';
+
 /**
- * TotalComments
- * @param   {any}         props - props
- * @returns {JSX.Element}       TotalComments
+ * TotalComments — the "Comments N" heading of the review modal.
+ * @param   {object}                    props            - Component props
+ * @param   {IFormByMarkerDataEntity[]} props.allReviews - Every review of the thread, flat
+ * @param   {IFormByMarkerDataEntity}   props.review     - The review whose replies are counted
+ * @returns {JSX.Element}                                TotalComments
  */
 const TotalComments = ({
   allReviews,
   review,
 }: {
-  allReviews: any;
-  review: any;
+  allReviews: IFormByMarkerDataEntity[];
+  review: IFormByMarkerDataEntity;
 }): JSX.Element => {
-  /**
-   * Recursively count all comments (including nested replies)
-   * @param   {number} reviewId - The ID of the review to start counting from
-   * @returns {number}          The total number of comments
-   */
-  const countAllComments = (reviewId: number): number => {
-    /** Find direct children */
-    const directChildren = allReviews.filter(
-      (r: any) => r.parentId == reviewId && r.id !== reviewId,
-    );
-
-    /** Count direct children + their nested children */
-    return directChildren.reduce((total: number, child: any) => {
-      return total + 1 + countAllComments(child.id);
-    }, 0);
-  };
-
-  /** totalComments */
-  const totalComments = countAllComments(review?.id);
+  /** Direct plus nested replies of this review */
+  const totalComments = countReviewReplies(allReviews, review.id);
 
   return (
     <h4 className="mb-4 text-lg font-semibold text-neutral-800">

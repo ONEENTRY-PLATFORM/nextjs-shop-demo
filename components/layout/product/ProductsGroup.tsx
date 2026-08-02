@@ -32,12 +32,9 @@ const ProductsGroup = ({
       className="mb-8 flex flex-col max-md:max-w-full"
       index={4}
     >
-      {/* together_title */}
+      {/* together_title — the SDK already unwraps the requested locale */}
       <h2 className="mb-5 text-base leading-5 text-neutral-600 uppercase max-md:max-w-full">
-        {((
-          block?.attributeValues as unknown as Record<string, IAttributeValues>
-        )?.[lang]?.together_title?.value as string) ||
-          (block?.attributeValues?.together_title?.value as string)}
+        {(block?.attributeValues?.together_title?.value as string) || ''}
       </h2>
 
       {/** GroupCards */}

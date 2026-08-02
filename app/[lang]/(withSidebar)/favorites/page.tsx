@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import type { JSX } from 'react';
 
+import { getPageByUrl } from '@/app/api';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
+import { PAGES } from '@/app/utils/constants';
 import FavoritesPage from '@/components/layout/favorites';
 import { i18n, type Locale } from '@/i18n-config';
 
@@ -59,10 +61,15 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   /** Extract language parameter from params */
   const { lang } = await params;
-  /** Set page title for SEO */
-  const title = 'Favorites';
-  /** Set page description for SEO */
-  const description = 'Products you have marked as favorites.';
+
+  /** Get localized page content from the CMS, if the page exists */
+  const { page } = await getPageByUrl(PAGES.favorites, lang);
+
+  /** Page title from CMS localize infos with an English code fallback */
+  const title = page?.localizeInfos?.title || 'Favorites';
+  /** Page description from CMS plain content with an English code fallback */
+  const description =
+    page?.localizeInfos?.plainValue || 'Products you have marked as favorites.';
 
   /** Return metadata object with SEO information */
   return {

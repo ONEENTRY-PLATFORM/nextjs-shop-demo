@@ -49,7 +49,8 @@ type QueryResult<T> = { data: T } | { error: IError };
  * Awaits an SDK call and converts it to RTK Query's `{ data | error }` shape.
  *
  * Replaces the per-endpoint pattern of `handleApiResponse` + manual
- * `(result as IError)?.statusCode` checks. Uses the canonical {@link isError} type guard from `./api`.
+ * `(result as IError)?.statusCode` checks. Uses the canonical {@link isError}
+ * type guard from `./api`.
  * @template           T
  * @param    {Promise} call - Promise returned by any SDK method.
  * @returns  {Promise}      Result narrowed for RTK Query (`{ data | error }`).
@@ -125,11 +126,12 @@ export const RTKApi = createApi({
     }),
     /**
      * Get Product By Id.
-     * @param id - Product ID.
-     * @returns  Query result with product
+     * @param id   - Product ID.
+     * @param lang - Current language shortcode (converted to SDK langCode).
+     * @returns    Query result with product
      */
-    getProductById: build.query<IProductsEntity, { id: number }>({
-      queryFn: async ({ id }) => {
+    getProductById: build.query<IProductsEntity, { id: number; lang: string }>({
+      queryFn: async ({ id, lang }) => {
         if (!id) {
           return {
             error: {
@@ -139,7 +141,7 @@ export const RTKApi = createApi({
           };
         }
         return toQueryResult<IProductsEntity>(
-          getApi().Products.getProductById(id),
+          getApi().Products.getProductById(id, toLangCode(lang)),
         );
       },
     }),
@@ -152,15 +154,19 @@ export const RTKApi = createApi({
      * product entities before it reaches consumers (favorites/cart/payment
      * would otherwise render them as empty "ghost" cards).
      * @param items - Array of product IDs as string.
+     * @param lang  - Current language shortcode (converted to SDK langCode).
      * @returns     Query result with products (stub entries filtered out)
      */
-    getProductsByIds: build.query<IProductsEntity[], { items: string }>({
-      queryFn: async ({ items }) => {
+    getProductsByIds: build.query<
+      IProductsEntity[],
+      { items: string; lang: string }
+    >({
+      queryFn: async ({ items, lang }) => {
         if (!items || items.length < 1) {
           return { data: [] };
         }
         const result = await toQueryResult<IProductsEntity[]>(
-          getApi().Products.getProductsByIds(items),
+          getApi().Products.getProductsByIds(items, toLangCode(lang)),
         );
         if ('error' in result) {
           return result;

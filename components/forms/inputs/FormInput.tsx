@@ -1,5 +1,4 @@
-/* eslint-disable jsdoc/reject-any-type */
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import type { IFormAttribute } from 'oneentry/dist/forms/formsInterfaces';
 import type { JSX } from 'react';
 import { useEffect, useState } from 'react';
 
@@ -14,31 +13,50 @@ import EyeOpenIcon from '@/components/icons/eye-o';
 import StarRating from './StarRating';
 
 /**
- * FormInput component for rendering various types of form fields.
- * Handles text inputs, textareas, select dropdowns, and password fields with show/hide functionality.
- * @param   {object}              field                    - Field properties.
- * @param   {string}              field.marker             - Field marker.
- * @param   {string}              field.type               - Field type.
- * @param   {string | number}     field.value              - Field value.
- * @param   {Record<string, any>} [field.validators]       - Field validators.
- * @param   {number}              [field.index]            - Field index.
- * @param   {Record<string, any>} [field.listTitles]       - List titles.
- * @param   {Record<string, any>} [field.localizeInfos]    - Localize info.
- * @param   {Record<string, any>} [field.additionalFields] - Admin-configured extra fields (placeholder, hint).
- * @param   {string}              [field.className]        - Class name.
- * @returns {JSX.Element}                                  Form input.
+ * Props for FormInput — the SDK form field definition (`IFormAttribute`) plus
+ * view-only extras. All schema fields except `marker`/`type` are optional at
+ * the call site, so callers may spread the whole field object or pass only the
+ * subset they hold; the shape itself always comes from the SDK type.
+ * @property {string}          marker      - Field marker (machine name).
+ * @property {string}          type        - Field type from the form attributes.
+ * @property {string | number} value       - Current field value.
+ * @property {number}          [index]     - Field index for staggered animations.
+ * @property {string}          [className] - CSS class name override.
  */
-const FormInput = (field: {
+type FormInputProps = Partial<
+  Pick<
+    IFormAttribute,
+    | 'position'
+    | 'isVisible'
+    | 'localizeInfos'
+    | 'initialValue'
+    | 'listTitles'
+    | 'validators'
+    | 'settings'
+    | 'additionalFields'
+    | 'isLogin'
+    | 'isSignUp'
+    | 'isPassword'
+    | 'isSignUpRequired'
+    | 'isNotificationEmail'
+    | 'isNotificationPhonePush'
+    | 'isNotificationPhoneSMS'
+  >
+> & {
   marker: string;
   type: string;
   value: string | number;
-  validators?: Record<string, any>;
-  index?: number;
-  listTitles?: Record<string, any>;
-  localizeInfos?: Record<string, any>;
-  additionalFields?: Record<string, any> | undefined;
-  className?: string;
-}): JSX.Element => {
+  index?: number | undefined;
+  className?: string | undefined;
+};
+
+/**
+ * FormInput component for rendering various types of form fields.
+ * Handles text inputs, textareas, select dropdowns, and password fields with show/hide functionality.
+ * @param   {FormInputProps} field - Field properties (SDK form attribute plus view extras).
+ * @returns {JSX.Element}          Form input.
+ */
+const FormInput = (field: FormInputProps): JSX.Element => {
   const { localizeInfos, additionalFields } = field;
 
   /* Placeholder/hint sourced from admin-configured additionalFields, falling back to the label */
@@ -72,12 +90,14 @@ const FormInput = (field: {
    * Determine the field type based on marker or provided type
    * Special handling for email and password fields
    */
-  const fieldType = (FormFieldsEnum as unknown as FormFieldsEnum)[
+  const fieldTypeKey =
     field?.marker?.indexOf('password') !== -1
       ? 'password'
       : field.marker.indexOf('email') !== -1
         ? 'email'
-        : (field.type as any)
+        : field.type;
+  const fieldType = (FormFieldsEnum as unknown as Record<string, string>)[
+    fieldTypeKey
   ];
 
   /**
@@ -145,27 +165,13 @@ const FormInput = (field: {
           value={value}
           onChange={(val) => setValue(val.currentTarget.value)}
         >
-          {field.listTitles?.map(
-            (option: {
-              value: string;
-              title:
-                | string
-                | number
-                | bigint
-                | boolean
-                | Iterable<React.ReactNode>
-                | React.ReactPortal
-                | Promise<unknown>
-                | null
-                | undefined;
-            }) => {
-              return (
-                <option key={option.value} value={option.value as string}>
-                  {option.title as string}
-                </option>
-              );
-            },
-          )}
+          {field.listTitles?.map((option) => {
+            return (
+              <option key={String(option.value)} value={String(option.value)}>
+                {option.title}
+              </option>
+            );
+          })}
         </select>
       )}
       {/** Render textarea for textarea type fields */}

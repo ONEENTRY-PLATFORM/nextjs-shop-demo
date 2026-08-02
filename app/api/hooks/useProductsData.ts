@@ -2,47 +2,20 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 
 /**
- * Safely extracts the product title from localized information
- * @param   {IProductsEntity} product    - The product entity
- * @param   {string}          [langCode] - The language code
- * @param   {string}          fallback   - The fallback string if title is not found
- * @returns {string}                     The product title or a fallback string
+ * Safely extracts the product title from localized information.
+ * The SDK already unwraps the locale requested by the API call, so
+ * `localizeInfos.title` is the localized title — no per-locale indexing.
+ * @param   {IProductsEntity} product  - The product entity
+ * @param   {string}          fallback - The fallback string if title is not found
+ * @returns {string}                   The product title or a fallback string
  */
 export const getProductTitle = (
   product: IProductsEntity,
-  langCode?: string,
   fallback: string = '',
 ): string => {
-  /** Return fallback if product or localizeInfos is missing */
-  if (!product?.localizeInfos) {
-    return fallback;
-  }
-
-  /** Check for title in specific language code */
-  const localizeInfos = product.localizeInfos as unknown as Record<
-    string,
-    { title?: unknown }
-  >;
-  if (
-    langCode &&
-    localizeInfos[langCode] &&
-    typeof localizeInfos[langCode] === 'object' &&
-    'title' in localizeInfos[langCode] &&
-    typeof localizeInfos[langCode].title === 'string'
-  ) {
-    return localizeInfos[langCode].title as string;
-  }
-
-  /** Check for title in default localizeInfos */
-  if (
-    typeof product.localizeInfos === 'object' &&
-    'title' in product.localizeInfos &&
-    typeof product.localizeInfos.title === 'string'
-  ) {
-    return product.localizeInfos.title;
-  }
-
-  return fallback;
+  /** Title from the SDK-unwrapped localize infos */
+  const title = product?.localizeInfos?.title;
+  return typeof title === 'string' && title ? title : fallback;
 };
 
 /**
@@ -93,21 +66,24 @@ export const getProductSalePrice = (
 export const getProductCategory = (
   product: IProductsEntity,
 ): { value: string; title: string } | undefined => {
-  /** Extract category information from product attributes */
+  /**
+   * `category` is a list-type attribute: its value is an array of
+   * `{ title, value }` options (a lone object is normalized too, just in
+   * case). Take the first selected option and return its title/value pair.
+   */
+  const raw = product?.attributeValues?.category?.value;
+  const first = (Array.isArray(raw) ? raw[0] : raw) as
+    { title?: unknown; value?: unknown } | null | undefined;
+
   if (
-    product?.attributeValues?.category &&
-    typeof product.attributeValues.category === 'object' &&
-    'value' in product.attributeValues.category &&
-    product.attributeValues.category.value &&
-    typeof product.attributeValues.category.value === 'object' &&
-    'value' in product.attributeValues.category.value &&
-    'title' in product.attributeValues.category.value &&
-    typeof product.attributeValues.category.value.value === 'string' &&
-    typeof product.attributeValues.category.value.title === 'string'
+    first &&
+    typeof first === 'object' &&
+    first.title != null &&
+    first.value != null
   ) {
     return {
-      title: product.attributeValues.category.value.title,
-      value: product.attributeValues.category.value.value,
+      title: String(first.title),
+      value: String(first.value),
     };
   }
   return undefined;

@@ -2,50 +2,43 @@ import Image from 'next/image';
 import type { JSX } from 'react';
 
 /**
+ * A single selected option of the `stickers` list attribute.
+ * List options come as `{ title, value, extended }`, where `extended.value`
+ * holds the swatch image object for options that have one and `null` for
+ * options without extended data — every access must be optional.
+ * @property {string} title    - Option title, used as alt text for accessibility
+ * @property {string} value    - Underlying option value (not directly used in rendering)
+ * @property {object} extended - Extended payload with the sticker image, may be `{ type: null, value: null }`
+ */
+export type StickerOption = {
+  title?: string | undefined;
+  value?: string | number | null | undefined;
+  extended?:
+    | {
+        type?: string | null | undefined;
+        value?: { downloadLink?: string | undefined } | null | undefined;
+      }
+    | null
+    | undefined;
+};
+
+/**
  * Sticker component displays a product sticker image, typically used to show badges or special offers.
  * It renders a small square container with an image if the sticker data is available.
- * The sticker may contain a title, value, and an extended object with a download link for the image.
- * @param   {object}      props                                           - Component properties
- * @param   {object}      props.sticker                                   - Sticker object containing sticker data
- * @param   {object}      props.sticker.value                             - Sticker value object with title and image information
- * @param   {string}      props.sticker.value.title                       - Sticker title used as alt text for accessibility
- * @param   {string}      props.sticker.value.value                       - Sticker value (not directly used in rendering)
- * @param   {object}      props.sticker.value.extended                    - Sticker extended object containing additional data
- * @param   {object}      props.sticker.value.extended.value              - Sticker extended value object
- * @param   {string}      props.sticker.value.extended.value.downloadLink - URL to the sticker image file
- * @returns {JSX.Element}                                                 A div container with the sticker image or empty fragment if no sticker data
+ * @param   {object}        props         - Component properties
+ * @param   {StickerOption} props.sticker - Selected list option containing sticker data
+ * @returns {JSX.Element}                 A div container with the sticker image or empty fragment if no sticker data
  */
-const Sticker = ({
-  sticker,
-}: {
-  sticker: {
-    value: {
-      title: string;
-      value: string;
-      extended: {
-        value: {
-          downloadLink: string;
-        };
-      };
-    };
-  };
-}): JSX.Element => {
-  if (!sticker?.value) {
+const Sticker = ({ sticker }: { sticker: StickerOption }): JSX.Element => {
+  /** Return empty fragment if no sticker option is provided */
+  if (!sticker) {
     return <></>;
   }
 
-  /** Return empty fragment if no sticker value is provided */
-  if (!sticker?.value) {
-    return <></>;
-  }
-
-  /** Extract data from sticker */
-  const title = sticker.value?.title;
-  /** Extract image source from sticker's extended value or from first item in array if applicable */
-  const imgSrc =
-    sticker.value.extended?.value.downloadLink ||
-    (Array.isArray(sticker.value) &&
-      sticker.value[0]?.extended?.value.downloadLink);
+  /** Extract data from sticker option */
+  const title = sticker.title;
+  /** Extract image source from the option's extended value (fully optional — extended.value may be null) */
+  const imgSrc = sticker.extended?.value?.downloadLink || '';
 
   return (
     <div className="relative box-border flex size-6.5 shrink-0 flex-col items-center justify-center">

@@ -45,6 +45,12 @@ export const SIMILAR_PRODUCTS_PAGE_SIZE = 5;
  * RelatedItems) — cache() deduplicates per request on the server and is a
  * passthrough in the client build.
  *
+ * Deliberately NOT wrapped in `unstable_cache`, unlike its sibling fetchers:
+ * `RelatedItemsGrid` is a `'use client'` component that calls this directly,
+ * and `next/cache` is server-only — importing it here would pull server code
+ * into the client bundle and break the build. Adding the cross-request cache
+ * layer requires first moving the client path behind a Server Action.
+ *
  * Pagination is capped by the block's quantity: the API reports
  * `total = min(matching pool, quantity)` and returns 400 for offsets beyond
  * it (verified on live API 2026-07-02).

@@ -10,11 +10,17 @@ export enum LanguageEnum {
  * Converts a Next.js route lang code (`'en'`, `'fr'`) to a OneEntry SDK
  * `langCode` (`'en_US'`, `'fr_FR'`). Centralized so call sites do not have to
  * repeat `LanguageEnum[lang as keyof typeof LanguageEnum]`.
+ *
+ * An unknown or missing locale falls back to the default one instead of
+ * yielding `undefined`: the server components read the locale from
+ * `ServerProvider('lang')`, which is empty while a route is statically
+ * prerendered, and passing `undefined` on to the SDK made those builds bake a
+ * navigation skeleton into every generated page.
  * @param   {string} lang - Short locale from `params.lang`.
  * @returns {string}      Long locale code accepted by the SDK.
  */
 export const toLangCode = (lang: string): string =>
-  LanguageEnum[lang as keyof typeof LanguageEnum];
+  LanguageEnum[lang as keyof typeof LanguageEnum] ?? LanguageEnum.en;
 
 /**
  * Internationalization codes mapping

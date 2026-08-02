@@ -7,6 +7,7 @@ import { getChildPagesByParentUrl, getPageByUrl } from '@/app/api';
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams } from '@/app/types/global';
+import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
@@ -27,14 +28,13 @@ const MemoizedProductsGridLoader = memo(ProductsGridLoader);
  */
 const ShopCategoryLayout = async (props: {
   params: Promise<{ lang: string; handle: string }>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  searchParams: any;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }): Promise<JSX.Element> => {
   /** Extract route parameters from props */
   const params = await props.params;
   /** Destructure language and handle from parameters */
   const { lang, handle } = params;
-  /** Access searchParams without await to keep page static */
+  /** Next 15+ delivers `searchParams` as a Promise — it must be awaited */
   const searchParams = await props.searchParams;
 
   /** Get the dictionary from the API and set the server provider. */
@@ -72,7 +72,7 @@ const ShopCategoryLayout = async (props: {
       {
         '@type': 'ListItem',
         position: 3,
-        name: page.localizeInfos.title,
+        name: page.localizeInfos?.title ?? NO_TITLE,
         item: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}/shop/category/${handle}`,
       },
     ],
@@ -160,11 +160,11 @@ export async function generateMetadata({
   /** Return metadata object */
   return generatePageMetadata({
     handle: handle,
-    title: localizeInfos.title,
-    description: localizeInfos.plainValue as string,
+    title: localizeInfos?.title ?? NO_TITLE,
+    description: (localizeInfos?.plainValue as string | undefined) ?? '',
     isVisible: isVisible,
     imageUrl: getImageUrl('opengraph_image', attributeValues),
-    imageAlt: localizeInfos.title,
+    imageAlt: localizeInfos?.title ?? NO_TITLE,
     lang: lang,
     baseUrl: '',
   });

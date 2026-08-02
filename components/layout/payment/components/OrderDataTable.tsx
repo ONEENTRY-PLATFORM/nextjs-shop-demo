@@ -62,57 +62,60 @@ const OrderDataTable = ({
       <div className="mb-4 font-bold">Order Information</div>
 
       {/** Map through order form data to display relevant fields */}
-      {orderData.formData.map(
-        (field: {
-          marker: string;
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          value: any;
-        }) => {
-          /** Display delivery address when marker matches */
-          if (field.marker === 'order_address') {
-            return (
-              <div
-                key={field.marker}
-                className="flex flex-col max-md:flex-row max-md:gap-2"
-              >
-                <b>{order_info_address_placeholder?.value as string}:</b>{' '}
-                {field.value}
-              </div>
-            );
+      {orderData.formData.map((field: { marker: string; value: unknown }) => {
+        /** Display delivery address when marker matches */
+        if (field.marker === 'order_address') {
+          return (
+            <div
+              key={field.marker}
+              className="flex flex-col max-md:flex-row max-md:gap-2"
+            >
+              <b>{order_info_address_placeholder?.value as string}:</b>{' '}
+              {(field.value as string) || ''}
+            </div>
+          );
+        }
+
+        /** Display formatted delivery date when marker matches. Uses UseDate utility to format the fullDate value */
+        if (field.marker === 'date') {
+          /** A date field stored with a null/empty value has no fullDate — skip the row */
+          const fullDate = (
+            field.value as { fullDate?: string } | null | undefined
+          )?.fullDate;
+          if (!fullDate) {
+            return null;
           }
 
-          /** Display formatted delivery date when marker matches. Uses UseDate utility to format the fullDate value */
-          if (field.marker === 'date') {
-            return (
-              <div
-                key={field.marker}
-                className="flex flex-col max-md:flex-row max-md:gap-2"
-              >
-                <b>{delivery_date_text?.value as string}: </b>{' '}
-                {UseDate({
-                  fullDate: field.value.fullDate,
-                  format: 'en',
-                })}
-              </div>
-            );
-          }
+          return (
+            <div
+              key={field.marker}
+              className="flex flex-col max-md:flex-row max-md:gap-2"
+            >
+              <b>{delivery_date_text?.value as string}: </b>{' '}
+              {UseDate({
+                fullDate,
+                format: 'en',
+              })}
+            </div>
+          );
+        }
 
-          /** Display delivery time when marker matches */
-          if (field.marker === 'time') {
-            return (
-              <div
-                key={field.marker}
-                className="flex flex-col max-md:flex-row max-md:gap-2"
-              >
-                <b>{delivery_time_text?.value as string}: </b> {field.value}
-              </div>
-            );
-          }
+        /** Display delivery time when marker matches */
+        if (field.marker === 'time') {
+          return (
+            <div
+              key={field.marker}
+              className="flex flex-col max-md:flex-row max-md:gap-2"
+            >
+              <b>{delivery_time_text?.value as string}: </b>{' '}
+              {(field.value as string) || ''}
+            </div>
+          );
+        }
 
-          /** Return null for unrecognized field markers */
-          return null;
-        },
-      )}
+        /** Return null for unrecognized field markers */
+        return null;
+      })}
 
       {/** Section header for payment method */}
       <div className="mt-4 font-bold">Payment Method</div>

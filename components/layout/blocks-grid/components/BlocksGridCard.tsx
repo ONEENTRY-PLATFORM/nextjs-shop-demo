@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Baloo_2 as Baloo } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,7 +5,6 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { ReactElement } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
-import { toLangCode } from '@/app/types/enum';
 import BlockCardAnimations from '@/components/layout/blocks-grid/animations/BlockCardAnimations';
 
 import BlocksGridImage from './BlocksGridImage';
@@ -41,17 +39,16 @@ const BlocksGridCard = async ({
   lang: string;
   className: string;
   index: number;
-  blocksColors: any;
+  blocksColors: Record<string, string>;
 }): Promise<ReactElement> => {
-  /** Convert short locale to SDK langCode */
-  const langCode = toLangCode(lang);
-
   /** Fetch block data from API using the provided marker and language */
   const { block, isError } = await getBlockByMarker(marker, lang);
 
-  /** Extract attribute values from block data, prioritizing language-specific values */
-  const attributeValues =
-    block?.attributeValues[langCode] || block?.attributeValues;
+  /**
+   * Block attribute values — the SDK already unwraps the requested locale,
+   * so this is the flat marker→value map.
+   */
+  const attributeValues = block?.attributeValues;
 
   /** Return error message if no attribute values are found */
   if (!attributeValues) {
@@ -82,7 +79,7 @@ const BlocksGridCard = async ({
   }
 
   /** bgColor */
-  const bgColor = blocksColors[marker as keyof typeof blocksColors] || '';
+  const bgColor = blocksColors[marker] || '';
 
   return (
     /** Wrap card with animation component for entrance effects */
@@ -121,7 +118,7 @@ const BlocksGridCard = async ({
           )}
 
           {/** Block image component that renders optimized background image */}
-          <BlocksGridImage attributeValues={attributeValues} />
+          <BlocksGridImage attributeValues={attributeValues} index={index} />
 
           {/** Radial hover effect overlay */}
           <div className="radial-hover"></div>

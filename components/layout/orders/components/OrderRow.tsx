@@ -1,8 +1,8 @@
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
 import type { JSX } from 'react';
 import { useState } from 'react';
 
-import { getOrderStatusLabel } from '@/app/utils/orderStatusLabels';
 import { UsePrice } from '@/components/utils/utils';
 
 import OrderRowAnimations from '../animations/OrderRowAnimations';
@@ -10,8 +10,7 @@ import OrderPage from './OrderPage';
 
 interface OrderRowProps {
   order: IOrderByMarkerEntity;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  settings: Record<string, any> | undefined;
+  settings: IAttributeValues | undefined;
   lang: string;
   index: number;
   onStatusChange: (id: number, statusIdentifier: string) => void;
@@ -37,7 +36,14 @@ const OrderRow = ({
   onStatusChange,
 }: OrderRowProps): JSX.Element => {
   /** Extract relevant order data */
-  const { id, createdDate, statusIdentifier, totalSum, currency } = order;
+  const {
+    id,
+    createdDate,
+    statusIdentifier,
+    statusLocalizeInfos,
+    totalSum,
+    currency,
+  } = order;
 
   /** Format the total amount using the UsePrice utility */
   const formattedPrice = UsePrice({
@@ -74,8 +80,10 @@ const OrderRow = ({
         <div className="w-1/2">{date}</div>
         {/** Display formatted order total */}
         <div className="w-1/4">{formattedPrice}</div>
-        {/** Display order status */}
-        <div className="w-1/4">{getOrderStatusLabel(statusIdentifier)}</div>
+        {/** Display order status — localized title from the SDK, falling back to the raw marker */}
+        <div className="w-1/4">
+          {statusLocalizeInfos?.title || statusIdentifier || ''}
+        </div>
       </button>
       {/** Expanded order details page, shown when state is true */}
       <OrderPage

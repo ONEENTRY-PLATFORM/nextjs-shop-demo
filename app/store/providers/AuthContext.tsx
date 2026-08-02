@@ -1,5 +1,6 @@
 'use client';
 
+import type { IError } from 'oneentry/dist/base/utils';
 import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
 import type { JSX, ReactNode } from 'react';
 import {
@@ -13,6 +14,7 @@ import {
 } from 'react';
 
 import {
+  clearTokens,
   hasActiveSession,
   reDefine,
   RTKApi,
@@ -95,7 +97,7 @@ export const AuthProvider = ({
   const favoritesMeta = useAppSelector(selectFavoritesMeta);
   const cartMeta = useAppSelector(selectCartMeta);
 
-  const [trigger, { isError }] = useLazyGetMeQuery({
+  const [trigger, { isError, error: meError }] = useLazyGetMeQuery({
     pollingInterval: isAuth ? 30000 : 0,
   });
 
@@ -129,6 +131,9 @@ export const AuthProvider = ({
 
   /**
    * Re-fetches the current user via RTK Query and updates auth state.
+   * Logs out (and clears the dead refresh token) only on a **confirmed**
+   * 401/403 — a transient network/5xx failure keeps the current session so a
+   * flaky poll does not log the user out (tokens rule).
    * Memoized so it can be safely listed as an effect dep.
    * @returns {Promise<void>} Resolves once auth state is reconciled.
    */
@@ -140,15 +145,27 @@ export const AuthProvider = ({
     }
     try {
       const res = await trigger({ langCode });
-      if ((res.isError && !res.isLoading) || !res.data?.id) {
-        resetAuth();
-      } else {
+      if (res.data?.id) {
         setUser(res.data);
         setIsAuth(true);
         hadSessionRef.current = true;
+        return;
       }
-    } catch {
+      /** Confirmed auth failure — the refresh token is dead, clear it */
+      const statusCode = (res.error as IError | undefined)?.statusCode;
+      if (statusCode === 401 || statusCode === 403) {
+        clearTokens();
+        resetAuth();
+        return;
+      }
+      /** Transient failure (network/5xx) — keep the session, retry on next poll */
+      if (res.isError) {
+        return;
+      }
+      /** No user and no error envelope — treat as an ended session */
       resetAuth();
+    } catch {
+      /** Unexpected throw — not a confirmed auth error, keep the session */
     }
   }, [langCode, trigger, resetAuth]);
 
@@ -264,16 +281,20 @@ export const AuthProvider = ({
   }, [reinitTick, langCode, checkToken, resetAuth]);
 
   /**
-   * Drop auth on RTK Query polling errors (e.g. expired session).
+   * Drop auth on RTK Query polling errors — but only on a **confirmed**
+   * 401/403 (expired/dead session). Transient network/5xx poll failures keep
+   * the session (tokens rule: "log out only on confirmed 401/403").
    * setState-in-effect is intentional: this reacts to a derived change in the
    * polling result, not to a user-driven event.
    */
   useEffect(() => {
-    if (isError) {
+    const statusCode = (meError as IError | undefined)?.statusCode;
+    if (isError && (statusCode === 401 || statusCode === 403)) {
+      clearTokens();
       // eslint-disable-next-line react-hooks/set-state-in-effect
       resetAuth();
     }
-  }, [isError, resetAuth]);
+  }, [isError, meError, resetAuth]);
 
   /**
    * Manual re-check on `refreshUser()` calls (e.g. after profile edit).

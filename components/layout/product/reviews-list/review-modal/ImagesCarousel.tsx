@@ -1,29 +1,34 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import Image from 'next/image';
-import type { JSX, Key } from 'react';
+import type { Dispatch, JSX, Key, SetStateAction } from 'react';
 import Slider from 'react-slick';
 
+import type { ReviewAttachment } from '@/app/utils/getReviewFormData';
 import Placeholder from '@/components/shared/Placeholder';
 
+/**
+ * ImagesCarousel — the main (large) image slider of the review modal, synced
+ * with the thumbnail strip through the shared slider refs.
+ * @param   {object}                                  props              - Component props
+ * @param   {ReviewAttachment[]}                      props.reviewImages - Review attachments (already narrowed to items with a `downloadLink`)
+ * @param   {Slider | null}                           props.nav2         - Thumbnail slider this one follows
+ * @param   {Dispatch<SetStateAction<Slider | null>>} props.setNav1      - Publishes this slider so the thumbnails can follow it
+ * @returns {JSX.Element}                                                The main image slider, or a placeholder when there are no images
+ */
 const ImagesCarousel = ({
   reviewImages,
   nav2,
   setNav1,
 }: {
-  reviewImages: any;
-  nav2: any;
-  setNav1: any;
+  reviewImages: ReviewAttachment[];
+  nav2: Slider | null;
+  setNav1: Dispatch<SetStateAction<Slider | null>>;
 }): JSX.Element => {
   /** Prepare images data for carousel */
-  const imagesData: { original: string }[] = reviewImages
-    .filter(
-      (img: any) => img && typeof img === 'object' && 'downloadLink' in img,
-    )
-    .map((img: any) => ({
-      original: img.downloadLink,
-    }));
+  const imagesData: { original: string }[] = reviewImages.map((img) => ({
+    original: img.downloadLink,
+  }));
 
   const hasImages = imagesData.length > 0;
   const isGallery = imagesData.length > 1;

@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IFormByMarkerDataEntity } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
@@ -12,15 +12,15 @@ import UserComment from './UserComment';
 
 /**
  * ReviewCard component.
- * @param   {object}           props              - Component props.
- * @param   {IAttributeValues} props.dict         - Dictionary object.
- * @param   {IProductsEntity}  props.product      - Product object entity.
- * @param   {object}           props.review       - Review object entity containing all review data.
- * @param   {Array}            props.childReviews - Array of child review objects.
- * @param   {Array}            props.allReviews   - All reviews for recursive lookup.
- * @param   {number}           props.index        - Index of this element for staggered animations.
- * @param   {boolean}          props.state        - Visibility state that triggers animation.
- * @returns {JSX.Element}                         Review card component with animation wrapper.
+ * @param   {object}                    props              - Component props.
+ * @param   {IAttributeValues}          props.dict         - Dictionary object.
+ * @param   {IProductsEntity}           props.product      - Product object entity.
+ * @param   {IFormByMarkerDataEntity}   props.review       - Review object entity containing all review data.
+ * @param   {IFormByMarkerDataEntity[]} props.childReviews - Array of child review objects.
+ * @param   {IFormByMarkerDataEntity[]} props.allReviews   - All reviews for recursive lookup.
+ * @param   {number}                    props.index        - Index of this element for staggered animations.
+ * @param   {boolean}                   props.state        - Visibility state that triggers animation.
+ * @returns {JSX.Element}                                  Review card component with animation wrapper.
  */
 const ReviewCard = ({
   dict,
@@ -33,9 +33,9 @@ const ReviewCard = ({
 }: {
   dict: IAttributeValues;
   product: IProductsEntity;
-  review: any;
-  childReviews: any[];
-  allReviews: any[];
+  review: IFormByMarkerDataEntity;
+  childReviews: IFormByMarkerDataEntity[];
+  allReviews: IFormByMarkerDataEntity[];
   index: number;
   state: boolean;
 }): JSX.Element => {

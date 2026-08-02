@@ -10,12 +10,18 @@ import {
   getString,
   getText,
 } from '@/app/api/hooks/useAttributesData';
+import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import ProductSingleServer from '@/components/layout/product/ProductSingleServer';
 import type { Locale } from '@/i18n-config';
 import { i18n } from '@/i18n-config';
 
-export const dynamic = 'force-dynamic';
+/**
+ * ISR: CMS content — revalidate every 5 minutes instead of force-dynamic so
+ * generateStaticParams keeps pre-rendering product pages (performance rule:
+ * never force-dynamic for CMS pages).
+ */
+export const revalidate = 300;
 
 /**
  * Product page.
@@ -143,14 +149,19 @@ export async function generateMetadata({
   /** Extract required data from product for metadata generation */
   const { attributeValues, localizeInfos, isVisible } = product;
 
-  /** Generate and return metadata object using the extracted data */
+  /**
+   * `localizeInfos` is optional CMS content: a product that exists but has no
+   * localized record for this locale must still build. Reading it without
+   * optional chaining used to crash the ISR prerender of such products (the
+   * page body has always guarded it) — degrade to empty strings instead.
+   */
   return generatePageMetadata({
     handle: handle,
-    title: localizeInfos.title,
-    description: localizeInfos.plainValue as string,
+    title: localizeInfos?.title ?? NO_TITLE,
+    description: (localizeInfos?.plainValue as string | undefined) ?? '',
     isVisible: isVisible,
     imageUrl: getImageUrl('pic', attributeValues),
-    imageAlt: localizeInfos.title,
+    imageAlt: localizeInfos?.title ?? NO_TITLE,
     lang: lang,
     baseUrl: `/${lang}/shop/product/${handle}`,
   });

@@ -1,10 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from 'next/image';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IFormByMarkerDataEntity } from 'oneentry/dist/forms-data/formsDataInterfaces';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { type JSX, useContext, useState } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
+import { countReviewReplies } from '@/app/utils/countReviewReplies';
 import { getReviewFormData } from '@/app/utils/getReviewFormData';
 import CommentForm from '@/components/forms/CommentForm';
 
@@ -14,13 +15,13 @@ import ChildReviews from './ChildReviews';
 
 /**
  * User Comment component.
- * @param   {object}           props              - UserCommentProps.
- * @param   {IAttributeValues} props.dict         - Dictionary object.
- * @param   {IProductsEntity}  props.product      - product object entity.
- * @param   {object}           props.review       - review object entity.
- * @param   {Array}            props.childReviews - Array of child review objects.
- * @param   {Array}            props.allReviews   - All reviews for recursive lookup.
- * @returns {JSX.Element}                         UserComment component.
+ * @param   {object}                    props              - UserCommentProps.
+ * @param   {IAttributeValues}          props.dict         - Dictionary object.
+ * @param   {IProductsEntity}           props.product      - product object entity.
+ * @param   {IFormByMarkerDataEntity}   props.review       - review object entity.
+ * @param   {IFormByMarkerDataEntity[]} props.childReviews - Array of child review objects.
+ * @param   {IFormByMarkerDataEntity[]} props.allReviews   - All reviews for recursive lookup.
+ * @returns {JSX.Element}                                  UserComment component.
  */
 const UserComment = ({
   dict,
@@ -31,9 +32,9 @@ const UserComment = ({
 }: {
   dict: IAttributeValues;
   product: IProductsEntity;
-  review: any;
-  childReviews?: any[];
-  allReviews?: any[];
+  review: IFormByMarkerDataEntity;
+  childReviews?: IFormByMarkerDataEntity[];
+  allReviews?: IFormByMarkerDataEntity[];
 }): JSX.Element => {
   const { open, setOpen, setComponent, setData } =
     useContext(OpenDrawerContext);
@@ -48,24 +49,8 @@ const UserComment = ({
     review.formData,
   );
 
-  /**
-   * Recursively count all comments (including nested replies)
-   * @param   {number} reviewId - ID of the review to count
-   * @returns {number}          - Total number of comments
-   */
-  const countAllComments = (reviewId: number): number => {
-    /** Find direct children */
-    const directChildren = allReviews.filter(
-      (r: any) => r.parentId == reviewId && r.id !== reviewId,
-    );
-
-    /** Count direct children + their nested children */
-    return directChildren.reduce((total: number, child: any) => {
-      return total + 1 + countAllComments(child.id);
-    }, 0);
-  };
-
-  const commentsCount = countAllComments(review?.id);
+  /** Direct plus nested replies of this review */
+  const commentsCount = countReviewReplies(allReviews, review.id);
 
   return (
     <>
@@ -79,7 +64,7 @@ const UserComment = ({
         {/* Attachments */}
         {reviewImages.length > 0 && (
           <div className="grid w-full max-w-md grid-cols-2 gap-4">
-            {reviewImages.map((image: any, index: number) => (
+            {reviewImages.map((image, index: number) => (
               <div
                 key={index}
                 className="relative aspect-square cursor-pointer overflow-hidden rounded-2xl border border-solid border-gray-300"

@@ -38,6 +38,7 @@ const FavoritesPage = ({ lang, dict }: SimplePageProps): JSX.Element => {
 
   const { data, isLoading } = useGetProductsByIdsQuery({
     items: favoritesIds.toString(),
+    lang: (lang as string) || 'en',
   });
 
   /**

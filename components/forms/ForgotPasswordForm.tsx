@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
@@ -15,6 +14,7 @@ import Loader from '../shared/Loader';
 import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
+import { getFormAttributes } from './utils/getFormAttributes';
 
 /**
  * ForgotPassword form component that allows users to initiate the password reset process.
@@ -86,7 +86,7 @@ export const ForgotPasswordForm = ({
         setError('');
         setComponent('VerificationForm');
         setAction('checkCode');
-      } catch (e: any) {
+      } catch (e) {
         /** Set error message from exception */
         setError(getApiErrorMessage(e));
       }
@@ -120,20 +120,20 @@ export const ForgotPasswordForm = ({
         {/** Form input fields container */}
         <div className="relative mb-8 box-border flex shrink-0 flex-col gap-4">
           {/** Map through form attributes to render only the email input field */}
-          {Array.isArray(data?.attributes) &&
-            data.attributes.map((field: any, index: Key | number) => {
-              /** Only render the email registration field for password reset */
-              if (field.marker === 'email_reg') {
-                return (
-                  <FormInput
-                    key={field.marker || index}
-                    index={index as number}
-                    {...field}
-                  />
-                );
-              }
-              return;
-            })}
+          {getFormAttributes(data).map((field, index: Key | number) => {
+            /** Only render the email registration field for password reset */
+            if (field.marker === 'email_reg') {
+              return (
+                <FormInput
+                  key={field.marker || index}
+                  index={index as number}
+                  {...field}
+                  value={(field.value as string | number | undefined) ?? ''}
+                />
+              );
+            }
+            return;
+          })}
         </div>
 
         {/** Submit button for forgot password form */}
