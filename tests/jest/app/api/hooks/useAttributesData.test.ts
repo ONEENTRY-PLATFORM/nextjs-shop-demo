@@ -10,6 +10,17 @@
 import { describe, expect, it } from '@jest/globals';
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
 
+/*
+ * `useAttributesData` imports `components/utils/sanitize`, which pulls in
+ * `sanitize-html` → its bundled `htmlparser2@12`, a pure-ESM package. Node 22
+ * loads it through require(ESM); Jest's CJS runtime cannot and dies while
+ * parsing the module. `getImageUrl` sanitizes nothing, so the sanitize module
+ * is stubbed to keep the import chain loadable.
+ */
+jest.mock('@/components/utils/sanitize', () => ({
+  sanitizeHTML: (html: string) => html,
+}));
+
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
 
 /**

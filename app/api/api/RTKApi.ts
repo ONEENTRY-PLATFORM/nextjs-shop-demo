@@ -51,9 +51,8 @@ type QueryResult<T> = { data: T } | { error: IError };
  * Replaces the per-endpoint pattern of `handleApiResponse` + manual
  * `(result as IError)?.statusCode` checks. Uses the canonical {@link isError}
  * type guard from `./api`.
- * @template           T
- * @param    {Promise} call - Promise returned by any SDK method.
- * @returns  {Promise}      Result narrowed for RTK Query (`{ data | error }`).
+ * @param   {Promise} call - Promise returned by any SDK method (`T` is its payload type).
+ * @returns {Promise}      Result narrowed for RTK Query (`{ data | error }`).
  */
 const toQueryResult = async <T>(
   call: Promise<T | IError>,
