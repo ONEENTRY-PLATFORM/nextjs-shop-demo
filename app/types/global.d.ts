@@ -5,18 +5,6 @@ import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
 import type { React, ReactNode } from 'react';
 
 /**
- * Localize info.
- * @property {string} content   - Content of the page.
- * @property {string} menuTitle - Menu title of the page.
- * @property {string} title     - Title of the page.
- */
-declare type LocalizeInfo = {
-  content: string;
-  menuTitle: string;
-  title: string;
-};
-
-/**
  * Page props.
  * @property {object} params       - Page parameters.
  * @property {object} searchParams - Search parameters.
@@ -99,47 +87,6 @@ export type IProducts = {
   selected: boolean;
   quantity: number;
 };
-
-/**
- * Product metadata.
- * @property {string} title       - Title of the product.
- * @property {string} description - Description of the product.
- * @property {string} url         - URL of the product.
- * @property {number} width       - Width of the product image.
- * @property {number} height      - Height of the product image.
- * @property {string} alt         - Alt text of the product image.
- */
-interface IProductMetadata {
-  title: string;
-  description: string;
-  url: string;
-  width: number;
-  height: number;
-  alt: string;
-}
-
-/**
- * Page metadata.
- * @property {string}           title           - Title of the page.
- * @property {string}           description     - Description of the page.
- * @property {boolean}          isVisible       - Whether the page is visible.
- * @property {IAttributeValues} attributeValues - Attribute values of the page.
- * @property {LocalizeInfo}     localizeInfos   - Localize info of the page.
- */
-interface IPageMetadata {
-  title: string;
-  description: string;
-  isVisible: boolean;
-  attributeValues: {
-    icon?: {
-      downloadLink: string;
-    };
-  };
-  localizeInfos: {
-    title: string;
-    plainContent: string;
-  };
-}
 
 /**
  * Order product.

@@ -1,5 +1,5 @@
 import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IProductsResponse } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
 import { SIMILAR_PRODUCTS_PAGE_SIZE } from '@/app/api/server/blocks/getSimilarProductsByBlock';
@@ -9,18 +9,16 @@ import RelatedItemsGrid from './RelatedItemsGrid';
 
 /**
  * RelatedItems component displays a section of similar or related products.
- * @param   {object}            props                               - Component properties
- * @param   {string}            props.lang                          - Current language shortcode for localization
- * @param   {IAttributeValues}  props.dict                          - Dictionary of attribute values from server API
- * @param   {number}            props.productId                     - Current product id — block rules context, excluded from the grid
- * @param   {object}            props.block                         - The block data containing similar products
- * @param   {string}            props.block.identifier              - Block marker used to load next portions
- * @param   {number}            [props.block.quantity]              - Portion size configured on the block in admin (Quantity)
- * @param   {IAttributeValues}  props.block.attributeValues         - The attribute values for the block, including title information
- * @param   {object}            props.block.similarProducts         - The similar products data container
- * @param   {IProductsEntity[]} [props.block.similarProducts.items] - The first portion of similar products
- * @param   {number}            [props.block.similarProducts.total] - Raw API total of similar products (capped by the block's quantity)
- * @returns {JSX.Element}                                           A section containing a title and a grid of related product cards, or empty fragment if no data
+ * @param   {object}            props                         - Component properties
+ * @param   {string}            props.lang                    - Current language shortcode for localization
+ * @param   {IAttributeValues}  props.dict                    - Dictionary of attribute values from server API
+ * @param   {number}            props.productId               - Current product id — block rules context, excluded from the grid
+ * @param   {object}            props.block                   - The block data containing similar products
+ * @param   {string}            props.block.identifier        - Block marker used to load next portions
+ * @param   {number}            [props.block.quantity]        - Portion size configured on the block in admin (Quantity)
+ * @param   {IAttributeValues}  props.block.attributeValues   - The attribute values for the block, including title information
+ * @param   {IProductsResponse} [props.block.similarProducts] - The similar products container returned by the block endpoint (`items`/`total`, `total` capped by the block's quantity)
+ * @returns {JSX.Element}                                     A section containing a title and a grid of related product cards, or empty fragment if no data
  */
 const RelatedItems = ({
   lang,
@@ -36,10 +34,7 @@ const RelatedItems = ({
     identifier: string;
     quantity?: number;
     attributeValues: IAttributeValues;
-    similarProducts?: {
-      items?: IProductsEntity[];
-      total?: number;
-    };
+    similarProducts?: IProductsResponse | undefined;
   };
 }): JSX.Element => {
   /** Early return if essential data (block or similarProducts) is missing */

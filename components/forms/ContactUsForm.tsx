@@ -203,7 +203,9 @@ const ContactUsForm = memo(
                     </div>
                   )}
                   <FormSubmitButton
-                    title={field.localizeInfos.title}
+                    // The API omits `title` when the form carries no
+                    // localization for the requested language.
+                    title={field.localizeInfos.title || 'Submit'}
                     isLoading={loading}
                     index={10}
                   />

@@ -158,7 +158,7 @@ export async function generateMetadata({
   return generatePageMetadata({
     handle: handle,
     title: localizeInfos?.title ?? NO_TITLE,
-    description: (localizeInfos?.plainValue as string | undefined) ?? '',
+    description: localizeInfos?.plainContent ?? '',
     isVisible: isVisible,
     imageUrl: getImageUrl('pic', attributeValues),
     imageAlt: localizeInfos?.title ?? NO_TITLE,

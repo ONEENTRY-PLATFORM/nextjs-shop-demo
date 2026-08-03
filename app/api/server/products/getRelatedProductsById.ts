@@ -1,9 +1,6 @@
 import { unstable_cache } from 'next/cache';
 import type { IError } from 'oneentry/dist/base/utils';
-import type {
-  IProductsEntity,
-  IProductsResponse,
-} from 'oneentry/dist/products/productsInterfaces';
+import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import { cache } from 'react';
 
 import { getApi, isError } from '@/app/api';
@@ -42,15 +39,13 @@ const fetchRelatedProductsById = unstable_cache(
     const data = await getApi().Products.getRelatedProductsById(id, langCode);
 
     if (isError(data)) {
-      return { isError: true, error: data as IError, total: 0 };
+      return { isError: true, error: data, total: 0 };
     }
-
-    const productsResponse = data as IProductsResponse;
 
     return {
       isError: false,
-      products: productsResponse.items,
-      total: productsResponse.total,
+      products: data.items,
+      total: data.total,
     };
   },
   ['oneentry-getRelatedProductsById'],
