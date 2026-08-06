@@ -15,6 +15,12 @@ const ContactInfo = async (): Promise<JSX.Element> => {
    */
   const [lang] = ServerProvider('lang');
 
+  /** Dictionary set by the root layout — used for the "not found" plug */
+  const [dict] = ServerProvider('dict');
+  /** Localized "nothing to show" text with an English fallback */
+  const notFoundText =
+    (dict?.content_not_found?.value as string) || 'Content not found';
+
   /**
    * Fetch contact information block from CMS by marker
    * This retrieves all the contact data stored in the CMS
@@ -23,7 +29,7 @@ const ContactInfo = async (): Promise<JSX.Element> => {
 
   /** Return error message if block is not found */
   if (!block) {
-    return <>Block not found</>;
+    return <>{notFoundText}</>;
   }
 
   /**
@@ -34,7 +40,7 @@ const ContactInfo = async (): Promise<JSX.Element> => {
 
   /** Return error message if attribute values are not found */
   if (!attributeValues) {
-    return <>Attributes not found</>;
+    return <>{notFoundText}</>;
   }
 
   /**

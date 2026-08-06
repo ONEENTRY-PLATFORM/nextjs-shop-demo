@@ -34,7 +34,7 @@ const PageLayout = async ({
   const { page: p, lang } = await params;
 
   /** Get dictionary and set to server provider for internationalization */
-  ServerProvider('dict', await getDictionary(lang as Locale));
+  const [dict] = ServerProvider('dict', await getDictionary(lang as Locale));
 
   /** Get page data by current url */
   const { page, isError } = await getPageByUrl(p, lang);
@@ -107,7 +107,9 @@ const PageLayout = async ({
           );
         })
       ) : (
-        <div>Page not found</div>
+        <div>
+          {(dict?.content_not_found?.value as string) || 'Content not found'}
+        </div>
       )}
     </div>
   );

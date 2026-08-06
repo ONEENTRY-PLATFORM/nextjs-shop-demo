@@ -5,6 +5,7 @@ import type {
 import type { JSX } from 'react';
 
 import { getLocales, getMenuByMarker } from '@/app/api';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
 import LangSelector from './LangSelector';
 import MenuButton from './MenuButton';
@@ -29,6 +30,9 @@ const NavGroup = async ({ lang }: { lang: string }): Promise<JSX.Element> => {
 
   /** Fetch side menu data for user profile dropdown */
   const userMenu = await getMenuByMarker('side_web', lang);
+
+  /** Dictionary set by the root layout — passed down to client nav items */
+  const [dict] = ServerProvider('dict');
 
   /**
    * Return empty fragment if there's an error or user menu is not available
@@ -58,6 +62,7 @@ const NavGroup = async ({ lang }: { lang: string }): Promise<JSX.Element> => {
                   item={item}
                   lang={lang}
                   userMenu={userMenu.menu as IMenusEntity}
+                  dict={dict}
                 />
               )}
               {item.pageUrl === 'favorites' && (

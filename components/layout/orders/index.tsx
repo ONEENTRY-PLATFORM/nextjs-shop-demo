@@ -151,6 +151,9 @@ const OrdersPage = ({
   /** Destructure block attributes for easier access — the CMS block may be incomplete */
   const { date_title, total_title, status_title } = settings ?? {};
 
+  /** Extract localized text values from the dictionary */
+  const { loading_more_orders_text } = dict ?? {};
+
   /** Show authentication error if user is not logged in */
   if (!isAuth) {
     return <AuthError dict={dict} />;
@@ -203,7 +206,10 @@ const OrdersPage = ({
             )}
             {/* Show loading message when loading more orders */}
             {loading && currentPage > 0 && (
-              <div className="p-4 text-center">Loading more orders...</div>
+              <div className="p-4 text-center">
+                {(loading_more_orders_text?.value as string) ||
+                  'Loading more orders...'}
+              </div>
             )}
           </div>
         </div>

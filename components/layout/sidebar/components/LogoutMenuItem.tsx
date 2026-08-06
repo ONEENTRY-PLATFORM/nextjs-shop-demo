@@ -1,6 +1,7 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
 import { useContext } from 'react';
 
@@ -12,9 +13,11 @@ import Profile from '@/components/icons/profile';
  * Logout menu item component that displays a logout button in the sidebar menu.
  * This component is only visible when the user is authenticated.
  * When clicked, it logs out the user and redirects to the home page.
- * @returns {JSX.Element} Logout menu item with icon and text.
+ * @param   {object}           props      - Component properties
+ * @param   {IAttributeValues} props.dict - Dictionary with localized values from server API
+ * @returns {JSX.Element}                 Logout menu item with icon and text.
  */
-const LogoutMenuItem = (): JSX.Element => {
+const LogoutMenuItem = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   /** Router for navigation with transition effects */
   const router = useTransitionRouter();
 
@@ -51,7 +54,7 @@ const LogoutMenuItem = (): JSX.Element => {
         <div className="my-auto aspect-square size-4 shrink-0">
           <Profile />
         </div>
-        <div>Logout</div>
+        <div>{(dict?.log_out_button?.value as string) || 'Logout'}</div>
       </button>
     </li>
   );

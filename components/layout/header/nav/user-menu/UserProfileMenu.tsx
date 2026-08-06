@@ -1,5 +1,6 @@
 'use client';
 
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type {
   IMenusEntity,
   IMenusPages,
@@ -16,20 +17,23 @@ import UserMenuItem from './UserMenuItem';
 /**
  * User Profile menu component for displaying the user profile dropdown menu.
  * Renders a profile icon button that opens a dropdown menu with user-related navigation links.
- * @param   {object}       props          - UserProfileMenu props.
- * @param   {string}       props.lang     - Current language shortcode.
- * @param   {IMenusEntity} props.userMenu - Represents a menu object.
- * @param   {string}       props.title    - Menu title.
- * @returns {JSX.Element}                 User Profile menu.
+ * @param   {object}           props          - UserProfileMenu props.
+ * @param   {string}           props.lang     - Current language shortcode.
+ * @param   {IMenusEntity}     props.userMenu - Represents a menu object.
+ * @param   {string}           props.title    - Menu title.
+ * @param   {IAttributeValues} props.dict     - Dictionary with localized values from server API.
+ * @returns {JSX.Element}                     User Profile menu.
  */
 const UserProfileMenu = ({
   lang,
   userMenu,
   title,
+  dict,
 }: {
   lang: string;
   title: string;
   userMenu: IMenusEntity;
+  dict: IAttributeValues;
 }): JSX.Element => {
   /**
    * State to control the visibility of the profile menu dropdown
@@ -90,7 +94,7 @@ const UserProfileMenu = ({
               );
             })}
             <li>
-              <LogoutMenuItem />
+              <LogoutMenuItem dict={dict} />
             </li>
           </ul>
         )}

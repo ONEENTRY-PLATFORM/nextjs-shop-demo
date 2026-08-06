@@ -9,7 +9,10 @@ import {
   expandAttributeTimeIntervals,
   isTimeIntervalAttribute,
 } from 'oneentry';
-import type { IAttributeValue } from 'oneentry/dist/base/utils';
+import type {
+  IAttributeValue,
+  IAttributeValues,
+} from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';
@@ -46,11 +49,18 @@ type HolidayEntry = { date: string };
 
 /**
  * Calendar form component for selecting delivery date and time.
- * @param   {object}      props      - Component props.
- * @param   {string}      props.lang - Current language shortcode.
- * @returns {JSX.Element}            Calendar form.
+ * @param   {object}           props      - Component props.
+ * @param   {string}           props.lang - Current language shortcode.
+ * @param   {IAttributeValues} props.dict - Dictionary from server API (passed by the modal host).
+ * @returns {JSX.Element}                 Calendar form.
  */
-const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
+const CalendarForm = ({
+  lang,
+  dict,
+}: {
+  lang: string;
+  dict: IAttributeValues;
+}): JSX.Element => {
   /** Redux dispatch function for updating store */
   const dispatch = useAppDispatch();
 
@@ -234,7 +244,7 @@ const CalendarForm = ({ lang }: { lang: string }): JSX.Element => {
 
   /** If loading, return loading indicator */
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>{(dict?.loading_text?.value as string) || 'Loading...'}</div>;
   }
 
   /** If error, return error message */

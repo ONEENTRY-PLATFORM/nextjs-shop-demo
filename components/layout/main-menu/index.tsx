@@ -17,6 +17,9 @@ const MainMenu = async (): Promise<JSX.Element> => {
   /** Get the current language from the server provider */
   const [lang] = ServerProvider('lang');
 
+  /** Dictionary set by the root layout — passed down to the mobile menu */
+  const [dict] = ServerProvider('dict');
+
   /** Fetch the menu data by marker from the API */
   const { isError, menu } = await getMenuByMarker('main_web', lang as string);
 
@@ -40,7 +43,7 @@ const MainMenu = async (): Promise<JSX.Element> => {
   return (
     <>
       <NavigationMenu menu={mainMenu} lang={lang as string} />
-      <OffscreenModal menu={mainMenu} lang={lang as string} />
+      <OffscreenModal menu={mainMenu} lang={lang as string} dict={dict} />
     </>
   );
 };

@@ -1,3 +1,4 @@
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { JSX } from 'react';
 
@@ -16,19 +17,31 @@ import { UsePrice } from '@/components/utils/utils';
  * Handles cases where there are no products or delivery information to display.
  * @param   {object}                        props          - Component properties.
  * @param   {string}                        props.lang     - Current language shortcode for price formatting.
+ * @param   {IAttributeValues}              props.dict     - Dictionary from server API containing localized text values.
  * @param   {IProductsEntity[] | undefined} props.products - Products data to display (optional, falls back to Redux state).
  * @param   {IProductsEntity | undefined}   props.delivery - Delivery data to display (optional, falls back to Redux state).
  * @returns {JSX.Element}                                  Order products table component.
  */
 const OrderProductsTable = ({
   lang,
+  dict,
   products,
   delivery,
 }: {
   lang: string;
+  dict: IAttributeValues;
   products: IProductsEntity[] | undefined;
   delivery: IProductsEntity | undefined;
 }): JSX.Element => {
+  /** Extract localized text values from the dictionary */
+  const {
+    order_product_title,
+    order_price_title,
+    order_info_quantity,
+    no_order_products_text,
+    delivery_text,
+  } = dict;
+
   /** Retrieve cart data from Redux store */
   const productsDataInCart = useAppSelector(selectCartData) as Array<{
     id: number;
@@ -54,16 +67,27 @@ const OrderProductsTable = ({
   const hasDelivery = delivery || d;
 
   if (!hasProducts && !hasDelivery) {
-    return <div className="p-4">No products or delivery information</div>;
+    return (
+      <div className="p-4">
+        {(no_order_products_text?.value as string) ||
+          'No products or delivery information'}
+      </div>
+    );
   }
 
   return (
     <>
       {/** Table header row */}
       <div className="border-muted flex border-b border-solid p-2">
-        <div className="w-1/2 font-bold">Product</div>
-        <div className="w-1/4 font-bold">Price</div>
-        <div className="w-1/4 font-bold">Quantity</div>
+        <div className="w-1/2 font-bold">
+          {(order_product_title?.value as string) || 'Product'}
+        </div>
+        <div className="w-1/4 font-bold">
+          {(order_price_title?.value as string) || 'Price'}
+        </div>
+        <div className="w-1/4 font-bold">
+          {(order_info_quantity?.value as string) || 'Quantity'}
+        </div>
       </div>
 
       {/** Product rows */}
@@ -115,6 +139,7 @@ const OrderProductsTable = ({
           <div className="w-1/2">
             {delivery?.localizeInfos?.title ||
               d?.localizeInfos?.title ||
+              (delivery_text?.value as string) ||
               'Delivery'}
           </div>
           <div className="w-1/4">

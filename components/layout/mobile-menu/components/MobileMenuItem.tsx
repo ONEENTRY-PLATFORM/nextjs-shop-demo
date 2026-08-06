@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { JSX } from 'react';
 import { useContext, useState } from 'react';
@@ -12,17 +13,20 @@ import MobileMenu from './MobileMenu';
 /**
  * Mobile menu list item component.
  * Renders a single menu item with support for nested submenus in mobile navigation.
- * @param   {object}      props      - Component properties
- * @param   {IMenusPages} props.item - Menu item object containing title and URL information
- * @param   {string}      props.lang - Current language shortcode (e.g., 'en', 'ru')
- * @returns {JSX.Element}            A mobile menu item with optional submenu toggle
+ * @param   {object}           props      - Component properties
+ * @param   {IMenusPages}      props.item - Menu item object containing title and URL information
+ * @param   {string}           props.lang - Current language shortcode (e.g., 'en', 'ru')
+ * @param   {IAttributeValues} props.dict - Dictionary with localized values from server API
+ * @returns {JSX.Element}                 A mobile menu item with optional submenu toggle
  */
 function MobileMenuItem({
   item,
   lang,
+  dict,
 }: {
   item: IMenusPages;
   lang: string;
+  dict: IAttributeValues;
 }): JSX.Element {
   /** Access the setOpen function from OpenDrawerContext to control menu visibility */
   const { setOpen } = useContext(OpenDrawerContext);
@@ -94,6 +98,7 @@ function MobileMenuItem({
         <MobileMenu
           menu={item.children}
           lang={lang}
+          dict={dict}
           className={'px-2 ' + (!openSubmenu ? 'hidden' : 'visible')}
         />
       )}

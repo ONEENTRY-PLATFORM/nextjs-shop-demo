@@ -2,6 +2,7 @@ import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { JSX } from 'react';
 
 import { getMenuByMarker } from '@/app/api';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
 import SidebarAnimations from './animations/SidebarAnimations';
 import LogoutMenuItem from './components/LogoutMenuItem';
@@ -23,6 +24,9 @@ const SidebarMenu = async ({
 }): Promise<JSX.Element> => {
   /** Fetch menu data by marker from the OneEntry CMS API */
   const { isError, menu } = await getMenuByMarker('side_web', lang);
+
+  /** Dictionary set by the root layout — used for the logout item label */
+  const [dict] = ServerProvider('dict');
 
   /** Show loader if there's an error or no menu data is available */
   if (isError || !menu) {
@@ -48,7 +52,7 @@ const SidebarMenu = async ({
             <SidebarMenuLoader />
           )}
           {/** Logout menu item that only appears when user is authenticated */}
-          <LogoutMenuItem />
+          <LogoutMenuItem dict={dict} />
         </ul>
       </SidebarAnimations>
     </nav>

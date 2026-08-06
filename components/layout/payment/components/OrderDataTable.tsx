@@ -39,6 +39,10 @@ const OrderDataTable = ({
     order_info_address_placeholder,
     delivery_date_text,
     delivery_time_text,
+    order_information_title,
+    payment_method_title,
+    no_order_data_text,
+    cart_page_text,
   } = dict;
 
   /**
@@ -48,9 +52,10 @@ const OrderDataTable = ({
   if (!orderData || !orderData.formData || orderData.formData.length === 0) {
     return (
       <div className="p-4 text-center">
-        No order data available, go to{' '}
+        {(no_order_data_text?.value as string) ||
+          'No order data available, go to'}{' '}
         <Link href="/cart/" className="text-orange-500">
-          cart page
+          {(cart_page_text?.value as string) || 'cart page'}
         </Link>
       </div>
     );
@@ -59,7 +64,9 @@ const OrderDataTable = ({
   return (
     <>
       {/** Section header for order information */}
-      <div className="mb-4 font-bold">Order Information</div>
+      <div className="mb-4 font-bold">
+        {(order_information_title?.value as string) || 'Order Information'}
+      </div>
 
       {/** Map through order form data to display relevant fields */}
       {orderData.formData.map((field: { marker: string; value: unknown }) => {
@@ -118,7 +125,9 @@ const OrderDataTable = ({
       })}
 
       {/** Section header for payment method */}
-      <div className="mt-4 font-bold">Payment Method</div>
+      <div className="mt-4 font-bold">
+        {(payment_method_title?.value as string) || 'Payment Method'}
+      </div>
 
       {/** Display payment method title from account localization info */}
       <div>{account?.localizeInfos?.title}</div>

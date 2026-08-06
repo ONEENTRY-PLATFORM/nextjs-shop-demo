@@ -26,6 +26,9 @@ const BottomMobileMenu = async (): Promise<JSX.Element> => {
   /** Fetch menu data from API using 'bottom_web' marker for mobile bottom menu */
   const { menu, isError } = await getMenuByMarker('bottom_web', lang);
 
+  /** Dictionary set by the root layout — passed down to client nav items */
+  const [dict] = ServerProvider('dict');
+
   return (
     /** Fixed position container at the bottom of the screen for mobile navigation */
     <div className="xs:hidden fixed bottom-0 z-50 my-auto flex h-15 w-full items-center justify-between gap-10 bg-white p-4">
@@ -43,7 +46,12 @@ const BottomMobileMenu = async (): Promise<JSX.Element> => {
                 <NavItemCatalog item={item} lang={lang} />
               )}
               {item.pageUrl === 'profile' && (
-                <NavItemProfile item={item} lang={lang} userMenu={menu} />
+                <NavItemProfile
+                  item={item}
+                  lang={lang}
+                  userMenu={menu}
+                  dict={dict}
+                />
               )}
               {item.pageUrl === 'favorites' && (
                 <NavItemFavorites item={item} lang={lang} />

@@ -1,6 +1,7 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { JSX } from 'react';
 import { useContext } from 'react';
 
@@ -10,9 +11,11 @@ import { AuthContext } from '@/app/store/providers/AuthContext';
 /**
  * Logout menu item button component for handling user logout functionality.
  * Provides a button that logs out the user and redirects to the homepage.
- * @returns {JSX.Element} JSX Logout menu item button.
+ * @param   {object}           props      - Component properties
+ * @param   {IAttributeValues} props.dict - Dictionary with localized values from server API
+ * @returns {JSX.Element}                 JSX Logout menu item button.
  */
-const LogoutMenuItem = (): JSX.Element => {
+const LogoutMenuItem = ({ dict }: { dict: IAttributeValues }): JSX.Element => {
   /** Get authentication context to update authentication state after logout */
   const { authenticate } = useContext(AuthContext);
 
@@ -42,7 +45,7 @@ const LogoutMenuItem = (): JSX.Element => {
       data-testid="logout-button"
       onClick={onLogoutHandle}
     >
-      <div>Logout</div>
+      <div>{(dict?.log_out_button?.value as string) || 'Logout'}</div>
     </button>
   );
 };

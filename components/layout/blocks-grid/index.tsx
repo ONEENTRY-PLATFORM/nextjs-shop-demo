@@ -1,5 +1,6 @@
 import type { JSX } from 'react';
 
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import { blocksColors, blocksData } from '@/components/data';
 
 import BlocksGridAnimations from './animations/BlocksGridAnimations';
@@ -22,9 +23,15 @@ const BlocksGrid = async ({
   blocks: Array<string>;
   lang: string;
 }): Promise<JSX.Element> => {
+  /** Dictionary set by the root layout — used for the "not found" plug */
+  const [dict] = ServerProvider('dict');
+  /** Localized "nothing to show" text with an English fallback */
+  const notFoundText =
+    (dict?.content_not_found?.value as string) || 'Content not found';
+
   /** Return early if no blocks are provided or array is empty */
   if (!blocks || blocks?.length < 1) {
-    return <>Blocks not found</>;
+    return <>{notFoundText}</>;
   }
 
   return (
@@ -54,7 +61,7 @@ const BlocksGrid = async ({
           })
         ) : (
           /** Fallback message when blocks data is not an array */
-          <div>Blocks not found</div>
+          <div>{notFoundText}</div>
         )}
       </div>
     </BlocksGridAnimations>

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type {
   IMenusEntity,
   IMenusPages,
@@ -21,20 +22,23 @@ import UserProfileMenu from './user-menu/UserProfileMenu';
  * - Sign in button for unauthenticated users
  * - Profile link for authenticated users without menu
  * - Full profile menu for authenticated users with menu
- * @param   {object}       props          - Props.
- * @param   {IMenusPages}  props.item     - menu item.
- * @param   {string}       props.lang     - current language shortcode.
- * @param   {IMenusEntity} props.userMenu - Represents a menu object.
- * @returns {JSX.Element}                 JSX.Element.
+ * @param   {object}           props          - Props.
+ * @param   {IMenusPages}      props.item     - menu item.
+ * @param   {string}           props.lang     - current language shortcode.
+ * @param   {IMenusEntity}     props.userMenu - Represents a menu object.
+ * @param   {IAttributeValues} props.dict     - Dictionary with localized values from server API.
+ * @returns {JSX.Element}                     JSX.Element.
  */
 const NavItemProfile = ({
   item,
   lang,
   userMenu,
+  dict,
 }: {
   item: IMenusPages;
   lang: string;
   userMenu: IMenusEntity;
+  dict: IAttributeValues;
 }): JSX.Element => {
   /**
    * Get drawer state and control functions from OpenDrawerContext
@@ -92,6 +96,7 @@ const NavItemProfile = ({
       lang={lang}
       userMenu={userMenu}
       title={item.localizeInfos.menuTitle as string}
+      dict={dict}
     />
   );
 };

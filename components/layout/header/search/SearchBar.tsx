@@ -168,6 +168,7 @@ const SearchBar = ({
         state={state}
         setState={setState}
         lang={lang}
+        dict={dict}
       />
     </div>
   );

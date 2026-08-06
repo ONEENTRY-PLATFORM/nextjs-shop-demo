@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
 import type { JSX } from 'react';
 import { useContext, useEffect } from 'react';
@@ -19,14 +20,17 @@ import MobileMenu from './components/MobileMenu';
  * @param   {object}                         props      - Component properties
  * @param   {IMenusPages[]}                  props.menu - Array of menu items to display in the mobile menu
  * @param   {string}                         props.lang - Current language shortcode (e.g., 'en', 'ru')
+ * @param   {IAttributeValues}               props.dict - Dictionary with localized values from server API
  * @returns {JSX.Element | null | undefined}            The rendered mobile menu component or nothing if conditions aren't met
  */
 const OffscreenModal = ({
   menu,
   lang,
+  dict,
 }: {
   menu: IMenusPages[];
   lang: string;
+  dict: IAttributeValues;
 }): JSX.Element | null | undefined => {
   /** Get the current pathname to detect route changes */
   const pathname = usePathname();
@@ -86,7 +90,7 @@ const OffscreenModal = ({
           </div>
 
           {/* The actual mobile menu items */}
-          <MobileMenu menu={menu} lang={lang} />
+          <MobileMenu menu={menu} lang={lang} dict={dict} />
         </div>
       </div>
 

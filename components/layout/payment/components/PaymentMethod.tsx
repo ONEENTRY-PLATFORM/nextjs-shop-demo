@@ -64,6 +64,9 @@ const PaymentMethod = ({
   /** Get cart data from Redux store */
   const cartData = useAppSelector((state) => state.cartReducer.productsData);
 
+  /** Extract localized text values from the dictionary */
+  const { payment_method_desc, empty_cart_plug } = dict;
+
   /** Check if there are any selected items in the cart (memoized) */
   const hasCartItems = useMemo(
     () => cartData && cartData.some((item) => item.selected),
@@ -103,7 +106,8 @@ const PaymentMethod = ({
         <div className={'flex-col'}>
           <h2 className="text-lg font-bold">{account?.localizeInfos?.title}</h2>
           <p className="mb-4 text-base">
-            Payment description {account?.localizeInfos?.title}
+            {(payment_method_desc?.value as string) || 'Payment description'}{' '}
+            {account?.localizeInfos?.title}
           </p>
           <button
             className="absolute right-4 bottom-4 size-6 cursor-pointer rounded-full bg-slate-50 text-center"
@@ -125,11 +129,14 @@ const PaymentMethod = ({
               {hasCartItems ? (
                 <OrderProductsTable
                   lang={lang}
+                  dict={dict}
                   products={products}
                   delivery={delivery}
                 />
               ) : (
-                <div className="p-4">No items in cart</div>
+                <div className="p-4">
+                  {(empty_cart_plug?.value as string) || 'Cart is empty'}
+                </div>
               )}
             </div>
             <div className="border-muted flex w-1/3 flex-col border border-solid px-6 py-2 max-md:w-full max-md:max-w-full max-md:border-t-0 max-md:px-2">

@@ -36,7 +36,12 @@ const ProductSingleServer = async ({
     return (
       <section className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
         <div className="flex min-h-100 items-center justify-center">
-          {!product && <p>Product not found</p>}
+          {!product && (
+            <p>
+              {(dict?.content_not_found?.value as string) ||
+                'Content not found'}
+            </p>
+          )}
           {!lang && <p>Language not specified</p>}
           {!dict && <p>Dictionary not loaded</p>}
         </div>

@@ -5,6 +5,7 @@ import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { ReactElement } from 'react';
 
 import { getBlockByMarker } from '@/app/api';
+import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import BlockCardAnimations from '@/components/layout/blocks-grid/animations/BlockCardAnimations';
 
 import BlocksGridImage from './BlocksGridImage';
@@ -44,6 +45,12 @@ const BlocksGridCard = async ({
   /** Fetch block data from API using the provided marker and language */
   const { block, isError } = await getBlockByMarker(marker, lang);
 
+  /** Dictionary set by the root layout — used for the "not found" plug */
+  const [dict] = ServerProvider('dict');
+  /** Localized "nothing to show" text with an English fallback */
+  const notFoundText =
+    (dict?.content_not_found?.value as string) || 'Content not found';
+
   /**
    * Block attribute values — the SDK already unwraps the requested locale,
    * so this is the flat marker→value map.
@@ -52,7 +59,7 @@ const BlocksGridCard = async ({
 
   /** Return error message if no attribute values are found */
   if (!attributeValues) {
-    return <>Block error</>;
+    return <>{notFoundText}</>;
   }
 
   /** Extract content data from block attribute values */
@@ -75,7 +82,7 @@ const BlocksGridCard = async ({
 
   /** Return error message if block data is missing or API returned an error */
   if (!block || isError) {
-    return <>Block error</>;
+    return <>{notFoundText}</>;
   }
 
   /** bgColor */

@@ -28,7 +28,10 @@ const ProductsNotFound = async ({
         priority
         className="mx-auto mb-5 size-20"
       />
-      <div className="text-center text-lg">Products not found</div>
+      <div className="text-center text-lg">
+        {(dict?.products_not_found_text?.value as string) ||
+          'Products not found'}
+      </div>
       <FilterModal prices={{ min: 0, max: 1 }} lang={lang} dict={dict} />
     </div>
   );

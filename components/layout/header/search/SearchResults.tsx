@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
 import type { Dispatch, JSX, SetStateAction } from 'react';
 
@@ -15,6 +16,7 @@ import Spinner from '@/components/shared/Spinner';
  * @param   {unknown}            props.state       - state.
  * @param   {Dispatch<unknown>}  props.setState    - set state.
  * @param   {string}             props.lang        - current language shortcode.
+ * @param   {IAttributeValues}   props.dict        - dictionary from server api.
  * @returns {JSX.Element}                          JSX.Element.
  */
 const SearchResults = ({
@@ -22,11 +24,13 @@ const SearchResults = ({
   state,
   setState,
   lang,
+  dict,
 }: {
   searchValue: string | undefined;
   state: boolean;
   setState: Dispatch<SetStateAction<boolean>>;
   lang: string;
+  dict: IAttributeValues;
 }): JSX.Element => {
   /**
    * Fetch products based on search value using custom hook
@@ -92,7 +96,7 @@ const SearchResults = ({
               </div>
             );
           })
-        : 'Not found'}
+        : (dict?.search_not_found_text?.value as string) || 'Not found'}
     </div>
   ) : (
     <></>
