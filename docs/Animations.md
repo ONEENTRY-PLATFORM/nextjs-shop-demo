@@ -22,11 +22,25 @@ This component should be included in the application root to ensure all animatio
 
 ### TransitionProvider
 
-Provides page transition animations using Framer Motion. It wraps the page content and handles transitions between different pages.
+Provides page transition animations using GSAP and `next-transition-router`. It wraps the page content and handles transitions between different pages.
 
-### IntroAnimations
+> ⚠️ It is loaded with `dynamic()` **without** `ssr: false`, and that must stay
+> that way. `ssr: false` on a component that wraps `children` bails the whole
+> Suspense boundary out to client-side rendering
+> (`BAILOUT_TO_CLIENT_SIDE_RENDERING`): the document ships an empty `<main>`,
+> the LCP image gets no `<link rel=preload>`, and nothing is painted until the
+> bundle has hydrated. That single flag cost ~5 s of Speed Index.
 
-Handles the initial loading animation that appears when the application first loads. This creates a smooth introduction to the application.
+### Entrance fade (`.fade-in`)
+
+The initial reveal of the server-rendered chrome (logo, nav, search, footer) is
+a **CSS animation** on the `.fade-in` class (see `app/globals.css`), not a GSAP
+timeline. It replaced an `IntroAnimations` component that rendered a white
+full-screen overlay and set `.fade-in` to `opacity: 0` until GSAP revealed it.
+Because that component was lazy and `ssr: false`, it arrived after the first
+paint: the markup present in the HTML stayed invisible for seconds, and the
+overlay then covered content that was already on screen. Keep entrance reveals
+of server-rendered, above-the-fold markup in CSS — never behind hydration.
 
 ### FadeTransition
 
@@ -40,14 +54,18 @@ A reusable component that applies slide-up animations to its children. Like Fade
 
 ### Client-Side Providers
 
-All animation components are loaded as client components and are managed through the ClientProviders component. This ensures that animations are only loaded on the client side, improving server-side rendering performance.
+All animation components are loaded as client components and are managed through the ClientProviders component.
+
+`ssr: false` is reserved for components that render **nothing** in the document
+(plugin registration, toasts, on-demand modal forms). Applying it to anything
+that wraps page content removes that content from the server-rendered HTML —
+the opposite of "improving server-side rendering performance".
 
 The ClientProviders component wraps the application content and includes:
 
-- TransitionProvider for page transitions
-- RegisterGSAP for GSAP plugin registration
-- IntroAnimations for initial loading animation
-- ToastContainer for notifications
+- TransitionProvider for page transitions (server-rendered, lazy chunk)
+- RegisterGSAP for GSAP plugin registration (`ssr: false` — renders nothing)
+- ToastContainer for notifications (`ssr: false` — renders nothing)
 
 ### Dynamic Imports
 

@@ -50,6 +50,24 @@ body {
   animation: skeletonFadeIn 0.4s ease forwards;
 }
 
+/*
+ * Entrance fade for the server-rendered chrome (logo, nav, search, footer).
+ * Driven by CSS on purpose: the previous version left `.fade-in` at
+ * `opacity: 0` and relied on GSAP to reveal it, so the only markup present in
+ * the initial HTML stayed invisible until the bundle had downloaded, hydrated
+ * and run a lazily-loaded timeline — several seconds on a throttled
+ * connection, which is what wrecked Speed Index. A CSS animation starts as
+ * soon as the stylesheet applies, with no JS on the critical path.
+ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 ::-webkit-inner-spin-button,
 ::-webkit-outer-spin-button {
   height: auto;
@@ -374,7 +392,16 @@ input:focus-visible {
     /* opacity: 0; */
   }
   .fade-in {
-    opacity: 0;
+    animation: fadeIn 0.4s ease-out both;
+  }
+}
+
+/* Honour users who ask for less motion — show the chrome immediately. */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in,
+  .skeleton-fade-in {
+    animation: none;
+    opacity: 1;
   }
 }
 

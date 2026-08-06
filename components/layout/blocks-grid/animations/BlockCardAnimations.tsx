@@ -47,8 +47,22 @@ const BlockCardAnimations = ({
       paused: true,
     });
 
+    /**
+     * Cards carrying a `script[data-painted]` marker (see BlocksGridCard)
+     * arrived with the initially-streamed HTML and are already on screen —
+     * React attaches to them long after first paint. Hiding them here to
+     * replay the entrance would blink the painted home-page grid out and
+     * wreck Speed Index, so leave them alone; client-mounted cards (page
+     * transitions) have no marker and still animate.
+     */
+    const isServerPainted = Boolean(
+      (ref.current as HTMLDivElement | null)?.querySelector(
+        'script[data-painted]',
+      ),
+    );
+
     /** Animate card entrance when in initial 'none' stage */
-    if (stage === 'none' && prevStage === '') {
+    if (stage === 'none' && prevStage === '' && !isServerPainted) {
       /**
        * Hide synchronously, before first paint: a timeline's set() only
        * applies on the next GSAP tick, which can land after paint under

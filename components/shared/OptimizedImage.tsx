@@ -2,7 +2,7 @@
 
 import NextImage from 'next/image';
 import type { JSX } from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Image from './Image';
 import Placeholder from './Placeholder';
@@ -57,6 +57,32 @@ const OptimizedImage = ({
   const ref = useRef<HTMLImageElement>(null);
 
   /**
+   * Above-the-fold images (`priority` / `loading="eager"`) are revealed
+   * immediately instead of waiting for React's `onLoad`.
+   *
+   * The reveal-on-load effect hides the image with `opacity-0` until the
+   * handler fires, and that handler cannot run before hydration. For an image
+   * that came with the server HTML this means the LCP candidate is painted at
+   * `opacity: 0` — invisible to the browser's LCP bookkeeping — so the metric
+   * only lands after the bundle has hydrated, no matter how fast the image
+   * itself arrived. The blur placeholder (`blurDataURL`) already covers the
+   * gap before the bytes land, so there is nothing to hide.
+   */
+  const revealImmediately = priority || loading === 'eager';
+
+  /**
+   * Cached or already-decoded images can finish loading *before* React
+   * attaches its listener, and a `load` event that already fired is never
+   * replayed — the image would stay stuck at `opacity-0`. Clear the loading
+   * state on mount when the element reports itself complete.
+   */
+  useEffect(() => {
+    if (ref.current?.complete) {
+      setImageLoading(false);
+    }
+  }, []);
+
+  /**
    * Resolve the image URL. `src` is either a raw OneEntry image attribute
    * (`{ value }`, object- or array-shaped), or a plain URL string (e.g. category
    * cards, which receive a pre-resolved URL from `getImageUrl`).
@@ -102,6 +128,15 @@ const OptimizedImage = ({
       priority,
       quality,
       /**
+       * Raise the network priority of above-the-fold images. Next.js maps
+       * `priority` to `preload` and to "not lazy" only — it does **not** emit
+       * `fetchpriority="high"` on the `<img>` itself (see `get-img-props.js`),
+       * which is what the browser uses to order the request against the rest
+       * of the page. Passing it explicitly is what makes the LCP candidate win
+       * the queue instead of merely being discoverable.
+       */
+      ...(revealImmediately && { fetchPriority: 'high' as const }),
+      /**
        * Only set `loading` when it's explicitly provided. When `priority` is
        * true Next.js requires `loading` to be unset (or 'eager'), otherwise
        * it logs a conflict warning.
@@ -109,8 +144,8 @@ const OptimizedImage = ({
       ...(loading !== undefined && { loading }),
       className: `
         duration-300 ease-in-out
-        ${isImageLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0 object-cover'}
-        ${isImageLoading ? 'opacity-0' : 'opacity-100'}
+        ${isImageLoading && !revealImmediately ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0 object-cover'}
+        ${isImageLoading && !revealImmediately ? 'opacity-0' : 'opacity-100'}
       `,
       // eslint-disable-next-line react-hooks/refs
       ref,

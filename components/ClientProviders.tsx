@@ -30,18 +30,18 @@ const RegisterGSAP = dynamic(
   },
 );
 
-const IntroAnimations = dynamic(
-  () => import('@/app/animations/IntroAnimations'),
-  {
-    ssr: false,
-    loading: () => null,
-  },
-);
-
+/**
+ * Page-transition provider. Loaded as its own chunk, but **must stay
+ * server-rendered**: it wraps `children`, and `ssr: false` on a component that
+ * wraps page content bails the whole Suspense boundary out to client-side
+ * rendering (`BAILOUT_TO_CLIENT_SIDE_RENDERING`). The document then ships with
+ * an empty `<main>` — no content to paint, no `<link rel=preload>` for the LCP
+ * image — so the page stays visually blank until the JS bundle has downloaded,
+ * hydrated and re-rendered the tree on the client.
+ */
 const TransitionProvider = dynamic(
   () => import('@/app/animations/TransitionProvider'),
   {
-    ssr: false,
     loading: () => null,
   },
 );
@@ -76,10 +76,15 @@ export default function ClientProviders({
         </Suspense>
       </div>
 
-      {/** Lazy loading of animations and notifications */}
+      {/*
+        Lazy loading of animations and notifications. The intro overlay that
+        used to live here was removed: being `ssr: false`, it arrived *after*
+        the first paint and covered the already-rendered page with a white
+        screen, then revealed `.fade-in` elements through a GSAP timeline. The
+        entrance fade is a CSS animation now (see `.fade-in` in globals.css).
+      */}
       <Suspense fallback={null}>
         <RegisterGSAP />
-        <IntroAnimations />
         <ToastContainer position="bottom-right" autoClose={2000} />
       </Suspense>
     </>

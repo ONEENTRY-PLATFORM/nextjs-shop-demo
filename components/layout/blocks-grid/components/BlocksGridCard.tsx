@@ -94,6 +94,24 @@ const BlocksGridCard = async ({
       className={`${baloo.className} block-card group relative flex flex-col ${className} grow flex-col justify-center text-2xl font-bold text-white`}
       index={index}
     >
+      {/*
+        SSR-paint marker — same mechanism as ProductCard. The inline script
+        runs ONLY while the browser parses the initially-streamed HTML
+        document; scripts inserted from RSC-payload fragments are inert, so
+        client navigations still animate. It marks itself rather than a
+        React-managed node to avoid hydration-diff warnings.
+        BlockCardAnimations skips the entrance animation for cards carrying
+        this marker: they were painted from the server HTML long before React
+        attaches, and hiding them at hydration time would blink the whole
+        home-page grid out and replay the stagger.
+      */}
+      <span
+        hidden
+        dangerouslySetInnerHTML={{
+          __html:
+            '<script>document.currentScript.setAttribute("data-painted","")</script>',
+        }}
+      />
       {/** Link wrapper with dynamic target and href based on link type */}
       <Link
         target={(linkValue?.indexOf('http') === -1 ? '' : '_blank') as string}
