@@ -9,6 +9,7 @@ import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams } from '@/app/types/global';
 import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
+import { getSiteUrl } from '@/app/utils/getSiteUrl';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import type { Locale } from '@/i18n-config';
@@ -52,6 +53,9 @@ const ShopCategoryLayout = async (props: {
     return notFound();
   }
 
+  /** Site origin — never the CMS API host, see {@link getSiteUrl} */
+  const siteUrl = getSiteUrl();
+
   /** Generate structured data for breadcrumbs to improve SEO */
   const breadcrumbStructuredData = {
     '@context': 'https://schema.org',
@@ -61,19 +65,19 @@ const ShopCategoryLayout = async (props: {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}`,
+        item: `${siteUrl}/${lang}`,
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Shop',
-        item: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}/shop`,
+        item: `${siteUrl}/${lang}/shop`,
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: page.localizeInfos?.title ?? NO_TITLE,
-        item: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}/shop/category/${handle}`,
+        item: `${siteUrl}/${lang}/shop/category/${handle}`,
       },
     ],
   };

@@ -10,6 +10,7 @@ import { getBlurDataURL } from '@/app/api/utils/getBlurDataURL';
 import type { PageProps } from '@/app/types/global';
 import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
+import { getSiteUrl } from '@/app/utils/getSiteUrl';
 import CategoriesGrid from '@/components/layout/categories';
 import { i18n } from '@/i18n-config';
 
@@ -57,6 +58,9 @@ const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
     })),
   );
 
+  /** Site origin — never the CMS API host, see {@link getSiteUrl} */
+  const siteUrl = getSiteUrl();
+
   /** Generate structured data for breadcrumbs to improve SEO */
   const breadcrumbStructuredData = {
     '@context': 'https://schema.org',
@@ -66,13 +70,13 @@ const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}`,
+        item: `${siteUrl}/${lang}`,
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Categories',
-        item: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}/shop/category`,
+        item: `${siteUrl}/${lang}/shop/category`,
       },
     ],
   };

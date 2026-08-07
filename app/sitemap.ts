@@ -1,17 +1,7 @@
 import type { MetadataRoute } from 'next';
 
+import { getSiteUrl } from '@/app/utils/getSiteUrl';
 import { i18n } from '@/i18n-config';
-
-/**
- * Get base URL for the website
- * @returns {string} Base URL string
- */
-const getBaseUrl = (): string => {
-  const envUrl =
-    process.env.NEXT_PUBLIC_PROJECT_URL || process.env.NEXT_PUBLIC_VERCEL_URL;
-  if (!envUrl) return 'http://localhost:3000';
-  return envUrl.replace(/\/$/, '');
-};
 
 /**
  * Generate sitemap data for the website, including all localized root pages and main section pages
@@ -23,7 +13,7 @@ const getBaseUrl = (): string => {
  * @returns {Promise<MetadataRoute.Sitemap>} Returns a Promise that resolves to a sitemap entry array in Next.js MetadataRoute.Sitemap format
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = getBaseUrl();
+  const baseUrl = getSiteUrl();
 
   /** Generate sitemap entries for root pages of each locale with highest priority */
   const localizedRoots = i18n.locales.map((loc) => ({

@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 
 import { i18n } from '@/i18n-config';
 
+import { getSiteUrl } from './getSiteUrl';
+
 /**
  * Options for generating page metadata.
  * @interface PageMetadataOptions
@@ -65,15 +67,27 @@ export const generatePageMetadata = ({
     };
   }
 
+  /** Site origin — never the CMS API host, see {@link getSiteUrl} */
+  const siteUrl = getSiteUrl();
+
+  /** Path part shared by the canonical URL and every language alternate */
+  const suffix = `${baseUrl && baseUrl + '/'}${handle && '/' + handle}`;
+
   return {
+    /**
+     * An empty description must not be emitted: Next treats `description: ''`
+     * as an override and drops the layout's default, which left the home page
+     * with no `<meta name="description">` at all (Lighthouse SEO flags it).
+     * Omitting the key lets the layout value through.
+     */
     title,
-    description,
+    ...(description ? { description } : {}),
     alternates: {
-      canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}${baseUrl && baseUrl + '/'}${handle && '/' + handle}`,
+      canonical: `${siteUrl}/${lang}${suffix}`,
       languages: Object.fromEntries(
         i18n.locales.map((lng, i) => [
           i18n.localesData[i],
-          `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lng}${baseUrl && baseUrl + '/'}${handle && '/' + handle}`,
+          `${siteUrl}/${lng}${suffix}`,
         ]),
       ),
     },

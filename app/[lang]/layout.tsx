@@ -16,9 +16,10 @@ import Footer from '@/components/layout/footer';
 import Header from '@/components/layout/header';
 import NavigationMenu from '@/components/layout/main-menu';
 import Modal from '@/components/layout/modal';
-import type { Locale } from '@/i18n-config';
+import { i18n, type Locale } from '@/i18n-config';
 
 import { toLangCode } from '../types/enum';
+import { getSiteUrl } from '../utils/getSiteUrl';
 import { getDictionary } from './dictionaries';
 
 /** Fonts settings */
@@ -26,6 +27,25 @@ const lato = Lato({
   subsets: ['latin'],
   weight: ['300', '400', '700', '900'],
 });
+
+/**
+ * Only the locales declared in `i18n` are valid values for `[lang]`.
+ *
+ * Without this, the segment matched *any* single path element: `/ads.txt` was
+ * rendered as `<html lang="ads.txt">`, and because the page body sits inside a
+ * Suspense boundary the shell had already been streamed by the time
+ * `notFound()` ran — so the response came back **HTTP 200** with a 404 body
+ * (a soft 404 that search engines index). Pinning the segment to the generated
+ * locales makes Next reject unknown values before rendering starts, which
+ * yields a real 404 status.
+ * @returns {Promise<Array<{ lang: string }>>} One entry per supported locale.
+ */
+export async function generateStaticParams(): Promise<Array<{ lang: string }>> {
+  return i18n.locales.map((lang) => ({ lang }));
+}
+
+/** Reject any `[lang]` value that `generateStaticParams` did not produce. */
+export const dynamicParams = false;
 
 /**
  * Homepage static metadata.
@@ -41,13 +61,7 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'OneEntry Shop',
   },
-  metadataBase: new URL(
-    (
-      process.env.NEXT_PUBLIC_PROJECT_URL ||
-      process.env.NEXT_PUBLIC_VERCEL_URL ||
-      'http://localhost:3000'
-    ).replace(/\/$/, ''),
-  ),
+  metadataBase: new URL(getSiteUrl()),
 };
 
 /**

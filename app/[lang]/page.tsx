@@ -13,12 +13,17 @@ import { i18n } from '@/i18n-config';
 
 import { getImageUrl } from '../api/hooks/useAttributesData';
 import { generatePageMetadata } from '../utils/generatePageMetadata';
+import { getSiteUrl } from '../utils/getSiteUrl';
 
 /** Increase revalidation time to reduce server load (60 seconds instead of 10) */
 export const revalidate = 60;
 
-/** Enable dynamic route parameters */
-export const dynamicParams = true;
+/**
+ * Locale validity is enforced on the `[lang]` segment itself — see
+ * `dynamicParams = false` in `app/[lang]/layout.tsx`. Declaring
+ * `dynamicParams = true` here would re-open the segment to any value, which is
+ * how `/ads.txt` ended up rendering as `<html lang="ads.txt">` with HTTP 200.
+ */
 
 interface IndexPageLayoutProps {
   params: Promise<{ lang: string }>;
@@ -63,13 +68,16 @@ const IndexPageLayout = async ({
   /** Extract blocks from the fetched page data */
   const { blocks } = page;
 
+  /** Site origin — never the CMS API host, see {@link getSiteUrl} */
+  const siteUrl = getSiteUrl();
+
   /** Organization structured data */
   const organizationStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'OneEntry Shop',
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}`,
-    logo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/logo.png`,
+    url: `${siteUrl}/${lang}`,
+    logo: `${siteUrl}/logo.png`,
   };
 
   /** WebSite structured data */
@@ -77,7 +85,7 @@ const IndexPageLayout = async ({
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'OneEntry Shop',
-    url: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/${lang}`,
+    url: `${siteUrl}/${lang}`,
   };
 
   /** Render the main layout of the page */
