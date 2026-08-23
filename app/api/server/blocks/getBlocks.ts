@@ -1,9 +1,5 @@
 import { unstable_cache } from 'next/cache';
-import type { IError } from 'oneentry/dist/base/utils';
-import type {
-  BlockType,
-  IBlocksResponse,
-} from 'oneentry/dist/blocks/blocksInterfaces';
+import type { BlockType, IBlocksResponse, IError } from 'oneentry/types';
 import { cache } from 'react';
 
 import { getApi, isError } from '@/app/api';

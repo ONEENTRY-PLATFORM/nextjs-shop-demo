@@ -1,6 +1,6 @@
 import 'server-only';
 
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 
 import { getBlockByMarker } from '@/app/api/';
 

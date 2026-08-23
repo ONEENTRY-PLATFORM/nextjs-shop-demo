@@ -1,7 +1,4 @@
-import type {
-  IAuthEntity,
-  IAuthPostBody,
-} from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import type { IAuthEntity, IAuthPostBody } from 'oneentry/types';
 
 import { getApi, isError } from '@/app/api';
 import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';

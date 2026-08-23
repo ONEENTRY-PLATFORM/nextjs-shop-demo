@@ -1,5 +1,5 @@
 import { defineOneEntry } from 'oneentry';
-import type { IError } from 'oneentry/dist/base/utils';
+import type { IError } from 'oneentry/types';
 
 const PROJECT_URL = process.env.NEXT_PUBLIC_PROJECT_URL as string;
 const APP_TOKEN = process.env.NEXT_PUBLIC_APP_TOKEN as string;

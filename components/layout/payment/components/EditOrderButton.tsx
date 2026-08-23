@@ -1,6 +1,6 @@
 import { useParams } from 'next/navigation';
 import { useTransitionRouter } from 'next-transition-router';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import Loader from '@/components/shared/Loader';

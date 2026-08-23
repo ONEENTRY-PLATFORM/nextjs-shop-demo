@@ -1,7 +1,6 @@
 'use client';
 
-import type { IError } from 'oneentry/dist/base/utils';
-import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
+import type { IError, IUserEntity } from 'oneentry/types';
 import type { JSX, ReactNode } from 'react';
 import {
   createContext,

@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IOrderProducts } from 'oneentry/dist/orders/ordersInterfaces';
+import type { IAttributeValues, IOrderProducts } from 'oneentry/types';
 import type { JSX } from 'react';
 import { memo } from 'react';
 

@@ -1,8 +1,8 @@
-import type { IError } from 'oneentry/dist/base/utils';
 import type {
+  IError,
   IProductsEntity,
   IProductsResponse,
-} from 'oneentry/dist/products/productsInterfaces';
+} from 'oneentry/types';
 import { cache } from 'react';
 
 import { getApi, isError } from '@/app/api';

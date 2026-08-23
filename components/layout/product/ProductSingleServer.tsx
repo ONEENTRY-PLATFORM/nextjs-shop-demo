@@ -1,6 +1,8 @@
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IAttributeValues,
+  IBlockEntity,
+  IProductsEntity,
+} from 'oneentry/types';
 import type { JSX } from 'react';
 
 import {

@@ -1,7 +1,7 @@
 import { Baloo_2 as Baloo } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { IMenusEntity } from 'oneentry/dist/menus/menusInterfaces';
+import type { IMenusEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import { getMenuByMarker } from '@/app/api';

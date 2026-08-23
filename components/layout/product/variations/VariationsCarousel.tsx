@@ -1,6 +1,6 @@
 'use client';
 
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IProductsEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 import { useState } from 'react';
 import Carousel from 'react-simply-carousel';

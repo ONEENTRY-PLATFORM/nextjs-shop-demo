@@ -1,6 +1,5 @@
 import { unstable_cache } from 'next/cache';
-import type { IError } from 'oneentry/dist/base/utils';
-import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
+import type { IError, IPositionBlock } from 'oneentry/types';
 import { cache } from 'react';
 
 import { getApi, isError } from '@/app/api';

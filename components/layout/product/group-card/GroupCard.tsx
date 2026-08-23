@@ -1,5 +1,8 @@
-import type { IAttributeValues, ILocalizeInfo } from 'oneentry/dist/base/utils';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IAttributeValues,
+  ILocalizeInfo,
+  IProductsEntity,
+} from 'oneentry/types';
 import type { JSX } from 'react';
 
 import ApplyButton from './ApplyButton';

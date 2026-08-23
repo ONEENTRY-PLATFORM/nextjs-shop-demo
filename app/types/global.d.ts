@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
-import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IAttributeValues,
+  IFilterParams,
+  IPagesEntity,
+} from 'oneentry/types';
 import type { React, ReactNode } from 'react';
 
 /**

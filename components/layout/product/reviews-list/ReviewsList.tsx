@@ -1,11 +1,11 @@
 'use client';
 
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type {
+  IAttributeValues,
   IFormByMarkerDataEntity,
   IFormsByMarkerDataEntity,
-} from 'oneentry/dist/forms-data/formsDataInterfaces';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+  IProductsEntity,
+} from 'oneentry/types';
 import type { JSX } from 'react';
 import { useState } from 'react';
 

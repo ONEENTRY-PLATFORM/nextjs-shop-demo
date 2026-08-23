@@ -1,6 +1,8 @@
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IFormByMarkerDataEntity } from 'oneentry/dist/forms-data/formsDataInterfaces';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IAttributeValues,
+  IFormByMarkerDataEntity,
+  IProductsEntity,
+} from 'oneentry/types';
 import { type JSX, useState } from 'react';
 
 import { getReviewAuthorName } from '@/app/utils/getReviewAuthorName';

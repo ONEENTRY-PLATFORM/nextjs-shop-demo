@@ -1,11 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import type { IAttributeValues, IError } from 'oneentry/dist/base/utils';
 import type {
   FormDataType,
+  IAttributeValues,
+  IError,
   IPostFormResponse,
-} from 'oneentry/dist/forms-data/formsDataInterfaces';
+} from 'oneentry/types';
 import type { FormEvent, JSX } from 'react';
 import { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';

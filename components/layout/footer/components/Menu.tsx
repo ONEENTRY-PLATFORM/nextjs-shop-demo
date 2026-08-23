@@ -1,7 +1,4 @@
-import type {
-  IMenusEntity,
-  IMenusPages,
-} from 'oneentry/dist/menus/menusInterfaces';
+import type { IMenusEntity, IMenusPages } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import { ServerProvider } from '@/app/store/providers/ServerProvider';

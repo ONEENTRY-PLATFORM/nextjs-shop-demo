@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
+import type { IPagesEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import { sanitizeHTML } from '@/components/utils/sanitize';

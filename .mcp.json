@@ -2,7 +2,22 @@
   "mcpServers": {
     "oneentry": {
       "command": "npx",
-      "args": ["-y", "@oneentry/mcp-server@latest"]
+      "args": ["-y", "@oneentry/mcp-server@latest"],
+      "env": {
+        "ONEENTRY_URL": "${NEXT_PUBLIC_ONEENTRY_URL:-}",
+        "ONEENTRY_TOKEN": "${NEXT_PUBLIC_ONEENTRY_TOKEN:-}"
+      }
+    },
+    "oneentry-mcp-platform": {
+      "command": "npx",
+      "args": ["-y", "@oneentry/mcp-platform-server@latest"],
+      "env": {
+        "ONEENTRY_CMS_BASE_URL": "${NEXT_PUBLIC_ONEENTRY_URL:-}/api/admin",
+        "ONEENTRY_CMS_LOGIN": "${OE_ADMIN_LOGIN:-}",
+        "ONEENTRY_CMS_PASSWORD": "${OE_ADMIN_PASSWORD:-}",
+        "ONEENTRY_MCP_ALLOW": "destructive",
+        "ONEENTRY_MCP_AUDIT_PATH": "${CLAUDE_PROJECT_DIR:-.}/.claude/oneentry-mcp-audit.jsonl"
+      }
     },
     "playwright": {
       "command": "npx",

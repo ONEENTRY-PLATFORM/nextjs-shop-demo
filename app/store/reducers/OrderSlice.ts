@@ -1,9 +1,6 @@
 import type { PayloadAction, WritableDraft } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import type {
-  IOrderProductData,
-  IOrdersFormData,
-} from 'oneentry/dist/orders/ordersInterfaces';
+import type { IOrderProductData, IOrdersFormData } from 'oneentry/types';
 
 /**
  * Defining the application-specific order type.

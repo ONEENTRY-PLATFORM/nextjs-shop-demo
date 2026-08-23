@@ -1,6 +1,5 @@
 import { unstable_noStore } from 'next/cache';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IAttributeValues, IProductsEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import { getApi, isError } from '@/app/api';

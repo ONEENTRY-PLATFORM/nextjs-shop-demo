@@ -1,5 +1,4 @@
-import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
+import type { IAuthFormData, IUserEntity } from 'oneentry/types';
 
 import { getApi, isError } from '@/app/api';
 import type { CartLedger, FavLedger } from '@/app/store/utils/ledger';

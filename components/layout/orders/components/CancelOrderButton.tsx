@@ -1,8 +1,5 @@
 /* eslint-disable no-console */
-import type {
-  IOrderByMarkerEntity,
-  IOrderData,
-} from 'oneentry/dist/orders/ordersInterfaces';
+import type { IOrderByMarkerEntity, IOrderData } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import { updateOrderByMarkerAndId } from '@/app/api';

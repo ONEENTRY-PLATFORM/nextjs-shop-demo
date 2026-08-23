@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IProductsEntity } from 'oneentry/types';
 import type { Dispatch, JSX, SetStateAction } from 'react';
 
 import CarouselItemImage from './CarouselItemImage';

@@ -1,9 +1,11 @@
 /* eslint-disable jsdoc/no-undefined-types */
 'use client';
 
-import type { IAuthFormData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import type { IFormAttribute } from 'oneentry/dist/forms/formsInterfaces';
-import type { FormDataType } from 'oneentry/dist/forms-data/formsDataInterfaces';
+import type {
+  FormDataType,
+  IAuthFormData,
+  IFormAttribute,
+} from 'oneentry/types';
 import type { FormEvent, JSX, Key } from 'react';
 import { useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';

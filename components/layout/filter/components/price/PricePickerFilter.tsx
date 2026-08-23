@@ -3,7 +3,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 import type { JSX } from 'react';
 import { memo, useCallback, useContext, useEffect, useState } from 'react';
 import { getTrackBackground, Range } from 'react-range';

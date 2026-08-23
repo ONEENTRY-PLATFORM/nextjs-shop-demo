@@ -1,8 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IOrderByMarkerEntity } from 'oneentry/dist/orders/ordersInterfaces';
+import type { IAttributeValues, IOrderByMarkerEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 import { useContext, useEffect, useState } from 'react';
 

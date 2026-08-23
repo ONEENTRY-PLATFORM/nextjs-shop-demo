@@ -3,7 +3,7 @@
 
 import { useParams } from 'next/navigation';
 import { useTransitionRouter } from 'next-transition-router';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 import type { FormEvent, JSX } from 'react';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';

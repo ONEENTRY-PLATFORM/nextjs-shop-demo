@@ -1,5 +1,4 @@
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IAttributeValues, IProductsEntity } from 'oneentry/types';
 
 /**
  * Safely extracts the product title from localized information.

@@ -2,7 +2,7 @@
 
 import type { PayloadAction, WritableDraft } from '@reduxjs/toolkit';
 import { createSelector, createSlice } from '@reduxjs/toolkit';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IProductsEntity } from 'oneentry/types';
 
 import type { CartLedger } from '@/app/store/utils/ledger';
 import { cartActiveProducts } from '@/app/store/utils/ledger';

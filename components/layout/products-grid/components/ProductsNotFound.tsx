@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import FilterModal from '@/components/layout/filter/FilterModal';

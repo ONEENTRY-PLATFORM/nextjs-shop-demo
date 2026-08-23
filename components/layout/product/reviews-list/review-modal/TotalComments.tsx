@@ -1,4 +1,4 @@
-import type { IFormByMarkerDataEntity } from 'oneentry/dist/forms-data/formsDataInterfaces';
+import type { IFormByMarkerDataEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import { countReviewReplies } from '@/app/utils/countReviewReplies';

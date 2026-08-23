@@ -1,4 +1,4 @@
-import type { FormDataType } from 'oneentry/dist/forms-data/formsDataInterfaces';
+import type { FormDataType } from 'oneentry/types';
 
 /**
  * Captured reCAPTCHA verification data required to submit a `spam` field

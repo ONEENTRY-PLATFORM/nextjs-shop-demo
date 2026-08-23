@@ -1,7 +1,4 @@
-import type {
-  IFormAttribute,
-  IFormsEntity,
-} from 'oneentry/dist/forms/formsInterfaces';
+import type { IFormAttribute, IFormsEntity } from 'oneentry/types';
 
 /**
  * Normalizes a form's `attributes` payload to a plain array.

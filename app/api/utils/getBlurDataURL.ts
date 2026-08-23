@@ -1,5 +1,5 @@
 import { unstable_cache } from 'next/cache';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 
 import {
   getImagePreview,

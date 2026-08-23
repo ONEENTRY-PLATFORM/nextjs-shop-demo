@@ -1,6 +1,6 @@
 'use client';
 
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 import type { FormEvent, JSX, Key } from 'react';
 import { useCallback, useContext, useState } from 'react';
 

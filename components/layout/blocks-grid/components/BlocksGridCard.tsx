@@ -1,7 +1,7 @@
 import { Baloo_2 as Baloo } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 import type { ReactElement } from 'react';
 
 import { getBlockByMarker } from '@/app/api';

@@ -8,7 +8,7 @@
  * `.claude/rules/attribute-values.md`).
  */
 import { describe, expect, it } from '@jest/globals';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 
 /*
  * `useAttributesData` imports `components/utils/sanitize`, which pulls in

@@ -3,7 +3,7 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 import type { FormEvent, JSX } from 'react';
 import { useRef, useState } from 'react';
 import { useDebounce } from 'use-debounce';

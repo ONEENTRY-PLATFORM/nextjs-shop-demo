@@ -1,10 +1,11 @@
 import { useParams } from 'next/navigation';
-import type { IAttributeValues, IError } from 'oneentry/dist/base/utils';
 import type {
+  IAttributeValues,
+  IError,
   IFormByMarkerDataEntity,
   IPostFormResponse,
-} from 'oneentry/dist/forms-data/formsDataInterfaces';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+  IProductsEntity,
+} from 'oneentry/types';
 import type { ChangeEvent, FormEvent, JSX } from 'react';
 import { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';

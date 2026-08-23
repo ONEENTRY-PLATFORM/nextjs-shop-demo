@@ -1,6 +1,6 @@
 'use client';
 
-import type { IBodyPostFormData } from 'oneentry/dist/forms-data/formsDataInterfaces';
+import type { IBodyPostFormData } from 'oneentry/types';
 import { useState } from 'react';
 
 import { getApi } from '@/app/api';

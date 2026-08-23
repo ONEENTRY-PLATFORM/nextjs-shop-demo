@@ -1,10 +1,10 @@
 'use client';
 
-import type { IError } from 'oneentry/dist/base/utils';
 import type {
+  IError,
   IProductSearchResult,
   IProductsEntity,
-} from 'oneentry/dist/products/productsInterfaces';
+} from 'oneentry/types';
 import { useEffect, useState } from 'react';
 
 import { getApi, isError } from '@/app/api';

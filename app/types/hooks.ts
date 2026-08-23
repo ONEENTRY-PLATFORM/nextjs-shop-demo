@@ -1,15 +1,15 @@
-import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import type { IError } from 'oneentry/dist/base/utils';
-import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
-import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
 import type {
+  IAccountsEntity,
+  IAuthProvidersEntity,
+  IBlockEntity,
+  IError,
+  IFormsEntity,
   IOrderByMarkerEntity,
   IOrdersEntity,
-} from 'oneentry/dist/orders/ordersInterfaces';
-import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
-import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
+  IPositionBlock,
+  IProductsEntity,
+  IUserEntity,
+} from 'oneentry/types';
 
 /** Generic type for API responses */
 export type ApiResponse<T> = T | IError;

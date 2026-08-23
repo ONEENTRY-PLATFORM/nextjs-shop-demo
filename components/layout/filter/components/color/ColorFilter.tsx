@@ -1,11 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import type {
-  IAttributesSetsEntity,
-  IListTitle,
-} from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
-import type { IError } from 'oneentry/dist/base/utils';
+import type { IAttributesSetsEntity, IError, IListTitle } from 'oneentry/types';
 import type { JSX } from 'react';
 import { memo, useCallback, useContext, useEffect, useState } from 'react';
 

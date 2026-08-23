@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useRouter } from 'next/navigation';
-import type { ILocalEntity } from 'oneentry/dist/locales/localesInterfaces';
+import type { ILocalEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 
 /**

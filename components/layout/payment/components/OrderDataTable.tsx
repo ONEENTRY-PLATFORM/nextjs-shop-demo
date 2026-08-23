@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
+import type { IAccountsEntity, IAttributeValues } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import { useAppSelector } from '@/app/store/hooks';

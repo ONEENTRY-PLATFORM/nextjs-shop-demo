@@ -1,20 +1,18 @@
 import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
-import type { IAuthProvidersEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
-import type { IError } from 'oneentry/dist/base/utils';
-import type { IBlockEntity } from 'oneentry/dist/blocks/blocksInterfaces';
-import type { IFormsEntity } from 'oneentry/dist/forms/formsInterfaces';
-import type {
-  IOrderByMarkerEntity,
-  IOrdersEntity,
-} from 'oneentry/dist/orders/ordersInterfaces';
-import type { IPositionBlock } from 'oneentry/dist/pages/pagesInterfaces';
 import type {
   IAccountsEntity,
+  IAttributesSetsEntity,
+  IAuthProvidersEntity,
+  IBlockEntity,
+  IError,
+  IFormsEntity,
+  IOrderByMarkerEntity,
+  IOrdersEntity,
+  IPositionBlock,
+  IProductsEntity,
   ISessionEntity,
-} from 'oneentry/dist/payments/paymentsInterfaces';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
+  IUserEntity,
+} from 'oneentry/types';
 
 import { toLangCode } from '@/app/types/enum';
 

@@ -1,5 +1,5 @@
 import parse from 'html-react-parser';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 
 import { sanitizeHTML } from '@/components/utils/sanitize';
 

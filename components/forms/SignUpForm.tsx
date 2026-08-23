@@ -1,7 +1,7 @@
 /* eslint-disable jsdoc/no-undefined-types */
 'use client';
 
-import type { ISignUpData } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import type { ISignUpData } from 'oneentry/types';
 import type { FormEvent, JSX, Key } from 'react';
 import { useCallback, useContext, useMemo, useState } from 'react';
 

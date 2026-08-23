@@ -1,7 +1,9 @@
 import Image from 'next/image';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IFormByMarkerDataEntity } from 'oneentry/dist/forms-data/formsDataInterfaces';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IAttributeValues,
+  IFormByMarkerDataEntity,
+  IProductsEntity,
+} from 'oneentry/types';
 import { type JSX, useContext, useState } from 'react';
 
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';

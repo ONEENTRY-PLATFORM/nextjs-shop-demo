@@ -1,8 +1,4 @@
-import type { IError } from 'oneentry/dist/base/utils';
-import type {
-  IBaseOrdersEntity,
-  IOrderData,
-} from 'oneentry/dist/orders/ordersInterfaces';
+import type { IBaseOrdersEntity, IError, IOrderData } from 'oneentry/types';
 
 import { getApi, isError } from '@/app/api';
 import { toLangCode } from '@/app/types/enum';

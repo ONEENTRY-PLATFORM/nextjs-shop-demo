@@ -1,4 +1,4 @@
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 import { type JSX, memo, useCallback, useContext } from 'react';
 import { toast } from 'react-toastify';
 

@@ -57,14 +57,25 @@ const GoogleSignInButton = ({
     // provider (registered as …/auth/callback/google in Google Console).
     const redirectUri = `${process.env.NEXT_PUBLIC_APP_URL}/${lang}/auth/callback/google`;
 
-    window.location.href =
-      `${provider.config.oauthAuthUrl}` +
-      `?client_id=${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}` +
-      `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-      `&response_type=code` +
-      `&scope=${encodeURIComponent('openid email profile')}` +
-      `&access_type=offline` +
-      `&prompt=consent`;
+    // Built via `URL`/`URLSearchParams` rather than string concatenation: it
+    // preserves any query already present in `oauthAuthUrl` and encodes params
+    // for us. It also keeps `@next/next/no-location-assign-relative-destination`
+    // quiet — the rule reads the static prefix of the assigned expression and
+    // treats a leading `${...}` (empty prefix) as an internal, relative route.
+    const authUrl = new URL(provider.config.oauthAuthUrl);
+    authUrl.searchParams.set(
+      'client_id',
+      process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID ?? '',
+    );
+    authUrl.searchParams.set('redirect_uri', redirectUri);
+    authUrl.searchParams.set('response_type', 'code');
+    authUrl.searchParams.set('scope', 'openid email profile');
+    authUrl.searchParams.set('access_type', 'offline');
+    authUrl.searchParams.set('prompt', 'consent');
+
+    // External provider — a full-page redirect is required here; the Next.js
+    // router cannot navigate outside the app.
+    window.location.href = authUrl.toString();
   }, [lang]);
 
   return (

@@ -9,10 +9,7 @@ import {
   expandAttributeTimeIntervals,
   isTimeIntervalAttribute,
 } from 'oneentry';
-import type {
-  IAttributeValue,
-  IAttributeValues,
-} from 'oneentry/dist/base/utils';
+import type { IAttributeValue, IAttributeValues } from 'oneentry/types';
 import type { JSX } from 'react';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import Calendar from 'react-calendar';

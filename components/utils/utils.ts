@@ -1,5 +1,4 @@
-import type { IError } from 'oneentry/dist/base/utils';
-import type { IMenusPages } from 'oneentry/dist/menus/menusInterfaces';
+import type { IError, IMenusPages } from 'oneentry/types';
 
 import { CurrencyEnum, IntlEnum } from '@/app/types/enum';
 
@@ -127,9 +126,18 @@ export const sortObjectFieldsByPosition = (
  *
  * This function takes a flat array of menu items and converts it into
  * a hierarchical tree structure based on parent-child relationships.
- * @param   {[] | Array<IMenusPages>} data - Array of menu items.
- * @param   {number | null}           pid  - Parent ID to start from (null for root level).
- * @returns {IMenusPages[]}                Nested array of menu items with children.
+ *
+ * A menu mixes page items and custom items, and the two id spaces **overlap** —
+ * a page with id 52 and a custom item with id 52 can both exist, so `parentId`
+ * alone addresses a parent ambiguously. SDK 1.0.162 declares `itemType` (what
+ * this item is) and `parentType` (what its parent is); a child belongs to a
+ * parent only when both the id and the kind match. Both fields are optional, so
+ * when the API omits them the match falls back to `parentId` alone — the
+ * pre-1.0.162 behaviour.
+ * @param   {[] | Array<IMenusPages>}  data    - Array of menu items.
+ * @param   {number | null}            pid     - Parent ID to start from (null for root level).
+ * @param   {'page' | 'custom' | null} [ptype] - Kind of the parent (null/omitted for root level).
+ * @returns {IMenusPages[]}                    Nested array of menu items with children.
  * @example
  * ```typescript
  * const nested = flatMenuToNested([
@@ -142,11 +150,24 @@ export const sortObjectFieldsByPosition = (
 export const flatMenuToNested = (
   data: [] | Array<IMenusPages>,
   pid: number | null,
+  ptype: 'page' | 'custom' | null = null,
 ): IMenusPages[] => {
   return data.reduce((r: IMenusPages[], element: IMenusPages) => {
-    if (pid == element.parentId) {
+    /* Loose `==` on purpose: keeps the historic `null == undefined` match. */
+    const sameParent = pid == element.parentId;
+    /* Kind check only when both sides declare one, so older payloads still nest. */
+    const sameKind =
+      ptype == null ||
+      element.parentType == null ||
+      element.parentType === ptype;
+
+    if (sameParent && sameKind) {
       const object = { ...element };
-      const children = flatMenuToNested(data, element.id);
+      const children = flatMenuToNested(
+        data,
+        element.id,
+        element.itemType ?? null,
+      );
       if (children.length) {
         object.children = children;
       }

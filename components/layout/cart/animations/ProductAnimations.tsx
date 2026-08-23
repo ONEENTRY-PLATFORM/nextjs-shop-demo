@@ -2,7 +2,7 @@
 
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IProductsEntity } from 'oneentry/types';
 import type { JSX, ReactNode } from 'react';
 import { memo, useCallback, useRef } from 'react';
 import { toast } from 'react-toastify';

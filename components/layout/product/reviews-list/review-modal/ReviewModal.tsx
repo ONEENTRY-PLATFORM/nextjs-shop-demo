@@ -3,7 +3,7 @@
 import '@/app/styles/slick.css';
 import '@/app/styles/slick-theme.css';
 
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 import type { JSX } from 'react';
 import { useContext, useState } from 'react';
 import type Slider from 'react-slick';

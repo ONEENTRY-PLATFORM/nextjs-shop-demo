@@ -1,5 +1,4 @@
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IProductsResponse } from 'oneentry/dist/products/productsInterfaces';
+import type { IAttributeValues, IProductsResponse } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import { SIMILAR_PRODUCTS_PAGE_SIZE } from '@/app/api/server/blocks/getSimilarProductsByBlock';

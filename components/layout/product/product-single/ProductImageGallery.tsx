@@ -5,7 +5,7 @@ import '@/app/styles/slick.css';
 import '@/app/styles/slick-theme.css';
 
 import Image from 'next/image';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type { IProductsEntity } from 'oneentry/types';
 import type { JSX, Key } from 'react';
 import { useState } from 'react';
 import Slider from 'react-slick';

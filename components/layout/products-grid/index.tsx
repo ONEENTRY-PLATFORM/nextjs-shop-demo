@@ -1,5 +1,4 @@
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IFilterParams } from 'oneentry/dist/products/productsInterfaces';
+import type { IAttributeValues, IFilterParams } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import { getProducts, getProductsByPageUrl } from '@/app/api';

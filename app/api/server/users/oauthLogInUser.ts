@@ -1,7 +1,7 @@
 'use server';
 
 import { defineOneEntry } from 'oneentry';
-import type { IAuthEntity } from 'oneentry/dist/auth-provider/authProvidersInterfaces';
+import type { IAuthEntity } from 'oneentry/types';
 
 import { isError } from '@/app/api';
 import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';

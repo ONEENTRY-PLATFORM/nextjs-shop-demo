@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
-import type { IUserEntity } from 'oneentry/dist/users/usersInterfaces';
+import type { IProductsEntity, IUserEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 import { memo, useCallback, useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';

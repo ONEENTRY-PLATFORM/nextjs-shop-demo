@@ -1,8 +1,7 @@
 'use client';
 
 import { useTransitionRouter } from 'next-transition-router';
-import type { IOrderProductData } from 'oneentry/dist/orders/ordersInterfaces';
-import type { ISessionEntity } from 'oneentry/dist/payments/paymentsInterfaces';
+import type { IOrderProductData, ISessionEntity } from 'oneentry/types';
 import { useState } from 'react';
 
 import { getApi, isError } from '@/app/api';

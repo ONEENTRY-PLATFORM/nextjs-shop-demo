@@ -1,6 +1,6 @@
 'use client';
 
-import type { IPostFormResponse } from 'oneentry/dist/forms-data/formsDataInterfaces';
+import type { IPostFormResponse } from 'oneentry/types';
 import type { FormEvent, JSX, Key } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
 

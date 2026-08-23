@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IPagesEntity } from 'oneentry/dist/pages/pagesInterfaces';
+import type {
+  IAttributesSetsEntity,
+  IAttributeValues,
+  IPagesEntity,
+} from 'oneentry/types';
 import type { JSX } from 'react';
 
 import { getSingleAttributeByMarkerSet } from '@/app/api';

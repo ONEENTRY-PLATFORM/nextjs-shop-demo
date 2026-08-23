@@ -1,10 +1,10 @@
 'use client';
 
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
 import type {
+  IAttributeValues,
   IMenusEntity,
   IMenusPages,
-} from 'oneentry/dist/menus/menusInterfaces';
+} from 'oneentry/types';
 import type { JSX } from 'react';
 import { useState } from 'react';
 

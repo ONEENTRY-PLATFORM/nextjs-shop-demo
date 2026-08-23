@@ -1,4 +1,4 @@
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
+import type { IAttributeValues } from 'oneentry/types';
 import type { Dispatch, JSX, SetStateAction } from 'react';
 
 const AnswerButton = ({

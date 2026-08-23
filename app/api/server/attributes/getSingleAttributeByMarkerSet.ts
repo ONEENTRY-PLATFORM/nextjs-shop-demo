@@ -1,6 +1,5 @@
 import { unstable_cache } from 'next/cache';
-import type { IAttributesSetsEntity } from 'oneentry/dist/attribute-sets/attributeSetsInterfaces';
-import type { IError } from 'oneentry/dist/base/utils';
+import type { IAttributesSetsEntity, IError } from 'oneentry/types';
 import { cache } from 'react';
 
 import { getApi, isError } from '@/app/api';

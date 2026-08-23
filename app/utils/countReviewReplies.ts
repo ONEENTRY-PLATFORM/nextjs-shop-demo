@@ -1,4 +1,4 @@
-import type { IFormByMarkerDataEntity } from 'oneentry/dist/forms-data/formsDataInterfaces';
+import type { IFormByMarkerDataEntity } from 'oneentry/types';
 
 /**
  * countReviewReplies — total number of replies under a review, including

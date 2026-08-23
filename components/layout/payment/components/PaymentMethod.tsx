@@ -1,7 +1,9 @@
 import clsx from 'clsx';
-import type { IAttributeValues } from 'oneentry/dist/base/utils';
-import type { IAccountsEntity } from 'oneentry/dist/payments/paymentsInterfaces';
-import type { IProductsEntity } from 'oneentry/dist/products/productsInterfaces';
+import type {
+  IAccountsEntity,
+  IAttributeValues,
+  IProductsEntity,
+} from 'oneentry/types';
 import type { JSX } from 'react';
 import { useCallback, useMemo } from 'react';
 
