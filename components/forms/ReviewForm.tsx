@@ -25,6 +25,7 @@ import ErrorMessage from './inputs/ErrorMessage';
 import FormInput from './inputs/FormInput';
 import FormSubmitButton from './inputs/FormSubmitButton';
 import { getFormAttributes } from './utils/getFormAttributes';
+import { reviewSubmissionStatus } from './utils/reviewSubmissionStatus';
 import {
   transformFormField,
   validateFormData,
@@ -49,7 +50,6 @@ export interface ReviewFormProps {
 
 const DEFAULT_MODULE_CONFIG_ID = 5;
 const FORM_MARKER = 'comment_to_product';
-const FORM_STATUS = 'approved';
 
 /**
  * Review form for submitting product reviews
@@ -180,7 +180,11 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
           formModuleConfigId: moduleFormConfig?.id || DEFAULT_MODULE_CONFIG_ID,
           moduleEntityIdentifier: productData.id,
           replayTo: null,
-          status: FORM_STATUS,
+          /** Respects the admin panel's premoderation switch — see the helper. */
+          status: reviewSubmissionStatus(
+            productData,
+            moduleFormConfig?.id || DEFAULT_MODULE_CONFIG_ID,
+          ),
         });
 
         /**

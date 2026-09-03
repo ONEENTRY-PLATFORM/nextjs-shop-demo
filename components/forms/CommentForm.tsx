@@ -33,9 +33,10 @@ export interface CommentFormProps {
   product: IProductsEntity;
 }
 
+import { reviewSubmissionStatus } from './utils/reviewSubmissionStatus';
+
 const FORM_MARKER = 'comment_to_product';
 const COMMENT_MARKER = 'comment_description';
-const FORM_STATUS = 'approved';
 
 /**
  * Comment form for replying to product reviews
@@ -168,7 +169,8 @@ const CommentForm = memo(
             formModuleConfigId: moduleFormConfig.id,
             moduleEntityIdentifier: product.id.toString(),
             replayTo: review.id.toString(),
-            status: FORM_STATUS,
+            /** Respects the admin panel's premoderation switch — see the helper. */
+            status: reviewSubmissionStatus(product, moduleFormConfig.id),
           });
 
           const typedResponse = responseData as IPostFormResponse | IError;
