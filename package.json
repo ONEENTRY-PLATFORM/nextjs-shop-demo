@@ -6,6 +6,7 @@
     "dev": "next dev -p 3545",
     "build": "next build",
     "start": "next start",
+    "analyze": "next experimental-analyze",
     "lint": "eslint --cache .",
     "tsc": "npx tsc --noEmit --watch false",
     "typecheck": "npm run tsc",
@@ -108,7 +109,7 @@
     "use-debounce": "^10.1.1"
   },
   "engines": {
-    "node": ">=22.11.0"
+    "node": ">=22.22.3"
   },
   "overrides": {
     "playwright-core": "1.62.1"
