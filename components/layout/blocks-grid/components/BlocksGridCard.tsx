@@ -4,7 +4,7 @@ import Link from 'next/link';
 import type { IAttributeValues } from 'oneentry/types';
 import type { ReactElement } from 'react';
 
-import { getBlockByMarker } from '@/app/api';
+import { getBlockByMarker } from '@/app/api/server/blocks/getBlockByMarker';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import BlockCardAnimations from '@/components/layout/blocks-grid/animations/BlockCardAnimations';
 

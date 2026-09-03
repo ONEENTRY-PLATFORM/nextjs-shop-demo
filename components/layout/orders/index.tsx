@@ -6,7 +6,7 @@ import type { JSX } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
 import FadeTransition from '@/app/animations/FadeTransition';
-import { getAllOrdersByMarker } from '@/app/api';
+import { getAllOrdersByMarker } from '@/app/api/server/orders/getAllOrdersByMarker';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import AuthError from '@/components/pages/AuthError';
 

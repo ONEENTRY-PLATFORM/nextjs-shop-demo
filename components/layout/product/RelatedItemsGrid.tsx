@@ -4,7 +4,7 @@ import type { IAttributeValues, IProductsEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 import { useEffect, useState } from 'react';
 
-import { getSimilarProductsByBlock } from '@/app/api';
+import { getSimilarProductsByBlock } from '@/app/api/server/blocks/getSimilarProductsByBlock';
 import { useIntersectionObserver } from '@/components/hooks/useIntersectionObserver';
 import Spinner from '@/components/shared/Spinner';
 

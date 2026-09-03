@@ -12,13 +12,8 @@ import {
   useState,
 } from 'react';
 
-import {
-  clearTokens,
-  hasActiveSession,
-  reDefine,
-  RTKApi,
-  useLazyGetMeQuery,
-} from '@/app/api';
+import { clearTokens, hasActiveSession, reDefine } from '@/app/api/api/api';
+import { RTKApi, useLazyGetMeQuery } from '@/app/api/api/RTKApi';
 import { updateUserState } from '@/app/api/server/users/updateUserState';
 
 import { useAppDispatch, useAppSelector } from '../hooks';

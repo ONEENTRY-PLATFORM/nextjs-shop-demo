@@ -4,7 +4,7 @@ import { useTransitionRouter } from 'next-transition-router';
 import type { IOrderProductData, ISessionEntity } from 'oneentry/types';
 import { useState } from 'react';
 
-import { getApi, isError } from '@/app/api';
+import { getApi, isError } from '@/app/api/api/api';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { removeProduct } from '@/app/store/reducers/CartSlice';
 import { removeOrder } from '@/app/store/reducers/OrderSlice';

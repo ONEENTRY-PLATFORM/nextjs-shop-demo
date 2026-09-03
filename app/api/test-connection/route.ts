@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
-import { getApi } from '@/app/api';
+import { getApi } from '@/app/api/api/api';
 import { getBlockByMarker } from '@/app/api/server/blocks/getBlockByMarker';
 import { getMenuByMarker } from '@/app/api/server/menus/getMenuByMarker';
 import { getPageByUrl } from '@/app/api/server/pages/getPageByUrl';

@@ -3,7 +3,7 @@
 import type { IBodyPostFormData } from 'oneentry/types';
 import { useState } from 'react';
 
-import { getApi } from '@/app/api';
+import { getApi } from '@/app/api/api/api';
 
 /**
  * Custom hook for handling form submissions to the OneEntry CMS

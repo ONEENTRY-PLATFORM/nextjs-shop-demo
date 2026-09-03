@@ -1,7 +1,8 @@
 import type { IAttributeValues, IFilterParams } from 'oneentry/types';
 import type { JSX } from 'react';
 
-import { getProducts, getProductsByPageUrl } from '@/app/api';
+import { getProducts } from '@/app/api/server/products/getProducts';
+import { getProductsByPageUrl } from '@/app/api/server/products/getProductsByPageUrl';
 import FilterModal from '@/components/layout/filter/FilterModal';
 import CardsGridAnimations from '@/components/layout/products-grid/animations/CardsGridAnimations';
 

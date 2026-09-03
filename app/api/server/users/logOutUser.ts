@@ -1,4 +1,4 @@
-import { getApi, isError } from '@/app/api';
+import { getApi, isError } from '@/app/api/api/api';
 
 type LogOutProps = { marker: string; token?: string };
 

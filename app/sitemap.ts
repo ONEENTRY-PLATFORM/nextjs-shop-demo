@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 
-import { getChildPagesByParentUrl, getProducts } from '@/app/api';
+import { getChildPagesByParentUrl } from '@/app/api/server/pages/getChildPagesByParentUrl';
+import { getProducts } from '@/app/api/server/products/getProducts';
 import { getSiteUrl } from '@/app/utils/getSiteUrl';
 import { i18n } from '@/i18n-config';
 

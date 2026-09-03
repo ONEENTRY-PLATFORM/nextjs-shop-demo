@@ -4,7 +4,9 @@ import type { IPostFormResponse } from 'oneentry/types';
 import type { FormEvent, JSX, Key } from 'react';
 import { memo, useCallback, useMemo, useState } from 'react';
 
-import { isError, useFormsData, useGetFormByMarkerQuery } from '@/app/api';
+import { isError } from '@/app/api/api/api';
+import { useGetFormByMarkerQuery } from '@/app/api/api/RTKApi';
+import { useFormsData } from '@/app/api/hooks/useFormsData';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { clearFields } from '@/app/store/reducers/FormFieldsSlice';
 import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';

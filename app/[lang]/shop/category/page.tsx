@@ -3,9 +3,9 @@ import { notFound } from 'next/navigation';
 import type { IPagesEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 
-import { getPageByUrl } from '@/app/api';
-import { getChildPagesByParentUrl } from '@/app/api';
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
+import { getChildPagesByParentUrl } from '@/app/api/server/pages/getChildPagesByParentUrl';
+import { getPageByUrl } from '@/app/api/server/pages/getPageByUrl';
 import { getBlurDataURL } from '@/app/api/utils/getBlurDataURL';
 import type { PageProps } from '@/app/types/global';
 import { NO_TITLE } from '@/app/utils/constants';

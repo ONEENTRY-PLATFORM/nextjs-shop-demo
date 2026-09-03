@@ -1,7 +1,7 @@
 import type { IProductsEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 
-import { getProductById } from '@/app/api';
+import { getProductById } from '@/app/api/server/products/getProductById';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { PageProps } from '@/app/types/global';
 import { DELIVERY_PRODUCT_ID } from '@/app/utils/constants';

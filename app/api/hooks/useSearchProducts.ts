@@ -7,7 +7,7 @@ import type {
 } from 'oneentry/types';
 import { useEffect, useState } from 'react';
 
-import { getApi, isError } from '@/app/api';
+import { getApi, isError } from '@/app/api/api/api';
 import { toLangCode } from '@/app/types/enum';
 
 /**

@@ -5,7 +5,7 @@ import type { IAttributeValues } from 'oneentry/types';
 import type { JSX } from 'react';
 import { useContext } from 'react';
 
-import { logOutUser } from '@/app/api';
+import { logOutUser } from '@/app/api/server/users/logOutUser';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import Profile from '@/components/icons/profile';
 

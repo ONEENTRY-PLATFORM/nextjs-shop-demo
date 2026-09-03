@@ -30,7 +30,12 @@ jest.mock('next-transition-router', () => ({
   useTransitionRouter: () => ({ push: mockPush }),
 }));
 
-jest.mock('@/app/api', () => ({
+/*
+  Mocks the SDK module directly rather than the old `@/app/api` barrel: the
+  barrel was removed because it dragged every server wrapper into client chunks,
+  and `useCreateOrder` now imports `getApi` / `isError` from their real module.
+*/
+jest.mock('@/app/api/api/api', () => ({
   getApi: () => ({
     Orders: { createOrder: mockCreateOrder },
     Payments: {

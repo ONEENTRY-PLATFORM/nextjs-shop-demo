@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 
-import { getBlockByMarker } from '@/app/api';
+import { getBlockByMarker } from '@/app/api/server/blocks/getBlockByMarker';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
 /**

@@ -2,7 +2,7 @@ import type { IAttributeValues, IProductsEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 import { useContext, useEffect } from 'react';
 
-import { useGetFormByMarkerQuery } from '@/app/api';
+import { useGetFormByMarkerQuery } from '@/app/api/api/RTKApi';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { selectDeliveryData } from '@/app/store/reducers/CartSlice';

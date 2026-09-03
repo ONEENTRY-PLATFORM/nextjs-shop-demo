@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import type { JSX } from 'react';
 
-import { getPageByUrl } from '@/app/api';
+import { getPageByUrl } from '@/app/api/server/pages/getPageByUrl';
 import { i18n, type Locale } from '@/i18n-config';
 
 import { getDictionary } from './dictionaries';

@@ -4,12 +4,13 @@ import type { IProductsEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 
 import { getDictionary } from '@/app/[lang]/dictionaries';
-import { getProductById, getProducts } from '@/app/api';
 import {
   getImageUrl,
   getString,
   getText,
 } from '@/app/api/hooks/useAttributesData';
+import { getProductById } from '@/app/api/server/products/getProductById';
+import { getProducts } from '@/app/api/server/products/getProducts';
 import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import { serializeJsonLd } from '@/app/utils/serializeJsonLd';

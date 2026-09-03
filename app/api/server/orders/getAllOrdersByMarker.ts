@@ -1,6 +1,6 @@
 import type { IError, IOrderByMarkerEntity } from 'oneentry/types';
 
-import { getApi, isError } from '@/app/api';
+import { getApi, isError } from '@/app/api/api/api';
 import { toLangCode } from '@/app/types/enum';
 
 /**

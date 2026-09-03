@@ -2,7 +2,7 @@
 import type { IOrderByMarkerEntity, IOrderData } from 'oneentry/types';
 import type { JSX } from 'react';
 
-import { updateOrderByMarkerAndId } from '@/app/api';
+import { updateOrderByMarkerAndId } from '@/app/api/server/orders/updateOrderByMarkerAndId';
 import Loader from '@/components/shared/Loader';
 
 /**

@@ -2,7 +2,7 @@ import { unstable_cache } from 'next/cache';
 import type { IError, ILocalEntity } from 'oneentry/types';
 import { cache } from 'react';
 
-import { getApi, isError } from '@/app/api';
+import { getApi, isError } from '@/app/api/api/api';
 
 /**
  * Cross-request Data Cache layer: stores the locales in the Next.js Data

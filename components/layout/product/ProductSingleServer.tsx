@@ -5,12 +5,10 @@ import type {
 } from 'oneentry/types';
 import type { JSX } from 'react';
 
-import {
-  getBlockByMarker,
-  getRelatedProductsById,
-  getSimilarProductsByBlock,
-} from '@/app/api';
+import { getBlockByMarker } from '@/app/api/server/blocks/getBlockByMarker';
+import { getSimilarProductsByBlock } from '@/app/api/server/blocks/getSimilarProductsByBlock';
 import { SIMILAR_PRODUCTS_PAGE_SIZE } from '@/app/api/server/blocks/getSimilarProductsByBlock';
+import { getRelatedProductsById } from '@/app/api/server/products/getRelatedProductsById';
 
 import ProductSingle from './index';
 

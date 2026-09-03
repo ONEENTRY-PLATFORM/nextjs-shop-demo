@@ -8,7 +8,8 @@ import type { FormEvent, JSX } from 'react';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import OtpInput from 'react-otp-input';
 
-import { getApi, isError, logInUser } from '@/app/api';
+import { getApi, isError } from '@/app/api/api/api';
+import { logInUser } from '@/app/api/server/users/logInUser';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';

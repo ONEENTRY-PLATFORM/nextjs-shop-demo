@@ -2,7 +2,7 @@
 import type { Dispatch, JSX } from 'react';
 import { useEffect, useRef } from 'react';
 
-import { getApi } from '@/app/api';
+import { getApi } from '@/app/api/api/api';
 
 /**
  * FormReCaptcha component for Google reCAPTCHA v3 Enterprise integration.

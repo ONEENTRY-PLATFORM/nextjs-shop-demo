@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 
-import { getApi } from '@/app/api';
+import { getApi } from '@/app/api/api/api';
 import { handleApiError } from '@/app/utils/errorHandler';
 
 /**

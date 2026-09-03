@@ -3,8 +3,9 @@ import { notFound } from 'next/navigation';
 import type { JSX } from 'react';
 import { memo, Suspense } from 'react';
 
-import { getChildPagesByParentUrl, getPageByUrl } from '@/app/api';
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
+import { getChildPagesByParentUrl } from '@/app/api/server/pages/getChildPagesByParentUrl';
+import { getPageByUrl } from '@/app/api/server/pages/getPageByUrl';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams } from '@/app/types/global';
 import { NO_TITLE } from '@/app/utils/constants';

@@ -11,8 +11,10 @@ import type { FormEvent, JSX } from 'react';
 import { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { isError, useFormsData, useGetFormByMarkerQuery } from '@/app/api';
+import { isError } from '@/app/api/api/api';
+import { useGetFormByMarkerQuery } from '@/app/api/api/RTKApi';
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
+import { useFormsData } from '@/app/api/hooks/useFormsData';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';

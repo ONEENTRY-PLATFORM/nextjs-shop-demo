@@ -1,6 +1,6 @@
 import type { IAuthFormData, IUserEntity } from 'oneentry/types';
 
-import { getApi, isError } from '@/app/api';
+import { getApi, isError } from '@/app/api/api/api';
 import type { CartLedger, FavLedger } from '@/app/store/utils/ledger';
 import {
   cartActiveProducts,

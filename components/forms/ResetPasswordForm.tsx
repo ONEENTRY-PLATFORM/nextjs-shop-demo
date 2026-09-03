@@ -4,7 +4,7 @@ import type { IAttributeValues } from 'oneentry/types';
 import type { FormEvent, JSX } from 'react';
 import { useCallback, useContext, useState } from 'react';
 
-import { getApi, isError } from '@/app/api';
+import { getApi, isError } from '@/app/api/api/api';
 import { useAppSelector } from '@/app/store/hooks';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';
 import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';

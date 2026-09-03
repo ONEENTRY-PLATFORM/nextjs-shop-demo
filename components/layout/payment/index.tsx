@@ -9,7 +9,7 @@ import {
   useGetAccountsQuery,
   useGetOrderStorageByMarkerQuery,
   useGetProductsByIdsQuery,
-} from '@/app/api';
+} from '@/app/api/api/RTKApi';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {

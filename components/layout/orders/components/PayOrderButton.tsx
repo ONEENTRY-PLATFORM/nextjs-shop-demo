@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 
-import { useCreateOrder } from '@/app/api';
+import { useCreateOrder } from '@/app/api/hooks/useCreateOrder';
 import { toLangCode } from '@/app/types/enum';
 import Loader from '@/components/shared/Loader';
 

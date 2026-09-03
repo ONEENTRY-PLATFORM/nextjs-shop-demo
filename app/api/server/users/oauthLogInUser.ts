@@ -3,7 +3,7 @@
 import { defineOneEntry } from 'oneentry';
 import type { IAuthEntity } from 'oneentry/types';
 
-import { isError } from '@/app/api';
+import { isError } from '@/app/api/api/api';
 import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';
 
 const PROJECT_URL = process.env.NEXT_PUBLIC_PROJECT_URL as string;

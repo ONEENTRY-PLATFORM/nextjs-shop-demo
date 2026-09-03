@@ -3,7 +3,7 @@
 import type { IAttributeValues, IOrderProducts } from 'oneentry/types';
 import type { JSX } from 'react';
 
-import { useGetSingleOrderQuery } from '@/app/api';
+import { useGetSingleOrderQuery } from '@/app/api/api/RTKApi';
 import { toLangCode } from '@/app/types/enum';
 import { DELIVERY_PRODUCT_ID } from '@/app/utils/constants';
 import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';

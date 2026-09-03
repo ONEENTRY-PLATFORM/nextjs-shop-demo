@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 
-import { getMenuByMarker } from '@/app/api';
+import { getMenuByMarker } from '@/app/api/server/menus/getMenuByMarker';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import { flatMenuToNested } from '@/components/utils/utils';
 

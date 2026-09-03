@@ -4,7 +4,8 @@ import type { IAttributeValues, IProductsEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 import { useContext, useEffect, useState } from 'react';
 
-import { getApi, useGetProductsByIdsQuery } from '@/app/api';
+import { getApi } from '@/app/api/api/api';
+import { useGetProductsByIdsQuery } from '@/app/api/api/RTKApi';
 import { useAppDispatch, useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import {

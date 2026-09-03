@@ -6,7 +6,7 @@ import type {
 } from 'oneentry/types';
 import type { JSX } from 'react';
 
-import { getSingleAttributeByMarkerSet } from '@/app/api';
+import { getSingleAttributeByMarkerSet } from '@/app/api/server/attributes/getSingleAttributeByMarkerSet';
 import { getPageByUrl } from '@/app/api/server/pages/getPageByUrl';
 import Loader from '@/components/shared/Loader';
 import { sortObjectFieldsByPosition } from '@/components/utils/utils';

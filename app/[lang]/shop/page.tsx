@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation';
 import type { JSX } from 'react';
 import { memo, Suspense } from 'react';
 
-import { getPageByUrl } from '@/app/api';
 import { getImageUrl } from '@/app/api/hooks/useAttributesData';
+import { getPageByUrl } from '@/app/api/server/pages/getPageByUrl';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import type { MetadataParams, PageProps } from '@/app/types/global';
 import { NO_TITLE } from '@/app/utils/constants';

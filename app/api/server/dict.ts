@@ -1,6 +1,6 @@
 import type { IAttributeValues } from 'oneentry/types';
 
-import { getBlockByMarker } from '@/app/api';
+import { getBlockByMarker } from '@/app/api/server/blocks/getBlockByMarker';
 
 /**
  * Dictionary - get block by Marker with API Blocks.

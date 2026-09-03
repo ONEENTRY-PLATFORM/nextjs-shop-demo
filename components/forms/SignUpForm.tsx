@@ -5,9 +5,9 @@ import type { ISignUpData } from 'oneentry/types';
 import type { FormEvent, JSX, Key } from 'react';
 import { useCallback, useContext, useMemo, useState } from 'react';
 
-import { useGetFormByMarkerQuery } from '@/app/api';
-import { logInUser } from '@/app/api';
-import { getApi } from '@/app/api';
+import { getApi } from '@/app/api/api/api';
+import { useGetFormByMarkerQuery } from '@/app/api/api/RTKApi';
+import { logInUser } from '@/app/api/server/users/logInUser';
 import { useAppSelector } from '@/app/store/hooks';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 import { OpenDrawerContext } from '@/app/store/providers/OpenDrawerContext';

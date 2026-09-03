@@ -4,7 +4,7 @@ import Link from 'next/link';
 import type { IMenusEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 
-import { getMenuByMarker } from '@/app/api';
+import { getMenuByMarker } from '@/app/api/server/menus/getMenuByMarker';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 import LogoWhite from '@/components/layout/footer/components/LogoWhite';
 

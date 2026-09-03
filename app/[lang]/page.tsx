@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import type { JSX } from 'react';
 import { Suspense } from 'react';
 
-import { getPageByUrl } from '@/app/api';
+import { getPageByUrl } from '@/app/api/server/pages/getPageByUrl';
 import { SITE_NAME } from '@/app/utils/constants';
 import { serializeJsonLd } from '@/app/utils/serializeJsonLd';
 import { blocksColors, blocksData } from '@/components/data';

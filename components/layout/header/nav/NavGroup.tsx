@@ -1,7 +1,8 @@
 import type { IMenusEntity, IMenusPages } from 'oneentry/types';
 import type { JSX } from 'react';
 
-import { getLocales, getMenuByMarker } from '@/app/api';
+import { getLocales } from '@/app/api/server/locales/getLocales';
+import { getMenuByMarker } from '@/app/api/server/menus/getMenuByMarker';
 import { ServerProvider } from '@/app/store/providers/ServerProvider';
 
 import LangSelector from './LangSelector';

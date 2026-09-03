@@ -2,7 +2,7 @@ import 'server-only';
 
 import type { IAttributeValues } from 'oneentry/types';
 
-import { getBlockByMarker } from '@/app/api/';
+import { getBlockByMarker } from '@/app/api/server/blocks/getBlockByMarker';
 
 import { i18n, type Locale } from '../../i18n-config.ts';
 

@@ -2,7 +2,7 @@ import { unstable_noStore } from 'next/cache';
 import type { IAttributeValues, IProductsEntity } from 'oneentry/types';
 import type { JSX } from 'react';
 
-import { getApi, isError } from '@/app/api';
+import { getApi, isError } from '@/app/api/api/api';
 import { getFormByMarker } from '@/app/api/server/forms/getFormByMarker';
 import { toLangCode } from '@/app/types/enum';
 

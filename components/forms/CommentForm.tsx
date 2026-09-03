@@ -10,7 +10,8 @@ import type { ChangeEvent, FormEvent, JSX } from 'react';
 import { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { useFormsData, useGetFormByMarkerQuery } from '@/app/api';
+import { useGetFormByMarkerQuery } from '@/app/api/api/RTKApi';
+import { useFormsData } from '@/app/api/hooks/useFormsData';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
 import ArrowUpIcon from '../icons/arrow-up';

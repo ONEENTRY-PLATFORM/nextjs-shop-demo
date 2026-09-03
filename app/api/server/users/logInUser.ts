@@ -1,6 +1,6 @@
 import type { IAuthEntity, IAuthPostBody } from 'oneentry/types';
 
-import { getApi, isError } from '@/app/api';
+import { getApi, isError } from '@/app/api/api/api';
 import { getApiErrorMessage } from '@/app/utils/getApiErrorMessage';
 
 /**

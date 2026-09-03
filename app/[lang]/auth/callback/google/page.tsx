@@ -4,7 +4,8 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import type { JSX } from 'react';
 import { Suspense, useContext, useEffect, useRef, useState } from 'react';
 
-import { getApi, oauthLogInUser, syncTokens } from '@/app/api';
+import { getApi, syncTokens } from '@/app/api/api/api';
+import { oauthLogInUser } from '@/app/api/server/users/oauthLogInUser';
 import { AuthContext } from '@/app/store/providers/AuthContext';
 
 /**
