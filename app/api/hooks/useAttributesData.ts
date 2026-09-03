@@ -1,4 +1,5 @@
 import parse from 'html-react-parser';
+import { getAttributeFile } from 'oneentry';
 import type { IAttributeValues } from 'oneentry/types';
 
 import { sanitizeHTML } from '@/components/utils/sanitize';
@@ -53,29 +54,12 @@ export const getText = (
 };
 
 /**
- * CMS-generated preview payload attached to an `image` value once previews exist.
- * Each tuple is `[base64DataURI, previewUrl]`; `default[0]` is a tiny base64 blur.
- */
-type PreviewLinkObject = { default?: string[]; preview?: string[] };
-
-/**
- * Possible payload shape inside `image` / `groupOfImages` attribute values.
- * `previewLink` is `''` (or absent) when no preview has been generated, or a
- * {@link PreviewLinkObject} once the CMS has produced low-quality previews.
- */
-type ImageValueItem = {
-  downloadLink?: string;
-  previewLink?: string | PreviewLinkObject;
-};
-
-/**
  * Read an `image` attribute value and return its URL.
  *
- * The SDK normalizes `image` differently per entity:
- * - **Products** → `value` is an object;
- * - **Pages / Blocks / `groupOfImages`** → `value` is an array of objects.
- *
- * This helper handles both shapes transparently.
+ * The single-vs-array shape (products answer with an object, pages / blocks /
+ * `groupOfImages` with an array) is handled by the SDK's own
+ * {@link getAttributeFile}, which also replaces the local file type this helper
+ * used to declare — `IAttributeFile` has been exported since SDK 1.0.163.
  * @param   {string} name            - Attribute marker.
  * @param   {Attrs}  attributeValues - Entity `attributeValues`.
  * @param   {string} type            - Which URL to return: `'image'` (full) or `'preview'`.
@@ -86,21 +70,25 @@ export const getImageUrl = (
   attributeValues: Attrs,
   type: 'image' | 'preview' = 'image',
 ): string => {
-  const attr = attributeValues?.[name];
-  if (!attr || attr.value == null) {
+  const file = getAttributeFile(attributeValues?.[name]);
+  if (!file) {
     return '';
   }
-  const value = attr.value as ImageValueItem | ImageValueItem[];
-  const first: ImageValueItem | undefined = Array.isArray(value)
-    ? value[0]
-    : value;
-  if (!first || typeof first !== 'object') {
-    return '';
+  /**
+   * `IAttributeFile.previewLink` is typed as the preview map, but an upload made
+   * without a preview template answers with a plain string (`''`, or a legacy
+   * URL). The narrow read keeps the previous behaviour: return that string when
+   * it is one, otherwise fall through to the original.
+   */
+  const legacyPreview = (file as { previewLink?: unknown }).previewLink;
+  if (
+    type === 'preview' &&
+    typeof legacyPreview === 'string' &&
+    legacyPreview
+  ) {
+    return legacyPreview;
   }
-  if (type === 'preview' && typeof first.previewLink === 'string') {
-    return first.previewLink;
-  }
-  return typeof first.downloadLink === 'string' ? first.downloadLink : '';
+  return typeof file.downloadLink === 'string' ? file.downloadLink : '';
 };
 
 /**
@@ -119,15 +107,7 @@ export const getImagePreview = (
   name: string,
   attributeValues: Attrs,
 ): string => {
-  const attr = attributeValues?.[name];
-  if (!attr || attr.value == null) {
-    return '';
-  }
-  const value = attr.value as ImageValueItem | ImageValueItem[];
-  const first: ImageValueItem | undefined = Array.isArray(value)
-    ? value[0]
-    : value;
-  const preview = first?.previewLink;
+  const preview = getAttributeFile(attributeValues?.[name])?.previewLink;
   if (preview && typeof preview === 'object') {
     const base64 = preview.default?.[0];
     if (typeof base64 === 'string') {

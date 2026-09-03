@@ -71,10 +71,17 @@ describe('getImageUrl', () => {
     expect(getImageUrl('pic', attrsWith([]))).toBe('');
   });
 
-  it('returns "" when the first array element has no downloadLink', () => {
+  /*
+    Contract changed on purpose (2026-09-03) when this helper moved onto the
+    SDK's `getAttributeFile`: a malformed first entry no longer blanks the
+    image, the first usable file is returned instead. The old behaviour meant a
+    single stray record in the CMS hid a product photo entirely, with nothing in
+    the UI to say why.
+  */
+  it('skips a malformed first array element and returns the first usable file', () => {
     expect(
-      getImageUrl('pic', attrsWith([{}, { downloadLink: 'unused.png' }])),
-    ).toBe('');
+      getImageUrl('pic', attrsWith([{}, { downloadLink: 'second.png' }])),
+    ).toBe('second.png');
   });
 
   it('returns previewLink for type="preview" when it is a string', () => {

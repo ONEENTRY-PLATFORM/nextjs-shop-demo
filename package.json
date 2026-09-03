@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint --cache .",
     "tsc": "npx tsc --noEmit --watch false",
+    "typecheck": "npm run tsc",
     "lint-fix": "eslint --cache --fix .",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",

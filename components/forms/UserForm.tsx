@@ -96,17 +96,41 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
 
         /** Prepare form data for submission. Maps through form attributes and creates data objects for each field */
         const attributes = getFormAttributes(data);
+
+        /** Password field resolved by its SDK flag (`isPassword === true`), same fallback as SignInForm. */
+        const passwordField =
+          attributes.find((field) => field.isPassword === true) ??
+          attributes.find((field) => field.marker === 'password_reg');
+
+        /** Empty means "the user did not change the password on this save". */
+        const passwordValue = passwordField
+          ? String(
+              fields[passwordField.marker as keyof typeof fields]?.value ?? '',
+            ).trim()
+          : '';
+
         const formData: IAuthFormData[] = attributes
           .map((field: IFormAttribute) => {
-            if (field.marker !== 'email_notifications') {
-              const fieldData = fields[field.marker as keyof typeof fields];
-              if (fieldData) {
-                return {
-                  marker: field.marker,
-                  value: fieldData.value,
-                  type: 'string',
-                };
-              }
+            /**
+             * The password must never travel in `formData`: that payload is
+             * ordinary profile data, so a password sent there is stored in the
+             * clear alongside the name and phone. It belongs in `authData` and
+             * nowhere else. Notification opt-in has its own `notificationData`.
+             */
+            if (
+              field.marker === 'email_notifications' ||
+              field.isPassword === true ||
+              field.marker === passwordField?.marker
+            ) {
+              return null;
+            }
+            const fieldData = fields[field.marker as keyof typeof fields];
+            if (fieldData) {
+              return {
+                marker: field.marker,
+                value: fieldData.value,
+                type: 'string',
+              };
             }
             return null;
           })
@@ -117,12 +141,20 @@ const UserForm = ({ lang, dict }: FormProps): JSX.Element => {
           await getApi().Users.updateUser({
             formIdentifier: user.formIdentifier,
             formData,
-            authData: [
-              {
-                marker: 'password_reg',
-                value: String(fields['password_reg']?.value || ''),
-              },
-            ],
+            /**
+             * `authData` is OMITTED unless a new password was actually typed.
+             * The contract (verified against the live API) is that the key must
+             * be absent, not empty: sending it with `''` is a plain "Login or
+             * password values are missed" rejection, so an ordinary "save
+             * profile" without a password change used to fail its validator.
+             */
+            ...(passwordValue && passwordField
+              ? {
+                  authData: [
+                    { marker: passwordField.marker, value: passwordValue },
+                  ],
+                }
+              : {}),
             notificationData: {
               email: String(fields['email_reg']?.value || ''),
               phonePush: [],
