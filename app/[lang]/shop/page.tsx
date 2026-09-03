@@ -10,6 +10,7 @@ import type { MetadataParams, PageProps } from '@/app/types/global';
 import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import { getSiteUrl } from '@/app/utils/getSiteUrl';
+import { serializeJsonLd } from '@/app/utils/serializeJsonLd';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import { i18n, type Locale } from '@/i18n-config';
@@ -84,7 +85,7 @@ const ShopPageLayout = async (props: PageProps): Promise<JSX.Element> => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbStructuredData),
+          __html: serializeJsonLd(breadcrumbStructuredData),
         }}
       />
       <main className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
@@ -130,8 +131,8 @@ export async function generateStaticParams(): Promise<Array<{ lang: string }>> {
 export async function generateMetadata({
   params,
 }: MetadataParams): Promise<Metadata> {
-  /** Extract handle and language from route parameters */
-  const { handle, lang } = await params;
+  /** Extract language from route parameters — this route has no `[handle]` segment */
+  const { lang } = await params;
   /** Fetch the shop page by URL and language */
   const { isError, page } = await getPageByUrl('shop', lang);
 
@@ -145,13 +146,12 @@ export async function generateMetadata({
 
   /** Return metadata object */
   return generatePageMetadata({
-    handle: handle,
+    path: '/shop',
     title: localizeInfos?.title ?? NO_TITLE,
     description: localizeInfos?.plainContent ?? '',
     isVisible: isVisible,
     imageUrl: getImageUrl('opengraph_image', attributeValues),
     imageAlt: localizeInfos?.title ?? NO_TITLE,
     lang: lang,
-    baseUrl: '',
   });
 }

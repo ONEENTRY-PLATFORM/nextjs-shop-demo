@@ -134,13 +134,12 @@ export async function generateMetadata({
 
   /** Return metadata object with page information */
   return generatePageMetadata({
-    handle: handle,
+    path: `/shop/${handle}`,
     title: localizeInfos?.title ?? NO_TITLE,
     description: localizeInfos?.plainContent ?? '',
     isVisible: isVisible,
     imageUrl: getImageUrl('opengraph_image', attributeValues),
     imageAlt: localizeInfos?.title ?? NO_TITLE,
     lang: lang,
-    baseUrl: '',
   });
 }

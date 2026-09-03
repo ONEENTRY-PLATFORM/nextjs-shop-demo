@@ -11,6 +11,7 @@ import type { PageProps } from '@/app/types/global';
 import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import { getSiteUrl } from '@/app/utils/getSiteUrl';
+import { serializeJsonLd } from '@/app/utils/serializeJsonLd';
 import CategoriesGrid from '@/components/layout/categories';
 import { i18n } from '@/i18n-config';
 
@@ -87,7 +88,7 @@ const CategoryPage = async ({ params }: PageProps): Promise<JSX.Element> => {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(breadcrumbStructuredData),
+          __html: serializeJsonLd(breadcrumbStructuredData),
         }}
       />
       <main className="relative mx-auto box-border flex w-full max-w-(--breakpoint-xl) shrink-0 grow flex-col self-stretch">
@@ -137,8 +138,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ handle: string; lang: string }>;
 }): Promise<Metadata> {
-  /** Extract handle and language from route parameters */
-  const { handle, lang } = await params;
+  /** Extract language from route parameters — this route has no `[handle]` segment */
+  const { lang } = await params;
   /** Fetch the category page by URL and language */
   const { isError, page } = await getPageByUrl('category', lang);
 
@@ -150,13 +151,12 @@ export async function generateMetadata({
 
   /** Return metadata object */
   return generatePageMetadata({
-    handle: handle,
+    path: '/shop/category',
     title: localizeInfos?.title ?? NO_TITLE,
     description: localizeInfos?.plainContent ?? '',
     isVisible: isVisible,
     imageUrl: getImageUrl('opengraph_image', attributeValues),
     imageAlt: localizeInfos?.title ?? NO_TITLE,
     lang: lang,
-    baseUrl: '',
   });
 }

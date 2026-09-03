@@ -12,6 +12,7 @@ import {
 } from '@/app/api/hooks/useAttributesData';
 import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
+import { serializeJsonLd } from '@/app/utils/serializeJsonLd';
 import ProductSingleServer from '@/components/layout/product/ProductSingleServer';
 import type { Locale } from '@/i18n-config';
 import { i18n } from '@/i18n-config';
@@ -78,7 +79,7 @@ const ProductPageLayout = async ({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(productJsonLd),
+          __html: serializeJsonLd(productJsonLd),
         }}
       />
       <div className="mx-auto flex w-full max-w-(--breakpoint-xl) flex-col bg-white">
@@ -156,13 +157,12 @@ export async function generateMetadata({
    * page body has always guarded it) — degrade to empty strings instead.
    */
   return generatePageMetadata({
-    handle: handle,
+    path: `/shop/product/${handle}`,
     title: localizeInfos?.title ?? NO_TITLE,
     description: localizeInfos?.plainContent ?? '',
     isVisible: isVisible,
     imageUrl: getImageUrl('pic', attributeValues),
     imageAlt: localizeInfos?.title ?? NO_TITLE,
     lang: lang,
-    baseUrl: `/${lang}/shop/product/${handle}`,
   });
 }

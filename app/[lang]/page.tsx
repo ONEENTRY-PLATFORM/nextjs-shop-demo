@@ -6,6 +6,7 @@ import { Suspense } from 'react';
 
 import { getPageByUrl } from '@/app/api';
 import { SITE_NAME } from '@/app/utils/constants';
+import { serializeJsonLd } from '@/app/utils/serializeJsonLd';
 import { blocksColors, blocksData } from '@/components/data';
 import BlocksGrid from '@/components/layout/blocks-grid';
 import BlocksGridLoader from '@/components/layout/blocks-grid/components/BlocksGridLoader';
@@ -94,13 +95,13 @@ const IndexPageLayout = async ({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(organizationStructuredData),
+          __html: serializeJsonLd(organizationStructuredData),
         }}
       />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(websiteStructuredData),
+          __html: serializeJsonLd(websiteStructuredData),
         }}
       />
       <main className="flex flex-col items-center justify-between gap-16">
@@ -174,7 +175,5 @@ export async function generateMetadata({
     imageUrl: getImageUrl('opengraph_image', attributeValues),
     imageAlt: localizeInfos?.title || SITE_NAME,
     lang: lang,
-    handle: '',
-    baseUrl: '',
   });
 }
