@@ -26,8 +26,14 @@ const nextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    minimumCacheTTL: 60,
-    deviceSizes: [320, 640, 768, 1024, 1280, 1536, 1920, 2560],
+    // OneEntry CDN URLs (/cloud-static/**) are immutable per file — the optimized
+    // variant never needs to change, so cache it for a year. The previous 60s TTL
+    // made the edge re-fetch from compute every minute, re-encoding and
+    // re-streaming each product photo back to the CDN on a loop.
+    minimumCacheTTL: 31536000,
+    // Trimmed to the breakpoints the layout actually uses: every extra entry is
+    // another variant the optimizer may be asked to generate and store.
+    deviceSizes: [640, 768, 1024, 1280, 1920, 2560],
     imageSizes: [16, 32, 64, 96, 128, 256],
     qualities: [50, 75],
     unoptimized: false,

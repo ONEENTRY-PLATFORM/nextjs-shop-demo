@@ -163,11 +163,22 @@ export const flatMenuToNested = (
 
     if (sameParent && sameKind) {
       const object = { ...element };
-      const children = flatMenuToNested(
-        data,
-        element.id,
-        element.itemType ?? null,
-      );
+      /**
+       * The Menus API may already hand back a tree. Prefer the children it sent
+       * over rebuilding them from `parentId`: reconstruction searches the FLAT
+       * list, so against a tree response it finds nothing and the real submenu
+       * silently disappears. Every menu arrives flat today — each `parentId` is
+       * null and each `children` an empty array — which is exactly what keeps
+       * this latent instead of visibly broken.
+       */
+      const apiChildren = Array.isArray(element.children)
+        ? element.children
+        : element.children
+          ? [element.children as IMenusPages]
+          : [];
+      const children = apiChildren.length
+        ? apiChildren
+        : flatMenuToNested(data, element.id, element.itemType ?? null);
       if (children.length) {
         object.children = children;
       }
