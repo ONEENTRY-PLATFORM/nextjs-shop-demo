@@ -11,6 +11,7 @@ import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
 import { getSiteUrl } from '@/app/utils/getSiteUrl';
 import { serializeJsonLd } from '@/app/utils/serializeJsonLd';
+import { shopCrawlMeta } from '@/app/utils/shopCrawlMeta';
 import ProductsGridLayout from '@/components/layout/products-grid';
 import ProductsGridLoader from '@/components/layout/products-grid/components/ProductsGridLoader';
 import { i18n, type Locale } from '@/i18n-config';
@@ -130,9 +131,12 @@ export async function generateStaticParams(): Promise<Array<{ lang: string }>> {
  */
 export async function generateMetadata({
   params,
+  searchParams,
 }: MetadataParams): Promise<Metadata> {
   /** Extract language from route parameters — this route has no `[handle]` segment */
   const { lang } = await params;
+  /** Facet state decides indexability — see `shopCrawlMeta` */
+  const sp = await searchParams;
   /** Fetch the shop page by URL and language */
   const { isError, page } = await getPageByUrl('shop', lang);
 
@@ -144,14 +148,21 @@ export async function generateMetadata({
   /** Extract page information from the page object */
   const { localizeInfos, isVisible, attributeValues } = page;
 
-  /** Return metadata object */
-  return generatePageMetadata({
-    path: '/shop',
-    title: localizeInfos?.title ?? NO_TITLE,
-    description: localizeInfos?.plainContent ?? '',
-    isVisible: isVisible,
-    imageUrl: getImageUrl('opengraph_image', attributeValues),
-    imageAlt: localizeInfos?.title ?? NO_TITLE,
-    lang: lang,
-  });
+  /**
+   * Return metadata object. The crawl overlay comes last: it folds `isVisible`
+   * into the same `index` flag and must win over the plain robots block that
+   * `generatePageMetadata` emits.
+   */
+  return {
+    ...generatePageMetadata({
+      path: '/shop',
+      title: localizeInfos?.title ?? NO_TITLE,
+      description: localizeInfos?.plainContent ?? '',
+      isVisible: isVisible,
+      imageUrl: getImageUrl('opengraph_image', attributeValues),
+      imageAlt: localizeInfos?.title ?? NO_TITLE,
+      lang: lang,
+    }),
+    ...shopCrawlMeta({ searchParams: sp, isVisible }),
+  };
 }

@@ -48,10 +48,14 @@ declare type LoaderProps = {
 
 /**
  * Metadata params.
- * @property {object} params - Page parameters.
+ * @property {object} params       - Page parameters.
+ * @property {object} searchParams - Query string, delivered to `generateMetadata` of pages (not layouts). Optional because most routes have no faceted variants to distinguish; catalog listings read it to de-index filtered views.
  */
 declare type MetadataParams = {
   params: Promise<{ handle: string; lang: string }>;
+  searchParams?:
+    | Promise<Record<string, string | string[] | undefined>>
+    | undefined;
 };
 
 /**
