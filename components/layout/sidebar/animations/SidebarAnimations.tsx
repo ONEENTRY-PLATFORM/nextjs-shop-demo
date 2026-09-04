@@ -35,45 +35,52 @@ const SidebarAnimations = ({
   /**
    * GSAP animation effect that runs when the component mounts or when the transition stage changes.
    * Implements slide-in/slide-out animation for the sidebar menu.
+   *
+   * `scope` confines the `.sidebar-menu` selector to this wrapper. The class is
+   * styled globally in `globals.css`, so an unscoped selector would reach any
+   * other element carrying it.
    */
-  useGSAP(() => {
-    /** Skip animations for specific pages or if ref is not available */
-    if (
-      !ref.current ||
-      pathNames[1] === 'profile' ||
-      pathNames[1] === 'favorites' ||
-      pathNames[1] === 'cart' ||
-      pathNames[1] === 'payment' ||
-      pathNames[1] === 'orders'
-    ) {
-      return;
-    }
+  useGSAP(
+    () => {
+      /** Skip animations for specific pages or if ref is not available */
+      if (
+        !ref.current ||
+        pathNames[1] === 'profile' ||
+        pathNames[1] === 'favorites' ||
+        pathNames[1] === 'cart' ||
+        pathNames[1] === 'payment' ||
+        pathNames[1] === 'orders'
+      ) {
+        return;
+      }
 
-    /** Create a GSAP timeline for the sidebar animation */
-    const tl = gsap.timeline({
-      paused: true,
-    });
+      /** Create a GSAP timeline for the sidebar animation */
+      const tl = gsap.timeline({
+        paused: true,
+      });
 
-    /** Initialize sidebar position off-screen to the left and animate it in */
-    tl.set('.sidebar-menu', {
-      xPercent: -100,
-    }).to('.sidebar-menu', {
-      xPercent: 0,
-      duration: 0.7,
-    });
+      /** Initialize sidebar position off-screen to the left and animate it in */
+      tl.set('.sidebar-menu', {
+        xPercent: -100,
+      }).to('.sidebar-menu', {
+        xPercent: 0,
+        duration: 0.7,
+      });
 
-    /** Play or reverse animation based on transition stage */
-    if (stage === 'entering') {
-      tl.play();
-    } else if (stage === 'leaving') {
-      tl.reverse(0.7);
-    }
+      /** Play or reverse animation based on transition stage */
+      if (stage === 'entering') {
+        tl.play();
+      } else if (stage === 'leaving') {
+        tl.reverse(0.7);
+      }
 
-    /** Cleanup function to kill the timeline when component unmounts */
-    return () => {
-      tl.kill();
-    };
-  }, [stage]);
+      /** Cleanup function to kill the timeline when component unmounts */
+      return () => {
+        tl.kill();
+      };
+    },
+    { dependencies: [stage], scope: ref },
+  );
 
   return (
     <div className={className} ref={ref}>

@@ -2,15 +2,11 @@ import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react';
 import type {
   IAccountsEntity,
   IAttributesSetsEntity,
-  IAuthProvidersEntity,
-  IBlockEntity,
   IError,
   IFormsEntity,
   IOrderByMarkerEntity,
   IOrdersEntity,
-  IPositionBlock,
   IProductsEntity,
-  ISessionEntity,
   IUserEntity,
 } from 'oneentry/types';
 
@@ -21,16 +17,6 @@ import { getApi, isError } from './api';
 interface AttributeByMarkerProps {
   setMarker: string;
   attributeMarker: string;
-  activeLang: string;
-}
-
-interface BlockByMarkerProps {
-  marker: string;
-  activeLang: string;
-}
-
-interface BlocksByPageUrlProps {
-  pageUrl: string;
   activeLang: string;
 }
 
@@ -73,35 +59,19 @@ const toQueryResult = async <T>(
 
 /**
  * Creates basic redux logic.
+ *
+ * `keepUnusedDataFor` is the retention window after the **last** subscriber
+ * unmounts, and RTK Query's default of 60 s is far too short for CMS content
+ * that changes on an editor's schedule, not a user's: every remount of a form
+ * or a cart re-issues the same request. The global default is raised to 5
+ * minutes and each endpoint overrides it by how volatile its data actually is
+ * — editorial content long, anything reflecting the user's own session short.
  */
 export const RTKApi = createApi({
   reducerPath: 'api',
   baseQuery: fakeBaseQuery<IError>(),
+  keepUnusedDataFor: 300,
   endpoints: (build) => ({
-    /**
-     * Get all blocks by page url.
-     * @param pageUrl    - Page URL.
-     * @param activeLang - Language code. Default "en_US".
-     * @returns          Query result with position blocks
-     */
-    getBlocksByPageUrl: build.query<IPositionBlock[], BlocksByPageUrlProps>({
-      queryFn: async ({ pageUrl, activeLang }) =>
-        toQueryResult<IPositionBlock[]>(
-          getApi().Pages.getBlocksByPageUrl(pageUrl, activeLang),
-        ),
-    }),
-    /**
-     * Get block by Marker.
-     * @param marker     - Marker of Block.
-     * @param activeLang - Language code. Default "en_US".
-     * @returns          Query result with block
-     */
-    getBlockByMarker: build.query<IBlockEntity, BlockByMarkerProps>({
-      queryFn: async ({ marker, activeLang }) =>
-        toQueryResult<IBlockEntity>(
-          getApi().Blocks.getBlockByMarker(marker, activeLang),
-        ),
-    }),
     /**
      * Get single attribute by marker set.
      * @param setMarker       - Marker of attribute set.
@@ -120,6 +90,8 @@ export const RTKApi = createApi({
             activeLang,
           ),
         ),
+      /** An attribute set changes when the CMS schema does — effectively never at runtime. */
+      keepUnusedDataFor: 600,
     }),
     /**
      * Get Product By Id.
@@ -141,6 +113,8 @@ export const RTKApi = createApi({
           getApi().Products.getProductById(id, toLangCode(lang)),
         );
       },
+      /** Price and stock status move, but not within a single browsing session. */
+      keepUnusedDataFor: 300,
     }),
     /**
      * Get Products By Ids.
@@ -175,17 +149,8 @@ export const RTKApi = createApi({
           ),
         };
       },
-    }),
-    /**
-     * Get all auth providers objects.
-     * @param langCode - Language code. Default "en_US".
-     * @returns        Query result with auth providers
-     */
-    getAuthProviders: build.query<IAuthProvidersEntity[], string>({
-      queryFn: async (langCode) =>
-        toQueryResult<IAuthProvidersEntity[]>(
-          getApi().AuthProvider.getAuthProviders(langCode),
-        ),
+      /** Backs cart / favorites / payment, all of which remount constantly. */
+      keepUnusedDataFor: 300,
     }),
     /**
      * Get form by marker.
@@ -201,6 +166,11 @@ export const RTKApi = createApi({
         toQueryResult<IFormsEntity>(
           getApi().Forms.getFormByMarker(marker, toLangCode(lang)),
         ),
+      /**
+       * The heaviest win here: eight forms share this endpoint and each one
+       * refetched its field schema on every open at the 60 s default.
+       */
+      keepUnusedDataFor: 600,
     }),
     /**
      * Getting the data of an authorized user.
@@ -224,6 +194,11 @@ export const RTKApi = createApi({
         }
         return toQueryResult<IUserEntity>(getApi().Users.getUser(langCode));
       },
+      /**
+       * Deliberately short: this is the signed-in user's own record, and a
+       * stale copy outlives edits made in the profile form.
+       */
+      keepUnusedDataFor: 60,
     }),
     /**
      * Get all payment accounts as an array.
@@ -232,6 +207,8 @@ export const RTKApi = createApi({
     getAccounts: build.query<IAccountsEntity[], object>({
       queryFn: async () =>
         toQueryResult<IAccountsEntity[]>(getApi().Payments.getAccounts()),
+      /** Payment accounts are project configuration, not per-session data. */
+      keepUnusedDataFor: 600,
     }),
     /**
      * Retrieve one order storage object by marker.
@@ -243,15 +220,8 @@ export const RTKApi = createApi({
         toQueryResult<IOrdersEntity>(
           getApi().Orders.getOrdersStorageByMarker(marker),
         ),
-    }),
-    /**
-     * Get a single payment session object by its identifier.
-     * @param id - Identifier of the retrieved payment session object.
-     * @returns  Query result with payment session
-     */
-    getPaymentSessionById: build.query<ISessionEntity, { id: number }>({
-      queryFn: async ({ id }) =>
-        toQueryResult<ISessionEntity>(getApi().Payments.getSessionById(id)),
+      /** The storage object is delivery/checkout configuration, not an order. */
+      keepUnusedDataFor: 600,
     }),
     /**
      * Getting a single order from the order storage object created by the user.
@@ -265,20 +235,21 @@ export const RTKApi = createApi({
         toQueryResult<IOrderByMarkerEntity>(
           getApi().Orders.getOrderByMarkerAndId(marker, id, activeLang),
         ),
+      /**
+       * Kept at the floor on purpose: an order's status changes underneath the
+       * user (payment confirmation, fulfilment), so this is the one read that
+       * must not survive its own screen.
+       */
+      keepUnusedDataFor: 60,
     }),
   }),
 });
 
 export const {
-  useGetBlockByMarkerQuery,
-  useGetBlocksByPageUrlQuery,
   useGetSingleAttributeByMarkerSetQuery,
   useGetFormByMarkerQuery,
-  useGetAuthProvidersQuery,
   useLazyGetMeQuery,
   useGetAccountsQuery,
-  useGetPaymentSessionByIdQuery,
-  useLazyGetPaymentSessionByIdQuery,
   useGetOrderStorageByMarkerQuery,
   useGetSingleOrderQuery,
   useGetProductByIdQuery,

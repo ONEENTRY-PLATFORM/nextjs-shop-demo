@@ -3,6 +3,7 @@
 import { useGSAP } from '@gsap/react';
 import { gsap } from 'gsap';
 import type { JSX } from 'react';
+import { useRef } from 'react';
 
 import type { BlockData } from '@/components/data';
 
@@ -21,6 +22,9 @@ const BlocksGridLoader = ({
   blocksData: BlockData[];
   blocksColors: Record<string, string>;
 }): JSX.Element => {
+  /** Container reference — scopes the GSAP selectors to this loader's own cards */
+  const ref = useRef<HTMLDivElement>(null);
+
   /**
    * Array of block names representing different content sections
    * Each name corresponds to a specific type of content block in the grid
@@ -37,47 +41,60 @@ const BlocksGridLoader = ({
   /**
    * Intro animations for the block loaders using GSAP
    * Applies a staggered fade-in effect to all block cards
+   *
+   * `scope` is load-bearing here, not hygiene: `.block-card` is also the class
+   * of the real content cards (`BlocksGridCard`, `BlocksGrid`) and of
+   * `CategoryCard`. Unscoped, this loader set `autoAlpha: 0` on every one of
+   * them anywhere on the page and then faded them all back in with its own
+   * stagger — hiding already-loaded content while a sibling block was still
+   * loading. Scoped, it only touches its own skeleton cards.
    */
-  useGSAP(() => {
-    /**
-     * Hide synchronously, before first paint: a timeline's set() only
-     * applies on the next GSAP tick, which can land after paint under
-     * main-thread jank — the visible skeleton would flash before being
-     * hidden. Uses autoAlpha for combined opacity and visibility control.
-     */
-    gsap.set('.block-card', {
-      autoAlpha: 0,
-    });
+  useGSAP(
+    () => {
+      /**
+       * Hide synchronously, before first paint: a timeline's set() only
+       * applies on the next GSAP tick, which can land after paint under
+       * main-thread jank — the visible skeleton would flash before being
+       * hidden. Uses autoAlpha for combined opacity and visibility control.
+       */
+      gsap.set('.block-card', {
+        autoAlpha: 0,
+      });
 
-    /** Create a GSAP timeline for the block loader animations */
-    const tl = gsap.timeline({
-      paused: true,
-      id: 'BlocksGridTL',
-    });
+      /** Create a GSAP timeline for the block loader animations */
+      const tl = gsap.timeline({
+        paused: true,
+        id: 'BlocksGridTL',
+      });
 
-    /** Animate block cards into view */
-    tl.to('.block-card', {
-      autoAlpha: 1,
-      stagger: 0.1,
-    });
+      /** Animate block cards into view */
+      tl.to('.block-card', {
+        autoAlpha: 1,
+        stagger: 0.1,
+      });
 
-    tl.play();
+      tl.play();
 
-    /**
-     * Cleanup function to kill the timeline
-     * Ensures proper disposal of animations to prevent memory leaks
-     */
-    return () => {
-      tl.kill();
-    };
-  }, []);
+      /**
+       * Cleanup function to kill the timeline
+       * Ensures proper disposal of animations to prevent memory leaks
+       */
+      return () => {
+        tl.kill();
+      };
+    },
+    { dependencies: [], scope: ref },
+  );
 
   return (
     /**
      * Container for the grid of block loaders
      * Uses flexbox for responsive layout with wrapping behavior
      */
-    <div className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col">
+    <div
+      ref={ref}
+      className="flex w-full flex-wrap justify-between gap-5 max-md:flex-col"
+    >
       {
         /**
          * Map through block names and render a loader for each

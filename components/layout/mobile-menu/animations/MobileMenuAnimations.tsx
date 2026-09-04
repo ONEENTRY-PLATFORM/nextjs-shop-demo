@@ -44,9 +44,27 @@ const MobileMenuAnimations = ({
       paused: true,
     });
 
+    /**
+     * Resolve the animated nodes from this component's own subtree.
+     *
+     * `#modalBody` and `#modalBg` are not unique in the document: the same two
+     * ids are rendered by `Modal` and by `FilterModal`, so the bare
+     * `'#modalBg, #modalBody'` selectors used here matched whichever copy came
+     * first in document order — the mobile menu could animate another modal's
+     * nodes and leave its own untouched. `ModalAnimations` and
+     * `FilterModalAnimations` already resolve theirs through the wrapper ref;
+     * this does the same.
+     *
+     * Note this cannot be solved with `useGSAP`'s `scope` option: the menu
+     * body *is* the wrapper element, and a scope only matches its descendants.
+     */
+    const modalBody = ref.current as HTMLDivElement | null;
+    const modalBg = modalBody?.querySelector('#modalBg') ?? null;
+    const modalNodes = [modalBg, modalBody];
+
     /** Handle closing animation */
     if (transition === 'close') {
-      tl.to('#modalBg, #modalBody', {
+      tl.to(modalNodes, {
         xPercent: -150, // Move elements off-screen to the left
         autoAlpha: 0, // Fade out elements
         onComplete: () => {
@@ -64,15 +82,15 @@ const MobileMenuAnimations = ({
        * main-thread jank — the fully visible menu would flash before
        * being hidden and re-animated.
        */
-      gsap.set('#modalBg, #modalBody', {
+      gsap.set(modalNodes, {
         xPercent: -150, // Initially position elements off-screen
         autoAlpha: 0, // Initially hide elements
       });
-      tl.to('#modalBg, #modalBody', {
+      tl.to(modalNodes, {
         xPercent: -50, // Move elements to their final position
         autoAlpha: 1, // Fade in elements
       })
-        .to('#modalBg', {
+        .to(modalBg, {
           backdropFilter: 'blur(10px)', // Apply blur effect to background
           delay: -0.35, // Overlap with previous animation
         })

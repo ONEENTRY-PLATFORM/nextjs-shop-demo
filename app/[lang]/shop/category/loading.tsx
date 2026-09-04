@@ -6,6 +6,11 @@ import { CategoriesLoader } from '@/components/layout/categories/components/Cate
  * Loading skeleton for the categories overview route. Shown while the category
  * pages are fetched on a direct load / refresh (client-side navigation is
  * covered by the transition overlay).
+ *
+ * Accepted trade-off: this boundary flushes the 200 shell before the page
+ * resolves, so the sibling `notFound()` renders 404 markup under a 200 status.
+ * The skeleton is judged worth more than the status code here; do not add a
+ * `loading.tsx` to a segment where the code matters without re-deciding that.
  * @returns {JSX.Element} Categories grid skeleton.
  */
 export default function Loading(): JSX.Element {

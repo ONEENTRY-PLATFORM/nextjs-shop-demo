@@ -13,6 +13,7 @@ import { getProductById } from '@/app/api/server/products/getProductById';
 import { getProducts } from '@/app/api/server/products/getProducts';
 import { NO_TITLE } from '@/app/utils/constants';
 import { generatePageMetadata } from '@/app/utils/generatePageMetadata';
+import { getSiteUrl } from '@/app/utils/getSiteUrl';
 import { serializeJsonLd } from '@/app/utils/serializeJsonLd';
 import ProductSingleServer from '@/components/layout/product/ProductSingleServer';
 import type { Locale } from '@/i18n-config';
@@ -57,22 +58,42 @@ const ProductPageLayout = async ({
    * Product JSON-LD structured data for SEO
    * https://json-ld.org/
    */
+  /**
+   * Offers are emitted only when the CMS actually has a price.
+   *
+   * The previous `|| 1` turned a missing price into "costs 1", which is a false
+   * fact in machine-readable markup — the one thing structured data must never
+   * carry. An absent `offers` block is a product without a published price;
+   * a fabricated one is a wrong price.
+   */
+  const lowPrice = additional?.prices?.min;
+  const highPrice = additional?.prices?.max;
+  const hasPrice =
+    typeof lowPrice === 'number' && typeof highPrice === 'number';
+
   const productJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: localizeInfos?.title,
     description: getText('description', attributeValues, 'plain'),
     image: getImageUrl('pic', attributeValues),
-    offers: {
-      '@type': 'AggregateOffer',
-      availability:
-        statusIdentifier === 'in_stock'
-          ? 'https://schema.org/InStock'
-          : 'https://schema.org/OutOfStock',
-      priceCurrency: getString('currency', attributeValues),
-      highPrice: additional?.prices?.max || 1,
-      lowPrice: additional?.prices?.min || 1,
-    },
+    ...(hasPrice
+      ? {
+          offers: {
+            '@type': 'AggregateOffer',
+            /** Rich results want the offer to name the page it is sold on. */
+            url: `${getSiteUrl()}/${lang}/shop/product/${handle}`,
+            availability:
+              statusIdentifier === 'in_stock'
+                ? 'https://schema.org/InStock'
+                : 'https://schema.org/OutOfStock',
+            itemCondition: 'https://schema.org/NewCondition',
+            priceCurrency: getString('currency', attributeValues),
+            highPrice,
+            lowPrice,
+          },
+        }
+      : {}),
   };
 
   return (
