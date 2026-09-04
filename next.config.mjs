@@ -84,6 +84,9 @@ const nextConfig = {
     ];
   },
   compress: true,
+  // Do not advertise the framework: `X-Powered-By: Next.js` tells a scanner
+  // which CVE list to try. Covered by tests/e2e/security-headers.spec.ts.
+  poweredByHeader: false,
 };
 
 export default nextConfig;
