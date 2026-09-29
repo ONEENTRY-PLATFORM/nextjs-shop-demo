@@ -1,3 +1,4 @@
+import type { Locator } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 
 import { openSignInModal } from './helpers/auth-helpers';
@@ -8,6 +9,23 @@ import { ROUTES, SELECTORS } from './settings';
  * E2E accessibility tests
  * Covers keyboard navigation, ARIA roles, focus management, and semantic HTML.
  */
+/**
+ * Focuses an element and waits for the focus to stick, re-applying it.
+ *
+ * The catalog card mounts, hydrates and then runs its GSAP entrance animation. Focus applied
+ * into that window is dropped — React replaces the node, or the animation re-parents it — and
+ * the assertion reads `inactive` on an element that is plainly there. Re-focusing costs a
+ * moment and removes the race; what the spec is about (the link IS reachable) is unchanged.
+ * @param   {Locator}       target - Element that should end up focused.
+ * @returns {Promise<void>}        Resolves once the element holds focus.
+ */
+const focusAndKeep = async (target: Locator): Promise<void> => {
+  await expect(async () => {
+    await target.focus();
+    await expect(target).toBeFocused({ timeout: 2000 });
+  }).toPass({ timeout: 15000 });
+};
+
 test.describe('Accessibility', () => {
   // Firefox + Next.js dev server hydrates noticeably slower than Chromium,
   // so the default 30s timeout is too tight for nav-heavy a11y tests.
@@ -109,8 +127,7 @@ test.describe('Accessibility', () => {
       const count = await productLinks.count();
       if (count === 0) return;
 
-      await productLinks.first().focus();
-      await expect(productLinks.first()).toBeFocused();
+      await focusAndKeep(productLinks.first());
     });
 
     test('product card links are focusable and point to product pages', async ({
@@ -126,8 +143,7 @@ test.describe('Accessibility', () => {
       if (count === 0) return;
 
       const firstLink = productLinks.first();
-      await firstLink.focus();
-      await expect(firstLink).toBeFocused();
+      await focusAndKeep(firstLink);
 
       // Verify href points to a product page (ensures keyboard users can navigate)
       const href = await firstLink.getAttribute('href');

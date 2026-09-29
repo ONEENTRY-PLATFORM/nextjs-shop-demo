@@ -22,9 +22,19 @@ test.describe('Filter Combinations', () => {
   async function openFilterModal(page: Page): Promise<Locator> {
     const filterBtn = page.locator(SELECTORS.filterButton);
     await expect(filterBtn).toBeVisible({ timeout: 10000 });
-    await filterBtn.click();
     const modal = page.locator(SELECTORS.filterModal);
-    await expect(modal).toBeVisible({ timeout: 8000 });
+
+    // The button is revealed by a GSAP animation right after hydration, and a click that lands
+    // in the gap between "painted" and "handler attached" is swallowed: Playwright reports a
+    // successful click and nothing opens. Each attempt gets its own short budget so the loop is
+    // what retries; the same pattern as `openFilterDrawer` in catalog.spec.ts.
+    await expect(async () => {
+      if (!(await modal.isVisible().catch(() => false))) {
+        await filterBtn.click({ timeout: 4000 }).catch(() => {});
+      }
+      await expect(modal).toBeVisible({ timeout: 4000 });
+    }).toPass({ timeout: 20000 });
+
     return modal;
   }
 

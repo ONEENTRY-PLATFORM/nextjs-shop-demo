@@ -6,7 +6,21 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const nextConfig = {
+  /**
+   * A prerender that hits a CMS blip retries instead of shipping the failure.
+   * `getProductById` now throws on anything but a 404, so a rate-limited build fails the page
+   * rather than baking `notFound()` into it — with retries, a blip costs a second attempt
+   * instead of the whole build.
+   */
   experimental: {
+    /**
+     * Prerender workers. Next defaults to one per core (11 here) and the CMS does not survive
+     * that fanout: a full-parallelism build answers `<!DOCTYPE …>` instead of JSON
+     * (`statusCode: 0`) for dozens of reads, and a worker eventually dies outright. Four keeps
+     * every read clean.
+     */
+    cpus: 4,
+    staticGenerationRetryCount: 3,
     staleTimes: {
       dynamic: 30,
       static: 180,

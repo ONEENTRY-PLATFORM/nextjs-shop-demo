@@ -33,8 +33,8 @@
     "next-redux-wrapper": "^8.1.0",
     "next-transition-router": "^0.2.11",
     "nuqs": "^2.10.1",
-    "oneentry": "^1.0.166",
-    "playwright": "^1.62.1",
+    "oneentry": "^1.0.169",
+    "playwright": "1.62.1",
     "react": "^19.2.8",
     "react-calendar": "^6.0.1",
     "react-dom": "^19.2.8",
@@ -55,7 +55,7 @@
     "@gsap/react": "^2.1.2",
     "@next/env": "^16.3.4",
     "@next/eslint-plugin-next": "^16.3.4",
-    "@playwright/test": "^1.62.1",
+    "@playwright/test": "1.62.1",
     "@reduxjs/toolkit": "^2.12.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/postcss": "^4.3.3",
@@ -111,6 +111,7 @@
   "engines": {
     "node": ">=22.22.3"
   },
+  "comment_overrides": "playwright, @playwright/test and playwright-core must be the SAME version — Playwright refuses to launch a browser when they drift ('browserType.launch: renderParamsForCall is not a function'). playwright-core is pinned here because @axe-core/playwright pulls its own; the two direct deps are pinned exactly, without a caret, so a fresh install cannot float past it.",
   "overrides": {
     "playwright-core": "1.62.1"
   }

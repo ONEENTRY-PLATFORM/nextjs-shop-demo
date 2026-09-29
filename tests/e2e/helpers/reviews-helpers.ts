@@ -131,7 +131,10 @@ export async function expandReviewsList(page: Page): Promise<void> {
   const expandedChevron = page.locator(`${REVIEWS.toggleChevron}.rotate-180`);
   await expect(async () => {
     if ((await expandedChevron.count()) === 0) {
-      await toggle.click();
+      // Short per-attempt budget, failures swallowed: the section is animating, Playwright's
+      // actionability wait holds for the element to stop moving, and a bare `click()` can sit
+      // there past the test timeout — which leaves `toPass` no second attempt at all.
+      await toggle.click({ timeout: 4000 }).catch(() => {});
     }
     await expect(leave).toBeVisible({ timeout: 4000 });
   }).toPass({ timeout: 20000 });
@@ -165,10 +168,18 @@ export async function openReviewForm(page: Page): Promise<void> {
   // and just wait for the open animation to finish.
   await expect(async () => {
     if ((await drawer.count()) === 0) {
-      await trigger.click();
+      // Short per-attempt budget, and failures swallowed, so the loop below is the thing that
+      // retries. The reviews section is still settling its GSAP height when the first click
+      // lands, and Playwright's actionability wait holds for the element to stop moving — a
+      // bare `click()` sat there for the whole test timeout, so `toPass` never got a second
+      // attempt and the spec failed with the element plainly visible on the screenshot.
+      await trigger.click({ timeout: 4000 }).catch(() => {});
     }
     await expect(drawer).toBeVisible({ timeout: 6000 });
-  }).toPass({ timeout: 25000 });
+    // 40s, not 25: one attempt now costs up to 10 (a 4s click plus a 6s wait for the drawer),
+    // so the old budget bought two tries — and the first is the one most likely to land while
+    // the section is still animating.
+  }).toPass({ timeout: 40000 });
 }
 
 /**

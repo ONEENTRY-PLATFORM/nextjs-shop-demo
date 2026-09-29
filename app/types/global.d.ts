@@ -54,8 +54,7 @@ declare type LoaderProps = {
 declare type MetadataParams = {
   params: Promise<{ handle: string; lang: string }>;
   searchParams?:
-    | Promise<Record<string, string | string[] | undefined>>
-    | undefined;
+    Promise<Record<string, string | string[] | undefined>> | undefined;
 };
 
 /**

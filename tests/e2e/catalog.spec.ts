@@ -1,7 +1,32 @@
+import type { Page } from '@playwright/test';
 import { expect, test } from '@playwright/test';
 
 import { waitForPageLoad } from './helpers/navigation-helpers';
 import { ROUTES, SELECTORS } from './settings';
+
+/**
+ * Opens the filter drawer, retrying the click once.
+ *
+ * The button is revealed by a GSAP animation after hydration, and a click that lands in the gap
+ * between "painted" and "handler attached" is swallowed: the element is there, Playwright clicks
+ * it, and nothing opens. Under a full-suite run that gap is wide enough to fail three specs in a
+ * row while each passes on its own. Re-clicking costs one second and removes the race.
+ * @param   {Page}          page - Playwright page, already on the shop route.
+ * @returns {Promise<void>}      Resolves once the drawer is visible.
+ */
+const openFilterDrawer = async (page: Page): Promise<void> => {
+  const button = page.locator(SELECTORS.filterButton);
+  const drawer = page.locator(SELECTORS.filterModal);
+
+  await expect(button).toBeVisible({ timeout: 12000 });
+  await button.click();
+  try {
+    await drawer.waitFor({ state: 'visible', timeout: 5000 });
+  } catch {
+    await button.click();
+    await drawer.waitFor({ state: 'visible', timeout: 10000 });
+  }
+};
 
 /**
  * E2E tests for catalog page and product filtering
@@ -45,19 +70,12 @@ test.describe('Catalog', () => {
 
   test.describe('Filter Modal', () => {
     test('clicking filter button opens filter modal', async ({ page }) => {
-      const filterButton = page.locator(SELECTORS.filterButton);
-      await filterButton.click();
-
-      // Modal with filter form should open
-      const filterModal = page.locator(SELECTORS.filterModal);
-      await expect(filterModal).toBeVisible({ timeout: 5000 });
+      await openFilterDrawer(page);
+      await expect(page.locator(SELECTORS.filterModal)).toBeVisible();
     });
 
     test('filter modal contains price range inputs', async ({ page }) => {
-      await page.locator(SELECTORS.filterButton).click();
-
-      const filterModal = page.locator(SELECTORS.filterModal);
-      await expect(filterModal).toBeVisible({ timeout: 5000 });
+      await openFilterDrawer(page);
 
       const priceFrom = page.locator(SELECTORS.priceFromInput);
       const priceTo = page.locator(SELECTORS.priceToInput);
@@ -67,10 +85,7 @@ test.describe('Catalog', () => {
     });
 
     test('filter modal contains apply and reset buttons', async ({ page }) => {
-      await page.locator(SELECTORS.filterButton).click();
-
-      const filterModal = page.locator(SELECTORS.filterModal);
-      await expect(filterModal).toBeVisible({ timeout: 5000 });
+      await openFilterDrawer(page);
 
       await expect(page.locator(SELECTORS.filterApplyButton)).toBeVisible();
       await expect(page.locator(SELECTORS.filterResetButton)).toBeVisible();
@@ -156,9 +171,8 @@ test.describe('Catalog', () => {
 
   test.describe('Filter Apply/Reset', () => {
     test('apply filter closes modal', async ({ page }) => {
-      await page.locator(SELECTORS.filterButton).click();
+      await openFilterDrawer(page);
       const filterModal = page.locator(SELECTORS.filterModal);
-      await expect(filterModal).toBeVisible({ timeout: 5000 });
 
       await page.locator(SELECTORS.filterApplyButton).click();
 
@@ -167,9 +181,8 @@ test.describe('Catalog', () => {
     });
 
     test('in_stock filter adds URL param', async ({ page }) => {
-      await page.locator(SELECTORS.filterButton).click();
+      await openFilterDrawer(page);
       const filterModal = page.locator(SELECTORS.filterModal);
-      await expect(filterModal).toBeVisible({ timeout: 5000 });
 
       // Find in stock checkbox/toggle
       const inStockCheckbox = filterModal

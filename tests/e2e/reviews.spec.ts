@@ -24,6 +24,18 @@ import { ALLOW_WRITES, SELECTORS, TEST_AUTH_USER } from './settings';
  * - the one test that PERSISTS a review is gated behind ALLOW_WRITES.
  */
 test.describe('Product Reviews', () => {
+  /**
+   * The reviews section is the most heavily animated part of the site: the rating block expands
+   * over ~0.75s and the form drawer fades in over ~0.5s, both driven by GSAP. Clicks aimed at a
+   * control that is still moving wait for it to settle, and the helpers below had to grow retry
+   * loops just to stay honest. The app now collapses those tweens when the reader asks for less
+   * motion (`RegisterGSAP`), so the suite asks for it: what these specs are about is the form and
+   * its validation, not the easing.
+   */
+  test.beforeEach(async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+  });
+
   test.describe('Rating summary', () => {
     test('product page shows a rating summary with a "Leave review" button', async ({
       page,

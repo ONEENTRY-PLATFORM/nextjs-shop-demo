@@ -103,13 +103,20 @@ const ProductCard = ({
           />
         </div>
 
-        {/** Clickable overlay that navigates to the product detail page */}
+        {/*
+          Clickable overlay that navigates to the product detail page.
+
+          It is the ONLY link to the product on this card — the title is an `h2`, and the other
+          two controls favourite and add to cart. It used to carry `tabIndex={-1}`, which took it
+          out of the tab order and left the product page unreachable from the catalog by
+          keyboard (WCAG 2.1.1). The ring is drawn on focus-visible only, so a mouse click does
+          not leave an outline on a full-card invisible overlay.
+        */}
         <Link
           prefetch={true}
           href={'/' + lang + '/shop/product/' + id}
-          className="absolute top-0 left-0 z-0 flex size-full"
+          className="absolute top-0 left-0 z-0 flex size-full rounded-lg focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 focus-visible:outline-none"
           aria-label={`View details for ${title}`}
-          tabIndex={-1}
         ></Link>
       </article>
     </CardAnimations>

@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 
 import { getCartBadge, getCartItemCount } from './helpers/cart-helpers';
 import {
+  clickFavoriteAndExpect,
   getFavoritesBadge,
   getFavoritesItemCount,
 } from './helpers/favorites-helpers';
@@ -35,13 +36,7 @@ test.describe('Favorites', () => {
     const initialCount = await getFavoritesItemCount(page);
 
     // Add to favorites
-    await addToFavoritesButton.click();
-
-    // Wait for Redux store update and badge to reflect new count
-    const badge = getFavoritesBadge(page);
-    await expect(badge).toHaveText(String(initialCount + 1), {
-      timeout: 5000,
-    });
+    await clickFavoriteAndExpect(addToFavoritesButton, page, initialCount + 1);
   });
 
   test('should remove product from favorites', async ({ page }) => {
@@ -55,15 +50,12 @@ test.describe('Favorites', () => {
     await expect(addToFavoritesButton).toBeVisible({ timeout: 10000 });
 
     const initialCount = await getFavoritesItemCount(page);
-    const badge = getFavoritesBadge(page);
 
     // Add to favorites — badge reflects the increment.
-    await addToFavoritesButton.click();
-    await expect(badge).toHaveText(String(initialCount + 1), { timeout: 5000 });
+    await clickFavoriteAndExpect(addToFavoritesButton, page, initialCount + 1);
 
     // Toggle again to remove — badge settles back to the original count.
-    await addToFavoritesButton.click();
-    await expect(badge).toHaveText(String(initialCount), { timeout: 5000 });
+    await clickFavoriteAndExpect(addToFavoritesButton, page, initialCount);
 
     // The button aria-label also flips back to the "add" state after removal.
     await expect(addToFavoritesButton).toHaveAttribute(
@@ -154,10 +146,10 @@ test.describe('Favorites', () => {
     await expect(inStockCard).toBeVisible({ timeout: 20000 });
 
     const initialFavCount = await getFavoritesItemCount(page);
-    await inStockCard.locator(SELECTORS.addToFavoritesButton).click();
-    await expect(getFavoritesBadge(page)).toHaveText(
-      String(initialFavCount + 1),
-      { timeout: 5000 },
+    await clickFavoriteAndExpect(
+      inStockCard.locator(SELECTORS.addToFavoritesButton),
+      page,
+      initialFavCount + 1,
     );
 
     // Give redux-persist time to flush to localStorage before the full navigation

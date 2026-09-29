@@ -1,4 +1,4 @@
-import type { FormDataType } from 'oneentry/types';
+import type { FormDataPostType } from 'oneentry/types';
 
 /**
  * Captured reCAPTCHA verification data required to submit a `spam` field
@@ -21,9 +21,13 @@ export interface TransformFieldParams {
 
 /**
  * Field transformer function type
- * Takes the full field params, returns transformed FormDataType
+ * Takes the full field params, returns one submission field.
+ *
+ * `FormDataPostType` is the SUBMISSION side of the SDK's types — the shapes a
+ * read returns are different, and until 1.0.168 only the read ones were
+ * declared, which is why the list and radioButton branches below needed casts.
  */
-type FieldTransformer = (params: TransformFieldParams) => FormDataType;
+type FieldTransformer = (params: TransformFieldParams) => FormDataPostType;
 
 /**
  * Map of field transformers by marker or type
@@ -72,12 +76,12 @@ const FIELD_TRANSFORMERS: Record<string, FieldTransformer> = {
   list: ({ marker, value }) => ({
     marker,
     type: 'list',
-    value: (value === '' || value == null ? [] : [String(value)]) as never,
+    value: value === '' || value == null ? [] : [String(value)],
   }),
   radioButton: ({ marker, value }) => ({
     marker,
     type: 'radioButton',
-    value: (value === '' || value == null ? [] : [String(value)]) as never,
+    value: value === '' || value == null ? [] : [String(value)],
   }),
 };
 
@@ -89,11 +93,11 @@ const FIELD_TRANSFORMERS: Record<string, FieldTransformer> = {
  * @param   {unknown}              params.value       - Field value
  * @param   {number}               [params.productId] - Product ID for file uploads
  * @param   {CaptchaData}          [params.captcha]   - Captured reCAPTCHA token/siteKey for `spam` fields
- * @returns {FormDataType}                            Transformed form field data
+ * @returns {FormDataPostType}                        Transformed form field data
  */
 export const transformFormField = (
   params: TransformFieldParams,
-): FormDataType => {
+): FormDataPostType => {
   const { marker, type, value } = params;
 
   // Check if there's a marker-specific transformer first (higher priority)
@@ -116,11 +120,11 @@ export const transformFormField = (
 
 /**
  * Validate required form fields
- * @param   {FormDataType[]}                       transformedData - Array of transformed form fields
+ * @param   {FormDataPostType[]}                   transformedData - Array of transformed form fields
  * @returns {{ isValid: boolean; error?: string }}                 Validation result with isValid flag and error message
  */
 export const validateFormData = (
-  transformedData: FormDataType[],
+  transformedData: FormDataPostType[],
 ): { isValid: boolean; error?: string } => {
   // Check if there's at least some data
   if (transformedData.length === 0) {

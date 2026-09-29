@@ -47,6 +47,12 @@ const buildProductsKey = (
     },
   ]);
 
+/** Total attempts (first try plus retries) for one catalog read. */
+const PRODUCTS_FETCH_ATTEMPTS = 3;
+
+/** Base backoff between catalog read attempts; multiplied by the attempt number. */
+const PRODUCTS_RETRY_DELAY_MS = 250;
+
 /**
  * Cross-request Data Cache layer: stores the catalog page in the Next.js Data
  * Cache with a TTL and tags so repeat requests skip the OneEntry round-trip.
@@ -76,18 +82,41 @@ const fetchProducts = unstable_cache(
     const langCode = toLangCode(lang);
     const body = getSearchParams(sp, handle || undefined) || [];
 
-    const data = await getApi().Products.getProducts(body, langCode, {
-      limit,
-      offset,
-      sortOrder: 'ASC',
-      sortKey: 'date',
-    });
+    /**
+     * Retried and then thrown, on the same contract as the menu reader in
+     * `app/api/server/menus/getMenuByMarker.ts`. A returned value is written to the Data Cache
+     * and every caller reads a failed envelope as "this catalog is empty": the shop page paints
+     * an empty grid, and `generateStaticParams` hands Next an empty list, so a whole build can
+     * prerender zero product pages and still report success. Throwing keeps the failure out of
+     * the cache, surfaces it, and lets `staticGenerationRetryCount` try again at build time.
+     */
+    let lastError: IError | undefined;
+    for (let attempt = 0; attempt < PRODUCTS_FETCH_ATTEMPTS; attempt++) {
+      const data = await getApi().Products.getProducts(body, langCode, {
+        limit,
+        offset,
+        sortOrder: 'ASC',
+        sortKey: 'date',
+      });
 
-    if (isError(data)) {
-      return { isError: true, error: data, total: 0 };
+      if (!isError(data)) {
+        return { isError: false, products: data.items, total: data.total };
+      }
+
+      // A closed or missing catalog is a fact about the content, not about the CMS.
+      if (data.statusCode === 404 || data.statusCode === 403) {
+        return { isError: true, error: data, total: 0 };
+      }
+
+      lastError = data;
+      if (attempt < PRODUCTS_FETCH_ATTEMPTS - 1) {
+        await new Promise((resolve) =>
+          setTimeout(resolve, PRODUCTS_RETRY_DELAY_MS * (attempt + 1)),
+        );
+      }
     }
 
-    return { isError: false, products: data.items, total: data.total };
+    throw lastError;
   },
   ['oneentry-getProducts'],
   { revalidate: 60, tags: ['oneentry', 'oneentry-products'] },

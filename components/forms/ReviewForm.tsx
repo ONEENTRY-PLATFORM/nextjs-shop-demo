@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import type {
-  FormDataType,
+  FormDataPostType,
   IAttributeValues,
   IError,
   IPostFormResponse,
@@ -156,17 +156,19 @@ const ReviewForm = memo(({ lang, dict }: ReviewFormProps): JSX.Element => {
 
       try {
         /** Transform form data based on field types */
-        const transformedFormData: FormDataType[] = formFields.map((field) => {
-          const { marker, type } = field;
-          const value = fieldsData[marker]?.value;
+        const transformedFormData: FormDataPostType[] = formFields.map(
+          (field) => {
+            const { marker, type } = field;
+            const value = fieldsData[marker]?.value;
 
-          return transformFormField({
-            marker,
-            type,
-            value,
-            productId: productData.id,
-          });
-        });
+            return transformFormField({
+              marker,
+              type,
+              value,
+              productId: productData.id,
+            });
+          },
+        );
 
         /** Validate form data before submission */
         const validation = validateFormData(transformedFormData);

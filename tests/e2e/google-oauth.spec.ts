@@ -26,6 +26,15 @@ import { ROUTES, SELECTORS } from './settings';
 test.describe('Google OAuth — sign-in button & redirect', () => {
   test.setTimeout(40_000);
 
+  // The params under test are built from `NEXT_PUBLIC_GOOGLE_CLIENT_ID`. Without it the app
+  // still sends the browser to Google, but with an empty `client_id` — so the assertion below
+  // fails on a checkout that simply has no OAuth configured, which reads as a broken redirect
+  // rather than a missing variable. Skipped, and the reason says which variable to set.
+  test.skip(
+    !process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+    'NEXT_PUBLIC_GOOGLE_CLIENT_ID is not set — the OAuth params cannot be asserted',
+  );
+
   test('Google login button is visible in the sign-in modal', async ({
     page,
   }) => {
